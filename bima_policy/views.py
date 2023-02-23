@@ -560,7 +560,13 @@ def policy_entrydata(request, id):
         return redirect('bima_policy:policy_entry')
     else:
         data = Policy.objects.get(policyid=id)
-        return render(request, 'policylist/edit_policy.html', {'data': data})
+        ins_company = InsuranceCompany.objects.all()
+        product_name = ProductName.objects.all()
+        product_type = ProductType.objects.all()        
+        context = {'data': data, 'ins_company': ins_company,
+                   'product_name': product_name,
+                   'product_type': product_type}
+        return render(request, 'policylist/edit_policy.html',  context)
 
 
 def edit_policy(request, id):

@@ -68,6 +68,36 @@ class RtoConversionModel(models.Model):
         super(RtoConversionModel, self).save(*args, **kwargs)
 
 
+class ProductName(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:6].upper(), editable=False, max_length=30)
+    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+    prod_name = models.CharField(max_length=100)
+    status = models.CharField(default='Active', max_length=20)
+
+    def __str__(self):
+        return self.prod_name
+
+    def save(self, *args, **kwargs):
+        self.id = uuid.uuid4().hex[:6].upper()
+        super(ProductName, self).save(*args, **kwargs)
+
+
+class ProductType(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:6].upper(), editable=False, max_length=30)
+    # profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+    prod_type = models.CharField(max_length=100)
+    status = models.CharField(default='Active', max_length=20)
+
+    def __str__(self):
+        return self.prod_type
+
+    def save(self, *args, **kwargs):
+        self.id = uuid.uuid4().hex[:6].upper()
+        super(ProductType, self).save(*args, **kwargs)
+
+
 class InsuranceCompany(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
@@ -203,23 +233,28 @@ product_name = (
     ('8', 'Others')
 )
 
-product_type = (
-    ('1', 'Private Car'),
-    ('2', 'Commercial Vehicle'),
-    ('3', 'GCV-3W'),
-    ('4', 'GCV-4W'),
-    ('5', 'GCV-Erickshaw'),
-    ('6', 'Kisan Tractor'),
-    ('7', 'Misc-D'),
-    ('8', 'PCV-3W'),
-    ('9', 'PCV-Bus and Maxi'),
-    ('10', 'PCV-Erickshaw'),
-    ('11', 'PCV-School Bus'),
-    ('12', 'PCV-Taxi 4W'),
-    ('13', 'TW Bike'),
-    ('14', 'TW Scooter'),
-    ('15', 'Two Wheeler')
-)
+# product_type = (
+#     ('1', 'Private Car'),
+#     ('2', 'Commercial Vehicle'),
+#     ('3', 'GCV-3W'),
+#     ('4', 'GCV-4W'),
+#     ('5', 'GCV-Erickshaw'),
+#     ('6', 'Kisan Tractor'),
+#     ('7', 'Misc-D'),
+#     ('8', 'PCV-3W'),
+#     ('9', 'PCV-Bus and Maxi'),
+#     ('10', 'PCV-Erickshaw'),
+#     ('11', 'PCV-School Bus'),
+#     ('12', 'PCV-Taxi 4W'),
+#     ('13', 'TW Bike'),
+#     ('14', 'TW Scooter'),
+#     ('15', 'Two Wheeler')
+# )
+
+product_type1 = {
+    'car': 'car',
+    'bike': 'bike'
+}
 
 yes_no = (
     ('1', 'Yes'),
@@ -294,7 +329,7 @@ class Policy(models.Model):
     product_name = models.CharField(
         max_length=50, choices=product_name, default='1')
     product_type = models.CharField(
-        max_length=50, choices=product_type, default='1')
+        max_length=50, choices=ProductType.objects.all())
     registration_no = models.CharField(max_length=50)
     rto_city = models.CharField(max_length=50)
     rto_state = models.CharField(max_length=50)
