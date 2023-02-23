@@ -2,720 +2,925 @@
 
 {%block content%}
 {% load static %}
-         <main class="app-main">
-            <div class="wrapper">
-               <div class="page ">
-                  <div class="page-inner">
-                     <div class="ajax-progressBar">
-                        <div class="postProgress"></div>
-                     </div>
-                     <header class="page-title-bar">
-                        <div class="d-flex justify-content-between align-items-center">
-                           <nav aria-label="breadcrumb">
-                              <ol class="breadcrumb">
-                                 <li class="breadcrumb-item active">
-                                    <a href="list"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a>
-                                 </li>
-                              </ol>
-                           </nav>
-                        </div>
-                        <div class="row text-center text-sm-left">
-                           <div class="col">
-                              <h1 class="page-title"> Policy Form  <small class="text-muted"> All * marks Fields are mandatory. </small></h1>
-                           </div>
-                        </div>
-                     </header>
-                     <div class="page-section">
-                        <div class="section-block">
-                           <form id="frminsurance" method="post" action=''>
-                              {%csrf_token%}
-                              <div class="row">
-                                 <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <div class="card">
-                                       <div class="card-body">
-                                          <fieldset>
-                                             <legend>Policy Details</legend>
-                                             {% if messages %}
-                                          {% for message in messages %}
-                                             <p style="background-color: #FAF8F5;padding: 10px;font-size: 18px;color: rgb(48, 197, 48);border-radius: 10px;">{{ message }}</p>
-                                             {% endfor %}</ul>
-                                          {% endif %}
-                                             <div class="form-row">
-                                                <div class="col-md-4 mb-4">
-                                                   <label for="policy_no">Policy No. <abbr title="Required" class="text-danger">*</abbr></label><input type="text" value="{{data2.policy_no}}" data-parsley-required-message="" class="form-control" data-parsley-required="true" data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="policy_no" id="policy_no">
-                                                </div>
-                                                
-                                                <div class="col-md-4 mb-4">
-                                                   <label for="registration">Registration No. <abbr title="Required Minimum 8 Character Length" class="text-danger">*</abbr></label>
-                                                   <div class="input-group input-group-alt">
-                                                      <input type="text" data-parsley-group="payout" class="form-control" value="{{data2.registration_no}}" data-mask-as-number-minlength="8" placeholder="Minimum 8 Character" data-parsley-required="true" data-parsley-minlength="8" data-parsley-maxlength="14" data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$" id="registration" name="registration" maxlength="14" required>
-                                                      <div class="input-group-append">
-                                                         <span class="input-group-text" id="rto">{{data3.rto}}</span>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                                <div class="col-md-4 mb-4">
-                                                   <label for="case_type">Case Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="case_type" required class="custom-select">
-                                                      <option value="{{data.casetype}}">{{data2.casetype}}</option>
-                                                      <option value="Breakin">Breakin</option>
-                                                      <option value="New">New</option>
-                                                      <option value="Rollover">Rollover</option>
-                                                   </select>
-                                                </div>
+<main class="app-main">
+   <div class="wrapper">
+      <div class="page ">
+         <div class="page-inner">
+            <div class="ajax-progressBar">
+               <div class="postProgress"></div>
+            </div>
+            <header class="page-title-bar">
+               <div class="d-flex justify-content-between align-items-center">
+                  <nav aria-label="breadcrumb">
+                     <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                           <a href="list"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a>
+                        </li>
+                     </ol>
+                  </nav>
+               </div>
+               <div class="row text-center text-sm-left">
+                  <div class="col">
+                     <h1 class="page-title"> Policy Form <small class="text-muted"> All * marks Fields are mandatory.
+                        </small></h1>
+                  </div>
+               </div>
+            </header>
+            <div class="page-section">
+               <div class="section-block">
+                  <form id="frminsurance" method="post" action=''>
+                     {%csrf_token%}
+                     <div class="row">
+                        <div class="col-lg-9 col-md-9 col-sm-12">
+                           <div class="card">
+                              <div class="card-body">
+                                 <fieldset>
+                                    <legend>Policy Details</legend>
+                                    {% if messages %}
+                                    {% for message in messages %}
+                                    <p
+                                       style="background-color: #FAF8F5;padding: 10px;font-size: 18px;color: rgb(48, 197, 48);border-radius: 10px;">
+                                       {{ message }}</p>
+                                    {% endfor %}</ul>
+                                    {% endif %}
+                                    <div class="form-row">
+                                       <div class="col-md-4 mb-4">
+                                          <label for="policy_no">Policy No. <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data2.policy_no}}" data-parsley-required-message=""
+                                             class="form-control" data-parsley-required="true"
+                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="policy_no"
+                                             id="policy_no">
+                                       </div>
+
+                                       <div class="col-md-4 mb-4">
+                                          <label for="registration">Registration No. <abbr
+                                                title="Required Minimum 8 Character Length"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt">
+                                             <input type="text" data-parsley-group="payout" class="form-control"
+                                                value="{{data2.registration_no}}" data-mask-as-number-minlength="8"
+                                                placeholder="Minimum 8 Character" data-parsley-required="true"
+                                                data-parsley-minlength="8" data-parsley-maxlength="14"
+                                                data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$"
+                                                id="registration" name="registration" maxlength="14" required>
+                                             <div class="input-group-append">
+                                                <span class="input-group-text" id="rto">{{data3.rto}}</span>
                                              </div>
-                                             <div class="form-row">
-                                                <div class="col-md-4 mb-4">
-                                                   <label>Insurance Company<abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="ins_company" data-parsley-required-message="" class="custom-select" id="ins_company" data-parsley-required="true">
-                                                      <option value="{{data.insurance_comp}}"> {{data2.insurance_comp}}</option>
-                                                      {% comment %} {%for value in data%}
-                                                      <option>{{value.comp_name}}</option>
-                                                      {%endfor%} {% endcomment %}
-                                                      
-                                                   </select>
-                                                </div>
-                                                <div class="col-md-4 mb-4">
-                                                   <label>Service Provider<abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="service_provider" data-parsley-required-message="" class="custom-select" id="service_provider" data-parsley-required="true">
-                                                      
-                                                      <option value="{{value.sp_name}}">{{value.sp_name}}</option>
-                                                      {% comment %} {%for value in datasp%}
-                                                      <option value={{value.full_name}}>{{value.full_name}}</option>
-                                                      {%endfor%} {% endcomment %}
-                                                      
-                                                   </select>
-                                                </div>
-                                                <div class="col-md-4 mb-4">
-                                                   <label>Service Provider/Broker Code<abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="code" class="custom-select" id="code">
-                                                      <option value="{{value.sp_brokercode}}">{{value.sp_brokercode}}</option>
-                                                      {% comment %} {%for value in databc%}
-                                                      <option value="{{value.code}}">{{value.code}}</option>
-                                                      {%endfor%} {% endcomment %}
-                                                      {% comment %} <option value="3">Code Indore</option> {% endcomment %}
-                                                   </select>
-                                                </div>
-                                             </div>
-                                             <div class="form-row">
-                                                <div class="col-md-4 mb-4">
-                                                   <label for="flatpickr-wrap">Issued  Date <abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <div class="input-group input-group-alt flatpickr" data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true" data-default-date="" ata-alt-format="F j, Y" data-alt-input-class="form-control" data-date-format="Y-m-d">
-                                                       <input type="date" class="form-control flatpickr-input" placeholder="Choose date..." value="{{data2.issueDate}}" name="issue_date" required="" data-input="">
-         
-                  
-                                                   </div>
-                                                </div>
-                                                <!-- /.form-group -->
-                                                <div class="col-md-4 mb-4">
-                                                   <label for="flatpickr-wrap">Risk Start Date <abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <div class="input-group input-group-alt flatpickr" data-toggle="risk_flatpickr" data-default-date="" data-wrap="true" data-alt-input="true" data-alt-format="F j, Y" data-alt-input-class="form-control" data-date-format="Y-m-d">
-                                                      <input type="date" class="form-control flatpickr-input" placeholder="Choose date..." value="{{data2.riskDate}}" name="risk_date" required="" data-input="">
-                                                      
+                                          </div>
+                                       </div>
+                                       <div class="col-md-4 mb-4">
+                                          <label for="case_type">Case Type <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="case_type" required class="custom-select">
+                                             <option value="{{data.casetype}}">{{data2.casetype}}</option>
+                                             <option value="Breakin">Breakin</option>
+                                             <option value="New">New</option>
+                                             <option value="Rollover">Rollover</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="form-row">
                                       
-                                                   </div>
-                                                </div>
-                                                <!-- /.form-group -->
-                                                <div class="col-md-4 mb-4">
-                                                   <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="cpa" data-parsley-group="payout" data-parsley-required="true" data-parsley-required-message="" class="custom-select" required  >
-                                                      <option value="{{data2.CPA}}">{{data2.CPA}}</option>
-                                                      <option value="Yes">Yes</option>
-                                                      <option value="No">No</option>
-                                                   </select>
-                                                </div>
-                                             </div>
-                                             <div class="form-row">
-                                                <div class="col-md-4 mb-4">
-                                                   <label>Insurance PDF <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
-                                                   <div class="">
-                                                      <input type="file" name="document" accept=".pdf" data-parsley-required="true" data-parsley-required-message="" id="document" class="form-control p-1" style="background: #fcfcfd">
-                                                      <div class="f-14 m-t-5">
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                                <div class="col-md-4 mb-4">
-                                                   <label>Previous Policy<small>(Only<strong> PDF &amp; Image </strong>File)</small> </label>
-                                                   <div class="custom-file">
-                                                      <input type="file" name="previous_policy" accept=".pdf,image/*" id="previous_policy" class="custom-file-input">
-                                                      <label class="custom-file-label" for="document">Choose file</label>
-                                                   </div>
-                                                </div>
-                                                <div class="col-md-4 mb-4">
-                                                   <label>Vehicle RC<small>(Only<strong> PDF &amp; Image </strong>File)</small> </label>
-                                                   <div class="custom-file">
-                                                      <input type="file" name="vehicle_rc" accept=".pdf,image/*" id="vehicle_rc" class="custom-file-input">
-                                                      <label class="custom-file-label" for="document">Choose file</label>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                          </fieldset>
-                                          <fieldset>
-                                             <legend class="pt-2">Vehicle Details</legend>
-                                             <div class="form-row">
-                                                <div class="col-md-3 mb-4">
-                                                   <label>Vehicle Make By <abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="vehicle_makeby" data-parsley-required-message="" data-parsley-required="true" class="custom-select ">
-                                                
-                                                      <option value="{{data2.vehicle_makeby}}">{{data2.vehicle_makeby}}</option>
-                                                      {% comment %} {%for value in datamb%}
-                                                      <option value="{{value.company}}">{{value.company}}</option>
-                                                    {%endfor%} {% endcomment %}
-                                                   </select>
-                                                </div>
-                                                <div class="col-md-3 mb-4">
-                                                   <label>Vehicle Model <abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="vehicle_model" data-parsley-required-message="" data-parsley-required="true" class="custom-select ">
-                                                      
-                                                      <option value="{{data2.vehicle_model}}">{{data2.vehicle_model}}</option>
-                                                      {% comment %} {%for value in datavm%}
-                                                      <option value="{{value.model}}">{{value.model}}</option>
-                                                      {%endfor%} {% endcomment %}
-                                                   </select>
-                                                </div>
-                                                <div class="col-md-3 mb-4">
-                                                   <label>Vehicle Category <abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="vehicle_category" data-parsley-required-message="" data-parsley-required="true" class="custom-select ">
-                                                      <option value="{{data2.vehicle_category}}">{{data2.vehicle_category}}</option>
+                                       <div class="col-md-4 mb-4">
+                                          <label>Service Provider<abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="service_provider" data-parsley-required-message=""
+                                             class="custom-select" id="service_provider" data-parsley-required="true">
 
-                                                      {% comment %} {%for value in datavc%}
-                                                      <option value="{{value.category}}">{{value.category}}</option>
-                                                      {%endfor%}
-                                                     {% endcomment %}
-                                                   </select>
-                                                </div>
-                                                <div class="col-md-3 mb-4">
-                                                   <label for="gvw">Other info</label>
-                                                   <input type="text" value="{{data2.other_info}}" class="form-control" name="vehicle_other_info">
-                                                </div>
-                                                <div class="col-md-3 mb-4">
-                                                   <label>Vehicle Fuel Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="fuel_type" data-parsley-group="payout" data-parsley-required="true" data-parsley-required-message="" class="custom-select">
-                                                      <option value="{{data2.vehicle_fuel_type}}">{{data2.vehicle_fuel_type}}</option>
-                                                      <option value="Petrol">Petrol</option>
-                                                      <option value="Diesel">Diesel</option>
-                                                      <option value="CNG">CNG</option>
-                                                      <option value="Electric">Electric</option>
-                                                   </select>
-                                                </div>
-                                                <div class="col-md-3 mb-4">
-                                                   <label for="manu_year">Manufacture Year <abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="manu_year" data-parsley-required-message="" data-parsley-required="true" class="custom-select">
-                                                      <option value="{{data2.manufature_year}}">{{data2.manufature_year}}</option>
-                                                      <option value="2022">2022</option>
-                                                      <option value="2021">2021</option>
-                                                      <option value="2020">2020</option>
-                                                      <option value="2019">2019</option>
-                                                      <option value="2018">2018</option>
-                                                      <option value="2017">2017</option>
-                                                      <option value="2016">2016</option>
-                                                      <option value="2015">2015</option>
-                                                      <option value="2014">2014</option>
-                                                      <option value="2013">2013</option>
-                                                      <option value="2012">2012</option>
-                                                      <option value="2011">2011</option>
-                                                      <option value="2010">2010</option>
-                                                      <option value="2009">2009</option>
-                                                      <option value="2008">2008</option>
-                                                      <option value="2007">2007</option>
-                                                      <option value="2006">2006</option>
-                                                      <option value="2005">2005</option>
-                                                      <option value="2004">2004</option>
-                                                      <option value="2003">2003</option>
-                                                      <option value="2002">2002</option>
-                                                      <option value="2001">2001</option>
-                                                   </select>
-                                                </div>
-                                                <div class="col-md-3 mb-4">
-                                                   <label for="engine_no">Engine Number</label>
-                                                   <input type="text" value="{{data2.engine_no}}" class="form-control" data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$" name="engine_no">
-                                                </div>
-                                                <div class="col-md-3 mb-4">
-                                                   <label for="chasis_no">Chasis Number</label>
-                                                   <input type="text" value="{{data2.chasis_no}}" class="form-control" data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$" name="chasis_no">
-                                                </div>
-                                             </div>
-                                             <div class="form-row">
-                                                <div class="col-md-4 mb-4">
-                                                   <label>Agent <abbr title="Required" class="text-danger">*</abbr></label>
-                                                   <select name="agent" data-parsley-group="payout" data-parsley-required="true" data-parsley-required-message="" class="custom-select ">
-                                                      <option value="{{data2.agent_name}}">{{data2.agent_name}}</option>
-                                                      {% comment %} {%for value in datag%}
-                                                      <option value="{{value.full_name}}">{{value.full_name}}</option>
-                                                      {%endfor%} {% endcomment %}
-                                                    
-                                                   </select>
-                                                </div>
-                                                <div class="col-md-4 mb-4">
-                                                   <label for="cust_name">Customer Name <abbr title="Required" class="text-danger">*</abbr></label><input type="text" value="{{data2.customer_name}}" data-parsley-required-message="" class="form-control" data-parsley-required="true" name="cust_name">
-                                                </div>
-                                                <div class="col-md-4 mb-4">
-                                                   <label>Remarks</label>
-                                                   <textarea class="form-control" rows="1" name="remarks"></textarea>
-                                                </div>
-                                             </div>
-                                             <div class="form-row">
-                                                <div class="col-md-3">
-                                                   <label class="switcher-control switcher-control-success switcher-control-lg">
-                                                   <input id="itc2" name="Send_To_Email" type="checkbox" class="switcher-input" data-parsley-multiple="Send_To_Email"> 
-                                                   <span class="switcher-indicator"></span> 
-                                                   <span class="switcher-label-on"><i class="fa fa-check"></i></span> 
-                                                   <span class="switcher-label-off"><i class="fa fa-times"></i></span>
-                                                   </label>
-                                                   <label for="itc2">Send Policy on Email</label>
-                                                </div>
-                                             </div>
-                                          </fieldset>
-                                          <p class="mb-4"></p>
+                                             <option value="{{value.sp_name}}">{{value.sp_name}}</option>
+                                             {% comment %} {%for value in datasp%}
+                                             <option value={{value.full_name}}>{{value.full_name}}</option>
+                                             {%endfor%} {% endcomment %}
+
+                                          </select>
                                        </div>
-                                       <!-- /.card-body -->
+                                       <div class="col-md-4 mb-4">
+                                          <label>Service Provider/Broker Code<abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="code" class="custom-select" id="code">
+                                             <option value="{{value.sp_brokercode}}">{{value.sp_brokercode}}</option>
+                                             {% comment %} {%for value in databc%}
+                                             <option value="{{value.code}}">{{value.code}}</option>
+                                             {%endfor%} {% endcomment %}
+                                             {% comment %} <option value="3">Code Indore</option> {% endcomment %}
+                                          </select>
+                                       </div>
                                     </div>
-                                    <!-- /.card -->
-                                 </div>
-                                 <div class="col-lg-3 col-md-3 col-sm-12">
-                                    <div class="card">
-                                       <!-- .card -->
-                                       <div class="card-body">
-                                          <!-- .card-body -->
-                                          <h4 class="card-title mb-3"> Payout Details </h4>
-                                          <!-- grid row -->
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5" for="od">OD Premium <abbr title="Required" class="text-danger">*</abbr></label>
-                                             <input type="text" data-parsley-group="payout" value="{{data2.OD_premium}}" class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10" data-parsley-required="true" data-parsley-required-message="" data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10">
-                                          </div>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5" for="tp">TP Premium<abbr title="Required" class="text-danger">*</abbr></label><input type="text" data-parsley-group="payout" value="{{data2.TP_premium}}" class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10" data-parsley-required="true" data-parsley-required-message="" data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="tp" id="tp" maxlength="10">
-                                          </div>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5">Net=(OD+TP) </label><input type="text" name="net" data="" value={{data2.net}} class="form-control col-lg-6 maskNumField bg-light" data-mask-as-number-maxlength="10" data-parsley-required-message="" data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net" maxlength="10" readonly="">
-                                          </div>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5" for="gst">GST <abbr title="Required" class="text-danger">*</abbr></label><input type="text" data-parsley-group="payout" value="{{data2.GST}}" class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10" data-parsley-required="true" data-parsley-required-message="" data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10">
-                                          </div>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total" value="{{data2.total}}" class="form-control maskNumField col-lg-6 bg-light" data-mask-as-number-maxlength="10" data-parsley-required-message="" data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="totalnet" readonly="" maxlength="10">
-                                          </div>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5 pr-0">Payment Mode</label>
-                                             <select class="custom-select col-lg-6" name="payment_mode">
-                                                <option value="Customer Online">Customer Online</option>
-                                                <option value="Self Online">Self Online</option>
-                                                <option value="Cash">Cash</option>
-                                                <option value="Cut Pay">Cut Pay</option>
-                                                <option value="Customer Cheque">Customer Cheque</option>
-                                                <option value="Self Cheque">Self Cheque</option>
-                                             </select>
-                                          </div>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5 pr-0">Policy Type</label>
-                                             <select class="custom-select col-lg-6" name="payment_mode">
-                                                <option value="{{data2.policy_type}}">{{data2.policy_type}} </option>
-                                                <option value="Comp">Comp</option>
-                                                <option value="SAOD">SAOD</option>
-                                                <option value="TP">TP</option>
-                                             </select>
+                                    <div class="form-row">
+                                       <div class="col-md-4 mb-4">
+                                          <label for="flatpickr-wrap">Issued Date <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
+                                             data-default-date="" ata-alt-format="F j, Y"
+                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="{{data2.issueDate}}"
+                                                name="issue_date" required="" data-input="">
+
+
                                           </div>
                                        </div>
-                                       <!-- /.card-body -->
+                                       <!-- /.form-group -->
+                                       <div class="col-md-4 mb-4">
+                                          <label for="flatpickr-wrap">Risk Start Date <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="risk_flatpickr" data-default-date="" data-wrap="true"
+                                             data-alt-input="true" data-alt-format="F j, Y"
+                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="{{data2.riskDate}}" name="risk_date"
+                                                required="" data-input="">
+
+
+                                          </div>
+                                       </div>
+                                       <!-- /.form-group -->
+                                       <div class="col-md-4 mb-4">
+                                          <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="cpa" data-parsley-group="payout" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required>
+                                             <option value="{{data2.CPA}}">{{data2.CPA}}</option>
+                                             <option value="Yes">Yes</option>
+                                             <option value="No">No</option>
+                                          </select>
+                                       </div>
                                     </div>
-                                    <div id="payoutSection" class="card card-inverse bg-info">
-                                       <div class="card-header p-2">
-                                          <h4 class="card-title mb-1">Payouts
-                                             <button type="button" class="btn-payout-close btn"><i class="fa fa-times"></i></button>
-                                          </h4> 
+                                    <div class="form-row">
+                                       <div class="col-md-4 mb-4">
+                                          <label>Insurance PDF <small> (Accept Only<strong> PDF </strong>File)</small>
+                                             <abbr title="Required" class="text-danger">*</abbr> </label>
+                                          <div class="">
+                                             <input type="file" name="document" accept=".pdf"
+                                                data-parsley-required="true" data-parsley-required-message=""
+                                                id="document" class="form-control p-1" style="background: #fcfcfd">
+                                             <div class="f-14 m-t-5">
+                                             </div>
+                                          </div>
                                        </div>
-                                       <input type="hidden" readonly="" name="payout_id">
-                                       <div class="card-body">
-                                          <p>Agent Commision</p>
-                                          
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5">Rewards On <abbr title="Required" class="text-danger">*</abbr></label>
-                                             <div style="visibility:hidden" id='A'> 
-                                             <select data-parsley-required="true" name="ag_reward_on" onchange="mycommision(this)" class="col-lg-6 ag-toggle-mannual custom-select">
-                                                <option>-select-</option>
-                                                <option value="{{data2.OD_premium}}">OD</option>
-                                                <option value="{{data2.net}}">NET</option>
-                                             </select>
+                                       <div class="col-md-4 mb-4">
+                                          <label>Previous Policy<small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="previous_policy" accept=".pdf,image/*"
+                                                id="previous_policy" class="custom-file-input">
+                                             <label class="custom-file-label" for="document">Choose file</label>
                                           </div>
-                                          <div id='D'>
-                                             <p class="col-lg-6 ag-toggle-auto">{{data3.rewards_on}}</p>  </div>
-                                          </div>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5">Rewards % <abbr title="Required" class="text-danger">*</abbr></label>
-                                             {% comment %} <input type="text" id="ag_reward_pct" value="{{value.rewards_age}}" name="ag_reward_pct" class="col-lg-6 form-control ag-toggle-mannual maskNumField" data-parsley-required-message="" data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100" style="display:none"> {% endcomment %}
-                                          <div style="visibility:hidden" id='B'>
-                                             <input type="text" id="ag_reward_pct" value="{{value.rewards_age}}" name="ag_reward_pct" class="col-lg-6 form-control ag-toggle-mannual maskNumField" data-parsley-required-message="" data-mask-as-number-decimals="2" data-parsley-required="true" min="0" id="ron" max="100"> 
-                                          </div>
-                                          <div id='E'>
-                                             <p class="col-lg-6 ag-toggle-auto">{{data3.rewards_age}}</p>
-                                          </div>
-                                          </div>
-                                          
-                                          
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5">Commision <abbr title="Required" class="text-danger">*</abbr></label>
-                                             <div style="visibility:hidden" id='C'>
-                                             <input type="text" value="" readonly=""  data-parsley-required-message="" data-parsley-required="true" data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$" class="form-control col-lg-6 maskNumField ag-toggle-mannual" name="ag_commision" id="ag_commision" >
-                                             </div>
-                                             <div id='F'>
-                                             <p class="col-lg-6 ag-toggle-auto">{{data3.rewards_age}}</p></div>
-                                          </div><div class="row mb-3">
-                                             <label class="col-lg-5">Calculation</label>
-                                             <div class="custom-control custom-control-inline custom-radio">
-                                                <input class="custom-control-input" value="Auto" checked="" id="ag_chkauto" name="ag_calculation" type="radio" onClick="aghideA()" checked>
-                                                <label class="custom-control-label" for="ag_chkauto">Auto</label>
-                                             </div>
-                                             <div class="custom-control custom-control-inline custom-radio">
-                                                <input class="custom-control-input" value="Mannual" id="ag_chkmannual" name="ag_calculation" type="radio" onClick="aghideB()" >
-                                                <label class="custom-control-label" for="ag_chkmannual">Mannual</label>
-                                             </div>
-                                          </div>
-                                          <p>Self Commision</p>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5">Rewards On <abbr title="Required" class="text-danger">*</abbr></label>
-                                             <div style="visibility:hidden" id='G'>
-                                             <select data-parsley-required="true" name="sf_reward_on" class="col-lg-6 sf-toggle-mannual custom-select" >
-                                                <option value="-none-">-none-</option>
-                                                <option value="OD" selected="">OD</option>
-                                                <option value="NET">NET</option>
-                                             </select>
-                                          </div>
-                                          <div id='J'>
-                                             <p class="col-lg-6 sf-toggle-auto">{{data3.self_rewards_on}}</p>
-                                          </div>
-                                          </div>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5">Rewards % <abbr title="Required" class="text-danger">*</abbr></label>
-                                             <div style="visibility:hidden" id='H'>
-                                             <input type="text" id="sf_reward_pct" value="15" name="sf_reward_pct" class="col-lg-6 form-control sf-toggle-mannual maskNumField" data-parsley-required-message="" data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100" >
-                                             </div>
-                                             <div id='K'>
-                                             <p class="col-lg-6 sf-toggle-auto">{{data3.self_rewards_age}}</p>
-                                             </div>
-                                          </div>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5">Commision <abbr title="Required" class="text-danger">*</abbr></label>
-                                             <div style="visibility:hidden" id='I'>
-                                             <input type="text" readonly="" value="" data-parsley-required-message="" data-parsley-required="true" data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$" class="form-control col-lg-6 maskNumField sf-toggle-mannual" name="sf_commision" id="sf_commision" >
-                                             </div>
-                                             <div id='L'>
-                                             <p class="col-lg-6 sf-toggle-auto">{{data3.self_rewards_age}}</p>
-                                             </div>
-                                          
-                                          </div>
-                                          <div class="row mb-2">
-                                             <label class="col-lg-5">Calculation</label>
-                                             <div class="custom-control custom-control-inline custom-radio">
-                                                <input class="custom-control-input" checked="" value="Auto" id="sf_chkauto" name="sf_calculation" type="radio" onClick="hideA()" checked>
-                                                <label class="custom-control-label" for="sf_chkauto">Auto</label>
-                                             </div>
-                                             <div class="custom-control custom-control-inline custom-radio">
-                                                <input class="custom-control-input" value="Mannual" id="chkmannual" name="sf_calculation" type="radio" onClick="hideB()">
-                                                <label class="custom-control-label" for="chkmannual">Mannual</label>
-                                             </div>
-                                          </div></div>
                                        </div>
-                                    <!-- /.card -->
+                                       <div class="col-md-4 mb-4">
+                                          <label>Vehicle RC<small>(Only<strong> PDF &amp; Image </strong>File)</small>
+                                          </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="vehicle_rc" accept=".pdf,image/*" id="vehicle_rc"
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="document">Choose file</label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </fieldset>
+                                 <fieldset>
+                                    <legend class="pt-2">Vehicle Details</legend>
+                                    <div class="form-row">
+                                       <div class="col-md-3 mb-4">
+                                          <label>Vehicle Make By <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="vehicle_makeby" data-parsley-required-message=""
+                                             data-parsley-required="true" class="custom-select ">
+
+                                             <option value="{{data2.vehicle_makeby}}">{{data2.vehicle_makeby}}</option>
+                                             {% comment %} {%for value in datamb%}
+                                             <option value="{{value.company}}">{{value.company}}</option>
+                                             {%endfor%} {% endcomment %}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Vehicle Model <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="vehicle_model" data-parsley-required-message=""
+                                             data-parsley-required="true" class="custom-select ">
+
+                                             <option value="{{data2.vehicle_model}}">{{data2.vehicle_model}}</option>
+                                             {% comment %} {%for value in datavm%}
+                                             <option value="{{value.model}}">{{value.model}}</option>
+                                             {%endfor%} {% endcomment %}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Vehicle Category <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="vehicle_category" data-parsley-required-message=""
+                                             data-parsley-required="true" class="custom-select ">
+                                             <option value="{{data2.vehicle_category}}">{{data2.vehicle_category}}
+                                             </option>
+
+                                             {% comment %} {%for value in datavc%}
+                                             <option value="{{value.category}}">{{value.category}}</option>
+                                             {%endfor%}
+                                             {% endcomment %}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="gvw">Other info</label>
+                                          <input type="text" value="{{data2.other_info}}" class="form-control"
+                                             name="vehicle_other_info">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Vehicle Fuel Type <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="fuel_type" data-parsley-group="payout"
+                                             data-parsley-required="true" data-parsley-required-message=""
+                                             class="custom-select">
+                                             <option value="{{data2.vehicle_fuel_type}}">{{data2.vehicle_fuel_type}}
+                                             </option>
+                                             <option value="Petrol">Petrol</option>
+                                             <option value="Diesel">Diesel</option>
+                                             <option value="CNG">CNG</option>
+                                             <option value="Electric">Electric</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="manu_year">Manufacture Year <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="manu_year" data-parsley-required-message=""
+                                             data-parsley-required="true" class="custom-select">
+                                             <option value="{{data2.manufature_year}}">{{data2.manufature_year}}
+                                             </option>
+                                             <option value="2022">2022</option>
+                                             <option value="2021">2021</option>
+                                             <option value="2020">2020</option>
+                                             <option value="2019">2019</option>
+                                             <option value="2018">2018</option>
+                                             <option value="2017">2017</option>
+                                             <option value="2016">2016</option>
+                                             <option value="2015">2015</option>
+                                             <option value="2014">2014</option>
+                                             <option value="2013">2013</option>
+                                             <option value="2012">2012</option>
+                                             <option value="2011">2011</option>
+                                             <option value="2010">2010</option>
+                                             <option value="2009">2009</option>
+                                             <option value="2008">2008</option>
+                                             <option value="2007">2007</option>
+                                             <option value="2006">2006</option>
+                                             <option value="2005">2005</option>
+                                             <option value="2004">2004</option>
+                                             <option value="2003">2003</option>
+                                             <option value="2002">2002</option>
+                                             <option value="2001">2001</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="engine_no">Engine Number</label>
+                                          <input type="text" value="{{data2.engine_no}}" class="form-control"
+                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$" name="engine_no">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="chasis_no">Chasis Number</label>
+                                          <input type="text" value="{{data2.chasis_no}}" class="form-control"
+                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$" name="chasis_no">
+                                       </div>
+                                    </div>
+                                    <div class="form-row">
+                                       <div class="col-md-4 mb-4">
+                                          <label>Agent <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="agent" data-parsley-group="payout" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select ">
+                                             <option value="{{data2.agent_name}}">{{data2.agent_name}}</option>
+                                             {% comment %} {%for value in datag%}
+                                             <option value="{{value.full_name}}">{{value.full_name}}</option>
+                                             {%endfor%} {% endcomment %}
+
+                                          </select>
+                                       </div>
+                                       <div class="col-md-4 mb-4">
+                                          <label for="cust_name">Customer Name <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data2.customer_name}}" data-parsley-required-message=""
+                                             class="form-control" data-parsley-required="true" name="cust_name">
+                                       </div>
+                                       <div class="col-md-4 mb-4">
+                                          <label>Remarks</label>
+                                          <textarea class="form-control" rows="1" name="remarks"></textarea>
+                                       </div>
+                                    </div>
+                                    <div class="form-row">
+                                       <div class="col-md-3">
+                                          <label class="switcher-control switcher-control-success switcher-control-lg">
+                                             <input id="itc2" name="Send_To_Email" type="checkbox"
+                                                class="switcher-input" data-parsley-multiple="Send_To_Email">
+                                             <span class="switcher-indicator"></span>
+                                             <span class="switcher-label-on"><i class="fa fa-check"></i></span>
+                                             <span class="switcher-label-off"><i class="fa fa-times"></i></span>
+                                          </label>
+                                          <label for="itc2">Send Policy on Email</label>
+                                       </div>
+                                    </div>
+                                 </fieldset>
+                                 <p class="mb-4"></p>
+                              </div>
+                              <!-- /.card-body -->
+                           </div>
+                           <!-- /.card -->
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                           <div class="card">
+                              <!-- .card -->
+                              <div class="card-body">
+                                 <!-- .card-body -->
+                                 <h4 class="card-title mb-3"> Payout Details </h4>
+                                 <!-- grid row -->
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <input type="text" data-parsley-group="payout" value="{{data2.OD_premium}}"
+                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
+                                       data-parsley-required="true" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="od" id="od"
+                                       maxlength="10">
                                  </div>
-                              </div>               
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="tp">TP Premium<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="{{data2.TP_premium}}"
+                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
+                                       data-parsley-required="true" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="tp" id="tp"
+                                       maxlength="10">
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Net=(OD+TP) </label><input type="text" name="net" data=""
+                                       value={{data2.net}} class="form-control col-lg-6 maskNumField bg-light"
+                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
+                                       maxlength="10" readonly="">
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="gst">GST <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="{{data2.GST}}"
+                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
+                                       data-parsley-required="true" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="gst" id="gst"
+                                       maxlength="10">
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
+                                       value="{{data2.total}}" class="form-control maskNumField col-lg-6 bg-light"
+                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="totalnet"
+                                       readonly="" maxlength="10">
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5 pr-0">Payment Mode</label>
+                                    <select class="custom-select col-lg-6" name="payment_mode">
+                                       <option value="Customer Online">Customer Online</option>
+                                       <option value="Self Online">Self Online</option>
+                                       <option value="Cash">Cash</option>
+                                       <option value="Cut Pay">Cut Pay</option>
+                                       <option value="Customer Cheque">Customer Cheque</option>
+                                       <option value="Self Cheque">Self Cheque</option>
+                                    </select>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5 pr-0">Policy Type</label>
+                                    <select class="custom-select col-lg-6" name="payment_mode">
+                                       <option value="{{data2.policy_type}}">{{data2.policy_type}} </option>
+                                       <option value="Comp">Comp</option>
+                                       <option value="SAOD">SAOD</option>
+                                       <option value="TP">TP</option>
+                                    </select>
+                                 </div>
+                              </div>
+                              <!-- /.card-body -->
+                           </div>
+                           <div id="payoutSection" class="card card-inverse bg-info">
+                              <div class="card-header p-2">
+                                 <h4 class="card-title mb-1">Payouts
+                                    <button type="button" class="btn-payout-close btn"><i
+                                          class="fa fa-times"></i></button>
+                                 </h4>
+                              </div>
+                              <input type="hidden" readonly="" name="payout_id">
+                              <div class="card-body">
+                                 <p>Agent Commision</p>
+
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div style="visibility:hidden" id='A'>
+                                       <select data-parsley-required="true" name="ag_reward_on"
+                                          onchange="mycommision(this)" class="col-lg-6 ag-toggle-mannual custom-select">
+                                          <option>-select-</option>
+                                          <option value="{{data2.OD_premium}}">OD</option>
+                                          <option value="{{data2.net}}">NET</option>
+                                       </select>
+                                    </div>
+                                    <div id='D'>
+                                       <p class="col-lg-6 ag-toggle-auto">{{data3.rewards_on}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Rewards % <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    {% comment %} <input type="text" id="ag_reward_pct" value="{{value.rewards_age}}"
+                                       name="ag_reward_pct" class="col-lg-6 form-control ag-toggle-mannual maskNumField"
+                                       data-parsley-required-message="" data-mask-as-number-decimals="2"
+                                       data-parsley-required="true" min="0" max="100" style="display:none"> {%
+                                    endcomment %}
+                                    <div style="visibility:hidden" id='B'>
+                                       <input type="text" id="ag_reward_pct" value="{{value.rewards_age}}"
+                                          name="ag_reward_pct"
+                                          class="col-lg-6 form-control ag-toggle-mannual maskNumField"
+                                          data-parsley-required-message="" data-mask-as-number-decimals="2"
+                                          data-parsley-required="true" min="0" id="ron" max="100">
+                                    </div>
+                                    <div id='E'>
+                                       <p class="col-lg-6 ag-toggle-auto">{{data3.rewards_age}}</p>
+                                    </div>
+                                 </div>
+
+
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Commision <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div style="visibility:hidden" id='C'>
+                                       <input type="text" value="" readonly="" data-parsley-required-message=""
+                                          data-parsley-required="true"
+                                          data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
+                                          class="form-control col-lg-6 maskNumField ag-toggle-mannual"
+                                          name="ag_commision" id="ag_commision">
+                                    </div>
+                                    <div id='F'>
+                                       <p class="col-lg-6 ag-toggle-auto">{{data3.rewards_age}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-3">
+                                    <label class="col-lg-5">Calculation</label>
+                                    <div class="custom-control custom-control-inline custom-radio">
+                                       <input class="custom-control-input" value="Auto" checked="" id="ag_chkauto"
+                                          name="ag_calculation" type="radio" onClick="aghideA()" checked>
+                                       <label class="custom-control-label" for="ag_chkauto">Auto</label>
+                                    </div>
+                                    <div class="custom-control custom-control-inline custom-radio">
+                                       <input class="custom-control-input" value="Mannual" id="ag_chkmannual"
+                                          name="ag_calculation" type="radio" onClick="aghideB()">
+                                       <label class="custom-control-label" for="ag_chkmannual">Mannual</label>
+                                    </div>
+                                 </div>
+                                 <p>Self Commision</p>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div style="visibility:hidden" id='G'>
+                                       <select data-parsley-required="true" name="sf_reward_on"
+                                          class="col-lg-6 sf-toggle-mannual custom-select">
+                                          <option value="-none-">-none-</option>
+                                          <option value="OD" selected="">OD</option>
+                                          <option value="NET">NET</option>
+                                       </select>
+                                    </div>
+                                    <div id='J'>
+                                       <p class="col-lg-6 sf-toggle-auto">{{data3.self_rewards_on}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Rewards % <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div style="visibility:hidden" id='H'>
+                                       <input type="text" id="sf_reward_pct" value="15" name="sf_reward_pct"
+                                          class="col-lg-6 form-control sf-toggle-mannual maskNumField"
+                                          data-parsley-required-message="" data-mask-as-number-decimals="2"
+                                          data-parsley-required="true" min="0" max="100">
+                                    </div>
+                                    <div id='K'>
+                                       <p class="col-lg-6 sf-toggle-auto">{{data3.self_rewards_age}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Commision <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div style="visibility:hidden" id='I'>
+                                       <input type="text" readonly="" value="" data-parsley-required-message=""
+                                          data-parsley-required="true"
+                                          data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
+                                          class="form-control col-lg-6 maskNumField sf-toggle-mannual"
+                                          name="sf_commision" id="sf_commision">
+                                    </div>
+                                    <div id='L'>
+                                       <p class="col-lg-6 sf-toggle-auto">{{data3.self_rewards_age}}</p>
+                                    </div>
+
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Calculation</label>
+                                    <div class="custom-control custom-control-inline custom-radio">
+                                       <input class="custom-control-input" checked="" value="Auto" id="sf_chkauto"
+                                          name="sf_calculation" type="radio" onClick="hideA()" checked>
+                                       <label class="custom-control-label" for="sf_chkauto">Auto</label>
+                                    </div>
+                                    <div class="custom-control custom-control-inline custom-radio">
+                                       <input class="custom-control-input" value="Mannual" id="chkmannual"
+                                          name="sf_calculation" type="radio" onClick="hideB()">
+                                       <label class="custom-control-label" for="chkmannual">Mannual</label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- /.card -->
                         </div>
                      </div>
-                  </div>
-               </div>
-            </div>
-
-            <button type="submit" name="submit" class="btn btn-success w-100p">Save</button>
-
-
-
-            
-            <div class="modal fade" id="mdlpayout" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="PayoutModalLabel" aria-hidden="true">
-               <div class="modal-dialog modal-lg" role="document">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 id="PayoutModalLabel" class="modal-title"> Payouts</h5>
-                     </div>
-                     <div class="modal-body"></div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
-                        <button type="submit" name="applypayout" class="btn btn-primary w-100p" disabled="">Apply</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="modal modal-alert fade" id="mdlalready" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
-               <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title"> Attention</h5>
-                     </div>
-                     <div class="modal-body"></div>
-                     <div class="modal-footer">
-                        <a href="../ins" class="btn btn-secondary w-100p">No</a>
-                        <button type="submit" class="btn btn-primary w-100p" data-dismiss="modal">Yes</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </main>
-         <div class="aside-backdrop"></div>
-      </div>
-      <div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
-         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <h5 class="modal-title">
-                     <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error 
-                  </h5>
-               </div>
-               <div class="modal-body">
-                  <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error remains the same, you need to contact your Administrator immediately.</p>
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-light" data-dismiss="modal">OK</button>
                </div>
             </div>
          </div>
       </div>
-       {% comment %} <script src="{%static 'js/jquery.min.js' %}"></script>  {% endcomment %}
-      <script src="{%static 'js/popper.min.js' %}"></script>
-      <script src="{%static 'js/bootstrap.min.js' %}"></script><!-- END BASE JS -->
-      <!-- BEGIN PLUGINS JS -->
-      <script src="{% static 'js/pace.min.js' %}"></script>
-      <script src="{% static 'js/stacked-menu.min.js' %}"></script>
-      <script src="{% static 'js/perfect-scrollbar.min.js'%}"></script><!-- END PLUGINS JS -->
-      <!-- Parsley -->
-      <script src="{%static 'js/parsley.js' %}"></script>
-      <!-- BEGIN THEME JS -->
-      <script src="{%static 'js/theme.js' %}"></script> 
-      <script src="{%static 'js/toastr.min.js' %}"></script>
-      <script src="{%static 'js/flatpickr.min.js' %}"></script>
-      <script src="{%static 'js/select2.full.min.js' %}"></script>
-      <script src="{%static 'js/moment.js' %}"></script>
-      <script src="{%static 'js/mask-as-number.min.js' %}"></script>
-      <script src="{%static 'js/jquery.dataTables.min.js' %}"></script>
-      <script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
-      <script src="{%static 'js/jquery.form.js' %}"></script>
-      <script src="{%static 'js/custom.min.js' %}"></script>
-      {% comment %} <script src="{%static 'js/insurance.min.js' %}"></script> {% endcomment %} 
-      <script>
-         function add()
-         {
-           var numOne, numTwo, sum;
-           numOne = parseInt(document.getElementById("od").value);
-           numTwo = parseInt(document.getElementById("tp").value);
-           sum = numOne + numTwo;
-           document.getElementById("net").value = sum;
-         }
-      </script>
-      <script>
-         function addgst()
-         {
-           var numOne, numTwo, sum;
-           numOne = parseInt(document.getElementById("net").value);
-           numTwo = parseInt(document.getElementById("gst").value);
-           sum = numOne + numTwo;
-           document.getElementById("totalnet").value = sum;
-         }
-      </script>
+   </div>
+
+   <button type="submit" name="submit" class="btn btn-success w-100p">Save</button>
 
 
-      <script>
-         function mycommision(e)
-         {
-            var total = e.value;
-            var b= total/10;
 
-            document.getElementById('ag_commision').value = b;
-           // console.log(b)
-         
-         }
-      </script>
-      
-      {% comment %} http://127.0.0.1:8000/bima_policy/policy/policy_entrydata/Submit {% endcomment %}
-      {% comment %} <script>
-         function setSelfComm(){var e=$("#od").val(),n=$("#tp").val(),t=$("#sf_reward_pct").val(),a=0;""==!e&&$.isNumeric(e)&&""==!n&&$.isNumeric(n)&&""==!t&&(a="OD"==$("select[name='sf_reward_on']").val()?(t*e/100).toFixed(0):(t*(parseInt(e)+parseInt(n))/100).toFixed(0));$("input[name='sf_commision']").val(a),$("input[name='sf_commision']").next("p").html(a)}$(document).ready(function(){$(document).on("change","select[name='sf_reward_on'],#sf_reward_pct",function(){setSelfComm()})});
-      </script>
-      <script>
-         $(document).on("change", "#registration", function () {
-             var t = $(this);
-             $.getJSON("../Submit", { request: "getRTO", registration: t.val(),form: "new" }, function (e) {
-                 $("#rto").html(e.rto), t.val(e.registration_no), t.parsley().validate();
-                 if(e.oldest!=''){
-                     $("#mdlalready .modal-body").html(e.oldest), $("#mdlalready").modal();
-                 } 
-             }).fail(function () {
-                 console.log("error");
-             });
-         }),
-         $(document).on("change", "#policy_no", function () {
-             var o = $(this);o.val(o.val().replaceAll(/\s/g,''));
-             $(o).parsley().validate();
-             $.get("../Submit", { request: "checkPolicy", policy_no: o.val(), form: "new" }, function (o) {"" == o || ($("#mdlalready .modal-body").html(o), $("#mdlalready").modal());}).fail(function () {console.log("error");});
-         }); {% endcomment %}
-      </script> 
-      <div class="flatpickr-calendar animate" tabindex="-1">
-         <div class="flatpickr-months">
-            <span class="flatpickr-prev-month">
-               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 17 17">
-                  <g></g>
-                  <path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z"></path>
-               </svg>
-            </span>
-            <div class="flatpickr-month">
-               <div class="flatpickr-current-month">
-                  <select class="flatpickr-monthDropdown-months" tabindex="-1">
-                     <option class="flatpickr-monthDropdown-month" value="0" tabindex="-1">January</option>
-                     <option class="flatpickr-monthDropdown-month" value="1" tabindex="-1">February</option>
-                     <option class="flatpickr-monthDropdown-month" value="2" tabindex="-1">March</option>
-                     <option class="flatpickr-monthDropdown-month" value="3" tabindex="-1">April</option>
-                     <option class="flatpickr-monthDropdown-month" value="4" tabindex="-1">May</option>
-                     <option class="flatpickr-monthDropdown-month" value="5" tabindex="-1">June</option>
-                     <option class="flatpickr-monthDropdown-month" value="6" tabindex="-1">July</option>
-                     <option class="flatpickr-monthDropdown-month" value="7" tabindex="-1">August</option>
-                  </select>
-                  <div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year" max="2022"><span class="arrowUp"></span><span class="arrowDown"></span></div>
-               </div>
+
+   <div class="modal fade" id="mdlpayout" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+      aria-labelledby="PayoutModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 id="PayoutModalLabel" class="modal-title"> Payouts</h5>
             </div>
-            <span class="flatpickr-next-month flatpickr-disabled">
-               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 17 17">
-                  <g></g>
-                  <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z"></path>
-               </svg>
-            </span>
-         </div>
-         <div class="flatpickr-innerContainer">
-            <div class="flatpickr-rContainer">
-               <div class="flatpickr-weekdays">
-                  <div class="flatpickr-weekdaycontainer">
-                     <span class="flatpickr-weekday">
-                     Sun</span><span class="flatpickr-weekday">Mon</span><span class="flatpickr-weekday">Tue</span><span class="flatpickr-weekday">Wed</span><span class="flatpickr-weekday">Thu</span><span class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
-                     </span>
-                  </div>
-               </div>
-               <div class="flatpickr-days" tabindex="-1">
-                  <div class="dayContainer"><span class="flatpickr-day prevMonthDay" aria-label="July 31, 2022" tabindex="-1">31</span><span class="flatpickr-day " aria-label="August 1, 2022" tabindex="-1">1</span><span class="flatpickr-day " aria-label="August 2, 2022" tabindex="-1">2</span><span class="flatpickr-day " aria-label="August 3, 2022" tabindex="-1">3</span><span class="flatpickr-day " aria-label="August 4, 2022" tabindex="-1">4</span><span class="flatpickr-day " aria-label="August 5, 2022" tabindex="-1">5</span><span class="flatpickr-day " aria-label="August 6, 2022" tabindex="-1">6</span><span class="flatpickr-day " aria-label="August 7, 2022" tabindex="-1">7</span><span class="flatpickr-day today" aria-label="August 8, 2022" aria-current="date" tabindex="-1">8</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 9, 2022">9</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 10, 2022">10</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 11, 2022">11</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 12, 2022">12</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 13, 2022">13</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 14, 2022">14</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 15, 2022">15</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 16, 2022">16</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 17, 2022">17</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 18, 2022">18</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 19, 2022">19</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 20, 2022">20</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 21, 2022">21</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 22, 2022">22</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 23, 2022">23</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 24, 2022">24</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 25, 2022">25</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 26, 2022">26</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 27, 2022">27</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 28, 2022">28</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 29, 2022">29</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 30, 2022">30</span><span class="flatpickr-day flatpickr-disabled" aria-label="August 31, 2022">31</span><span class="flatpickr-day nextMonthDay flatpickr-disabled" aria-label="September 1, 2022">1</span><span class="flatpickr-day nextMonthDay flatpickr-disabled" aria-label="September 2, 2022">2</span><span class="flatpickr-day nextMonthDay flatpickr-disabled" aria-label="September 3, 2022">3</span><span class="flatpickr-day nextMonthDay flatpickr-disabled" aria-label="September 4, 2022">4</span><span class="flatpickr-day nextMonthDay flatpickr-disabled" aria-label="September 5, 2022">5</span><span class="flatpickr-day nextMonthDay flatpickr-disabled" aria-label="September 6, 2022">6</span><span class="flatpickr-day nextMonthDay flatpickr-disabled" aria-label="September 7, 2022">7</span><span class="flatpickr-day nextMonthDay flatpickr-disabled" aria-label="September 8, 2022">8</span><span class="flatpickr-day nextMonthDay flatpickr-disabled" aria-label="September 9, 2022">9</span><span class="flatpickr-day nextMonthDay flatpickr-disabled" aria-label="September 10, 2022">10</span></div>
-               </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
+               <button type="submit" name="applypayout" class="btn btn-primary w-100p" disabled="">Apply</button>
             </div>
          </div>
       </div>
-      <div class="flatpickr-calendar animate" tabindex="-1">
-         <div class="flatpickr-months">
-            <span class="flatpickr-prev-month">
-               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 17 17">
-                  <g></g>
-                  <path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z"></path>
-               </svg>
-            </span>
-            <div class="flatpickr-month">
-               <div class="flatpickr-current-month">
-                  <select class="flatpickr-monthDropdown-months" tabindex="-1">
-                     <option class="flatpickr-monthDropdown-month" value="0" tabindex="-1">January</option>
-                     <option class="flatpickr-monthDropdown-month" value="1" tabindex="-1">February</option>
-                     <option class="flatpickr-monthDropdown-month" value="2" tabindex="-1">March</option>
-                     <option class="flatpickr-monthDropdown-month" value="3" tabindex="-1">April</option>
-                     <option class="flatpickr-monthDropdown-month" value="4" tabindex="-1">May</option>
-                     <option class="flatpickr-monthDropdown-month" value="5" tabindex="-1">June</option>
-                     <option class="flatpickr-monthDropdown-month" value="6" tabindex="-1">July</option>
-                     <option class="flatpickr-monthDropdown-month" value="7" tabindex="-1">August</option>
-                     <option class="flatpickr-monthDropdown-month" value="8" tabindex="-1">September</option>
-                     <option class="flatpickr-monthDropdown-month" value="9" tabindex="-1">October</option>
-                     <option class="flatpickr-monthDropdown-month" value="10" tabindex="-1">November</option>
-                     <option class="flatpickr-monthDropdown-month" value="11" tabindex="-1">December</option>
-                  </select>
-                  <div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year" max="2023"><span class="arrowUp"></span><span class="arrowDown"></span></div>
-               </div>
+   </div>
+   <div class="modal modal-alert fade" id="mdlalready" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title"> Attention</h5>
             </div>
-            <span class="flatpickr-next-month">
-               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 17 17">
-                  <g></g>
-                  <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z"></path>
-               </svg>
-            </span>
-         </div>
-         <div class="flatpickr-innerContainer">
-            <div class="flatpickr-rContainer">
-               <div class="flatpickr-weekdays">
-                  <div class="flatpickr-weekdaycontainer">
-                     <span class="flatpickr-weekday">
-                     Sun</span><span class="flatpickr-weekday">Mon</span><span class="flatpickr-weekday">Tue</span><span class="flatpickr-weekday">Wed</span><span class="flatpickr-weekday">Thu</span><span class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
-                     </span>
-                  </div>
-               </div>
-               <div class="flatpickr-days" tabindex="-1">
-                  <div class="dayContainer"><span class="flatpickr-day prevMonthDay" aria-label="July 31, 2022" tabindex="-1">31</span><span class="flatpickr-day " aria-label="August 1, 2022" tabindex="-1">1</span><span class="flatpickr-day " aria-label="August 2, 2022" tabindex="-1">2</span><span class="flatpickr-day " aria-label="August 3, 2022" tabindex="-1">3</span><span class="flatpickr-day " aria-label="August 4, 2022" tabindex="-1">4</span><span class="flatpickr-day " aria-label="August 5, 2022" tabindex="-1">5</span><span class="flatpickr-day " aria-label="August 6, 2022" tabindex="-1">6</span><span class="flatpickr-day " aria-label="August 7, 2022" tabindex="-1">7</span><span class="flatpickr-day today" aria-label="August 8, 2022" aria-current="date" tabindex="-1">8</span><span class="flatpickr-day " aria-label="August 9, 2022" tabindex="-1">9</span><span class="flatpickr-day " aria-label="August 10, 2022" tabindex="-1">10</span><span class="flatpickr-day " aria-label="August 11, 2022" tabindex="-1">11</span><span class="flatpickr-day " aria-label="August 12, 2022" tabindex="-1">12</span><span class="flatpickr-day " aria-label="August 13, 2022" tabindex="-1">13</span><span class="flatpickr-day " aria-label="August 14, 2022" tabindex="-1">14</span><span class="flatpickr-day " aria-label="August 15, 2022" tabindex="-1">15</span><span class="flatpickr-day " aria-label="August 16, 2022" tabindex="-1">16</span><span class="flatpickr-day " aria-label="August 17, 2022" tabindex="-1">17</span><span class="flatpickr-day " aria-label="August 18, 2022" tabindex="-1">18</span><span class="flatpickr-day " aria-label="August 19, 2022" tabindex="-1">19</span><span class="flatpickr-day " aria-label="August 20, 2022" tabindex="-1">20</span><span class="flatpickr-day " aria-label="August 21, 2022" tabindex="-1">21</span><span class="flatpickr-day " aria-label="August 22, 2022" tabindex="-1">22</span><span class="flatpickr-day " aria-label="August 23, 2022" tabindex="-1">23</span><span class="flatpickr-day " aria-label="August 24, 2022" tabindex="-1">24</span><span class="flatpickr-day " aria-label="August 25, 2022" tabindex="-1">25</span><span class="flatpickr-day " aria-label="August 26, 2022" tabindex="-1">26</span><span class="flatpickr-day " aria-label="August 27, 2022" tabindex="-1">27</span><span class="flatpickr-day " aria-label="August 28, 2022" tabindex="-1">28</span><span class="flatpickr-day " aria-label="August 29, 2022" tabindex="-1">29</span><span class="flatpickr-day " aria-label="August 30, 2022" tabindex="-1">30</span><span class="flatpickr-day " aria-label="August 31, 2022" tabindex="-1">31</span><span class="flatpickr-day nextMonthDay" aria-label="September 1, 2022" tabindex="-1">1</span><span class="flatpickr-day nextMonthDay" aria-label="September 2, 2022" tabindex="-1">2</span><span class="flatpickr-day nextMonthDay" aria-label="September 3, 2022" tabindex="-1">3</span><span class="flatpickr-day nextMonthDay" aria-label="September 4, 2022" tabindex="-1">4</span><span class="flatpickr-day nextMonthDay" aria-label="September 5, 2022" tabindex="-1">5</span><span class="flatpickr-day nextMonthDay" aria-label="September 6, 2022" tabindex="-1">6</span><span class="flatpickr-day nextMonthDay" aria-label="September 7, 2022" tabindex="-1">7</span><span class="flatpickr-day nextMonthDay" aria-label="September 8, 2022" tabindex="-1">8</span><span class="flatpickr-day nextMonthDay" aria-label="September 9, 2022" tabindex="-1">9</span><span class="flatpickr-day nextMonthDay" aria-label="September 10, 2022" tabindex="-1">10</span></div>
-               </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+               <a href="../ins" class="btn btn-secondary w-100p">No</a>
+               <button type="submit" class="btn btn-primary w-100p" data-dismiss="modal">Yes</button>
             </div>
          </div>
       </div>
-      <script> 
-         //Functions to open database and to create, insert data into tables
-         var a = "{{policy_no}}";
-         getSelectedRow = function(a)
-            {
-                db.transaction(function(transaction) {
-                      transaction.executeSql('SELECT * FROM policy where policy_no = a;',[], selectedRowValues, errorHandler);
-        
-                });
-            };
-            selectedRowValues = function(transaction,results)
-            {
-                 for(var i = 0; i < results.rows.length; i++)
-                 {
-                     var row = results.rows.item(i);
-                     alert(row['policy_no']);
-                     //alert(row['name']);                 
-                 }
-            };
-        </script>
-        <script >
-         function hideB()
-         {
-         
-            document.getElementById("G").style.visibility="visible";
-            document.getElementById("H").style.visibility="visible";   
-            document.getElementById("I").style.visibility="visible";  
-            document.getElementById("J").style.visibility="hidden";
-            document.getElementById("K").style.visibility="hidden";  
-            document.getElementById("L").style.visibility="hidden";     
-         
+   </div>
+</main>
+<div class="aside-backdrop"></div>
+</div>
+<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog"
+   aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">
+               <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
+            </h5>
+         </div>
+         <div class="modal-body">
+            <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error
+               remains the same, you need to contact your Administrator immediately.</p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-dismiss="modal">OK</button>
+         </div>
+      </div>
+   </div>
+</div>
+{% comment %}
+<script src="{%static 'js/jquery.min.js' %}"></script> {% endcomment %}
+<script src="{%static 'js/popper.min.js' %}"></script>
+<script src="{%static 'js/bootstrap.min.js' %}"></script><!-- END BASE JS -->
+<!-- BEGIN PLUGINS JS -->
+<script src="{% static 'js/pace.min.js' %}"></script>
+<script src="{% static 'js/stacked-menu.min.js' %}"></script>
+<script src="{% static 'js/perfect-scrollbar.min.js'%}"></script><!-- END PLUGINS JS -->
+<!-- Parsley -->
+<script src="{%static 'js/parsley.js' %}"></script>
+<!-- BEGIN THEME JS -->
+<script src="{%static 'js/theme.js' %}"></script>
+<script src="{%static 'js/toastr.min.js' %}"></script>
+<script src="{%static 'js/flatpickr.min.js' %}"></script>
+<script src="{%static 'js/select2.full.min.js' %}"></script>
+<script src="{%static 'js/moment.js' %}"></script>
+<script src="{%static 'js/mask-as-number.min.js' %}"></script>
+<script src="{%static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
+<script src="{%static 'js/jquery.form.js' %}"></script>
+<script src="{%static 'js/custom.min.js' %}"></script>
+{% comment %}
+<script src="{%static 'js/insurance.min.js' %}"></script> {% endcomment %}
+<script>
+   function add() {
+      var numOne, numTwo, sum;
+      numOne = parseInt(document.getElementById("od").value);
+      numTwo = parseInt(document.getElementById("tp").value);
+      sum = numOne + numTwo;
+      document.getElementById("net").value = sum;
+   }
+</script>
+<script>
+   function addgst() {
+      var numOne, numTwo, sum;
+      numOne = parseInt(document.getElementById("net").value);
+      numTwo = parseInt(document.getElementById("gst").value);
+      sum = numOne + numTwo;
+      document.getElementById("totalnet").value = sum;
+   }
+</script>
+
+
+<script>
+   function mycommision(e) {
+      var total = e.value;
+      var b = total / 10;
+
+      document.getElementById('ag_commision').value = b;
+      // console.log(b)
+
+   }
+</script>
+
+{% comment %} http://127.0.0.1:8000/bima_policy/policy/policy_entrydata/Submit {% endcomment %}
+{% comment %}
+<script>
+   function setSelfComm() { var e = $("#od").val(), n = $("#tp").val(), t = $("#sf_reward_pct").val(), a = 0; "" == !e && $.isNumeric(e) && "" == !n && $.isNumeric(n) && "" == !t && (a = "OD" == $("select[name='sf_reward_on']").val() ? (t * e / 100).toFixed(0) : (t * (parseInt(e) + parseInt(n)) / 100).toFixed(0)); $("input[name='sf_commision']").val(a), $("input[name='sf_commision']").next("p").html(a) } $(document).ready(function () { $(document).on("change", "select[name='sf_reward_on'],#sf_reward_pct", function () { setSelfComm() }) });
+</script>
+<script>
+   $(document).on("change", "#registration", function () {
+      var t = $(this);
+      $.getJSON("../Submit", { request: "getRTO", registration: t.val(), form: "new" }, function (e) {
+         $("#rto").html(e.rto), t.val(e.registration_no), t.parsley().validate();
+         if (e.oldest != '') {
+            $("#mdlalready .modal-body").html(e.oldest), $("#mdlalready").modal();
          }
-         
-         function hideA()
-         {
-            document.getElementById("G").style.visibility="hidden";
-            document.getElementById("H").style.visibility="hidden";   
-            document.getElementById("I").style.visibility="hidden";  
-            document.getElementById("J").style.visibility="visible";
-            document.getElementById("K").style.visibility="visible";  
-            document.getElementById("L").style.visibility="visible";  
-         
-         }
-         function aghideB()
-         {
-         
-             document.getElementById("C").style.visibility="visible";
-             document.getElementById("A").style.visibility="visible";   
-             document.getElementById("B").style.visibility="visible";  
-             document.getElementById("D").style.visibility="hidden";
-             document.getElementById("E").style.visibility="hidden";  
-             document.getElementById("F").style.visibility="hidden";     
-         
-         }
-         
-         function aghideA()
-         {
-             document.getElementById("A").style.visibility="hidden";
-             document.getElementById("B").style.visibility="hidden";
-             document.getElementById("C").style.visibility="hidden";
-             document.getElementById("D").style.visibility="visible";
-             document.getElementById("E").style.visibility="visible";
-             document.getElementById("F").style.visibility="visible";
-             
-         
-         }
-          
-         </script>
-   </body>
+      }).fail(function () {
+         console.log("error");
+      });
+   }),
+      $(document).on("change", "#policy_no", function () {
+         var o = $(this); o.val(o.val().replaceAll(/\s/g, ''));
+         $(o).parsley().validate();
+         $.get("../Submit", { request: "checkPolicy", policy_no: o.val(), form: "new" }, function (o) { "" == o || ($("#mdlalready .modal-body").html(o), $("#mdlalready").modal()); }).fail(function () { console.log("error"); });
+      }); {% endcomment %}
+</script>
+<div class="flatpickr-calendar animate" tabindex="-1">
+   <div class="flatpickr-months">
+      <span class="flatpickr-prev-month">
+         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 17 17">
+            <g></g>
+            <path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z"></path>
+         </svg>
+      </span>
+      <div class="flatpickr-month">
+         <div class="flatpickr-current-month">
+            <select class="flatpickr-monthDropdown-months" tabindex="-1">
+               <option class="flatpickr-monthDropdown-month" value="0" tabindex="-1">January</option>
+               <option class="flatpickr-monthDropdown-month" value="1" tabindex="-1">February</option>
+               <option class="flatpickr-monthDropdown-month" value="2" tabindex="-1">March</option>
+               <option class="flatpickr-monthDropdown-month" value="3" tabindex="-1">April</option>
+               <option class="flatpickr-monthDropdown-month" value="4" tabindex="-1">May</option>
+               <option class="flatpickr-monthDropdown-month" value="5" tabindex="-1">June</option>
+               <option class="flatpickr-monthDropdown-month" value="6" tabindex="-1">July</option>
+               <option class="flatpickr-monthDropdown-month" value="7" tabindex="-1">August</option>
+            </select>
+            <div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year"
+                  max="2022"><span class="arrowUp"></span><span class="arrowDown"></span></div>
+         </div>
+      </div>
+      <span class="flatpickr-next-month flatpickr-disabled">
+         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 17 17">
+            <g></g>
+            <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z"></path>
+         </svg>
+      </span>
+   </div>
+   <div class="flatpickr-innerContainer">
+      <div class="flatpickr-rContainer">
+         <div class="flatpickr-weekdays">
+            <div class="flatpickr-weekdaycontainer">
+               <span class="flatpickr-weekday">
+                  Sun</span><span class="flatpickr-weekday">Mon</span><span class="flatpickr-weekday">Tue</span><span
+                  class="flatpickr-weekday">Wed</span><span class="flatpickr-weekday">Thu</span><span
+                  class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
+               </span>
+            </div>
+         </div>
+         <div class="flatpickr-days" tabindex="-1">
+            <div class="dayContainer"><span class="flatpickr-day prevMonthDay" aria-label="July 31, 2022"
+                  tabindex="-1">31</span><span class="flatpickr-day " aria-label="August 1, 2022"
+                  tabindex="-1">1</span><span class="flatpickr-day " aria-label="August 2, 2022"
+                  tabindex="-1">2</span><span class="flatpickr-day " aria-label="August 3, 2022"
+                  tabindex="-1">3</span><span class="flatpickr-day " aria-label="August 4, 2022"
+                  tabindex="-1">4</span><span class="flatpickr-day " aria-label="August 5, 2022"
+                  tabindex="-1">5</span><span class="flatpickr-day " aria-label="August 6, 2022"
+                  tabindex="-1">6</span><span class="flatpickr-day " aria-label="August 7, 2022"
+                  tabindex="-1">7</span><span class="flatpickr-day today" aria-label="August 8, 2022"
+                  aria-current="date" tabindex="-1">8</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 9, 2022">9</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 10, 2022">10</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 11, 2022">11</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 12, 2022">12</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 13, 2022">13</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 14, 2022">14</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 15, 2022">15</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 16, 2022">16</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 17, 2022">17</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 18, 2022">18</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 19, 2022">19</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 20, 2022">20</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 21, 2022">21</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 22, 2022">22</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 23, 2022">23</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 24, 2022">24</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 25, 2022">25</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 26, 2022">26</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 27, 2022">27</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 28, 2022">28</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 29, 2022">29</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 30, 2022">30</span><span class="flatpickr-day flatpickr-disabled"
+                  aria-label="August 31, 2022">31</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
+                  aria-label="September 1, 2022">1</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
+                  aria-label="September 2, 2022">2</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
+                  aria-label="September 3, 2022">3</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
+                  aria-label="September 4, 2022">4</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
+                  aria-label="September 5, 2022">5</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
+                  aria-label="September 6, 2022">6</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
+                  aria-label="September 7, 2022">7</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
+                  aria-label="September 8, 2022">8</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
+                  aria-label="September 9, 2022">9</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
+                  aria-label="September 10, 2022">10</span></div>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="flatpickr-calendar animate" tabindex="-1">
+   <div class="flatpickr-months">
+      <span class="flatpickr-prev-month">
+         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 17 17">
+            <g></g>
+            <path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z"></path>
+         </svg>
+      </span>
+      <div class="flatpickr-month">
+         <div class="flatpickr-current-month">
+            <select class="flatpickr-monthDropdown-months" tabindex="-1">
+               <option class="flatpickr-monthDropdown-month" value="0" tabindex="-1">January</option>
+               <option class="flatpickr-monthDropdown-month" value="1" tabindex="-1">February</option>
+               <option class="flatpickr-monthDropdown-month" value="2" tabindex="-1">March</option>
+               <option class="flatpickr-monthDropdown-month" value="3" tabindex="-1">April</option>
+               <option class="flatpickr-monthDropdown-month" value="4" tabindex="-1">May</option>
+               <option class="flatpickr-monthDropdown-month" value="5" tabindex="-1">June</option>
+               <option class="flatpickr-monthDropdown-month" value="6" tabindex="-1">July</option>
+               <option class="flatpickr-monthDropdown-month" value="7" tabindex="-1">August</option>
+               <option class="flatpickr-monthDropdown-month" value="8" tabindex="-1">September</option>
+               <option class="flatpickr-monthDropdown-month" value="9" tabindex="-1">October</option>
+               <option class="flatpickr-monthDropdown-month" value="10" tabindex="-1">November</option>
+               <option class="flatpickr-monthDropdown-month" value="11" tabindex="-1">December</option>
+            </select>
+            <div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year"
+                  max="2023"><span class="arrowUp"></span><span class="arrowDown"></span></div>
+         </div>
+      </div>
+      <span class="flatpickr-next-month">
+         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 17 17">
+            <g></g>
+            <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z"></path>
+         </svg>
+      </span>
+   </div>
+   <div class="flatpickr-innerContainer">
+      <div class="flatpickr-rContainer">
+         <div class="flatpickr-weekdays">
+            <div class="flatpickr-weekdaycontainer">
+               <span class="flatpickr-weekday">
+                  Sun</span><span class="flatpickr-weekday">Mon</span><span class="flatpickr-weekday">Tue</span><span
+                  class="flatpickr-weekday">Wed</span><span class="flatpickr-weekday">Thu</span><span
+                  class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
+               </span>
+            </div>
+         </div>
+         <div class="flatpickr-days" tabindex="-1">
+            <div class="dayContainer"><span class="flatpickr-day prevMonthDay" aria-label="July 31, 2022"
+                  tabindex="-1">31</span><span class="flatpickr-day " aria-label="August 1, 2022"
+                  tabindex="-1">1</span><span class="flatpickr-day " aria-label="August 2, 2022"
+                  tabindex="-1">2</span><span class="flatpickr-day " aria-label="August 3, 2022"
+                  tabindex="-1">3</span><span class="flatpickr-day " aria-label="August 4, 2022"
+                  tabindex="-1">4</span><span class="flatpickr-day " aria-label="August 5, 2022"
+                  tabindex="-1">5</span><span class="flatpickr-day " aria-label="August 6, 2022"
+                  tabindex="-1">6</span><span class="flatpickr-day " aria-label="August 7, 2022"
+                  tabindex="-1">7</span><span class="flatpickr-day today" aria-label="August 8, 2022"
+                  aria-current="date" tabindex="-1">8</span><span class="flatpickr-day " aria-label="August 9, 2022"
+                  tabindex="-1">9</span><span class="flatpickr-day " aria-label="August 10, 2022"
+                  tabindex="-1">10</span><span class="flatpickr-day " aria-label="August 11, 2022"
+                  tabindex="-1">11</span><span class="flatpickr-day " aria-label="August 12, 2022"
+                  tabindex="-1">12</span><span class="flatpickr-day " aria-label="August 13, 2022"
+                  tabindex="-1">13</span><span class="flatpickr-day " aria-label="August 14, 2022"
+                  tabindex="-1">14</span><span class="flatpickr-day " aria-label="August 15, 2022"
+                  tabindex="-1">15</span><span class="flatpickr-day " aria-label="August 16, 2022"
+                  tabindex="-1">16</span><span class="flatpickr-day " aria-label="August 17, 2022"
+                  tabindex="-1">17</span><span class="flatpickr-day " aria-label="August 18, 2022"
+                  tabindex="-1">18</span><span class="flatpickr-day " aria-label="August 19, 2022"
+                  tabindex="-1">19</span><span class="flatpickr-day " aria-label="August 20, 2022"
+                  tabindex="-1">20</span><span class="flatpickr-day " aria-label="August 21, 2022"
+                  tabindex="-1">21</span><span class="flatpickr-day " aria-label="August 22, 2022"
+                  tabindex="-1">22</span><span class="flatpickr-day " aria-label="August 23, 2022"
+                  tabindex="-1">23</span><span class="flatpickr-day " aria-label="August 24, 2022"
+                  tabindex="-1">24</span><span class="flatpickr-day " aria-label="August 25, 2022"
+                  tabindex="-1">25</span><span class="flatpickr-day " aria-label="August 26, 2022"
+                  tabindex="-1">26</span><span class="flatpickr-day " aria-label="August 27, 2022"
+                  tabindex="-1">27</span><span class="flatpickr-day " aria-label="August 28, 2022"
+                  tabindex="-1">28</span><span class="flatpickr-day " aria-label="August 29, 2022"
+                  tabindex="-1">29</span><span class="flatpickr-day " aria-label="August 30, 2022"
+                  tabindex="-1">30</span><span class="flatpickr-day " aria-label="August 31, 2022"
+                  tabindex="-1">31</span><span class="flatpickr-day nextMonthDay" aria-label="September 1, 2022"
+                  tabindex="-1">1</span><span class="flatpickr-day nextMonthDay" aria-label="September 2, 2022"
+                  tabindex="-1">2</span><span class="flatpickr-day nextMonthDay" aria-label="September 3, 2022"
+                  tabindex="-1">3</span><span class="flatpickr-day nextMonthDay" aria-label="September 4, 2022"
+                  tabindex="-1">4</span><span class="flatpickr-day nextMonthDay" aria-label="September 5, 2022"
+                  tabindex="-1">5</span><span class="flatpickr-day nextMonthDay" aria-label="September 6, 2022"
+                  tabindex="-1">6</span><span class="flatpickr-day nextMonthDay" aria-label="September 7, 2022"
+                  tabindex="-1">7</span><span class="flatpickr-day nextMonthDay" aria-label="September 8, 2022"
+                  tabindex="-1">8</span><span class="flatpickr-day nextMonthDay" aria-label="September 9, 2022"
+                  tabindex="-1">9</span><span class="flatpickr-day nextMonthDay" aria-label="September 10, 2022"
+                  tabindex="-1">10</span></div>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+   //Functions to open database and to create, insert data into tables
+   var a = "{{policy_no}}";
+   getSelectedRow = function (a) {
+      db.transaction(function (transaction) {
+         transaction.executeSql('SELECT * FROM policy where policy_no = a;', [], selectedRowValues, errorHandler);
+
+      });
+   };
+   selectedRowValues = function (transaction, results) {
+      for (var i = 0; i < results.rows.length; i++) {
+         var row = results.rows.item(i);
+         alert(row['policy_no']);
+         //alert(row['name']);                 
+      }
+   };
+</script>
+<script>
+   function hideB() {
+
+      document.getElementById("G").style.visibility = "visible";
+      document.getElementById("H").style.visibility = "visible";
+      document.getElementById("I").style.visibility = "visible";
+      document.getElementById("J").style.visibility = "hidden";
+      document.getElementById("K").style.visibility = "hidden";
+      document.getElementById("L").style.visibility = "hidden";
+
+   }
+
+   function hideA() {
+      document.getElementById("G").style.visibility = "hidden";
+      document.getElementById("H").style.visibility = "hidden";
+      document.getElementById("I").style.visibility = "hidden";
+      document.getElementById("J").style.visibility = "visible";
+      document.getElementById("K").style.visibility = "visible";
+      document.getElementById("L").style.visibility = "visible";
+
+   }
+   function aghideB() {
+
+      document.getElementById("C").style.visibility = "visible";
+      document.getElementById("A").style.visibility = "visible";
+      document.getElementById("B").style.visibility = "visible";
+      document.getElementById("D").style.visibility = "hidden";
+      document.getElementById("E").style.visibility = "hidden";
+      document.getElementById("F").style.visibility = "hidden";
+
+   }
+
+   function aghideA() {
+      document.getElementById("A").style.visibility = "hidden";
+      document.getElementById("B").style.visibility = "hidden";
+      document.getElementById("C").style.visibility = "hidden";
+      document.getElementById("D").style.visibility = "visible";
+      document.getElementById("E").style.visibility = "visible";
+      document.getElementById("F").style.visibility = "visible";
+
+
+   }
+
+</script>
+</body>
+
 </html>
 {%endblock%}

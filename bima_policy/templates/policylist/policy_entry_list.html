@@ -267,7 +267,6 @@
                                           </tr>
                                        </thead>
 
-
                                        <tbody>
                                           {%for value in data%}
                                           <tr role="row" class="odd">
@@ -279,7 +278,7 @@
                                              <td>
                                                 <a href="" class="tile tile-img" target="_blank"><i
                                                       class="far fa-file-pdf text-danger"></i></a>
-                                                <a href="/bima_policy/policy/policy_entrydata/{{value.policy_no}}"
+                                                <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
                                                    class="">{{value.policy_no}}</a>
                                              </td>
                                              <td>{{value.insured_name}}</td>
@@ -326,7 +325,7 @@
                                              <td class="text-center">
                                                 <form method="POST">
                                                    {% csrf_token %}
-                                                   <a href="/bima_policy/policy/policy_entrydata/{{value.policy_no}}"
+                                                   <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
                                                       class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
                                                       <i class="fa fa-pencil-alt mt-2"></i>
                                                    </a>

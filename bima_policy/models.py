@@ -75,6 +75,9 @@ class InsuranceCompany(models.Model):
     comp_name = models.CharField(max_length=100)
     status = models.CharField(default='Active', max_length=20)
 
+    def __str__(self):
+        return self.comp_name
+
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:6].upper()
         super(InsuranceCompany, self).save(*args, **kwargs)
