@@ -33,7 +33,8 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> Policy Form <small class="text-muted"> All * marks Fields are mandatory.
+                     <h1 class="page-title"> Policy Edit Form <small class="text-muted"> All * marks Fields are
+                           mandatory.
                         </small></h1>
                   </div>
                   <!-- /grid column -->
@@ -107,11 +108,11 @@
                                        </div>
                                        <div class="col-md-4 mb-4">
                                           <label>Insurer Name<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="insurer_name" class="custom-select" id="insurer_name"
+                                          <select name="product_name" class="custom-select" id="product_name"
                                              data-parsley-required="true">
-                                             <option class='bg-info text-white' value='{{data.insurer_name}}'>
-                                                {{data.insurer_name}}</option>
-                                             {%for value in ins_company%}
+                                             <option class='bg-info text-white' value='{{data.product_name}}'>
+                                                {{data.product_name}}</option>
+                                             {%for value in product_name%}
                                              <option>{{value}}</option>
                                              {%endfor%}
                                           </select>

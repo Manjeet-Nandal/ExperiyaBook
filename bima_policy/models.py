@@ -68,15 +68,14 @@ class RtoConversionModel(models.Model):
         super(RtoConversionModel, self).save(*args, **kwargs)
 
 
-class ProductName(models.Model):
+class ProductName(models.Model, name = str):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
     profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
     prod_name = models.CharField(max_length=100)
     status = models.CharField(default='Active', max_length=20)
-
     def __str__(self):
-        return self.prod_name
+        return self.name
 
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:6].upper()
@@ -222,16 +221,16 @@ insurer_name = (
     ('15', 'THE NEW INDIA ASSURANCE')
 )
 
-product_name = (
-    ('1', 'Motor'),
-    ('2', 'Fire'),
-    ('3', 'Marine'),
-    ('4', 'Burgulary'),
-    ('5', 'Shopkeeper'),
-    ('6', 'Engineering'),
-    ('7', 'WC'),
-    ('8', 'Others')
-)
+# product_name = (
+#     ('1', 'Motor'),
+#     ('2', 'Fire'),
+#     ('3', 'Marine'),
+#     ('4', 'Burgulary'),
+#     ('5', 'Shopkeeper'),
+#     ('6', 'Engineering'),
+#     ('7', 'WC'),
+#     ('8', 'Others')
+# )
 
 # product_type = (
 #     ('1', 'Private Car'),
@@ -327,7 +326,7 @@ class Policy(models.Model):
         max_length=50, choices=insurer_name, default='1')
     location = models.CharField(max_length=100, blank=True)
     product_name = models.CharField(
-        max_length=50, choices=product_name, default='1')
+        max_length=50, choices=ProductName('jkkk'))
     product_type = models.CharField(
         max_length=50, choices=ProductType.objects.all())
     registration_no = models.CharField(max_length=50)
