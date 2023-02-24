@@ -20,7 +20,6 @@ admin.site.register(BankDetail)
 admin.site.register(UserRole)
 admin.site.register(StateRtos)
 admin.site.register(rtotables)
-admin.site.register(ProductName)
-admin.site.register(ProductType)
+
 
 

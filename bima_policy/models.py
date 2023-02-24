@@ -68,35 +68,6 @@ class RtoConversionModel(models.Model):
         super(RtoConversionModel, self).save(*args, **kwargs)
 
 
-class ProductName(models.Model, name = str):
-    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
-    ).hex[:6].upper(), editable=False, max_length=30)
-    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
-    prod_name = models.CharField(max_length=100)
-    status = models.CharField(default='Active', max_length=20)
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        self.id = uuid.uuid4().hex[:6].upper()
-        super(ProductName, self).save(*args, **kwargs)
-
-
-class ProductType(models.Model):
-    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
-    ).hex[:6].upper(), editable=False, max_length=30)
-    # profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
-    prod_type = models.CharField(max_length=100)
-    status = models.CharField(default='Active', max_length=20)
-
-    def __str__(self):
-        return self.prod_type
-
-    def save(self, *args, **kwargs):
-        self.id = uuid.uuid4().hex[:6].upper()
-        super(ProductType, self).save(*args, **kwargs)
-
-
 class InsuranceCompany(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
@@ -204,111 +175,113 @@ class Payout(models.Model):
 
 
 insurer_name = (
-    ('1', 'HDFC Ergo'),
-    ('2', 'ICICI Lombard'),
-    ('3', 'BAJAJ Allianz'),
-    ('4', 'IFFCO Tokio'),
-    ('5', 'TATA AIG'),
-    ('6', 'Royal Sundram'),
-    ('7', 'United India Ins'),
-    ('8', 'Future Generali'),
-    ('9', 'Go digit'),
-    ('10', 'Shri Ram'),
-    ('11', 'SBI General Ins'),
-    ('12', 'Kotak General Ins'),
-    ('13', 'Reliance'),
-    ('14', 'Magma Gen Ins'),
-    ('15', 'THE NEW INDIA ASSURANCE')
+    ('HDFC Ergo', 'HDFC Ergo'),
+    ('ICICI Lombard', 'ICICI Lombard'),
+    ('BAJAJ Allianz', 'BAJAJ Allianz'),
+    ('IFFCO Tokio', 'IFFCO Tokio'),
+    ('TATA AIG', 'TATA AIG'),
+    ('Royal Sundram', 'Royal Sundram'),
+    ('United India Ins', 'United India Ins'),
+    ('Future Generali', 'Future Generali'),
+    ('Go digit', 'Go digit'),
+    ('Shri Ram', 'Shri Ram'),
+    ('SBI General Ins', 'SBI General Ins'),
+    ('Kotak General Ins', 'Kotak General Ins'),
+    ('Reliance', 'Reliance'),
+    ('Magma Gen Ins', 'Magma Gen Ins'),
+    ('THE NEW INDIA ASSURANCE', 'THE NEW INDIA ASSURANCE')
 )
 
-# product_name = (
-#     ('1', 'Motor'),
-#     ('2', 'Fire'),
-#     ('3', 'Marine'),
-#     ('4', 'Burgulary'),
-#     ('5', 'Shopkeeper'),
-#     ('6', 'Engineering'),
-#     ('7', 'WC'),
-#     ('8', 'Others')
-# )
+product_name = (
+    ('Motor', 'Motor'),
+    ('Fire', 'Fire'),
+    ('Marine', 'Marine'),
+    ('Burgulary', 'Burgulary'),
+    ('Shopkeeper', 'Shopkeeper'),
+    ('Engineering', 'Engineering'),
+    ('WC', 'WC'),
+    ('Others', 'Others')
+)
 
-# product_type = (
-#     ('1', 'Private Car'),
-#     ('2', 'Commercial Vehicle'),
-#     ('3', 'GCV-3W'),
-#     ('4', 'GCV-4W'),
-#     ('5', 'GCV-Erickshaw'),
-#     ('6', 'Kisan Tractor'),
-#     ('7', 'Misc-D'),
-#     ('8', 'PCV-3W'),
-#     ('9', 'PCV-Bus and Maxi'),
-#     ('10', 'PCV-Erickshaw'),
-#     ('11', 'PCV-School Bus'),
-#     ('12', 'PCV-Taxi 4W'),
-#     ('13', 'TW Bike'),
-#     ('14', 'TW Scooter'),
-#     ('15', 'Two Wheeler')
-# )
-
-product_type1 = {
-    'car': 'car',
-    'bike': 'bike'
-}
+product_type = (
+    ('Private Car', 'Private Car'),
+    ('Commercial Vehicle', 'Commercial Vehicle'),
+    ('GCV-3W', 'GCV-3W'),
+    ('GCV-4W', 'GCV-4W'),
+    ('GCV-Erickshaw', 'GCV-Erickshaw'),
+    ('Kisan Tractor', 'Kisan Tractor'),
+    ('Misc-D', 'Misc-D'),
+    ('PCV-3W', 'PCV-3W'),
+    ('PCV-Bus and Maxi', 'PCV-Bus and Maxi'),
+    ('PCV-Erickshaw', 'PCV-Erickshaw'),
+    ('PCV-School Bus', 'PCV-School Bus'),
+    ('PCV-Taxi 4W', 'PCV-Taxi 4W'),
+    ('TW Bike', 'TW Bike'),
+    ('TW Scooter', 'TW Scooter'),
+    ('Two Wheeler', 'Two Wheeler')
+)
 
 yes_no = (
-    ('1', 'Yes'),
-    ('2', 'No')
+    ('No', 'No'),
+    ('Yes', 'Yes')
 )
 
-fuel_type = (
-    ('1', 'CNG'),
-    ('2', 'Diesel'),
-    ('3', 'Electric'),
-    ('4', 'Petrol'),
-    ('5', 'Petrol/CNG')
+fuel= (
+    ('CNG', 'CNG'),
+    ('Diesel', 'Diesel'),
+    ('Electric', 'Electric'),
+    ('Petrol', 'Petrol'),
+    ('Petrol/CNG', 'Petrol/CNG')
 )
 
 cubic_capacity = (
-    ('1', 'Below 1000'),
-    ('2', '1000-1500'),
-    ('3', 'Above 1500')
+    ('Below 1000', 'Below 1000'),
+    ('1000-1500', '1000-1500'),
+    ('Above 1500', 'Above 1500')
 )
 
 gvw = (
-    ('1', 'Below 2000'),
-    ('2', '2000-2500'),
-    ('3', '2500-3500'),
-    ('4', '3500-7000'),
-    ('5', '7000-7500'),
-    ('6', '7500-12000'),
-    ('7', '12000-25000'),
-    ('8', '25000-40000'),
-    ('9', 'Above 40000')
+    ('Below 2000', 'Below 2000'),
+    ('2000-2500', '2000-2500'),
+    ('2500-3500', '2500-3500'),
+    ('3500-7000', '3500-7000'),
+    ('7000-7500', '7000-7500'),
+    ('7500-12000', '7500-12000'),
+    ('12000-25000', '12000-25000'),
+    ('25000-40000', '25000-40000'),
+    ('Above 40000', 'Above 40000')
 )
 
 seating_capacity = (
-    ('1', 'Below 5'),
-    ('2', '5-7'),
-    ('3', '7-12'),
-    ('4', '12-18'),
-    ('5', 'Above 18')
+    ('Below 5', 'Below 5'),
+    ('5-7', '5-7'),
+    ('7-12', '7-12'),
+    ('12-18', '12-18'),
+    ('Above 18', 'Above 18')
 )
 
 coverage_type = (
-    ('1', '1+2 Pvt Car'),
-    ('2', '1+4 Two Wheeler'),
-    ('3', 'TP Only'),
-    ('4', 'OD Only'),
-    ('5', 'Standard Policy'),
-    ('6', 'Comprehensive Package Policy'),
-    ('7', 'Others')
+    ('1+2 Pvt Car', '1+2 Pvt Car'),
+    ('1+4 Two Wheeler', '1+4 Two Wheeler'),
+    ('TP Only', 'TP Only'),
+    ('OD Only', 'OD Only'),
+    ('Standard Policy', 'Standard Policy'),
+    ('Comprehensive Package Policy', 'Comprehensive Package Policy'),
+    ('Others', 'Others')
 )
 
 types = (
-    ('1', 'Fresh'),
-    ('2', 'Renewal'),
-    ('3', 'Rollover'),
-    ('4', 'Endorsement')
+    ('Fresh', 'Fresh'),
+    ('Renewal', 'Renewal'),
+    ('Rollover', 'Rollover'),
+    ('Endorsement', 'Endorsement')
+)
+
+rto_state = (
+    ('sonipat', 'Fresh'),
+    ('Renewal', 'Renewal'),
+    ('Rollover', 'Rollover'),
+    ('Endorsement', 'Endorsement')
 )
 
 
@@ -323,29 +296,29 @@ class Policy(models.Model):
     policy_no = models.CharField(max_length=50, unique=True)
     insured_name = models.CharField(max_length=100)
     insurer_name = models.CharField(
-        max_length=50, choices=insurer_name, default='1')
+        max_length=50, choices=insurer_name, default='BAJAJ Allianz')
     location = models.CharField(max_length=100, blank=True)
     product_name = models.CharField(
-        max_length=50, choices=ProductName('jkkk'))
+        max_length=50, choices=product_name, default='Motor')
     product_type = models.CharField(
-        max_length=50, choices=ProductType.objects.all())
+        max_length=50, choices=product_type, default='Private Car')
     registration_no = models.CharField(max_length=50)
     rto_city = models.CharField(max_length=50)
     rto_state = models.CharField(max_length=50)
     make = models.CharField(max_length=50)
     model_variant = models.CharField(max_length=50)
     mfg_year = models.IntegerField()
-    addon = models.CharField(max_length=50, choices=yes_no, default='1')
-    ncb = models.CharField(max_length=50, choices=yes_no, default='1')
-    fuel = models.CharField(max_length=50, choices=fuel_type, default='1')
+    addon = models.CharField(max_length=50, choices=yes_no, default='No')
+    ncb = models.CharField(max_length=50, choices=yes_no, default='No')
+    fuel = models.CharField(max_length=50, choices=fuel, default='Petrol')
     cubic_capacity = models.CharField(
-        max_length=50, choices=cubic_capacity, default='1')
-    gvw = models.CharField(max_length=50, choices=gvw, default='1')
-    seating_capicity = models.CharField(
-        max_length=50, choices=seating_capacity, default='1')
+        max_length=50, choices=cubic_capacity, default='Below 1000')
+    gvw = models.CharField(max_length=50, choices=gvw, default='Below 2000')    
+    seating_capacity = models.CharField(
+        max_length=50, choices=seating_capacity, default='Below 5')  
     coverage_type = models.CharField(
-        max_length=50, choices=coverage_type, default='1')
-    types = models.CharField(max_length=50, choices=types, default='1')
+        max_length=50, choices=coverage_type, default='TP Only')    
+    types = models.CharField(max_length=50, choices=types, default='Fresh')
     risk_start_date = models.DateField()
     risk_end_date = models.DateField()
     issue_date = models.DateField()
@@ -451,7 +424,7 @@ class StateRtos(models.Model):
         return self.state
 
     def save(self, *args, **kwargs):
-        self.payoutid = uuid.uuid4().hex[:10].upper()
+        # self.payoutid = uuid.uuid4().hex[:10].upper()
         super(StateRtos, self).save(*args, **kwargs)
 
 
@@ -465,5 +438,5 @@ class rtotables(models.Model):
         return self.RegNo
 
     def save(self, *args, **kwargs):
-        self.payoutid = uuid.uuid4().hex[:5].upper()
+        # self.payoutid = uuid.uuid4().hex[:5].upper()
         super(rtotables, self).save(*args, **kwargs)

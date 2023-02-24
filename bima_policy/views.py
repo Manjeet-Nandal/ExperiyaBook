@@ -560,12 +560,59 @@ def policy_entrydata(request, id):
         return redirect('bima_policy:policy_entry')
     else:
         data = Policy.objects.get(policyid=id)
-        ins_company = InsuranceCompany.objects.all()
-        product_name = ProductName.objects.all()
-        product_type = ProductType.objects.all()        
-        context = {'data': data, 'ins_company': ins_company,
-                   'product_name': product_name,
-                   'product_type': product_type}
+        # getting items
+        insurer_name_list = []
+        for item in insurer_name:
+            insurer_name_list.append(item[1])
+
+        product_name_list = []
+        for item in product_name:
+            product_name_list.append(item[1])
+
+        product_type_list = []
+        for item in product_type:
+            product_type_list.append(item[1])
+
+        fuel_type_list = []
+        for item in fuel:
+            fuel_type_list.append(item[1])
+
+        cubic_capicity_list = []
+        for item in cubic_capacity:
+            cubic_capicity_list.append(item[1])
+
+        gvw_list = []
+        for item in gvw:
+            gvw_list.append(item[1])
+
+        seating_capacity_list = []
+        for item in seating_capacity:
+            seating_capacity_list.append(item[1])
+
+        coverage_type_list = []
+        for item in coverage_type:
+            coverage_type_list.append(item[1])
+
+        
+        types_list = []
+        for item in types:
+            types_list.append(item[1])
+
+        
+        print(data.risk_start_date)
+        context = {'data': data,
+                   'insurer_name_list': insurer_name_list,
+                   'product_name_list': product_name_list,
+                   'product_type_list': product_type_list,
+                   'fuel_type_list': fuel_type_list,
+                   'cubic_capicity_list': cubic_capicity_list,
+                   'gvw_list': gvw_list,
+                   'seating_capacity_list': seating_capacity_list,
+                   'coverage_type_list': coverage_type_list,
+                   'types_list': types_list,
+
+                   }
+
         return render(request, 'policylist/edit_policy.html',  context)
 
 
