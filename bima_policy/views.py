@@ -521,45 +521,96 @@ def policy_entry(request):
 
 def policy_entrydata(request, id):
     if request.method == "POST":
-        policy_no = request.POST['policy_no']
-        registration = request.POST['registration']
-        case_type = request.POST['case_type']
-        ins_company = request.POST['ins_company']
-        service_provider = request.POST['service_provider']
-        code = request.POST['code']
-        # issue_date=request.POST['issue_date']
-        # risk_date=request.POST['risk_date']
-        cpa = request.POST['cpa']
+
+        # policy_no=request.POST['policy_no']
+        # registration=request.POST['registration']
+        # case_type=request.POST['case_type']
+        # ins_company=request.POST['ins_company']
+        # service_provider=request.POST['service_provider']
+        # code=request.POST['code']
+        # # issue_date=request.POST['issue_date']
+        # # risk_date=request.POST['risk_date']
+        # cpa=request.POST['cpa']
+        # document=request.FILES.get('document')
+        # vehicle_makeby=request.POST['vehicle_makeby']
+        # vehicle_model=request.POST['vehicle_model']
+        # vehicle_category=request.POST['vehicle_category']
+        # vehicle_other_info=request.POST['vehicle_other_info']
+        # fuel_type=request.POST['fuel_type']
+        # manu_year=request.POST['manu_year']
+        # engine_no=request.POST['engine_no']
+        # chasis_no=request.POST['chasis_no']
+        # agent=request.POST['agent']
+        # cust_name=request.POST['cust_name']
+        # remarks=request.POST['remarks']
+        # od=request.POST['od']
+        # tp=request.POST['tp']
+        # gst=request.POST['gst']
+        # net=request.POST.get('net')
+        # payment_mode=request.POST['payment_mode']
+        # total=request.POST['total']
+        # policy_type=request.POST.get('policy_type')
+
+        _proposal_no = request.POST['proposal_no']
+        _policy_no = request.POST['policy_no']
+        _insured_name = request.POST['insured_name']
+        _insurer_name = request.POST['insurer_name']
+        _product_name = request.POST['product_name']
+        _product_type = request.POST['product_type']
+        _registration_no = request.POST['registration_no']
+        _rto_city = request.POST['rto_city']
+        _rto_state = request.POST['rto_state']
+        _make = request.POST['make']
+        _model_variant = request.POST['model_variant']
+        _mfg_year = request.POST['mfg_year']
+        _addon = request.POST['addon']
+        _ncb = request.POST['ncb']
+        _fuel = request.POST['fuel']
+        _cubic_capacity = request.POST['cubic_capacity']
+        _gvw = request.POST['gvw']
+        _seating_capacity = request.POST['seating_capacity']
+        _coverage_type = request.POST['coverage_type']
+        _types = request.POST['types']
+        _risk_start_date=request.POST['risk_start_date']
+        _risk_end_date=request.POST['risk_end_date']
+        _issue_date=request.POST['issue_date']
+
+        print('risk : ', _risk_start_date)
+
         document = request.FILES.get('document')
-        vehicle_makeby = request.POST['vehicle_makeby']
-        vehicle_model = request.POST['vehicle_model']
-        vehicle_category = request.POST['vehicle_category']
-        vehicle_other_info = request.POST['vehicle_other_info']
-        fuel_type = request.POST['fuel_type']
-        manu_year = request.POST['manu_year']
-        engine_no = request.POST['engine_no']
-        chasis_no = request.POST['chasis_no']
-        agent = request.POST['agent']
-        cust_name = request.POST['cust_name']
-        remarks = request.POST['remarks']
-        od = request.POST['od']
-        tp = request.POST['tp']
-        gst = request.POST['gst']
-        net = request.POST.get('net')
-        payment_mode = request.POST['payment_mode']
-        total = request.POST['total']
-        policy_type = request.POST.get('policy_type')
 
-        data = Policy.objects.filter(policy_no=id)
-        data.update(policy_no=policy_no, registration_no=registration, casetype=case_type, insurance_comp=ins_company, sp_name=service_provider, sp_brokercode=code,
-                    CPA=cpa, insurance=document, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_category=vehicle_category, other_info=vehicle_other_info,
-                    vehicle_fuel_type=fuel_type, manufature_year=manu_year, engine_no=engine_no, chasis_no=chasis_no, agent_name=agent, customer_name=cust_name, remark=remarks, OD_premium=od,
-                    TP_premium=tp, GST=gst, net=net, payment_mode=payment_mode, total=total, policy_type=policy_type)
+        data = Policy.objects.filter(policyid=id)
 
-        # print('iiiii')
+        data.update(proposal_no=_proposal_no,
+                    policy_no=_policy_no,
+                    insured_name=_insured_name,
+                    insurer_name=_insurer_name,
+                    product_name=_product_name,
+                    product_type=_product_type,
+                    registration_no=_registration_no,
+                    rto_city=_rto_city,
+                    rto_state=_rto_state,
+                    make=_make,
+                    model_variant=_model_variant,
+                    mfg_year=_mfg_year,
+                    addon=_addon,
+                    ncb=_ncb,
+                    fuel=_fuel,
+                    cubic_capacity=_cubic_capacity,
+                    gvw=_gvw,
+                    seating_capacity=_seating_capacity,
+                    coverage_type=_coverage_type,
+                    types=_types)
+
+        print('saved')
         return redirect('bima_policy:policy_entry')
+
     else:
         data = Policy.objects.get(policyid=id)
+        print('id is ', id)
+
+        print('data was :', data)
+
         # getting items
         insurer_name_list = []
         for item in insurer_name:
@@ -593,13 +644,10 @@ def policy_entrydata(request, id):
         for item in coverage_type:
             coverage_type_list.append(item[1])
 
-        
         types_list = []
         for item in types:
             types_list.append(item[1])
 
-        
-        print(data.risk_start_date)
         context = {'data': data,
                    'insurer_name_list': insurer_name_list,
                    'product_name_list': product_name_list,
@@ -617,6 +665,7 @@ def policy_entrydata(request, id):
 
 
 def edit_policy(request, id):
+    print('edit policy method')
     if request.method == "GET":
         data = Policy.objects.filter(policyid=id)
         datai = InsuranceCompany.objects.filter(

@@ -82,7 +82,7 @@
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.insured_name}}" data-parsley-required-message=""
                                              class="form-control" data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$"
+                                             data-parsley-pattern="^(?:[A-Z a-z0-9]+[-/])*[A-Z a-z0-9]+$"
                                              name="insured_name" id="insured_name">
                                        </div>
 
@@ -102,8 +102,8 @@
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.location}}" data-parsley-required-message=""
                                              class="form-control" data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="location"
-                                             id="location">
+                                             data-parsley-pattern="^(?:[A-Z a-z0-9]+[-/])*[A-Z a-z0-9]+$"
+                                             name="location" id="location">
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Product Name<abbr title="Required" class="text-danger">*</abbr></label>
@@ -157,7 +157,7 @@
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.make}}" data-parsley-required-message="" class="form-control"
                                              data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="make"
+                                             data-parsley-pattern="^(?:[A-Z a-z0-9]+[-/])*[A-Z a-z0-9]+$" name="make"
                                              id="make">
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -301,10 +301,11 @@
                                           <div class="input-group input-group-alt flatpickr"
                                              data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
                                              data-alt-input-class="form-control">
-                                             <input type="date" class="form-control" id="date"
-                                                value="{{data.risk_start_date|date:'Y-m-d' }}">
+                                             <input type="date" class="form-control" id="date" name="risk_start_date"
+                                                value="{{data.risk_start_date|date:'Y-m-d'  }}">
                                           </div>
                                        </div>
+                                      
                                        <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
@@ -346,7 +347,7 @@
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.bqp}}" data-parsley-required-message="" class="form-control"
                                              data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="bqp"
+                                             data-parsley-pattern="^(?:[A-Z a-z0-9]+[-/])*[A-Z a-z0-9]+$" name="bqp"
                                              id="bqp">
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -354,7 +355,7 @@
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.pos}}" data-parsley-required-message="" class="form-control"
                                              data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="pos"
+                                             data-parsley-pattern="^(?:[A-Z a-z0-9]+[-/])*[A-Z a-z0-9]+$" name="pos"
                                              id="pos">
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -362,8 +363,8 @@
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.employee}}" data-parsley-required-message=""
                                              class="form-control" data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="employee"
-                                             id="employee">
+                                             data-parsley-pattern="^(?:[A-Z a-z0-9]+[-/])*[A-Z a-z0-9]+$"
+                                             name="employee" id="employee">
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -440,7 +441,7 @@
                                              <label class="custom-file-label" for="document">Choose file</label>
                                           </div>
                                        </div>
-                                      
+
 
                                     </div>
 
@@ -448,14 +449,15 @@
                                        <div class="col-md-12 col-sm-12">
                                           <a href="list" class="btn btn-secondary w-100p pull-left">Back</a>
                                           <span class="float-right">
-                                             <button type="submit" name="submit" class="btn btn-success w-100p">Edit</button>
+                                             <button type="submit" name="submit"
+                                                class="btn btn-success w-100p">Edit</button>
                                           </span>
                                        </div>
                                     </div>
 
                                  </fieldset>
 
-                               
+
 
                                  <p class="mb-4"></p>
                               </div>
