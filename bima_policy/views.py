@@ -571,13 +571,28 @@ def policy_entrydata(request, id):
         _seating_capacity = request.POST['seating_capacity']
         _coverage_type = request.POST['coverage_type']
         _types = request.POST['types']
-        _risk_start_date=request.POST['risk_start_date']
-        _risk_end_date=request.POST['risk_end_date']
-        _issue_date=request.POST['issue_date']
+        _risk_start_date = request.POST['risk_start_date']
+        _risk_end_date = request.POST['risk_end_date']
+        _issue_date = request.POST['issue_date']
+        _TP_premium = request.POST['tp']
+        _net = request.POST['net']
+        _OD_premium = request.POST['od']
+        _tp_terrorism = request.POST['tp_terrorism']
+        _insured_age = request.POST['insured_age']
+        _policy_term = request.POST['policy_term']
+        _payment_mode = request.POST['payment_mode']
+        _bqp = request.POST['bqp']
+        _pos = request.POST['pos']
+        _employee = request.POST['employee']
+        _proposal = request.POST['proposal']
+        _mandate = request.POST['mandate']
 
-        print('risk : ', _risk_start_date)
-
-        document = request.FILES.get('document')
+        _policy = request.FILES.get('policy')
+        _previous_policy = request.FILES.get('previous_policy')
+        _pan_card = request.FILES.get('pan_card')
+        _aadhar_card = request.FILES.get('aadhar_card')
+        _rc = request.FILES.get('rc')
+        _inspection_report = request.FILES.get('inspection_report')
 
         data = Policy.objects.filter(policyid=id)
 
@@ -600,11 +615,31 @@ def policy_entrydata(request, id):
                     gvw=_gvw,
                     seating_capacity=_seating_capacity,
                     coverage_type=_coverage_type,
-                    types=_types)
+                    types=_types,
+                    risk_start_date=_risk_start_date,
+                    risk_end_date=_risk_end_date,
+                    issue_date=_issue_date,
+                    TP_premium=_TP_premium,
+                    net=_net,
+                    OD_premium=_OD_premium,
+                    tp_terrorism=_tp_terrorism,
+                    insured_age=_insured_age,
+                    policy_term=_policy_term,
+                    payment_mode=_payment_mode,
+                    bqp=_bqp,
+                    pos=_pos,
+                    employee=_employee,
+                    proposal=_proposal,
+                    mandate=_mandate,
+                    policy=_policy,
+                    previous_policy=_previous_policy,
+                    pan_card=_pan_card,
+                    aadhar_card=_aadhar_card,
+                    rc=_rc,
+                    inspection_report=_inspection_report)
 
         print('saved')
         return redirect('bima_policy:policy_entry')
-
     else:
         data = Policy.objects.get(policyid=id)
         print('id is ', id)
@@ -644,6 +679,10 @@ def policy_entrydata(request, id):
         for item in coverage_type:
             coverage_type_list.append(item[1])
 
+        payment_mode_list = []
+        for item in payment_mode:
+            payment_mode_list.append(item[1])
+
         types_list = []
         for item in types:
             types_list.append(item[1])
@@ -657,6 +696,7 @@ def policy_entrydata(request, id):
                    'gvw_list': gvw_list,
                    'seating_capacity_list': seating_capacity_list,
                    'coverage_type_list': coverage_type_list,
+                   'payment_mode_list': payment_mode_list,
                    'types_list': types_list,
 
                    }

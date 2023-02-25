@@ -101,7 +101,7 @@
                                           <label for="location">Location <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.location}}" data-parsley-required-message=""
-                                             class="form-control" data-parsley-required="true"
+                                             class="form-control" data-parsley-required="false"
                                              data-parsley-pattern="^(?:[A-Z a-z0-9]+[-/])*[A-Z a-z0-9]+$"
                                              name="location" id="location">
                                        </div>
@@ -312,7 +312,7 @@
                                           <div class="input-group input-group-alt flatpickr"
                                              data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
                                              data-alt-input-class="form-control">
-                                             <input type="date" class="form-control" id="date"
+                                             <input type="date" class="form-control" id="date"  name="risk_end_date"
                                                 value="{{data.risk_end_date|date:'Y-m-d' }}">
                                           </div>
                                        </div>
@@ -322,7 +322,7 @@
                                           <div class="input-group input-group-alt flatpickr"
                                              data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
                                              data-alt-input-class="form-control">
-                                             <input type="date" class="form-control" id="date"
+                                             <input type="date" class="form-control" id="date"  name="issue_date"
                                                 value="{{data.issue_date|date:'Y-m-d' }}">
                                           </div>
                                        </div>
@@ -371,7 +371,7 @@
                                           <label for="proposal">Proposal <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.proposal}}" data-parsley-required-message=""
-                                             class="form-control" data-parsley-required="true"
+                                             class="form-control" data-parsley-required="false"
                                              data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="proposal"
                                              id="proposal">
                                        </div>
@@ -379,7 +379,7 @@
                                           <label for="mandate">Mandate <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.mandate}}" data-parsley-required-message=""
-                                             class="form-control" data-parsley-required="true"
+                                             class="form-control" data-parsley-required="false"
                                              data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="mandate"
                                              id="mandate">
                                        </div>
@@ -489,7 +489,7 @@
                                        data-parsley-group="payout" value="{{data.tp_terrorism}}"
                                        class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
                                        data-parsley-required="true" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="tp" id="tp"
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="tp_terrorism" id="tp_terrorism"
                                        maxlength="10">
                                  </div>
 
@@ -505,7 +505,7 @@
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Net=(OD+TP) </label><input type="text" onclick="add()"
-                                       value="{{data2.net}}" class="form-control col-lg-6 maskNumField bg-light"
+                                       value="{{data.net}}" class="form-control col-lg-6 maskNumField bg-light"
                                        data-mask-as-number-maxlength="10" data-parsley-required-message=""
                                        data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
                                        maxlength="10" readonly="" name="net">
@@ -530,24 +530,21 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0">Payment Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode">
-                                       <option class='bg-info text-white' value='{{data2.payment_mode}}'>
-                                          {{data2.payment_mode}}</option>
-                                       <option value="Customer Online">Customer Online</option>
-                                       <option value="Self Online">Self Online</option>
-                                       <option value="Cash">Cash</option>
-                                       <option value="Cut Pay">Cut Pay</option>
-                                       <option value="Customer Cheque">Customer Cheque</option>
-                                       <option value="Self Cheque">Self Cheque</option>
+                                       <option class='bg-info text-white' value='{{data.payment_mode}}'>
+                                          {{data.payment_mode}}</option>                                     
+                                       {%for value in payment_mode_list %}
+                                       <option>{{value}}</option>
+                                       {%endfor%}
                                     </select>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0">Policy Type</label>
-                                    <select class="custom-select col-lg-6" name="payment_mode">
-                                       <option class='bg-info text-white' value='{{data2.policy_type}}'>
-                                          {{data2.policy_type}}</option>
-                                       <option value="Comp">Comp</option>
-                                       <option value="SAOD">SAOD</option>
-                                       <option value="TP">TP</option>
+                                    <select class="custom-select col-lg-6" name="coverage_type">
+                                       <option class='bg-info text-white' value='{{data.coverage_type}}'>
+                                          {{data.coverage_type}}</option>
+                                          {%for value in coverage_type_list %}
+                                          <option>{{value}}</option>
+                                          {%endfor%}
                                     </select>
                                  </div>
                               </div>

@@ -226,7 +226,7 @@ yes_no = (
     ('Yes', 'Yes')
 )
 
-fuel= (
+fuel = (
     ('CNG', 'CNG'),
     ('Diesel', 'Diesel'),
     ('Electric', 'Electric'),
@@ -284,6 +284,48 @@ rto_state = (
     ('Endorsement', 'Endorsement')
 )
 
+mfg_year = (
+    ('2030', '2030'),
+    ('2029', '2029'),
+    ('2028', '2028'),
+    ('2027', '2027'),
+    ('2026', '2026'),
+    ('2025', '2025'),
+    ('2024', '2024'),
+    ('2023', '2023'),
+    ('2022', '2022'),
+    ('2021', '2021'),
+    ('2020', '2020'),
+    ('2019', '2019'),
+    ('2018', '2018'),
+    ('2017', '2017'),
+    ('2016', '2016'),
+    ('2015', '2015'),
+    ('2014', '2014'),
+    ('2013', '2013'),
+    ('2012', '2012'),
+    ('2011', '2011'),
+    ('2010', '2010'),
+    ('2009', '2009'),
+    ('2008', '2008'),
+    ('2007', '2007'),
+    ('2006', '2006'),
+    ('2005', '2005'),
+    ('2004', '2004'),
+    ('2003', '2003'),
+    ('2002', '2002'),
+    ('2001', '2001')
+)
+
+payment_mode = (
+    ('Customer Online', 'Customer Online'),
+    ('Self Online', 'Self Online'),
+    ('Cash', 'Cash'),
+    ('Cut Pay', 'Cut Pay'),
+    ('Customer Cheque', 'Customer Cheque'),
+    ('Self Cheque', 'Self Cheque')
+)
+
 
 class Policy(models.Model):
     id = models.CharField(unique=True, default=uuid.uuid4(
@@ -297,7 +339,7 @@ class Policy(models.Model):
     insured_name = models.CharField(max_length=100)
     insurer_name = models.CharField(
         max_length=50, choices=insurer_name, default='BAJAJ Allianz')
-    location = models.CharField(max_length=100, blank=True)
+    location = models.CharField(max_length=100, default='NA', blank=True)
     product_name = models.CharField(
         max_length=50, choices=product_name, default='Motor')
     product_type = models.CharField(
@@ -307,17 +349,17 @@ class Policy(models.Model):
     rto_state = models.CharField(max_length=50)
     make = models.CharField(max_length=50)
     model_variant = models.CharField(max_length=50)
-    mfg_year = models.IntegerField()
+    mfg_year = models.CharField(max_length=50,choices=mfg_year, default=2023)
     addon = models.CharField(max_length=50, choices=yes_no, default='No')
     ncb = models.CharField(max_length=50, choices=yes_no, default='No')
     fuel = models.CharField(max_length=50, choices=fuel, default='Petrol')
     cubic_capacity = models.CharField(
         max_length=50, choices=cubic_capacity, default='Below 1000')
-    gvw = models.CharField(max_length=50, choices=gvw, default='Below 2000')    
+    gvw = models.CharField(max_length=50, choices=gvw, default='Below 2000')
     seating_capacity = models.CharField(
-        max_length=50, choices=seating_capacity, default='Below 5')  
+        max_length=50, choices=seating_capacity, default='Below 5')
     coverage_type = models.CharField(
-        max_length=50, choices=coverage_type, default='TP Only')    
+        max_length=50, choices=coverage_type, default='TP Only')
     types = models.CharField(max_length=50, choices=types, default='Fresh')
     risk_start_date = models.DateField()
     risk_end_date = models.DateField()
@@ -328,12 +370,13 @@ class Policy(models.Model):
     tp_terrorism = models.CharField(max_length=50)
     insured_age = models.IntegerField()
     policy_term = models.CharField(max_length=50)
-    payment_mode = models.CharField(max_length=100)
-    bqp = models.CharField(max_length=100, blank=True)
+    payment_mode = models.CharField(
+        max_length=100, choices=payment_mode, default='Customer Online')
+    bqp = models.CharField(max_length=100, default='NA')
     pos = models.CharField(max_length=100)
     employee = models.CharField(max_length=100)
-    proposal = models.CharField(max_length=100, blank=True)
-    mandate = models.CharField(max_length=100, blank=True)
+    proposal = models.CharField(max_length=100, default='NA', blank=True)
+    mandate = models.CharField(max_length=100, default='NA', blank=True)
     policy = models.FileField(upload_to='media/documents/')
     previous_policy = models.FileField(upload_to='media/documents/')
     pan_card = models.FileField(upload_to='media/documents/')
