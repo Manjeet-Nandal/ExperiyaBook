@@ -411,8 +411,8 @@ class create_policy(View):
             profile_id=get_id_from_session(request))
         data_vc = VehicleCategory.objects.filter(
             profile_id=get_id_from_session(request))
-        data_rto_state = StateRtos.objects.all()
-        
+        data_rto_state = States.objects.all()
+        print(data_rto_state)
         return render(request, 'policylist/policy_list.html', {'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_rto_state': data_rto_state})
 
     def post(self, request):

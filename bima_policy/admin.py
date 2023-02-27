@@ -18,8 +18,10 @@ admin.site.register(VehicleModelName)
 admin.site.register(VehicleMakeBy)
 admin.site.register(BankDetail)
 admin.site.register(UserRole)
+admin.site.register(States)
 admin.site.register(StateRtos)
 admin.site.register(rtotables)
+
 
 
 

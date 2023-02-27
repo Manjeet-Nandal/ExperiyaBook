@@ -299,6 +299,22 @@ class UserRole(models.Model):
     role = models.CharField(max_length=100, default='user')
 
 
+class States(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:6].upper(), editable=False, max_length=30)
+    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+    state = models.CharField(max_length=100)
+    status = models.CharField(default='Active', max_length=20)
+
+    def __str__(self):
+        return self.state
+
+    def save(self, *args, **kwargs):
+        self.id = uuid.uuid4().hex[:6].upper()
+        super(States, self).save(*args, **kwargs)
+
+
+
 class StateRtos(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
@@ -314,6 +330,7 @@ class StateRtos(models.Model):
         super(StateRtos, self).save(*args, **kwargs)
 
 
+
 class rtotables(models.Model):
     sid_id = models.ForeignKey(StateRtos, on_delete=models.CASCADE)
     rto_id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
@@ -327,3 +344,4 @@ class rtotables(models.Model):
         # self.payoutid = uuid.uuid4().hex[:5].upper()
         self.id = uuid.uuid4().hex[:6].upper()
         super(rtotables, self).save(*args, **kwargs)
+
