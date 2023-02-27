@@ -33,7 +33,7 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> Policy Edit Form <small class="text-muted"> All * marks Fields are
+                     <h1 class="page-title"> Policy Motor Form <small class="text-muted"> All * marks Fields are
                            mandatory.
                         </small></h1>
                   </div>
@@ -101,42 +101,22 @@
                                              class="form-control" data-parsley-required="true" name="location">
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Product Name<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="product_name" data-parsley-required-message=""
-                                             class="custom-select" id="product_name" data-parsley-required="true">
-                                             <option value="{{data.product_name}}"> {{data.product_name}} </option>
-                                             <option value="Motor">Motor</option>
-                                             <option value="Fire">Fire</option>
-                                             <option value="Marine">Marine</option>
-                                             <option value="Burgulary">Burgulary</option>
-                                             <option value="Shopkeeper">Shopkeeper</option>
-                                             <option value="Engineering">Engineering</option>
+                                          <label>Product Name <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="product_name" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select">
+                                             <option value="{{data.product_name}}">{{data.product_name}}
+                                             </option>
+                                             <option value="MOTOR">MOTOR</option>
+                                             <option value="FIRE">FIRE</option>
+                                             <option value="MARINE">MARINE</option>
+                                             <option value="BURGULARY">BURGULARY</option>
+                                             <option value="SHOPKEEPER">SHOPKEEPER</option>
+                                             <option value="ENGINEERING">ENGINEERING</option>
                                              <option value="WC">WC</option>
-                                             <option value="Others">Others</option>
+                                             <option value="OTHERS">OTHERS</option>
                                           </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Product Type<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="product_type" data-parsley-required-message=""
-                                             class="custom-select" id="product_type" data-parsley-required="true">
-                                             <option value="{{data.product_type}}"> {{data.product_type}} </option>
-                                             <option value="Private Car">Private Car</option>
-                                             <option value="Commercial Vehicle">Commercial Vehicle</option>
-                                             <option value="GCV-3W">GCV-3W</option>
-                                             <option value="GCV-4W">GCV-4W</option>
-                                             <option value="GCV-Erickshaw">GCV-Erickshaw</option>
-                                             <option value="Kisan Tractor">Kisan Tractor</option>
-                                             <option value="Misc-D">Misc-D</option>
-                                             <option value="PCV-3W">PCV-3W</option>
-                                             <option value="PCV-Bus and Maxi">PCV-Bus and Maxi</option>
-                                             <option value="PCV-Erickshaw">PCV-Erickshaw</option>
-                                             <option value="PCV-School Bus">PCV-School Bus</option>
-                                             <option value="PCV-Taxi 4W">PCV-Taxi 4W</option>
-                                             <option value="TW Bike">TW Bike</option>
-                                             <option value="TW Scooter">TW Scooter</option>
-                                             <option value="Two Wheeler">Two Wheeler</option>
-                                          </select>
-                                       </div>
+                                       </div>                                      
                                        <div class="col-md-3 mb-4">
                                           <label for="registration_no">Registration No. <abbr
                                                 title="Required Minimum 8 Character Length"
@@ -165,43 +145,9 @@
                                           <select name="rto_state" data-parsley-required-message=""
                                              class="custom-select" id="rto_state" data-parsley-required="true">
                                              <option value="{{data.rto_state}}">{{data.rto_state}}</option>
-                                             <option value="1">Andama And Nicobar Island</option>
-                                             <option value="2">Andhra Pradesh</option>
-                                             <option value="3">Arunachal Pradesh</option>
-                                             <option value="4">Assam</option>
-                                             <option value="5">Bihar</option>
-                                             <option value="7">Chandigarh</option>
-                                             <option value="6">Chattisgarh</option>
-                                             <option value="8">Daman And Diu</option>
-                                             <option value="9">Delhi</option>
-                                             <option value="10">Goa</option>
-                                             <option value="11">Gujrat</option>
-                                             <option value="13">Haryana</option>
-                                             <option value="12">Himachal Pradesh</option>
-                                             <option value="15">Jammu And Kashmir</option>
-                                             <option value="14">Jharkhand</option>
-                                             <option value="16">Karnataka</option>
-                                             <option value="17">Kerala</option>
-                                             <option value="19">Lakshadweep</option>
-                                             <option value="18">Leh</option>
-                                             <option value="23">Madhya Pradesh</option>
-                                             <option value="20">Maharashtra</option>
-                                             <option value="22">Manipur</option>
-                                             <option value="21">Meghalaya</option>
-                                             <option value="24">Mizoram</option>
-                                             <option value="25">Nagaland</option>
-                                             <option value="37">NCR</option>
-                                             <option value="26">Odisha</option>
-                                             <option value="28">Puducherry</option>
-                                             <option value="27">Punjab</option>
-                                             <option value="29">Rajasthan</option>
-                                             <option value="30">Sikkim</option>
-                                             <option value="31">Tamil Nadu</option>
-                                             <option value="33">Telangana</option>
-                                             <option value="32">Tripura</option>
-                                             <option value="35">Uttar Pradesh</option>
-                                             <option value="34">Uttrakhand</option>
-                                             <option value="36">West Bengal</option>
+                                             {%for value in data_rto_state%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
                                        </div>
 
@@ -221,8 +167,20 @@
                                                 class="text-danger">*</abbr></label>
                                           <select name="vehicle_model" data-parsley-required-message=""
                                              data-parsley-required="true" class="custom-select ">
-                                             <option value="{{data.vehicle_model}}"> {{data.vehicle_model}}</option>
+                                             <option value="{{data.vehicle_model}}">{{data.vehicle_model}}</option>
                                              {%for value in data_vm%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Vehicle Catagory <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="vehicle_catagory" data-parsley-required-message=""
+                                             data-parsley-required="true" class="custom-select ">
+                                             <option value="{{data.vehicle_catagory}}">{{data.vehicle_catagory}}
+                                             </option>
+                                             {%for value in data_vc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -278,8 +236,8 @@
                                           <select name="addon" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required>
                                              <option value="{{data.addon}}">{{data.addon}}</option>
-                                             <option value="Yes">Yes</option>
-                                             <option value="No">No</option>
+                                             <option value="YES">YES</option>
+                                             <option value="NO">NO</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -287,8 +245,8 @@
                                           <select name="ncb" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required>
                                              <option value="{{data.ncb}}">{{data.ncb}}</option>
-                                             <option value="Yes">Yes</option>
-                                             <option value="No">No</option>
+                                             <option value="YES">YES</option>
+                                             <option value="NO">NO</option>
                                           </select>
                                        </div>
 
@@ -298,9 +256,9 @@
                                           <select name="cubic_capacity" data-parsley-required-message=""
                                              class="custom-select" id="cubic_capacity" data-parsley-required="true">
                                              <option value="{{data.cubic_capacity}}"> {{data.cubic_capacity}} </option>
-                                             <option value="Below 1000">Below 1000</option>
+                                             <option value="BELOW 1000">BELOW 1000</option>
                                              <option value="1000-1500">1000-1500</option>
-                                             <option value="Above 1500">Above 1500</option>
+                                             <option value="ABOVE 1500">ABOVE 1500</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -308,7 +266,7 @@
                                           <select name="gvw" data-parsley-required-message="" class="custom-select"
                                              id="gvw" data-parsley-required="true">
                                              <option value="{{data.gvw}}"> {{data.gvw}} </option>
-                                             <option value="Below 2000">Below 2000</option>
+                                             <option value="BELOW 2000">BELOW 2000</option>
                                              <option value="2000-2500">2000-2500</option>
                                              <option value="2500-3500">2500-3500</option>
                                              <option value="3500-7000">3500-7000</option>
@@ -316,7 +274,7 @@
                                              <option value="7500-12000">7500-12000</option>
                                              <option value="12000-25000">12000-25000</option>
                                              <option value="25000-40000">25000-40000</option>
-                                             <option value="Above 40000">Above 40000</option>
+                                             <option value="ABOVE 40000">ABOVE 40000</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -326,11 +284,11 @@
                                              class="custom-select" id="seating_capacity" data-parsley-required="true">
                                              <option value="{{data.seating_capacity}}"> {{data.seating_capacity}}
                                              </option>
-                                             <option value="Below 5">Below 5</option>
+                                             <option value="BELOW 5">BELOW 5</option>
                                              <option value="5-7">5-7</option>
                                              <option value="7-12">7-12</option>
                                              <option value="12-18">12-18</option>
-                                             <option value="Above 18">Above 18</option>
+                                             <option value="ABOVE 18">ABOVE 18</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -339,14 +297,14 @@
                                           <select name="coverage_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select">
                                              <option value="{{data.coverage_type}}">{{data.coverage_type}}</option>
-                                             <option value="1+2 Pvt Car">1+2 Pvt Car</option>
-                                             <option value="1+4 Two Wheeler">1+4 Two Wheeler</option>
-                                             <option value="TP Only">TP Only</option>
-                                             <option value="OD Only">OD Only</option>
-                                             <option value="Standard Policy">Standard Policy</option>
-                                             <option value="Comprehensive Package Policy">Comprehensive Package Policy
+                                             <option value="1+2 PVT CAR">1+2 PVT CAR</option>
+                                             <option value="1+4 TWO WHEELER">1+4 TWO WHEELER</option>
+                                             <option value="TP ONLY">TP ONLY</option>
+                                             <option value="OD ONLY">OD ONLY</option>
+                                             <option value="STANDARD POLICY">STANDARD POLICY</option>
+                                             <option value="COMPREHENSIVE PACKAGE POLICY">COMPREHENSIVE PACKAGE POLICY
                                              </option>
-                                             <option value="Others">Others</option>
+                                             <option value="OTHERS">OTHERS</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -354,13 +312,13 @@
                                           <select name="case_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select">
                                              <option value="{{data.case_type}}">{{data.case_type}}</option>
-                                             <option value="Fresh">Fresh</option>
-                                             <option value="Renewal">Renewal</option>
-                                             <option value="Rollover">Rollover</option>
-                                             <option value="Endorsement">Endorsement</option>
+                                             <option value="FRESH">FRESH</option>
+                                             <option value="RENEWAL">RENEWAL</option>
+                                             <option value="ROLLOVER">ROLLOVER</option>
+                                             <option value="ENDORSEMENT">ENDORSEMENT</option>
                                           </select>
                                        </div>
-                                       <!-- <div class="col-md-3 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk Start Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
@@ -369,9 +327,9 @@
                                              data-alt-input-class="form-control" data-date-format="Y-m-d">
                                              <input type="date" class="form-control flatpickr-input"
                                                 placeholder="Choose date..." value="{{data.risk_start_date}}"
-                                                name="risk_start_date1" required="" data-input="">
+                                                name="risk_start_date" required="" data-input="">
                                           </div>
-                                       </div>                                      
+                                       </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
@@ -395,7 +353,7 @@
                                                 placeholder="Choose date..." value="{{data.issue_date}}"
                                                 name="issue_date" required="" data-input="">
                                           </div>
-                                       </div> -->
+                                       </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="insured_age">Insured Age <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text"
@@ -441,13 +399,14 @@
                                              value="{{data.mandate}}" data-parsley-required-message=""
                                              class="form-control" data-parsley-required="true" name="mandate">
                                        </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label>Policy <small>(Only<strong> PDF &amp; Image
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="policy" accept=".pdf,image/" id="policy"
-                                                class="custom-file-input" value="{{data.policy}}">
-                                             <label class="custom-file-label" for="document">{{data.policy}}</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="policy">Choose file</label>
                                           </div>
                                        </div>
 
@@ -456,10 +415,8 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="previous_policy" accept=".pdf,image/"
-                                                id="previous_policy" class="custom-file-input"
-                                                value="{{data.previous_policy}}">
-                                             <label class="custom-file-label"
-                                                for="document">{{data.previous_policy}}</label>
+                                                id="previous_policy" class="custom-file-input">
+                                             <label class="custom-file-label" for="previous_policy">Choose file</label>
                                           </div>
                                        </div>
 
@@ -468,8 +425,8 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
-                                                class="custom-file-input" value="{{data.pan_card}}">
-                                             <label class="custom-file-label" for="document">{{data.pan_card}}</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="pan_card">Choose file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -477,18 +434,17 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
-                                                class="custom-file-input" value="{{data.aadhar_card}}">
-                                             <label class="custom-file-label"
-                                                for="document">{{data.aadhar_card}}</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="aadhar_card">Choose file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>RC <small>(Only<strong> PDF &amp; Image
+                                          <label>Vehicle RC <small>(Only<strong> PDF &amp; Image
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="vehicle_rc" accept=".pdf,image/" id="vehicle_rc"
-                                                class="custom-file-input" value="{{data.vehicle_rc}}">
-                                             <label class="custom-file-label" for="document">{{data.vehicle_rc}}</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -496,13 +452,10 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="inspection_report" accept=".pdf,image/"
-                                                id="inspection_report" class="custom-file-input"
-                                                value="{{data.inspection_report}}">
-                                             <label class="custom-file-label"
-                                                for="document">{{data.inspection_report}}</label>
+                                                id="inspection_report" class="custom-file-input">
+                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
-
 
                                     </div>
 
@@ -552,7 +505,7 @@
                                        maxlength="10">
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
+                                    <label class="col-lg-5" for="tpt">TP/Terrorism<abbr title="Required"
                                           class="text-danger">*</abbr></label><input type="text"
                                        data-parsley-group="payout" value="{{data.TP_terrorism}}"
                                        class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
