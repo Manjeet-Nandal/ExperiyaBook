@@ -398,7 +398,7 @@ def edit_sp(request, id):
 
 
 # PolicyView
-class create_policy(View):
+class create_policy_old(View):
     def get(self, request):
         data = InsuranceCompany.objects.filter(
             profile_id=get_id_from_session(request))
@@ -467,6 +467,104 @@ class create_policy(View):
         # data=Payout.objects.filter(case_type=case_type, cpa=cpa).values & Payout.objects.filter(fuel_type=fuel_type).values()
         print(data)
         return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': policy_no})
+
+
+class create_policy(View):
+    def get(self, request):
+        print('create_policy get')
+        data_ins = InsuranceCompany.objects.filter(
+            profile_id=get_id_from_session(request))
+        data_vmb = VehicleMakeBy.objects.filter(
+            profile_id=get_id_from_session(request))
+        data_vm = VehicleModelName.objects.filter(
+            profile_id=get_id_from_session(request))
+        data_vc = VehicleCategory.objects.filter(
+            profile_id=get_id_from_session(request))
+        data_ag = Agents.objects.filter(
+            profile_id=get_id_from_session(request))
+        return render(request, 'policylist/policy_list.html', {'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm,  'data_ag': data_ag})
+
+    def post(self, request):
+        print('create_policy post')
+        profile_id = ProfileModel.objects.get(id=get_id_from_session(request))
+        proposal_no = request.POST['proposal_no']
+        policy_no = request.POST['policy_no']
+        customer_name = request.POST['customer_name']
+        insurance_company = request.POST['insurance_company']
+        print(insurance_company)
+        location = request.POST['location']
+        product_name = request.POST['product_name']
+        product_type = request.POST['product_type']
+        registration_no = request.POST['registration_no']
+        rto_city = request.POST['rto_city']
+        rto_state = request.POST['rto_state']
+        vehicle_makeby = request.POST['vehicle_makeby']
+        vehicle_model = request.POST['vehicle_model']
+        vehicle_fuel_type = request.POST['vehicle_fuel_type']
+        mfg_year = request.POST['mfg_year']
+        addon = request.POST['addon']
+        ncb = request.POST['ncb']
+        cubic_capacity = request.POST['cubic_capacity']
+        gvw = request.POST['gvw']
+        seating_capacity = request.POST['seating_capacity']
+        coverage_type = request.POST['coverage_type']
+        case_type = request.POST['case_type']
+        risk_start_date = request.POST['risk_start_date']
+        risk_end_date = request.POST['risk_end_date']
+        issue_date = request.POST['issue_date']
+        insured_age = request.POST['insured_age']
+        policy_term = request.POST['policy_term']
+        payment_mode = request.POST['payment_mode']
+        bqp = request.POST['bqp']
+        pos = request.POST['pos']
+        employee = request.POST['employee']
+        proposal = request.POST['proposal']
+        mandate = request.POST['mandate']
+        OD_premium = request.POST['od']
+        TP_premium = request.POST['tp']
+        TP_terrorism = request.POST['tpt']
+        net = request.POST['net']
+        GST = request.POST['gst']
+        total = request.POST['total']
+
+        policy = request.FILES.get('policy')
+        if policy:
+            fs = FileSystemStorage()
+            fs.save(policy.name, policy)
+        previous_policy = request.FILES.get('previous_policy')
+        pan_card = request.FILES.get('pan_card')
+        aadhar_card = request.FILES.get('aadhar_card')
+        vehicle_rc = request.FILES.get('vehicle_rc')
+        inspection_report = request.FILES.get('inspection_report')
+        fspp = FileSystemStorage()
+        fspc = FileSystemStorage()
+        fsac = FileSystemStorage()
+        fsvc = FileSystemStorage()
+        fsis = FileSystemStorage()
+        if previous_policy is not None:
+            fspp.save(previous_policy.name, previous_policy)
+        if pan_card is not None:
+            fspc.save(pan_card.name, pan_card)
+        if aadhar_card is not None:
+            fsac.save(aadhar_card.name, aadhar_card)
+        if vehicle_rc is not None:
+            fsvc.save(vehicle_rc.name, vehicle_rc)
+        if inspection_report is not None:
+            fsis.save(inspection_report.name, inspection_report)
+
+        Policy.objects.create(profile_id=profile_id,  proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, location=location, product_name=product_name, product_type=product_type, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_fuel_type=vehicle_fuel_type,
+                              mfg_year=mfg_year,
+                              addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
+                              risk_start_date=risk_start_date,
+                              risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+                              employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
+                              policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report)
+        reg = registration_no[0:4]
+        print(reg)
+        data = Payout.objects.filter(Q(case_type=case_type) & Q(
+            fuel_type=vehicle_fuel_type) & Q(Insurance_company=insurance_company)).values()
+
+        return render(request, 'policylist/list_apply_payout.html', {'data': data,  'policy_no': policy_no})
 
 
 # Policy Entry Function by Pragati/ shubham
@@ -641,10 +739,8 @@ def policy_entrydata(request, id):
         print('saved')
         return redirect('bima_policy:policy_entry')
     else:
+        print('gettt')
         data = Policy.objects.get(policyid=id)
-        print('id is ', id)
-
-        print('data was :', data)
 
         # getting items
         insurer_name_list = []

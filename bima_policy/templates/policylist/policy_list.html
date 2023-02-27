@@ -21,14 +21,15 @@
                </div>
                <div class="row text-center text-sm-left">
                   <div class="col">
-                     <h1 class="page-title"> Policy Form <small class="text-muted"> All * marks Fields are mandatory.
+                     <h1 class="page-title"> Policy Motor Form <small class="text-muted"> All * marks Fields are
+                           mandatory.
                         </small></h1>
                   </div>
                </div>
             </header>
             <div class="page-section">
                <div class="section-block">
-                  <form id="frminsurance" method="post" action="{%url 'bima_policy:create_policy'%}">
+                  <form id="frminsurance" method="post" enctype ="multipart/form-data" action="{%url 'bima_policy:create_policy'%}">
                      {%csrf_token%}
                      <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-12">
@@ -37,7 +38,15 @@
                                  <fieldset>
                                     <legend>Policy Details</legend>
                                     <div class="form-row">
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
+                                          <label for="proposal_no">Proposal No. <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true"
+                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$"
+                                             name="proposal_no" id="proposal_no">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
                                           <label for="policy_no">Policy No. <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text" value=""
                                              data-parsley-required-message="" class="form-control"
@@ -45,8 +54,67 @@
                                              data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="policy_no"
                                              id="policy_no">
                                        </div>
-                                       <div class="col-md-4 mb-4">
-                                          <label for="registration">Registration No. <abbr
+                                       <div class="col-md-3 mb-4">
+                                          <label for="customer_name">Insured Name <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="customer_name">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Insurer Name<abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="insurance_company" data-parsley-required-message=""
+                                             class="custom-select" id="insurance_company" data-parsley-required="true">
+                                             <option value=""> Choose Company... </option>
+                                             {%for value in data_ins%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="location">Location <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="location">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Product Name<abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="product_name" data-parsley-required-message=""
+                                             class="custom-select" id="product_name" data-parsley-required="true">
+                                             <option value=""> Choose Product Name... </option>
+                                             <option value="Motor">Motor</option>
+                                             <option value="Fire">Fire</option>
+                                             <option value="Marine">Marine</option>
+                                             <option value="Burgulary">Burgulary</option>
+                                             <option value="Shopkeeper">Shopkeeper</option>
+                                             <option value="Engineering">Engineering</option>
+                                             <option value="WC">WC</option>
+                                             <option value="Others">Others</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Product Type<abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="product_type" data-parsley-required-message=""
+                                             class="custom-select" id="product_type" data-parsley-required="true">
+                                             <option value=""> Choose Product Type... </option>
+                                             <option value="Private Car">Private Car</option>
+                                             <option value="Commercial Vehicle">Commercial Vehicle</option>
+                                             <option value="GCV-3W">GCV-3W</option>
+                                             <option value="GCV-4W">GCV-4W</option>
+                                             <option value="GCV-Erickshaw">GCV-Erickshaw</option>
+                                             <option value="Kisan Tractor">Kisan Tractor</option>
+                                             <option value="Misc-D">Misc-D</option>
+                                             <option value="PCV-3W">PCV-3W</option>
+                                             <option value="PCV-Bus and Maxi">PCV-Bus and Maxi</option>
+                                             <option value="PCV-Erickshaw">PCV-Erickshaw</option>
+                                             <option value="PCV-School Bus">PCV-School Bus</option>
+                                             <option value="PCV-Taxi 4W">PCV-Taxi 4W</option>
+                                             <option value="TW Bike">TW Bike</option>
+                                             <option value="TW Scooter">TW Scooter</option>
+                                             <option value="Two Wheeler">Two Wheeler</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="registration_no">Registration No. <abbr
                                                 title="Required Minimum 8 Character Length"
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt">
@@ -55,146 +123,71 @@
                                                 placeholder="Minimum 8 Character" data-parsley-required="true"
                                                 data-parsley-minlength="8" data-parsley-maxlength="14"
                                                 data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$"
-                                                id="registration" name="registration" maxlength="14" required>
+                                                id="registration_no" name="registration_no" maxlength="14" required>
                                              <div class="input-group-append">
                                                 <span class="input-group-text" id="demo" placeholder="xxxx"></span>
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-4 mb-4">
-                                          <label for="case_type">Case Type <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="case_type" required class="custom-select">
-                                             <option value="">Choose Type...</option>
-                                             <option value="Breakin">Breakin</option>
-                                             <option value="New">New</option>
-                                             <option value="Rollover">Rollover</option>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="rto_city">RTO City <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="rto_city">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>RTO State<abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="rto_state" data-parsley-required-message=""
+                                             class="custom-select" id="rto_state" data-parsley-required="true">
+                                             <option value="">Choose State...</option>
+                                             <option value="1">Andama And Nicobar Island</option>
+                                             <option value="2">Andhra Pradesh</option>
+                                             <option value="3">Arunachal Pradesh</option>
+                                             <option value="4">Assam</option>
+                                             <option value="5">Bihar</option>
+                                             <option value="7">Chandigarh</option>
+                                             <option value="6">Chattisgarh</option>
+                                             <option value="8">Daman And Diu</option>
+                                             <option value="9">Delhi</option>
+                                             <option value="10">Goa</option>
+                                             <option value="11">Gujrat</option>
+                                             <option value="13">Haryana</option>
+                                             <option value="12">Himachal Pradesh</option>
+                                             <option value="15">Jammu And Kashmir</option>
+                                             <option value="14">Jharkhand</option>
+                                             <option value="16">Karnataka</option>
+                                             <option value="17">Kerala</option>
+                                             <option value="19">Lakshadweep</option>
+                                             <option value="18">Leh</option>
+                                             <option value="23">Madhya Pradesh</option>
+                                             <option value="20">Maharashtra</option>
+                                             <option value="22">Manipur</option>
+                                             <option value="21">Meghalaya</option>
+                                             <option value="24">Mizoram</option>
+                                             <option value="25">Nagaland</option>
+                                             <option value="37">NCR</option>
+                                             <option value="26">Odisha</option>
+                                             <option value="28">Puducherry</option>
+                                             <option value="27">Punjab</option>
+                                             <option value="29">Rajasthan</option>
+                                             <option value="30">Sikkim</option>
+                                             <option value="31">Tamil Nadu</option>
+                                             <option value="33">Telangana</option>
+                                             <option value="32">Tripura</option>
+                                             <option value="35">Uttar Pradesh</option>
+                                             <option value="34">Uttrakhand</option>
+                                             <option value="36">West Bengal</option>
                                           </select>
                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                       <div class="col-md-4 mb-4">
-                                          <label>Insurance Company<abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="ins_company" data-parsley-required-message=""
-                                             class="custom-select" id="ins_company" data-parsley-required="true">
-                                             <option value=""> Choose Company... </option>
-                                             {%for value in data%}
-                                             <option>{{value.comp_name}}</option>
-                                             {%endfor%}
 
-                                          </select>
-                                       </div>
-                                       <div class="col-md-4 mb-4">
-                                          <label>Service Provider<abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="service_provider" data-parsley-required-message=""
-                                             class="custom-select" id="service_provider" data-parsley-required="true">
-
-                                             <option value=""> Choose Provider... </option>
-                                             {%for value in datasp%}
-                                             <option value={{value.full_name}}>{{value.full_name}}</option>
-                                             {%endfor%}
-
-                                          </select>
-                                       </div>
-                                       <div class="col-md-4 mb-4">
-                                          <label>Service Provider/Broker Code<abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="code" class="custom-select" id="code">
-                                             <option value=""> Choose Code... </option>
-                                             {%for value in databc%}
-                                             <option value="{{value.code}}">{{value.code}}</option>
-                                             {%endfor%}
-                                             {% comment %} <option value="3">Code Indore</option> {% endcomment %}
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div class="form-row">
-                                       <div class="col-md-4 mb-4">
-                                          <label for="flatpickr-wrap">Issued Date <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
-                                             data-default-date="" ata-alt-format="F j, Y"
-                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
-                                             <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="" name="issue_date" required=""
-                                                data-input="">
-
-
-                                          </div>
-                                       </div>
-                                       <!-- /.form-group -->
-                                       <div class="col-md-4 mb-4">
-                                          <label for="flatpickr-wrap">Risk Start Date <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="risk_flatpickr" data-default-date="" data-wrap="true"
-                                             data-alt-input="true" data-alt-format="F j, Y"
-                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
-                                             <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="" name="risk_date" required=""
-                                                data-input="">
-
-
-                                          </div>
-                                       </div>
-                                       <!-- /.form-group -->
-                                       <div class="col-md-4 mb-4">
-                                          <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="cpa" data-parsley-group="payout" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="">Choose CPA...</option>
-                                             <option value="Yes">Yes</option>
-                                             <option value="No">No</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div class="form-row">
-                                       <div class="col-md-4 mb-4">
-                                          <label>Insurance PDF <small> (Accept Only<strong> PDF </strong>File)</small>
-                                             <abbr title="Required" class="text-danger">*</abbr> </label>
-                                          <div class="">
-                                             <input type="file" name="document" accept=".pdf"
-                                                data-parsley-required="true" data-parsley-required-message=""
-                                                id="document" class="form-control p-1" style="background: #fcfcfd">
-                                             <div class="f-14 m-t-5">
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="col-md-4 mb-4">
-                                          <label>Previous Policy<small>(Only<strong> PDF &amp; Image
-                                                </strong>File)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="previous_policy" accept=".pdf,image/*"
-                                                id="previous_policy" class="custom-file-input">
-                                             <label class="custom-file-label" for="document">Choose file</label>
-                                          </div>
-                                       </div>
-                                       <div class="col-md-4 mb-4">
-                                          <label>Vehicle RC<small>(Only<strong> PDF &amp; Image </strong>File)</small>
-                                          </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="vehicle_rc" accept=".pdf,image/*" id="vehicle_rc"
-                                                class="custom-file-input">
-                                             <label class="custom-file-label" for="document">Choose file</label>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </fieldset>
-                                 <fieldset>
-                                    <legend class="pt-2">Vehicle Details</legend>
-                                    <div class="form-row">
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Make By <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select name="vehicle_makeby" data-parsley-required-message=""
                                              data-parsley-required="true" class="custom-select ">
-
-                                             <option value="">Choose...</option>
-                                             {%for value in datamb%}
-                                             <option value="{{value.company}}">{{value.company}}</option>
+                                             <option value="">Choose Make...</option>
+                                             {%for value in data_vmb%}
+                                             <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
@@ -203,36 +196,17 @@
                                                 class="text-danger">*</abbr></label>
                                           <select name="vehicle_model" data-parsley-required-message=""
                                              data-parsley-required="true" class="custom-select ">
-
-                                             <option value="">Select</option>
-                                             {%for value in datavm%}
-                                             <option value="{{value.model}}">{{value.model}}</option>
+                                             <option value=""> Choose Model...</option>
+                                             {%for value in data_vm%}
+                                             <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Vehicle Category <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="vehicle_category" data-parsley-required-message=""
-                                             data-parsley-required="true" class="custom-select ">
-                                             <option value="">Choose Category...</option>
-
-                                             {%for value in datavc%}
-                                             <option value="{{value.category}}">{{value.category}}</option>
-                                             {%endfor%}
-
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label for="gvw">Other info</label>
-                                          <input type="text" value="" class="form-control" name="vehicle_other_info">
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="fuel_type" data-parsley-group="payout"
-                                             data-parsley-required="true" data-parsley-required-message=""
-                                             class="custom-select">
+                                          <select name="vehicle_fuel_type" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select">
                                              <option value="">Choose Fuel Type...</option>
                                              <option value="Petrol">Petrol</option>
                                              <option value="Diesel">Diesel</option>
@@ -241,12 +215,15 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label for="manu_year">Manufacture Year <abbr title="Required"
+                                          <label for="mfg_year">Manufacture Year <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="manu_year" data-parsley-required-message=""
+                                          <select name="mfg_year" data-parsley-required-message=""
                                              data-parsley-required="true" class="custom-select">
                                              <option value="">Choose Year...</option>
-                                             <option value="2022">2022</option>
+                                             <option value="2021">2025</option>
+                                             <option value="2021">2024</option>
+                                             <option value="2021">2023</option>
+                                             <option value="2021">2022</option>
                                              <option value="2021">2021</option>
                                              <option value="2020">2020</option>
                                              <option value="2019">2019</option>
@@ -271,58 +248,256 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label for="engine_no">Engine Number</label>
-                                          <input type="text" value="" class="form-control"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$" name="engine_no">
+                                          <label>Addon <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="addon" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required>
+                                             <option value="">Choose Addon...</option>
+                                             <option value="Yes">Yes</option>
+                                             <option value="No">No</option>
+                                          </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label for="chasis_no">Chasis Number</label>
-                                          <input type="text" value="" class="form-control"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$" name="chasis_no">
+                                          <label>NCB <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="ncb" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required>
+                                             <option value="">Choose NCB...</option>
+                                             <option value="Yes">Yes</option>
+                                             <option value="No">No</option>
+                                          </select>
                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                       <div class="col-md-4 mb-4">
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Cubic Capacity<abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="cubic_capacity" data-parsley-required-message=""
+                                             class="custom-select" id="cubic_capacity" data-parsley-required="true">
+                                             <option value=""> Choose Capacity... </option>
+                                             <option value="Below 1000">Below 1000</option>
+                                             <option value="1000-1500">1000-1500</option>
+                                             <option value="Above 1500">Above 1500</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>GVW<abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="gvw" data-parsley-required-message="" class="custom-select"
+                                             id="gvw" data-parsley-required="true">
+                                             <option value=""> Choose GVW... </option>
+                                             <option value="Below 2000">Below 2000</option>
+                                             <option value="2000-2500">2000-2500</option>
+                                             <option value="2500-3500">2500-3500</option>
+                                             <option value="3500-7000">3500-7000</option>
+                                             <option value="7000-7500">7000-7500</option>
+                                             <option value="7500-12000">7500-12000</option>
+                                             <option value="12000-25000">12000-25000</option>
+                                             <option value="25000-40000">25000-40000</option>
+                                             <option value="Above 40000">Above 40000</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Seating Capacity<abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="seating_capacity" data-parsley-required-message=""
+                                             class="custom-select" id="seating_capacity" data-parsley-required="true">
+                                             <option value=""> Choose Seating Capacity... </option>
+                                             <option value="Below 5">Below 5</option>
+                                             <option value="5-7">5-7</option>
+                                             <option value="7-12">7-12</option>
+                                             <option value="12-18">12-18</option>
+                                             <option value="Above 18">Above 18</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Coverage Type <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="coverage_type" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select">
+                                             <option value="">Choose Coverage Type...</option>
+                                             <option value="1+2 Pvt Car">1+2 Pvt Car</option>
+                                             <option value="1+4 Two Wheeler">1+4 Two Wheeler</option>
+                                             <option value="TP Only">TP Only</option>
+                                             <option value="OD Only">OD Only</option>
+                                             <option value="Standard Policy">Standard Policy</option>
+                                             <option value="Comprehensive Package Policy">Comprehensive Package Policy
+                                             </option>
+                                             <option value="Others">Others</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Case Type <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="case_type" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select">
+                                             <option value="">Choose Case Type...</option>
+                                             <option value="Fresh">Fresh</option>
+                                             <option value="Renewal">Renewal</option>
+                                             <option value="Rollover">Rollover</option>
+                                             <option value="Endorsement">Endorsement</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="flatpickr-wrap">Risk Start Date <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="risk_flatpickr" data-default-date="" data-wrap="true"
+                                             data-alt-input="true" data-alt-format="F j, Y"
+                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="" name="risk_start_date" required=""
+                                                data-input="">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="risk_flatpickr" data-default-date="" data-wrap="true"
+                                             data-alt-input="true" data-alt-format="F j, Y"
+                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="" name="risk_end_date" required=""
+                                                data-input="">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="flatpickr-wrap">Issued Date <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
+                                             data-default-date="" ata-alt-format="F j, Y"
+                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="" name="issue_date" required=""
+                                                data-input="">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="insured_age">Insured Age <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="insured_age">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="policy_term">Policy Term <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="policy_term">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="bqp">BQP <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="bqp">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="pos">POS <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="pos">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="employee">Employee <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="employee">
+                                       </div>
+                                       <div class="col-md-3 mb-4">
                                           <label>Agent <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="agent" data-parsley-group="payout" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select ">
-                                             <option value="">Select</option>
-                                             {%for value in datag%}
+                                             <option value="">Select Agent...</option>
+                                             {%for value in data_ag%}
                                              <option value="{{value.full_name}}">{{value.full_name}}</option>
                                              {%endfor%}
 
                                           </select>
                                        </div>
-                                       <div class="col-md-4 mb-4">
-                                          <label for="cust_name">Customer Name <abbr title="Required"
+                                       <div class="col-md-3 mb-4">
+                                          <label for="proposal">Proposal <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text" value=""
                                              data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true" name="cust_name">
+                                             data-parsley-required="true"
+                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="proposal"
+                                             id="proposal">
                                        </div>
-                                       <div class="col-md-4 mb-4">
-                                          <label>Remarks</label>
-                                          <textarea class="form-control" rows="1" name="remarks"></textarea>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="mandate">Mandate <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="mandate">
                                        </div>
+                                     
+                                       <div class="col-md-3 mb-4">
+                                          <label>Policy <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="policy" accept=".pdf,image/" id="policy"
+                                                class="custom-file-input" >
+                                             <label class="custom-file-label" for="document">Choose file</label>
+                                          </div>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Prev. Policy <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="previous_policy" accept=".pdf,image/"
+                                                id="previous_policy" class="custom-file-input"
+                                                >
+                                             <label class="custom-file-label" for="document">Choose file</label>
+                                          </div>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Pan Card <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
+                                                class="custom-file-input" >
+                                             <label class="custom-file-label" for="document">Choose file</label>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Aadhar Card <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
+                                                class="custom-file-input" >
+                                             <label class="custom-file-label" for="document">Choose file</label>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>RC <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="rc" accept=".pdf,image/" id="rc"
+                                                class="custom-file-input" >
+                                             <label class="custom-file-label" for="document">Choose file</label>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Inspection Report <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="inspection_report" accept=".pdf,image/"
+                                                id="inspection_report" class="custom-file-input"
+                                                >
+                                             <label class="custom-file-label" for="document">Choose file</label>
+                                          </div>
+                                       </div>
+                                      
+
+
                                     </div>
-                                    <div class="form-row">
-                                       <div class="col-md-3">
-                                          <label class="switcher-control switcher-control-success switcher-control-lg">
-                                             <input id="itc2" name="Send_To_Email" type="checkbox"
-                                                class="switcher-input" data-parsley-multiple="Send_To_Email">
-                                             <span class="switcher-indicator"></span>
-                                             <span class="switcher-label-on"><i class="fa fa-check"></i></span>
-                                             <span class="switcher-label-off"><i class="fa fa-times"></i></span>
-                                          </label>
-                                          <label for="itc2">Send Policy on Email</label>
-                                       </div>
-                                    </div>
+
+
                                  </fieldset>
+
                                  <p class="mb-4"></p>
                               </div>
                               <!-- /.card-body -->
                            </div>
                            <!-- /.card -->
                         </div>
+
                         <div class="col-lg-3 col-md-3 col-sm-12">
                            <div class="card">
                               <!-- .card -->
@@ -347,7 +522,15 @@
                                        data-parsley-pattern="^[0-9]+$" name="tp" id="tp" maxlength="10">
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5">Net=(OD+TP) </label><input type="text" name="net"
+                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10">
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
                                        onclick="add()" value="" class="form-control col-lg-6 maskNumField bg-light"
                                        data-mask-as-number-maxlength="10" data-parsley-required-message=""
                                        data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
@@ -379,7 +562,7 @@
                                        <option value="Self Cheque">Self Cheque</option>
                                     </select>
                                  </div>
-                                 <div class="row mb-2">
+                                 <!-- <div class="row mb-2">
                                     <label class="col-lg-5 pr-0">Policy Type</label>
                                     <select class="custom-select col-lg-6" name="policy_type">
                                        <option value="">Choose </option>
@@ -387,7 +570,7 @@
                                        <option value="SAOD">SAOD</option>
                                        <option value="TP">TP</option>
                                     </select>
-                                 </div>
+                                 </div> -->
                               </div>
                               <!-- /.card-body -->
                            </div>
@@ -492,8 +675,113 @@
                            </div> {% endcomment %}
                            <!-- /.card -->
                         </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+
+                           {% comment %} <div id="payoutSection" class="card card-inverse bg-info">
+                              <div class="card-header p-2">
+                                 <h4 class="card-title mb-1">Payouts
+                                    <button type="button" class="btn-payout-close btn"><i
+                                          class="fa fa-times"></i></button>
+                                 </h4>
+                              </div>
+                              <input type="hidden" value="43" readonly="" name="payout_id">
+                              <div class="card-body">
+                                 <p>Agent Commision</p>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <select data-parsley-required="true" name="ag_reward_on"
+                                       class="col-lg-6 ag-toggle-mannual custom-select" style="display:none">
+                                       <option value="-none-">-none-</option>
+                                       <option value="OD" selected="">OD</option>
+                                       <option value="NET">NET</option>
+                                    </select>
+                                    <p class="col-lg-6 ag-toggle-auto">OD</p>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Rewards % <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <input type="text" id="ag_reward_pct" value="15" name="ag_reward_pct"
+                                       class="col-lg-6 form-control ag-toggle-mannual maskNumField"
+                                       data-parsley-required-message="" data-mask-as-number-decimals="2"
+                                       data-parsley-required="true" min="0" max="100" style="display:none">
+                                    <p class="col-lg-6 ag-toggle-auto">15</p>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Commision <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <input type="text" value="" readonly="" data-parsley-required-message=""
+                                       data-parsley-required="true"
+                                       data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
+                                       class="form-control col-lg-6 maskNumField ag-toggle-mannual" name="ag_commision"
+                                       id="ag_commision" style="display:none">
+                                    <p class="col-lg-6 ag-toggle-auto">18518</p>
+                                 </div>
+                                 <div class="row mb-3">
+                                    <label class="col-lg-5">Calculation</label>
+                                    <div class="custom-control custom-control-inline custom-radio">
+                                       <input class="custom-control-input" value="Auto" checked="" id="ag_chkauto"
+                                          name="ag_calculation" type="radio">
+                                       <label class="custom-control-label" for="ag_chkauto">Auto</label>
+                                    </div>
+                                    <div class="custom-control custom-control-inline custom-radio">
+                                       <input class="custom-control-input" value="Mannual" id="ag_chkmannual"
+                                          name="ag_calculation" type="radio">
+                                       <label class="custom-control-label" for="ag_chkmannual">Mannual</label>
+                                    </div>
+                                 </div>
+                                 <p>Self Commision</p>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <select data-parsley-required="true" name="sf_reward_on"
+                                       class="col-lg-6 sf-toggle-mannual custom-select" style="display:none">
+                                       <option value="-none-">-none-</option>
+                                       <option value="OD" selected="">OD</option>
+                                       <option value="NET">NET</option>
+                                    </select>
+                                    <p class="col-lg-6 sf-toggle-auto">OD</p>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Rewards % <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <input type="text" id="sf_reward_pct" value="15" name="sf_reward_pct"
+                                       class="col-lg-6 form-control sf-toggle-mannual maskNumField"
+                                       data-parsley-required-message="" data-mask-as-number-decimals="2"
+                                       data-parsley-required="true" min="0" max="100" style="display:none">
+                                    <p class="col-lg-6 sf-toggle-auto">15</p>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Commision <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <input type="text" readonly="" value="" data-parsley-required-message=""
+                                       data-parsley-required="true"
+                                       data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
+                                       class="form-control col-lg-6 maskNumField sf-toggle-mannual" name="sf_commision"
+                                       id="sf_commision" style="display:none">
+                                    <p class="col-lg-6 sf-toggle-auto">18518</p>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Calculation</label>
+                                    <div class="custom-control custom-control-inline custom-radio">
+                                       <input class="custom-control-input" checked="" value="Auto" id="sf_chkauto"
+                                          name="sf_calculation" type="radio">
+                                       <label class="custom-control-label" for="sf_chkauto">Auto</label>
+                                    </div>
+                                    <div class="custom-control custom-control-inline custom-radio">
+                                       <input class="custom-control-input" value="Mannual" id="chkmannual"
+                                          name="sf_calculation" type="radio">
+                                       <label class="custom-control-label" for="chkmannual">Mannual</label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div> {% endcomment %}
+                           <!-- /.card -->
+                        </div>
                      </div>
                      <hr>
+
                      <div class="form-row">
                         <div class="col-md-12 col-sm-12">
                            <div id="payoutSection" class="card card-inverse bg-info">
@@ -599,7 +887,7 @@
 
 <script>
    function myFunction() {
-      var x = document.getElementById("registration").value;
+      var x = document.getElementById("registration_no").value;
       document.getElementById("demo").innerHTML = x.slice(0, 4);
    }
 </script>
@@ -608,7 +896,8 @@
       var numOne, numTwo, sum;
       numOne = parseInt(document.getElementById("od").value);
       numTwo = parseInt(document.getElementById("tp").value);
-      sum = numOne + numTwo;
+      numThree = parseInt(document.getElementById("tpt").value);
+      sum = numOne + numTwo + numThree;
       document.getElementById("net").value = sum;
    }
 </script>

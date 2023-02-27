@@ -99,6 +99,9 @@ class Agents(models.Model):
     PAN = models.CharField(max_length=100)
     document = models.FileField()
     status = models.CharField(default='Active', max_length=20)
+    
+    def __str__(self):
+        return self.full_name
 
     def save(self, *args, **kwargs):
         self.login_id = uuid.uuid4().hex[:10].upper()
@@ -327,7 +330,53 @@ payment_mode = (
 )
 
 
-class Policy(models.Model):
+class VehicleMakeBy(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:6].upper(), editable=False, max_length=30)
+    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+    company = models.CharField(max_length=100)
+    status = models.CharField(default='Active', max_length=20)
+
+    def __str__(self):
+        return self.company
+
+    def save(self, *args, **kwargs):
+        self.id = uuid.uuid4().hex[:6].upper()
+        super(VehicleMakeBy, self).save(*args, **kwargs)
+
+
+class VehicleModelName(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:6].upper(), editable=False, max_length=30)
+    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+    model = models.CharField(max_length=100)
+    company = models.CharField(max_length=100)
+    status = models.CharField(default='Active', max_length=20)
+
+    def __str__(self):
+        return self.model
+
+    def save(self, *args, **kwargs):
+        self.id = uuid.uuid4().hex[:6].upper()
+        super(VehicleModelName, self).save(*args, **kwargs)
+
+
+class VehicleCategory(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:6].upper(), editable=False, max_length=30)
+    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+    category = models.CharField(max_length=100)
+    status = models.CharField(default='Active', max_length=20)
+
+    def __str__(self):
+        return self.category
+
+    def save(self, *args, **kwargs):
+        self.id = uuid.uuid4().hex[:6].upper()
+        super(VehicleCategory, self).save(*args, **kwargs)
+
+
+class PolicyOld(models.Model):
     id = models.CharField(unique=True, default=uuid.uuid4(
     ).hex[:15].upper(), editable=False, max_length=30)
     policyid = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
@@ -344,23 +393,20 @@ class Policy(models.Model):
         max_length=50, choices=product_name, default='Motor')
     product_type = models.CharField(
         max_length=50, choices=product_type, default='Private Car')
-    registration_no = models.CharField(max_length=50)
+    registration = models.CharField(max_length=50)
     rto_city = models.CharField(max_length=50)
     rto_state = models.CharField(max_length=50)
-    make = models.CharField(max_length=50)
-    model_variant = models.CharField(max_length=50)
-    mfg_year = models.CharField(max_length=50,choices=mfg_year, default=2023)
+    vehicle_makeby = models.CharField(max_length=50)
+    vehicle_model = models.CharField(max_length=50)
+    manu_year = models.CharField(max_length=50)
     addon = models.CharField(max_length=50, choices=yes_no, default='No')
     ncb = models.CharField(max_length=50, choices=yes_no, default='No')
-    fuel = models.CharField(max_length=50, choices=fuel, default='Petrol')
-    cubic_capacity = models.CharField(
-        max_length=50, choices=cubic_capacity, default='Below 1000')
-    gvw = models.CharField(max_length=50, choices=gvw, default='Below 2000')
-    seating_capacity = models.CharField(
-        max_length=50, choices=seating_capacity, default='Below 5')
-    coverage_type = models.CharField(
-        max_length=50, choices=coverage_type, default='TP Only')
-    types = models.CharField(max_length=50, choices=types, default='Fresh')
+    fuel_type = models.CharField(max_length=50)
+    cubic_capacity = models.CharField(max_length=50)
+    gvw = models.CharField(max_length=50)
+    seating_capacity = models.CharField(max_length=50)
+    coverage_type = models.CharField(max_length=50)
+    case_type = models.CharField(max_length=50)
     risk_start_date = models.DateField()
     risk_end_date = models.DateField()
     issue_date = models.DateField()
@@ -370,8 +416,7 @@ class Policy(models.Model):
     tp_terrorism = models.CharField(max_length=50)
     insured_age = models.IntegerField()
     policy_term = models.CharField(max_length=50)
-    payment_mode = models.CharField(
-        max_length=100, choices=payment_mode, default='Customer Online')
+    payment_mode = models.CharField(max_length=100)
     bqp = models.CharField(max_length=100, default='NA')
     pos = models.CharField(max_length=100)
     employee = models.CharField(max_length=100)
@@ -393,50 +438,63 @@ class Policy(models.Model):
         super(Policy, self).save(*args, **kwargs)
 
 
-class VehicleCategory(models.Model):
-    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
-    ).hex[:6].upper(), editable=False, max_length=30)
+class Policy(models.Model):
+    policyid = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:7].upper(), editable=False, max_length=7)
+    # Agent=models.ForeignKey(Agents,on_delete=models.CASCADE)
     profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
-    category = models.CharField(max_length=100)
-    status = models.CharField(default='Active', max_length=20)
+    proposal_no = models.CharField(max_length=50, unique=True)
+    policy_no = models.CharField(max_length=50, unique=True)
+    customer_name = models.CharField(max_length=100)
+    insurance_company = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    product_name = models.CharField(max_length=100)
+    product_type = models.CharField(max_length=100)
+    registration_no = models.CharField(max_length=50)
+    rto_city = models.CharField(max_length=100)
+    rto_state = models.CharField(max_length=100)
+    vehicle_makeby = models.CharField(max_length=100)
+    vehicle_model = models.CharField(max_length=100)
+    vehicle_fuel_type = models.CharField(max_length=50)
+    # vehicle_category = models.ForeignKey(VehicleCategory, on_delete=models.CASCADE)
+    mfg_year = models.IntegerField()
+    addon = models.CharField(max_length=50)
+    ncb = models.CharField(max_length=50)
+    cubic_capacity = models.CharField(max_length=50)
+    gvw = models.CharField(max_length=50)
+    seating_capacity = models.CharField(max_length=50)
+    coverage_type = models.CharField(max_length=100)
+    case_type = models.CharField(max_length=100)
+    risk_start_date = models.DateField()
+    risk_end_date = models.DateField()
+    issue_date = models.DateField()    
+    insured_age = models.IntegerField()
+    policy_term = models.IntegerField()
+    payment_mode = models.CharField(max_length=100)
+    bqp = models.CharField(max_length=100)
+    pos = models.CharField(max_length=100)
+    employee = models.CharField(max_length=100)
+    proposal = models.CharField(max_length=100)
+    mandate = models.CharField(max_length=100)
+    OD_premium = models.IntegerField()
+    TP_premium = models.IntegerField()
+    TP_terrorism = models.IntegerField()
+    net = models.IntegerField()
+    GST = models.IntegerField()
+    total = models.IntegerField()
+    policy = models.FileField(upload_to='media/documents/')
+    previous_policy = models.FileField(upload_to='media/documents/', null=True)
+    pan_card = models.FileField(upload_to='media/documents/')
+    aadhar_card = models.FileField(upload_to='media/documents/')
+    vehicle_rc = models.FileField(upload_to='media/documents/')
+    inspection_report = models.FileField(upload_to='media/documents/')
 
     def __str__(self):
-        return self.category
+        return self.customer_name
 
     def save(self, *args, **kwargs):
-        self.id = uuid.uuid4().hex[:6].upper()
-        super(VehicleCategory, self).save(*args, **kwargs)
-
-
-class VehicleModelName(models.Model):
-    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
-    ).hex[:6].upper(), editable=False, max_length=30)
-    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
-    model = models.CharField(max_length=100)
-    company = models.CharField(max_length=100)
-    status = models.CharField(default='Active', max_length=20)
-
-    def __str__(self):
-        return self.model
-
-    def save(self, *args, **kwargs):
-        self.id = uuid.uuid4().hex[:6].upper()
-        super(VehicleModelName, self).save(*args, **kwargs)
-
-
-class VehicleMakeBy(models.Model):
-    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
-    ).hex[:6].upper(), editable=False, max_length=30)
-    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
-    company = models.CharField(max_length=100)
-    status = models.CharField(default='Active', max_length=20)
-
-    def __str__(self):
-        return self.company
-
-    def save(self, *args, **kwargs):
-        self.id = uuid.uuid4().hex[:6].upper()
-        super(VehicleMakeBy, self).save(*args, **kwargs)
+        self.policyid = uuid.uuid4().hex[:7].upper()
+        super(Policy, self).save(*args, **kwargs)
 
 
 class InsuranceUpload(models.Model):
