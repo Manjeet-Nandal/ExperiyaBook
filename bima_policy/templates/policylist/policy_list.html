@@ -29,7 +29,8 @@
             </header>
             <div class="page-section">
                <div class="section-block">
-                  <form id="frminsurance" method="post" enctype ="multipart/form-data" action="{%url 'bima_policy:create_policy'%}">
+                  <form id="frminsurance" method="post" enctype="multipart/form-data"
+                     action="{%url 'bima_policy:create_policy'%}">
                      {%csrf_token%}
                      <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-12">
@@ -75,44 +76,22 @@
                                                 class="text-danger">*</abbr></label><input type="text" value=""
                                              data-parsley-required-message="" class="form-control"
                                              data-parsley-required="true" name="location">
-                                       </div>
+                                       </div>                                      
                                        <div class="col-md-3 mb-4">
                                           <label>Product Name<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="product_name" data-parsley-required-message=""
                                              class="custom-select" id="product_name" data-parsley-required="true">
                                              <option value=""> Choose Product Name... </option>
-                                             <option value="Motor">Motor</option>
-                                             <option value="Fire">Fire</option>
-                                             <option value="Marine">Marine</option>
-                                             <option value="Burgulary">Burgulary</option>
-                                             <option value="Shopkeeper">Shopkeeper</option>
-                                             <option value="Engineering">Engineering</option>
+                                             <option value="MOTOR">MOTOR</option>
+                                             <option value="FIRE">FIRE</option>
+                                             <option value="MARINE">MARINE</option>
+                                             <option value="BURGULARY">BURGULARY</option>
+                                             <option value="SHOPKEEPER">SHOPKEEPER</option>
+                                             <option value="ENGINEERING">ENGINEERING</option>
                                              <option value="WC">WC</option>
-                                             <option value="Others">Others</option>
+                                             <option value="OTHERS">OTHERS</option>
                                           </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Product Type<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="product_type" data-parsley-required-message=""
-                                             class="custom-select" id="product_type" data-parsley-required="true">
-                                             <option value=""> Choose Product Type... </option>
-                                             <option value="Private Car">Private Car</option>
-                                             <option value="Commercial Vehicle">Commercial Vehicle</option>
-                                             <option value="GCV-3W">GCV-3W</option>
-                                             <option value="GCV-4W">GCV-4W</option>
-                                             <option value="GCV-Erickshaw">GCV-Erickshaw</option>
-                                             <option value="Kisan Tractor">Kisan Tractor</option>
-                                             <option value="Misc-D">Misc-D</option>
-                                             <option value="PCV-3W">PCV-3W</option>
-                                             <option value="PCV-Bus and Maxi">PCV-Bus and Maxi</option>
-                                             <option value="PCV-Erickshaw">PCV-Erickshaw</option>
-                                             <option value="PCV-School Bus">PCV-School Bus</option>
-                                             <option value="PCV-Taxi 4W">PCV-Taxi 4W</option>
-                                             <option value="TW Bike">TW Bike</option>
-                                             <option value="TW Scooter">TW Scooter</option>
-                                             <option value="Two Wheeler">Two Wheeler</option>
-                                          </select>
-                                       </div>
+                                       </div>                                      
                                        <div class="col-md-3 mb-4">
                                           <label for="registration_no">Registration No. <abbr
                                                 title="Required Minimum 8 Character Length"
@@ -139,44 +118,10 @@
                                           <label>RTO State<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="rto_state" data-parsley-required-message=""
                                              class="custom-select" id="rto_state" data-parsley-required="true">
-                                             <option value="">Choose State...</option>
-                                             <option value="1">Andama And Nicobar Island</option>
-                                             <option value="2">Andhra Pradesh</option>
-                                             <option value="3">Arunachal Pradesh</option>
-                                             <option value="4">Assam</option>
-                                             <option value="5">Bihar</option>
-                                             <option value="7">Chandigarh</option>
-                                             <option value="6">Chattisgarh</option>
-                                             <option value="8">Daman And Diu</option>
-                                             <option value="9">Delhi</option>
-                                             <option value="10">Goa</option>
-                                             <option value="11">Gujrat</option>
-                                             <option value="13">Haryana</option>
-                                             <option value="12">Himachal Pradesh</option>
-                                             <option value="15">Jammu And Kashmir</option>
-                                             <option value="14">Jharkhand</option>
-                                             <option value="16">Karnataka</option>
-                                             <option value="17">Kerala</option>
-                                             <option value="19">Lakshadweep</option>
-                                             <option value="18">Leh</option>
-                                             <option value="23">Madhya Pradesh</option>
-                                             <option value="20">Maharashtra</option>
-                                             <option value="22">Manipur</option>
-                                             <option value="21">Meghalaya</option>
-                                             <option value="24">Mizoram</option>
-                                             <option value="25">Nagaland</option>
-                                             <option value="37">NCR</option>
-                                             <option value="26">Odisha</option>
-                                             <option value="28">Puducherry</option>
-                                             <option value="27">Punjab</option>
-                                             <option value="29">Rajasthan</option>
-                                             <option value="30">Sikkim</option>
-                                             <option value="31">Tamil Nadu</option>
-                                             <option value="33">Telangana</option>
-                                             <option value="32">Tripura</option>
-                                             <option value="35">Uttar Pradesh</option>
-                                             <option value="34">Uttrakhand</option>
-                                             <option value="36">West Bengal</option>
+                                             <option value="">Choose State...</option>                                          
+                                             {%for value in data_rto_state%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
                                        </div>
 
@@ -198,6 +143,17 @@
                                              data-parsley-required="true" class="custom-select ">
                                              <option value=""> Choose Model...</option>
                                              {%for value in data_vm%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Vehicle Catagory <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="vehicle_catagory" data-parsley-required-message=""
+                                             data-parsley-required="true" class="custom-select ">
+                                             <option value=""> Choose Catagory...</option>
+                                             {%for value in data_vc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -399,17 +355,7 @@
                                              data-parsley-required-message="" class="form-control"
                                              data-parsley-required="true" name="employee">
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Agent <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="agent" data-parsley-group="payout" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select ">
-                                             <option value="">Select Agent...</option>
-                                             {%for value in data_ag%}
-                                             <option value="{{value.full_name}}">{{value.full_name}}</option>
-                                             {%endfor%}
-
-                                          </select>
-                                       </div>
+                                     
                                        <div class="col-md-3 mb-4">
                                           <label for="proposal">Proposal <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text" value=""
@@ -424,14 +370,14 @@
                                              data-parsley-required-message="" class="form-control"
                                              data-parsley-required="true" name="mandate">
                                        </div>
-                                     
+
                                        <div class="col-md-3 mb-4">
                                           <label>Policy <small>(Only<strong> PDF &amp; Image
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="policy" accept=".pdf,image/" id="policy"
-                                                class="custom-file-input" >
-                                             <label class="custom-file-label" for="document">Choose file</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="policy">Choose file</label>
                                           </div>
                                        </div>
 
@@ -440,9 +386,8 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="previous_policy" accept=".pdf,image/"
-                                                id="previous_policy" class="custom-file-input"
-                                                >
-                                             <label class="custom-file-label" for="document">Choose file</label>
+                                                id="previous_policy" class="custom-file-input">
+                                             <label class="custom-file-label" for="previous_policy">Choose file</label>
                                           </div>
                                        </div>
 
@@ -451,8 +396,8 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
-                                                class="custom-file-input" >
-                                             <label class="custom-file-label" for="document">Choose file</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="pan_card">Choose file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -460,17 +405,17 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
-                                                class="custom-file-input" >
-                                             <label class="custom-file-label" for="document">Choose file</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="aadhar_card">Choose file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>RC <small>(Only<strong> PDF &amp; Image
+                                          <label>Vehicle RC <small>(Only<strong> PDF &amp; Image
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
-                                             <input type="file" name="rc" accept=".pdf,image/" id="rc"
-                                                class="custom-file-input" >
-                                             <label class="custom-file-label" for="document">Choose file</label>
+                                             <input type="file" name="vehicle_rc" accept=".pdf,image/" id="vehicle_rc"
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -478,12 +423,11 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="inspection_report" accept=".pdf,image/"
-                                                id="inspection_report" class="custom-file-input"
-                                                >
-                                             <label class="custom-file-label" for="document">Choose file</label>
+                                                id="inspection_report" class="custom-file-input">
+                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
-                                      
+
 
 
                                     </div>
@@ -554,7 +498,7 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0">Payment Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode">
-                                       <option value="Customer Online">Customer Online</option>
+                                       <option value="CUSTOMER">Customer Online</option>
                                        <option value="Self Online">Self Online</option>
                                        <option value="Cash">Cash</option>
                                        <option value="Cut Pay">Cut Pay</option>
@@ -562,15 +506,7 @@
                                        <option value="Self Cheque">Self Cheque</option>
                                     </select>
                                  </div>
-                                 <!-- <div class="row mb-2">
-                                    <label class="col-lg-5 pr-0">Policy Type</label>
-                                    <select class="custom-select col-lg-6" name="policy_type">
-                                       <option value="">Choose </option>
-                                       <option value="Comp">Comp</option>
-                                       <option value="SAOD">SAOD</option>
-                                       <option value="TP">TP</option>
-                                    </select>
-                                 </div> -->
+                              
                               </div>
                               <!-- /.card-body -->
                            </div>

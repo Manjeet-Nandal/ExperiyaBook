@@ -209,6 +209,7 @@ def update_rto(request, id):
 
 # InsuranceView
 def ins_comp(request):
+    print('ins_comp')
     if request.method == "GET":
         try:
             data = InsuranceCompany.objects.filter(
@@ -397,81 +398,11 @@ def edit_sp(request, id):
     return redirect('bima_policy:service_p')
 
 
-# PolicyView
-class create_policy_old(View):
-    def get(self, request):
-        data = InsuranceCompany.objects.filter(
-            profile_id=get_id_from_session(request))
-        datasp = ServiceProvider.objects.filter(
-            profile_id=get_id_from_session(request))
-        databc = BrokerCode.objects.filter(
-            profile_id=get_id_from_session(request))
-        datamb = VehicleMakeBy.objects.filter(
-            profile_id=get_id_from_session(request))
-        datavm = VehicleModelName.objects.filter(
-            profile_id=get_id_from_session(request))
-        datavc = VehicleCategory.objects.filter(
-            profile_id=get_id_from_session(request))
-        datag = Agents.objects.filter(profile_id=get_id_from_session(request))
-        return render(request, 'policylist/policy_list.html', {'data': data, 'datasp': datasp, 'databc': databc, 'datamb': datamb, 'datavm': datavm, 'datavc': datavc, 'datag': datag})
-
-    def post(self, request):
-        p = ProfileModel.objects.get(id=get_id_from_session(request))
-        policy_no = request.POST['policy_no']
-        registration = request.POST['registration']
-        case_type = request.POST['case_type']
-        ins_company = request.POST['ins_company']
-        service_provider = request.POST['service_provider']
-        code = request.POST['code']
-        issue_date = request.POST['issue_date']
-        risk_date = request.POST['risk_date']
-        cpa = request.POST['cpa']
-        document = request.FILES.get('document')
-        if document:
-            fs = FileSystemStorage()
-            fs.save(document.name, document)
-        previous_policy = request.FILES.get('previous_policy')
-        vehicle_rc = request.FILES.get('vehicle_rc')
-        fs1 = FileSystemStorage()
-        fs2 = FileSystemStorage()
-        if previous_policy is not None:
-            fs1.save(previous_policy.name, previous_policy)
-        if vehicle_rc is not None:
-            fs2.save(vehicle_rc.name, vehicle_rc)
-        vehicle_makeby = request.POST['vehicle_makeby']
-        vehicle_model = request.POST['vehicle_model']
-        vehicle_category = request.POST['vehicle_category']
-        vehicle_other_info = request.POST['vehicle_other_info']
-        fuel_type = request.POST['fuel_type']
-        manu_year = request.POST['manu_year']
-        engine_no = request.POST['engine_no']
-        chasis_no = request.POST['chasis_no']
-        agent = request.POST['agent']
-        cust_name = request.POST['cust_name']
-        remarks = request.POST['remarks']
-        od = request.POST['od']
-        tp = request.POST['tp']
-        gst = request.POST['gst']
-        net = request.POST['net']            # shubham
-        payment_mode = request.POST['payment_mode']
-        total = request.POST['total']
-        policy_type = request.POST.get('policy_type')
-        Policy.objects.create(policy_no=policy_no, registration_no=registration, casetype=case_type, insurance_comp=ins_company, sp_name=service_provider, sp_brokercode=code, issueDate=issue_date, riskDate=risk_date, CPA=cpa, insurance=document, previous_policy=previous_policy, vehicle_rc=vehicle_rc, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_category=vehicle_category, other_info=vehicle_other_info,
-                              vehicle_fuel_type=fuel_type, manufature_year=manu_year, engine_no=engine_no, chasis_no=chasis_no, agent_name=agent, customer_name=cust_name, remark=remarks, OD_premium=od,
-                              TP_premium=tp, GST=gst, net=net, payment_mode=payment_mode, total=total, policy_type=policy_type, profile_id=p)
-        reg = registration[0:4]
-        print(reg)
-        data = Payout.objects.filter(Q(case_type=case_type) & Q(
-            fuel_type=fuel_type) & Q(Insurance_company=ins_company) & Q(rto=reg)).values()
-
-        # data=Payout.objects.filter(case_type=case_type, cpa=cpa).values & Payout.objects.filter(fuel_type=fuel_type).values()
-        print(data)
-        return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': policy_no})
-
-
 class create_policy(View):
     def get(self, request):
         print('create_policy get')
+        data_sp = ServiceProvider.objects.filter(
+            profile_id=get_id_from_session(request))
         data_ins = InsuranceCompany.objects.filter(
             profile_id=get_id_from_session(request))
         data_vmb = VehicleMakeBy.objects.filter(
@@ -480,9 +411,9 @@ class create_policy(View):
             profile_id=get_id_from_session(request))
         data_vc = VehicleCategory.objects.filter(
             profile_id=get_id_from_session(request))
-        data_ag = Agents.objects.filter(
-            profile_id=get_id_from_session(request))
-        return render(request, 'policylist/policy_list.html', {'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm,  'data_ag': data_ag})
+        data_rto_state = StateRtos.objects.all()
+        
+        return render(request, 'policylist/policy_list.html', {'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_rto_state': data_rto_state})
 
     def post(self, request):
         print('create_policy post')
@@ -491,15 +422,14 @@ class create_policy(View):
         policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
         insurance_company = request.POST['insurance_company']
-        print(insurance_company)
         location = request.POST['location']
         product_name = request.POST['product_name']
-        product_type = request.POST['product_type']
         registration_no = request.POST['registration_no']
         rto_city = request.POST['rto_city']
         rto_state = request.POST['rto_state']
         vehicle_makeby = request.POST['vehicle_makeby']
         vehicle_model = request.POST['vehicle_model']
+        vehicle_catagory = request.POST['vehicle_catagory']
         vehicle_fuel_type = request.POST['vehicle_fuel_type']
         mfg_year = request.POST['mfg_year']
         addon = request.POST['addon']
@@ -552,13 +482,14 @@ class create_policy(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
-        Policy.objects.create(profile_id=profile_id,  proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, location=location, product_name=product_name, product_type=product_type, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_fuel_type=vehicle_fuel_type,
+        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, location=location, product_name=product_name, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory ,vehicle_fuel_type=vehicle_fuel_type,
                               mfg_year=mfg_year,
                               addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
                               risk_start_date=risk_start_date,
                               risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                               employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report)
+
         reg = registration_no[0:4]
         print(reg)
         data = Payout.objects.filter(Q(case_type=case_type) & Q(
@@ -618,186 +549,77 @@ def policy_entry(request):
 # code by Manjeet Nandal
 
 def policy_entrydata(request, id):
+    print('policy_entrydata')
     if request.method == "POST":
+        proposal_no = request.POST['proposal_no']
+        policy_no = request.POST['policy_no']
+        customer_name = request.POST['customer_name']
+        insurance_company = request.POST['insurance_company']
+        location = request.POST['location']
+        product_name = request.POST['product_name']
+        product_type = request.POST['product_type']
+        registration_no = request.POST['registration_no']
+        rto_city = request.POST['rto_city']
+        rto_state = request.POST['rto_state']
+        vehicle_makeby = request.POST['vehicle_makeby']
+        vehicle_model = request.POST['vehicle_model']
+        vehicle_fuel_type = request.POST['vehicle_fuel_type']
+        mfg_year = request.POST['mfg_year']
+        addon = request.POST['addon']
+        ncb = request.POST['ncb']
+        cubic_capacity = request.POST['cubic_capacity']
+        gvw = request.POST['gvw']
+        seating_capacity = request.POST['seating_capacity']
+        coverage_type = request.POST['coverage_type']
+        case_type = request.POST['case_type']
+        # risk_start_date = request.POST['risk_start_date']
+        # risk_end_date = request.POST['risk_end_date']
+        # issue_date = request.POST['issue_date']
+        insured_age = request.POST['insured_age']
+        policy_term = request.POST['policy_term']
+        payment_mode = request.POST['payment_mode']
+        bqp = request.POST['bqp']
+        pos = request.POST['pos']
+        employee = request.POST['employee']
+        proposal = request.POST['proposal']
+        mandate = request.POST['mandate']
+        OD_premium = request.POST['od']
+        TP_premium = request.POST['tp']
+        TP_terrorism = request.POST['tpt']
+        net = request.POST['net']
+        GST = request.POST['gst']
+        total = request.POST['total']
 
-        # policy_no=request.POST['policy_no']
-        # registration=request.POST['registration']
-        # case_type=request.POST['case_type']
-        # ins_company=request.POST['ins_company']
-        # service_provider=request.POST['service_provider']
-        # code=request.POST['code']
-        # # issue_date=request.POST['issue_date']
-        # # risk_date=request.POST['risk_date']
-        # cpa=request.POST['cpa']
-        # document=request.FILES.get('document')
-        # vehicle_makeby=request.POST['vehicle_makeby']
-        # vehicle_model=request.POST['vehicle_model']
-        # vehicle_category=request.POST['vehicle_category']
-        # vehicle_other_info=request.POST['vehicle_other_info']
-        # fuel_type=request.POST['fuel_type']
-        # manu_year=request.POST['manu_year']
-        # engine_no=request.POST['engine_no']
-        # chasis_no=request.POST['chasis_no']
-        # agent=request.POST['agent']
-        # cust_name=request.POST['cust_name']
-        # remarks=request.POST['remarks']
-        # od=request.POST['od']
-        # tp=request.POST['tp']
-        # gst=request.POST['gst']
-        # net=request.POST.get('net')
-        # payment_mode=request.POST['payment_mode']
-        # total=request.POST['total']
-        # policy_type=request.POST.get('policy_type')
-
-        _proposal_no = request.POST['proposal_no']
-        _policy_no = request.POST['policy_no']
-        _insured_name = request.POST['insured_name']
-        _insurer_name = request.POST['insurer_name']
-        _product_name = request.POST['product_name']
-        _product_type = request.POST['product_type']
-        _registration_no = request.POST['registration_no']
-        _rto_city = request.POST['rto_city']
-        _rto_state = request.POST['rto_state']
-        _make = request.POST['make']
-        _model_variant = request.POST['model_variant']
-        _mfg_year = request.POST['mfg_year']
-        _addon = request.POST['addon']
-        _ncb = request.POST['ncb']
-        _fuel = request.POST['fuel']
-        _cubic_capacity = request.POST['cubic_capacity']
-        _gvw = request.POST['gvw']
-        _seating_capacity = request.POST['seating_capacity']
-        _coverage_type = request.POST['coverage_type']
-        _types = request.POST['types']
-        _risk_start_date = request.POST['risk_start_date']
-        _risk_end_date = request.POST['risk_end_date']
-        _issue_date = request.POST['issue_date']
-        _TP_premium = request.POST['tp']
-        _net = request.POST['net']
-        _OD_premium = request.POST['od']
-        _tp_terrorism = request.POST['tp_terrorism']
-        _insured_age = request.POST['insured_age']
-        _policy_term = request.POST['policy_term']
-        _payment_mode = request.POST['payment_mode']
-        _bqp = request.POST['bqp']
-        _pos = request.POST['pos']
-        _employee = request.POST['employee']
-        _proposal = request.POST['proposal']
-        _mandate = request.POST['mandate']
-
-        _policy = request.FILES.get('policy')
-        _previous_policy = request.FILES.get('previous_policy')
-        _pan_card = request.FILES.get('pan_card')
-        _aadhar_card = request.FILES.get('aadhar_card')
-        _rc = request.FILES.get('rc')
-        _inspection_report = request.FILES.get('inspection_report')
+        policy = request.FILES.get('policy')
+        previous_policy = request.FILES.get('previous_policy')
+        pan_card = request.FILES.get('pan_card')
+        aadhar_card = request.FILES.get('aadhar_card')
+        vehicle_rc = request.FILES.get('vehicle_rc')
+        inspection_report = request.FILES.get('inspection_report')
 
         data = Policy.objects.filter(policyid=id)
+        print('data iss: ', data)
+        data.update(proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, location=location, product_name=product_name, product_type=product_type, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_fuel_type=vehicle_fuel_type,
+                    mfg_year=mfg_year,
+                    addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
 
-        data.update(proposal_no=_proposal_no,
-                    policy_no=_policy_no,
-                    insured_name=_insured_name,
-                    insurer_name=_insurer_name,
-                    product_name=_product_name,
-                    product_type=_product_type,
-                    registration_no=_registration_no,
-                    rto_city=_rto_city,
-                    rto_state=_rto_state,
-                    make=_make,
-                    model_variant=_model_variant,
-                    mfg_year=_mfg_year,
-                    addon=_addon,
-                    ncb=_ncb,
-                    fuel=_fuel,
-                    cubic_capacity=_cubic_capacity,
-                    gvw=_gvw,
-                    seating_capacity=_seating_capacity,
-                    coverage_type=_coverage_type,
-                    types=_types,
-                    risk_start_date=_risk_start_date,
-                    risk_end_date=_risk_end_date,
-                    issue_date=_issue_date,
-                    TP_premium=_TP_premium,
-                    net=_net,
-                    OD_premium=_OD_premium,
-                    tp_terrorism=_tp_terrorism,
-                    insured_age=_insured_age,
-                    policy_term=_policy_term,
-                    payment_mode=_payment_mode,
-                    bqp=_bqp,
-                    pos=_pos,
-                    employee=_employee,
-                    proposal=_proposal,
-                    mandate=_mandate,
-                    policy=_policy,
-                    previous_policy=_previous_policy,
-                    pan_card=_pan_card,
-                    aadhar_card=_aadhar_card,
-                    rc=_rc,
-                    inspection_report=_inspection_report)
+                    insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+                    employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
+                    policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report)
 
-        print('saved')
         return redirect('bima_policy:policy_entry')
     else:
-        print('gettt')
         data = Policy.objects.get(policyid=id)
+        data_ins = InsuranceCompany.objects.filter(
+            profile_id=get_id_from_session(request))
+        data_vmb = VehicleMakeBy.objects.filter(
+            profile_id=get_id_from_session(request))
+        data_vm = VehicleModelName.objects.filter(
+            profile_id=get_id_from_session(request))
+        data_vc = VehicleCategory.objects.filter(
+            profile_id=get_id_from_session(request))
 
-        # getting items
-        insurer_name_list = []
-        for item in insurer_name:
-            insurer_name_list.append(item[1])
-
-        product_name_list = []
-        for item in product_name:
-            product_name_list.append(item[1])
-
-        product_type_list = []
-        for item in product_type:
-            product_type_list.append(item[1])
-
-        fuel_type_list = []
-        for item in fuel:
-            fuel_type_list.append(item[1])
-
-        cubic_capicity_list = []
-        for item in cubic_capacity:
-            cubic_capicity_list.append(item[1])
-
-        gvw_list = []
-        for item in gvw:
-            gvw_list.append(item[1])
-
-        seating_capacity_list = []
-        for item in seating_capacity:
-            seating_capacity_list.append(item[1])
-
-        coverage_type_list = []
-        for item in coverage_type:
-            coverage_type_list.append(item[1])
-
-        payment_mode_list = []
-        for item in payment_mode:
-            payment_mode_list.append(item[1])
-
-        types_list = []
-        for item in types:
-            types_list.append(item[1])
-
-        context = {'data': data,
-                   'insurer_name_list': insurer_name_list,
-                   'product_name_list': product_name_list,
-                   'product_type_list': product_type_list,
-                   'fuel_type_list': fuel_type_list,
-                   'cubic_capicity_list': cubic_capicity_list,
-                   'gvw_list': gvw_list,
-                   'seating_capacity_list': seating_capacity_list,
-                   'coverage_type_list': coverage_type_list,
-                   'payment_mode_list': payment_mode_list,
-                   'types_list': types_list,
-
-                   }
-
-        return render(request, 'policylist/edit_policy.html',  context)
+        return render(request, 'policylist/edit_policy.html', {'data': data, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm})
 
 
 def edit_policy(request, id):
