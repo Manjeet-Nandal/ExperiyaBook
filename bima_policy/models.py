@@ -276,7 +276,7 @@ class Policy(models.Model):
         return self.customer_name
 
     def save(self, *args, **kwargs):
-        self.policyid = uuid.uuid4().hex[:7].upper()
+        self.policy_no = uuid.uuid4().hex[:7].upper()
         super(Policy, self).save(*args, **kwargs)
 
 

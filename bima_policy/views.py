@@ -549,6 +549,7 @@ def policy_entry(request):
 def policy_entrydata(request, id):
     print('policy_entrydata')
     if request.method == "POST":
+        print('policy_entrydata post')
         proposal_no = request.POST['proposal_no']
         policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
@@ -595,20 +596,24 @@ def policy_entrydata(request, id):
         vehicle_rc = request.FILES.get('vehicle_rc')
         inspection_report = request.FILES.get('inspection_report')
 
+        print(policy)
+        
+
+
         data = Policy.objects.filter(policyid=id)
-        print('data iss: ', data)
         data.update(proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, location=location, product_name=product_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state,
                     vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                     mfg_year=mfg_year,
                     addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
 
                     insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                    employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
+                    employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium,
+                    TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
                     policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report)
 
         return redirect('bima_policy:policy_entry')
     else:
-        print('entrydata')
+        print('get entrydata')
         data = Policy.objects.get(policyid=id)
         data_ins = InsuranceCompany.objects.filter(
             profile_id=get_id_from_session(request))
@@ -619,12 +624,12 @@ def policy_entrydata(request, id):
         data_vc = VehicleCategory.objects.filter(
             profile_id=get_id_from_session(request))
         data_rto_state = States.objects.all()
-        print(data.product_name)
+        print(data.policy)
         return render(request, 'policylist/edit_policy.html', {'data': data, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_rto_state': data_rto_state})
 
 
 def edit_policy(request, id):
-    print('edit policy method')
+    print('edit policy method is calling')
     if request.method == "GET":
         data = Policy.objects.filter(policyid=id)
         datai = InsuranceCompany.objects.filter(

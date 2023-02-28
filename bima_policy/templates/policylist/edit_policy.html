@@ -33,7 +33,7 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> Policy Motor Form <small class="text-muted"> All * marks Fields are
+                     <h1 class="page-title"> Policy Edit Motor Form <small class="text-muted"> All * marks Fields are
                            mandatory.
                         </small></h1>
                   </div>
@@ -105,8 +105,7 @@
                                                 class="text-danger">*</abbr></label>
                                           <select name="product_name" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select">
-                                             <option value="{{data.product_name}}">{{data.product_name}}
-                                             </option>
+                                             <option value="{{data.product_name}}">{{data.product_name}}</option>
                                              <option value="MOTOR">MOTOR</option>
                                              <option value="FIRE">FIRE</option>
                                              <option value="MARINE">MARINE</option>
@@ -116,7 +115,7 @@
                                              <option value="WC">WC</option>
                                              <option value="OTHERS">OTHERS</option>
                                           </select>
-                                       </div>                                      
+                                       </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="registration_no">Registration No. <abbr
                                                 title="Required Minimum 8 Character Length"
@@ -318,7 +317,7 @@
                                              <option value="ENDORSEMENT">ENDORSEMENT</option>
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4">
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk Start Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
@@ -329,8 +328,8 @@
                                                 placeholder="Choose date..." value="{{data.risk_start_date}}"
                                                 name="risk_start_date" required="" data-input="">
                                           </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
+                                       </div> -->
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
@@ -341,8 +340,8 @@
                                                 placeholder="Choose date..." value="{{data.risk_end_date}}"
                                                 name="risk_end_date" required="" data-input="">
                                           </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
+                                       </div> -->
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Issued Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
@@ -353,7 +352,7 @@
                                                 placeholder="Choose date..." value="{{data.issue_date}}"
                                                 name="issue_date" required="" data-input="">
                                           </div>
-                                       </div>
+                                       </div> -->
                                        <div class="col-md-3 mb-4">
                                           <label for="insured_age">Insured Age <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text"
@@ -399,61 +398,58 @@
                                              value="{{data.mandate}}" data-parsley-required-message=""
                                              class="form-control" data-parsley-required="true" name="mandate">
                                        </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Policy <small>(Only<strong> PDF &amp; Image
-                                                </strong>File)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="policy" accept=".pdf,image/" id="policy"
-                                                class="custom-file-input">
-                                             <label class="custom-file-label" for="policy">Choose file</label>
+                                       <div class="col-md-4 mb-4">
+                                          <label>Policy PDF <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
+                                          <div class="">
+                                             <input type="file" value="{{data.policy}}" name="policy" accept=".pdf" data-parsley-required="false"  id="policy" class="form-control p-1" style="background: #fcfcfd">
+                                             <div class="f-14 m-t-5">
+                                                <i class="fa fa-file" aria-hidden="true"></i>  {{data.policy}}
+                                             </div>
                                           </div>
                                        </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Prev. Policy <small>(Only<strong> PDF &amp; Image
-                                                </strong>)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="previous_policy" accept=".pdf,image/"
-                                                id="previous_policy" class="custom-file-input">
-                                             <label class="custom-file-label" for="previous_policy">Choose file</label>
+                                       <div class="col-md-4 mb-4">
+                                          <label>Previous Policy <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
+                                          <div class="">
+                                             <input type="file" value="{{data.previous_policy}}" name="previous_policy" accept=".pdf" data-parsley-required="false"  id="previous_policy" class="form-control p-1" style="background: #fcfcfd">
+                                             <div class="f-14 m-t-5">
+                                                <i class="fa fa-file" aria-hidden="true"></i>  {{data.previous_policy}}
+                                             </div>
                                           </div>
                                        </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Pan Card <small>(Only<strong> PDF &amp; Image
-                                                </strong>)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
-                                                class="custom-file-input">
-                                             <label class="custom-file-label" for="pan_card">Choose file</label>
+                                       <div class="col-md-4 mb-4">
+                                          <label>PAN Card <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
+                                          <div class="">
+                                             <input type="file" value="" name="pan_card" accept=".pdf" data-parsley-required="false"  id="pan_card" class="form-control p-1" style="background: #fcfcfd">
+                                             <div class="f-14 m-t-5">
+                                                <i class="fa fa-file" aria-hidden="true"></i>  {{data.pan_card}}
+                                             </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Aadhar Card <small>(Only<strong> PDF &amp; Image
-                                                </strong>)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
-                                                class="custom-file-input">
-                                             <label class="custom-file-label" for="aadhar_card">Choose file</label>
+                                       <div class="col-md-4 mb-4">
+                                          <label>Aadhar Card <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
+                                          <div class="">
+                                             <input type="file" value="" name="aadhar_card" accept=".pdf" data-parsley-required="false"  id="aadhar_card" class="form-control p-1" style="background: #fcfcfd">
+                                             <div class="f-14 m-t-5">
+                                                <i class="fa fa-file" aria-hidden="true"></i>  {{data.aadhar_card}}
+                                             </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Vehicle RC <small>(Only<strong> PDF &amp; Image
-                                                </strong>File)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="vehicle_rc" accept=".pdf,image/" id="vehicle_rc"
-                                                class="custom-file-input">
-                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
+                                       <div class="col-md-4 mb-4">
+                                          <label>Vehicle RC <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
+                                          <div class="">
+                                             <input type="file" value="" name="vehicle_rc" accept=".pdf" data-parsley-required="false"  id="vehicle_rc" class="form-control p-1" style="background: #fcfcfd">
+                                             <div class="f-14 m-t-5">
+                                                <i class="fa fa-file" aria-hidden="true"></i>  {{data.vehicle_rc}}
+                                             </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Inspection Report <small>(Only<strong> PDF &amp; Image
-                                                </strong>)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="inspection_report" accept=".pdf,image/"
-                                                id="inspection_report" class="custom-file-input">
-                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
+                                       <div class="col-md-4 mb-4">
+                                          <label>Inspection Report PDF <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
+                                          <div class="">
+                                             <input type="file" value="" name="inspection_report" accept=".pdf" data-parsley-required="false"  id="inspection_report" class="form-control p-1" style="background: #fcfcfd">
+                                             <div class="f-14 m-t-5">
+                                                <i class="fa fa-file" aria-hidden="true"></i>  {{data.inspection_report}}
+                                             </div>
                                           </div>
                                        </div>
 
