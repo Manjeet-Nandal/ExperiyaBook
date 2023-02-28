@@ -15,7 +15,7 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> Policy List 
+                     <h1 class="page-title"> Policy List
                         <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal"
                            data-target="#mdlcolsetting" title="Column Setting"><i class="fa fa-cog"
                               aria-hidden="true"></i> Column Setting</button>
@@ -224,6 +224,8 @@
                                              <th class="sorting">Policy No. </th>
                                              <th class="sorting">Insured Name</th>
                                              <th class="sorting">Insurer Name</th>
+                                             <th class="sorting">Service Provider</th>
+                                             <th class="sorting">Broker Code</th>
                                              <th class="sorting">Location</th>
                                              <th class="sorting">Product Name</th>
                                              <th class="sorting">Registration No.</th>
@@ -257,7 +259,7 @@
                                              <th class="sorting">TP / Terrorism</th>
                                              <th class="sorting">NET</th>
                                              <th class="sorting">GST</th>
-                                             <th class="sorting">Total</th>  
+                                             <th class="sorting">Total</th>
                                              <th class="sorting">Policy</th>
                                              <th class="sorting">Previous Policy</th>
                                              <th class="sorting">Pan Card</th>
@@ -282,11 +284,11 @@
                                                       class="far fa-file-pdf text-danger"></i></a>
                                                 <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
                                                    class="">{{value.policy_no}}</a>
-                                                
-                                                <!-- <a href="/bima_policy/policy/policy_entrydata/{{value.policy_no}}" class="">{{value.policy_no}}</a> -->
                                              </td>
                                              <td>{{value.customer_name}}</td>
                                              <td>{{value.insurance_company}}</td>
+                                             <td>{{value.sp_name}}</td>
+                                             <td>{{value.sp_brokercode}}</td>
                                              <td>{{value.location}}</td>
                                              <td>{{value.product_name}}</td>
                                              <td>{{value.registration_no}}</td>

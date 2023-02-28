@@ -403,6 +403,8 @@ class create_policy(View):
         print('create_policy get')
         data_sp = ServiceProvider.objects.filter(
             profile_id=get_id_from_session(request))
+        data_bc = BrokerCode.objects.filter(
+            profile_id=get_id_from_session(request))
         data_ins = InsuranceCompany.objects.filter(
             profile_id=get_id_from_session(request))
         data_vmb = VehicleMakeBy.objects.filter(
@@ -413,7 +415,7 @@ class create_policy(View):
             profile_id=get_id_from_session(request))
         data_rto_state = States.objects.all()
         print(data_rto_state)
-        return render(request, 'policylist/policy_list.html', {'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_rto_state': data_rto_state})
+        return render(request, 'policylist/policy_list.html', {'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_rto_state': data_rto_state})
 
     def post(self, request):
         print('create_policy post')
@@ -422,6 +424,8 @@ class create_policy(View):
         policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
         insurance_company = request.POST['insurance_company']
+        sp_name = request.POST['sp_name']
+        sp_brokercode = request.POST['sp_brokercode']
         location = request.POST['location']
         product_name = request.POST['product_name']
         registration_no = request.POST['registration_no']
@@ -481,7 +485,7 @@ class create_policy(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
-        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, location=location, product_name=product_name, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
+        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, location=location, product_name=product_name, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                               mfg_year=mfg_year,
                               addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
                               risk_start_date=risk_start_date,
@@ -491,8 +495,7 @@ class create_policy(View):
 
         data = Policy.objects.filter(profile_id=get_id_from_session(
             request)).order_by('-policyid').values()
-        datag = Agents.objects.filter(profile_id=get_id_from_session(request))
-        return render(request, 'policylist/policy_entry_list.html', {'data': data, 'datag': datag})
+        return render(request, 'policylist/policy_entry_list.html', {'data': data})
 
 
 # Policy Entry Function by Pragati/ shubham
@@ -554,6 +557,8 @@ def policy_entrydata(request, id):
         policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
         insurance_company = request.POST['insurance_company']
+        sp_name = request.POST['sp_name']
+        sp_brokercode = request.POST['sp_brokercode']
         location = request.POST['location']
         product_name = request.POST['product_name']
         registration_no = request.POST['registration_no']
@@ -597,7 +602,8 @@ def policy_entrydata(request, id):
         inspection_report = request.FILES.get('inspection_report')
 
         data = Policy.objects.filter(policyid=id)
-        data.update(proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, location=location, product_name=product_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state,
+        data.update(proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name,
+                    sp_name=sp_name, sp_brokercode=sp_brokercode, insurance_company=insurance_company, location=location, product_name=product_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state,
                     vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                     mfg_year=mfg_year,
                     addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
@@ -621,6 +627,11 @@ def policy_entrydata(request, id):
         return redirect('bima_policy:policy_entry')
     else:
         print('get entrydata')
+
+        data_sp = ServiceProvider.objects.filter(
+            profile_id=get_id_from_session(request))
+        data_bc = BrokerCode.objects.filter(
+            profile_id=get_id_from_session(request))
         data = Policy.objects.get(policyid=id)
         data_ins = InsuranceCompany.objects.filter(
             profile_id=get_id_from_session(request))
@@ -632,7 +643,7 @@ def policy_entrydata(request, id):
             profile_id=get_id_from_session(request))
         data_rto_state = States.objects.all()
         print(data.policy)
-        return render(request, 'policylist/edit_policy.html', {'data': data, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_rto_state': data_rto_state})
+        return render(request, 'policylist/edit_policy.html', {'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_rto_state': data_rto_state})
 
 
 def edit_policy(request, id):

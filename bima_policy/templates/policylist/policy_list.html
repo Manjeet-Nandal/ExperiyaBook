@@ -72,6 +72,27 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
+                                          <label>Service Provider<abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="sp_name" data-parsley-required-message="" class="custom-select"
+                                             id="sp_name" data-parsley-required="true">
+                                             <option value=""> Choose Company... </option>
+                                             {%for value in data_sp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Broker Code<abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="sp_brokercode" data-parsley-required-message=""
+                                             class="custom-select" id="sp_brokercode" data-parsley-required="true">
+                                             <option value=""> Choose Company... </option>
+                                             {%for value in data_bc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
                                           <label for="location">Location <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text" value=""
                                              data-parsley-required-message="" class="form-control"

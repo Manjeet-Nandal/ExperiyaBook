@@ -94,6 +94,28 @@
                                              {%endfor%}
                                           </select>
                                        </div>
+                                        <div class="col-md-3 mb-4">
+                                          <label>Service Provider<abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="sp_name" data-parsley-required-message=""
+                                             class="custom-select" id="sp_name" data-parsley-required="true">
+                                             <option value="{{data.sp_name}}"> {{data.sp_name}}
+                                             </option>
+                                             {%for value in data_sp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
+                                        <div class="col-md-3 mb-4">
+                                          <label>Broker Code<abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="sp_brokercode" data-parsley-required-message=""
+                                             class="custom-select" id="sp_brokercode" data-parsley-required="true">
+                                             <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}}
+                                             </option>
+                                             {%for value in data_bc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="location">Location <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text"
@@ -398,7 +420,7 @@
                                              value="{{data.mandate}}" data-parsley-required-message=""
                                              class="form-control" data-parsley-required="true" name="mandate">
                                        </div>
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label>Policy PDF <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
                                           <div class="">
                                              <input type="file" value="{{data.policy}}" name="policy" accept=".pdf" data-parsley-required="false"  id="policy" class="form-control p-1" style="background: #fcfcfd">
@@ -407,7 +429,7 @@
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label>Previous Policy <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
                                           <div class="">
                                              <input type="file" value="{{data.previous_policy}}" name="previous_policy" accept=".pdf" data-parsley-required="false"  id="previous_policy" class="form-control p-1" style="background: #fcfcfd">
@@ -416,7 +438,7 @@
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label>PAN Card <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
                                           <div class="">
                                              <input type="file" value="" name="pan_card" accept=".pdf" data-parsley-required="false"  id="pan_card" class="form-control p-1" style="background: #fcfcfd">
@@ -425,7 +447,7 @@
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label>Aadhar Card <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
                                           <div class="">
                                              <input type="file" value="" name="aadhar_card" accept=".pdf" data-parsley-required="false"  id="aadhar_card" class="form-control p-1" style="background: #fcfcfd">
@@ -434,7 +456,7 @@
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label>Vehicle RC <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
                                           <div class="">
                                              <input type="file" value="" name="vehicle_rc" accept=".pdf" data-parsley-required="false"  id="vehicle_rc" class="form-control p-1" style="background: #fcfcfd">
@@ -443,7 +465,7 @@
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label>Inspection Report PDF <small> (Accept Only<strong> PDF </strong>File)</small> <abbr title="Required" class="text-danger">*</abbr> </label>
                                           <div class="">
                                              <input type="file" value="" name="inspection_report" accept=".pdf" data-parsley-required="false"  id="inspection_report" class="form-control p-1" style="background: #fcfcfd">

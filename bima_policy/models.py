@@ -122,6 +122,9 @@ class ServiceProvider(models.Model):
     PAN = models.CharField(max_length=100)
     status = models.CharField(default='Active', max_length=20)
 
+    def __str__(self):
+        return self.full_name
+
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:6].upper()
         super(ServiceProvider, self).save(*args, **kwargs)
@@ -133,6 +136,9 @@ class BrokerCode(models.Model):
     profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
     code = models.CharField(max_length=100)
     status = models.CharField(default='Active', max_length=20)
+
+    def __str__(self):
+        return self.code
 
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:6].upper()
@@ -231,6 +237,8 @@ class Policy(models.Model):
     policy_no = models.CharField(max_length=50, unique=True)
     customer_name = models.CharField(max_length=100)
     insurance_company = models.CharField(max_length=100)
+    sp_name = models.CharField(max_length=100)
+    sp_brokercode = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
     product_name = models.CharField(max_length=100)
     registration_no = models.CharField(max_length=50)
@@ -276,7 +284,7 @@ class Policy(models.Model):
         return self.customer_name
 
     def save(self, *args, **kwargs):
-        self.policy_no = uuid.uuid4().hex[:7].upper()
+        self.policyid = uuid.uuid4().hex[:7].upper()
         super(Policy, self).save(*args, **kwargs)
 
 
@@ -314,7 +322,6 @@ class States(models.Model):
         super(States, self).save(*args, **kwargs)
 
 
-
 class StateRtos(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
@@ -330,7 +337,6 @@ class StateRtos(models.Model):
         super(StateRtos, self).save(*args, **kwargs)
 
 
-
 class rtotables(models.Model):
     sid_id = models.ForeignKey(StateRtos, on_delete=models.CASCADE)
     rto_id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
@@ -344,4 +350,3 @@ class rtotables(models.Model):
         # self.payoutid = uuid.uuid4().hex[:5].upper()
         self.id = uuid.uuid4().hex[:6].upper()
         super(rtotables, self).save(*args, **kwargs)
-
