@@ -596,10 +596,6 @@ def policy_entrydata(request, id):
         vehicle_rc = request.FILES.get('vehicle_rc')
         inspection_report = request.FILES.get('inspection_report')
 
-        print(policy)
-        
-
-
         data = Policy.objects.filter(policyid=id)
         data.update(proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, location=location, product_name=product_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state,
                     vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
@@ -608,8 +604,19 @@ def policy_entrydata(request, id):
 
                     insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                     employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium,
-                    TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
-                    policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report)
+                    TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total)
+        if policy:
+            data.update(policy=policy)
+        if previous_policy:
+            data.update(previous_policy=previous_policy)
+        if pan_card:
+            data.update(pan_card=pan_card)
+        if aadhar_card:
+            data.update(aadhar_card=aadhar_card)
+        if vehicle_rc:
+            data.update(vehicle_rc=vehicle_rc)
+        if inspection_report:
+            data.update(inspection_report=inspection_report)
 
         return redirect('bima_policy:policy_entry')
     else:
