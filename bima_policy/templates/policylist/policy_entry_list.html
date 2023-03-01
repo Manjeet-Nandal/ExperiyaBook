@@ -226,7 +226,6 @@
                                              <th class="sorting">Insurer Name</th>
                                              <th class="sorting">Service Provider</th>
                                              <th class="sorting">Broker Code</th>
-                                             <th class="sorting">Location</th>
                                              <th class="sorting">Product Name</th>
                                              <th class="sorting">Registration No.</th>
                                              <th class="sorting">RTO City</th>
@@ -248,18 +247,18 @@
                                              <th class="sorting">Issue Date</th>
                                              <th class="sorting">Insured Age</th>
                                              <th class="sorting">Policy Term</th>
-                                             <th class="sorting">Payment Mode</th>
                                              <th class="sorting">BQP</th>
                                              <th class="sorting">POS</th>
                                              <th class="sorting">Employee</th>
-                                             <th class="sorting">Proposal</th>
-                                             <th class="sorting">Mandate</th>
-                                             <th class="sorting">OD</th>
-                                             <th class="sorting">TP</th>
+                                             <th class="sorting">OD Premium</th>
+                                             <th class="sorting">TP Premium</th>
                                              <th class="sorting">TP / Terrorism</th>
-                                             <th class="sorting">NET</th>
+                                             <th class="sorting">NET Premium</th>
                                              <th class="sorting">GST</th>
                                              <th class="sorting">Total</th>
+                                             <th class="sorting">Payment Mode</th>
+                                             <th class="sorting">Proposal</th>
+                                             <th class="sorting">Mandate</th>
                                              <th class="sorting">Policy</th>
                                              <th class="sorting">Previous Policy</th>
                                              <th class="sorting">Pan Card</th>
@@ -267,7 +266,6 @@
                                              <th class="sorting">Vehicle RC</th>
                                              <th class="sorting">Inspection Report</th>
                                              <th class="sorting">Action</th>
-
                                           </tr>
                                        </thead>
 
@@ -289,7 +287,6 @@
                                              <td>{{value.insurance_company}}</td>
                                              <td>{{value.sp_name}}</td>
                                              <td>{{value.sp_brokercode}}</td>
-                                             <td>{{value.location}}</td>
                                              <td>{{value.product_name}}</td>
                                              <td>{{value.registration_no}}</td>
                                              <td>{{value.rto_city}}</td>
@@ -311,18 +308,18 @@
                                              <td>{{value.issue_date}}</td>
                                              <td>{{value.insured_age}}</td>
                                              <td>{{value.policy_term}}</td>
-                                             <td>{{value.payment_mode}}</td>
                                              <td>{{value.bqp}}</td>
                                              <td>{{value.pos}}</td>
                                              <td>{{value.employee}}</td>
-                                             <td>{{value.proposal}}</td>
-                                             <td>{{value.mandate}}</td>
                                              <td>{{value.OD_premium}}</td>
                                              <td>{{value.TP_premium}}</td>
                                              <td>{{value.TP_terrorism}}</td>
                                              <td>{{value.net}}</td>
                                              <td>{{value.GST}}</td>
                                              <td>{{value.total}}</td>
+                                             <td>{{value.payment_mode}}</td>
+                                             <td>{{value.proposal}}</td>
+                                             <td>{{value.mandate}}</td>
                                              <td>{{value.policy}}</td>
                                              <td>{{value.previous_policy}}</td>
                                              <td>{{value.pan_card}}</td>
@@ -342,7 +339,6 @@
                                                       class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                                                       <i class="far fa-trash-alt mt-2"></i>
                                                    </a>
-
                                              </td>
                                           </tr>
                                           {% endfor %}

@@ -21,6 +21,7 @@ admin.site.register(UserRole)
 admin.site.register(States)
 admin.site.register(StateRtos)
 admin.site.register(rtotables)
+admin.site.register(BQP) 
 
 
 

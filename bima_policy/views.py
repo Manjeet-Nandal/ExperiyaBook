@@ -413,9 +413,10 @@ class create_policy(View):
             profile_id=get_id_from_session(request))
         data_vc = VehicleCategory.objects.filter(
             profile_id=get_id_from_session(request))
-        data_rto_state = States.objects.all()
-        print(data_rto_state)
-        return render(request, 'policylist/policy_list.html', {'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_rto_state': data_rto_state})
+        data_bqp = BQP.objects.filter(
+            profile_id=get_id_from_session(request))
+
+        return render(request, 'policylist/policy_list.html', {'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_bqp': data_bqp})
 
     def post(self, request):
         print('create_policy post')
@@ -426,7 +427,6 @@ class create_policy(View):
         insurance_company = request.POST['insurance_company']
         sp_name = request.POST['sp_name']
         sp_brokercode = request.POST['sp_brokercode']
-        location = request.POST['location']
         product_name = request.POST['product_name']
         registration_no = request.POST['registration_no']
         rto_city = request.POST['rto_city']
@@ -448,32 +448,38 @@ class create_policy(View):
         issue_date = request.POST['issue_date']
         insured_age = request.POST['insured_age']
         policy_term = request.POST['policy_term']
-        payment_mode = request.POST['payment_mode']
         bqp = request.POST['bqp']
         pos = request.POST['pos']
         employee = request.POST['employee']
-        proposal = request.POST['proposal']
-        mandate = request.POST['mandate']
         OD_premium = request.POST['od']
         TP_premium = request.POST['tp']
         TP_terrorism = request.POST['tpt']
         net = request.POST['net']
         GST = request.POST['gst']
         total = request.POST['total']
+        payment_mode = request.POST['payment_mode']
+        proposal = request.FILES.get('proposal')
+        mandate = request.FILES.get('mandate')
         policy = request.FILES.get('policy')
-        if policy:
-            fs = FileSystemStorage()
-            fs.save(policy.name, policy)
         previous_policy = request.FILES.get('previous_policy')
         pan_card = request.FILES.get('pan_card')
         aadhar_card = request.FILES.get('aadhar_card')
         vehicle_rc = request.FILES.get('vehicle_rc')
         inspection_report = request.FILES.get('inspection_report')
+        fspr = FileSystemStorage()
+        fsm = FileSystemStorage()
+        fsp = FileSystemStorage()
         fspp = FileSystemStorage()
         fspc = FileSystemStorage()
         fsac = FileSystemStorage()
         fsvc = FileSystemStorage()
         fsis = FileSystemStorage()
+        if proposal is not None:
+            fspr.save(proposal.name, proposal)
+        if mandate is not None:
+            fsm.save(mandate.name, mandate)
+        if policy is not None:
+            fsp.save(policy.name, policy)
         if previous_policy is not None:
             fspp.save(previous_policy.name, previous_policy)
         if pan_card is not None:
@@ -485,7 +491,7 @@ class create_policy(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
-        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, location=location, product_name=product_name, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
+        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, product_name=product_name, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                               mfg_year=mfg_year,
                               addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
                               risk_start_date=risk_start_date,
@@ -559,7 +565,6 @@ def policy_entrydata(request, id):
         insurance_company = request.POST['insurance_company']
         sp_name = request.POST['sp_name']
         sp_brokercode = request.POST['sp_brokercode']
-        location = request.POST['location']
         product_name = request.POST['product_name']
         registration_no = request.POST['registration_no']
         rto_city = request.POST['rto_city']
@@ -581,19 +586,18 @@ def policy_entrydata(request, id):
         # issue_date = request.POST['issue_date']
         insured_age = request.POST['insured_age']
         policy_term = request.POST['policy_term']
-        payment_mode = request.POST['payment_mode']
         bqp = request.POST['bqp']
         pos = request.POST['pos']
         employee = request.POST['employee']
-        proposal = request.POST['proposal']
-        mandate = request.POST['mandate']
         OD_premium = request.POST['od']
         TP_premium = request.POST['tp']
         TP_terrorism = request.POST['tpt']
         net = request.POST['net']
         GST = request.POST['gst']
         total = request.POST['total']
-
+        payment_mode = request.POST['payment_mode']
+        proposal = request.POST['proposal']
+        mandate = request.POST['mandate']
         policy = request.FILES.get('policy')
         previous_policy = request.FILES.get('previous_policy')
         pan_card = request.FILES.get('pan_card')
@@ -603,14 +607,17 @@ def policy_entrydata(request, id):
 
         data = Policy.objects.filter(policyid=id)
         data.update(proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name,
-                    sp_name=sp_name, sp_brokercode=sp_brokercode, insurance_company=insurance_company, location=location, product_name=product_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state,
+                    sp_name=sp_name, sp_brokercode=sp_brokercode, insurance_company=insurance_company, product_name=product_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state,
                     vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                     mfg_year=mfg_year,
                     addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
-
                     insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                    employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium,
+                    employee=employee, OD_premium=OD_premium,
                     TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total)
+        if proposal:
+            data.update(proposal=proposal)
+        if mandate:
+            data.update(mandate=mandate)
         if policy:
             data.update(policy=policy)
         if previous_policy:
@@ -627,12 +634,11 @@ def policy_entrydata(request, id):
         return redirect('bima_policy:policy_entry')
     else:
         print('get entrydata')
-
+        data = Policy.objects.get(policyid=id)
         data_sp = ServiceProvider.objects.filter(
             profile_id=get_id_from_session(request))
         data_bc = BrokerCode.objects.filter(
             profile_id=get_id_from_session(request))
-        data = Policy.objects.get(policyid=id)
         data_ins = InsuranceCompany.objects.filter(
             profile_id=get_id_from_session(request))
         data_vmb = VehicleMakeBy.objects.filter(
@@ -641,9 +647,10 @@ def policy_entrydata(request, id):
             profile_id=get_id_from_session(request))
         data_vc = VehicleCategory.objects.filter(
             profile_id=get_id_from_session(request))
-        data_rto_state = States.objects.all()
+        data_bqp = BQP.objects.filter(
+            profile_id=get_id_from_session(request))
         print(data.policy)
-        return render(request, 'policylist/edit_policy.html', {'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_rto_state': data_rto_state})
+        return render(request, 'policylist/edit_policy.html', {'data': data, 'data_sp': data_sp,                                                               'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_bqp': data_bqp})
 
 
 def edit_policy(request, id):

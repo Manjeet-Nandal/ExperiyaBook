@@ -239,7 +239,6 @@ class Policy(models.Model):
     insurance_company = models.CharField(max_length=100)
     sp_name = models.CharField(max_length=100)
     sp_brokercode = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
     product_name = models.CharField(max_length=100)
     registration_no = models.CharField(max_length=50)
     rto_city = models.CharField(max_length=100)
@@ -264,15 +263,15 @@ class Policy(models.Model):
     payment_mode = models.CharField(max_length=100)
     bqp = models.CharField(max_length=100)
     pos = models.CharField(max_length=100)
-    employee = models.CharField(max_length=100)
-    proposal = models.CharField(max_length=100)
-    mandate = models.CharField(max_length=100)
+    employee = models.CharField(max_length=100)    
     OD_premium = models.IntegerField()
     TP_premium = models.IntegerField()
     TP_terrorism = models.IntegerField()
     net = models.IntegerField()
     GST = models.IntegerField()
     total = models.IntegerField()
+    proposal = models.FileField(upload_to='media/documents/')
+    mandate = models.FileField(upload_to='media/documents/')
     policy = models.FileField(upload_to='media/documents/')
     previous_policy = models.FileField(upload_to='media/documents/', null=True)
     pan_card = models.FileField(upload_to='media/documents/')
@@ -350,3 +349,17 @@ class rtotables(models.Model):
         # self.payoutid = uuid.uuid4().hex[:5].upper()
         self.id = uuid.uuid4().hex[:6].upper()
         super(rtotables, self).save(*args, **kwargs)
+
+class BQP(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:6].upper(), editable=False, max_length=30)
+    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    status = models.CharField(default='Active', max_length=20)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.id = uuid.uuid4().hex[:6].upper()
+        super(BQP, self).save(*args, **kwargs)
