@@ -20,7 +20,7 @@ class ProfileModel(models.Model):
     package_duration = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.full_name
+        return self.id
 
     def save(self, *args, **kwargs):
         self.login_id = uuid.uuid4().hex[:10].upper()

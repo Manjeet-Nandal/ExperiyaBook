@@ -398,29 +398,31 @@ def edit_sp(request, id):
     return redirect('bima_policy:service_p')
 
 
+def get_profile_id(id):
+    login_id = ''
+    try:
+        login_id = ProfileModel.objects.get(id=id).id
+    except Exception as ex:
+        login_id = StaffModel.objects.get(login_id=id).profile_id
+    return ProfileModel.objects.get(id=login_id).id
+
+
 class create_policy(View):
     def get(self, request):
         print('create_policy get')
-        data_sp = ServiceProvider.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_bc = BrokerCode.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_ins = InsuranceCompany.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vmb = VehicleMakeBy.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vm = VehicleModelName.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vc = VehicleCategory.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_bqp = BQP.objects.filter(
-            profile_id=get_id_from_session(request))
-
+        pid = get_profile_id(get_id_from_session(request))
+        data_sp = ServiceProvider.objects.filter(profile_id=pid)
+        data_bc = BrokerCode.objects.filter(profile_id=pid)
+        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
+        data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
+        data_vm = VehicleModelName.objects.filter(profile_id=pid)
+        data_vc = VehicleCategory.objects.filter(profile_id=pid)
+        data_bqp = BQP.objects.filter(profile_id=pid)
         return render(request, 'policylist/policy_list.html', {'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_bqp': data_bqp})
 
     def post(self, request):
         print('create_policy post')
-        profile_id = ProfileModel.objects.get(id=get_id_from_session(request))
+        profile_id = ProfileModel.objects.get(id=get_profile_id(get_id_from_session(request)))
         proposal_no = request.POST['proposal_no']
         policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
@@ -547,8 +549,7 @@ def apply_policy(request, id):
 
 def policy_entry(request):
     print('policy_entry method')
-    data = Policy.objects.filter(profile_id=get_id_from_session(
-        request)).order_by('-policyid').values()
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').values()
     datag = Agents.objects.filter(profile_id=get_id_from_session(request))
     return render(request, 'policylist/policy_entry_list.html', {'data': data, 'datag': datag})
 
