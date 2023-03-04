@@ -21,7 +21,7 @@
                </div>
                <div class="row text-center text-sm-left">
                   <div class="col">
-                     <h1 class="page-title"> Policy Motor Form <small class="text-muted"> All * marks Fields are
+                     <h1 class="page-title"> {% if is_motor_form %}  Policy Motor Form {% else %} Policy Non-Motor Form {% endif %}<small class="text-muted"> All * marks Fields are
                            mandatory.
                         </small></h1>
                   </div>
