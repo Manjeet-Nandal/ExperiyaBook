@@ -129,6 +129,8 @@
                                              </div>
                                           </div>
                                        </div>
+                                       {% if is_motor_form %}
+
                                        <div class="col-md-3 mb-4">
                                           <label for="rto_city">RTO City <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text" value=""
@@ -321,6 +323,8 @@
                                              <option value="ABOVE 18">ABOVE 18</option>
                                           </select>
                                        </div>
+                                       {% endif %}
+
                                        <div class="col-md-3 mb-4">
                                           <label>Coverage Type <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
@@ -485,6 +489,8 @@
                                              <label class="custom-file-label" for="aadhar_card">Choose file</label>
                                           </div>
                                        </div>
+                                       {% if is_motor_form %}
+
                                        <div class="col-md-4 mb-4">
                                           <label> Vehicle RC <small>(Only<strong> PDF &amp; Image
                                                 </strong>File)</small> </label>
@@ -494,6 +500,8 @@
                                              <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
+                                       {% endif %}
+
                                        <div class="col-md-4 mb-4">
                                           <label>Inspection Report <small>(Only<strong> PDF &amp; Image
                                                 </strong>)</small> </label>
