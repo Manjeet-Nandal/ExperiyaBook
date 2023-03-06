@@ -408,3 +408,18 @@ class BQP(models.Model):
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:6].upper()
         super(BQP, self).save(*args, **kwargs)
+
+class CoverageType(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:6].upper(), editable=False, max_length=30)
+    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    status = models.CharField(default='Active', max_length=20)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.id = uuid.uuid4().hex[:6].upper()
+        super(CoverageType, self).save(*args, **kwargs)
+

@@ -117,6 +117,9 @@
                                              <option value="OTHERS">OTHERS</option>
                                           </select>
                                        </div>
+
+                                       {% if is_motor_form %}
+
                                        <div class="col-md-3 mb-4">
                                           <label for="registration_no">Registration No. <abbr
                                                 title="Required Minimum 8 Character Length"
@@ -133,7 +136,6 @@
                                              </div>
                                           </div>
                                        </div>
-                                       {% if is_motor_form %}
 
                                        <div class="col-md-3 mb-4">
                                           <label for="rto_city">RTO City <abbr title="Required"
@@ -327,7 +329,7 @@
                                              <option value="ABOVE 18">ABOVE 18</option>
                                           </select>
                                        </div>
-                                       {% endif %}
+                                     
 
                                        <div class="col-md-3 mb-4">
                                           <label>Coverage Type <abbr title="Required"
@@ -335,17 +337,14 @@
                                           <select name="coverage_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required>
                                              <option value="">-- Select Coverage --</option>
-                                             <option value="1+2 PVT CAR">1+2 PVT CAR</option>
-                                             <option value="1+4 TWO WHEELER">1+4 TWO WHEELER</option>
-                                             <option value="TP ONLY">TP ONLY</option>
-                                             <option value="OD ONLY">OD ONLY</option>
-                                             <option value="STANDARD POLICY">STANDARD POLICY</option>
-                                             <option value="COMPREHENSIVE PACKAGE POLICY">COMPREHENSIVE PACKAGE POLICY
-                                             </option>
-                                             <option value="OTHERS">OTHERS</option>
+                                            {% for value in data_ct%}
+                                            <option value="{{value}}">{{value}}</option>
+                                            {% endfor%}
                                           </select>
                                        </div>
-                                        
+
+                                       {% endif %}
+
                                        <div class="col-md-3 mb-4">   <!-- it is case_type in model -->
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="case_type" data-parsley-required="true"

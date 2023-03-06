@@ -417,8 +417,9 @@ class create_policy(View):
         data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
         data_vm = VehicleModelName.objects.filter(profile_id=pid)
         data_vc = VehicleCategory.objects.filter(profile_id=pid)
+        data_ct = CoverageType.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': True,'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': True,'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct,'data_bqp': data_bqp})
 
     def post(self, request):
         print('create_policy post')
