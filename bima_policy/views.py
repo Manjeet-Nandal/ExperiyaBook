@@ -419,11 +419,12 @@ class create_policy(View):
         data_vc = VehicleCategory.objects.filter(profile_id=pid)
         data_ct = CoverageType.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': True,'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct,'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
 
     def post(self, request):
         print('create_policy post')
-        profile_id = ProfileModel.objects.get(id=get_profile_id(get_id_from_session(request)))
+        profile_id = ProfileModel.objects.get(
+            id=get_profile_id(get_id_from_session(request)))
         proposal_no = request.POST['proposal_no']
         policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
@@ -513,14 +514,15 @@ class create_policy_non_motor(View):
         pid = get_profile_id(get_id_from_session(request))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
         data_bc = BrokerCode.objects.filter(profile_id=pid)
-        data_ins = InsuranceCompany.objects.filter(profile_id=pid)     
+        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
 
-        return render(request, 'policylist/policy_list.html', { 'is_motor_form': False, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': False, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_bqp': data_bqp})
 
     def post(self, request):
         print('create_policy post')
-        profile_id = ProfileModel.objects.get(id=get_profile_id(get_id_from_session(request)))
+        profile_id = ProfileModel.objects.get(
+            id=get_profile_id(get_id_from_session(request)))
         proposal_no = request.POST['proposal_no']
         policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
@@ -528,8 +530,20 @@ class create_policy_non_motor(View):
         sp_name = request.POST['sp_name']
         sp_brokercode = request.POST['sp_brokercode']
         product_name = request.POST['product_name']
-        registration_no = request.POST['registration_no']     
-        coverage_type = request.POST['coverage_type']
+        registration_no = ''
+        rto_city = ''
+        rto_state = ''
+        vehicle_makeby = ''
+        vehicle_model = ''
+        vehicle_catagory = ''
+        vehicle_fuel_type = ''
+        mfg_year = None
+        addon = ''
+        ncb = ''
+        cubic_capacity = ''
+        gvw = ''
+        seating_capacity = ''
+        coverage_type = ''
         case_type = request.POST['case_type']
         risk_start_date = request.POST['risk_start_date']
         risk_end_date = request.POST['risk_end_date']
@@ -551,7 +565,7 @@ class create_policy_non_motor(View):
         policy = request.FILES.get('policy')
         previous_policy = request.FILES.get('previous_policy')
         pan_card = request.FILES.get('pan_card')
-        aadhar_card = request.FILES.get('aadhar_card')        
+        aadhar_card = request.FILES.get('aadhar_card')
         inspection_report = request.FILES.get('inspection_report')
         fspr = FileSystemStorage()
         fsm = FileSystemStorage()
@@ -573,19 +587,18 @@ class create_policy_non_motor(View):
             fspc.save(pan_card.name, pan_card)
         if aadhar_card is not None:
             fsac.save(aadhar_card.name, aadhar_card)
-       
+
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
-        PolicyNonMotor.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, product_name=product_name, registration_no=registration_no,
+        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, product_name=product_name, registration_no=registration_no,
                               coverage_type=coverage_type, case_type=case_type,
                               risk_start_date=risk_start_date,
                               risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                               employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, inspection_report=inspection_report)
 
-        data = PolicyNonMotor.objects.filter(profile_id=get_id_from_session(
-            request)).order_by('-policyid').values()
+        data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').values()
         return render(request, 'policylist/policy_entry_list.html', {'data': data})
 
 
@@ -632,9 +645,9 @@ def apply_policy(request, id):
 
 def policy_entry(request):
     print('policy_entry method')
-    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').values()
-    datag = Agents.objects.filter(profile_id=get_id_from_session(request))
-    return render(request, 'policylist/policy_entry_list.html', {'data': data, 'datag': datag})
+    data = Policy.objects.filter(profile_id=get_profile_id(
+        get_id_from_session(request))).order_by('-policyid').values()
+    return render(request, 'policylist/policy_entry_list.html', {'data': data})
 
 
 # code by Manjeet Nandal
@@ -650,24 +663,78 @@ def policy_entrydata(request, id):
         sp_name = request.POST['sp_name']
         sp_brokercode = request.POST['sp_brokercode']
         product_name = request.POST['product_name']
-        registration_no = request.POST['registration_no']
-        rto_city = request.POST['rto_city']
-        rto_state = request.POST['rto_state']
-        vehicle_makeby = request.POST['vehicle_makeby']
-        vehicle_model = request.POST['vehicle_model']
-        vehicle_catagory = request.POST['vehicle_catagory']
-        vehicle_fuel_type = request.POST['vehicle_fuel_type']
-        mfg_year = request.POST['mfg_year']
-        addon = request.POST['addon']
-        ncb = request.POST['ncb']
-        cubic_capacity = request.POST['cubic_capacity']
-        gvw = request.POST['gvw']
-        seating_capacity = request.POST['seating_capacity']
-        coverage_type = request.POST['coverage_type']
+        registration_no = ''
+        rto_city = ''
+        rto_state = ''
+        vehicle_makeby = ''
+        vehicle_model = ''
+        vehicle_catagory = ''
+        vehicle_fuel_type = ''
+        mfg_year = None
+        addon = ''
+        ncb = ''
+        cubic_capacity = ''
+        gvw = ''
+        seating_capacity = ''
+        coverage_type = ''
+        try:
+            registration_no = request.POST['registration_no']
+        except Exception as ex:
+            registration_no = ''
+        try:
+            rto_city = request.POST['rto_city']
+        except Exception as ex:
+            rto_city = ''
+        try:
+            rto_state = request.POST['rto_state']
+        except Exception as ex:
+            rto_state = ''
+        try:
+            vehicle_makeby = request.POST['vehicle_makeby']
+        except Exception as ex:
+            vehicle_makeby = ''
+        try:
+            vehicle_model = request.POST['vehicle_model']
+        except Exception as ex:
+            vehicle_model = ''
+        try:
+            vehicle_catagory = request.POST['vehicle_catagory']
+        except Exception as ex:
+            vehicle_catagory = ''
+        try:
+            vehicle_fuel_type = request.POST['vehicle_fuel_type']
+        except Exception as ex:
+            vehicle_fuel_type = ''
+        try:
+            mfg_year = request.POST['mfg_year']
+        except Exception as ex:
+            mfg_year = None
+        try:
+            addon = request.POST['addon']
+        except Exception as ex:
+            addon = ''
+        try:
+            ncb = request.POST['ncb']
+        except Exception as ex:
+            ncb = ''
+        try:
+            cubic_capacity = request.POST['cubic_capacity']
+        except Exception as ex:
+            cubic_capacity = ''
+        try:
+            gvw = request.POST['gvw']
+        except Exception as ex:
+            gvw = ''
+        try:
+            seating_capacity = request.POST['seating_capacity']
+        except Exception as ex:
+            seating_capacity = ''
+        try:
+            coverage_type = request.POST['coverage_type']
+        except Exception as ex:
+            coverage_type = ''
+        
         case_type = request.POST['case_type']
-        # risk_start_date = request.POST['risk_start_date']
-        # risk_end_date = request.POST['risk_end_date']
-        # issue_date = request.POST['issue_date']
         insured_age = request.POST['insured_age']
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
@@ -687,6 +754,11 @@ def policy_entrydata(request, id):
         pan_card = request.FILES.get('pan_card')
         aadhar_card = request.FILES.get('aadhar_card')
         vehicle_rc = request.FILES.get('vehicle_rc')
+        try:
+            vehicle_rc = request.FILES.get('vehicle_rc')
+        except Exception as ex:
+            vehicle_rc = ''
+        
         inspection_report = request.FILES.get('inspection_report')
 
         data = Policy.objects.filter(policyid=id)
@@ -731,10 +803,28 @@ def policy_entrydata(request, id):
             profile_id=get_id_from_session(request))
         data_vc = VehicleCategory.objects.filter(
             profile_id=get_id_from_session(request))
+        data_ct = CoverageType.objects.filter(
+            profile_id=get_id_from_session(request))
         data_bqp = BQP.objects.filter(
             profile_id=get_id_from_session(request))
-        print(data.policy)
-        return render(request, 'policylist/edit_policy.html', {'data': data, 'data_sp': data_sp,                                                               'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_bqp': data_bqp})
+        is_motor_form = True
+        if data.registration_no is '':
+            is_motor_form = False
+            data.registration_no = ''
+            data.rto_city = ''
+            data.rto_state = ''
+            data.vehicle_makeby = ''
+            data.vehicle_model = ''
+            data.vehicle_catagory = ''
+            data.vehicle_fuel_type = ''
+            data.mfg_year = ''
+            data.addon = ''
+            data.ncb = ''
+            data.cubic_capacity = ''
+            data.gvw = ''
+            data.seating_capacity = ''
+            data.coverage_type = ''
+        return render(request, 'policylist/edit_policy.html', {'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp,  'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
 
 
 def edit_policy(request, id):

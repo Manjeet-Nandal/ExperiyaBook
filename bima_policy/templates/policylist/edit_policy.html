@@ -33,9 +33,9 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> Policy Motor Form <small class="text-muted"> All * marks Fields are
-                           mandatory.
-                        </small></h1>
+                     <h1 class="page-title"> {% if is_motor_form %}  Policy Motor Form {% else %} Policy Non-Motor Form {% endif %}<small class="text-muted"> All * marks Fields are
+                        mandatory.
+                     </small></h1>
                   </div>
                   <!-- /grid column -->
                </div>
@@ -136,6 +136,9 @@
                                              <option value="OTHERS">OTHERS</option>
                                           </select>
                                        </div>
+
+                                       {% if is_motor_form %}
+
                                        <div class="col-md-3 mb-4">
                                           <label for="registration_no">Registration No. <abbr
                                                 title="Required Minimum 8 Character Length"
@@ -364,6 +367,9 @@
                                              <option value="OTHERS">OTHERS</option>
                                           </select>
                                        </div>
+
+                                       {% endif %}
+
                                        <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="case_type" data-parsley-required="true"
