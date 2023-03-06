@@ -19,7 +19,7 @@
                   </li>
                </ol>
             </nav>
-            <h1 class="page-title"> Payout List 
+            <h1 class="page-title"> Payout List Here
                <button class="btn btn-secondary btn-sm float-right" id="download_payout" onclick="ExportToExcel('xlsx')"><i class="fa fa-download"></i> Download</button>
                <a href="{%url 'bima_policy:slab_payoutform' %}" class="btn btn-secondary btn-sm float-right mr-2"><i class="fa fa-plus"></i> Add New</a>
             </h1>
@@ -58,9 +58,9 @@
                                  <tr role="row">
                                     <th class="text-center w-10pc sorting_asc" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Payout Name: activate to sort column ascending" style="width: 0px;">Payout Name</th>
-                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Insurer</th>
-                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Service Provider</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Product Name</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Insurer</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">SP</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Make</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Model</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Catagory</th>
@@ -72,12 +72,9 @@
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">GVW</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Cubic Capacity</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Seating Capacity</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Coverage Type</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Coverage: activate to sort column ascending" style="width: 0px;">Case Type</th>
-                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="CPA: activate to sort column ascending" style="width: 0px;">CPA</th>
-                                    <th class="text-center sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Reward On: activate to sort column ascending" style="width: 0px;">Reward On</th>
-                                    <th class="text-center sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Reward %age: activate to sort column ascending" style="width: 0px;">Reward %age</th>
-                                    <th class="text-center sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Self Reward On: activate to sort column ascending" style="width: 0px;">Self Reward On</th>
-                                    <th class="text-center sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Self Reward %age: activate to sort column ascending" style="width: 0px;">Self Reward %age</th>
+
                                     <th class="text-center sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th>
                                     <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="#" style="width: 0px;">#</th>
                                  </tr>
@@ -91,14 +88,22 @@
                                        <a href="/bima_policy/slab/slab_payoutformshow/{{value.payoutid}}" class="">{{value.payout_name}}</a>
                                     </td>
                                     
-                                    <td>{{value.case_type}}</td>
-                                    <td>{{value.coverage}}</td>
-                                    <td>{{value.fuel_type}}</td>
-                                    <td>{{value.cpa}}</td>
-                                    <td class=" text-center ">{{value.rewards_on}}</td>
-                                    <td class=" text-center ">{{value.rewards_age}}</td>
-                                    <td class=" text-center ">{{value.self_rewards_on}}</td>
-                                    <td class=" text-center ">{{value.self_rewards_age}}</td>
+                                          <td>{{value.product_name}}</td>
+                                          <td>{{value.insurance_company}}</td>
+                                          <td>{{value.sp_name}}</td>
+                                          <td>{{value.vehicle_makeby}}</td>
+                                          <td>{{value.vehicle_model}}</td>
+                                          <td>{{value.vehicle_catagory}}</td>
+                                          <td>{{value.vehicle_fuel_type}}</td>
+                                          <td>{{value.mfg_year}}</td>
+                                          <td>{{value.addon}}</td>
+                                          <td>{{value.ncb}}</td>
+                                          <td>{{value.gvw}}</td>
+                                          <td>{{value.cubic_capacity}}</td>
+                                          <td>{{value.seating_capacity}}</td>
+                                          <td>{{value.coverage_type}}</td>
+                                          <td>{{value.case_type}}</td>                                   
+                                 
                                     <td class=" text-center "><span class="badge badge-success">{{value.status}}</span></td>
                                     <td class=" text-center">
                                        <form method="post">
