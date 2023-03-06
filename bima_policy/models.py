@@ -287,6 +287,51 @@ class Policy(models.Model):
         super(Policy, self).save(*args, **kwargs)
 
 
+class PolicyNonMotor(models.Model):
+    policyid = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:7].upper(), editable=False, max_length=7)
+    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
+    proposal_no = models.CharField(max_length=50, unique=True)
+    policy_no = models.CharField(max_length=50, unique=True)
+    customer_name = models.CharField(max_length=100)
+    insurance_company = models.CharField(max_length=100)
+    sp_name = models.CharField(max_length=100)
+    sp_brokercode = models.CharField(max_length=100)
+    product_name = models.CharField(max_length=100)
+    registration_no = models.CharField(max_length=50)    
+    coverage_type = models.CharField(max_length=100)
+    case_type = models.CharField(max_length=100)
+    risk_start_date = models.DateField()
+    risk_end_date = models.DateField()
+    issue_date = models.DateField()
+    insured_age = models.IntegerField()
+    policy_term = models.IntegerField()
+    payment_mode = models.CharField(max_length=100)
+    bqp = models.CharField(max_length=100)
+    pos = models.CharField(max_length=100)
+    employee = models.CharField(max_length=100)    
+    OD_premium = models.IntegerField()
+    TP_premium = models.IntegerField()
+    TP_terrorism = models.IntegerField()
+    net = models.IntegerField()
+    GST = models.IntegerField()
+    total = models.IntegerField()
+    proposal = models.FileField(upload_to='media/documents/')
+    mandate = models.FileField(upload_to='media/documents/')
+    policy = models.FileField(upload_to='media/documents/')
+    previous_policy = models.FileField(upload_to='media/documents/', null=True)
+    pan_card = models.FileField(upload_to='media/documents/')
+    aadhar_card = models.FileField(upload_to='media/documents/')    
+    inspection_report = models.FileField(upload_to='media/documents/')
+
+    def __str__(self):
+        return self.customer_name
+
+    def save(self, *args, **kwargs):
+        self.policyid = uuid.uuid4().hex[:7].upper()
+        super(PolicyNonMotor, self).save(*args, **kwargs)
+
+
 class InsuranceUpload(models.Model):
     profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
     policyid = models.OneToOneField(Policy, verbose_name=(

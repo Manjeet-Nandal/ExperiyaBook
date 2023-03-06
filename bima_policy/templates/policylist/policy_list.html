@@ -30,7 +30,11 @@
             <div class="page-section">
                <div class="section-block">
                   <form id="frminsurance" method="post" enctype="multipart/form-data"
-                     action="{%url 'bima_policy:create_policy'%}">
+                     
+                     
+                     {% if is_motor_form %}  action="{%url 'bima_policy:create_policy'%}"
+                     {% else %} action="{%url 'bima_policy:create_policy_non_motor'%}" 
+                     {% endif %}>
                      {%csrf_token%}
                      <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-12">
