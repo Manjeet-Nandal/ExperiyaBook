@@ -1011,10 +1011,9 @@ def slab_payoutform(request):
         data_ct = CoverageType.objects.filter(
             profile_id=get_id_from_session(request))
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
-        states = StateRtos.objects.all()
-        state_rto = rtotables.objects.all()
+       
         # print(state_rto.rto_id)
-        return render(request, 'payout/slab_payoutform.html', {'state_rto': state_rto, 'states': states, 'slab': slab, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct})
+        return render(request, 'payout/slab_payoutform.html', { 'slab': slab, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct})
 
     if request.method == 'POST' and 'savepayout' in request.POST:
         print("data enter")
@@ -1037,12 +1036,12 @@ def slab_payoutform(request):
         cubic_capacity = request.POST['cubic_capacity']
         seating_capacity = request.POST['seating_capacity']
         coverage_type = request.POST['coverage_type']
-        case_type = request.POST['case_type']       
+        case_type = request.POST['case_type']
 
         print('mfg_year: ', mfg_year)
-        Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name, insurer=insurer, sp_name=sp_name, 
+        Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name, insurer=insurer, sp_name=sp_name,
                               vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
-                              vehicle_catagory=vehicle_catagory,vehicle_fuel_type=vehicle_fuel_type,mfg_year=mfg_year, 
+                              vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
                               rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
                               coverage_type=coverage_type, case_type=case_type,  profile_id=data)
         print("insert data")
@@ -1052,43 +1051,54 @@ def slab_payoutform(request):
 # slab payoutform update here by Manjeet Nandal
 
 def slab_payoutformshow(request, id):
+    print('slab_payoutformshow')
     if request.method == "POST":
         payout_name = request.POST['payout_name']
-        status = request.POST['status']
-        vehicle_category = request.POST['vehicle_category']
-        policy_provider = request.POST['policy_provider']
-        Insurance_company = request.POST['ins_com']
-        vehicle_make_by = request.POST['vehicle_make_by']
-        rto = request.POST['rtos']
-        case_type = request.POST['casetype']
-        coverage = request.POST['coverage']
-        fuel_type = request.POST['fueltype']
-        cpa = request.POST['cpa']
-        rewards_on = request.POST['areward_on']
-        rewards_age = request.POST['areward_pct']
-        self_rewards_on = request.POST['sreward_on']
-        self_rewards_age = request.POST['sreward_pct']
+        product_name = request.POST['product_name']
+        insurer = request.POST['insurer']
+        sp_name = request.POST['sp_name']
+        vehicle_makeby = request.POST['vehicle_makeby']
+        vehicle_model = request.POST['vehicle_model']
+        vehicle_catagory = request.POST['vehicle_catagory']
+        vehicle_fuel_type = request.POST['vehicle_fuel_type']
+        mfg_year = request.POST['mfg_year']
+        rto_city = request.POST['rto_city']
+        addon = request.POST['addon']
+        ncb = request.POST['ncb']
+        gvw = request.POST['gvw']
+        cubic_capacity = request.POST['cubic_capacity']
+        seating_capacity = request.POST['seating_capacity']
+        coverage_type = request.POST['coverage_type']
+        case_type = request.POST['case_type']
+
         payout_updt = Payout.objects.filter(payoutid=id)
         # print("this is output", payout_updt.values())
-        payout_updt.update(payout_name=payout_name, status=status, vehicle_category=vehicle_category, Insurance_company=Insurance_company, policy_provider=policy_provider, vehicle_make_by=vehicle_make_by, rto=rto.upper(
-        ), case_type=case_type, coverage=coverage, fuel_type=fuel_type, cpa=cpa, rewards_on=rewards_on, rewards_age=rewards_age, self_rewards_on=self_rewards_on, self_rewards_age=self_rewards_age)
+        payout_updt.update(payout_name=payout_name,  product_name=product_name, insurer=insurer, sp_name=sp_name,
+                           vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
+                           vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
+                           rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
+                           coverage_type=coverage_type, case_type=case_type)
         print("done")
         return redirect('bima_policy:slab')
 
     else:
         data = Payout.objects.get(payoutid=id)
-        pol_provider = ServiceProvider.objects.filter(
+        data_sp = ServiceProvider.objects.filter(
             profile_id=get_id_from_session(request))
-        ins_comp = InsuranceCompany.objects.filter(
+        data_ins = InsuranceCompany.objects.filter(
             profile_id=get_id_from_session(request))
-        vcat = VehicleCategory.objects.filter(
+        data_vmb = VehicleMakeBy.objects.filter(
             profile_id=get_id_from_session(request))
-        vmb = VehicleMakeBy.objects.filter(
+        data_vm = VehicleModelName.objects.filter(
             profile_id=get_id_from_session(request))
-        vmodel = VehicleModelName.objects.filter(
+        data_vc = VehicleCategory.objects.filter(
             profile_id=get_id_from_session(request))
+        data_ct = CoverageType.objects.filter(
+            profile_id=get_id_from_session(request))        
+        
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
-        return render(request, 'payout/edit_payoutform.html', {'data': data, 'slab': slab, 'vcat': vcat, 'vmb': vmb, 'vmodel': vmodel, 'ins_comp': ins_comp, 'pol_provider': pol_provider})
+        print(slab)
+        return render(request, 'payout/edit_payoutform.html', {'data':data, 'slab': slab, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct})
 
 
 def payout_delete(request, id):
