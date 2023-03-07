@@ -75,7 +75,6 @@
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Coverage Type</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Coverage: activate to sort column ascending" style="width: 0px;">Case Type</th>
 
-                                    <th class="text-center sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th>
                                     <th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="#" style="width: 0px;">#</th>
                                  </tr>
                               </thead>
@@ -89,22 +88,22 @@
                                     </td>
                                     
                                           <td>{{value.product_name}}</td>
-                                          <td>{{value.insurance_company}}</td>
+                                          <td>{{value.insurer}}</td>
                                           <td>{{value.sp_name}}</td>
                                           <td>{{value.vehicle_makeby}}</td>
                                           <td>{{value.vehicle_model}}</td>
                                           <td>{{value.vehicle_catagory}}</td>
                                           <td>{{value.vehicle_fuel_type}}</td>
                                           <td>{{value.mfg_year}}</td>
+                                          <td>{{value.rto_city}}</td>
                                           <td>{{value.addon}}</td>
                                           <td>{{value.ncb}}</td>
                                           <td>{{value.gvw}}</td>
                                           <td>{{value.cubic_capacity}}</td>
                                           <td>{{value.seating_capacity}}</td>
                                           <td>{{value.coverage_type}}</td>
-                                          <td>{{value.case_type}}</td>                                   
+                                          <td>{{value.case_type}}</td>                                  
                                  
-                                    <td class=" text-center "><span class="badge badge-success">{{value.status}}</span></td>
                                     <td class=" text-center">
                                        <form method="post">
                                           {% csrf_token %}

@@ -598,7 +598,8 @@ class create_policy_non_motor(View):
                               employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, inspection_report=inspection_report)
 
-        data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').values()
+        data = Policy.objects.filter(profile_id=get_profile_id(
+            get_id_from_session(request))).order_by('-policyid').values()
         return render(request, 'policylist/policy_entry_list.html', {'data': data})
 
 
@@ -733,7 +734,7 @@ def policy_entrydata(request, id):
             coverage_type = request.POST['coverage_type']
         except Exception as ex:
             coverage_type = ''
-        
+
         case_type = request.POST['case_type']
         insured_age = request.POST['insured_age']
         policy_term = request.POST['policy_term']
@@ -758,7 +759,7 @@ def policy_entrydata(request, id):
             vehicle_rc = request.FILES.get('vehicle_rc')
         except Exception as ex:
             vehicle_rc = ''
-        
+
         inspection_report = request.FILES.get('inspection_report')
 
         data = Policy.objects.filter(policyid=id)
@@ -1006,7 +1007,7 @@ def slab_payoutform(request):
         data_vm = VehicleModelName.objects.filter(
             profile_id=get_id_from_session(request))
         data_vc = VehicleCategory.objects.filter(
-            profile_id=get_id_from_session(request))        
+            profile_id=get_id_from_session(request))
         data_ct = CoverageType.objects.filter(
             profile_id=get_id_from_session(request))
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
@@ -1018,71 +1019,37 @@ def slab_payoutform(request):
     if request.method == 'POST' and 'savepayout' in request.POST:
         print("data enter")
         data = ProfileModel.objects.get(id=get_id_from_session(request))
-        payoutName = request.POST['payout_name']
+        payout_name = request.POST['payout_name']
         slab = request.POST['slab']
         s = Slab.objects.get(slab_name=slab)
         product_name = request.POST['product_name']
+        insurer = request.POST['insurer']
+        sp_name = request.POST['sp_name']
+        vehicle_makeby = request.POST['vehicle_makeby']
+        vehicle_model = request.POST['vehicle_model']
+        vehicle_catagory = request.POST['vehicle_catagory']
+        vehicle_fuel_type = request.POST['vehicle_fuel_type']
+        mfg_year = request.POST['mfg_year']
+        rto_city = request.POST['rto_city']
+        addon = request.POST['addon']
+        ncb = request.POST['ncb']
+        gvw = request.POST['gvw']
+        cubic_capacity = request.POST['cubic_capacity']
+        seating_capacity = request.POST['seating_capacity']
+        coverage_type = request.POST['coverage_type']
+        case_type = request.POST['case_type']       
 
-        if request.POST['insurance_company'] == 'any':
-            ins = list(InsuranceCompany.objects.filter(
-                profile_id=get_id_from_session(request)))
-            Insurance_company = ins
-            print(Insurance_company)
-        else:
-            Insurance_company = request.POST['insurance_company']
-      
-
-        if request.POST['sp_name'] == 'any':
-            sp = list(ServiceProvider.objects.filter(
-                profile_id=get_id_from_session(request)))
-            sp_name = sp
-            print(sp_name)
-        else:
-            sp_name = request.POST['sp_name']
-
-
-        if request.POST['vehicle_makeby'] == 'any':
-            vehicle = list(VehicleCategory.objects.filter(
-                profile_id=get_id_from_session(request)))
-            vehicle_makeby = vehicle
-            print(vehicle_makeby)
-        else:
-            vehicle_makeby = request.POST['vehicle_makeby']
-
-         if request.POST['vehicle_model'] == 'any':
-            vehicle = list(VehicleCategory.objects.filter(
-                profile_id=get_id_from_session(request)))
-            vehicle_model = vehicle
-            print(vehicle_model)
-        else:
-            vehicle_model = request.POST['vehicle_model']
-
-        
-        if request.POST['vehicle_catagory'] == 'any':
-            v_cat = list(VehicleMakeBy.objects.filter(
-                profile_id=get_id_from_session(request)))
-            vehicle_catagory = v_cat
-            print(vehicle_catagory)
-        else:
-            vehicle_catagory = request.POST['vehicle_catagory']
-
-        fueltype = request.POST.getlist('fueltype')
-        rto = request.POST.getlist('rto_city')
-        addon = request.POST.getlist('addon')
-        ncb = request.POST.getlist('ncb')
-        gvw = request.POST.getlist('gvw')
-        casetype = request.POST.getlist('casetype')
-        coverage = request.POST.getlist('coverage')
-      
-        status = request.POST['status']
-
-        Payout.objects.create(payout_name=payoutName, slab_name=s, status=status, vehicle_category=vehicle_category, Insurance_company=Insurance_company, policy_provider=policy_provider, vehicle_make_by=vehicle_make_by,
-                              rto=rtos, case_type=casetype, coverage=coverage, fuel_type=fueltype, cpa=cpa, rewards_on=rewards_on, rewards_age=rewards_age, self_rewards_on=self_rewards_on, self_rewards_age=self_rewards_age, profile_id=data)
+        print('mfg_year: ', mfg_year)
+        Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name, insurer=insurer, sp_name=sp_name, 
+                              vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
+                              vehicle_catagory=vehicle_catagory,vehicle_fuel_type=vehicle_fuel_type,mfg_year=mfg_year, 
+                              rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
+                              coverage_type=coverage_type, case_type=case_type,  profile_id=data)
         print("insert data")
         return redirect('bima_policy:slab')
 
 
-# slab payoutform update here by shubham raikwar
+# slab payoutform update here by Manjeet Nandal
 
 def slab_payoutformshow(request, id):
     if request.method == "POST":

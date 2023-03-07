@@ -165,10 +165,10 @@ class Payout(models.Model):
     sp_name = models.CharField(max_length=50)
     vehicle_makeby = models.CharField(max_length=50)
     vehicle_model = models.CharField(max_length=50)
-    vehicle_category = models.CharField(max_length=50)
+    vehicle_catagory = models.CharField(max_length=50)
     vehicle_fuel_type = models.CharField(max_length=50)    
     mfg_year = models.IntegerField()
-    rto = models.CharField(max_length=50)
+    rto_city = models.CharField(max_length=50)
     addon = models.CharField(max_length=50)
     ncb = models.CharField(max_length=50)
     gvw = models.CharField(max_length=50)
@@ -176,7 +176,6 @@ class Payout(models.Model):
     seating_capacity = models.CharField(max_length=50)
     coverage_type = models.CharField(max_length=100)
     case_type = models.CharField(max_length=100)      
-    status = models.CharField(default='Active', max_length=10)
 
     def __str__(self):
         return self.payout_name
