@@ -89,9 +89,8 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="insurer" data-parsley-required-message=""
-                                             class="custom-select" id="insurer" data-parsley-required="true"
-                                             required>
+                                          <select name="insurer" data-parsley-required-message="" class="custom-select"
+                                             id="insurer" data-parsley-required="true" required>
                                              <option value=""> -- Select Insurer -- </option>
                                              {%for value in data_ins%}
                                              <option value="{{value}}">{{value}}</option>
@@ -290,50 +289,65 @@
                               <!-- .card -->
                               <div class="card-body">
                                  <!-- .card-body -->
-
-                                 <h4 class="card-title mb-3">Agent Payout </h4>
+                                 <h4 class="card-title mb-3"> Payout Details </h4>
                                  <!-- grid row -->
                                  <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards On <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <div class="col-lg-7 pl-0 pr-0">
-                                       <select name="areward_on" data-parsley-required="true"
-                                          data-parsley-required-message="" class="custom-select">
-                                          <option value="">Choose </option>
-                                          <option value="OD">OD</option>
-                                          <option value="NET">NET</option>
-                                       </select>
-                                    </div>
+                                    <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards % <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text" value=""
-                                       name="areward_pct" class="form-control maskNumField col-lg-7 rewardpct"
-                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
-                                       maxlength="4">
-                                 </div>
-
-                                 <hr>
-                                 <h4 class="card-title mb-3">Self Payout </h4>
-                                 <!-- grid row -->
-                                 <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards On <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <div class="col-lg-7 pl-0 pr-0">
-                                       <select name="sreward_on" data-parsley-required="true"
-                                          data-parsley-required-message="" class="custom-select">
-                                          <option value="">Choose </option>
-                                          <option value="OD">OD</option>
-                                          <option value="NET">NET</option>
-                                       </select>
-                                    </div>
+                                    <label class="col-lg-5" for="tp">TP Premium<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="tp" id="tp" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards %<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text" value=""
-                                       name="sreward_pct" class="form-control maskNumField rewardpct col-lg-7"
-                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
-                                       maxlength="4">
+                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
+                                       onclick="add()" value="" class="form-control col-lg-6 maskNumField bg-light"
+                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
+                                       maxlength="10" readonly="" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="gst">GST <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
+                                       onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"
+                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="totalnet"
+                                       readonly="" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
+                                    <select class="custom-select col-lg-6" name="payment_mode" required>
+                                       <option value=""> -- Mode -- </option>
+                                       <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
+                                       <option value="SELF ONLINE">SELF ONLINE</option>
+                                       <option value="CASH">CASH</option>
+                                       <option value="CUT PAY">CUT PAY</option>
+                                       <option value="CUSTOMER CHEQUE">CUSTOMER CHEQUE</option>
+                                       <option value="SELF CHEQUE">SELF CHEQUE</option>
+                                    </select>
                                  </div>
 
                               </div>

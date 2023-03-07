@@ -10,15 +10,17 @@
          <div class="page-inner">
             <!-- .page-title-bar -->
             <header class="page-title-bar">
-               
-               <h1 class="page-title"> Payout Form <small class="text-muted">All * marks Fields are mandatory. </small></h1>
+
+               <h1 class="page-title"> Payout Form <small class="text-muted">All * marks Fields are mandatory. </small>
+               </h1>
             </header>
             <!-- .page-section -->
             <div class="page-section">
                <!-- .section-block -->
                <div class="section-block">
                   <!-- page content goes here -->
-                  <form name="frmpayout" method="post" autocomplete="off" data-parsley-validate="true" action=""> <!--url 'bima_policy:slab_payoutform'-->
+                  <form name="frmpayout" method="post" autocomplete="off" data-parsley-validate="true" action="">
+                     <!--url 'bima_policy:slab_payoutform'-->
                      {% csrf_token %}
                      <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-12">
@@ -33,8 +35,8 @@
                                     <div class="form-row">
                                        <div class="col-md-3 mb-3">
                                           <label>Payout Name <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <input type="text" name="payout_name" value="{{data.payout_name}}" class="form-control"
-                                             placeholder="All RTO of HR except GGN &amp; FDB">
+                                          <input type="text" name="payout_name" value="{{data.payout_name}}"
+                                             class="form-control" placeholder="All RTO of HR except GGN &amp; FDB">
                                        </div>
                                        <!-- <div class="col-md-3 mb-4">
                                           <label>Slab<abbr title="Required" class="text-danger">*</abbr></label>
@@ -47,7 +49,7 @@
                                              {%endfor%}
                                           </select>
                                        </div> -->
-                                    
+
                                        <div class="col-md-3 mb-4">
                                           <label>Product Name<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="product_name" data-parsley-required-message=""
@@ -66,9 +68,8 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="insurer" data-parsley-required-message=""
-                                             class="custom-select" id="insurer" data-parsley-required="true"
-                                             required>
+                                          <select name="insurer" data-parsley-required-message="" class="custom-select"
+                                             id="insurer" data-parsley-required="true" required>
                                              <option value="{{data.insurer}}">{{data.insurer}} </option>
                                              {%for value in data_ins%}
                                              <option value="{{value}}">{{value}}</option>
@@ -113,7 +114,8 @@
                                                 class="text-danger">*</abbr></label>
                                           <select name="vehicle_catagory" data-parsley-required-message=""
                                              data-parsley-required="true" class="custom-select " required>
-                                             <option value="{{data.vehicle_catagory}}"> {{data.vehicle_catagory}}</option>
+                                             <option value="{{data.vehicle_catagory}}"> {{data.vehicle_catagory}}
+                                             </option>
                                              {%for value in data_vc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -124,7 +126,8 @@
                                                 class="text-danger">*</abbr></label>
                                           <select name="vehicle_fuel_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.vehicle_fuel_type}}">{{data.vehicle_fuel_type}}</option>
+                                             <option value="{{data.vehicle_fuel_type}}">{{data.vehicle_fuel_type}}
+                                             </option>
                                              <option value="PETROL">PETROL</option>
                                              <option value="DIESEL">DIESEL</option>
                                              <option value="CNG">CNG</option>
@@ -166,9 +169,9 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="rto_city">RTO City <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value="{{data.rto_city}}"
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true" name="rto_city"
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.rto_city}}" data-parsley-required-message=""
+                                             class="form-control" data-parsley-required="true" name="rto_city"
                                              style="text-transform: uppercase;" required>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -223,7 +226,8 @@
                                           <select name="seating_capacity" data-parsley-required-message=""
                                              class="custom-select" id="seating_capacity" data-parsley-required="true"
                                              required>
-                                             <option value="{{data.seating_capacity}}"> {{data.seating_capacity}} </option>
+                                             <option value="{{data.seating_capacity}}"> {{data.seating_capacity}}
+                                             </option>
                                              <option value="BELOW 5">BELOW 5</option>
                                              <option value="5-7">5-7</option>
                                              <option value="7-12">7-12</option>
@@ -253,11 +257,11 @@
                                              <option value="ENDORSEMENT">ENDORSEMENT</option>
                                           </select>
                                        </div>
-                                     
-                                       
-                                    </div>                                    
-                                  
-                                   
+
+
+                                    </div>
+
+
                                  </fieldset>
                                  <p class="mb-1"></p>
                               </div>
@@ -270,38 +274,67 @@
                               <!-- .card -->
                               <div class="card-body">
                                  <!-- .card-body -->
+                                 <h4 class="card-title mb-3"> Payout Details </h4>
+                                 <!-- grid row -->
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="tp">TP Premium<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="tp" id="tp" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
+                                       onclick="add()" value="" class="form-control col-lg-6 maskNumField bg-light"
+                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
+                                       maxlength="10" readonly="" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="gst">GST <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
+                                       onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"
+                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="totalnet"
+                                       readonly="" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
+                                    <select class="custom-select col-lg-6" name="payment_mode" required>
+                                       <option value=""> -- Mode -- </option>
+                                       <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
+                                       <option value="SELF ONLINE">SELF ONLINE</option>
+                                       <option value="CASH">CASH</option>
+                                       <option value="CUT PAY">CUT PAY</option>
+                                       <option value="CUSTOMER CHEQUE">CUSTOMER CHEQUE</option>
+                                       <option value="SELF CHEQUE">SELF CHEQUE</option>
+                                    </select>
+                                 </div>
 
-                                 <h4 class="card-title mb-3">Agent Payout </h4>
-                                 <!-- grid row -->
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards On <abbr title="Required" class="text-danger">*</abbr></label>
-                                    <div class="col-lg-7 pl-0 pr-0">
-                                       <select name="areward_on" data-parsley-required="true" data-parsley-required-message="" class="custom-select">
-                                          <option value="{{data.rewards_on}}">{{data.rewards_on}}</option>
-                                          <option value="OD">OD</option>
-                                          <option value="NET">NET</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards % <abbr title="Required" class="text-danger">*</abbr></label><input type="text" value="{{ data.rewards_age}}" name="areward_pct" class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100" maxlength="4">
-                                 </div>
-                                 <hr>
-                                 <h4 class="card-title mb-3">Self Payout </h4>
-                                 <!-- grid row -->
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards On <abbr title="Required" class="text-danger">*</abbr></label>
-                                    <div class="col-lg-7 pl-0 pr-0">
-                                       <select name="sreward_on" data-parsley-required="true" data-parsley-required-message="" class="custom-select">
-                                          <option value="{{data.self_rewards_on}}">{{data.self_rewards_on}} </option>
-                                          <option value="OD">OD</option>
-                                          <option value="NET">NET</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards %<abbr title="Required" class="text-danger">*</abbr></label><input type="text" value="{{ data.self_rewards_age }}" name="sreward_pct" class="form-control maskNumField rewardpct col-lg-7" data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100" maxlength="4">
-                                 </div>
                               </div>
                               <!-- /.card-body -->
                            </div>
@@ -313,7 +346,7 @@
                         <div class="col-md-12 col-sm-12">
                            <a href="" class="btn btn-secondary w-100p float-left">Back</a>
                            <span class="float-right">
-                           <button type="submit"  class="btn btn-success w-100p">EDIT</button>
+                              <button type="submit" class="btn btn-success w-100p">EDIT</button>
                            </span>
                         </div>
                      </div>
@@ -333,7 +366,8 @@
 <!-- /.app-main -->
 <div class="aside-backdrop"></div>
 </div><!-- /.app -->
-<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
+<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog"
+   aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
    <!-- .modal-dialog -->
    <div class="modal-dialog" role="document">
       <!-- .modal-content -->
@@ -341,13 +375,14 @@
          <!-- .modal-header -->
          <div class="modal-header">
             <h5 class="modal-title">
-               <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error 
+               <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
             </h5>
          </div>
          <!-- /.modal-header -->
          <!-- .modal-body -->
          <div class="modal-body">
-            <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error remains the same, you need to contact your Administrator immediately.</p>
+            <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error
+               remains the same, you need to contact your Administrator immediately.</p>
          </div>
          <!-- /.modal-body -->
          <!-- .modal-footer -->
@@ -363,29 +398,40 @@
 <!-- /.modal -->
 <!-- BEGIN BASE JS -->
 
-<script src="{%static 'js/jquery.min.js' %}"></script> 
-{% comment %} <script src="{%static 'js/popper.min.js' %}"></script>
+<script src="{%static 'js/jquery.min.js' %}"></script>
+{% comment %}
+<script src="{%static 'js/popper.min.js' %}"></script>
 <script src="{%static 'js/bootstrap.min.js' %}"></script> <!-- END BASE JS --> {% endcomment %}
 <!-- BEGIN PLUGINS JS -->
-{% comment %} <script src="{% static 'js/pace.min.js' %}"></script> {% endcomment %}
-{% comment %} <script src="{% static 'js/stacked-menu.min.js' %}"></script>
+{% comment %}
+<script src="{% static 'js/pace.min.js' %}"></script> {% endcomment %}
+{% comment %}
+<script src="{% static 'js/stacked-menu.min.js' %}"></script>
 <script src="{% static 'js/perfect-scrollbar.min.js'%}"></script><!-- END PLUGINS JS -->
 <!-- Parsley -->
 <script src="{%static 'js/parsley.js' %}"></script> {% endcomment %}
 <!-- BEGIN THEME JS -->
-{% comment %} <script src="{%static 'js/theme.js' %}"></script> 
+{% comment %}
+<script src="{%static 'js/theme.js' %}"></script>
 <script src="{%static 'js/toastr.min.js' %}"></script>
 <script src="{%static 'js/flatpickr.min.js' %}"></script> {% endcomment %}
-{% comment %} <script src="{%static 'js/select2.full.min.js' %}"></script>
+{% comment %}
+<script src="{%static 'js/select2.full.min.js' %}"></script>
 <script src="{%static 'js/moment.js' %}"></script>
 <script src="{%static 'js/mask-as-number.min.js' %}"></script>
 <script src="{%static 'js/jquery.dataTables.min.js' %}"></script> {% endcomment %}
-{% comment %} <script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
+{% comment %}
+<script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
 <script src="{%static 'js/jquery.form.js' %}"></script>
 <script src="{%static 'js/custom.min.js' %}"></script> {% endcomment %}
-{% comment %} <script type="text/javascript" src="{%static 'js/bootstrap-select.min.js' %}"></script> {% endcomment %}
-{% comment %} <script type="text/javascript" src="{%static 'js/filter-multi-select.js' %}"></script> {% endcomment %}
+{% comment %}
+<script type="text/javascript" src="{%static 'js/bootstrap-select.min.js' %}"></script> {% endcomment %}
+{% comment %}
+<script type="text/javascript" src="{%static 'js/filter-multi-select.js' %}"></script> {% endcomment %}
 <script type="text/javascript" src="{%static 'js/bootstrap-tagsinput.min.js' %}"></script>
-{% comment %} <script type="text/javascript" src="{%static 'js/payouts.min.js' %}"></script>  {% endcomment %}
-</body></html>
+{% comment %}
+<script type="text/javascript" src="{%static 'js/payouts.min.js' %}"></script> {% endcomment %}
+</body>
+
+</html>
 {%endblock%}

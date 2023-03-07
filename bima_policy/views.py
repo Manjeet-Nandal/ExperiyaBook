@@ -503,9 +503,13 @@ class create_policy(View):
                               employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report)
 
-        data = Policy.objects.filter(profile_id=get_id_from_session(
-            request)).order_by('-policyid').values()
-        return render(request, 'policylist/policy_entry_list.html', {'data': data})
+        # data = Policy.objects.filter(profile_id=get_id_from_session(
+        #     request)).order_by('-policyid').values()
+        
+        data=Payout.objects.filter(Q(case_type=case_type)).values()
+        print(data)
+        # return render(request, 'policylist/policy_entry_list.html', {'data': data})
+        return render(request,'policylist/list_apply_payout.html',{'data':data,'policy_no':policy_no})
 
 
 class create_policy_non_motor(View):
@@ -606,42 +610,16 @@ class create_policy_non_motor(View):
 # Policy Entry Function by Pragati/ shubham
 
 def apply_policy(request, id):
+    print('apply_policy')
     data = Policy.objects.get(policy_no=id)
     data = Policy.objects.get(policyid=data.policyid)
     d = data.OD_premium
     dt = data.net
-    case_data = data.casetype
-    fuel_data = data.vehicle_fuel_type
-    ins_data = data.insurance_comp
-    reg = data.registration_no[0:4]
-    # print(data./\)
-    data1 = Payout.objects.get(Q(case_type=case_data) & Q(
-        fuel_type=fuel_data) & Q(Insurance_company=ins_data) & Q(rto=reg))
+    case_type = data.case_type
+    data1 = Payout.objects.get(Q(case_type=case_type))
     # data1=Payout.objects.get(payoutid=data.payoutid)
-    # print(data1.rewards_on)
-    y = data1.rewards_age
-    y1 = data1.rewards_on
-    if y1 == 'OD':
-        z = ((d/100)*y)
-        z = int(z)
-
-    elif y1 == 'NET':
-        z = ((dt/100)*y)
-        z = int(z)
-
-    a = data1.self_rewards_age
-    a1 = data1.self_rewards_on
-    if a1 == 'OD':
-        z1 = ((d/100)*a)
-        z1 = int(z1)
-
-    elif a1 == 'NET':
-        z1 = ((dt/100)*a)
-        z1 = int(z1)
-
-    print(z)
-    print(z1)
-    return render(request, 'policylist/policy_save.html', {'data': data, 'data1': data1, 'z': z, 'z1': z1})
+    # print(data1.rewards_on)  
+    return render(request, 'policylist/policy_save.html', {'data': data, 'data1': data1, 'z': dt, 'z1': dt})
 
 
 def policy_entry(request):
