@@ -160,10 +160,9 @@ class Payout(models.Model):
     ).hex[:7].upper(), editable=False, max_length=7)
     slab_name = models.ForeignKey(Slab, on_delete=models.CASCADE)
     payout_name = models.CharField(max_length=100)
-    status = models.CharField(default='Active', max_length=10)
-    Insuror = models.CharField(max_length=50)
-    policy_provider = models.CharField(max_length=50)
     product_name = models.CharField(max_length=100)
+    insurer = models.CharField(max_length=50)
+    sp_name = models.CharField(max_length=50)
     vehicle_makeby = models.CharField(max_length=50)
     vehicle_model = models.CharField(max_length=50)
     vehicle_category = models.CharField(max_length=50)
@@ -176,12 +175,8 @@ class Payout(models.Model):
     cubic_capacity = models.CharField(max_length=50)
     seating_capacity = models.CharField(max_length=50)
     coverage_type = models.CharField(max_length=100)
-    case_type = models.CharField(max_length=100)    
-    cpa = models.CharField(max_length=50)
-    rewards_on = models.CharField(max_length=50)
-    rewards_age = models.IntegerField()
-    self_rewards_on = models.CharField(max_length=50)
-    self_rewards_age = models.IntegerField()
+    case_type = models.CharField(max_length=100)      
+    status = models.CharField(default='Active', max_length=10)
 
     def __str__(self):
         return self.payout_name

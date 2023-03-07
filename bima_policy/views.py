@@ -981,6 +981,7 @@ def slab_edit(request, id):
 
 
 def slab_payout(request, id):
+    print('slab_payout')
     if request.method == 'GET':
         try:
             data = Payout.objects.filter(
@@ -992,23 +993,27 @@ def slab_payout(request, id):
 
 
 def slab_payoutform(request):
-    print("function calling..")
+    print('slab_payoutform')
+
     if request.method == "GET":
-        pol_provider = ServiceProvider.objects.filter(
+        print('slab_payoutform get')
+        data_sp = ServiceProvider.objects.filter(
             profile_id=get_id_from_session(request))
-        ins_comp = InsuranceCompany.objects.filter(
+        data_ins = InsuranceCompany.objects.filter(
             profile_id=get_id_from_session(request))
-        vcat = VehicleCategory.objects.filter(
+        data_vmb = VehicleMakeBy.objects.filter(
             profile_id=get_id_from_session(request))
-        vmb = VehicleMakeBy.objects.filter(
+        data_vm = VehicleModelName.objects.filter(
             profile_id=get_id_from_session(request))
-        vmodel = VehicleModelName.objects.filter(
+        data_vc = VehicleCategory.objects.filter(
+            profile_id=get_id_from_session(request))        
+        data_ct = CoverageType.objects.filter(
             profile_id=get_id_from_session(request))
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
         states = StateRtos.objects.all()
         state_rto = rtotables.objects.all()
         # print(state_rto.rto_id)
-        return render(request, 'payout/slab_payoutform.html', {'state_rto': state_rto, 'states': states, 'slab': slab, 'vcat': vcat, 'vmb': vmb, 'vmodel': vmodel, 'ins_comp': ins_comp, 'pol_provider': pol_provider})
+        return render(request, 'payout/slab_payoutform.html', {'state_rto': state_rto, 'states': states, 'slab': slab, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct})
 
     if request.method == 'POST' and 'savepayout' in request.POST:
         print("data enter")
@@ -1016,47 +1021,61 @@ def slab_payoutform(request):
         payoutName = request.POST['payout_name']
         slab = request.POST['slab']
         s = Slab.objects.get(slab_name=slab)
-        status = request.POST['status']
-        if request.POST['vehicle_category'] == 'any':
-            vehicle = list(VehicleCategory.objects.filter(
-                profile_id=get_id_from_session(request)))
-            vehicle_category = vehicle
-            print(vehicle_category)
-        else:
-            vehicle_category = request.POST['vehicle_category']
+        product_name = request.POST['product_name']
 
-        if request.POST['ins_com'] == 'any':
+        if request.POST['insurance_company'] == 'any':
             ins = list(InsuranceCompany.objects.filter(
                 profile_id=get_id_from_session(request)))
             Insurance_company = ins
             print(Insurance_company)
         else:
-            Insurance_company = request.POST['ins_com']
+            Insurance_company = request.POST['insurance_company']
+      
 
-        if request.POST['policy_provider'] == 'any':
-            policy = list(ServiceProvider.objects.filter(
+        if request.POST['sp_name'] == 'any':
+            sp = list(ServiceProvider.objects.filter(
                 profile_id=get_id_from_session(request)))
-            policy_provider = policy
-            print(policy_provider)
+            sp_name = sp
+            print(sp_name)
         else:
-            policy_provider = request.POST['policy_provider']
+            sp_name = request.POST['sp_name']
 
-        if request.POST['vehicle_category'] == 'any':
-            vehiclemb = list(VehicleMakeBy.objects.filter(
+
+        if request.POST['vehicle_makeby'] == 'any':
+            vehicle = list(VehicleCategory.objects.filter(
                 profile_id=get_id_from_session(request)))
-            vehicle_make_by = vehiclemb
-            print(vehicle_make_by)
+            vehicle_makeby = vehicle
+            print(vehicle_makeby)
         else:
-            vehicle_make_by = request.POST['vehicle_make_by']
-        rtos = request.POST.getlist('rto')
+            vehicle_makeby = request.POST['vehicle_makeby']
+
+         if request.POST['vehicle_model'] == 'any':
+            vehicle = list(VehicleCategory.objects.filter(
+                profile_id=get_id_from_session(request)))
+            vehicle_model = vehicle
+            print(vehicle_model)
+        else:
+            vehicle_model = request.POST['vehicle_model']
+
+        
+        if request.POST['vehicle_catagory'] == 'any':
+            v_cat = list(VehicleMakeBy.objects.filter(
+                profile_id=get_id_from_session(request)))
+            vehicle_catagory = v_cat
+            print(vehicle_catagory)
+        else:
+            vehicle_catagory = request.POST['vehicle_catagory']
+
+        fueltype = request.POST.getlist('fueltype')
+        rto = request.POST.getlist('rto_city')
+        addon = request.POST.getlist('addon')
+        ncb = request.POST.getlist('ncb')
+        gvw = request.POST.getlist('gvw')
         casetype = request.POST.getlist('casetype')
         coverage = request.POST.getlist('coverage')
-        fueltype = request.POST.getlist('fueltype')
-        cpa = request.POST.getlist('cpa')
-        rewards_on = request.POST['areward_on']
-        rewards_age = request.POST['areward_pct']
-        self_rewards_on = request.POST['sreward_on']
-        self_rewards_age = request.POST['sreward_pct']
+      
+        status = request.POST['status']
+
         Payout.objects.create(payout_name=payoutName, slab_name=s, status=status, vehicle_category=vehicle_category, Insurance_company=Insurance_company, policy_provider=policy_provider, vehicle_make_by=vehicle_make_by,
                               rto=rtos, case_type=casetype, coverage=coverage, fuel_type=fueltype, cpa=cpa, rewards_on=rewards_on, rewards_age=rewards_age, self_rewards_on=self_rewards_on, self_rewards_age=self_rewards_age, profile_id=data)
         print("insert data")
