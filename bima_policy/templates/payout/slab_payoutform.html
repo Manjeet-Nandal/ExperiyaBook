@@ -72,9 +72,9 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Product Name<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="product_name" data-parsley-required-message=""
+                                          <select id="product_name" name="product_name" data-parsley-required-message=""
                                              class="custom-select" id="product_name" data-parsley-required="true"
-                                             multiple required>
+                                             multiple required onchange="selectAllItems('product_name')">
                                              <option value="MOTOR">MOTOR</option>
                                              <option value="FIRE">FIRE</option>
                                              <option value="MARINE">MARINE</option>
@@ -89,8 +89,9 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="insurer" data-parsley-required-message="" class="custom-select"
-                                             multiple id="insurer" data-parsley-required="true" required>
+                                          <select id="insurer" name="insurer" data-parsley-required-message=""
+                                             class="custom-select" multiple id="insurer" data-parsley-required="true"
+                                             required onchange="selectAllItems('insurer')">
                                              {%for value in data_ins%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -101,8 +102,9 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Service Provider<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="sp_name" data-parsley-required-message="" class="custom-select"
-                                             multiple id="sp_name" data-parsley-required="true" required>
+                                          <select id="sp_name" name="sp_name" data-parsley-required-message=""
+                                             class="custom-select" multiple id="sp_name" data-parsley-required="true"
+                                             required onchange="selectAllItems('sp_name')">
                                              {%for value in data_sp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -113,8 +115,10 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Make By <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="vehicle_makeby" data-parsley-required-message="" multiple
-                                             data-parsley-required="true" class="custom-select" required>
+                                          <select id="vehicle_makeby" name="vehicle_makeby"
+                                             data-parsley-required-message="" multiple
+                                             onchange="selectAllItems('vehicle_makeby')" data-parsley-required="true"
+                                             class="custom-select" required>
                                              {%for value in data_vmb%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -125,21 +129,23 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Model <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="vehicle_model" data-parsley-required-message="" multiple
-                                             data-parsley-required="true" class="custom-select" required>
+                                          <select id="vehicle_model" d name="vehicle_model"
+                                             ata-parsley-required-message="" multiple
+                                             onchange="selectAllItems('vehicle_model')" data-parsley-required="true"
+                                             class="custom-select" required>
                                              {%for value in data_vm%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                              <option value="*"> select all </option>
-
-
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Catagory <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="vehicle_catagory" data-parsley-required-message="" multiple
-                                             data-parsley-required="true" class="custom-select " required>
+                                          <select id="vehicle_catagory" name="vehicle_catagory"
+                                             data-parsley-required-message="" multiple
+                                             onchange="selectAllItems('vehicle_catagory')" data-parsley-required="true"
+                                             class="custom-select " required>
                                              {%for value in data_vc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -151,7 +157,9 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="vehicle_fuel_type" data-parsley-required="true" multiple
+                                          <select id="vehicle_fuel_type" name="vehicle_fuel_type"
+                                             data-parsley-required="true" multiple
+                                             onchange="selectAllItems('vehicle_fuel_type')"
                                              data-parsley-required-message="" class="custom-select" required>
                                              <option value="PETROL">PETROL</option>
                                              <option value="DIESEL">DIESEL</option>
@@ -194,8 +202,9 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Addon <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="addon" data-parsley-required="true"  onchange="selectAll('addon')"
-                                             data-parsley-required-message="" class="custom-select" required multiple>
+                                          <select id="addon" name="addon" data-parsley-required="true"
+                                             onchange="selectAllItems('addon')" data-parsley-required-message=""
+                                             class="custom-select" required multiple>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                              <option value="*"> select all </option>
@@ -204,8 +213,9 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>NCB <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="ncb" data-parsley-required="true" multiple  onchange="selectAll('ncb')"
-                                             data-parsley-required-message="" class="custom-select" required>
+                                          <select id="ncb" name="ncb" data-parsley-required="true" multiple
+                                             onchange="selectAllItems('ncb')" data-parsley-required-message=""
+                                             class="custom-select" required>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                              <option value="*"> select all </option>
@@ -214,8 +224,8 @@
                                        <div class="col-md-3 mb-4">
                                           <label>GVW<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="gvw" data-parsley-required-message="" class="custom-select"
-                                             id="gvw" data-parsley-required="true" required onchange="selectAll('gvw')"
-                                             multiple>
+                                             id="gvw" data-parsley-required="true" required
+                                             onchange="selectAllItems('gvw')" multiple>
                                              <option value="BELOW 2000">BELOW 2000</option>
                                              <option value="2000-2500">2000-2500</option>
                                              <option value="2500-3500">2500-3500</option>
@@ -228,25 +238,14 @@
                                              <option value="*"> select all </option>
                                           </select>
                                        </div>
-                                       <script>
-                                          function selectAll(name) {
-                                             var item = document.getElementById(name)                                             
-                                             if (item.value == '*') {       
-                                                print('hello alll')                                         
-                                                for (i = 0; i < item.length; i++) {
-                                                   item.options[i].selected = true
-                                                }
-                                             }
-                                             item.options[item.options.length - 1].selected = false
 
-                                          }
-                                       </script>
                                        <div class="col-md-3 mb-4">
                                           <label>Cubic Capacity<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="cubic_capacity" data-parsley-required-message=""
-                                             class="custom-select" id="cubic_capacity" data-parsley-required="true"
-                                             multiple required>
+                                          <select id="cubic_capacity" name="cubic_capacity"
+                                             data-parsley-required-message="" class="custom-select" id="cubic_capacity"
+                                             data-parsley-required="true" multiple required
+                                             onchange="selectAllItems('cubic_capacity')">
                                              <option value="BELOW 1000">BELOW 1000</option>
                                              <option value="1000-1500">1000-1500</option>
                                              <option value="ABOVE 1500">ABOVE 1500</option>
@@ -257,9 +256,10 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Seating Capacity<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="seating_capacity" data-parsley-required-message=""
-                                             class="custom-select" id="seating_capacity" data-parsley-required="true"
-                                             multiple required>
+                                          <select id="seating_capacity" name="seating_capacity"
+                                             data-parsley-required-message="" class="custom-select"
+                                             id="seating_capacity" data-parsley-required="true" multiple required
+                                             onchange="selectAllItems('seating_capacity')">
                                              <!-- <option value=""> -- Select Seating Capacity -- </option> -->
                                              <option value="5-7">5-7</option>
                                              <option value="7-12">7-12</option>
@@ -272,8 +272,9 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Coverage Type <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="coverage_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required multiple>
+                                          <select id="coverage_type" name="coverage_type" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required multiple
+                                             onchange="selectAllItems('coverage_type')">
                                              {% for value in data_ct%}
                                              <option value="{{value}}">{{value}}</option>
                                              {% endfor%}
@@ -282,8 +283,9 @@
                                        </div>
                                        <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="case_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required multiple>
+                                          <select id="case_type" name="case_type" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required multiple
+                                             onchange="selectAllItems('case_type')">
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
@@ -292,8 +294,20 @@
 
                                           </select>
                                        </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select id="cpa" name="cpa" data-parsley-required="true" multiple
+                                             onchange="selectAllItems('cpa')" data-parsley-required-message=""
+                                             class="custom-select" required>
+                                             <option value="YES">YES</option>
+                                             <option value="NO">NO</option>
+                                             <option value="*"> select all </option>
+                                          </select>
+                                       </div>
 
-                                       <div class="col-md-12 mb-4">
+                                       <div class="col-md-6 mb-4 ">
+                                          <label>State <abbr title="Required" class="text-danger">*</abbr></label>
+
                                           <button class="btn btn-default dropdown-toggle form-control btn-secondary "
                                              type="button" data-toggle="dropdown"><span class="dropdown-text"> -- Select
                                                 State --</span>
@@ -2466,6 +2480,19 @@
 
 </script>
 
+<script>
+   function selectAllItems(name) {
+      var item = document.getElementById(name)
+      if (item.value == '*') {
+         for (i = 0; i < item.length; i++) {
+            item.options[i].selected = true
+         }
+      }
+      item.options[item.options.length - 1].selected = false
+
+   }
+
+</script>
 
 {% comment %}
 <script>
