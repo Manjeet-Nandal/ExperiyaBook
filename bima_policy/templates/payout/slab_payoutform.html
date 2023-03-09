@@ -85,6 +85,7 @@
                                              <option value="ENGINEERING">ENGINEERING</option>
                                              <option value="WC">WC</option>
                                              <option value="OTHERS">OTHERS</option>
+                                             <option value="*">-- All Products --</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -184,6 +185,51 @@
                                              <option value="2003">2003</option>
                                              <option value="2002">2002</option>
                                              <option value="2001">2001</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>RTO State<abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="rto_state" data-parsley-required-message=""
+                                             class="custom-select" id="rto_state" data-parsley-required="true" required>
+                                             <option value="">-- Select State --</option>
+                                             <option value="Andama And Nicobar Island">Andama And Nicobar Island
+                                             </option>
+                                             <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                             <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                             <option value="Assam">Assam</option>
+                                             <option value="Bihar">Bihar</option>
+                                             <option value="Chandigarh">Chandigarh</option>
+                                             <option value="Chattisgarh">Chattisgarh</option>
+                                             <option value="Daman And Diu">Daman And Diu</option>
+                                             <option value="Delhi">Delhi</option>
+                                             <option value="Goa">Goa</option>
+                                             <option value="Gujrat">Gujrat</option>
+                                             <option value="Haryana">Haryana</option>
+                                             <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                             <option value="Jammu And Kashmir">Jammu And Kashmir</option>
+                                             <option value="Jharkhand">Jharkhand</option>
+                                             <option value="Karnataka">Karnataka</option>
+                                             <option value="Kerala">Kerala</option>
+                                             <option value="Lakshadweep">Lakshadweep</option>
+                                             <option value="Leh">Leh</option>
+                                             <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                             <option value="Maharashtra">Maharashtra</option>
+                                             <option value="Manipur">Manipur</option>
+                                             <option value="Meghalaya">Meghalaya</option>
+                                             <option value="Mizoram">Mizoram</option>
+                                             <option value="Nagaland">Nagaland</option>
+                                             <option value="NCR">NCR</option>
+                                             <option value="Odisha">Odisha</option>
+                                             <option value="Puducherry">Puducherry</option>
+                                             <option value="Punjab">Punjab</option>
+                                             <option value="Rajasthan">Rajasthan</option>
+                                             <option value="Sikkim">Sikkim</option>
+                                             <option value="Tamil Nadu">Tamil Nadu</option>
+                                             <option value="Telangana">Telangana</option>
+                                             <option value="Tripura">Tripura</option>
+                                             <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                             <option value="Uttrakhand">Uttrakhand</option>
+                                             <option value="West Bengal">West Bengal</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -289,70 +335,55 @@
                               <!-- .card -->
                               <div class="card-body">
                                  <!-- .card-body -->
-                                 <h4 class="card-title mb-3"> Payout Details </h4>
+                                 <h4 class="card-title mb-3"> Agent Payout </h4>
+                                 <!-- grid row -->
+
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div class="col-lg-7 pl-0 pr-0">
+                                       <select name="areward_on" data-parsley-required="true"
+                                          data-parsley-required-message="" class="custom-select">
+                                          <option value="">Choose </option>
+                                          <option value="OD">OD</option>
+                                          <option value="NET">NET</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards % <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                       name="areward_pct" class="form-control maskNumField col-lg-7 rewardpct"
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                       maxlength="4">
+                                 </div>
+                                 <hr>
+                                 <h4 class="card-title mb-3">Self Payout </h4>
                                  <!-- grid row -->
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
+                                    <label class="col-lg-4">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div class="col-lg-7 pl-0 pr-0">
+                                       <select name="sreward_on" data-parsley-required="true"
+                                          data-parsley-required-message="" class="custom-select">
+                                          <option value="">Choose </option>
+                                          <option value="OD">OD</option>
+                                          <option value="NET">NET</option>
+                                       </select>
+                                    </div>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">TP Premium<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="tp" id="tp" maxlength="10" required>
+                                    <label class="col-lg-4">Rewards %<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                       name="sreward_pct" class="form-control maskNumField rewardpct col-lg-7"
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                       maxlength="4">
                                  </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
-                                       onclick="add()" value="" class="form-control col-lg-6 maskNumField bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
-                                       maxlength="10" readonly="" required>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="gst">GST <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10" required>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="totalnet"
-                                       readonly="" maxlength="10" required>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
-                                    <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value=""> -- Mode -- </option>
-                                       <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
-                                       <option value="SELF ONLINE">SELF ONLINE</option>
-                                       <option value="CASH">CASH</option>
-                                       <option value="CUT PAY">CUT PAY</option>
-                                       <option value="CUSTOMER CHEQUE">CUSTOMER CHEQUE</option>
-                                       <option value="SELF CHEQUE">SELF CHEQUE</option>
-                                    </select>
-                                 </div>
+
 
                               </div>
                            </div>
-                           <!-- /.card-body -->
+
                         </div>
                         <!-- /.card -->
                      </div>

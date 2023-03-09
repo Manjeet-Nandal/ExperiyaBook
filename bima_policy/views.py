@@ -1000,6 +1000,12 @@ def slab_payoutform(request):
         slab = request.POST['slab']
         s = Slab.objects.get(slab_name=slab)
         product_name = request.POST['product_name']
+        if request.POST['product_name'] == '*':
+            product_name = request.POST.getlist('product_name')
+        else :
+            product_name = request.POST['product_name']
+
+        print(product_name)
         insurer = request.POST['insurer']
         sp_name = request.POST['sp_name']
         vehicle_makeby = request.POST['vehicle_makeby']
@@ -1016,7 +1022,6 @@ def slab_payoutform(request):
         coverage_type = request.POST['coverage_type']
         case_type = request.POST['case_type']
 
-        print('mfg_year: ', mfg_year)
         Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name, insurer=insurer, sp_name=sp_name,
                               vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
                               vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
