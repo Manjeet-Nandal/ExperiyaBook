@@ -168,7 +168,7 @@ class Payout(models.Model):
     vehicle_catagory = models.CharField(max_length=50)
     vehicle_fuel_type = models.CharField(max_length=50)    
     mfg_year = models.IntegerField()
-    rto_city = models.CharField(max_length=50)
+    rto_city = models.TextField()
     addon = models.CharField(max_length=50)
     ncb = models.CharField(max_length=50)
     gvw = models.CharField(max_length=50)
