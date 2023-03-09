@@ -999,84 +999,24 @@ def slab_payoutform(request):
         payout_name = request.POST['payout_name']
         slab = request.POST['slab']
         s = Slab.objects.get(slab_name=slab)
-
-        if request.POST['product_name'] == '*':
-            product_name = ['MOTOR', 'FIRE', 'MARINE', 'BURGULARY',
-                            'SHOPKEEPER', 'ENGINEERING', 'WC', 'OTHERS']
-        else:
-            product_name = request.POST['product_name']
-        if request.POST['insurer'] == '*':
-            insurer = list(InsuranceCompany.objects.filter(
-                profile_id=get_id_from_session(request)))
-        else:
-            insurer = request.POST['insurer']
-        if request.POST['sp_name'] == '*':
-            sp_name = list(ServiceProvider.objects.filter(
-                profile_id=get_id_from_session(request)))
-        else:
-            sp_name = request.POST['sp_name']
-        if request.POST['vehicle_makeby'] == '*':
-            vehicle_makeby = list(VehicleMakeBy.objects.filter(
-                profile_id=get_id_from_session(request)))
-        else:
-            vehicle_makeby = request.POST['vehicle_makeby']
-        if request.POST['vehicle_model'] == '*':
-            vehicle_model = list(VehicleModelName.objects.filter(
-                profile_id=get_id_from_session(request)))
-        else:
-            vehicle_model = request.POST['vehicle_model']
-        if request.POST['vehicle_catagory'] == '*':
-            vehicle_catagory = list(VehicleCategory.objects.filter(
-                profile_id=get_id_from_session(request)))
-        else:
-            vehicle_catagory = request.POST['vehicle_catagory']
-        if request.POST['vehicle_fuel_type'] == '*':
-            vehicle_fuel_type = ['PETROL', 'DIESEL', 'CNG', 'ELECTRIC']
-        else:
-            vehicle_fuel_type = request.POST['vehicle_fuel_type']
-        if request.POST['mfg_year'] == '*':
-            mfg_year = ['MOTOR', 'FIRE', 'MARINE', 'BURGULARY',
-                        'SHOPKEEPER', 'ENGINEERING', 'WC', 'OTHERS']
-        else:
-            mfg_year = request.POST['mfg_year']
-        if request.POST['addon'] == '*':
-            addon = ['YES', 'NO']
-        else:
-            addon = request.POST['addon']
-        if request.POST['ncb'] == '*':
-            ncb = ['YES', 'NO']
-        else:
-            ncb = request.POST['ncb']
-
-        if request.POST['gvw'] == '*':
-            gvw = request.POST.getlist('gvw')
-        else:
-            gvw = request.POST['gvw']
-        if request.POST['cubic_capacity'] == '*':
-            cubic_capacity = ['MOTOR', 'FIRE', 'MARINE', 'BURGULARY',
-                              'SHOPKEEPER', 'ENGINEERING', 'WC', 'OTHERS']
-        else:
-            cubic_capacity = request.POST['cubic_capacity']
-        if request.POST['seating_capacity'] == '*':
-            seating_capacity = ['MOTOR', 'FIRE', 'MARINE',
-                                'BURGULARY', 'SHOPKEEPER', 'ENGINEERING', 'WC', 'OTHERS']
-        else:
-            seating_capacity = request.POST['seating_capacity']
-        if request.POST['coverage_type'] == '*':
-            coverage_type = ['MOTOR', 'FIRE', 'MARINE', 'BURGULARY',
-                             'SHOPKEEPER', 'ENGINEERING', 'WC', 'OTHERS']
-        else:
-            coverage_type = request.POST['coverage_type']
-        if request.POST['case_type'] == '*':
-            case_type = ['MOTOR', 'FIRE', 'MARINE', 'BURGULARY',
-                         'SHOPKEEPER', 'ENGINEERING', 'WC', 'OTHERS']
-        else:
-            case_type = request.POST['case_type']
-
-        rtos = request.POST.getlist('rto')
-
-        print(gvw)
-
+        product_name = request.POST.getlist('product_name')
+        insurer = request.POST.getlist('insurer')
+        sp_name = request.POST.getlist('sp_name')
+        vehicle_makeby = request.POST.getlist('vehicle_makeby')
+        vehicle_model = request.POST.getlist('vehicle_model')
+        vehicle_catagory = request.POST.getlist('vehicle_catagory')
+        vehicle_fuel_type = request.POST.getlist('vehicle_fuel_type')
+        mfg_year = request.POST.getlist('mfg_year')
+        addon = request.POST.getlist('addon')
+        ncb = request.POST.getlist('ncb')
+        gvw = request.POST.getlist('gvw')
+        cubic_capacity = request.POST.getlist('cubic_capacity')
+        seating_capacity = request.POST.getlist('seating_capacity')
+        coverage_type = request.POST.getlist('coverage_type')
+        case_type = request.POST.getlist('case_type')
+        cpa = request.POST.getlist('cpa')
+        rto = request.POST.getlist('rto')
+        print(coverage_type)
         # Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name, insurer=insurer, sp_name=sp_name,
         #                       vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
         #                       vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,

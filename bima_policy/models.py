@@ -160,7 +160,7 @@ class Payout(models.Model):
     ).hex[:7].upper(), editable=False, max_length=7)
     slab_name = models.ForeignKey(Slab, on_delete=models.CASCADE)
     payout_name = models.CharField(max_length=100)
-    product_name = models.CharField(max_length=100)
+    product_name = models.TextField()
     insurer = models.CharField(max_length=50)
     sp_name = models.CharField(max_length=50)
     vehicle_makeby = models.CharField(max_length=50)
