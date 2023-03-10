@@ -160,22 +160,29 @@ class Payout(models.Model):
     ).hex[:7].upper(), editable=False, max_length=7)
     slab_name = models.ForeignKey(Slab, on_delete=models.CASCADE)
     payout_name = models.CharField(max_length=100)
-    product_name = models.TextField()
-    insurer = models.CharField(max_length=50)
-    sp_name = models.CharField(max_length=50)
-    vehicle_makeby = models.CharField(max_length=50)
-    vehicle_model = models.CharField(max_length=50)
-    vehicle_catagory = models.CharField(max_length=50)
-    vehicle_fuel_type = models.CharField(max_length=50)    
+    product_name = models.CharField(max_length=100)
+    insurer = models.CharField(max_length=255)
+    sp_name = models.CharField(max_length=255)
+    vehicle_makeby = models.CharField(max_length=255)
+    vehicle_model = models.CharField(max_length=255)
+    vehicle_catagory = models.CharField(max_length=255)
+    vehicle_fuel_type = models.CharField(max_length=255)    
     mfg_year = models.IntegerField()
     rto_city = models.TextField()
     addon = models.CharField(max_length=50)
     ncb = models.CharField(max_length=50)
-    gvw = models.CharField(max_length=50)
-    cubic_capacity = models.CharField(max_length=50)
-    seating_capacity = models.CharField(max_length=50)
+    gvw = models.CharField(max_length=100)
+    cubic_capacity = models.CharField(max_length=100)
+    seating_capacity = models.CharField(max_length=100)
     coverage_type = models.CharField(max_length=100)
-    case_type = models.CharField(max_length=100)      
+    case_type = models.CharField(max_length=50)      
+    cpa = models.CharField(max_length=50)      
+
+    rewards_on=models.CharField(max_length=50)
+    rewards_age=models.IntegerField()
+    self_rewards_on=models.CharField(max_length=50)
+    self_rewards_age=models.IntegerField()
+    
 
     def __str__(self):
         return self.payout_name
@@ -281,12 +288,14 @@ class Policy(models.Model):
     vehicle_rc = models.FileField(upload_to='media/documents/')
     inspection_report = models.FileField(upload_to='media/documents/')
 
+
     def __str__(self):
         return self.customer_name
 
     def save(self, *args, **kwargs):
         self.policyid = uuid.uuid4().hex[:7].upper()
         super(Policy, self).save(*args, **kwargs)
+
 
 
 class PolicyNonMotor(models.Model):

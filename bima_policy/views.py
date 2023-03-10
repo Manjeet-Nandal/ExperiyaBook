@@ -1016,12 +1016,36 @@ def slab_payoutform(request):
         case_type = request.POST.getlist('case_type')
         cpa = request.POST.getlist('cpa')
         rto = request.POST.getlist('rto')
-        print(coverage_type)
+
+        product_name = request.POST['product_name']
+
+        print(product_name)
+        product_name = ','.join(product_name)
+        insurer = ','.join(insurer)
+        sp_name = ','.join(sp_name)
+        vehicle_makeby = ','.join(vehicle_makeby)
+        vehicle_model = ','.join(vehicle_model)
+        vehicle_catagory = ','.join(vehicle_catagory)
+        vehicle_fuel_type = ','.join(vehicle_fuel_type)
+        mfg_year = ','.join(mfg_year)
+        rto_city = ','.join(rto)
+        addon = ','.join(addon)
+        ncb = ','.join(ncb)
+        gvw = ','.join(gvw)
+        cubic_capacity = ','.join(cubic_capacity)
+        seating_capacity = ','.join(seating_capacity)
+        coverage_type = ','.join(coverage_type)
+        case_type = ','.join(case_type)
+        cpa = ','.join(cpa)
+        print(product_name)
+
+        # my_list = product_names.split(",")
+        # print( my_list)
         # Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name, insurer=insurer, sp_name=sp_name,
         #                       vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
         #                       vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
         #                       rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
-        #                       coverage_type=coverage_type, case_type=case_type,  profile_id=data)
+        #                       coverage_type=coverage_type, case_type=case_type, cpa=cpa, profile_id=data)
         print("insert data")
         return redirect('bima_policy:slab')
 

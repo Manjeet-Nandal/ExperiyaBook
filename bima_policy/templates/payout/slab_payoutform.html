@@ -538,7 +538,24 @@
                                           data-parsley-required-message="" class="custom-select">
                                           <option value="">Choose </option>
                                           <option value="OD">OD</option>
-                                          <option value="NET">NET</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards % <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                       name="areward_pct" class="form-control maskNumField col-lg-7 rewardpct"
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                       maxlength="4">
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div class="col-lg-7 pl-0 pr-0">
+                                       <select name="areward_on" data-parsley-required="true"
+                                          data-parsley-required-message="" class="custom-select">
+                                          <option value="">Choose </option>
+                                          <option value="TP">TP</option>
                                        </select>
                                     </div>
                                  </div>
@@ -560,7 +577,6 @@
                                           data-parsley-required-message="" class="custom-select">
                                           <option value="">Choose </option>
                                           <option value="OD">OD</option>
-                                          <option value="NET">NET</option>
                                        </select>
                                     </div>
                                  </div>
@@ -571,6 +587,25 @@
                                        data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
                                        maxlength="4">
                                  </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div class="col-lg-7 pl-0 pr-0">
+                                       <select name="sreward_on" data-parsley-required="true"
+                                          data-parsley-required-message="" class="custom-select">
+                                          <option value="">Choose </option>
+                                          <option value="TP">TP</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards %<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                       name="sreward_pct" class="form-control maskNumField rewardpct col-lg-7"
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                       maxlength="4">
+                                 </div>
+
 
 
                               </div>
