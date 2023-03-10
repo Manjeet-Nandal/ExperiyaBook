@@ -152,7 +152,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label for="mfg_year">Manufacture Year <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="mfg_year" data-parsley-required-message=""
+                                          <select  id="mfg_year"  name="mfg_year" data-parsley-required-message=""
                                              data-parsley-required="true" class="custom-select" required multiple>
                                              <option value="2021">2025</option>
                                              <option value="2021">2024</option>
@@ -667,17 +667,6 @@
 <script type="text/javascript" src="{%static 'js/payouts.min.js' %}"></script> {% endcomment %}
 
 <script>
-   function selectAllItems(name) {
-      var item = document.getElementById(name)
-      if (item.value == '*') {
-         for (i = 0; i < item.length; i++) {
-            item.options[i].selected = true
-         }
-      }
-      item.options[item.options.length - 1].selected = false
-
-      // selectFromBackend();
-   }
 
 
 
@@ -689,59 +678,91 @@
 
       function initialSelection() {
          autoSelectOnLoad('product_name', "{{data.product_name|safe}}")
-         autoSelectOnLoad('insurer', "{{data.insurer|safe}}")       
-
+         autoSelectOnLoad('insurer', "{{data.insurer|safe}}")
+         autoSelectOnLoad('sp_name', "{{data.sp_name|safe}}")
+         autoSelectOnLoad('vehicle_makeby', "{{data.vehicle_makeby|safe}}")
+         autoSelectOnLoad('vehicle_model', "{{data.vehicle_model|safe}}")
+         autoSelectOnLoad('vehicle_catagory', "{{data.vehicle_catagory|safe}}")
+         autoSelectOnLoad('vehicle_fuel_type', "{{data.vehicle_fuel_type|safe}}")
+         autoSelectOnLoad('mfg_year', "{{data.mfg_year|safe}}")
+         autoSelectOnLoad('addon', "{{data.addon|safe}}")
+         autoSelectOnLoad('ncb', "{{data.ncb|safe}}")
+         autoSelectOnLoad('gvw', "{{data.gvw|safe}}")
+         autoSelectOnLoad('cubic_capacity', "{{data.cubic_capacity|safe}}")
+         autoSelectOnLoad('seating_capacity', "{{data.seating_capacity|safe}}")
+         autoSelectOnLoad('coverage_type', "{{data.coverage_type|safe}}")
+         autoSelectOnLoad('case_type', "{{data.case_type|safe}}")
+         autoSelectOnLoad('cpa', "{{data.cpa|safe}}")
+         autoSelectOnLoad('rto', "{{data.rto_city|safe}}")
       }
-      // product name
-      function selectFromBackend() {
-         var item_list = "{{data.product_name|safe}}";
-         item_list = item_list.substring(2, item_list.length - 2)
 
-         var item = document.getElementById('product_name')
+      function autoSelectOnLoad(element_name, data) {
+         let el = document.getElementById(element_name)
+         // alert(data)
+         if (data.includes(',')) {
+            newData = data.split(',')
+            for (let index = 0; index < newData.length; index++) {
+               const value = newData[index];
+               // alert(value)
+               for (i = 0; i < el.options.length - 1; i++) {
+                  if (el.options[i].value == value) {
+                     el.options[i].selected = true
+                  }
+               }
+            }
+         }
+         else {
+            for (i = 0; i < el.options.length - 1; i++) {
+               if (el.options[i].value == data) {
+                  el.options[i].selected = true
+               }
+            }
+         }
+      }
 
-         for (i = 0; i < item.options.length - 1; i++) {
-            if (item.options[i].value == item_list) {
+
+      function autoSelectOnLoad2(element_name, data) {
+         let el = document.getElementById(element_name)
+         // alert(data)
+         val = el.options[1].value
+         alert(val)
+         return
+         if (data.includes(',')) {
+            newData = data.split(',')
+            for (let index = 0; index < newData.length; index++) {
+               const value = newData[index];
+               // alert(value)
+               for (i = 0; i < el.options.length - 1; i++) {
+                  if (el.options[i].value == value) {
+                     el.options[i].selected = true
+                  }
+               }
+            }
+         }
+         else {
+            for (i = 0; i < el.options.length - 1; i++) {
+               if (el.options[i].value == data) {
+                  el.options[i].selected = true
+               }
+            }
+            alert(data)
+
+         }
+      }
+
+
+      function selectAllItems(name) {
+         var item = document.getElementById(name)
+         if (item.value == '*') {
+            for (i = 0; i < item.length; i++) {
                item.options[i].selected = true
             }
          }
-      }
-
-      function selectFromBackend2() {
-         let el = document.getElementById('product_name')
-         let data = "{{data.product_name|safe}}";
-         // alert(data)
-         if (data.includes(',')) {
-            newData = data.split(',')
-            for (let index = 0; index < newData.length; index++) {
-               const value = newData[index];
-               // alert(value)
-               for (i = 0; i < el.options.length - 1; i++) {
-                  if (el.options[i].value == value) {
-                     el.options[i].selected = true
-                  }
-               }
-            }
-         }
-      }
-     
-      function autoSelectOnLoad(element_name, data) {
-         let el = document.getElementById(element_name)        
-         // alert(data)
-         if (data.includes(',')) {
-            newData = data.split(',')
-            for (let index = 0; index < newData.length; index++) {
-               const value = newData[index];
-               // alert(value)
-               for (i = 0; i < el.options.length - 1; i++) {
-                  if (el.options[i].value == value) {
-                     el.options[i].selected = true
-                  }
-               }
-            }
-         }
+         item.options[item.options.length - 1].selected = false
       }
 
    </script>
+
 </body>
 
 

@@ -1116,7 +1116,7 @@ def slab_payoutformshow(request, id):
 
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
                
-        print(data.product_name)       
+        print('data.addon ', data.addon)       
         return render(request, 'payout/edit_payoutform.html', {'data': data, 'slab': slab, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct})
 
 
