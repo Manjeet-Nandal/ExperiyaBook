@@ -178,11 +178,15 @@ class Payout(models.Model):
     case_type = models.CharField(max_length=50)      
     cpa = models.CharField(max_length=50)      
 
-    rewards_on=models.CharField(max_length=50)
-    rewards_age=models.IntegerField()
-    self_rewards_on=models.CharField(max_length=50)
-    self_rewards_age=models.IntegerField()
-    
+    agent_od=models.CharField(max_length=50)
+    agent_od_amount=models.IntegerField()
+    agent_tp=models.CharField(max_length=50)
+    agent_tp_amount=models.IntegerField()
+
+    self_od=models.CharField(max_length=50)
+    self_od_amount=models.IntegerField()
+    self_tp=models.CharField(max_length=50)
+    self_tp_amount=models.IntegerField()
 
     def __str__(self):
         return self.payout_name

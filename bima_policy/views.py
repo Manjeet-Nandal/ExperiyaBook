@@ -1016,10 +1016,17 @@ def slab_payoutform(request):
         case_type = request.POST.getlist('case_type')
         cpa = request.POST.getlist('cpa')
         rto = request.POST.getlist('rto')
+        # agent payout
+        agent_od = request.POST['agent_od']
+        agent_od_amount = request.POST['agent_od_amount']
+        agent_tp = request.POST['agent_tp']
+        agent_tp_amount = request.POST['agent_tp_amount']
+        # self payout
+        self_od = request.POST['self_od']
+        self_od_amount = request.POST['self_od_amount']
+        self_tp = request.POST['self_tp']
+        self_tp_amount = request.POST['self_tp_amount']
 
-        product_name = request.POST['product_name']
-
-        print(product_name)
         product_name = ','.join(product_name)
         insurer = ','.join(insurer)
         sp_name = ','.join(sp_name)
@@ -1037,15 +1044,26 @@ def slab_payoutform(request):
         coverage_type = ','.join(coverage_type)
         case_type = ','.join(case_type)
         cpa = ','.join(cpa)
+        rto = ','.join(rto)
+
         print(product_name)
 
         # my_list = product_names.split(",")
         # print( my_list)
-        # Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name, insurer=insurer, sp_name=sp_name,
-        #                       vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
-        #                       vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
-        #                       rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
-        #                       coverage_type=coverage_type, case_type=case_type, cpa=cpa, profile_id=data)
+        Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name, insurer=insurer, sp_name=sp_name,
+                              vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
+                              vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
+                              rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
+                              coverage_type=coverage_type, case_type=case_type, cpa=cpa,
+                              agent_od=agent_od,
+                              agent_od_amount=agent_od_amount,
+                              agent_tp=agent_tp,
+                              agent_tp_amount=agent_tp_amount,
+                              self_od=self_od,
+                              self_od_amount=self_od_amount,
+                              self_tp=self_tp,
+                              self_tp_amount=self_tp_amount,
+                              profile_id=data)
         print("insert data")
         return redirect('bima_policy:slab')
 
