@@ -437,10 +437,11 @@
                                           </ul>
                                        </div>
 
-                                       <div class="col-md-12 mb-4">
+                                       <div class="col-md-12 mb-4" id="rtos_box">
                                           <div class="f-group">
                                              <label>RTOs<abbr title="Required" class="text-danger">*</abbr></label>
-                                             <select name="rto" id="rto" multiple class="form-control">
+                                             <select name="rto" id="rto" multiple class="form-control"
+                                                style="height: 150px;">
 
 
                                              </select>
@@ -665,11 +666,6 @@
 {% comment %}
 <script type="text/javascript" src="{%static 'js/payouts.min.js' %}"></script> {% endcomment %}
 
-<script>
-
-
-
-</script>
 
 <body onload="initialSelection()">
 
@@ -692,7 +688,8 @@
          autoSelectOnLoad('coverage_type', "{{data.coverage_type|safe}}")
          autoSelectOnLoad('case_type', "{{data.case_type|safe}}")
          autoSelectOnLoad('cpa', "{{data.cpa|safe}}")
-         autoSelectOnLoadRto('rto', "{{data.rto_city|safe}}")
+         autoSelectOnLoadRto('rto', "{{data.rto_city|safe}}")        
+         document.getElementById('rtoul').style.display = 'none';
       }
 
       function autoSelectOnLoad(element_name, data) {
@@ -726,25 +723,10 @@
 
          if (data.includes(',')) {
             newData = data.split(',')
-            addSelectedOptionsTest(newData)
-            // for (let index = 0; index < newData.length; index++) {
-            //    const value = newData[index];
-            //    alert(value)
-            //    for (i = 0; i < el.options.length - 1; i++) {
-            //       if (el.options[i].value == value) {
-            //          el.options[i].selected = true
-            //       }
-            //    }
-            // }
+            addSelectedOptionsTest(newData)           
          }
          else {
-            for (i = 0; i < el.options.length - 1; i++) {
-               if (el.options[i].value == data) {
-                  el.options[i].selected = true
-               }
-            }
-            alert(data)
-
+            addSelectedOptionsTest(data)      
          }
       }
 
@@ -770,6 +752,9 @@
       var optionList = [];
 
       function populate1(s1, s2) {
+         document.getElementById('rto').style.display = 'none';
+         document.getElementById('rtoul').style.display = '';
+
          let isChecked = false;
 
          if (document.getElementById(s1).checked) {
@@ -1386,8 +1371,7 @@
 
       function addSelectedOptionsTest(valueList) {
          var s2 = document.getElementById('rto');
-         s2.innerHTML = '';         
-         alert(valueList)
+         s2.innerHTML = '';
          for (var item in valueList) {
             var newoption = document.createElement("option");
             newoption.value = valueList[item];
