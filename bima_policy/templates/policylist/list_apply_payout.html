@@ -12,10 +12,13 @@
                 <table class="table dataTable table-bordered">
                 <tbody>
                     <tr>
-                        <th class="text-center">Select</th>
+                        <th class="text-center">Selecthello</th>
                         <th>Payout Name</th><th>Slab</th>
-                        <th class="text-center">Reward On</th>
-                        <th class="text-center">Reward %age</th>
+                        <th class="text-center">Agent OD Reward</th>
+                        <th class="text-center">Agent TP Reward</th>
+                        <th class="text-center">Self OD Reward</th>
+                        <th class="text-center">Self TP Reward</th>
+                       
                     </tr>
                     {%for value in data%}
                     <tr>
@@ -24,8 +27,10 @@
                         </td>
                         <td>{{value.payout_name}}</td>
                         <td>{{value.slab_name_id}}</td>
-                        <td class="text-center">{{value.rewards_on}}</td>
-                        <td class="text-center">{{value.rewards_age}}</td>
+                        <td class="text-center">{{value.agent_od_amount}}</td>
+                        <td class="text-center">{{value.agent_tp_amount}}</td>
+                        <td class="text-center">{{value.self_od_amount}}</td>
+                        <td class="text-center">{{value.self_tp_amount}}</td>
                     </tr>
                     {%endfor%}
                 </tbody>

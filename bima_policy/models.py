@@ -292,6 +292,12 @@ class Policy(models.Model):
     vehicle_rc = models.FileField(upload_to='media/documents/')
     inspection_report = models.FileField(upload_to='media/documents/')
 
+    agent_od_amount = models.IntegerField()
+    agent_tp_amount = models.IntegerField()
+
+    self_od_amount = models.IntegerField()
+    self_tp_amount = models.IntegerField()
+
     def __str__(self):
         return self.customer_name
 

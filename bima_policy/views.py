@@ -503,12 +503,25 @@ class create_policy(View):
                               employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report)
 
-        # data = Policy.objects.filter(profile_id=get_id_from_session(
-        #     request)).order_by('-policyid').values()
-
-        data = Payout.objects.filter(Q(case_type=case_type)).values()
-        print(data)
-        # return render(request, 'policylist/policy_entry_list.html', {'data': data})
+        # data = Payout.objects.filter(Q(case_type=case_type)).values()
+        # data=Payout.objects.filter(Q(case_type=case_type) & Q(fuel_type=fuel_type) & Q(Insurance_company=ins_company) & Q(rto=reg)).values()
+        # data = Payout.objects.filter(Q(product_name=product_name) &
+        #                              Q(insurer=insurance_company) &
+        #                              Q(sp_name=sp_name) &
+        #                              Q(vehicle_makeby=vehicle_makeby) &
+        #                              Q(vehicle_model=vehicle_model) &
+        #                              Q(vehicle_catagory=vehicle_catagory) &
+        #                              Q(vehicle_fuel_type=vehicle_fuel_type) &
+        #                              Q(mfg_year=mfg_year) &
+        #                              Q(rto_city=rto_city) &
+        #                              Q(addon=addon) &
+        #                              Q(ncb=ncb) &
+        #                              Q(gvw=gvw) &
+        #                              Q(cubic_capacity=cubic_capacity) &
+        #                              Q(seating_capacity=seating_capacity) &
+        #                              Q(coverage_type=coverage_type) &
+        #                              Q(case_type=case_type)) .values()
+        data = Payout.objects.filter( Q(case_type=case_type)) .values()
         return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': policy_no})
 
 
@@ -613,28 +626,28 @@ def apply_policy(request, id):
     print('apply_policy')
     data = Policy.objects.get(policy_no=id)
     data = Policy.objects.get(policyid=data.policyid)
-    # OD_premium = request.POST['od']
-    # TP_premium = request.POST['tp']
-    # TP_terrorism = request.POST['tpt']
-    # net = request.POST['net']
-    # GST = request.POST['gst']
-    # total = request.POST['total']
-    od = data.OD_premium
-    tp = data.TP_premium
-    tpt = data.TP_terrorism
-    dt = data.net
-    total = data.total
-
     case_type = data.case_type
     data1 = Payout.objects.get(Q(case_type=case_type))
-    a_odm=data1.agent_od_amount
-    a_tpm=data1.agent_tp_amount
-
-    z = od * a_odm
-    z1 = tp * a_tpm
     
-    print('z:', z, ", z1: ", z1)
-    return render(request, 'policylist/policy_save.html', {'data': data, 'data1': data1, 'z': dt, 'z1': dt})
+
+    # Agent payout
+    agent_od_amount = (data.OD_premium * data1.agent_od_amount) / 100
+    agent_tp_amount = (data.TP_premium * data1.agent_tp_amount) / 100
+
+    # Self payout
+    self_od_amount = (data.OD_premium * data1.self_od_amount) / 100
+    self_tp_amount = (data.TP_premium * data1.self_tp_amount) / 100
+
+    du = Policy.objects.filter(policyid=data.policyid)
+    # print(du)
+
+    du.update(agent_od_amount=agent_od_amount, agent_tp_amount=agent_tp_amount,
+              self_od_amount=self_od_amount, self_tp_amount=self_tp_amount)
+
+    data = Policy.objects.get(policy_no=id)
+    print(data.agent_tp_amount)
+
+    return render(request, 'policylist/policy_save.html', {'data': data, 'data1': data1})
 
 
 def policy_entry(request):
