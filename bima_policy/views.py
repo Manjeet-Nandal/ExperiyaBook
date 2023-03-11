@@ -1069,7 +1069,7 @@ def slab_payoutform(request):
 
 def slab_payoutformshow(request, id):
     print('slab_payoutformshow')
-    if request.method == "POST":      
+    if request.method == "POST":
         payout_name = request.POST['payout_name']
         product_name = request.POST.getlist('product_name')
         insurer = request.POST.getlist('insurer')
