@@ -33,9 +33,10 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> {% if is_motor_form %}  Policy Motor Form {% else %} Policy Non-Motor Form {% endif %}<small class="text-muted"> All * marks Fields are
-                        mandatory.
-                     </small></h1>
+                     <h1 class="page-title"> {% if is_motor_form %} Policy Motor Form {% else %} Policy Non-Motor Form
+                        {% endif %}<small class="text-muted"> All * marks Fields are
+                           mandatory.
+                        </small></h1>
                   </div>
                   <!-- /grid column -->
                </div>
@@ -381,6 +382,17 @@
                                              <option value="ENDORSEMENT">ENDORSEMENT</option>
                                           </select>
                                        </div>
+                                       {% if is_motor_form %}
+                                       <div class="col-md-3 mb-4">
+                                          <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="cpa" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required>
+                                             <option value="{{data.cpa}}">{{data.cpa}}</option>
+                                             <option value="YES">YES</option>
+                                             <option value="NO">NO</option>
+                                          </select>
+                                       </div>
+                                       {% endif %}
                                        <!-- <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk Start Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>

@@ -447,6 +447,7 @@ class create_policy(View):
         seating_capacity = request.POST['seating_capacity']
         coverage_type = request.POST['coverage_type']
         case_type = request.POST['case_type']
+        cpa = request.POST['cpa']
         risk_start_date = request.POST['risk_start_date']
         risk_end_date = request.POST['risk_end_date']
         issue_date = request.POST['issue_date']
@@ -497,7 +498,7 @@ class create_policy(View):
 
         Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, product_name=product_name, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                               mfg_year=mfg_year,
-                              addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
+                              addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type, cpa=cpa,
                               risk_start_date=risk_start_date,
                               risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                               employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
@@ -514,9 +515,14 @@ class create_policy(View):
                                      Q(addon__contains=addon) &
                                      Q(ncb__contains=ncb) &
                                      Q(gvw__contains=gvw) &
-                                     Q(cubic_capacity__contains=cubic_capacity) ) .values()
+                                     Q(cubic_capacity__contains=cubic_capacity) & 
+                                     Q(seating_capacity__contains=seating_capacity) &
+                                     Q(coverage_type__contains=coverage_type) &
+                                     Q(case_type__contains=case_type) & 
+                                     Q(cpa__contains=cpa) ) .values()
         
-        print('the data is ', rto_city)
+        print('the data is ', seating_capacity)
+        print(data)
         return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': policy_no})
 
 
@@ -750,6 +756,7 @@ def policy_entrydata(request, id):
             coverage_type = ''
 
         case_type = request.POST['case_type']
+        cpa = request.POST['cpa']
         insured_age = request.POST['insured_age']
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
@@ -782,7 +789,7 @@ def policy_entrydata(request, id):
                     vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                     mfg_year=mfg_year,
                     addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
-                    insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+                    cpa=cpa, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                     employee=employee, OD_premium=OD_premium,
                     TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total)
         if proposal:

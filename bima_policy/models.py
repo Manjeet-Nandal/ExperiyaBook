@@ -268,6 +268,7 @@ class Policy(models.Model):
     seating_capacity = models.CharField(max_length=50)
     coverage_type = models.CharField(max_length=100)
     case_type = models.CharField(max_length=100)
+    cpa = models.CharField(max_length=100)
     risk_start_date = models.DateField()
     risk_end_date = models.DateField()
     issue_date = models.DateField()
