@@ -613,12 +613,27 @@ def apply_policy(request, id):
     print('apply_policy')
     data = Policy.objects.get(policy_no=id)
     data = Policy.objects.get(policyid=data.policyid)
-    d = data.OD_premium
+    # OD_premium = request.POST['od']
+    # TP_premium = request.POST['tp']
+    # TP_terrorism = request.POST['tpt']
+    # net = request.POST['net']
+    # GST = request.POST['gst']
+    # total = request.POST['total']
+    od = data.OD_premium
+    tp = data.TP_premium
+    tpt = data.TP_terrorism
     dt = data.net
+    total = data.total
+
     case_type = data.case_type
     data1 = Payout.objects.get(Q(case_type=case_type))
-    # data1=Payout.objects.get(payoutid=data.payoutid)
-    # print(data1.rewards_on)
+    a_odm=data1.agent_od_amount
+    a_tpm=data1.agent_tp_amount
+
+    z = od * a_odm
+    z1 = tp * a_tpm
+    
+    print('z:', z, ", z1: ", z1)
     return render(request, 'policylist/policy_save.html', {'data': data, 'data1': data1, 'z': dt, 'z1': dt})
 
 
