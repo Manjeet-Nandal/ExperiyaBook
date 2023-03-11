@@ -1044,7 +1044,6 @@ def slab_payoutform(request):
         coverage_type = ','.join(coverage_type)
         case_type = ','.join(case_type)
         cpa = ','.join(cpa)
-        rto = ','.join(rto)
 
         print(product_name)
 
@@ -1070,32 +1069,70 @@ def slab_payoutform(request):
 
 def slab_payoutformshow(request, id):
     print('slab_payoutformshow')
-    if request.method == "POST":
+    if request.method == "POST":      
         payout_name = request.POST['payout_name']
-        product_name = request.POST['product_name']
-        insurer = request.POST['insurer']
-        sp_name = request.POST['sp_name']
-        vehicle_makeby = request.POST['vehicle_makeby']
-        vehicle_model = request.POST['vehicle_model']
-        vehicle_catagory = request.POST['vehicle_catagory']
-        vehicle_fuel_type = request.POST['vehicle_fuel_type']
-        mfg_year = request.POST['mfg_year']
-        rto_city = request.POST['rto_city']
-        addon = request.POST['addon']
-        ncb = request.POST['ncb']
-        gvw = request.POST['gvw']
-        cubic_capacity = request.POST['cubic_capacity']
-        seating_capacity = request.POST['seating_capacity']
-        coverage_type = request.POST['coverage_type']
-        case_type = request.POST['case_type']
+        product_name = request.POST.getlist('product_name')
+        insurer = request.POST.getlist('insurer')
+        sp_name = request.POST.getlist('sp_name')
+        vehicle_makeby = request.POST.getlist('vehicle_makeby')
+        vehicle_model = request.POST.getlist('vehicle_model')
+        vehicle_catagory = request.POST.getlist('vehicle_catagory')
+        vehicle_fuel_type = request.POST.getlist('vehicle_fuel_type')
+        mfg_year = request.POST.getlist('mfg_year')
+        addon = request.POST.getlist('addon')
+        ncb = request.POST.getlist('ncb')
+        gvw = request.POST.getlist('gvw')
+        cubic_capacity = request.POST.getlist('cubic_capacity')
+        seating_capacity = request.POST.getlist('seating_capacity')
+        coverage_type = request.POST.getlist('coverage_type')
+        case_type = request.POST.getlist('case_type')
+        cpa = request.POST.getlist('cpa')
+        rto = request.POST.getlist('rto')
+        # agent payout
+        agent_od = request.POST['agent_od']
+        agent_od_amount = request.POST['agent_od_amount']
+        agent_tp = request.POST['agent_tp']
+        agent_tp_amount = request.POST['agent_tp_amount']
+        # self payout
+        self_od = request.POST['self_od']
+        self_od_amount = request.POST['self_od_amount']
+        self_tp = request.POST['self_tp']
+        self_tp_amount = request.POST['self_tp_amount']
 
+        product_name = ','.join(product_name)
+        insurer = ','.join(insurer)
+        sp_name = ','.join(sp_name)
+        vehicle_makeby = ','.join(vehicle_makeby)
+        vehicle_model = ','.join(vehicle_model)
+        vehicle_catagory = ','.join(vehicle_catagory)
+        vehicle_fuel_type = ','.join(vehicle_fuel_type)
+        mfg_year = ','.join(mfg_year)
+        rto_city = ','.join(rto)
+        addon = ','.join(addon)
+        ncb = ','.join(ncb)
+        gvw = ','.join(gvw)
+        cubic_capacity = ','.join(cubic_capacity)
+        seating_capacity = ','.join(seating_capacity)
+        coverage_type = ','.join(coverage_type)
+        case_type = ','.join(case_type)
+        cpa = ','.join(cpa)
+
+        print(mfg_year)
         payout_updt = Payout.objects.filter(payoutid=id)
         # print("this is output", payout_updt.values())
         payout_updt.update(payout_name=payout_name,  product_name=product_name, insurer=insurer, sp_name=sp_name,
                            vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
                            vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
                            rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
-                           coverage_type=coverage_type, case_type=case_type)
+                           coverage_type=coverage_type, case_type=case_type, cpa=cpa,
+                           agent_od=agent_od,
+                           agent_od_amount=agent_od_amount,
+                           agent_tp=agent_tp,
+                           agent_tp_amount=agent_tp_amount,
+                           self_od=self_od,
+                           self_od_amount=self_od_amount,
+                           self_tp=self_tp,
+                           self_tp_amount=self_tp_amount)
         print("done")
         return redirect('bima_policy:slab')
 
@@ -1115,8 +1152,7 @@ def slab_payoutformshow(request, id):
             profile_id=get_id_from_session(request))
 
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
-               
-        print('data.rto_city ', data.rto_city)       
+
         return render(request, 'payout/edit_payoutform.html', {'data': data, 'slab': slab, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct})
 
 

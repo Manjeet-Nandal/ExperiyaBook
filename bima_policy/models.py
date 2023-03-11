@@ -166,8 +166,8 @@ class Payout(models.Model):
     vehicle_makeby = models.CharField(max_length=255)
     vehicle_model = models.CharField(max_length=255)
     vehicle_catagory = models.CharField(max_length=255)
-    vehicle_fuel_type = models.CharField(max_length=255)    
-    mfg_year = models.IntegerField()
+    vehicle_fuel_type = models.CharField(max_length=255)
+    mfg_year = models.CharField(max_length=255)
     rto_city = models.TextField()
     addon = models.CharField(max_length=50)
     ncb = models.CharField(max_length=50)
@@ -175,18 +175,18 @@ class Payout(models.Model):
     cubic_capacity = models.CharField(max_length=100)
     seating_capacity = models.CharField(max_length=100)
     coverage_type = models.CharField(max_length=100)
-    case_type = models.CharField(max_length=50)      
-    cpa = models.CharField(max_length=50)      
+    case_type = models.CharField(max_length=50)
+    cpa = models.CharField(max_length=50)
 
-    agent_od=models.CharField(max_length=50)
-    agent_od_amount=models.IntegerField()
-    agent_tp=models.CharField(max_length=50)
-    agent_tp_amount=models.IntegerField()
+    agent_od = models.CharField(max_length=50)
+    agent_od_amount = models.IntegerField()
+    agent_tp = models.CharField(max_length=50)
+    agent_tp_amount = models.IntegerField()
 
-    self_od=models.CharField(max_length=50)
-    self_od_amount=models.IntegerField()
-    self_tp=models.CharField(max_length=50)
-    self_tp_amount=models.IntegerField()
+    self_od = models.CharField(max_length=50)
+    self_od_amount = models.IntegerField()
+    self_tp = models.CharField(max_length=50)
+    self_tp_amount = models.IntegerField()
 
     def __str__(self):
         return self.payout_name
@@ -276,7 +276,7 @@ class Policy(models.Model):
     payment_mode = models.CharField(max_length=100)
     bqp = models.CharField(max_length=100)
     pos = models.CharField(max_length=100)
-    employee = models.CharField(max_length=100)    
+    employee = models.CharField(max_length=100)
     OD_premium = models.IntegerField()
     TP_premium = models.IntegerField()
     TP_terrorism = models.IntegerField()
@@ -292,14 +292,12 @@ class Policy(models.Model):
     vehicle_rc = models.FileField(upload_to='media/documents/')
     inspection_report = models.FileField(upload_to='media/documents/')
 
-
     def __str__(self):
         return self.customer_name
 
     def save(self, *args, **kwargs):
         self.policyid = uuid.uuid4().hex[:7].upper()
         super(Policy, self).save(*args, **kwargs)
-
 
 
 class PolicyNonMotor(models.Model):
@@ -313,7 +311,7 @@ class PolicyNonMotor(models.Model):
     sp_name = models.CharField(max_length=100)
     sp_brokercode = models.CharField(max_length=100)
     product_name = models.CharField(max_length=100)
-    registration_no = models.CharField(max_length=50)    
+    registration_no = models.CharField(max_length=50)
     coverage_type = models.CharField(max_length=100)
     case_type = models.CharField(max_length=100)
     risk_start_date = models.DateField()
@@ -324,7 +322,7 @@ class PolicyNonMotor(models.Model):
     payment_mode = models.CharField(max_length=100)
     bqp = models.CharField(max_length=100)
     pos = models.CharField(max_length=100)
-    employee = models.CharField(max_length=100)    
+    employee = models.CharField(max_length=100)
     OD_premium = models.IntegerField()
     TP_premium = models.IntegerField()
     TP_terrorism = models.IntegerField()
@@ -336,7 +334,7 @@ class PolicyNonMotor(models.Model):
     policy = models.FileField(upload_to='media/documents/')
     previous_policy = models.FileField(upload_to='media/documents/', null=True)
     pan_card = models.FileField(upload_to='media/documents/')
-    aadhar_card = models.FileField(upload_to='media/documents/')    
+    aadhar_card = models.FileField(upload_to='media/documents/')
     inspection_report = models.FileField(upload_to='media/documents/')
 
     def __str__(self):
@@ -410,6 +408,7 @@ class rtotables(models.Model):
         self.id = uuid.uuid4().hex[:6].upper()
         super(rtotables, self).save(*args, **kwargs)
 
+
 class BQP(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
@@ -424,6 +423,7 @@ class BQP(models.Model):
         self.id = uuid.uuid4().hex[:6].upper()
         super(BQP, self).save(*args, **kwargs)
 
+
 class CoverageType(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
@@ -437,4 +437,3 @@ class CoverageType(models.Model):
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:6].upper()
         super(CoverageType, self).save(*args, **kwargs)
-
