@@ -791,32 +791,45 @@ def policy_entrydata(request, id):
             vehicle_rc = ''
 
         inspection_report = request.FILES.get('inspection_report')
+        
+        data1 = Policy.objects.get(policyid=id)
+        # Agent payout
+        agent_od_amount = (int(OD_premium) * data1.agent_od_reward) / 100
+        agent_tp_amount = (int(TP_premium) * data1.agent_tp_reward) / 100
 
-        data = Policy.objects.filter(policyid=id)
+        # # Self payout
+        self_od_amount = (int(OD_premium) * data1.self_od_reward) / 100
+        self_tp_amount = (int(TP_premium) * data1.self_tp_reward) / 100
+
+        data = Policy.objects.filter(policyid=id)             
+
+        print(self_od_amount)
         data.update(proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name,
                     sp_name=sp_name, sp_brokercode=sp_brokercode, insurance_company=insurance_company, product_name=product_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state,
                     vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                     mfg_year=mfg_year,
                     addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
                     cpa=cpa, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                    employee=employee, OD_premium=OD_premium,
-                    TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total)
-        if proposal:
-            data.update(proposal=proposal)
-        if mandate:
-            data.update(mandate=mandate)
-        if policy:
-            data.update(policy=policy)
-        if previous_policy:
-            data.update(previous_policy=previous_policy)
-        if pan_card:
-            data.update(pan_card=pan_card)
-        if aadhar_card:
-            data.update(aadhar_card=aadhar_card)
-        if vehicle_rc:
-            data.update(vehicle_rc=vehicle_rc)
-        if inspection_report:
-            data.update(inspection_report=inspection_report)
+                    employee=employee, 
+                    OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
+                    agent_od_amount=agent_od_amount,agent_tp_amount=agent_tp_amount,self_od_amount=self_od_amount,self_tp_amount=self_tp_amount )
+        
+        # if proposal:
+        #     data.update(proposal=proposal)
+        # if mandate:
+        #     data.update(mandate=mandate)
+        # if policy:
+        #     data.update(policy=policy)
+        # if previous_policy:
+        #     data.update(previous_policy=previous_policy)
+        # if pan_card:
+        #     data.update(pan_card=pan_card)
+        # if aadhar_card:
+        #     data.update(aadhar_card=aadhar_card)
+        # if vehicle_rc:
+        #     data.update(vehicle_rc=vehicle_rc)
+        # if inspection_report:
+        #     data.update(inspection_report=inspection_report)
 
         return redirect('bima_policy:policy_entry')
     else:
