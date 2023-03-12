@@ -595,6 +595,7 @@
                            </div>
                            <!-- /.card -->
                         </div>
+                        {% if is_motor_form %}
                         <div class="col-lg-3 col-md-3 col-sm-12">
                            <div class="card">
                               <!-- .card -->
@@ -667,6 +668,57 @@
                                     </select>
                                  </div>
 
+                                 <hr>
+                                 <h4 class="card-title mb-3"> Agent Payout </h4>
+                                 <!-- grid row -->                                
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5 pr-0 " >Rewards on: </label>
+                                    <select class="custom-select col-lg-6"  >
+                                       <option value="OD" selected>OD</option>                                      
+                                    </select>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Rewards % </label><input type="text" name="agent_od_rate"
+                                       value="{{data.agent_od_rate}}"
+                                       class="form-control maskNumField col-lg-6 bg-light"                                       
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" 
+                                       readonly="" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Amount </label><input type="text" name="agent_od_amount"
+                                       value="{{data.agent_od_rate}}"
+                                       class="form-control maskNumField col-lg-6 bg-light"                                       
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" 
+                                       readonly="" maxlength="10" required>
+                                 </div>
+                                 <hr>
+                                 <h4 class="card-title mb-3"> Self Payout </h4>
+                                 <!-- grid row -->                                
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5 pr-0 ">Rewards on: </label>
+                                    <select class="custom-select col-lg-6" name="payment_mode" required>
+                                       <option value="{{data.payment_mode}}"> {{data.payment_mode}} </option>
+                                       <option value="OD" selected>OD</option>
+                                      
+                                    </select>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Rewards % </label><input type="text" name="self_od_rate"
+                                       value="{{data.agent_od_rate}}"
+                                       class="form-control maskNumField col-lg-6 bg-light"                                       
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" 
+                                       readonly="" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Amount </label><input type="text" name="self_od_amount"
+                                       value="{{data.agent_od_rate}}"
+                                       class="form-control maskNumField col-lg-6 bg-light"                                       
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" 
+                                       readonly="" maxlength="10" required>
+                                 </div>
+
+                                                                 
+
                               </div>
 
                               <!-- /.card-body -->
@@ -679,6 +731,7 @@
 
 
                         </div>
+                        {% endif %}
                      </div>
                      <hr>
 

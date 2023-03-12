@@ -178,15 +178,11 @@ class Payout(models.Model):
     case_type = models.CharField(max_length=50)
     cpa = models.CharField(max_length=50)
 
-    agent_od = models.CharField(max_length=50)
-    agent_od_amount = models.IntegerField()
-    agent_tp = models.CharField(max_length=50)
-    agent_tp_amount = models.IntegerField()
+    agent_od_reward = models.IntegerField(max_length=50)
+    agent_tp_reward = models.IntegerField(max_length=50)
 
-    self_od = models.CharField(max_length=50)
-    self_od_amount = models.IntegerField()
-    self_tp = models.CharField(max_length=50)
-    self_tp_amount = models.IntegerField()
+    self_od_reward = models.IntegerField(max_length=50)
+    self_tp_reward = models.IntegerField(max_length=50)
 
     def __str__(self):
         return self.payout_name
@@ -293,10 +289,14 @@ class Policy(models.Model):
     vehicle_rc = models.FileField(upload_to='media/documents/')
     inspection_report = models.FileField(upload_to='media/documents/')
 
+    agent_od_reward = models.IntegerField()
     agent_od_amount = models.IntegerField()
+    agent_tp_reward = models.IntegerField()
     agent_tp_amount = models.IntegerField()
 
+    self_od_reward = models.IntegerField()
     self_od_amount = models.IntegerField()
+    self_tp_reward = models.IntegerField()
     self_tp_amount = models.IntegerField()
 
     def __str__(self):

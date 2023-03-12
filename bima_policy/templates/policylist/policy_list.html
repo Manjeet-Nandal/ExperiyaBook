@@ -21,7 +21,8 @@
                </div>
                <div class="row text-center text-sm-left">
                   <div class="col">
-                     <h1 class="page-title"> {% if is_motor_form %}  Policy Motor Form {% else %} Policy Non-Motor Form {% endif %}<small class="text-muted"> All * marks Fields are
+                     <h1 class="page-title"> {% if is_motor_form %} Policy Motor Form {% else %} Policy Non-Motor Form
+                        {% endif %}<small class="text-muted"> All * marks Fields are
                            mandatory.
                         </small></h1>
                   </div>
@@ -29,12 +30,9 @@
             </header>
             <div class="page-section">
                <div class="section-block">
-                  <form id="frminsurance" method="post" enctype="multipart/form-data"
-                     
-                     
-                     {% if is_motor_form %}  action="{%url 'bima_policy:create_policy'%}"
-                     {% else %} action="{%url 'bima_policy:create_policy_non_motor'%}" 
-                     {% endif %}>
+                  <form id="frminsurance" method="post" enctype="multipart/form-data" {% if is_motor_form %}
+                     action="{%url 'bima_policy:create_policy'%}" {% else %}
+                     action="{%url 'bima_policy:create_policy_non_motor'%}" {% endif %}>
                      {%csrf_token%}
                      <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-12">
@@ -329,7 +327,7 @@
                                              <option value="ABOVE 18">ABOVE 18</option>
                                           </select>
                                        </div>
-                                     
+
 
                                        <div class="col-md-3 mb-4">
                                           <label>Coverage Type <abbr title="Required"
@@ -337,15 +335,15 @@
                                           <select name="coverage_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required>
                                              <option value="">-- Select Coverage --</option>
-                                            {% for value in data_ct%}
-                                            <option value="{{value}}">{{value}}</option>
-                                            {% endfor%}
+                                             {% for value in data_ct%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {% endfor%}
                                           </select>
                                        </div>
 
                                        {% endif %}
 
-                                       <div class="col-md-3 mb-4">   <!-- it is case_type in model -->
+                                       <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="case_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required>
@@ -356,13 +354,13 @@
                                              <option value="ENDORSEMENT">ENDORSEMENT</option>
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4">   
+                                       <div class="col-md-3 mb-4">
                                           <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="cpa" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required>
                                              <option value="">-- Select CPA --</option>
                                              <option value="YES">YES</option>
-                                             <option value="NO">NO</option>                                            
+                                             <option value="NO">NO</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -449,7 +447,7 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="proposal" accept=".pdf,image/" id="proposal"
-                                                class="custom-file-input" >
+                                                class="custom-file-input">
                                              <label class="custom-file-label" for="proposal">Choose file</label>
                                           </div>
                                        </div>
@@ -458,7 +456,7 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="mandate" accept=".pdf,image/" id="mandate"
-                                                class="custom-file-input" >
+                                                class="custom-file-input">
                                              <label class="custom-file-label" for="mandate">Choose file</label>
                                           </div>
                                        </div>
@@ -488,7 +486,7 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
-                                                class="custom-file-input" >
+                                                class="custom-file-input">
                                              <label class="custom-file-label" for="pan_card">Choose file</label>
                                           </div>
                                        </div>
@@ -497,7 +495,7 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
-                                                class="custom-file-input" >
+                                                class="custom-file-input">
                                              <label class="custom-file-label" for="aadhar_card">Choose file</label>
                                           </div>
                                        </div>
@@ -508,7 +506,7 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="vehicle_rc" accept=".pdf,image/" id="vehicle_rc"
-                                                class="custom-file-input" >
+                                                class="custom-file-input">
                                              <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
@@ -519,7 +517,7 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="inspection_report" accept=".pdf,image/"
-                                                id="inspection_report" class="custom-file-input" >
+                                                id="inspection_report" class="custom-file-input">
                                              <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
@@ -601,7 +599,7 @@
                                        <option value="SELF CHEQUE">SELF CHEQUE</option>
                                     </select>
                                  </div>
-
+                               
                               </div>
                               <!-- /.card-body -->
                            </div>

@@ -513,12 +513,16 @@ class create_policy(View):
                                    Q(cpa__contains=cpa))
 
         # Agent payout
-        agent_od_amount = (int(OD_premium) * data1.agent_od_amount) / 100
-        agent_tp_amount = (int(TP_premium) * data1.agent_tp_amount) / 100
+        agent_od_reward = data1.agent_od_reward
+        agent_od_amount = (int(OD_premium) * agent_od_reward) / 100
+        agent_tp_reward = data1.agent_tp_reward
+        agent_tp_amount = (int(TP_premium) * agent_tp_reward) / 100
 
         # # Self payout
-        self_od_amount = (int(OD_premium) * data1.self_od_amount) / 100
-        self_tp_amount = (int(TP_premium) * data1.self_tp_amount) / 100
+        self_od_reward = data1.self_od_reward
+        self_od_amount = (int(OD_premium) * self_od_reward) / 100
+        self_tp_reward = data1.self_tp_reward
+        self_tp_amount = (int(TP_premium) * self_tp_reward) / 100
 
         Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, product_name=product_name, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                               mfg_year=mfg_year,
@@ -527,14 +531,19 @@ class create_policy(View):
                               risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                               employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report,
-                              agent_od_amount=agent_od_amount, agent_tp_amount=agent_tp_amount,
-                              self_od_amount=self_od_amount, self_tp_amount=self_tp_amount)
-        
-        # return render(request, 'policylist/', {'data': data, 'policy_no': policy_no})
-        # data = Policy.objects.filter(profile_id=profile_id).order_by('-policyid').values()
-        # return render(request, 'policylist/policy_entry_list.html', {'data': data})
-        return render(request, 'policylist/policy_list.html')
+                              agent_od_reward=agent_od_reward, agent_od_amount=agent_od_amount, agent_tp_reward=agent_tp_reward, agent_tp_amount=agent_tp_amount,
+                              self_od_reward=self_od_reward, self_od_amount=self_od_amount, self_tp_reward=self_tp_reward, self_tp_amount=self_tp_amount)
 
+        pid = profile_id
+        data_sp = ServiceProvider.objects.filter(profile_id=pid)
+        data_bc = BrokerCode.objects.filter(profile_id=pid)
+        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
+        data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
+        data_vm = VehicleModelName.objects.filter(profile_id=pid)
+        data_vc = VehicleCategory.objects.filter(profile_id=pid)
+        data_ct = CoverageType.objects.filter(profile_id=pid)
+        data_bqp = BQP.objects.filter(profile_id=pid)
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
 
 
 class create_policy_non_motor(View):
@@ -694,79 +703,69 @@ def policy_entrydata(request, id):
         sp_name = request.POST['sp_name']
         sp_brokercode = request.POST['sp_brokercode']
         product_name = request.POST['product_name']
-        registration_no = ''
-        rto_city = ''
-        rto_state = ''
-        vehicle_makeby = ''
-        vehicle_model = ''
-        vehicle_catagory = ''
-        vehicle_fuel_type = ''
-        mfg_year = None
-        addon = ''
-        ncb = ''
-        cubic_capacity = ''
-        gvw = ''
-        seating_capacity = ''
-        coverage_type = ''
+
         try:
             registration_no = request.POST['registration_no']
-        except Exception as ex:
-            registration_no = ''
+        except:
+            pass
         try:
             rto_city = request.POST['rto_city']
-        except Exception as ex:
-            rto_city = ''
+        except:
+            pass
         try:
             rto_state = request.POST['rto_state']
-        except Exception as ex:
-            rto_state = ''
+        except:
+            pass
         try:
             vehicle_makeby = request.POST['vehicle_makeby']
-        except Exception as ex:
-            vehicle_makeby = ''
+        except:
+            pass
         try:
             vehicle_model = request.POST['vehicle_model']
-        except Exception as ex:
-            vehicle_model = ''
+        except:
+            pass
         try:
             vehicle_catagory = request.POST['vehicle_catagory']
-        except Exception as ex:
-            vehicle_catagory = ''
+        except:
+            pass
         try:
             vehicle_fuel_type = request.POST['vehicle_fuel_type']
-        except Exception as ex:
-            vehicle_fuel_type = ''
+        except:
+            pass
         try:
             mfg_year = request.POST['mfg_year']
-        except Exception as ex:
-            mfg_year = None
+        except:
+            pass
         try:
             addon = request.POST['addon']
-        except Exception as ex:
-            addon = ''
+        except:
+            pass
         try:
             ncb = request.POST['ncb']
-        except Exception as ex:
-            ncb = ''
+        except:
+            pass
         try:
             cubic_capacity = request.POST['cubic_capacity']
-        except Exception as ex:
-            cubic_capacity = ''
+        except:
+            pass
         try:
             gvw = request.POST['gvw']
-        except Exception as ex:
-            gvw = ''
+        except:
+            pass
         try:
             seating_capacity = request.POST['seating_capacity']
-        except Exception as ex:
-            seating_capacity = ''
+        except:
+            pass
         try:
             coverage_type = request.POST['coverage_type']
-        except Exception as ex:
-            coverage_type = ''
+        except:
+            pass
+        try:
+            cpa = request.POST['cpa']
+        except:
+            pass
 
         case_type = request.POST['case_type']
-        cpa = request.POST['cpa']
         insured_age = request.POST['insured_age']
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
@@ -1069,16 +1068,13 @@ def slab_payoutform(request):
         case_type = request.POST.getlist('case_type')
         cpa = request.POST.getlist('cpa')
         rto = request.POST.getlist('rto')
+        
         # agent payout
-        agent_od = request.POST['agent_od']
-        agent_od_amount = request.POST['agent_od_amount']
-        agent_tp = request.POST['agent_tp']
-        agent_tp_amount = request.POST['agent_tp_amount']
+        agent_od_reward = request.POST['agent_od_reward']
+        agent_tp_reward = request.POST['agent_tp_reward']
         # self payout
-        self_od = request.POST['self_od']
-        self_od_amount = request.POST['self_od_amount']
-        self_tp = request.POST['self_tp']
-        self_tp_amount = request.POST['self_tp_amount']
+        self_od_reward = request.POST['self_od_reward']
+        self_tp_reward = request.POST['self_tp_reward']
 
         product_name = ','.join(product_name)
         insurer = ','.join(insurer)
@@ -1107,14 +1103,10 @@ def slab_payoutform(request):
                               vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
                               rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
                               coverage_type=coverage_type, case_type=case_type, cpa=cpa,
-                              agent_od=agent_od,
-                              agent_od_amount=agent_od_amount,
-                              agent_tp=agent_tp,
-                              agent_tp_amount=agent_tp_amount,
-                              self_od=self_od,
-                              self_od_amount=self_od_amount,
-                              self_tp=self_tp,
-                              self_tp_amount=self_tp_amount,
+                              agent_od_reward=agent_od_reward,
+                              agent_tp_reward=agent_tp_reward,
+                              self_od_reward=self_od_reward,
+                              self_tp_reward=self_tp_reward,                              
                               profile_id=data)
         print("insert data")
         return redirect('bima_policy:slab')
