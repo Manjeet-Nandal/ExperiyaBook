@@ -536,7 +536,7 @@
 
                         <div class="col-lg-3 col-md-3 col-sm-12">
                            <div class="card">
-                              <!-- .card -->
+                              {% if is_motor_form %}
                               <div class="card-body">
                                  <!-- .card-body -->
                                  <h4 class="card-title mb-3"> Payout Details </h4>
@@ -601,6 +601,7 @@
                                  </div>
                                
                               </div>
+                              {% endif %}
                               <!-- /.card-body -->
                            </div>
                            {% comment %} <div id="payoutSection" class="card card-inverse bg-info">

@@ -497,7 +497,7 @@ class create_policy(View):
             fsis.save(inspection_report.name, inspection_report)
 
         print(rto_city)
-        
+
         data1 = Payout.objects.get(Q(product_name__contains=product_name) &
                                    Q(insurer__contains=insurance_company) &
                                    Q(sp_name__contains=sp_name) &
@@ -594,13 +594,13 @@ class create_policy_non_motor(View):
         bqp = request.POST['bqp']
         pos = request.POST['pos']
         employee = request.POST['employee']
-        OD_premium = request.POST['od']
-        TP_premium = request.POST['tp']
-        TP_terrorism = request.POST['tpt']
-        net = request.POST['net']
-        GST = request.POST['gst']
-        total = request.POST['total']
-        payment_mode = request.POST['payment_mode']
+        # OD_premium = request.POST['od']
+        # TP_premium = request.POST['tp']
+        # TP_terrorism = request.POST['tpt']
+        # net = request.POST['net']
+        # GST = request.POST['gst']
+        # total = request.POST['total']
+        # payment_mode = request.POST['payment_mode']
         proposal = request.FILES.get('proposal')
         mandate = request.FILES.get('mandate')
         policy = request.FILES.get('policy')
@@ -635,8 +635,8 @@ class create_policy_non_motor(View):
         Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, product_name=product_name, registration_no=registration_no,
                               coverage_type=coverage_type, case_type=case_type,
                               risk_start_date=risk_start_date,
-                              risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                              employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
+                              risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term,  bqp=bqp, pos=pos,
+                              employee=employee, proposal=proposal, mandate=mandate,  
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, inspection_report=inspection_report)
 
         data = Policy.objects.filter(profile_id=get_profile_id(

@@ -303,8 +303,14 @@
                                              <td>{{value.vehicle_makeby}}</td>
                                              <td>{{value.vehicle_model}}</td>
                                              <td>{{value.vehicle_catagory}}</td>
-                                             <td>{{value.vehicle_fuel_type}}</td>
+                                             <td>{{value.vehicle_fuel_type}}</td>                                            
+                                            
+                                             {% if value.mfg_year%}
                                              <td>{{value.mfg_year}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+
                                              <td>{{value.addon}}</td>
                                              <td>{{value.ncb}}</td>
                                              <td>{{value.cubic_capacity}}</td>
@@ -321,20 +327,91 @@
                                              <td>{{value.bqp}}</td>
                                              <td>{{value.pos}}</td>
                                              <td>{{value.employee}}</td>
+                                             <!-- OD  -->
+                                             {% if value.OD_premium%}
                                              <td>{{value.OD_premium}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+
+                                             {% if value.TP_premium%}
                                              <td>{{value.TP_premium}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.TP_terrorism%}
                                              <td>{{value.TP_terrorism}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.net%}
                                              <td>{{value.net}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.GST%}
                                              <td>{{value.GST}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.total%}
                                              <td>{{value.total}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.agent_od_reward%}
                                              <td>{{value.agent_od_reward}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.agent_od_amount%}
                                              <td>{{value.agent_od_amount}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.agent_tp_reward%}
                                              <td>{{value.agent_tp_reward}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.agent_tp_amount%}
                                              <td>{{value.agent_tp_amount}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.self_od_reward%}
                                              <td>{{value.self_od_reward}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.self_od_amount%}
                                              <td>{{value.self_od_amount}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.self_tp_reward%}
                                              <td>{{value.self_tp_reward}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.self_tp_amount%}
                                              <td>{{value.self_tp_amount}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}                                             
+                                            
                                              <td>{{value.payment_mode}}</td>
                                              <td>{{value.proposal}}</td>
                                              <td>{{value.mandate}}</td>
