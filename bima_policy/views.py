@@ -503,6 +503,7 @@ class create_policy(View):
                                    Q(vehicle_model__contains=vehicle_model) &
                                    Q(vehicle_catagory__contains=vehicle_catagory) &
                                    Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
+                                   Q(mfg_year__contains=mfg_year) &
                                    Q(addon__contains=addon) &
                                    Q(ncb__contains=ncb) &
                                    Q(gvw__contains=gvw) &
@@ -1147,15 +1148,11 @@ def slab_payoutformshow(request, id):
         cpa = request.POST.getlist('cpa')
         rto = request.POST.getlist('rto')
         # agent payout
-        agent_od = request.POST['agent_od']
-        agent_od_amount = request.POST['agent_od_amount']
-        agent_tp = request.POST['agent_tp']
-        agent_tp_amount = request.POST['agent_tp_amount']
+        agent_od_reward = request.POST['agent_od_reward']
+        agent_tp_reward = request.POST['agent_tp_reward']        
         # self payout
-        self_od = request.POST['self_od']
-        self_od_amount = request.POST['self_od_amount']
-        self_tp = request.POST['self_tp']
-        self_tp_amount = request.POST['self_tp_amount']
+        self_od_reward = request.POST['self_od_reward']
+        self_tp_reward = request.POST['self_tp_reward']        
 
         product_name = ','.join(product_name)
         insurer = ','.join(insurer)
@@ -1182,15 +1179,11 @@ def slab_payoutformshow(request, id):
                            vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
                            vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
                            rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
-                           coverage_type=coverage_type, case_type=case_type, cpa=cpa,
-                           agent_od=agent_od,
-                           agent_od_amount=agent_od_amount,
-                           agent_tp=agent_tp,
-                           agent_tp_amount=agent_tp_amount,
-                           self_od=self_od,
-                           self_od_amount=self_od_amount,
-                           self_tp=self_tp,
-                           self_tp_amount=self_tp_amount)
+                           coverage_type=coverage_type, case_type=case_type, cpa=cpa,                          
+                           agent_od_reward=agent_od_reward,
+                           agent_tp_reward=agent_tp_reward,
+                           self_od_reward=self_od_reward,
+                           self_tp_reward=self_tp_reward )
         print("done")
         return redirect('bima_policy:slab')
 

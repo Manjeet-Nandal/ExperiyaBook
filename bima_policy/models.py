@@ -256,7 +256,7 @@ class Policy(models.Model):
     vehicle_model = models.CharField(max_length=100)
     vehicle_catagory = models.CharField(max_length=50)
     vehicle_fuel_type = models.CharField(max_length=50)
-    mfg_year = models.IntegerField()
+    mfg_year = models.CharField(max_length=255)
     addon = models.CharField(max_length=50)
     ncb = models.CharField(max_length=50)
     cubic_capacity = models.CharField(max_length=50)
