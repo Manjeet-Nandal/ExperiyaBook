@@ -544,6 +544,7 @@ class create_policy(View):
                                      Q(vehicle_catagory=vehicle_catagory) &
                                      Q(vehicle_fuel_type=vehicle_fuel_type) &
                                      Q(mfg_year=mfg_year) &
+                                     Q(rto_city=rto_city) &
                                      Q(addon=addon) &
                                      Q(ncb=ncb) &
                                      Q(gvw=gvw) &
@@ -669,6 +670,7 @@ def apply_policy(request, id):
                                    Q(vehicle_catagory=data.vehicle_catagory) &
                                    Q(vehicle_fuel_type=data.vehicle_fuel_type) &
                                    Q(mfg_year=data.mfg_year) &
+                                   Q(rto_city=data.rto_city) &
                                    Q(addon=data.addon) &
                                    Q(ncb=data.ncb) &
                                    Q(gvw=data.gvw) &
