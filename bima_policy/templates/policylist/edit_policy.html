@@ -605,7 +605,7 @@
                                  <!-- grid row -->
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text" 
+                                          class="text-danger">*</abbr></label><input type="text"
                                        data-parsley-group="payout" value="{{data.OD_premium}}"
                                        class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
                                        data-parsley-required="true" data-parsley-required-message=""
@@ -718,34 +718,34 @@
                                  </div>
 
                                  <script>
-                                  
 
-                                    function onAgentODTPChange() {                                       
-                                       agent_od_tp = document.getElementById('agent_od_tp')                                       
+
+                                    function onAgentODTPChange() {
+                                       agent_od_tp = document.getElementById('agent_od_tp')
                                        agent_od_amount = document.getElementById('agent_od_amount')
 
                                        if (agent_od_tp.value == 'OD') {
                                           agent_od_reward.value = "{{data.agent_od_reward}}"
-                                          agent_od_amount.value = "{{data.agent_od_amount}}" 
+                                          agent_od_amount.value = "{{data.agent_od_amount}}"
                                        }
                                        if (agent_od_tp.value == 'TP') {
                                           agent_od_reward.value = "{{data.agent_tp_reward}}"
-                                          agent_od_amount.value = "{{data.agent_tp_amount}}" 
+                                          agent_od_amount.value = "{{data.agent_tp_amount}}"
                                        }
                                     }
 
                                     function onSelf_ODTPChange() {
-                                       self_od_tp = document.getElementById('self_od_tp')                                       
+                                       self_od_tp = document.getElementById('self_od_tp')
                                        self_od_reward = document.getElementById('self_od_reward')
                                        self_od_amount = document.getElementById('self_od_amount')
 
                                        if (self_od_tp.value == 'OD') {
                                           self_od_reward.value = "{{data.self_od_reward}}"
-                                          self_od_amount.value = "{{data.self_od_amount}}" 
+                                          self_od_amount.value = "{{data.self_od_amount}}"
                                        }
                                        if (self_od_tp.value == 'TP') {
                                           self_od_reward.value = "{{data.self_tp_reward}}"
-                                          self_od_amount.value = "{{data.self_tp_amount}}" 
+                                          self_od_amount.value = "{{data.self_tp_amount}}"
                                        }
                                     }
 

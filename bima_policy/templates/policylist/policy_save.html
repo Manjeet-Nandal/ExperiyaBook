@@ -28,7 +28,7 @@
             </header>
             <div class="page-section">
                <div class="section-block">
-                  <form id="frminsurance" method="post" action=''>
+                  <form id="frminsurance" method="post" action="">
                      {%csrf_token%}
                      <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-12">
@@ -539,7 +539,8 @@
                                        </div>
 
                                     </div>
-
+                                    <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
+                                    <button type="submit" name="applypayout" class="btn btn-primary w-100p" >Apply</button>
                                  </fieldset>
 
                                  <p class="mb-4"></p>
@@ -638,9 +639,9 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-4">Amount <abbr title="Required"
                                           class="text-danger">*</abbr></label><input type="text"
-                                          value="{{data.agent_od_amount}}" name="agent_od_amount"
+                                       value="{{data.agent_od_amount}}" name="agent_od_amount"
                                        class="form-control maskNumField col-lg-7 rewardpct"
-                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0" 
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
                                        maxlength="4">
                                  </div>
                                  <div class="row mb-2">
@@ -658,7 +659,7 @@
                                           class="text-danger">*</abbr></label><input type="text"
                                        value="{{data.agent_tp_amount}}" name="agent_tp_amount"
                                        class="form-control maskNumField col-lg-7 rewardpct"
-                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0" 
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
                                        maxlength="4">
                                  </div>
                                  <hr>
@@ -679,7 +680,7 @@
                                           class="text-danger">*</abbr></label><input type="text"
                                        value="{{data.self_od_amount}}" name="self_od_amount"
                                        class="form-control maskNumField rewardpct col-lg-7"
-                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0" 
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
                                        maxlength="4">
                                  </div>
                                  <div class="row mb-2">
@@ -697,7 +698,7 @@
                                           class="text-danger">*</abbr></label><input type="text"
                                        value="{{data.self_tp_amount}}" name="self_tp_amount"
                                        class="form-control maskNumField rewardpct col-lg-7"
-                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0" 
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
                                        maxlength="4">
                                  </div>
 

@@ -498,34 +498,34 @@ class create_policy(View):
 
         print(rto_city)
 
-        data1 = Payout.objects.get(Q(product_name__contains=product_name) &
-                                   Q(insurer__contains=insurance_company) &
-                                   Q(sp_name__contains=sp_name) &
-                                   Q(vehicle_makeby__contains=vehicle_makeby) &
-                                   Q(vehicle_model__contains=vehicle_model) &
-                                   Q(vehicle_catagory__contains=vehicle_catagory) &
-                                   Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
-                                   Q(mfg_year__contains=mfg_year) &
-                                   Q(addon__contains=addon) &
-                                   Q(ncb__contains=ncb) &
-                                   Q(gvw__contains=gvw) &
-                                   Q(cubic_capacity__contains=cubic_capacity) &
-                                   Q(seating_capacity__contains=seating_capacity) &
-                                   Q(coverage_type__contains=coverage_type) &
-                                   Q(case_type__contains=case_type) &
-                                   Q(cpa__contains=cpa))
+        # data1 = Payout.objects.get(Q(product_name__contains=product_name) &
+        #                            Q(insurer__contains=insurance_company) &
+        #                            Q(sp_name__contains=sp_name) &
+        #                            Q(vehicle_makeby__contains=vehicle_makeby) &
+        #                            Q(vehicle_model__contains=vehicle_model) &
+        #                            Q(vehicle_catagory__contains=vehicle_catagory) &
+        #                            Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
+        #                            Q(mfg_year__contains=mfg_year) &
+        #                            Q(addon__contains=addon) &
+        #                            Q(ncb__contains=ncb) &
+        #                            Q(gvw__contains=gvw) &
+        #                            Q(cubic_capacity__contains=cubic_capacity) &
+        #                            Q(seating_capacity__contains=seating_capacity) &
+        #                            Q(coverage_type__contains=coverage_type) &
+        #                            Q(case_type__contains=case_type) &
+        #                            Q(cpa__contains=cpa))
 
-        # Agent payout
-        agent_od_reward = data1.agent_od_reward
-        agent_od_amount = (int(OD_premium) * agent_od_reward) / 100
-        agent_tp_reward = data1.agent_tp_reward
-        agent_tp_amount = (int(TP_premium) * agent_tp_reward) / 100
+        # # Agent payout
+        # agent_od_reward = data1.agent_od_reward
+        # agent_od_amount = (int(OD_premium) * agent_od_reward) / 100
+        # agent_tp_reward = data1.agent_tp_reward
+        # agent_tp_amount = (int(TP_premium) * agent_tp_reward) / 100
 
-        # # Self payout
-        self_od_reward = data1.self_od_reward
-        self_od_amount = (int(OD_premium) * self_od_reward) / 100
-        self_tp_reward = data1.self_tp_reward
-        self_tp_amount = (int(TP_premium) * self_tp_reward) / 100
+        # # # Self payout
+        # self_od_reward = data1.self_od_reward
+        # self_od_amount = (int(OD_premium) * self_od_reward) / 100
+        # self_tp_reward = data1.self_tp_reward
+        # self_tp_amount = (int(TP_premium) * self_tp_reward) / 100
 
         Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, product_name=product_name, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                               mfg_year=mfg_year,
@@ -533,20 +533,26 @@ class create_policy(View):
                               risk_start_date=risk_start_date,
                               risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                               employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
-                              policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report,
-                              agent_od_reward=agent_od_reward, agent_od_amount=agent_od_amount, agent_tp_reward=agent_tp_reward, agent_tp_amount=agent_tp_amount,
-                              self_od_reward=self_od_reward, self_od_amount=self_od_amount, self_tp_reward=self_tp_reward, self_tp_amount=self_tp_amount)
+                              policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
+                              )
 
-        pid = profile_id
-        data_sp = ServiceProvider.objects.filter(profile_id=pid)
-        data_bc = BrokerCode.objects.filter(profile_id=pid)
-        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
-        data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
-        data_vm = VehicleModelName.objects.filter(profile_id=pid)
-        data_vc = VehicleCategory.objects.filter(profile_id=pid)
-        data_ct = CoverageType.objects.filter(profile_id=pid)
-        data_bqp = BQP.objects.filter(profile_id=pid)
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
+        data = Payout.objects.filter(Q(product_name=product_name) &
+                                     Q(insurer=insurance_company) &
+                                     Q(sp_name=sp_name) &
+                                     Q(vehicle_makeby=vehicle_makeby) &
+                                     Q(vehicle_model=vehicle_model) &
+                                     Q(vehicle_catagory=vehicle_catagory) &
+                                     Q(vehicle_fuel_type=vehicle_fuel_type) &
+                                     Q(mfg_year=mfg_year) &
+                                     Q(addon=addon) &
+                                     Q(ncb=ncb) &
+                                     Q(gvw=gvw) &
+                                     Q(cubic_capacity=cubic_capacity) &
+                                     Q(seating_capacity=seating_capacity) &
+                                     Q(coverage_type=coverage_type) &
+                                     Q(case_type=case_type) &
+                                     Q(cpa=cpa)).values()
+        return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': policy_no})
 
 
 class create_policy_non_motor(View):
@@ -636,7 +642,7 @@ class create_policy_non_motor(View):
                               coverage_type=coverage_type, case_type=case_type,
                               risk_start_date=risk_start_date,
                               risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term,  bqp=bqp, pos=pos,
-                              employee=employee, proposal=proposal, mandate=mandate,  
+                              employee=employee, proposal=proposal, mandate=mandate,
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, inspection_report=inspection_report)
 
         data = Policy.objects.filter(profile_id=get_profile_id(
@@ -648,42 +654,67 @@ class create_policy_non_motor(View):
 
 def apply_policy(request, id):
     print('apply_policy')
-    data = Policy.objects.get(policy_no=id)
-    data = Policy.objects.get(policyid=data.policyid)
-    case_type = data.case_type
-    # data1 = Payout.objects.get(Q(case_type=case_type))
-    # data1 = Payout.objects.get(Q(product_name__contains=data.product_name) &
-    #                                  Q(insurer__contains=data.insurance_company) &
-    #                                  Q(sp_name__contains=data.sp_name) &
-    #                                  Q(vehicle_makeby__contains=data.vehicle_makeby) &
-    #                                  Q(vehicle_model__contains=data.vehicle_model) &
-    #                                  Q(vehicle_catagory__contains=data.vehicle_catagory) &
-    #                                  Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-    #                                  Q(addon__contains=addon) &
-    #                                  Q(ncb__contains=ncb) &
-    #                                  Q(gvw__contains=gvw) &
-    #                                  Q(cubic_capacity__contains=cubic_capacity) &
-    #                                  Q(seating_capacity__contains=seating_capacity) &
-    #                                  Q(coverage_type__contains=coverage_type) &
-    #                                  Q(case_type__contains=case_type) &
-    #                                  Q(cpa__contains=cpa) )
-    # Agent payout
-    agent_od_amount = (data.OD_premium * data1.agent_od_amount) / 100
-    agent_tp_amount = (data.TP_premium * data1.agent_tp_amount) / 100
 
-    # Self payout
-    self_od_amount = (data.OD_premium * data1.self_od_amount) / 100
-    self_tp_amount = (data.TP_premium * data1.self_tp_amount) / 100
+    try:
+        data = Policy.objects.get(policy_no=id)
+        data = Policy.objects.get(policyid=data.policyid)
 
-    du = Policy.objects.filter(policyid=data.policyid)
+        data11 = Policy.objects.filter(policyid=data.policyid)
 
-    du.update(agent_od_amount=agent_od_amount, agent_tp_amount=agent_tp_amount,
-              self_od_amount=self_od_amount, self_tp_amount=self_tp_amount)
+        data1 = Payout.objects.get(Q(product_name=data.product_name) &
+                                   Q(insurer=data.insurance_company) &
+                                   Q(sp_name=data.sp_name) &
+                                   Q(vehicle_makeby=data.vehicle_makeby) &
+                                   Q(vehicle_model=data.vehicle_model) &
+                                   Q(vehicle_catagory=data.vehicle_catagory) &
+                                   Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+                                   Q(mfg_year=data.mfg_year) &
+                                   Q(addon=data.addon) &
+                                   Q(ncb=data.ncb) &
+                                   Q(gvw=data.gvw) &
+                                   Q(cubic_capacity=data.cubic_capacity) &
+                                   Q(seating_capacity=data.seating_capacity) &
+                                   Q(coverage_type=data.coverage_type) &
+                                   Q(case_type=data.case_type) &
+                                   Q(cpa=data.cpa))
 
-    data = Policy.objects.get(policy_no=id)
-    print(data.agent_tp_amount)
+        # Agent payout
+        agent_od_reward = data1.agent_od_reward
+        agent_od_amount = (int(data.OD_premium) * agent_od_reward) / 100
+        agent_tp_reward = data1.agent_tp_reward
+        agent_tp_amount = (int(data.TP_premium) * agent_tp_reward) / 100
 
-    return render(request, 'policylist/policy_save.html', {'data': data, 'data1': data1})
+        # # Self payout
+        self_od_reward = data1.self_od_reward
+        self_od_amount = (int(data.OD_premium) * self_od_reward) / 100
+        self_tp_reward = data1.self_tp_reward
+        self_tp_amount = (int(data.TP_premium) * self_tp_reward) / 100
+
+        data11.update(agent_od_reward=agent_od_reward,
+                      agent_od_amount=agent_od_amount,
+                      agent_tp_reward=agent_tp_reward,
+                      agent_tp_amount=agent_tp_amount,
+
+                      self_od_reward=self_od_reward,
+                      self_od_amount=self_od_amount,
+                      self_tp_reward=self_tp_reward,
+                      self_tp_amount=self_tp_amount)
+
+        pid = get_profile_id(get_id_from_session(request))
+        data_sp = ServiceProvider.objects.filter(profile_id=pid)
+        data_bc = BrokerCode.objects.filter(profile_id=pid)
+        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
+        data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
+        data_vm = VehicleModelName.objects.filter(profile_id=pid)
+        data_vc = VehicleCategory.objects.filter(profile_id=pid)
+        data_ct = CoverageType.objects.filter(profile_id=pid)
+        data_bqp = BQP.objects.filter(profile_id=pid)
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
+
+        # return render(request, 'policylist/policy_save.html', {'data': data, 'data1': data1})
+    except Exception as ex:
+        print(ex)
+        return HttpResponse(ex)
 
 
 def policy_entry(request):
