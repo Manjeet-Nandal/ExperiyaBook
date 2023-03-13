@@ -496,36 +496,7 @@ class create_policy(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
-        print(rto_city)
-
-        # data1 = Payout.objects.get(Q(product_name__contains=product_name) &
-        #                            Q(insurer__contains=insurance_company) &
-        #                            Q(sp_name__contains=sp_name) &
-        #                            Q(vehicle_makeby__contains=vehicle_makeby) &
-        #                            Q(vehicle_model__contains=vehicle_model) &
-        #                            Q(vehicle_catagory__contains=vehicle_catagory) &
-        #                            Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
-        #                            Q(mfg_year__contains=mfg_year) &
-        #                            Q(addon__contains=addon) &
-        #                            Q(ncb__contains=ncb) &
-        #                            Q(gvw__contains=gvw) &
-        #                            Q(cubic_capacity__contains=cubic_capacity) &
-        #                            Q(seating_capacity__contains=seating_capacity) &
-        #                            Q(coverage_type__contains=coverage_type) &
-        #                            Q(case_type__contains=case_type) &
-        #                            Q(cpa__contains=cpa))
-
-        # # Agent payout
-        # agent_od_reward = data1.agent_od_reward
-        # agent_od_amount = (int(OD_premium) * agent_od_reward) / 100
-        # agent_tp_reward = data1.agent_tp_reward
-        # agent_tp_amount = (int(TP_premium) * agent_tp_reward) / 100
-
-        # # # Self payout
-        # self_od_reward = data1.self_od_reward
-        # self_od_amount = (int(OD_premium) * self_od_reward) / 100
-        # self_tp_reward = data1.self_tp_reward
-        # self_tp_amount = (int(TP_premium) * self_tp_reward) / 100
+        print(rto_city)        
 
         Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, product_name=product_name, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                               mfg_year=mfg_year,
@@ -535,25 +506,30 @@ class create_policy(View):
                               employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
                               )
-
-        data = Payout.objects.filter(Q(product_name=product_name) &
-                                     Q(insurer=insurance_company) &
-                                     Q(sp_name=sp_name) &
-                                     Q(vehicle_makeby=vehicle_makeby) &
-                                     Q(vehicle_model=vehicle_model) &
-                                     Q(vehicle_catagory=vehicle_catagory) &
-                                     Q(vehicle_fuel_type=vehicle_fuel_type) &
-                                     Q(mfg_year=mfg_year) &
-                                     Q(rto_city=rto_city) &
-                                     Q(addon=addon) &
-                                     Q(ncb=ncb) &
-                                     Q(gvw=gvw) &
-                                     Q(cubic_capacity=cubic_capacity) &
-                                     Q(seating_capacity=seating_capacity) &
-                                     Q(coverage_type=coverage_type) &
-                                     Q(case_type=case_type) &
-                                     Q(cpa=cpa)).values()
+        reg=registration_no[0:4]
+        print(reg)
+        data = Payout.objects.filter(Q(product_name__contains=product_name) &
+                                     Q(insurer__contains=insurance_company) &
+                                     Q(sp_name__contains=sp_name) &
+                                     Q(vehicle_makeby__contains=vehicle_makeby) &
+                                     Q(vehicle_model__contains=vehicle_model) &
+                                     Q(vehicle_catagory__contains=vehicle_catagory) &
+                                     Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
+                                     Q(mfg_year__contains=mfg_year) &
+                                     Q(rto_city__contains=reg) &
+                                     Q(addon__contains=addon) &
+                                     Q(ncb__contains=ncb) &
+                                     Q(gvw__contains=gvw) &
+                                     Q(cubic_capacity__contains=cubic_capacity) &
+                                     Q(seating_capacity__contains=seating_capacity) &
+                                     Q(coverage_type__contains=coverage_type) &
+                                     Q(case_type__contains=case_type) &
+                                     Q(cpa__contains=cpa)).values()
+        print('data create post', data)
+        print('policy_no create post', policy_no)
         return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': policy_no})
+    
+
 
 
 class create_policy_non_motor(View):
@@ -655,30 +631,32 @@ class create_policy_non_motor(View):
 
 def apply_policy(request, id):
     print('apply_policy')
-
     try:
         data = Policy.objects.get(policy_no=id)
+        print(data)
         data = Policy.objects.get(policyid=data.policyid)
 
         data11 = Policy.objects.filter(policyid=data.policyid)
-
-        data1 = Payout.objects.get(Q(product_name=data.product_name) &
-                                   Q(insurer=data.insurance_company) &
-                                   Q(sp_name=data.sp_name) &
-                                   Q(vehicle_makeby=data.vehicle_makeby) &
-                                   Q(vehicle_model=data.vehicle_model) &
-                                   Q(vehicle_catagory=data.vehicle_catagory) &
-                                   Q(vehicle_fuel_type=data.vehicle_fuel_type) &
-                                   Q(mfg_year=data.mfg_year) &
-                                   Q(rto_city=data.rto_city) &
-                                   Q(addon=data.addon) &
-                                   Q(ncb=data.ncb) &
-                                   Q(gvw=data.gvw) &
-                                   Q(cubic_capacity=data.cubic_capacity) &
-                                   Q(seating_capacity=data.seating_capacity) &
-                                   Q(coverage_type=data.coverage_type) &
-                                   Q(case_type=data.case_type) &
-                                   Q(cpa=data.cpa))
+        reg=data.registration_no[0:4]  
+        
+        data1 = Payout.objects.get(Q(product_name__contains=data.product_name) &
+                                     Q(insurer__contains=data.insurance_company) &
+                                     Q(sp_name__contains=data.sp_name) &
+                                     Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                     Q(vehicle_model__contains=data.vehicle_model) &
+                                     Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                     Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                     Q(mfg_year__contains=data.mfg_year) &
+                                     Q(rto_city__contains=reg) &
+                                     Q(addon__contains=data.addon) &
+                                     Q(ncb__contains=data.ncb) &
+                                     Q(gvw__contains=data.gvw) &
+                                     Q(cubic_capacity__contains=data.cubic_capacity) &
+                                     Q(seating_capacity__contains=data.seating_capacity) &
+                                     Q(coverage_type__contains=data.coverage_type) &
+                                     Q(case_type__contains=data.case_type) &
+                                     Q(cpa__contains=data.cpa))
+        print(data1)
 
         # Agent payout
         agent_od_reward = data1.agent_od_reward

@@ -168,7 +168,9 @@ class Payout(models.Model):
     vehicle_catagory = models.CharField(max_length=255)
     vehicle_fuel_type = models.CharField(max_length=255)
     mfg_year = models.CharField(max_length=255)
-    rto_city = models.TextField()
+    
+    rto_city = models.CharField(max_length=1000)
+
     addon = models.CharField(max_length=50)
     ncb = models.CharField(max_length=50)
     gvw = models.CharField(max_length=100)
@@ -250,8 +252,8 @@ class Policy(models.Model):
     sp_brokercode = models.CharField(max_length=100)
     product_name = models.CharField(max_length=100)
     registration_no = models.CharField(max_length=50)
-    rto_state = models.CharField(max_length=1000)
-    rto_city = models.TextField()
+    rto_state = models.CharField(max_length=100)
+    rto_city = models.CharField(max_length=1000)
     vehicle_makeby = models.CharField(max_length=100)
     vehicle_model = models.CharField(max_length=100)
     vehicle_catagory = models.CharField(max_length=50)
