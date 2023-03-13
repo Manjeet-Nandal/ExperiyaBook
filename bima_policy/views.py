@@ -496,6 +496,8 @@ class create_policy(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
+        print(rto_city)
+        
         data1 = Payout.objects.get(Q(product_name__contains=product_name) &
                                    Q(insurer__contains=insurance_company) &
                                    Q(sp_name__contains=sp_name) &
@@ -792,7 +794,7 @@ def policy_entrydata(request, id):
             vehicle_rc = ''
 
         inspection_report = request.FILES.get('inspection_report')
-        
+
         data1 = Policy.objects.get(policyid=id)
         # Agent payout
         agent_od_amount = (int(OD_premium) * data1.agent_od_reward) / 100
@@ -802,7 +804,7 @@ def policy_entrydata(request, id):
         self_od_amount = (int(OD_premium) * data1.self_od_reward) / 100
         self_tp_amount = (int(TP_premium) * data1.self_tp_reward) / 100
 
-        data = Policy.objects.filter(policyid=id)             
+        data = Policy.objects.filter(policyid=id)
 
         print(self_od_amount)
         data.update(proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name,
@@ -811,10 +813,10 @@ def policy_entrydata(request, id):
                     mfg_year=mfg_year,
                     addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
                     cpa=cpa, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                    employee=employee, 
+                    employee=employee,
                     OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
-                    agent_od_amount=agent_od_amount,agent_tp_amount=agent_tp_amount,self_od_amount=self_od_amount,self_tp_amount=self_tp_amount )
-        
+                    agent_od_amount=agent_od_amount, agent_tp_amount=agent_tp_amount, self_od_amount=self_od_amount, self_tp_amount=self_tp_amount)
+
         # if proposal:
         #     data.update(proposal=proposal)
         # if mandate:
@@ -1082,7 +1084,7 @@ def slab_payoutform(request):
         case_type = request.POST.getlist('case_type')
         cpa = request.POST.getlist('cpa')
         rto = request.POST.getlist('rto')
-        
+
         # agent payout
         agent_od_reward = request.POST['agent_od_reward']
         agent_tp_reward = request.POST['agent_tp_reward']
@@ -1120,7 +1122,7 @@ def slab_payoutform(request):
                               agent_od_reward=agent_od_reward,
                               agent_tp_reward=agent_tp_reward,
                               self_od_reward=self_od_reward,
-                              self_tp_reward=self_tp_reward,                              
+                              self_tp_reward=self_tp_reward,
                               profile_id=data)
         print("insert data")
         return redirect('bima_policy:slab')
@@ -1149,10 +1151,10 @@ def slab_payoutformshow(request, id):
         rto = request.POST.getlist('rto')
         # agent payout
         agent_od_reward = request.POST['agent_od_reward']
-        agent_tp_reward = request.POST['agent_tp_reward']        
+        agent_tp_reward = request.POST['agent_tp_reward']
         # self payout
         self_od_reward = request.POST['self_od_reward']
-        self_tp_reward = request.POST['self_tp_reward']        
+        self_tp_reward = request.POST['self_tp_reward']
 
         product_name = ','.join(product_name)
         insurer = ','.join(insurer)
@@ -1179,11 +1181,11 @@ def slab_payoutformshow(request, id):
                            vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
                            vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
                            rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
-                           coverage_type=coverage_type, case_type=case_type, cpa=cpa,                          
+                           coverage_type=coverage_type, case_type=case_type, cpa=cpa,
                            agent_od_reward=agent_od_reward,
                            agent_tp_reward=agent_tp_reward,
                            self_od_reward=self_od_reward,
-                           self_tp_reward=self_tp_reward )
+                           self_tp_reward=self_tp_reward)
         print("done")
         return redirect('bima_policy:slab')
 
