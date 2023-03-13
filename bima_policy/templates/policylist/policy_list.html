@@ -128,7 +128,7 @@
                                                 placeholder="Minimum 8 Characters" data-parsley-required="true"
                                                 data-parsley-minlength="8" data-parsley-maxlength="14"
                                                 data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$"
-                                                id="registration_no" name="registration_no" maxlength="14" required>
+                                                id="registration_no" name="registration_no" maxlength="14" required style="text-transform: uppercase;">
                                              <div class="input-group-append">
                                                 <span class="input-group-text" id="demo" placeholder="xxxx"></span>
                                              </div>
@@ -918,8 +918,335 @@
 
 <script>
    function myFunction() {
+      document.getElementById("registration_no").value = document.getElementById("registration_no").value.toUpperCase();
       var x = document.getElementById("registration_no").value;
       document.getElementById("demo").innerHTML = x.slice(0, 4);
+
+      if (x.startsWith('AN')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Andama And Nicobar Island') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('AP')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Andhra Pradesh') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('AR')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Arunachal Pradesh') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('AS')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Assam') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('BR')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Bihar') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('CH')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Chandigarh') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('CG')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Chattisgarh') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('DD')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Daman And Diu') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('DL')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Delhi') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('GA')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'GOA') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('GJ')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Gujrat') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('HR')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Haryana') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('HP')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Himachal Pradesh') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('JK')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Jammu And Kashmir') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('JH')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Jharkhand') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('KA')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Karnataka') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('KL')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Kerala') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('LD')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Lakshadweep') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('LA')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Leh') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('MP')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Madhya Pradesh') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('MH')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Maharashtra') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('MN')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Manipur') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('ML')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Meghalaya') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('MZ')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Mizoram') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('NL')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Nagaland') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('OD')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Odisha') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('PY')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Puducherry') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('PB')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Punjab') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('RJ')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Rajasthan') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('SK')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Sikkim') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('TN')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Tamil Nadu') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('TR')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Telangana') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('TS')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Telangana') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('UK')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Uttrakhand') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('UP')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'Uttar Pradesh') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      else if (x.startsWith('WB')) {
+         var rto_state = document.getElementById("rto_state");
+        for (let index = 0; index < rto_state.options.length; index++) {
+            
+         if (rto_state[index].value == 'West Bengal') {
+            rto_state[index].selected = true;
+         }        
+        }
+      }     
+      
    }
 </script>
 <script>

@@ -286,7 +286,7 @@
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select id="case_type" name="case_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required multiple
-                                             style="height: 200PX;" onchange="selectAllItems('case_type')">
+                                             onchange="selectAllItems('case_type')">
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
@@ -299,17 +299,17 @@
                                           <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select id="cpa" name="cpa" data-parsley-required="true" multiple
                                              onchange="selectAllItems('cpa')" data-parsley-required-message=""
-                                             style="height: 200PX;" class="custom-select" required>
+                                             class="custom-select" required>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                              <option value="*"> select all </option>
                                           </select>
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label>RTO State <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select id="rto_state" name="rto_state" data-parsley-required="true" multiple
-                                              data-parsley-required-message="" onclick="addRtoCity()"
+                                             data-parsley-required-message="" onclick="alert('hhh')"
                                              style="height: 200PX;" class="custom-select" required>
                                              <option value="">-- Select State --</option>
                                              <option value="1">Andama And Nicobar Island</option>
@@ -357,7 +357,218 @@
                                              data-parsley-required-message="" class="custom-select" required
                                              style="height: 200PX;">
                                           </select>
+                                       </div> -->
+
+
+
+                                       <div class="col-md-12 mb-4 ">
+                                          <label>State <abbr title="Required" class="text-danger">*</abbr></label>
+
+                                          <button class="btn btn-default dropdown-toggle form-control btn-secondary "
+                                             type="button" data-toggle="dropdown"><span class="dropdown-text"> -- Select
+                                                State --</span>
+                                          </button>
+                                          <ul class="dropdown-menu">
+
+                                             <li><a href="#"><label><input id='rto1' onchange="populate1(this.id,'rto')"
+                                                         name='options[]' type="checkbox" class="option justone"
+                                                         value='1' /> Andama And Nicobar Island</label></a></li>
+                                             <li><a href="#"><label><input id='rto2' onchange="populate1(this.id,'rto')"
+                                                         name='options[]' type="checkbox" class="option justone"
+                                                         value='2' /> Andhra Pradesh</label></a></li>
+                                             <li><a href="#"><label><input id='rto3' onchange="populate1(this.id,'rto')"
+                                                         name='options[]' type="checkbox" class="option justone"
+                                                         value='3' /> Arunachal Pradesh</label></a></li>
+                                             <li><a href="#"><label><input id='rto4' onchange="populate1(this.id,'rto')"
+                                                         name='options[]' type="checkbox" class="option justone"
+                                                         value='4' /> Assam</label></a></li>
+                                             <li><a href="#"><label><input id='rto5' onchange="populate1(this.id,'rto')"
+                                                         name='options[]' type="checkbox" class="option justone"
+                                                         value='5' /> Bihar</label></a></li>
+                                             <li><a href="#"><label><input id='rto6' onchange="populate1(this.id,'rto')"
+                                                         name='options[]' type="checkbox" class="option justone"
+                                                         value='6' /> Chattisgarh</label></a></li>
+                                             <li><a href="#"><label><input id='rto7' onchange="populate1(this.id,'rto')"
+                                                         name='options[]' type="checkbox" class="option justone"
+                                                         value='7' /> Chandigarh</label></a></li>
+                                             <li><a href="#"><label><input id='rto8' onchange="populate1(this.id,'rto')"
+                                                         name='options[]' type="checkbox" class="option justone"
+                                                         value='8' /> Daman And Diu</label></a></li>
+                                             <li><a href="#"><label><input id='rto9' onchange="populate1(this.id,'rto')"
+                                                         name='options[]' type="checkbox" class="option justone"
+                                                         value='9' /> Delhi</label></a></li>
+                                             <li><a href="#"><label><input id='rto10'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='10' />
+                                                      Goa</label></a></li>
+                                             <li><a href="#"><label><input id='rto11'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='11' />
+                                                      Gujrat</label></a></li>
+                                             <li><a href="#"><label><input id='rto12'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='12' /> Himachal
+                                                      Pradesh</label></a></li>
+                                             <li><a href="#"><label><input id='rto13'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='13' />
+                                                      Haryana</label></a></li>
+                                             <li><a href="#"><label><input id='rto14'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='14' />
+                                                      Jharkhand</label></a></li>
+                                             <li><a href="#"><label><input id='rto15'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='15' /> Jammu And
+                                                      Kashmir</label></a></li>
+                                             <li><a href="#"><label><input id='rto16'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='16' />
+                                                      Karnataka</label></a></li>
+                                             <li><a href="#"><label><input id='rto17'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='17' />
+                                                      Kerala</label></a></li>
+                                             <li><a href="#"><label><input id='rto18'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='18' />
+                                                      LEH</label></a></li>
+                                             <li><a href="#"><label><input id='rto19'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='19' />
+                                                      Lakshadweep</label></a></li>
+                                             <li><a href="#"><label><input id='rto20'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='20' />
+                                                      Maharashtra</label></a></li>
+                                             <li><a href="#"><label><input id='rto21'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='21' />
+                                                      Meghalaya</label></a></li>
+                                             <li><a href="#"><label><input id='rto22'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='22' />
+                                                      Manipur</label></a></li>
+                                             <li><a href="#"><label><input id='rto23'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='23' /> Madhya
+                                                      Pradesh</label></a></li>
+                                             <li><a href="#"><label><input id='rto24'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='24' />
+                                                      Mizoram</label></a></li>
+                                             <li><a href="#"><label><input id='rto25'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='25' />
+                                                      Nagaland</label></a></li>
+                                             <li><a href="#"><label><input id='rto26'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='26' />
+                                                      Odisha</label></a></li>
+                                             <li><a href="#"><label><input id='rto27'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='27' />
+                                                      Punjab</label></a></li>
+                                             <li><a href="#"><label><input id='rto28'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='28' />
+                                                      Puducherry</label></a></li>
+                                             <li><a href="#"><label><input id='rto29'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='29' />
+                                                      Rajasthan</label></a></li>
+                                             <li><a href="#"><label><input id='rto30'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='30' />
+                                                      Sikkim</label></a></li>
+                                             <li><a href="#"><label><input id='rto31'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='31' /> Tamil
+                                                      Nadu</label></a></li>
+                                             <li><a href="#"><label><input id='rto32'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='32' />
+                                                      Tripura</label></a></li>
+                                             <li><a href="#"><label><input id='rto33'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='33' />
+                                                      Telangana</label></a></li>
+                                             <li><a href="#"><label><input id='rto34'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='34' />
+                                                      Uttrakhand</label></a></li>
+                                             <li><a href="#"><label><input id='rto35'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='35' /> Uttar
+                                                      Pradesh</label></a></li>
+                                             <li><a href="#"><label><input id='rto36'
+                                                         onchange="populate1(this.id,'rto')" name='options[]'
+                                                         type="checkbox" class="option justone" value='36' /> West
+                                                      Bengal</label></a></li>
+
+                                             <li><a href="#"><label><input id='rto0' onchange="selectAllStates()"
+                                                         name='options[]' type="checkbox" class="option justone"
+                                                         value='0' /> Select All</label></a></li>
+
+                                          </ul>
                                        </div>
+
+                                       <div class="col-md-12 mb-4">
+                                          <div class="f-group">
+                                             <label>RTOs<abbr title="Required" class="text-danger">*</abbr></label>
+                                             <select name="rto" id="rto" multiple hidden class="form-control">
+
+
+                                             </select>
+
+                                             <!-- This is added by Manjeet Nandal -->
+                                             <!-- Ul is added in place of select element -->
+                                             <style>
+                                                .ula01 {
+                                                   height: 150px;
+                                                   overflow: auto;
+                                                   border: 2px 0.8px silver;
+                                                   border-radius: 5px;
+                                                }
+
+                                                .ula02 {
+                                                   list-style-type: none;
+                                                   margin: 0;
+                                                   padding: 5;
+                                                   overflow-x: hidden;
+                                                }
+
+                                                .lia03 {
+                                                   margin: 0;
+                                                }
+
+                                                .labela04 {
+                                                   display: block;
+                                                   color: WindowText;
+                                                   background-color: Window;
+                                                   padding: 2px;
+                                                   width: 100%;
+                                                }
+
+                                                .labela04:hover {
+                                                   background-color: Highlight;
+                                                   color: HighlightText;
+                                                }
+                                             </style>
+
+                                             <ul class="ula01 ula02 form-control" id="rtoul" name="rtoul"
+                                                onclick="addSelectedOptions()">
+
+                                             </ul>
+
+                                             <!-- Clear RTO List implemented by: Manjeet Nandal -->
+
+                                             <button class="btn btn-danger mt-2" style="float: right;"
+                                                onclick="clearRtoList()">Clear List</button>
+
+                                          </div>
+                                       </div>
+
 
                                        <script>
                                           var trackRtoCity = [];
@@ -366,36 +577,36 @@
                                              rto_state = document.getElementById('rto_state')
                                              rto = document.getElementById('rto')
 
-                                             if (rto_state.selectedIndex == 12) {                                                                                       
+                                             if (rto_state.selectedIndex == 12) {
                                                 if (trackRtoCity.includes(12)) {
                                                    return;
                                                 }
                                                 var newoption = document.createElement("option");
                                                 newoption.value = 'ROHTAK';
-                                                newoption.innerHTML = 'ROHTAK';     
-                                                rto.options.add(newoption); 
-                                                
+                                                newoption.innerHTML = 'ROHTAK';
+                                                rto.options.add(newoption);
+
                                                 var newoption = document.createElement("option");
                                                 newoption.value = 'SONEPAT';
-                                                newoption.innerHTML = 'SONEPAT';     
-                                                rto.options.add(newoption);   
+                                                newoption.innerHTML = 'SONEPAT';
+                                                rto.options.add(newoption);
 
                                                 var newoption = document.createElement("option");
                                                 newoption.value = 'GURGAON';
-                                                newoption.innerHTML = 'GURGAON';     
-                                                rto.options.add(newoption);     
-                                              
+                                                newoption.innerHTML = 'GURGAON';
+                                                rto.options.add(newoption);
+
                                                 var newoption = document.createElement("option");
                                                 newoption.value = 'PANIPAT';
-                                                newoption.innerHTML = 'PANIPAT';     
-                                                rto.options.add(newoption);     
+                                                newoption.innerHTML = 'PANIPAT';
+                                                rto.options.add(newoption);
 
                                                 trackRtoCity.push(12)
-                                                
+
                                                 for (i = 0; i < rto.length; i++) {
                                                    rto.options[i].selected = true
                                                 }
-                                               
+
                                              }
 
 
@@ -1271,8 +1482,18 @@
             , 'GJ36|GJ36', 'GJ37|GJ37', 'GJ38|GJ38'];
       }
       else if (s1.value == "13") {
-         var optionArray = ['ROHTAK', 'SONEPAT', 'GURGAON'];
-      }
+            var optionArray = ['HR01|HR01', 'HR02|HR02', 'HR03|HR03', 'HR04|HR04', 'HR05|HR05', 'HR06|HR06', 'HR07|HR07', 'HR08|HR08'
+               , 'HR09|HR09', 'HR10|HR10', 'HR11|HR11', 'HR12|HR12', 'HR13|HR13', 'HR14|HR14', 'HR15|HR15', 'HR16|HR16', 'HR17|HR17'
+               , 'HR18|HR18', 'HR19|HR19', 'HR20|HR20', 'HR21|HR21', 'HR22|HR22', 'HR23|HR23', 'HR24|HR24', 'HR25|HR25', 'HR26|HR26'
+               , 'HR27|HR27', 'HR28|HR28', 'HR29|HR29', 'HR30|HR30', 'HR31|HR31', 'HR32|HR32', 'HR33|HR33', 'HR34|HR34', 'HR35|HR35'
+               , 'HR36|HR36', 'HR37|HR37', 'HR38|HR38', 'HR39|HR39', 'HR40|HR40', 'HR41|HR41', 'HR42|HR42', 'HR43|HR43', 'HR44|HR44'
+               , 'HR45|HR45', 'HR46|HR46', 'HR47|HR47', 'HR48|HR48', 'HR49|HR49', 'HR50|HR50', 'HR51|HR51', 'HR52|HR52', 'HR53|HR53'
+               , 'HR54|HR54', 'HR55|HR55', 'HR56|HR56', 'HR57|HR57', 'HR58|HR58', 'HR59|HR59', 'HR60|HR60', 'HR61|HR61', 'HR62|HR62'
+               , 'HR63|HR63', 'HR64|HR64', 'HR65|HR65', 'HR66|HR66', 'HR67|HR67', 'HR68|HR68', 'HR69|HR69', 'HR71|HR71', 'HR72|HR72'
+               , 'HR73|HR73', 'HR74|HR74', 'HR75|HR75', 'HR76|HR76', 'HR77|HR77', 'HR78|HR78', 'HR79|HR79', 'HR80|HR80', 'HR81|HR81'
+               , 'HR82|HR82', 'HR83|HR83', 'HR84|HR84', 'HR85|HR85', 'HR86|HR86', 'HR87|HR87', 'HR88|HR88', 'HR89|HR89', 'HR90|HR90'
+               , 'HR91|HR91', 'HR92|HR92', 'HR93|HR93', 'HR94|HR94', 'HR95|HR95', 'HR96|HR96', 'HR97|HR97', 'HR98|HR98'];
+         }
       else if (s1.value == "12") {
          var optionArray = ['HP03|HP03', 'HP04|HP04', 'HP05|HP05', 'HP06|HP06', 'HP07|HP07', 'HP08|HP08'
             , 'HP09|HP09', 'HP10|HP10', 'HP11|HP11', 'HP12|HP12', 'HP13|HP13', 'HP14|HP14', 'HP15|HP15', 'HP16|HP16', 'HP17|HP17'
