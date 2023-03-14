@@ -496,7 +496,7 @@ class create_policy(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
-        print(rto_city)        
+        print(rto_city)
 
         Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, product_name=product_name, registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                               mfg_year=mfg_year,
@@ -506,7 +506,7 @@ class create_policy(View):
                               employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
                               )
-        reg=registration_no[0:4]
+        reg = registration_no[0:4]
         print(reg)
         data = Payout.objects.filter(Q(product_name__contains=product_name) &
                                      Q(insurer__contains=insurance_company) &
@@ -528,8 +528,6 @@ class create_policy(View):
         print('data create post', data)
         print('policy_no create post', policy_no)
         return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': policy_no})
-    
-
 
 
 class create_policy_non_motor(View):
@@ -637,25 +635,25 @@ def apply_policy(request, id):
         data = Policy.objects.get(policyid=data.policyid)
 
         data11 = Policy.objects.filter(policyid=data.policyid)
-        reg=data.registration_no[0:4]  
-        
+        reg = data.registration_no[0:4]
+
         data1 = Payout.objects.get(Q(product_name__contains=data.product_name) &
-                                     Q(insurer__contains=data.insurance_company) &
-                                     Q(sp_name__contains=data.sp_name) &
-                                     Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                     Q(vehicle_model__contains=data.vehicle_model) &
-                                     Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                     Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                     Q(mfg_year__contains=data.mfg_year) &
-                                     Q(rto_city__contains=reg) &
-                                     Q(addon__contains=data.addon) &
-                                     Q(ncb__contains=data.ncb) &
-                                     Q(gvw__contains=data.gvw) &
-                                     Q(cubic_capacity__contains=data.cubic_capacity) &
-                                     Q(seating_capacity__contains=data.seating_capacity) &
-                                     Q(coverage_type__contains=data.coverage_type) &
-                                     Q(case_type__contains=data.case_type) &
-                                     Q(cpa__contains=data.cpa))
+                                   Q(insurer__contains=data.insurance_company) &
+                                   Q(sp_name__contains=data.sp_name) &
+                                   Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                   Q(vehicle_model__contains=data.vehicle_model) &
+                                   Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                   Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                   Q(mfg_year__contains=data.mfg_year) &
+                                   Q(rto_city__contains=reg) &
+                                   Q(addon__contains=data.addon) &
+                                   Q(ncb__contains=data.ncb) &
+                                   Q(gvw__contains=data.gvw) &
+                                   Q(cubic_capacity__contains=data.cubic_capacity) &
+                                   Q(seating_capacity__contains=data.seating_capacity) &
+                                   Q(coverage_type__contains=data.coverage_type) &
+                                   Q(case_type__contains=data.case_type) &
+                                   Q(cpa__contains=data.cpa))
         print(data1)
 
         # Agent payout
@@ -704,8 +702,6 @@ def policy_entry(request):
     return render(request, 'policylist/policy_entry_list.html', {'data': data})
 
 
-# code by Manjeet Nandal
-
 def policy_entrydata(request, id):
     print('policy_entrydata')
     if request.method == "POST":
@@ -721,77 +717,102 @@ def policy_entrydata(request, id):
         try:
             registration_no = request.POST['registration_no']
         except:
-            pass
+            registration_no = ''
         try:
             rto_city = request.POST['rto_city']
         except:
-            pass
+            rto_city = ''
         try:
             rto_state = request.POST['rto_state']
         except:
-            pass
+            rto_state = ''
         try:
             vehicle_makeby = request.POST['vehicle_makeby']
         except:
-            pass
+            vehicle_makeby = ''
         try:
             vehicle_model = request.POST['vehicle_model']
         except:
-            pass
+            vehicle_model = ''
         try:
             vehicle_catagory = request.POST['vehicle_catagory']
         except:
-            pass
+            vehicle_catagory = ''
         try:
             vehicle_fuel_type = request.POST['vehicle_fuel_type']
         except:
-            pass
+            vehicle_fuel_type = ''
         try:
             mfg_year = request.POST['mfg_year']
         except:
-            pass
+            mfg_year = ''       
         try:
             addon = request.POST['addon']
         except:
-            pass
+            addon = ''       
         try:
             ncb = request.POST['ncb']
         except:
-            pass
+            ncb = ''       
         try:
             cubic_capacity = request.POST['cubic_capacity']
         except:
-            pass
+            cubic_capacity = ''       
         try:
             gvw = request.POST['gvw']
         except:
-            pass
+            gvw = ''       
         try:
             seating_capacity = request.POST['seating_capacity']
         except:
-            pass
+            seating_capacity = ''       
         try:
             coverage_type = request.POST['coverage_type']
         except:
-            pass
+            coverage_type = ''       
         try:
             cpa = request.POST['cpa']
         except:
-            pass
-
+            cpa = ''       
+        
         case_type = request.POST['case_type']
         insured_age = request.POST['insured_age']
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
         pos = request.POST['pos']
         employee = request.POST['employee']
-        OD_premium = request.POST['od']
-        TP_premium = request.POST['tp']
-        TP_terrorism = request.POST['tpt']
-        net = request.POST['net']
-        GST = request.POST['gst']
-        total = request.POST['total']
-        payment_mode = request.POST['payment_mode']
+
+        try:
+            OD_premium = request.POST['od']
+        except:
+            OD_premium = None
+        try:
+            TP_premium = request.POST['tp']
+        except:
+            TP_premium = None
+
+        try:
+            TP_terrorism = request.POST['tpt']
+        except:
+            TP_terrorism = None
+
+        try:
+            net = request.POST['net']
+        except:
+            net = None
+        try:
+            GST = request.POST['gst']
+        except:
+            GST = None
+        try:
+            total = request.POST['total']
+        except:
+            total = None
+        try:
+            payment_mode = request.POST['payment_mode']
+        except:
+            payment_mode = ''
+
         proposal = request.POST['proposal']
         mandate = request.POST['mandate']
         policy = request.FILES.get('policy')
@@ -799,6 +820,7 @@ def policy_entrydata(request, id):
         pan_card = request.FILES.get('pan_card')
         aadhar_card = request.FILES.get('aadhar_card')
         vehicle_rc = request.FILES.get('vehicle_rc')
+
         try:
             vehicle_rc = request.FILES.get('vehicle_rc')
         except Exception as ex:
@@ -806,18 +828,23 @@ def policy_entrydata(request, id):
 
         inspection_report = request.FILES.get('inspection_report')
 
-        data1 = Policy.objects.get(policyid=id)
-        # Agent payout
-        agent_od_amount = (int(OD_premium) * data1.agent_od_reward) / 100
-        agent_tp_amount = (int(TP_premium) * data1.agent_tp_reward) / 100
+        try:
+            if OD_premium:
+                data1 = Policy.objects.get(policyid=id)
+                # Agent payout
+                agent_od_amount = (int(OD_premium) *
+                                   data1.agent_od_reward) / 100
+                agent_tp_amount = (int(TP_premium) *
+                                   data1.agent_tp_reward) / 100
 
-        # # Self payout
-        self_od_amount = (int(OD_premium) * data1.self_od_reward) / 100
-        self_tp_amount = (int(TP_premium) * data1.self_tp_reward) / 100
+                # # Self payout
+                self_od_amount = (int(OD_premium) * data1.self_od_reward) / 100
+                self_tp_amount = (int(TP_premium) * data1.self_tp_reward) / 100
+        except:
+            pass
 
         data = Policy.objects.filter(policyid=id)
 
-        print(self_od_amount)
         data.update(proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name,
                     sp_name=sp_name, sp_brokercode=sp_brokercode, insurance_company=insurance_company, product_name=product_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state,
                     vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
@@ -828,22 +855,22 @@ def policy_entrydata(request, id):
                     OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
                     agent_od_amount=agent_od_amount, agent_tp_amount=agent_tp_amount, self_od_amount=self_od_amount, self_tp_amount=self_tp_amount)
 
-        # if proposal:
-        #     data.update(proposal=proposal)
-        # if mandate:
-        #     data.update(mandate=mandate)
-        # if policy:
-        #     data.update(policy=policy)
-        # if previous_policy:
-        #     data.update(previous_policy=previous_policy)
-        # if pan_card:
-        #     data.update(pan_card=pan_card)
-        # if aadhar_card:
-        #     data.update(aadhar_card=aadhar_card)
-        # if vehicle_rc:
-        #     data.update(vehicle_rc=vehicle_rc)
-        # if inspection_report:
-        #     data.update(inspection_report=inspection_report)
+        if proposal:
+            data.update(proposal=proposal)
+        if mandate:
+            data.update(mandate=mandate)
+        if policy:
+            data.update(policy=policy)
+        if previous_policy:
+            data.update(previous_policy=previous_policy)
+        if pan_card:
+            data.update(pan_card=pan_card)
+        if aadhar_card:
+            data.update(aadhar_card=aadhar_card)
+        if vehicle_rc:
+            data.update(vehicle_rc=vehicle_rc)
+        if inspection_report:
+            data.update(inspection_report=inspection_report)
 
         return redirect('bima_policy:policy_entry')
     else:
