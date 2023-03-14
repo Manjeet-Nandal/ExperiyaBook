@@ -46,15 +46,13 @@
                                        <select name="vehicle_catagory" data-parsley-required-message=""
                                           id="vehicle_catagory" data-parsley-required="true" class="custom-select "
                                           required onchange="setCategoryOnChange()">
-                                          <option value="TWO WHEELER">TWO WHEELER</option>
-                                          <option value="PRIVATE CAR">PRIVATE CAR</option>
-                                          <option value="GCV-PUBLIC CARRIER OTHER THAN 3 W">GCV-PUBLIC CARRIER OTHER THAN 3 W</option>
-                                          <option value="PCV">PCV</option>
-                                          <!-- {%for value in data_vc%}
+                                          <option value=""> -- Select Category -- </option>                                        
+                                          {%for value in data_vc%}
                                           <option value="{{value}}">{{value}}</option>
-                                          {%endfor%} -->
+                                          {%endfor%}
                                        </select>
                                     </div>
+                                    
 
                                     <script>
 
