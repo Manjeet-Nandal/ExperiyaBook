@@ -46,20 +46,20 @@
                                        <select name="vehicle_catagory" data-parsley-required-message=""
                                           id="vehicle_catagory" data-parsley-required="true" class="custom-select "
                                           required onchange="setCategoryOnChange()">
-                                          <option value=""> -- Select Category -- </option>                                        
+                                          <option value=""> -- Select Category -- </option>
                                           {%for value in data_vc%}
                                           <option value="{{value}}">{{value}}</option>
                                           {%endfor%}
                                        </select>
                                     </div>
-                                    
+
 
                                     <script>
 
                                        function setCategoryOnChange() {
                                           element = document.getElementById('vehicle_catagory')
 
-                                          if (element.value == 'TWO WHEELER') {                                            
+                                          if (element.value == 'TWO WHEELER') {
                                              ct = document.getElementById('coverage_type')
                                              ct.hidden = false;
                                              cc = document.getElementById('cubic_capacity')
@@ -68,7 +68,7 @@
                                              gvw.hidden = true;
 
                                              cc.innerHTML = ''
-                                             ct.innerHTML = ''                                            
+                                             ct.innerHTML = ''
 
                                              var newoption = document.createElement("option");
                                              newoption.value = '75CC-150CC'
@@ -172,9 +172,9 @@
                                           else if (element.value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
                                              gvw = document.getElementById('gvww')
                                              gvw.hidden = false;
-                                             
+
                                              ct = document.getElementById('coverage_type')
-                                             ct.innerHTML = ''                             
+                                             ct.innerHTML = ''
                                              var newoption = document.createElement("option");
                                              newoption.value = 'Package Policy'
                                              newoption.innerHTML = '1 Year Package'
@@ -183,7 +183,14 @@
                                              var newoption = document.createElement("option");
                                              newoption.value = 'TP Only'
                                              newoption.innerHTML = 'TP Only'
-                                             ct.options.add(newoption);                                          
+                                             ct.options.add(newoption);
+
+                                          }
+                                          else if (element.value == '3 WHEELER PCV') {
+                                             gvw = document.getElementById('gvww')
+                                             gvw.hidden = true;
+                                             st = document.getElementById('seating_capacityy')
+                                             st.hidden = false;
 
                                           }
 
@@ -435,18 +442,18 @@
                                              <option value="ABOVE 40000">ABOVE 40000</option>
                                           </select>
                                        </div>
-                                       <!-- <div class="col-md-3 mb-4"> -->
-                                       <!-- <label>Seating Capacity<abbr title="Required"
+                                       <div class="col-md-3 mb-4" id="seating_capacityy">
+                                          <label>Seating Capacity<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select name="seating_capacity" data-parsley-required-message=""
                                              class="custom-select" id="seating_capacity" data-parsley-required="true"
                                              required>
                                              <option value=""> -- Select Seating Capacity -- </option>
+                                             <option value="1">1</option>
                                              <option value="2">2</option>
-                                             <option value="2">2</option>
-                                            
+
                                           </select>
-                                       </div> -->
+                                       </div>
 
 
                                        <div class="col-md-3 mb-4">
