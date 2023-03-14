@@ -45,13 +45,152 @@
                                              class="text-danger">*</abbr></label>
                                        <select name="vehicle_catagory" data-parsley-required-message=""
                                           id="vehicle_catagory" data-parsley-required="true" class="custom-select "
-                                          required onchange="setTWItems()">
-                                          <option value=""> -- Select Catagory --</option>
-                                          {%for value in data_vc%}
+                                          required onchange="setCategoryOnChange()">
+                                          <option value="TWO WHEELER">TWO WHEELER</option>
+                                          <option value="PRIVATE CAR">PRIVATE CAR</option>
+                                          <option value="GCV-PUBLIC CARRIER OTHER THAN 3 W">GCV-PUBLIC CARRIER OTHER THAN 3 W</option>
+                                          <option value="PCV">PCV</option>
+                                          <!-- {%for value in data_vc%}
                                           <option value="{{value}}">{{value}}</option>
-                                          {%endfor%}
+                                          {%endfor%} -->
                                        </select>
                                     </div>
+
+                                    <script>
+
+                                       function setCategoryOnChange() {
+                                          element = document.getElementById('vehicle_catagory')
+
+                                          if (element.value == 'TWO WHEELER') {                                            
+                                             ct = document.getElementById('coverage_type')
+                                             ct.hidden = false;
+                                             cc = document.getElementById('cubic_capacity')
+                                             cc.hidden = false;
+                                             gvw = document.getElementById('gvww')
+                                             gvw.hidden = true;
+
+                                             cc.innerHTML = ''
+                                             ct.innerHTML = ''                                            
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = '75CC-150CC'
+                                             newoption.innerHTML = '75CC-150CC'
+                                             cc.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = '150CC-150CC'
+                                             newoption.innerHTML = '150CC-150CC'
+                                             cc.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = 'Above 350CC'
+                                             newoption.innerHTML = 'Above 350CC'
+                                             cc.options.add(newoption);
+
+                                             // Coverage type
+                                             ct = document.getElementById('coverage_type')
+                                             ct.innerHTML = ''
+                                             ct.hidden = false
+                                             var newoption = document.createElement("option");
+                                             newoption.value = '1+4 Package'
+                                             newoption.innerHTML = '1+4 Package'
+                                             ct.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = '5 Year TP'
+                                             newoption.innerHTML = '5 Year TP'
+                                             ct.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = '1 Year Package'
+                                             newoption.innerHTML = '1 Year Package'
+                                             ct.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = 'TP Only'
+                                             newoption.innerHTML = 'TP Only'
+                                             ct.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = 'OD Only'
+                                             newoption.innerHTML = 'OD Only'
+                                             ct.options.add(newoption);
+
+                                          }
+
+                                          else if (element.value == 'PRIVATE CAR') {
+                                             gvw = document.getElementById('gvww')
+                                             gvw.hidden = true;
+
+                                             // Cubic Capicity
+                                             cc = document.getElementById('cubic_capacity')
+                                             cc.innerHTML = ''
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = 'BELOW 1000CC'
+                                             newoption.innerHTML = 'BELOW-1000CC'
+                                             cc.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = '1000CC-1500CC'
+                                             newoption.innerHTML = '1000CC-1500CC'
+                                             cc.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = 'ABOVE 1500CC'
+                                             newoption.innerHTML = 'ABOVE 1500C'
+                                             cc.options.add(newoption);
+                                             // Coverage Type
+                                             ct = document.getElementById('coverage_type')
+                                             ct.innerHTML = ''
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = '1+4 Package'
+                                             newoption.innerHTML = '1+4 Package'
+                                             ct.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = '5 Year TP'
+                                             newoption.innerHTML = '5 Year TP'
+                                             ct.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = '1 Year Package'
+                                             newoption.innerHTML = '1 Year Package'
+                                             ct.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = 'TP Only'
+                                             newoption.innerHTML = 'TP Only'
+                                             ct.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = 'OD Only'
+                                             newoption.innerHTML = 'OD Only'
+                                             ct.options.add(newoption);
+
+                                          }
+
+                                          else if (element.value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
+                                             gvw = document.getElementById('gvww')
+                                             gvw.hidden = false;
+                                             
+                                             ct = document.getElementById('coverage_type')
+                                             ct.innerHTML = ''                             
+                                             var newoption = document.createElement("option");
+                                             newoption.value = 'Package Policy'
+                                             newoption.innerHTML = '1 Year Package'
+                                             ct.options.add(newoption);
+
+                                             var newoption = document.createElement("option");
+                                             newoption.value = 'TP Only'
+                                             newoption.innerHTML = 'TP Only'
+                                             ct.options.add(newoption);                                          
+
+                                          }
+
+                                       }
+                                    </script>
 
                                     <div class="form-row">
                                        <div class="col-md-3 mb-4">
@@ -266,7 +405,7 @@
                                           </select>
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <div class="col-md-3 mb-4" id="cubic_capacityy">
                                           <label>Cubic Capacity<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select name="cubic_capacity" data-parsley-required-message=""
@@ -282,7 +421,7 @@
                                           </select>
                                        </div>
 
-                                       <div class="col-md-3 mb-4" hidden id="gvww">
+                                       <div class="col-md-3 mb-4" id="gvww">
                                           <label>GVW<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="gvw" data-parsley-required-message="" class="custom-select"
                                              id="gvw" data-parsley-required="true" required>
@@ -310,132 +449,7 @@
                                             
                                           </select>
                                        </div> -->
-                                       <script>
 
-                                          function setTWItems() {
-                                             element = document.getElementById('vehicle_catagory')
-                                             if (element.value == 'TWO WHEELER') {
-                                                cc = document.getElementById('cubic_capacity')
-                                                cc.innerHTML = ''
-                                                ct = document.getElementById('coverage_type')
-                                                ct.innerHTML = ''
-                                                gvww = document.getElementById('gvww')
-                                                gvww.hidden = true
-
-                                                var option = document.createElement('option')
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = '75CC-150CC'
-                                                newoption.innerHTML = '75CC-150CC'
-                                                cc.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = '150CC-150CC'
-                                                newoption.innerHTML = '150CC-150CC'
-                                                cc.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = 'Above 350CC'
-                                                newoption.innerHTML = 'Above 350CC'
-                                                cc.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = '1+4 Package'
-                                                newoption.innerHTML = '1+4 Package'
-                                                ct.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = '5 Year TP'
-                                                newoption.innerHTML = '5 Year TP'
-                                                ct.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = '1 Year Package'
-                                                newoption.innerHTML = '1 Year Package'
-                                                ct.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = 'TP Only'
-                                                newoption.innerHTML = 'TP Only'
-                                                ct.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = 'OD Only'
-                                                newoption.innerHTML = 'OD Only'
-                                                ct.options.add(newoption);
-
-                                             }
-
-                                             else if (element.value == 'PRIVATE CAR') {
-
-                                                cc = document.getElementById('cubic_capacity')
-                                                cc.innerHTML = ''
-                                                ct = document.getElementById('coverage_type')
-                                                ct.innerHTML = ''
-
-                                                var option = document.createElement('option')
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = 'BELOW 1000CC'
-                                                newoption.innerHTML = 'BELOW-1000CC'
-                                                cc.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = '1000CC-1500CC'
-                                                newoption.innerHTML = '1000CC-1500CC'
-                                                cc.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = 'ABOVE 1500CC'
-                                                newoption.innerHTML = 'ABOVE 1500C'
-                                                cc.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = '1+4 Package'
-                                                newoption.innerHTML = '1+4 Package'
-                                                ct.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = '5 Year TP'
-                                                newoption.innerHTML = '5 Year TP'
-                                                ct.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = '1 Year Package'
-                                                newoption.innerHTML = '1 Year Package'
-                                                ct.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = 'TP Only'
-                                                newoption.innerHTML = 'TP Only'
-                                                ct.options.add(newoption);
-
-                                                var newoption = document.createElement("option");
-                                                newoption.value = 'OD Only'
-                                                newoption.innerHTML = 'OD Only'
-                                                ct.options.add(newoption);
-
-                                             }
-
-                                             else if (element.value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
-
-                                                cc = document.getElementById('gvww')
-                                                cc.hidden = false
-
-                                             }
-
-                                             else if (element.value == '3 WHEELER PCV') {
-
-                                                cc = document.getElementById('cubic_capacity')
-                                                cc.innerHTML = ''
-                                                ct = document.getElementById('coverage_type')
-                                                ct.innerHTML = ''
-
-
-                                             }
-
-                                          }
-                                       </script>
 
                                        <div class="col-md-3 mb-4">
                                           <label>Coverage Type <abbr title="Required"
@@ -1368,23 +1382,23 @@
 </script>
 <script>
    function add() {
-      vc = document.getElementById('vehicle_catagory').value
 
+      od = parseInt(document.getElementById("od").value);
+      tpt = parseInt(document.getElementById("tpt").value);
 
-      var numOne, numTwo, sum;
-      numOne = parseInt(document.getElementById("od").value);
-      numTwo = parseInt(document.getElementById("tpt").value);
       gst = parseInt(document.getElementById("gst").value);
       gstt = parseInt(document.getElementById("gstt").value);
-      sum = numOne + numTwo;
-      document.getElementById("net").value = sum;
-     
+
+      vc = document.getElementById('vehicle_catagory').value
+
       if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
-         document.getElementById("gst").value = numOne * 18 / 100;
-         document.getElementById("gstt").value = numTwo * 12 / 100;
-
-         document.getElementById("totalnet").value = sum + gst + gstt;
-
+         document.getElementById("net").value = od + tpt;;
+         document.getElementById("gst").value = od * 18 / 100;
+         document.getElementById("gstt").value = tpt * 12 / 100;
+      }
+      else {
+         document.getElementById("net").value = od + tpt;;
+         document.getElementById("gst").value = (od + tpt) * 18 / 100;
       }
    }
 
@@ -1392,15 +1406,19 @@
 </script>
 <script>
    function addgst() {
-
-
       var numOne, numTwo, sum;
-      numOne = parseInt(document.getElementById("net").value);
-      numTwo = parseInt(document.getElementById("gst").value);
-      numTwoo = parseInt(document.getElementById("gstt").value);
-      sum = numOne + numTwo + numTwo;
-      document.getElementById("totalnet").value = sum;
-     
+      net = parseInt(document.getElementById("net").value);
+      gst = parseInt(document.getElementById("gst").value);
+      gstt = parseInt(document.getElementById("gstt").value);
+
+      vc = document.getElementById('vehicle_catagory').value
+      if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
+         document.getElementById("totalnet").value = net + gst + gstt;
+      }
+      else {
+         document.getElementById("totalnet").value = net + gst;
+      }
+
    }
 </script>
 
