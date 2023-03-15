@@ -668,7 +668,7 @@
                                     </select>
                                  </div>
 
-                              </div>                             
+                              </div>
                               {% else %}
                               <div class="card-body">
                                  <!-- .card-body -->
@@ -722,7 +722,6 @@
                                        data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt" maxlength="10" required>
                                  </div>
 
-
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
                                        onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"
@@ -743,6 +742,52 @@
                                     </select>
                                  </div>
 
+                              </div>
+                              <hr>
+                              <div class="card-body">
+                                 <!-- .card-body -->
+                                 <h4 class="card-title mb-3"> Pay-In Details </h4>
+                                 <!-- grid row -->
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="od">Pay-In OD Premium <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
+                                 </div>
+
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="tp">Pay-In TP/Terrorism<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
+                                 </div>
+                              </div>
+                              <hr>
+                              <div class="card-body">
+                                 <!-- .card-body -->
+                                 <h4 class="card-title mb-3"> Pay-In Details </h4>
+                                 <!-- grid row -->
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="od">Pay-In OD Premium <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
+                                 </div>
+
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="tp">Pay-In TP/Terrorism<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
+                                 </div>
                               </div>
                               {% endif%}
                               <!-- /.card-body -->
