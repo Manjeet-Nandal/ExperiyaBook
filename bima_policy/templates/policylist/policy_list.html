@@ -41,15 +41,17 @@
                                  <fieldset>
                                     <legend>Policy Details</legend>
 
-
                                     <div class="form-row">
+
+                                       {% if is_motor_form %}
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Catagory <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select name="vehicle_catagory" data-parsley-required-message=""
                                              id="vehicle_catagory" data-parsley-required="true" class="custom-select "
                                              required onchange="setCategoryOnChange()">
-                                             <option value="TWO WHEELER" selected>TWO WHEELER</option>
+                                             <option value=""> -- Select Category -- </option>
+                                             <option value="TWO WHEELER">TWO WHEELER</option>
                                              <option value="PRIVATE CAR">PRIVATE CAR</option>
                                              <option value="GCV-PUBLIC CARRIER OTHER THAN 3 W">GCV-PUBLIC CARRIER OTHER
                                                 THAN 3 W</option>
@@ -59,12 +61,47 @@
                                              <option value="TAXI 4 WHEELER">TAXI 4 WHEELER</option>
                                              <option value="BUS AND OTHERS">BUS AND OTHERS</option>
                                              <option value="MISC-D SPECIAL VEHICLE">MISC-D SPECIAL VEHICLE</option>
-                                             <option value="SCHOOL BUS">SCHOOL BUS</option>
+                                             <option value="SCHOOL BUS-SCHOOL NAME">SCHOOL BUS-SCHOOL NAME</option>
+                                             <option value="SCHOOL BUS-INDIVIDUAL NAME">SCHOOL BUS-INDIVIDUAL NAME
+                                             </option>
+
                                              <!-- {%for value in data_vc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%} -->
                                           </select>
                                        </div>
+                                       {% else %}
+                                       <div class="col-md-3 mb-4">
+                                          <label>Product Type <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="vehicle_catagory" data-parsley-required-message=""
+                                             id="vehicle_catagory" data-parsley-required="true" class="custom-select "
+                                             required onchange="setCategoryOnChange()">
+                                             <option value=""> -- Select Product -- </option>
+                                             <option value="FIRE">FIRE</option>
+                                             <option value="MARINE CARGO">MARINE CARGO</option>
+                                             <option value="MARINE HULL">MARINE HULL</option>
+                                             <option value="ENGINEERING">ENGINEERING</option>
+                                             <option value="MISCELLANEOUS">MISCELLANEOUS</option>
+
+                                             <!-- {%for value in data_vc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%} -->
+                                          </select>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
+                                          <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="case_type" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required>
+                                             <option value="">-- Select Policy Type --</option>
+                                             <option value="FRESH">FRESH</option>
+                                             <option value="RENEWAL">RENEWAL</option>
+                                             <option value="ROLLOVER">ROLLOVER</option>
+                                             <option value="ENDORSEMENT">ENDORSEMENT</option>
+                                          </select>
+                                       </div>
+                                       {% endif %}
 
                                        <div class="col-md-3 mb-4">
                                           <label for="proposal_no">Proposal No. <abbr title="Required"
@@ -75,14 +112,7 @@
                                              name="proposal_no" id="proposal_no" style="text-transform: uppercase;"
                                              required>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label for="policy_no">Policy No. <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="policy_no"
-                                             id="policy_no" style="text-transform: uppercase;" required>
-                                       </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label for="customer_name">Insured Name <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text" value=""
@@ -101,6 +131,18 @@
                                              {%endfor%}
                                           </select>
                                        </div>
+
+                                       {% if is_motor_form %}
+                                       {% else %}
+                                       <div class="col-md-3 mb-4">
+                                          <label for="customer_name">Sum Insured <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="customer_name"
+                                             style="text-transform: uppercase;" required>
+                                       </div>
+                                       {% endif %}
+
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
@@ -283,7 +325,6 @@
                                              class="custom-select" id="cubic_capacity" data-parsley-required="true"
                                              required>
                                              <option value=""> -- Select Capacity -- </option>
-                                             <option value="NA"> NA </option>
                                           </select>
                                        </div>
 
@@ -303,10 +344,11 @@
                                              <option value="ABOVE 40000">ABOVE 40000</option>
                                           </select>
                                        </div>
+
                                        <div class="col-md-3 mb-4" id="seating_capacityDiv">
                                           <label>Seating Capacity<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="seating_capacity" data-parsley-required-message=""
+                                          <select name="seating_capacity" data-parsley-required-message="" type="input"
                                              class="custom-select" id="seating_capacity" data-parsley-required="true"
                                              required>
                                              <option value=""> -- Select Seating Capacity -- </option>
@@ -316,6 +358,15 @@
                                              <option value="12-18">12-18</option>
                                              <option value="ABOVE 18">ABOVE 18</option>
                                           </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4" id="seating_capacityDiv1" hidden>
+                                          <label for="seating_capacity">Seating Capacity <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true"
+                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$"
+                                             name="seating_capacity" id="seating_capacity"
+                                             style="text-transform: uppercase;" required>
                                        </div>
 
 
@@ -332,8 +383,6 @@
                                           </select>
                                        </div>
 
-                                       {% endif %}
-
                                        <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="case_type" data-parsley-required="true"
@@ -345,6 +394,11 @@
                                              <option value="ENDORSEMENT">ENDORSEMENT</option>
                                           </select>
                                        </div>
+
+                                       {% endif %}
+
+                                       {% if is_motor_form %}
+
                                        <div class="col-md-3 mb-4">
                                           <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="cpa" data-parsley-required="true"
@@ -354,6 +408,8 @@
                                              <option value="NO">NO</option>
                                           </select>
                                        </div>
+                                       {% endif %}
+
                                        <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk Start Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
@@ -390,22 +446,33 @@
                                                 data-input="">
                                           </div>
                                        </div>
+                                       {% if is_motor_form %}
                                        <div class="col-md-3 mb-4">
                                           <label for="insured_age">Insured Age <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="number" value=""
                                              data-parsley-required-message="" class="form-control"
                                              data-parsley-required="true" name="insured_age" required>
                                        </div>
+                                       {% endif %}
+
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="policy_term" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required>
                                              <option value="">-- Select Term --</option>
+
+                                             {% if is_motor_form %}
+
                                              <option value="1">1</option>
                                              <option value="2">2</option>
                                              <option value="3">3</option>
                                              <option value="4">4</option>
                                              <option value="5">5</option>
+                                             {% else %}
+                                             <option value="1">1</option>
+                                             <option value="5">5</option>
+                                             <option value="10">10</option>
+                                             {% endif %}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -530,7 +597,7 @@
                               {% if is_motor_form %}
                               <div class="card-body">
                                  <!-- .card-body -->
-                                 <h4 class="card-title mb-3"> Payout Details </h4>
+                                 <h4 class="card-title mb-3"> Premium Details </h4>
                                  <!-- grid row -->
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
@@ -571,7 +638,82 @@
                                        data-parsley-required-message="" data-parsley-maxlength="10"
                                        data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10" required>
                                  </div>
-                                 <div class="row mb-2" id="gsttDiv">
+                                 <div class="row mb-2" id="gsttDiv" hidden>
+                                    <label class="col-lg-5" for="gstt">GST 12%<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt" maxlength="10" required>
+                                 </div>
+
+
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
+                                       onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"
+                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="totalnet"
+                                       readonly="" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
+                                    <select class="custom-select col-lg-6" name="payment_mode" required>
+                                       <option value=""> -- Mode -- </option>
+                                       <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
+                                       <option value="SELF ONLINE">SELF ONLINE</option>
+                                       <option value="CASH">CASH</option>
+                                       <option value="CUT PAY">CUT PAY</option>
+                                       <option value="CUSTOMER CHEQUE">CUSTOMER CHEQUE</option>
+                                       <option value="SELF CHEQUE">SELF CHEQUE</option>
+                                    </select>
+                                 </div>
+
+                              </div>                             
+                              {% else %}
+                              <div class="card-body">
+                                 <!-- .card-body -->
+                                 <h4 class="card-title mb-3"> Premium Details </h4>
+                                 <!-- grid row -->
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
+                                 </div>
+                                 <!-- <div class="row mb-2">
+                                    <label class="col-lg-5" for="tp">TP Premium<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="tp" id="tp" maxlength="10" required>
+                                 </div> -->
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
+                                       onclick="add()" value="" class="form-control col-lg-6 maskNumField bg-light"
+                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
+                                       maxlength="10" readonly="" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="gst">GST 18%<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
+                                       data-parsley-required-message="" data-parsley-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2" id="gsttDiv" hidden>
                                     <label class="col-lg-5" for="gstt">GST 12%<abbr title="Required"
                                           class="text-danger">*</abbr></label><input type="text"
                                        data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
@@ -602,7 +744,7 @@
                                  </div>
 
                               </div>
-                              {% endif %}
+                              {% endif%}
                               <!-- /.card-body -->
                            </div>
                            {% comment %} <div id="payoutSection" class="card card-inverse bg-info">
@@ -1260,7 +1402,7 @@
 
       vc = document.getElementById('vehicle_catagory').value
 
-      if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
+      if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
          document.getElementById("net").value = od + tpt;;
          document.getElementById("gst").value = od * 18 / 100;
          document.getElementById("gstt").value = tpt * 12 / 100;
@@ -1279,9 +1421,9 @@
       net = parseInt(document.getElementById("net").value);
       gst = parseInt(document.getElementById("gst").value);
       gstt = parseInt(document.getElementById("gstt").value);
-
+      // 3 WHEELER GCV-PUBLIC CARRIER
       vc = document.getElementById('vehicle_catagory').value
-      if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
+      if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
          document.getElementById("totalnet").value = net + gst + gstt;
       }
       else {
@@ -1515,6 +1657,8 @@
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
@@ -1558,7 +1702,7 @@
          var newoption = document.createElement("option");
          newoption.value = 'TP Only'
          newoption.innerHTML = 'TP Only'
-         ct.options.add(newoption);
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = 'OD Only'
@@ -1571,6 +1715,7 @@
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
 
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
@@ -1601,13 +1746,13 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = '1+4 Package'
-         newoption.innerHTML = '1+4 Package'
+         newoption.value = '1+2 Package'
+         newoption.innerHTML = '1+2 Package'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
-         newoption.value = '5 Year TP'
-         newoption.innerHTML = '5 Year TP'
+         newoption.value = '3 Year TP'
+         newoption.innerHTML = '3 Year TP'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1630,7 +1775,7 @@
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('seating_capacityDiv').hidden = false
-
+         document.getElementById('seating_capacityDiv1').hidden = true
 
          document.getElementById('gvwDiv').hidden = false
          document.getElementById('gvw').required = true
@@ -1652,19 +1797,220 @@
 
       }
 
-      else {
+      else if (value == '3 WHEELER PCV') {
+         document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+
+         coverage_type.innerHTML = ''
+
+
+         // Coverage type        
+         var newoption = document.createElement("option");
+         newoption.value = '1 Year Package'
+         newoption.innerHTML = '1 Year Package'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP Only'
+         newoption.innerHTML = 'TP Only'
+         coverage_type.options.add(newoption);
+
+
+
+      }
+
+      else if (value == '3 WHEELER GCV-PUBLIC CARRIER') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+
+
+         document.getElementById('gvwDiv').hidden = false
+         document.getElementById('gvw').required = true
+         document.getElementById('gsttDiv').hidden = false
+         document.getElementById('gstt').required = true
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = 'Package Policy'
+         newoption.innerHTML = '1 Year Package'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP Only'
+         newoption.innerHTML = 'TP Only'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'TAXI 4 WHEELER') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options
+         var newoption = document.createElement("option");
+         newoption.value = 'BELOW 1000CC'
+         newoption.innerHTML = 'BELOW-1000CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1000CC-1500CC'
+         newoption.innerHTML = '1000CC-1500CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 1500CC'
+         newoption.innerHTML = 'ABOVE 1500CC'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 Package'
+         newoption.innerHTML = '1+2 Package'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 Year TP'
+         newoption.innerHTML = '3 Year TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 Year Package'
+         newoption.innerHTML = '1 Year Package'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP Only'
+         newoption.innerHTML = 'TP Only'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD Only'
+         newoption.innerHTML = 'OD Only'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'BUS AND OTHERS') {
          document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('seating_capacityDiv').hidden = true
+
+         document.getElementById('coverage_typeDiv').hidden = true
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+
+         document.getElementById('seating_capacityDiv1').hidden = false
+
+         return;
+         var newoption = document.createElement("input");
+         document.body.appendChild(newoption)
+         newoption.value = 'BELOW 1000CC'
+         newoption.innerHTML = 'BELOW-1000CC'
+         cubic_capacity.options.add(newoption);
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options
+         var newoption = document.createElement("option");
+         newoption.value = 'BELOW 1000CC'
+         newoption.innerHTML = 'BELOW-1000CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1000CC-1500CC'
+         newoption.innerHTML = '1000CC-1500CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 1500CC'
+         newoption.innerHTML = 'ABOVE 1500CC'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 Package'
+         newoption.innerHTML = '1+2 Package'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 Year TP'
+         newoption.innerHTML = '3 Year TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 Year Package'
+         newoption.innerHTML = '1 Year Package'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP Only'
+         newoption.innerHTML = 'TP Only'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD Only'
+         newoption.innerHTML = 'OD Only'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'MISC-D SPECIAL VEHICLE') {
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gsttDiv').hidden = true
 
-         document.getElementById('cubic_capacity').required = false
-         document.getElementById('coverage_type').required = false
-         document.getElementById('seating_capacity').required = false
-         document.getElementById('gvw').required = false
-         document.getElementById('gstt').required = false
+      }
 
+      else if (value == 'SCHOOL BUS-SCHOOL NAME') {
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacityDiv1').hidden = false
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gsttDiv').hidden = true
+      }
+      else if (value == 'SCHOOL BUS-INDIVIDUAL NAME') {
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacityDiv1').hidden = false
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gsttDiv').hidden = true
       }
 
    }
@@ -1674,3 +2020,5 @@
 
 </html>
 {%endblock%}
+
+<!-- 3 WHEELER GCV-PUBLIC CARRIER -->
