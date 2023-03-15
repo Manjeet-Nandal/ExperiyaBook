@@ -669,6 +669,92 @@
                                  </div>
 
                               </div>
+                              <hr>
+                              <div class="card-body>
+                                 <div class="card">
+                                    <!-- .card -->
+                                    <div class="card-body">
+                                       <!-- .card-body -->
+                                       <h4 class="card-title mb-3"> Agent Payout </h4>
+                                       <!-- grid row -->
+      
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards On <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="col-lg-7 pl-0 pr-0">
+                                             <select name="agent_od" data-parsley-required="true"
+                                                data-parsley-required-message="" class="custom-select">
+                                                <option value="OD" selected>OD</option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards % <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             name="agent_od_reward" class="form-control maskNumField col-lg-7 rewardpct"
+                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                             maxlength="4">
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards On <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="col-lg-7 pl-0 pr-0">
+                                             <select name="agent_tp" data-parsley-required="true"
+                                                data-parsley-required-message="" class="custom-select">
+                                                <option value="TP" selected>TP</option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards % <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             name="agent_tp_reward" class="form-control maskNumField col-lg-7 rewardpct"
+                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                             maxlength="4">
+                                       </div>
+                                       <hr>
+                                       <h4 class="card-title mb-3">Self Payout </h4>
+                                       <!-- grid row -->
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards On <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="col-lg-7 pl-0 pr-0">
+                                             <select name="self_od" data-parsley-required="true"
+                                                data-parsley-required-message="" class="custom-select">
+                                                <option value="OD" selected>OD</option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards %<abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             name="self_od_reward" class="form-control maskNumField rewardpct col-lg-7"
+                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                             maxlength="4">
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards On <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="col-lg-7 pl-0 pr-0">
+                                             <select name="self_tp" data-parsley-required="true"
+                                                data-parsley-required-message="" class="custom-select">
+                                                <option value="TP" selected>TP</option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards %<abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             name="self_tp_reward" class="form-control maskNumField rewardpct col-lg-7"
+                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                             maxlength="4">
+                                       </div>
+      
+      
+      
+                                    </div>
+                                 </div>
+                              </div>                             
                               {% else %}
                               <div class="card-body">
                                  <!-- .card-body -->
@@ -743,52 +829,93 @@
                                  </div>
 
                               </div>
-                              <hr>
-                              <div class="card-body">
-                                 <!-- .card-body -->
-                                 <h4 class="card-title mb-3"> Pay-In Details </h4>
-                                 <!-- grid row -->
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="od">Pay-In OD Premium <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
-                                 </div>
 
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">Pay-In TP/Terrorism<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
+                              <div class="card-body>
+                                 <div class="card">
+                                    <!-- .card -->
+                                    <div class="card-body">
+                                       <!-- .card-body -->
+                                       <h4 class="card-title mb-3"> Agent Payout </h4>
+                                       <!-- grid row -->
+      
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards On <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="col-lg-7 pl-0 pr-0">
+                                             <select name="agent_od" data-parsley-required="true"
+                                                data-parsley-required-message="" class="custom-select">
+                                                <option value="OD" selected>OD</option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards % <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             name="agent_od_reward" class="form-control maskNumField col-lg-7 rewardpct"
+                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                             maxlength="4">
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards On <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="col-lg-7 pl-0 pr-0">
+                                             <select name="agent_tp" data-parsley-required="true"
+                                                data-parsley-required-message="" class="custom-select">
+                                                <option value="TP" selected>TP</option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards % <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             name="agent_tp_reward" class="form-control maskNumField col-lg-7 rewardpct"
+                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                             maxlength="4">
+                                       </div>
+                                       <hr>
+                                       <h4 class="card-title mb-3">Self Payout </h4>
+                                       <!-- grid row -->
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards On <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="col-lg-7 pl-0 pr-0">
+                                             <select name="self_od" data-parsley-required="true"
+                                                data-parsley-required-message="" class="custom-select">
+                                                <option value="OD" selected>OD</option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards %<abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             name="self_od_reward" class="form-control maskNumField rewardpct col-lg-7"
+                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                             maxlength="4">
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards On <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="col-lg-7 pl-0 pr-0">
+                                             <select name="self_tp" data-parsley-required="true"
+                                                data-parsley-required-message="" class="custom-select">
+                                                <option value="TP" selected>TP</option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <div class="row mb-2">
+                                          <label class="col-lg-4">Rewards %<abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             name="self_tp_reward" class="form-control maskNumField rewardpct col-lg-7"
+                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
+                                             maxlength="4">
+                                       </div>
+      
+      
+      
+                                    </div>
                                  </div>
-                              </div>
-                              <hr>
-                              <div class="card-body">
-                                 <!-- .card-body -->
-                                 <h4 class="card-title mb-3"> Pay-In Details </h4>
-                                 <!-- grid row -->
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="od">Pay-In OD Premium <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
-                                 </div>
-
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">Pay-In TP/Terrorism<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
-                                 </div>
-                              </div>
+                              </div>      
+                             
                               {% endif%}
                               <!-- /.card-body -->
                            </div>
