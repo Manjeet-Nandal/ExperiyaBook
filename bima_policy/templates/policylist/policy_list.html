@@ -53,7 +53,13 @@
                                              <option value="PRIVATE CAR">PRIVATE CAR</option>
                                              <option value="GCV-PUBLIC CARRIER OTHER THAN 3 W">GCV-PUBLIC CARRIER OTHER
                                                 THAN 3 W</option>
-                                             <option value="PCV">PCV</option>
+                                             <option value="3 WHEELER PCV">3 WHEELER PCV</option>
+                                             <option value="3 WHEELER GCV-PUBLIC CARRIER">3 WHEELER GCV-PUBLIC CARRIER
+                                             </option>
+                                             <option value="TAXI 4 WHEELER">TAXI 4 WHEELER</option>
+                                             <option value="BUS AND OTHERS">BUS AND OTHERS</option>
+                                             <option value="MISC-D SPECIAL VEHICLE">MISC-D SPECIAL VEHICLE</option>
+                                             <option value="SCHOOL BUS">SCHOOL BUS</option>
                                              <!-- {%for value in data_vc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%} -->
@@ -101,13 +107,11 @@
                                           <select name="sp_name" data-parsley-required-message="" class="custom-select"
                                              id="sp_name" data-parsley-required="true" required>
                                              <option value=""> -- Select Provider -- </option>
-
-                                             <option value="Delhi">Delhi</option>
-                                             <option value="Rohtak">Rohtak</option>
-                                             <option value="Chandigarh">Chandigarh</option>
-                                             <option value="Gurgaon">Gurgaon</option>
-                                             <option value="Luckhnow">Luckhnow</option>
-                                             <option value="Delhi">Delhi</option>
+                                             <option value="DELHI">Delhi</option>
+                                             <option value="ROHTAK">Rohtak</option>
+                                             <option value="CHANDIGARH">Chandigarh</option>
+                                             <option value="GURGAON">Gurgaon</option>
+                                             <option value="LUCKHNOW">Luckhnow</option>
                                           </select>
                                        </div>
 
@@ -278,7 +282,8 @@
                                           <select name="cubic_capacity" data-parsley-required-message=""
                                              class="custom-select" id="cubic_capacity" data-parsley-required="true"
                                              required>
-                                             <option value=""> -- Select Capacity -- </option>                                            
+                                             <option value=""> -- Select Capacity -- </option>
+                                             <option value="NA"> NA </option>
                                           </select>
                                        </div>
 
@@ -320,9 +325,10 @@
                                           <select name="coverage_type" data-parsley-required="true" id="coverage_type"
                                              data-parsley-required-message="" class="custom-select" required>
                                              <option value="">-- Select Coverage --</option>
-                                             {% for value in data_ct%}
+                                             <option value="NA"> NA </option>
+                                             <!-- {% for value in data_ct%}
                                              <option value="{{value}}">{{value}}</option>
-                                             {% endfor%}
+                                             {% endfor%} -->
                                           </select>
                                        </div>
 
@@ -1505,16 +1511,18 @@
       gvwDiv = document.getElementById('gvwDiv')
       gsttDiv = document.getElementById('gsttDiv')
 
-      cubic_capacity.innerHTML = ''
-      coverage_type.innerHTML = ''
-
       if (value == 'TWO WHEELER') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
-         
+         document.getElementById('gstt').required = false
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
          // Cubic_ capacity options
          var newoption = document.createElement("option");
          newoption.value = '75CC-150CC'
@@ -1563,9 +1571,15 @@
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
+
          document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
-         
+         document.getElementById('gstt').required = false
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
          // Cubic_ capacity options
          var newoption = document.createElement("option");
          newoption.value = 'BELOW 1000CC'
@@ -1616,8 +1630,15 @@
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('seating_capacityDiv').hidden = false
+
+
          document.getElementById('gvwDiv').hidden = false
+         document.getElementById('gvw').required = true
          document.getElementById('gsttDiv').hidden = false
+         document.getElementById('gstt').required = true
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
          newoption.value = 'Package Policy'
@@ -1628,6 +1649,21 @@
          newoption.value = 'TP Only'
          newoption.innerHTML = 'TP Only'
          coverage_type.options.add(newoption);
+
+      }
+
+      else {
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gsttDiv').hidden = true
+
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('coverage_type').required = false
+         document.getElementById('seating_capacity').required = false
+         document.getElementById('gvw').required = false
+         document.getElementById('gstt').required = false
 
       }
 
