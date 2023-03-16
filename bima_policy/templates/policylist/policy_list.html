@@ -594,7 +594,7 @@
 
                         <div class="col-lg-3 col-md-3 col-sm-12">
                            <div class="card">
-                              <div class="card-body">                                
+                              <div class="card-body">
                                  <!-- .card-body -->
                                  <h4 class="card-title mb-3"> Premium Details </h4>
                                  <!-- grid row -->
@@ -664,90 +664,50 @@
                                        <option value="SELF CHEQUE">SELF CHEQUE</option>
                                     </select>
                                  </div>
-
-                                 <hr>
-                                 <h4 class="card-title mb-3"> Agent Payout </h4>
-                                 <!-- grid row -->
-
-                                 <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards On <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <div class="col-lg-7 pl-0 pr-0">
-                                       <select name="agent_od" data-parsley-required="true"
-                                          data-parsley-required-message="" class="custom-select">
-                                          <option value="OD" selected>OD</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards % <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text" value=""
-                                       name="agent_od_reward" class="form-control maskNumField col-lg-7 rewardpct"
-                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
-                                       max="100" maxlength="4">
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards On <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <div class="col-lg-7 pl-0 pr-0">
-                                       <select name="agent_tp" data-parsley-required="true"
-                                          data-parsley-required-message="" class="custom-select">
-                                          <option value="TP" selected>TP</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards % <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text" value=""
-                                       name="agent_tp_reward" class="form-control maskNumField col-lg-7 rewardpct"
-                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
-                                       max="100" maxlength="4">
-                                 </div>
-                                 <hr>
-                                 <h4 class="card-title mb-3">Self Payout </h4>
-                                 <!-- grid row -->
-                                 <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards On <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <div class="col-lg-7 pl-0 pr-0">
-                                       <select name="self_od" data-parsley-required="true"
-                                          data-parsley-required-message="" class="custom-select">
-                                          <option value="OD" selected>OD</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards %<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text" value=""
-                                       name="self_od_reward" class="form-control maskNumField rewardpct col-lg-7"
-                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
-                                       max="100" maxlength="4">
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards On <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <div class="col-lg-7 pl-0 pr-0">
-                                       <select name="self_tp" data-parsley-required="true"
-                                          data-parsley-required-message="" class="custom-select">
-                                          <option value="TP" selected>TP</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-4">Rewards %<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text" value=""
-                                       name="self_tp_reward" class="form-control maskNumField rewardpct col-lg-7"
-                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
-                                       max="100" maxlength="4">
-                                 </div>
-
-
+                                 
                               </div>
-                           
-                            
+
+
                            </div>
 
-                         
+                           <script>
+                              function calculateAgentPayout() {
+                                 try {
+
+                                    od = document.getElementById('od').value
+                                    agent_od_reward = document.getElementById('agent_od_reward').value
+                                    agent_od_amount = document.getElementById('agent_od_amount')
+                                    agent_od_amount.value = od * agent_od_reward / 100
+
+                                    tp = document.getElementById('tpt').value
+                                    agent_tp_reward = document.getElementById('agent_tp_reward').value
+                                    agent_tp_amount = document.getElementById('agent_tp_amount')
+                                    agent_tp_amount.value = tp * agent_tp_reward / 100
+                                   
+                                 } catch (error) {
+                                 }
+
+                              }
+                            
+                              function calculateSelfPayout() {
+                                 try {
+
+                                    od = document.getElementById('od').value
+                                    tpt = document.getElementById('tpt').value
+
+                                    self_od_reward_value = document.getElementById('self_od_reward').value
+                                    self_tp_reward_value = document.getElementById('self_tp_reward').value
+                                    
+                                    document.getElementById('self_od_amount').value = od * self_od_reward_value /100                                    
+                                    document.getElementById('self_tp_amount').value = tpt * self_tp_reward_value /100                                    
+                                   
+                                 } catch (error) {
+                                 }
+
+                              }
+                          
+                          </script>
+
                         </div>
                         {% comment %} <div id="payoutSection" class="card card-inverse bg-info">
                            <div class="card-header p-2">
