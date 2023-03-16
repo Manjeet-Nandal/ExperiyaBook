@@ -426,12 +426,16 @@ class create_policy(View):
         profile_id = ProfileModel.objects.get(
             id=get_profile_id(get_id_from_session(request)))
         proposal_no = request.POST['proposal_no']
-        policy_no = request.POST['policy_no']
+        # policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
         insurance_company = request.POST['insurance_company']
         sp_name = request.POST['sp_name']
         # sp_brokercode = request.POST['sp_brokercode']
-        # product_name = request.POST['product_name']
+        try:
+            product_name = request.POST['product_name']
+        except:
+            product_name = ''
+
         registration_no = request.POST['registration_no']
         rto_city = request.POST['rto_city']
         rto_state = request.POST['rto_state']
@@ -442,10 +446,23 @@ class create_policy(View):
         mfg_year = request.POST['mfg_year']
         addon = request.POST['addon']
         ncb = request.POST['ncb']
-        cubic_capacity = request.POST['cubic_capacity']
-        gvw = request.POST['gvw']
-        seating_capacity = request.POST['seating_capacity']
-        coverage_type = request.POST['coverage_type']
+        try:
+            cubic_capacity = request.POST['cubic_capacity']
+        except:
+            cubic_capacity = ''
+        try:
+            gvw = request.POST['gvw']
+        except:
+            gvw = ''
+        try:
+            seating_capacity = request.POST['seating_capacity']
+        except:
+            seating_capacity = ''
+        try:
+            coverage_type = request.POST['coverage_type']
+        except:
+            coverage_type = ''
+
         case_type = request.POST['case_type']
         cpa = request.POST['cpa']
         risk_start_date = request.POST['risk_start_date']
@@ -496,7 +513,7 @@ class create_policy(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
-        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
+        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                               mfg_year=mfg_year,
                               addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type, cpa=cpa,
                               risk_start_date=risk_start_date,
@@ -523,8 +540,8 @@ class create_policy(View):
                                      Q(case_type__contains=case_type) &
                                      Q(cpa__contains=cpa)).values()
         print('data create post', data)
-        print('policy_no create post', policy_no)
-        return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': policy_no})
+        # print('policy_no create post', policy_no)
+        return render(request, 'policylist/list_apply_payout.html', {'data': data})
 
 
 class create_policy_non_motor(View):
@@ -752,36 +769,36 @@ def policy_entrydata(request, id):
         try:
             mfg_year = request.POST['mfg_year']
         except:
-            mfg_year = ''       
+            mfg_year = ''
         try:
             addon = request.POST['addon']
         except:
-            addon = ''       
+            addon = ''
         try:
             ncb = request.POST['ncb']
         except:
-            ncb = ''       
+            ncb = ''
         try:
             cubic_capacity = request.POST['cubic_capacity']
         except:
-            cubic_capacity = ''       
+            cubic_capacity = ''
         try:
             gvw = request.POST['gvw']
         except:
-            gvw = ''       
+            gvw = ''
         try:
             seating_capacity = request.POST['seating_capacity']
         except:
-            seating_capacity = ''       
+            seating_capacity = ''
         try:
             coverage_type = request.POST['coverage_type']
         except:
-            coverage_type = ''       
+            coverage_type = ''
         try:
             cpa = request.POST['cpa']
         except:
-            cpa = ''       
-        
+            cpa = ''
+
         case_type = request.POST['case_type']
         insured_age = request.POST['insured_age']
         policy_term = request.POST['policy_term']

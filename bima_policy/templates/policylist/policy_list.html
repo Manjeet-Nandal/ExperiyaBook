@@ -365,8 +365,8 @@
                                              data-parsley-required-message="" class="form-control"
                                              data-parsley-required="true"
                                              data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$"
-                                             name="seating_capacity" id="seating_capacity"
-                                             style="text-transform: uppercase;" required>
+                                             name="seating_capacity1" id="seating_capacity1"
+                                             style="text-transform: uppercase;" oninput="addSeatingCapacity()">
                                        </div>
 
 
@@ -594,8 +594,7 @@
 
                         <div class="col-lg-3 col-md-3 col-sm-12">
                            <div class="card">
-                              {% if is_motor_form %}
-                              <div class="card-body">
+                              <div class="card-body">                                
                                  <!-- .card-body -->
                                  <h4 class="card-title mb-3"> Premium Details </h4>
                                  <!-- grid row -->
@@ -646,8 +645,6 @@
                                        data-parsley-required-message="" data-parsley-maxlength="10"
                                        data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt" maxlength="10" required>
                                  </div>
-
-
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
                                        onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"
@@ -668,490 +665,321 @@
                                     </select>
                                  </div>
 
-                              </div>
-                              <hr>
-                              <div class="card-body>
-                                 <div class="card">
-                                    <!-- .card -->
-                                    <div class="card-body">
-                                       <!-- .card-body -->
-                                       <h4 class="card-title mb-3"> Agent Payout </h4>
-                                       <!-- grid row -->
-      
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards On <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="col-lg-7 pl-0 pr-0">
-                                             <select name="agent_od" data-parsley-required="true"
-                                                data-parsley-required-message="" class="custom-select">
-                                                <option value="OD" selected>OD</option>
-                                             </select>
-                                          </div>
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards % <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             name="agent_od_reward" class="form-control maskNumField col-lg-7 rewardpct"
-                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
-                                             maxlength="4">
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards On <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="col-lg-7 pl-0 pr-0">
-                                             <select name="agent_tp" data-parsley-required="true"
-                                                data-parsley-required-message="" class="custom-select">
-                                                <option value="TP" selected>TP</option>
-                                             </select>
-                                          </div>
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards % <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             name="agent_tp_reward" class="form-control maskNumField col-lg-7 rewardpct"
-                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
-                                             maxlength="4">
-                                       </div>
-                                       <hr>
-                                       <h4 class="card-title mb-3">Self Payout </h4>
-                                       <!-- grid row -->
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards On <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="col-lg-7 pl-0 pr-0">
-                                             <select name="self_od" data-parsley-required="true"
-                                                data-parsley-required-message="" class="custom-select">
-                                                <option value="OD" selected>OD</option>
-                                             </select>
-                                          </div>
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards %<abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             name="self_od_reward" class="form-control maskNumField rewardpct col-lg-7"
-                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
-                                             maxlength="4">
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards On <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="col-lg-7 pl-0 pr-0">
-                                             <select name="self_tp" data-parsley-required="true"
-                                                data-parsley-required-message="" class="custom-select">
-                                                <option value="TP" selected>TP</option>
-                                             </select>
-                                          </div>
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards %<abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             name="self_tp_reward" class="form-control maskNumField rewardpct col-lg-7"
-                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
-                                             maxlength="4">
-                                       </div>
-      
-      
-      
+                                 <hr>
+                                 <h4 class="card-title mb-3"> Agent Payout </h4>
+                                 <!-- grid row -->
+
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div class="col-lg-7 pl-0 pr-0">
+                                       <select name="agent_od" data-parsley-required="true"
+                                          data-parsley-required-message="" class="custom-select">
+                                          <option value="OD" selected>OD</option>
+                                       </select>
                                     </div>
                                  </div>
-                              </div>                             
-                              {% else %}
-                              <div class="card-body">
-                                 <!-- .card-body -->
-                                 <h4 class="card-title mb-3"> Premium Details </h4>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards % <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                       name="agent_od_reward" class="form-control maskNumField col-lg-7 rewardpct"
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
+                                       max="100" maxlength="4">
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div class="col-lg-7 pl-0 pr-0">
+                                       <select name="agent_tp" data-parsley-required="true"
+                                          data-parsley-required-message="" class="custom-select">
+                                          <option value="TP" selected>TP</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards % <abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                       name="agent_tp_reward" class="form-control maskNumField col-lg-7 rewardpct"
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
+                                       max="100" maxlength="4">
+                                 </div>
+                                 <hr>
+                                 <h4 class="card-title mb-3">Self Payout </h4>
                                  <!-- grid row -->
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
-                                 </div>
-                                 <!-- <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">TP Premium<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="tp" id="tp" maxlength="10" required>
-                                 </div> -->
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
-                                       onclick="add()" value="" class="form-control col-lg-6 maskNumField bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
-                                       maxlength="10" readonly="" required>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="gst">GST 18%<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10" required>
-                                 </div>
-                                 <div class="row mb-2" id="gsttDiv" hidden>
-                                    <label class="col-lg-5" for="gstt">GST 12%<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt" maxlength="10" required>
-                                 </div>
-
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="totalnet"
-                                       readonly="" maxlength="10" required>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
-                                    <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value=""> -- Mode -- </option>
-                                       <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
-                                       <option value="SELF ONLINE">SELF ONLINE</option>
-                                       <option value="CASH">CASH</option>
-                                       <option value="CUT PAY">CUT PAY</option>
-                                       <option value="CUSTOMER CHEQUE">CUSTOMER CHEQUE</option>
-                                       <option value="SELF CHEQUE">SELF CHEQUE</option>
-                                    </select>
-                                 </div>
-
-                              </div>
-
-                              <div class="card-body>
-                                 <div class="card">
-                                    <!-- .card -->
-                                    <div class="card-body">
-                                       <!-- .card-body -->
-                                       <h4 class="card-title mb-3"> Agent Payout </h4>
-                                       <!-- grid row -->
-      
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards On <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="col-lg-7 pl-0 pr-0">
-                                             <select name="agent_od" data-parsley-required="true"
-                                                data-parsley-required-message="" class="custom-select">
-                                                <option value="OD" selected>OD</option>
-                                             </select>
-                                          </div>
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards % <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             name="agent_od_reward" class="form-control maskNumField col-lg-7 rewardpct"
-                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
-                                             maxlength="4">
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards On <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="col-lg-7 pl-0 pr-0">
-                                             <select name="agent_tp" data-parsley-required="true"
-                                                data-parsley-required-message="" class="custom-select">
-                                                <option value="TP" selected>TP</option>
-                                             </select>
-                                          </div>
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards % <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             name="agent_tp_reward" class="form-control maskNumField col-lg-7 rewardpct"
-                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
-                                             maxlength="4">
-                                       </div>
-                                       <hr>
-                                       <h4 class="card-title mb-3">Self Payout </h4>
-                                       <!-- grid row -->
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards On <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="col-lg-7 pl-0 pr-0">
-                                             <select name="self_od" data-parsley-required="true"
-                                                data-parsley-required-message="" class="custom-select">
-                                                <option value="OD" selected>OD</option>
-                                             </select>
-                                          </div>
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards %<abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             name="self_od_reward" class="form-control maskNumField rewardpct col-lg-7"
-                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
-                                             maxlength="4">
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards On <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="col-lg-7 pl-0 pr-0">
-                                             <select name="self_tp" data-parsley-required="true"
-                                                data-parsley-required-message="" class="custom-select">
-                                                <option value="TP" selected>TP</option>
-                                             </select>
-                                          </div>
-                                       </div>
-                                       <div class="row mb-2">
-                                          <label class="col-lg-4">Rewards %<abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             name="self_tp_reward" class="form-control maskNumField rewardpct col-lg-7"
-                                             data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100"
-                                             maxlength="4">
-                                       </div>
-      
-      
-      
+                                    <label class="col-lg-4">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div class="col-lg-7 pl-0 pr-0">
+                                       <select name="self_od" data-parsley-required="true"
+                                          data-parsley-required-message="" class="custom-select">
+                                          <option value="OD" selected>OD</option>
+                                       </select>
                                     </div>
                                  </div>
-                              </div>      
-                             
-                              {% endif%}
-                              <!-- /.card-body -->
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards %<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                       name="self_od_reward" class="form-control maskNumField rewardpct col-lg-7"
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
+                                       max="100" maxlength="4">
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards On <abbr title="Required"
+                                          class="text-danger">*</abbr></label>
+                                    <div class="col-lg-7 pl-0 pr-0">
+                                       <select name="self_tp" data-parsley-required="true"
+                                          data-parsley-required-message="" class="custom-select">
+                                          <option value="TP" selected>TP</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-4">Rewards %<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                       name="self_tp_reward" class="form-control maskNumField rewardpct col-lg-7"
+                                       data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
+                                       max="100" maxlength="4">
+                                 </div>
+
+
+                              </div>
+                           
+                            
                            </div>
-                           {% comment %} <div id="payoutSection" class="card card-inverse bg-info">
-                              <div class="card-header p-2">
-                                 <h4 class="card-title mb-1">Payouts
-                                    <button type="button" class="btn-payout-close btn"><i
-                                          class="fa fa-times"></i></button>
-                                 </h4>
-                              </div>
-                              <input type="hidden" value="43" readonly="" name="payout_id">
-                              <div class="card-body">
-                                 <p>Agent Commision</p>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards On <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <select data-parsley-required="true" name="ag_reward_on"
-                                       class="col-lg-6 ag-toggle-mannual custom-select" style="display:none">
-                                       <option value="-none-">-none-</option>
-                                       <option value="OD" selected="">OD</option>
-                                       <option value="NET">NET</option>
-                                    </select>
-                                    <p class="col-lg-6 ag-toggle-auto">OD</p>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards % <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <input type="text" id="ag_reward_pct" value="15" name="ag_reward_pct"
-                                       class="col-lg-6 form-control ag-toggle-mannual maskNumField"
-                                       data-parsley-required-message="" data-mask-as-number-decimals="2"
-                                       data-parsley-required="true" min="0" max="100" style="display:none">
-                                    <p class="col-lg-6 ag-toggle-auto">15</p>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Commision <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <input type="text" value="" readonly="" data-parsley-required-message=""
-                                       data-parsley-required="true"
-                                       data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
-                                       class="form-control col-lg-6 maskNumField ag-toggle-mannual" name="ag_commision"
-                                       id="ag_commision" style="display:none">
-                                    <p class="col-lg-6 ag-toggle-auto">18518</p>
-                                 </div>
-                                 <div class="row mb-3">
-                                    <label class="col-lg-5">Calculation</label>
-                                    <div class="custom-control custom-control-inline custom-radio">
-                                       <input class="custom-control-input" value="Auto" checked="" id="ag_chkauto"
-                                          name="ag_calculation" type="radio">
-                                       <label class="custom-control-label" for="ag_chkauto">Auto</label>
-                                    </div>
-                                    <div class="custom-control custom-control-inline custom-radio">
-                                       <input class="custom-control-input" value="Mannual" id="ag_chkmannual"
-                                          name="ag_calculation" type="radio">
-                                       <label class="custom-control-label" for="ag_chkmannual">Mannual</label>
-                                    </div>
-                                 </div>
-                                 <p>Self Commision</p>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards On <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <select data-parsley-required="true" name="sf_reward_on"
-                                       class="col-lg-6 sf-toggle-mannual custom-select" style="display:none">
-                                       <option value="-none-">-none-</option>
-                                       <option value="OD" selected="">OD</option>
-                                       <option value="NET">NET</option>
-                                    </select>
-                                    <p class="col-lg-6 sf-toggle-auto">OD</p>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards % <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <input type="text" id="sf_reward_pct" value="15" name="sf_reward_pct"
-                                       class="col-lg-6 form-control sf-toggle-mannual maskNumField"
-                                       data-parsley-required-message="" data-mask-as-number-decimals="2"
-                                       data-parsley-required="true" min="0" max="100" style="display:none">
-                                    <p class="col-lg-6 sf-toggle-auto">15</p>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Commision <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <input type="text" readonly="" value="" data-parsley-required-message=""
-                                       data-parsley-required="true"
-                                       data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
-                                       class="form-control col-lg-6 maskNumField sf-toggle-mannual" name="sf_commision"
-                                       id="sf_commision" style="display:none">
-                                    <p class="col-lg-6 sf-toggle-auto">18518</p>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Calculation</label>
-                                    <div class="custom-control custom-control-inline custom-radio">
-                                       <input class="custom-control-input" checked="" value="Auto" id="sf_chkauto"
-                                          name="sf_calculation" type="radio">
-                                       <label class="custom-control-label" for="sf_chkauto">Auto</label>
-                                    </div>
-                                    <div class="custom-control custom-control-inline custom-radio">
-                                       <input class="custom-control-input" value="Mannual" id="chkmannual"
-                                          name="sf_calculation" type="radio">
-                                       <label class="custom-control-label" for="chkmannual">Mannual</label>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div> {% endcomment %}
-                           <!-- /.card -->
+
+                         
                         </div>
-
-                        <div class="col-lg-3 col-md-3 col-sm-12">
-
-                           {% comment %} <div id="payoutSection" class="card card-inverse bg-info">
-                              <div class="card-header p-2">
-                                 <h4 class="card-title mb-1">Payouts
-                                    <button type="button" class="btn-payout-close btn"><i
-                                          class="fa fa-times"></i></button>
-                                 </h4>
+                        {% comment %} <div id="payoutSection" class="card card-inverse bg-info">
+                           <div class="card-header p-2">
+                              <h4 class="card-title mb-1">Payouts
+                                 <button type="button" class="btn-payout-close btn"><i class="fa fa-times"></i></button>
+                              </h4>
+                           </div>
+                           <input type="hidden" value="43" readonly="" name="payout_id">
+                           <div class="card-body">
+                              <p>Agent Commision</p>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Rewards On <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <select data-parsley-required="true" name="ag_reward_on"
+                                    class="col-lg-6 ag-toggle-mannual custom-select" style="display:none">
+                                    <option value="-none-">-none-</option>
+                                    <option value="OD" selected="">OD</option>
+                                    <option value="NET">NET</option>
+                                 </select>
+                                 <p class="col-lg-6 ag-toggle-auto">OD</p>
                               </div>
-                              <input type="hidden" value="43" readonly="" name="payout_id">
-                              <div class="card-body">
-                                 <p>Agent Commision</p>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards On <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <select data-parsley-required="true" name="ag_reward_on"
-                                       class="col-lg-6 ag-toggle-mannual custom-select" style="display:none">
-                                       <option value="-none-">-none-</option>
-                                       <option value="OD" selected="">OD</option>
-                                       <option value="NET">NET</option>
-                                    </select>
-                                    <p class="col-lg-6 ag-toggle-auto">OD</p>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Rewards % <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <input type="text" id="ag_reward_pct" value="15" name="ag_reward_pct"
+                                    class="col-lg-6 form-control ag-toggle-mannual maskNumField"
+                                    data-parsley-required-message="" data-mask-as-number-decimals="2"
+                                    data-parsley-required="true" min="0" max="100" style="display:none">
+                                 <p class="col-lg-6 ag-toggle-auto">15</p>
+                              </div>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Commision <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <input type="text" value="" readonly="" data-parsley-required-message=""
+                                    data-parsley-required="true"
+                                    data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
+                                    class="form-control col-lg-6 maskNumField ag-toggle-mannual" name="ag_commision"
+                                    id="ag_commision" style="display:none">
+                                 <p class="col-lg-6 ag-toggle-auto">18518</p>
+                              </div>
+                              <div class="row mb-3">
+                                 <label class="col-lg-5">Calculation</label>
+                                 <div class="custom-control custom-control-inline custom-radio">
+                                    <input class="custom-control-input" value="Auto" checked="" id="ag_chkauto"
+                                       name="ag_calculation" type="radio">
+                                    <label class="custom-control-label" for="ag_chkauto">Auto</label>
                                  </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards % <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <input type="text" id="ag_reward_pct" value="15" name="ag_reward_pct"
-                                       class="col-lg-6 form-control ag-toggle-mannual maskNumField"
-                                       data-parsley-required-message="" data-mask-as-number-decimals="2"
-                                       data-parsley-required="true" min="0" max="100" style="display:none">
-                                    <p class="col-lg-6 ag-toggle-auto">15</p>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Commision <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <input type="text" value="" readonly="" data-parsley-required-message=""
-                                       data-parsley-required="true"
-                                       data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
-                                       class="form-control col-lg-6 maskNumField ag-toggle-mannual" name="ag_commision"
-                                       id="ag_commision" style="display:none">
-                                    <p class="col-lg-6 ag-toggle-auto">18518</p>
-                                 </div>
-                                 <div class="row mb-3">
-                                    <label class="col-lg-5">Calculation</label>
-                                    <div class="custom-control custom-control-inline custom-radio">
-                                       <input class="custom-control-input" value="Auto" checked="" id="ag_chkauto"
-                                          name="ag_calculation" type="radio">
-                                       <label class="custom-control-label" for="ag_chkauto">Auto</label>
-                                    </div>
-                                    <div class="custom-control custom-control-inline custom-radio">
-                                       <input class="custom-control-input" value="Mannual" id="ag_chkmannual"
-                                          name="ag_calculation" type="radio">
-                                       <label class="custom-control-label" for="ag_chkmannual">Mannual</label>
-                                    </div>
-                                 </div>
-                                 <p>Self Commision</p>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards On <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <select data-parsley-required="true" name="sf_reward_on"
-                                       class="col-lg-6 sf-toggle-mannual custom-select" style="display:none">
-                                       <option value="-none-">-none-</option>
-                                       <option value="OD" selected="">OD</option>
-                                       <option value="NET">NET</option>
-                                    </select>
-                                    <p class="col-lg-6 sf-toggle-auto">OD</p>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards % <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <input type="text" id="sf_reward_pct" value="15" name="sf_reward_pct"
-                                       class="col-lg-6 form-control sf-toggle-mannual maskNumField"
-                                       data-parsley-required-message="" data-mask-as-number-decimals="2"
-                                       data-parsley-required="true" min="0" max="100" style="display:none">
-                                    <p class="col-lg-6 sf-toggle-auto">15</p>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Commision <abbr title="Required"
-                                          class="text-danger">*</abbr></label>
-                                    <input type="text" readonly="" value="" data-parsley-required-message=""
-                                       data-parsley-required="true"
-                                       data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
-                                       class="form-control col-lg-6 maskNumField sf-toggle-mannual" name="sf_commision"
-                                       id="sf_commision" style="display:none">
-                                    <p class="col-lg-6 sf-toggle-auto">18518</p>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Calculation</label>
-                                    <div class="custom-control custom-control-inline custom-radio">
-                                       <input class="custom-control-input" checked="" value="Auto" id="sf_chkauto"
-                                          name="sf_calculation" type="radio">
-                                       <label class="custom-control-label" for="sf_chkauto">Auto</label>
-                                    </div>
-                                    <div class="custom-control custom-control-inline custom-radio">
-                                       <input class="custom-control-input" value="Mannual" id="chkmannual"
-                                          name="sf_calculation" type="radio">
-                                       <label class="custom-control-label" for="chkmannual">Mannual</label>
-                                    </div>
+                                 <div class="custom-control custom-control-inline custom-radio">
+                                    <input class="custom-control-input" value="Mannual" id="ag_chkmannual"
+                                       name="ag_calculation" type="radio">
+                                    <label class="custom-control-label" for="ag_chkmannual">Mannual</label>
                                  </div>
                               </div>
-                           </div> {% endcomment %}
-                           <!-- /.card -->
-                        </div>
-                     </div>
-                     <hr>
-
-                     <div class="form-row">
-                        <div class="col-md-12 col-sm-12">
-                           <div id="payoutSection" class="card card-inverse bg-info">
-                              <!-- .card -->
-                              <div class="card-header p-2">
-                                 <h4 class="card-title mb-1">Payouts</h4>
+                              <p>Self Commision</p>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Rewards On <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <select data-parsley-required="true" name="sf_reward_on"
+                                    class="col-lg-6 sf-toggle-mannual custom-select" style="display:none">
+                                    <option value="-none-">-none-</option>
+                                    <option value="OD" selected="">OD</option>
+                                    <option value="NET">NET</option>
+                                 </select>
+                                 <p class="col-lg-6 sf-toggle-auto">OD</p>
                               </div>
-                              <div class="card-body">
-                                 <p><span class="icofont icofont-hand-right ml-1"></span> The Payout will be shown as
-                                    per the Policy Details</p>
-                                 <p><span class="icofont icofont-hand-right ml-1"></span> You can add manual Payout
-                                    after the Policy saved</p>
-                                 <div class="text-center">
-                                    <button type="submit" name="submit" class="btn btn-success w-100p">Save</button>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Rewards % <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <input type="text" id="sf_reward_pct" value="15" name="sf_reward_pct"
+                                    class="col-lg-6 form-control sf-toggle-mannual maskNumField"
+                                    data-parsley-required-message="" data-mask-as-number-decimals="2"
+                                    data-parsley-required="true" min="0" max="100" style="display:none">
+                                 <p class="col-lg-6 sf-toggle-auto">15</p>
+                              </div>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Commision <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <input type="text" readonly="" value="" data-parsley-required-message=""
+                                    data-parsley-required="true"
+                                    data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
+                                    class="form-control col-lg-6 maskNumField sf-toggle-mannual" name="sf_commision"
+                                    id="sf_commision" style="display:none">
+                                 <p class="col-lg-6 sf-toggle-auto">18518</p>
+                              </div>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Calculation</label>
+                                 <div class="custom-control custom-control-inline custom-radio">
+                                    <input class="custom-control-input" checked="" value="Auto" id="sf_chkauto"
+                                       name="sf_calculation" type="radio">
+                                    <label class="custom-control-label" for="sf_chkauto">Auto</label>
+                                 </div>
+                                 <div class="custom-control custom-control-inline custom-radio">
+                                    <input class="custom-control-input" value="Mannual" id="chkmannual"
+                                       name="sf_calculation" type="radio">
+                                    <label class="custom-control-label" for="chkmannual">Mannual</label>
                                  </div>
                               </div>
                            </div>
-                        </div>
+                        </div> {% endcomment %}
+                        <!-- /.card -->
                      </div>
-                  </form>
 
+                     <div class="col-lg-3 col-md-3 col-sm-12">
+
+                        {% comment %} <div id="payoutSection" class="card card-inverse bg-info">
+                           <div class="card-header p-2">
+                              <h4 class="card-title mb-1">Payouts
+                                 <button type="button" class="btn-payout-close btn"><i class="fa fa-times"></i></button>
+                              </h4>
+                           </div>
+                           <input type="hidden" value="43" readonly="" name="payout_id">
+                           <div class="card-body">
+                              <p>Agent Commision</p>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Rewards On <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <select data-parsley-required="true" name="ag_reward_on"
+                                    class="col-lg-6 ag-toggle-mannual custom-select" style="display:none">
+                                    <option value="-none-">-none-</option>
+                                    <option value="OD" selected="">OD</option>
+                                    <option value="NET">NET</option>
+                                 </select>
+                                 <p class="col-lg-6 ag-toggle-auto">OD</p>
+                              </div>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Rewards % <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <input type="text" id="ag_reward_pct" value="15" name="ag_reward_pct"
+                                    class="col-lg-6 form-control ag-toggle-mannual maskNumField"
+                                    data-parsley-required-message="" data-mask-as-number-decimals="2"
+                                    data-parsley-required="true" min="0" max="100" style="display:none">
+                                 <p class="col-lg-6 ag-toggle-auto">15</p>
+                              </div>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Commision <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <input type="text" value="" readonly="" data-parsley-required-message=""
+                                    data-parsley-required="true"
+                                    data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
+                                    class="form-control col-lg-6 maskNumField ag-toggle-mannual" name="ag_commision"
+                                    id="ag_commision" style="display:none">
+                                 <p class="col-lg-6 ag-toggle-auto">18518</p>
+                              </div>
+                              <div class="row mb-3">
+                                 <label class="col-lg-5">Calculation</label>
+                                 <div class="custom-control custom-control-inline custom-radio">
+                                    <input class="custom-control-input" value="Auto" checked="" id="ag_chkauto"
+                                       name="ag_calculation" type="radio">
+                                    <label class="custom-control-label" for="ag_chkauto">Auto</label>
+                                 </div>
+                                 <div class="custom-control custom-control-inline custom-radio">
+                                    <input class="custom-control-input" value="Mannual" id="ag_chkmannual"
+                                       name="ag_calculation" type="radio">
+                                    <label class="custom-control-label" for="ag_chkmannual">Mannual</label>
+                                 </div>
+                              </div>
+                              <p>Self Commision</p>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Rewards On <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <select data-parsley-required="true" name="sf_reward_on"
+                                    class="col-lg-6 sf-toggle-mannual custom-select" style="display:none">
+                                    <option value="-none-">-none-</option>
+                                    <option value="OD" selected="">OD</option>
+                                    <option value="NET">NET</option>
+                                 </select>
+                                 <p class="col-lg-6 sf-toggle-auto">OD</p>
+                              </div>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Rewards % <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <input type="text" id="sf_reward_pct" value="15" name="sf_reward_pct"
+                                    class="col-lg-6 form-control sf-toggle-mannual maskNumField"
+                                    data-parsley-required-message="" data-mask-as-number-decimals="2"
+                                    data-parsley-required="true" min="0" max="100" style="display:none">
+                                 <p class="col-lg-6 sf-toggle-auto">15</p>
+                              </div>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Commision <abbr title="Required"
+                                       class="text-danger">*</abbr></label>
+                                 <input type="text" readonly="" value="" data-parsley-required-message=""
+                                    data-parsley-required="true"
+                                    data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
+                                    class="form-control col-lg-6 maskNumField sf-toggle-mannual" name="sf_commision"
+                                    id="sf_commision" style="display:none">
+                                 <p class="col-lg-6 sf-toggle-auto">18518</p>
+                              </div>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Calculation</label>
+                                 <div class="custom-control custom-control-inline custom-radio">
+                                    <input class="custom-control-input" checked="" value="Auto" id="sf_chkauto"
+                                       name="sf_calculation" type="radio">
+                                    <label class="custom-control-label" for="sf_chkauto">Auto</label>
+                                 </div>
+                                 <div class="custom-control custom-control-inline custom-radio">
+                                    <input class="custom-control-input" value="Mannual" id="chkmannual"
+                                       name="sf_calculation" type="radio">
+                                    <label class="custom-control-label" for="chkmannual">Mannual</label>
+                                 </div>
+                              </div>
+                           </div>
+                        </div> {% endcomment %}
+                        <!-- /.card -->
+                     </div>
                </div>
+               <hr>
+
+               <div class="form-row">
+                  <div class="col-md-12 col-sm-12">
+                     <div id="payoutSection" class="card card-inverse bg-info">
+                        <!-- .card -->
+                        <div class="card-header p-2">
+                           <h4 class="card-title mb-1">Payouts</h4>
+                        </div>
+                        <div class="card-body">
+                           <p><span class="icofont icofont-hand-right ml-1"></span> The Payout will be shown as
+                              per the Policy Details</p>
+                           <p><span class="icofont icofont-hand-right ml-1"></span> You can add manual Payout
+                              after the Policy saved</p>
+                           <div class="text-center">
+                              <button type="submit" name="submit" class="btn btn-success w-100p">Save</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               </form>
+
             </div>
          </div>
       </div>
+   </div>
    </div>
    <div class="modal fade" id="mdlpayout" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
       aria-labelledby="PayoutModalLabel" aria-hidden="true">
@@ -1827,9 +1655,13 @@
 
       if (value == 'TWO WHEELER') {
          document.getElementById('coverage_typeDiv').hidden = false
+         // document.getElementById('coverage_typeDiv').removeChild()
+
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
 
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
@@ -1946,8 +1778,10 @@
       else if (value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
 
          document.getElementById('gvwDiv').hidden = false
          document.getElementById('gvw').required = true
@@ -1972,8 +1806,11 @@
       else if (value == '3 WHEELER PCV') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
@@ -2000,8 +1837,10 @@
       else if (value == '3 WHEELER GCV-PUBLIC CARRIER') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
 
 
          document.getElementById('gvwDiv').hidden = false
@@ -2085,10 +1924,13 @@
 
       else if (value == 'BUS AND OTHERS') {
          document.getElementById('coverage_typeDiv').hidden = true
-         document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('coverage_type').required = false
 
-         document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
+
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
 
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
@@ -2097,100 +1939,76 @@
 
          document.getElementById('seating_capacityDiv1').hidden = false
 
-         return;
-         var newoption = document.createElement("input");
-         document.body.appendChild(newoption)
-         newoption.value = 'BELOW 1000CC'
-         newoption.innerHTML = 'BELOW-1000CC'
-         cubic_capacity.options.add(newoption);
-
-         document.getElementById('gvwDiv').hidden = true
-         document.getElementById('gvw').required = false
-         document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
-
-         cubic_capacity.innerHTML = ''
-         coverage_type.innerHTML = ''
-
-         // Cubic_ capacity options
-         var newoption = document.createElement("option");
-         newoption.value = 'BELOW 1000CC'
-         newoption.innerHTML = 'BELOW-1000CC'
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1000CC-1500CC'
-         newoption.innerHTML = '1000CC-1500CC'
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'ABOVE 1500CC'
-         newoption.innerHTML = 'ABOVE 1500CC'
-         cubic_capacity.options.add(newoption);
-
-         // Coverage Type
-         coverage_type = document.getElementById('coverage_type')
-         coverage_type.innerHTML = ''
-
-         var newoption = document.createElement("option");
-         newoption.value = '1+2 Package'
-         newoption.innerHTML = '1+2 Package'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '3 Year TP'
-         newoption.innerHTML = '3 Year TP'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1 Year Package'
-         newoption.innerHTML = '1 Year Package'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'TP Only'
-         newoption.innerHTML = 'TP Only'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'OD Only'
-         newoption.innerHTML = 'OD Only'
-         coverage_type.options.add(newoption);
       }
 
       else if (value == 'MISC-D SPECIAL VEHICLE') {
          document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('coverage_typeDiv').hidden = false
-         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('coverage_type').required = false
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
          document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
          document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
 
       }
 
       else if (value == 'SCHOOL BUS-SCHOOL NAME') {
          document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
          document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('coverage_type').required = false
          document.getElementById('seating_capacityDiv').hidden = true
-         document.getElementById('seating_capacityDiv1').hidden = false
+         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
          document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
       }
       else if (value == 'SCHOOL BUS-INDIVIDUAL NAME') {
          document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
          document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('coverage_type').required = false
          document.getElementById('seating_capacityDiv').hidden = true
-         document.getElementById('seating_capacityDiv1').hidden = false
+         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
          document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
       }
 
    }
+
+   function addSeatingCapacity() {
+      try {
+         var seating_capacity1 = document.getElementById('seating_capacity1')
+         var value = document.getElementById('seating_capacity1').value
+
+         if (value) {
+            // seating capacity
+            var newoption = document.createElement("option");
+            newoption.value = value
+            newoption.innerHTML = value
+            document.getElementById('seating_capacity').innerHTML = ''
+            document.getElementById('seating_capacity').options.add(newoption);
+         }
+      } catch (error) {
+
+      }
+   }
+
 </script>
 
 </body>
 
 </html>
 {%endblock%}
-
-<!-- 3 WHEELER GCV-PUBLIC CARRIER -->
