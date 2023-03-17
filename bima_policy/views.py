@@ -542,7 +542,7 @@ class create_policy(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
-        # Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
+        # pol = Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
         #                       mfg_year=mfg_year,
         #                       addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type, cpa=cpa,
         #                       risk_start_date=risk_start_date,
@@ -550,30 +550,35 @@ class create_policy(View):
         #                       employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
         #                       policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
         #                       )
-        reg = registration_no[0:4]
-        print(reg)
-
+        # print(pol)
+               
         if vehicle_catagory == 'TWO WHEELER':
             try:
+                reg = registration_no[0:4]
                 data = Payout.objects.filter(Q(insurer__contains=insurance_company) &
                                              Q(sp_name__contains=sp_name) &
+                                             Q(rto_city__contains=reg) &
                                              Q(vehicle_makeby__contains=vehicle_makeby) &
                                              Q(vehicle_model__contains=vehicle_model) &
                                              Q(vehicle_catagory__contains=vehicle_catagory) &
                                              Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
                                              Q(mfg_year__contains=mfg_year) &
-                                             Q(rto_city__contains=reg) &
                                              Q(addon__contains=addon) &
                                              Q(ncb__contains=ncb) &
                                              Q(cubic_capacity__contains=cubic_capacity) &
                                              Q(seating_capacity__contains=seating_capacity) &
                                              Q(coverage_type__contains=coverage_type) &
                                              Q(case_type__contains=case_type) &
-                                             Q(cpa__contains=cpa)).values()
+                                             Q(policy_term__contains=policy_term) &
+                                             Q(cpa__contains=cpa)                                            
+                                             ).values()
+                print('data ', data)
+                
             except Exception as ex:
                 print(ex)
         elif vehicle_catagory == 'PRIVATE CAR':
             try:
+                reg = registration_no[0:4]
                 data = Payout.objects.filter(Q(insurer__contains=insurance_company) &
                                              Q(sp_name__contains=sp_name) &
                                              Q(vehicle_makeby__contains=vehicle_makeby) &
@@ -613,32 +618,7 @@ class create_policy(View):
             except Exception as ex:
                 print(ex)
 
-
-
-        try:
-            data = Payout.objects.filter(Q(insurer__contains=insurance_company) &
-                                         Q(sp_name__contains=sp_name) &
-                                         Q(vehicle_makeby__contains=vehicle_makeby) &
-                                         Q(vehicle_model__contains=vehicle_model) &
-                                         Q(vehicle_catagory__contains=vehicle_catagory) &
-                                         Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
-                                         Q(mfg_year__contains=mfg_year) &
-                                         Q(rto_city__contains=reg) &
-                                         Q(addon__contains=addon) &
-                                         Q(ncb__contains=ncb) &
-                                         Q(gvw__contains=gvw) &
-                                         Q(cubic_capacity__contains=cubic_capacity) &
-                                         Q(seating_capacity__contains=seating_capacity) &
-                                         Q(coverage_type__contains=coverage_type) &
-                                         Q(case_type__contains=case_type) &
-                                         Q(policy_term__contains=policy_term) &
-                                         Q(cpa__contains=cpa)).values()
-        except Exception as ex:
-            print(ex)
-
-        # print('data create post', data)
-        # print('policy_no create post', policy_no)
-        return render(request, 'policylist/list_apply_payout.html')
+        return render(request, 'policylist/list_apply_payout.html', {'data':data})
 
 
 def all_payout_options(data):
@@ -1262,6 +1242,7 @@ def slab_payoutform(request):
         seating_capacity = request.POST.getlist('seating_capacity')
         coverage_type = request.POST.getlist('coverage_type')
         case_type = request.POST.getlist('case_type')
+        policy_term = request.POST.getlist('policy_term')
         cpa = request.POST.getlist('cpa')
         rto = request.POST.getlist('rto')
 
@@ -1289,6 +1270,7 @@ def slab_payoutform(request):
         coverage_type = ','.join(coverage_type)
         case_type = ','.join(case_type)
         cpa = ','.join(cpa)
+        policy_term = ','.join(policy_term)
 
         print(product_name)
 
@@ -1298,7 +1280,7 @@ def slab_payoutform(request):
                               vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
                               vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
                               rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
-                              coverage_type=coverage_type, case_type=case_type, cpa=cpa,
+                              coverage_type=coverage_type, case_type=case_type, cpa=cpa, policy_term=policy_term,
                               agent_od_reward=agent_od_reward,
                               agent_tp_reward=agent_tp_reward,
                               self_od_reward=self_od_reward,
@@ -1327,6 +1309,7 @@ def slab_payoutformshow(request, id):
         seating_capacity = request.POST.getlist('seating_capacity')
         coverage_type = request.POST.getlist('coverage_type')
         case_type = request.POST.getlist('case_type')
+        policy_term = request.POST.getlist('policy_term')
         cpa = request.POST.getlist('cpa')
         rto = request.POST.getlist('rto')
         # agent payout
@@ -1353,6 +1336,7 @@ def slab_payoutformshow(request, id):
         coverage_type = ','.join(coverage_type)
         case_type = ','.join(case_type)
         cpa = ','.join(cpa)
+        policy_term = ','.join(policy_term)
 
         print(mfg_year)
         payout_updt = Payout.objects.filter(payoutid=id)
@@ -1361,7 +1345,7 @@ def slab_payoutformshow(request, id):
                            vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
                            vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
                            rto_city=rto_city, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
-                           coverage_type=coverage_type, case_type=case_type, cpa=cpa,
+                           coverage_type=coverage_type, case_type=case_type, cpa=cpa, policy_term=policy_term,
                            agent_od_reward=agent_od_reward,
                            agent_tp_reward=agent_tp_reward,
                            self_od_reward=self_od_reward,

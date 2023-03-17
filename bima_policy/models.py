@@ -179,6 +179,7 @@ class Payout(models.Model):
     coverage_type = models.CharField(max_length=100)
     case_type = models.CharField(max_length=50)
     cpa = models.CharField(max_length=50)
+    policy_term = models.CharField(max_length=50)    
 
     agent_od_reward = models.IntegerField(max_length=50)
     agent_tp_reward = models.IntegerField(max_length=50)

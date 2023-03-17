@@ -127,9 +127,22 @@
                                              data-parsley-required-message="" multiple
                                              onchange="selectAllItems('vehicle_catagory')" data-parsley-required="true"
                                              class="custom-select " required>
-                                             {%for value in data_vc%}
+                                             <!-- {%for value in data_vc%}
                                              <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}
+                                             {%endfor%} -->
+                                             <option value="TWO WHEELER">TWO WHEELER</option>
+                                             <option value="PRIVATE CAR">PRIVATE CAR</option>
+                                             <option value="GCV-PUBLIC CARRIER OTHER THAN 3 W">GCV-PUBLIC CARRIER OTHER
+                                                THAN 3 W</option>
+                                             <option value="3 WHEELER PCV">3 WHEELER PCV</option>
+                                             <option value="3 WHEELER GCV-PUBLIC CARRIER">3 WHEELER GCV-PUBLIC CARRIER
+                                             </option>
+                                             <option value="TAXI 4 WHEELER">TAXI 4 WHEELER</option>
+                                             <option value="BUS AND OTHERS">BUS AND OTHERS</option>
+                                             <option value="MISC-D SPECIAL VEHICLE">MISC-D SPECIAL VEHICLE</option>
+                                             <option value="SCHOOL BUS-SCHOOL NAME">SCHOOL BUS-SCHOOL NAME</option>
+                                             <option value="SCHOOL BUS-INDIVIDUAL NAME">SCHOOL BUS-INDIVIDUAL NAME
+                                             </option>
                                              <option value="*"> select all </option>
 
 
@@ -227,9 +240,12 @@
                                              data-parsley-required-message="" class="custom-select" id="cubic_capacity"
                                              data-parsley-required="true" multiple required
                                              onchange="selectAllItems('cubic_capacity')">
-                                             <option value="BELOW 1000">BELOW 1000</option>
-                                             <option value="1000-1500">1000-1500</option>
-                                             <option value="ABOVE 1500">ABOVE 1500</option>
+                                             <option value="75CC-150CC">75CC-150CC</option>
+                                             <option value="150CC-350CC">150CC-350CC</option>
+                                             <option value="ABOVE 350CC">ABOVE 350CC</option>
+                                             <option value="BELOW 1000CC">BELOW 1000CC</option>
+                                             <option value="1000CC-1500CC">1000CC-1500CC</option>
+                                             <option value="ABOVE 1500CC">ABOVE 1500CC</option>
                                              <option value="*"> select all </option>
 
                                           </select>
@@ -256,9 +272,16 @@
                                           <select id="coverage_type" name="coverage_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required multiple
                                              onchange="selectAllItems('coverage_type')">
-                                             {% for value in data_ct%}
+                                             <!-- {% for value in data_ct%}
                                              <option value="{{value}}">{{value}}</option>
-                                             {% endfor%}
+                                             {% endfor%} -->
+                                             <option value="1 YEAR PACKAGE">1 YEAR PACKAGE</option>
+                                             <option value="1+2 YEAR PACKAGE">1+2 YEAR PACKAGE</option>
+                                             <option value="1+4 YEAR PACKAGE">1+4 YEAR PACKAGE</option>
+                                             <option value="3 YEAR TP">3 YEAR TP</option>
+                                             <option value="5 YEAR TP">5 YEAR TP</option>
+                                             <option value="TP ONLY">TP ONLY</option>
+                                             <option value="OD ONLY">OD ONLY</option>             
                                              <option value="*">select all </option>
                                           </select>
                                        </div>
@@ -272,7 +295,20 @@
                                              <option value="ROLLOVER">ROLLOVER</option>
                                              <option value="ENDORSEMENT">ENDORSEMENT</option>
                                              <option value="*"> select all </option>
-
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Policy Term <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select  id="policy_term"  name="policy_term" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required multiple
+                                             onchange="selectAllItems('policy_term')">
+                                             <option value="1">1</option>
+                                             <option value="2">2</option>
+                                             <option value="3">3</option>
+                                             <option value="4">4</option>
+                                             <option value="5">5</option>
+                                             <option value="10">10</option>
+                                             <option value="*"> select all </option>                                            
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -706,6 +742,7 @@
          selectionOnLoad('seating_capacity', "{{data.seating_capacity|safe}}")
          selectionOnLoad('coverage_type', "{{data.coverage_type|safe}}")
          selectionOnLoad('case_type', "{{data.case_type|safe}}")
+         selectionOnLoad('policy_term', "{{data.policy_term|safe}}")
          selectionOnLoad('cpa', "{{data.cpa|safe}}")
          selectionOnLoadRto('rto', "{{data.rto_city|safe}}")
          document.getElementById('rtoul').style.display = 'none';
