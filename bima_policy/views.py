@@ -551,7 +551,7 @@ class create_policy(View):
         #                       policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
         #                       )
         # print(pol)
-               
+
         if vehicle_catagory == 'TWO WHEELER':
             try:
                 reg = registration_no[0:4]
@@ -570,10 +570,10 @@ class create_policy(View):
                                              Q(coverage_type__contains=coverage_type) &
                                              Q(case_type__contains=case_type) &
                                              Q(policy_term__contains=policy_term) &
-                                             Q(cpa__contains=cpa)                                            
+                                             Q(cpa__contains=cpa)
                                              ).values()
                 print('data ', data)
-                
+
             except Exception as ex:
                 print(ex)
         elif vehicle_catagory == 'PRIVATE CAR':
@@ -595,10 +595,12 @@ class create_policy(View):
                                              Q(case_type__contains=case_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
+
             except Exception as ex:
                 print(ex)
         elif vehicle_catagory == 'GCV-PUBLIC CARRIER OTHER THAN 3 W':
-            try:
+           try:
+                reg = registration_no[0:4]
                 data = Payout.objects.filter(Q(insurer__contains=insurance_company) &
                                              Q(sp_name__contains=sp_name) &
                                              Q(vehicle_makeby__contains=vehicle_makeby) &
@@ -615,8 +617,11 @@ class create_policy(View):
                                              Q(case_type__contains=case_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
-            except Exception as ex:
+                print('data is ', data)
+
+           except Exception as ex:
                 print(ex)
+
 
         return render(request, 'policylist/list_apply_payout.html', {'data':data})
 
