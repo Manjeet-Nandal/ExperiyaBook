@@ -359,16 +359,16 @@
                                              <option value="ABOVE 18">ABOVE 18</option>
                                           </select>
                                        </div>
+                                      
                                        <div class="col-md-3 mb-4" id="seating_capacityDiv1" hidden>
-                                          <label for="seating_capacity">Seating Capacity <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$"
-                                             name="seating_capacity1" id="seating_capacity1"
-                                             style="text-transform: uppercase;" oninput="addSeatingCapacity()">
+                                          <label for="seating_capacity1">Seating Capacity <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text"
+                                                data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
+                                                data-mask-as-number-maxlength="2" data-parsley-required="true"
+                                                data-parsley-required-message="" data-parsley-maxlength="2"
+                                                data-parsley-pattern="^[0-9]+$" name="seating_capacity1" id="seating_capacity1" maxlength="2" required
+                                                oninput="addSeatingCapacity()">
                                        </div>
-
 
                                        <div class="col-md-3 mb-4" id="coverage_typeDiv">
                                           <label>Coverage Type <abbr title="Required"
@@ -582,7 +582,6 @@
 
                                     </div>
 
-
                                  </fieldset>
 
                                  <p class="mb-4"></p>
@@ -686,7 +685,6 @@
                                    
                                  } catch (error) {
                                  }
-
                               }
                             
                               function calculateSelfPayout() {
@@ -703,7 +701,6 @@
                                    
                                  } catch (error) {
                                  }
-
                               }
                           
                           </script>
@@ -1777,7 +1774,6 @@
 
          coverage_type.innerHTML = ''
 
-
          // Coverage type        
          var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
@@ -1785,12 +1781,9 @@
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
-         newoption.value = 'TP Only'
-         newoption.innerHTML = 'TP Only'
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
          coverage_type.options.add(newoption);
-
-
-
       }
 
       else if (value == '3 WHEELER GCV-PUBLIC CARRIER') {
@@ -1826,6 +1819,7 @@
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
 
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
@@ -1838,7 +1832,7 @@
          // Cubic_ capacity options
          var newoption = document.createElement("option");
          newoption.value = 'BELOW 1000CC'
-         newoption.innerHTML = 'BELOW-1000CC'
+         newoption.innerHTML = 'BELOW 1000CC'
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1856,28 +1850,28 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = '1+2 YEAR PACKAGE'
-         newoption.innerHTML = '1+2 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '3 Year TP'
-         newoption.innerHTML = '3 Year TP'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
          newoption.innerHTML = '1 YEAR PACKAGE'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
-         newoption.value = 'TP Only'
-         newoption.innerHTML = 'TP Only'
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
-         newoption.value = 'OD Only'
-         newoption.innerHTML = 'OD Only'
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);        
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
          coverage_type.options.add(newoption);
       }
 
@@ -1902,9 +1896,7 @@
 
       else if (value == 'MISC-D SPECIAL VEHICLE') {
          document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('cubic_capacity').required = false
-         document.getElementById('coverage_typeDiv').hidden = true
-         document.getElementById('coverage_type').required = false
+         document.getElementById('cubic_capacity').required = false        
          document.getElementById('seating_capacityDiv').hidden = true
          document.getElementById('seating_capacity').required = false
          document.getElementById('seating_capacityDiv1').hidden = true
@@ -1913,14 +1905,45 @@
          document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
          document.getElementById('gstt').required = false
+
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
+
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);         
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
 
       }
 
       else if (value == 'SCHOOL BUS-SCHOOL NAME') {
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
-         document.getElementById('coverage_typeDiv').hidden = true
-         document.getElementById('coverage_type').required = false
+         
          document.getElementById('seating_capacityDiv').hidden = true
          document.getElementById('seating_capacity').required = false
          document.getElementById('seating_capacityDiv1').hidden = true
@@ -1929,6 +1952,37 @@
          document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
          document.getElementById('gstt').required = false
+        
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
+          // Coverage Type
+          coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);         
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
       }
       else if (value == 'SCHOOL BUS-INDIVIDUAL NAME') {
          document.getElementById('cubic_capacityDiv').hidden = true
@@ -1943,6 +1997,37 @@
          document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
          document.getElementById('gstt').required = false
+
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
+          // Coverage Type
+          coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);         
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
       }
 
    }
@@ -1952,7 +2037,7 @@
          var seating_capacity1 = document.getElementById('seating_capacity1')
          var value = document.getElementById('seating_capacity1').value
 
-         if (value) {
+         if (value) { 
             // seating capacity
             var newoption = document.createElement("option");
             newoption.value = value
