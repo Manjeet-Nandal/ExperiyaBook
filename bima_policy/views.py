@@ -426,11 +426,9 @@ class create_policy(View):
         profile_id = ProfileModel.objects.get(
             id=get_profile_id(get_id_from_session(request)))
         proposal_no = request.POST['proposal_no']
-        # policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
         insurance_company = request.POST['insurance_company']
         sp_name = request.POST['sp_name']
-        # sp_brokercode = request.POST['sp_brokercode']
         try:
             product_name = request.POST['product_name']
         except:
@@ -504,14 +502,9 @@ class create_policy(View):
         employee = request.POST['employee']
         OD_premium = request.POST['od']
         TP_terrorism = request.POST['tpt']
-        net = request.POST['net']
-        GST = request.POST['gst']
-        try:
-            GST_gcv = request.POST['gstt']
-        except:
-            GST_gcv = 0
-
-        
+        net = request.POST['net']      
+        gst_amount = request.POST['gst']        
+        gst_gcv_amount = request.POST['gstt']            
         total = request.POST['total']
         payment_mode = request.POST['payment_mode']
         proposal = request.FILES.get('proposal')
@@ -546,19 +539,7 @@ class create_policy(View):
             fsvc.save(vehicle_rc.name, vehicle_rc)
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
-
-        print('GST_gcv ', GST_gcv)
-        pol = Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
-                                    mfg_year=mfg_year,
-                                    addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type, cpa=cpa,
-                                    risk_start_date=risk_start_date,
-                                    risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                                    employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, GST=GST,   total=total,
-                                    policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
-                                    ,GST_gcv= GST_gcv if GST_gcv is not "" else  0)
-        
-        print(pol)
-
+    
         if vehicle_catagory == 'TWO WHEELER':
             try:
                 reg = registration_no[0:4]
@@ -701,6 +682,7 @@ class create_policy(View):
                 reg = registration_no[0:4]
                 seating_capacity = int(request.POST['seating_capacity1'])
                 cap = seating_capacity
+                print('cap ', cap)
 
                 if cap < 5:
                     cap = 'BELOW 5'
@@ -712,9 +694,6 @@ class create_policy(View):
                     cap = '12-18'
                 elif cap > 18:
                     cap = 'ABOVE 18'
-                else:
-                    cap = seating_capacity
-                print('cap ', cap)
 
                 data = Payout.objects.filter(Q(insurer__contains=insurance_company) &
                                              Q(sp_name__contains=sp_name) &
@@ -802,6 +781,16 @@ class create_policy(View):
             except Exception as ex:
                 print(ex)
 
+        pol = Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
+                                    mfg_year=mfg_year,
+                                    addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type, cpa=cpa,
+                                    risk_start_date=risk_start_date,
+                                    risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+                                    employee=employee, proposal=proposal, mandate=mandate, 
+                                    OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, gst_gcv_amount= gst_gcv_amount,  total=total,
+                                    policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
+                                    )
+    
         return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': pol.policyid})
 
 
@@ -926,11 +915,9 @@ class create_policy_non_motor(View):
 def apply_policy(request, id):
     try:
         print('apply_policy')
-        print('id ', id)
 
         data = Policy.objects.get(policyid=id)
-        print('data ', data)
-
+      
         if data.vehicle_catagory == 'TWO WHEELER':
             try:
                 reg = data.registration_no[0:4]
@@ -1257,7 +1244,9 @@ def apply_policy(request, id):
         elif data.vehicle_catagory == 'BUS AND OTHERS':
             try:
                 reg = data.registration_no[0:4]
-                cap = data.seating_capacity   
+                cap = int(data.seating_capacity)
+                print('cap ', cap)
+              
                 if cap < 5:
                     cap = 'BELOW 5'
                 elif cap > 4 and cap < 8:
