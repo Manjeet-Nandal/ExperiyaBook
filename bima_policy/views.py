@@ -503,10 +503,15 @@ class create_policy(View):
         pos = request.POST['pos']
         employee = request.POST['employee']
         OD_premium = request.POST['od']
-        # TP_premium = request.POST['tp']
         TP_terrorism = request.POST['tpt']
         net = request.POST['net']
         GST = request.POST['gst']
+        try:
+            GST_gcv = request.POST['gstt']
+        except:
+            GST_gcv = 0
+
+        
         total = request.POST['total']
         payment_mode = request.POST['payment_mode']
         proposal = request.FILES.get('proposal')
@@ -542,14 +547,16 @@ class create_policy(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
+        print('GST_gcv ', GST_gcv)
         pol = Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
-                              mfg_year=mfg_year,
-                              addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type, cpa=cpa,
-                              risk_start_date=risk_start_date,
-                              risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                              employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
-                              policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
-                              )
+                                    mfg_year=mfg_year,
+                                    addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type, cpa=cpa,
+                                    risk_start_date=risk_start_date,
+                                    risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+                                    employee=employee, proposal=proposal, mandate=mandate, OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, GST=GST,   total=total,
+                                    policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
+                                    ,GST_gcv= GST_gcv if GST_gcv is not "" else  0)
+        
         print(pol)
 
         if vehicle_catagory == 'TWO WHEELER':
@@ -795,7 +802,7 @@ class create_policy(View):
             except Exception as ex:
                 print(ex)
 
-        return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no':pol.policy_no})
+        return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': pol.policyid})
 
 
 def all_payout_options(data):
@@ -917,54 +924,556 @@ class create_policy_non_motor(View):
 # Policy Entry Function by Pragati/ shubham
 
 def apply_policy(request, id):
-    print('apply_policy')
     try:
-        data = Policy.objects.get(policy_no=id)
-        print(data)
-        data = Policy.objects.get(policyid=data.policyid)
+        print('apply_policy')
+        print('id ', id)
 
-        data11 = Policy.objects.filter(policyid=data.policyid)
-        reg = data.registration_no[0:4]
+        data = Policy.objects.get(policyid=id)
+        print('data ', data)
 
-        data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
-                                   Q(sp_name__contains=data.sp_name) &
-                                   Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                   Q(vehicle_model__contains=data.vehicle_model) &
-                                   Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                   Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                   Q(mfg_year__contains=data.mfg_year) &
-                                   Q(rto_city__contains=reg) &
-                                   Q(addon__contains=data.addon) &
-                                   Q(ncb__contains=data.ncb) &
-                                   Q(gvw__contains=data.gvw) &
-                                   Q(cubic_capacity__contains=data.cubic_capacity) &
-                                   Q(seating_capacity__contains=data.seating_capacity) &
-                                   Q(coverage_type__contains=data.coverage_type) &
-                                   Q(case_type__contains=data.case_type) &
-                                   Q(cpa__contains=data.cpa))
-        print(data1)
+        if data.vehicle_catagory == 'TWO WHEELER':
+            try:
+                reg = data.registration_no[0:4]
+                data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
+                                           Q(sp_name__contains=data.sp_name) &
+                                           Q(rto_city__contains=reg) &
+                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                           Q(vehicle_model__contains=data.vehicle_model) &
+                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                           Q(mfg_year__contains=data.mfg_year) &
+                                           Q(addon__contains=data.addon) &
+                                           Q(ncb__contains=data.ncb) &
+                                           Q(cubic_capacity__contains=data.cubic_capacity) &
+                                           Q(seating_capacity__contains=data.seating_capacity) &
+                                           Q(coverage_type__contains=data.coverage_type) &
+                                           Q(case_type__contains=data.case_type) &
+                                           Q(policy_term__contains=data.policy_term) &
+                                           Q(cpa__contains=data.cpa)
+                                           )
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
 
-        # Agent payout
-        agent_od_reward = data1.agent_od_reward
-        agent_od_amount = (int(data.OD_premium) * agent_od_reward) / 100
-        agent_tp_reward = data1.agent_tp_reward
-        agent_tp_amount = (int(data.TP_terrorism) * agent_tp_reward) / 100
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
 
-        # # Self payout
-        self_od_reward = data1.self_od_reward
-        self_od_amount = (int(data.OD_premium) * self_od_reward) / 100
-        self_tp_reward = data1.self_tp_reward
-        self_tp_amount = (int(data.TP_terrorism) * self_tp_reward) / 100
+                print('payout data ', agent_od_reward)
 
-        data11.update(agent_od_reward=agent_od_reward,
-                      agent_od_amount=agent_od_amount,
-                      agent_tp_reward=agent_tp_reward,
-                      agent_tp_amount=agent_tp_amount,
+                data = Policy.objects.filter(policyid=id)
 
-                      self_od_reward=self_od_reward,
-                      self_od_amount=self_od_amount,
-                      self_tp_reward=self_tp_reward,
-                      self_tp_amount=self_tp_amount)
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
+
+        elif data.vehicle_catagory == 'PRIVATE CAR':
+            try:
+                reg = data.registration_no[0:4]
+                data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
+                                           Q(sp_name__contains=data.sp_name) &
+                                           Q(rto_city__contains=reg) &
+                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                           Q(vehicle_model__contains=data.vehicle_model) &
+                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                           Q(mfg_year__contains=data.mfg_year) &
+                                           Q(addon__contains=data.addon) &
+                                           Q(ncb__contains=data.ncb) &
+                                           Q(cubic_capacity__contains=data.cubic_capacity) &
+                                           Q(seating_capacity__contains=data.seating_capacity) &
+                                           Q(coverage_type__contains=data.coverage_type) &
+                                           Q(case_type__contains=data.case_type) &
+                                           Q(policy_term__contains=data.policy_term) &
+                                           Q(cpa__contains=data.cpa)
+                                           )
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
+
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
+
+                print('payout data ', agent_od_reward)
+
+                data = Policy.objects.filter(policyid=id)
+
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
+
+        elif data.vehicle_catagory == 'GCV-PUBLIC CARRIER OTHER THAN 3 W':
+            try:
+                reg = data.registration_no[0:4]
+                data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
+                                           Q(sp_name__contains=data.sp_name) &
+                                           Q(rto_city__contains=reg) &
+                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                           Q(vehicle_model__contains=data.vehicle_model) &
+                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                           Q(mfg_year__contains=data.mfg_year) &
+                                           Q(addon__contains=data.addon) &
+                                           Q(ncb__contains=data.ncb) &
+                                           Q(gvw__contains=data.gvw) &
+                                           Q(seating_capacity__contains=data.seating_capacity) &
+                                           Q(coverage_type__contains=data.coverage_type) &
+                                           Q(case_type__contains=data.case_type) &
+                                           Q(policy_term__contains=data.policy_term) &
+                                           Q(cpa__contains=data.cpa)
+                                           )
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
+
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
+
+                print('payout data ', agent_od_reward)
+
+                data = Policy.objects.filter(policyid=id)
+
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
+
+        elif data.vehicle_catagory == '3 WHEELER PCV':
+            try:
+                reg = data.registration_no[0:4]
+                data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
+                                           Q(sp_name__contains=data.sp_name) &
+                                           Q(rto_city__contains=reg) &
+                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                           Q(vehicle_model__contains=data.vehicle_model) &
+                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                           Q(mfg_year__contains=data.mfg_year) &
+                                           Q(addon__contains=data.addon) &
+                                           Q(ncb__contains=data.ncb) &
+                                           Q(seating_capacity__contains=data.seating_capacity) &
+                                           Q(coverage_type__contains=data.coverage_type) &
+                                           Q(case_type__contains=data.case_type) &
+                                           Q(policy_term__contains=data.policy_term) &
+                                           Q(cpa__contains=data.cpa)
+                                           )
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
+
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
+
+                print('payout data ', agent_od_reward)
+
+                data = Policy.objects.filter(policyid=id)
+
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
+
+        elif data.vehicle_catagory == '3 WHEELER GCV-PUBLIC CARRIER':
+            try:
+                reg = data.registration_no[0:4]
+                data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
+                                           Q(sp_name__contains=data.sp_name) &
+                                           Q(rto_city__contains=reg) &
+                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                           Q(vehicle_model__contains=data.vehicle_model) &
+                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                           Q(mfg_year__contains=data.mfg_year) &
+                                           Q(addon__contains=data.addon) &
+                                           Q(ncb__contains=data.ncb) &
+                                           Q(gvw__contains=data.gvw) &
+                                           Q(seating_capacity__contains=data.seating_capacity) &
+                                           Q(coverage_type__contains=data.coverage_type) &
+                                           Q(case_type__contains=data.case_type) &
+                                           Q(policy_term__contains=data.policy_term) &
+                                           Q(cpa__contains=data.cpa)
+                                           )
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
+
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
+
+                print('payout data ', agent_od_reward)
+
+                data = Policy.objects.filter(policyid=id)
+
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
+
+        elif data.vehicle_catagory == 'TAXI 4 WHEELER':
+            try:
+                reg = data.registration_no[0:4]
+                data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
+                                           Q(sp_name__contains=data.sp_name) &
+                                           Q(rto_city__contains=reg) &
+                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                           Q(vehicle_model__contains=data.vehicle_model) &
+                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                           Q(mfg_year__contains=data.mfg_year) &
+                                           Q(addon__contains=data.addon) &
+                                           Q(ncb__contains=data.ncb) &
+                                           Q(cubic_capacity__contains=data.cubic_capacity) &
+                                           Q(seating_capacity__contains=data.seating_capacity) &
+                                           Q(coverage_type__contains=data.coverage_type) &
+                                           Q(case_type__contains=data.case_type) &
+                                           Q(policy_term__contains=data.policy_term) &
+                                           Q(cpa__contains=data.cpa)
+                                           )
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
+
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
+
+                print('payout data ', agent_od_reward)
+
+                data = Policy.objects.filter(policyid=id)
+
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
+
+        elif data.vehicle_catagory == 'BUS AND OTHERS':
+            try:
+                reg = data.registration_no[0:4]
+                cap = data.seating_capacity   
+                if cap < 5:
+                    cap = 'BELOW 5'
+                elif cap > 4 and cap < 8:
+                    cap = '5-7'
+                elif cap > 6 and cap < 13:
+                    cap = '7-12'
+                elif cap > 11 and cap < 19:
+                    cap = '12-18'
+                else:
+                    cap = 'ABOVE 18'
+                
+                print('cap ', cap)
+                data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
+                                           Q(sp_name__contains=data.sp_name) &
+                                           Q(rto_city__contains=reg) &
+                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                           Q(vehicle_model__contains=data.vehicle_model) &
+                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                           Q(mfg_year__contains=data.mfg_year) &
+                                           Q(addon__contains=data.addon) &
+                                           Q(ncb__contains=data.ncb) &
+                                           Q(seating_capacity__contains=cap) &
+                                           Q(case_type__contains=data.case_type) &
+                                           Q(policy_term__contains=data.policy_term) &
+                                           Q(cpa__contains=data.cpa)
+                                           )
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
+
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
+
+                print('payout data ', agent_od_reward)
+
+                data = Policy.objects.filter(policyid=id)
+
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
+
+        elif data.vehicle_catagory == 'MISC-D SPECIAL VEHICLE':
+            try:
+                reg = data.registration_no[0:4]
+                data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
+                                           Q(sp_name__contains=data.sp_name) &
+                                           Q(rto_city__contains=reg) &
+                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                           Q(vehicle_model__contains=data.vehicle_model) &
+                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                           Q(mfg_year__contains=data.mfg_year) &
+                                           Q(addon__contains=data.addon) &
+                                           Q(ncb__contains=data.ncb) &
+                                           Q(coverage_type__contains=data.coverage_type) &
+                                           Q(case_type__contains=data.case_type) &
+                                           Q(policy_term__contains=data.policy_term) &
+                                           Q(cpa__contains=data.cpa)
+                                           )
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
+
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
+
+                print('payout data ', agent_od_reward)
+
+                data = Policy.objects.filter(policyid=id)
+
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
+
+        elif data.vehicle_catagory == 'SCHOOL BUS-SCHOOL NAME':
+            try:
+                reg = data.registration_no[0:4]
+                data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
+                                           Q(sp_name__contains=data.sp_name) &
+                                           Q(rto_city__contains=reg) &
+                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                           Q(vehicle_model__contains=data.vehicle_model) &
+                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                           Q(mfg_year__contains=data.mfg_year) &
+                                           Q(addon__contains=data.addon) &
+                                           Q(ncb__contains=data.ncb) &
+                                           Q(coverage_type__contains=data.coverage_type) &
+                                           Q(case_type__contains=data.case_type) &
+                                           Q(policy_term__contains=data.policy_term) &
+                                           Q(cpa__contains=data.cpa)
+                                           )
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
+
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
+
+                print('payout data ', agent_od_reward)
+
+                data = Policy.objects.filter(policyid=id)
+
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
+
+        elif data.vehicle_catagory == 'SCHOOL BUS-INDIVIDUAL NAME':
+            try:
+                reg = data.registration_no[0:4]
+                data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
+                                           Q(sp_name__contains=data.sp_name) &
+                                           Q(rto_city__contains=reg) &
+                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
+                                           Q(vehicle_model__contains=data.vehicle_model) &
+                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
+                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
+                                           Q(mfg_year__contains=data.mfg_year) &
+                                           Q(addon__contains=data.addon) &
+                                           Q(ncb__contains=data.ncb) &
+                                           Q(coverage_type__contains=data.coverage_type) &
+                                           Q(case_type__contains=data.case_type) &
+                                           Q(policy_term__contains=data.policy_term) &
+                                           Q(cpa__contains=data.cpa)
+                                           )
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
+
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
+
+                print('payout data ', agent_od_reward)
+
+                data = Policy.objects.filter(policyid=id)
+
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
 
         pid = get_profile_id(get_id_from_session(request))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
