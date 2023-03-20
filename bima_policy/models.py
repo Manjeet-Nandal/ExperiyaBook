@@ -246,7 +246,9 @@ class Policy(models.Model):
     ).hex[:7].upper(), editable=False, max_length=7)
     profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
     proposal_no = models.CharField(max_length=50, unique=True)
-    policy_no = models.CharField(max_length=50, unique=True,  default=uuid.uuid4( ).hex[:7].upper(), editable=False)
+    policy_no = models.CharField(unique=True, default=uuid.uuid4(
+    ).hex[:8].upper(), editable=False, max_length=8)
+    # policy_no = models.CharField(max_length=50, unique=True,  default=uuid.uuid4( ).hex[:7].upper(), editable=False)
     customer_name = models.CharField(max_length=100)
     insurance_company = models.CharField(max_length=100)
     sp_name = models.CharField(max_length=100)

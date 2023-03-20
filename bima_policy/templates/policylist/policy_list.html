@@ -359,15 +359,17 @@
                                              <option value="ABOVE 18">ABOVE 18</option>
                                           </select>
                                        </div>
-                                      
+
                                        <div class="col-md-3 mb-4" id="seating_capacityDiv1" hidden>
                                           <label for="seating_capacity1">Seating Capacity <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text"
-                                                data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                                data-mask-as-number-maxlength="2" data-parsley-required="true"
-                                                data-parsley-required-message="" data-parsley-maxlength="2"
-                                                data-parsley-pattern="^[0-9]+$" name="seating_capacity1" id="seating_capacity1" maxlength="2" required
-                                                oninput="addSeatingCapacity()">
+                                             data-parsley-group="payout" value=""
+                                             class="form-control col-lg-6 maskNumField"
+                                             data-mask-as-number-maxlength="2" data-parsley-required="true"
+                                             data-parsley-required-message="" data-parsley-maxlength="2"
+                                             data-parsley-pattern="^[0-9]+$" name="seating_capacity1"
+                                             id="seating_capacity1" maxlength="2" required
+                                             oninput="addSeatingCapacity()">
                                        </div>
 
                                        <div class="col-md-3 mb-4" id="coverage_typeDiv">
@@ -583,7 +585,6 @@
                                     </div>
 
                                  </fieldset>
-
                                  <p class="mb-4"></p>
                               </div>
                               <!-- /.card-body -->
@@ -604,7 +605,7 @@
                                        data-mask-as-number-maxlength="10" data-parsley-required="true"
                                        data-parsley-required-message="" data-parsley-maxlength="10"
                                        data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
-                                 </div>                               
+                                 </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
                                           class="text-danger">*</abbr></label><input type="text"
@@ -620,7 +621,7 @@
                                        data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
                                        maxlength="10" readonly="" required>
                                  </div>
-                               
+
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title="Required"
                                           class="text-danger">*</abbr></label><input type="text"
@@ -656,7 +657,7 @@
                                        <option value="SELF CHEQUE">SELF CHEQUE</option>
                                     </select>
                                  </div>
-                                 
+
                               </div>
 
 
@@ -675,11 +676,11 @@
                                     agent_tp_reward = document.getElementById('agent_tp_reward').value
                                     agent_tp_amount = document.getElementById('agent_tp_amount')
                                     agent_tp_amount.value = tp * agent_tp_reward / 100
-                                   
+
                                  } catch (error) {
                                  }
                               }
-                            
+
                               function calculateSelfPayout() {
                                  try {
 
@@ -688,220 +689,19 @@
 
                                     self_od_reward_value = document.getElementById('self_od_reward').value
                                     self_tp_reward_value = document.getElementById('self_tp_reward').value
-                                    
-                                    document.getElementById('self_od_amount').value = od * self_od_reward_value /100                                    
-                                    document.getElementById('self_tp_amount').value = tpt * self_tp_reward_value /100                                    
-                                   
+
+                                    document.getElementById('self_od_amount').value = od * self_od_reward_value / 100
+                                    document.getElementById('self_tp_amount').value = tpt * self_tp_reward_value / 100
+
                                  } catch (error) {
                                  }
                               }
-                          
-                          </script>
+
+                           </script>
 
                         </div>
-                        {% comment %} <div id="payoutSection" class="card card-inverse bg-info">
-                           <div class="card-header p-2">
-                              <h4 class="card-title mb-1">Payouts
-                                 <button type="button" class="btn-payout-close btn"><i class="fa fa-times"></i></button>
-                              </h4>
-                           </div>
-                           <input type="hidden" value="43" readonly="" name="payout_id">
-                           <div class="card-body">
-                              <p>Agent Commision</p>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Rewards On <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <select data-parsley-required="true" name="ag_reward_on"
-                                    class="col-lg-6 ag-toggle-mannual custom-select" style="display:none">
-                                    <option value="-none-">-none-</option>
-                                    <option value="OD" selected="">OD</option>
-                                    <option value="NET">NET</option>
-                                 </select>
-                                 <p class="col-lg-6 ag-toggle-auto">OD</p>
-                              </div>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Rewards % <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <input type="text" id="ag_reward_pct" value="15" name="ag_reward_pct"
-                                    class="col-lg-6 form-control ag-toggle-mannual maskNumField"
-                                    data-parsley-required-message="" data-mask-as-number-decimals="2"
-                                    data-parsley-required="true" min="0" max="100" style="display:none">
-                                 <p class="col-lg-6 ag-toggle-auto">15</p>
-                              </div>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Commision <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <input type="text" value="" readonly="" data-parsley-required-message=""
-                                    data-parsley-required="true"
-                                    data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
-                                    class="form-control col-lg-6 maskNumField ag-toggle-mannual" name="ag_commision"
-                                    id="ag_commision" style="display:none">
-                                 <p class="col-lg-6 ag-toggle-auto">18518</p>
-                              </div>
-                              <div class="row mb-3">
-                                 <label class="col-lg-5">Calculation</label>
-                                 <div class="custom-control custom-control-inline custom-radio">
-                                    <input class="custom-control-input" value="Auto" checked="" id="ag_chkauto"
-                                       name="ag_calculation" type="radio">
-                                    <label class="custom-control-label" for="ag_chkauto">Auto</label>
-                                 </div>
-                                 <div class="custom-control custom-control-inline custom-radio">
-                                    <input class="custom-control-input" value="Mannual" id="ag_chkmannual"
-                                       name="ag_calculation" type="radio">
-                                    <label class="custom-control-label" for="ag_chkmannual">Mannual</label>
-                                 </div>
-                              </div>
-                              <p>Self Commision</p>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Rewards On <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <select data-parsley-required="true" name="sf_reward_on"
-                                    class="col-lg-6 sf-toggle-mannual custom-select" style="display:none">
-                                    <option value="-none-">-none-</option>
-                                    <option value="OD" selected="">OD</option>
-                                    <option value="NET">NET</option>
-                                 </select>
-                                 <p class="col-lg-6 sf-toggle-auto">OD</p>
-                              </div>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Rewards % <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <input type="text" id="sf_reward_pct" value="15" name="sf_reward_pct"
-                                    class="col-lg-6 form-control sf-toggle-mannual maskNumField"
-                                    data-parsley-required-message="" data-mask-as-number-decimals="2"
-                                    data-parsley-required="true" min="0" max="100" style="display:none">
-                                 <p class="col-lg-6 sf-toggle-auto">15</p>
-                              </div>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Commision <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <input type="text" readonly="" value="" data-parsley-required-message=""
-                                    data-parsley-required="true"
-                                    data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
-                                    class="form-control col-lg-6 maskNumField sf-toggle-mannual" name="sf_commision"
-                                    id="sf_commision" style="display:none">
-                                 <p class="col-lg-6 sf-toggle-auto">18518</p>
-                              </div>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Calculation</label>
-                                 <div class="custom-control custom-control-inline custom-radio">
-                                    <input class="custom-control-input" checked="" value="Auto" id="sf_chkauto"
-                                       name="sf_calculation" type="radio">
-                                    <label class="custom-control-label" for="sf_chkauto">Auto</label>
-                                 </div>
-                                 <div class="custom-control custom-control-inline custom-radio">
-                                    <input class="custom-control-input" value="Mannual" id="chkmannual"
-                                       name="sf_calculation" type="radio">
-                                    <label class="custom-control-label" for="chkmannual">Mannual</label>
-                                 </div>
-                              </div>
-                           </div>
-                        </div> {% endcomment %}
-                        <!-- /.card -->
-                     </div>
 
-                     <div class="col-lg-3 col-md-3 col-sm-12">
-
-                        {% comment %} <div id="payoutSection" class="card card-inverse bg-info">
-                           <div class="card-header p-2">
-                              <h4 class="card-title mb-1">Payouts
-                                 <button type="button" class="btn-payout-close btn"><i class="fa fa-times"></i></button>
-                              </h4>
-                           </div>
-                           <input type="hidden" value="43" readonly="" name="payout_id">
-                           <div class="card-body">
-                              <p>Agent Commision</p>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Rewards On <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <select data-parsley-required="true" name="ag_reward_on"
-                                    class="col-lg-6 ag-toggle-mannual custom-select" style="display:none">
-                                    <option value="-none-">-none-</option>
-                                    <option value="OD" selected="">OD</option>
-                                    <option value="NET">NET</option>
-                                 </select>
-                                 <p class="col-lg-6 ag-toggle-auto">OD</p>
-                              </div>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Rewards % <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <input type="text" id="ag_reward_pct" value="15" name="ag_reward_pct"
-                                    class="col-lg-6 form-control ag-toggle-mannual maskNumField"
-                                    data-parsley-required-message="" data-mask-as-number-decimals="2"
-                                    data-parsley-required="true" min="0" max="100" style="display:none">
-                                 <p class="col-lg-6 ag-toggle-auto">15</p>
-                              </div>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Commision <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <input type="text" value="" readonly="" data-parsley-required-message=""
-                                    data-parsley-required="true"
-                                    data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
-                                    class="form-control col-lg-6 maskNumField ag-toggle-mannual" name="ag_commision"
-                                    id="ag_commision" style="display:none">
-                                 <p class="col-lg-6 ag-toggle-auto">18518</p>
-                              </div>
-                              <div class="row mb-3">
-                                 <label class="col-lg-5">Calculation</label>
-                                 <div class="custom-control custom-control-inline custom-radio">
-                                    <input class="custom-control-input" value="Auto" checked="" id="ag_chkauto"
-                                       name="ag_calculation" type="radio">
-                                    <label class="custom-control-label" for="ag_chkauto">Auto</label>
-                                 </div>
-                                 <div class="custom-control custom-control-inline custom-radio">
-                                    <input class="custom-control-input" value="Mannual" id="ag_chkmannual"
-                                       name="ag_calculation" type="radio">
-                                    <label class="custom-control-label" for="ag_chkmannual">Mannual</label>
-                                 </div>
-                              </div>
-                              <p>Self Commision</p>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Rewards On <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <select data-parsley-required="true" name="sf_reward_on"
-                                    class="col-lg-6 sf-toggle-mannual custom-select" style="display:none">
-                                    <option value="-none-">-none-</option>
-                                    <option value="OD" selected="">OD</option>
-                                    <option value="NET">NET</option>
-                                 </select>
-                                 <p class="col-lg-6 sf-toggle-auto">OD</p>
-                              </div>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Rewards % <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <input type="text" id="sf_reward_pct" value="15" name="sf_reward_pct"
-                                    class="col-lg-6 form-control sf-toggle-mannual maskNumField"
-                                    data-parsley-required-message="" data-mask-as-number-decimals="2"
-                                    data-parsley-required="true" min="0" max="100" style="display:none">
-                                 <p class="col-lg-6 sf-toggle-auto">15</p>
-                              </div>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Commision <abbr title="Required"
-                                       class="text-danger">*</abbr></label>
-                                 <input type="text" readonly="" value="" data-parsley-required-message=""
-                                    data-parsley-required="true"
-                                    data-parsley-pattern="^(?:[A-Za-z0-9]+[- /])*[A-Za-z0-9]+$"
-                                    class="form-control col-lg-6 maskNumField sf-toggle-mannual" name="sf_commision"
-                                    id="sf_commision" style="display:none">
-                                 <p class="col-lg-6 sf-toggle-auto">18518</p>
-                              </div>
-                              <div class="row mb-2">
-                                 <label class="col-lg-5">Calculation</label>
-                                 <div class="custom-control custom-control-inline custom-radio">
-                                    <input class="custom-control-input" checked="" value="Auto" id="sf_chkauto"
-                                       name="sf_calculation" type="radio">
-                                    <label class="custom-control-label" for="sf_chkauto">Auto</label>
-                                 </div>
-                                 <div class="custom-control custom-control-inline custom-radio">
-                                    <input class="custom-control-input" value="Mannual" id="chkmannual"
-                                       name="sf_calculation" type="radio">
-                                    <label class="custom-control-label" for="chkmannual">Mannual</label>
-                                 </div>
-                              </div>
-                           </div>
-                        </div> {% endcomment %}
-                        <!-- /.card -->
-                     </div>
+                     </div>                  
                </div>
                <hr>
 
@@ -1624,6 +1424,11 @@
 
          // Cubic_ capacity options
          var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
          newoption.value = '75CC-150CC'
          newoption.innerHTML = '75CC-150CC'
          cubic_capacity.options.add(newoption);
@@ -1640,6 +1445,11 @@
 
          // Coverage type
          var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
          newoption.innerHTML = '1 YEAR PACKAGE'
          coverage_type.options.add(newoption);
@@ -1652,7 +1462,7 @@
          var newoption = document.createElement("option");
          newoption.value = '5 YEAR TP'
          newoption.innerHTML = '5 YEAR TP'
-         coverage_type.options.add(newoption);         
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = 'TP ONLY'
@@ -1684,6 +1494,11 @@
 
          // Cubic_ capacity options
          var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
          newoption.value = 'BELOW 1000CC'
          newoption.innerHTML = 'BELOW 1000CC'
          cubic_capacity.options.add(newoption);
@@ -1703,6 +1518,11 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
          newoption.innerHTML = '1 YEAR PACKAGE'
          coverage_type.options.add(newoption);
@@ -1715,7 +1535,7 @@
          var newoption = document.createElement("option");
          newoption.value = '3 YEAR TP'
          newoption.innerHTML = '3 YEAR TP'
-         coverage_type.options.add(newoption);         
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = 'TP ONLY'
@@ -1743,6 +1563,11 @@
 
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
@@ -1774,6 +1599,11 @@
 
          // Coverage type        
          var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
          newoption.innerHTML = '1 YEAR PACKAGE'
          coverage_type.options.add(newoption);
@@ -1800,6 +1630,11 @@
 
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
@@ -1831,6 +1666,11 @@
 
          // Cubic_ capacity options
          var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
          newoption.value = 'BELOW 1000CC'
          newoption.innerHTML = 'BELOW 1000CC'
          cubic_capacity.options.add(newoption);
@@ -1850,6 +1690,11 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
          newoption.innerHTML = '1 YEAR PACKAGE'
          coverage_type.options.add(newoption);
@@ -1862,7 +1707,7 @@
          var newoption = document.createElement("option");
          newoption.value = '3 YEAR TP'
          newoption.innerHTML = '3 YEAR TP'
-         coverage_type.options.add(newoption);        
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = 'TP ONLY'
@@ -1891,14 +1736,13 @@
          document.getElementById('gstt').required = false
          document.getElementById('gstt').value = 0
 
-
          document.getElementById('seating_capacityDiv1').hidden = false
 
       }
 
       else if (value == 'MISC-D SPECIAL VEHICLE') {
          document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('cubic_capacity').required = false        
+         document.getElementById('cubic_capacity').required = false
          document.getElementById('seating_capacityDiv').hidden = true
          document.getElementById('seating_capacity').required = false
          document.getElementById('seating_capacityDiv1').hidden = true
@@ -1918,6 +1762,11 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
          newoption.innerHTML = '1 YEAR PACKAGE'
          coverage_type.options.add(newoption);
@@ -1930,7 +1779,7 @@
          var newoption = document.createElement("option");
          newoption.value = '3 YEAR TP'
          newoption.innerHTML = '3 YEAR TP'
-         coverage_type.options.add(newoption);         
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = 'TP ONLY'
@@ -1947,7 +1796,7 @@
       else if (value == 'SCHOOL BUS-SCHOOL NAME') {
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
-         
+
          document.getElementById('seating_capacityDiv').hidden = true
          document.getElementById('seating_capacity').required = false
          document.getElementById('seating_capacityDiv1').hidden = true
@@ -1958,12 +1807,17 @@
          document.getElementById('gstt').required = false
          document.getElementById('gstt').value = 0
 
-        
+
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('coverage_type').required = true
-          // Coverage Type
-          coverage_type = document.getElementById('coverage_type')
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
@@ -1978,7 +1832,7 @@
          var newoption = document.createElement("option");
          newoption.value = '3 YEAR TP'
          newoption.innerHTML = '3 YEAR TP'
-         coverage_type.options.add(newoption);         
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = 'TP ONLY'
@@ -2008,9 +1862,14 @@
 
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('coverage_type').required = true
-          // Coverage Type
-          coverage_type = document.getElementById('coverage_type')
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
@@ -2025,7 +1884,7 @@
          var newoption = document.createElement("option");
          newoption.value = '3 YEAR TP'
          newoption.innerHTML = '3 YEAR TP'
-         coverage_type.options.add(newoption);         
+         coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
          newoption.value = 'TP ONLY'
@@ -2045,7 +1904,7 @@
          var seating_capacity1 = document.getElementById('seating_capacity1')
          var value = document.getElementById('seating_capacity1').value
 
-         if (value) { 
+         if (value) {
             // seating capacity
             var newoption = document.createElement("option");
             newoption.value = value

@@ -55,13 +55,72 @@
                            <div class="card">
                               <!-- .card -->
                               <div class="card-body">
-                                 <!-- .card-body -->
-                                 <!-- .content -->
-
                                  <fieldset>
-                                    <!-- fieldset -->
-                                    <legend>Policy Details </legend>
+                                    <legend>Policy Details</legend>
+
                                     <div class="form-row">
+
+                                       {% if is_motor_form %}
+                                       <div class="col-md-3 mb-4">
+                                          <label>Vehicle Catagory <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="vehicle_catagory" data-parsley-required-message=""
+                                             id="vehicle_catagory" data-parsley-required="true" class="custom-select "
+                                             required onchange="setCategoryOnChange()">
+                                             <option value="{{data.vehicle_catagory}}"> {{data.vehicle_catagory}}
+                                             </option>
+                                             <option value="TWO WHEELER">TWO WHEELER</option>
+                                             <option value="PRIVATE CAR">PRIVATE CAR</option>
+                                             <option value="GCV-PUBLIC CARRIER OTHER THAN 3 W">GCV-PUBLIC CARRIER OTHER
+                                                THAN 3 W</option>
+                                             <option value="3 WHEELER PCV">3 WHEELER PCV</option>
+                                             <option value="3 WHEELER GCV-PUBLIC CARRIER">3 WHEELER GCV-PUBLIC CARRIER
+                                             </option>
+                                             <option value="TAXI 4 WHEELER">TAXI 4 WHEELER</option>
+                                             <option value="BUS AND OTHERS">BUS AND OTHERS</option>
+                                             <option value="MISC-D SPECIAL VEHICLE">MISC-D SPECIAL VEHICLE</option>
+                                             <option value="SCHOOL BUS-SCHOOL NAME">SCHOOL BUS-SCHOOL NAME</option>
+                                             <option value="SCHOOL BUS-INDIVIDUAL NAME">SCHOOL BUS-INDIVIDUAL NAME
+                                             </option>
+
+                                             <!-- {%for value in data_vc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%} -->
+                                          </select>
+                                       </div>
+                                       {% else %}
+                                       <div class="col-md-3 mb-4">
+                                          <label>Product Type <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="vehicle_catagory" data-parsley-required-message=""
+                                             id="vehicle_catagory" data-parsley-required="true" class="custom-select "
+                                             required onchange="setCategoryOnChange()">
+                                             <option value="{{data.product_name}}"> {{data.product_name}} </option>
+                                             <option value="FIRE">FIRE</option>
+                                             <option value="MARINE CARGO">MARINE CARGO</option>
+                                             <option value="MARINE HULL">MARINE HULL</option>
+                                             <option value="ENGINEERING">ENGINEERING</option>
+                                             <option value="MISCELLANEOUS">MISCELLANEOUS</option>
+
+                                             <!-- {%for value in data_vc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%} -->
+                                          </select>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
+                                          <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="case_type" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required>
+                                             <option value="{{data.case_type}}">{{data.case_type}}</option>
+                                             <option value="FRESH">FRESH</option>
+                                             <option value="RENEWAL">RENEWAL</option>
+                                             <option value="ROLLOVER">ROLLOVER</option>
+                                             <option value="ENDORSEMENT">ENDORSEMENT</option>
+                                          </select>
+                                       </div>
+                                       {% endif %}
+
                                        <div class="col-md-3 mb-4">
                                           <label for="proposal_no">Proposal No. <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text"
@@ -71,14 +130,7 @@
                                              name="proposal_no" id="proposal_no" style="text-transform: uppercase;"
                                              required>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label for="policy_no">Policy No. <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.policy_no}}" data-parsley-required-message=""
-                                             class="form-control" data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$" name="policy_no"
-                                             id="policy_no" style="text-transform: uppercase;" required>
-                                       </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label for="customer_name">Insured Name <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text"
@@ -98,43 +150,29 @@
                                              {%endfor%}
                                           </select>
                                        </div>
+
+                                       {% if is_motor_form %}
+                                       {% else %}
                                        <div class="col-md-3 mb-4">
-                                          <label>Service Provider<abbr title="Required"
+                                          <label for="customer_name">Sum Insured <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             data-parsley-required-message="" class="form-control"
+                                             data-parsley-required="true" name="customer_name"
+                                             style="text-transform: uppercase;" required>
+                                       </div>
+                                       {% endif %}
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Serving Office <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select name="sp_name" data-parsley-required-message="" class="custom-select"
                                              id="sp_name" data-parsley-required="true" required>
                                              <option value="{{data.sp_name}}"> {{data.sp_name}} </option>
-                                             {%for value in data_sp%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Broker Code<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="sp_brokercode" data-parsley-required-message=""
-                                             class="custom-select" id="sp_brokercode" data-parsley-required="true"
-                                             required>
-                                             <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}} </option>
-                                             {%for value in data_bc%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}
-                                          </select>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Product Name<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="product_name" data-parsley-required-message=""
-                                             class="custom-select" id="product_name" data-parsley-required="true"
-                                             required>
-                                             <option value="{{data.product_name}}"> {{data.product_name}} </option>
-                                             <option value="MOTOR">MOTOR</option>
-                                             <option value="FIRE">FIRE</option>
-                                             <option value="MARINE">MARINE</option>
-                                             <option value="BURGULARY">BURGULARY</option>
-                                             <option value="SHOPKEEPER">SHOPKEEPER</option>
-                                             <option value="ENGINEERING">ENGINEERING</option>
-                                             <option value="WC">WC</option>
-                                             <option value="OTHERS">OTHERS</option>
+                                             <option value="DELHI">Delhi</option>
+                                             <option value="ROHTAK">Rohtak</option>
+                                             <option value="CHANDIGARH">Chandigarh</option>
+                                             <option value="GURGAON">Gurgaon</option>
+                                             <option value="LUCKHNOW">Luckhnow</option>
                                           </select>
                                        </div>
 
@@ -151,19 +189,14 @@
                                                 data-parsley-required="true" data-parsley-minlength="8"
                                                 data-parsley-maxlength="14"
                                                 data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$"
-                                                id="registration_no" name="registration_no" maxlength="14" required>
+                                                id="registration_no" name="registration_no" maxlength="14" required
+                                                style="text-transform: uppercase;">
                                              <div class="input-group-append">
                                                 <span class="input-group-text" id="demo" placeholder="xxxx"></span>
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label for="rto_city">RTO City <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.rto_city}}" data-parsley-required-message=""
-                                             class="form-control" data-parsley-required="true" name="rto_city"
-                                             style="text-transform: uppercase;" required>
-                                       </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label>RTO State<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="rto_state" data-parsley-required-message=""
@@ -211,7 +244,15 @@
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label>Vehicle Make By <abbr title="Required"
+                                          <label for="rto_city">RTO City <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.rto_city}}" data-parsley-required-message=""
+                                             class="form-control" data-parsley-required="true" name="rto_city"
+                                             style="text-transform: uppercase;" required>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label> Vehicle Make By <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select name="vehicle_makeby" data-parsley-required-message=""
                                              data-parsley-required="true" class="custom-select" required>
@@ -232,18 +273,7 @@
                                              {%endfor%}
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Vehicle Catagory <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="vehicle_catagory" data-parsley-required-message=""
-                                             data-parsley-required="true" class="custom-select " required>
-                                             <option value="{{data.vehicle_catagory}}">{{data.vehicle_catagory}}
-                                             </option>
-                                             {%for value in data_vc%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}
-                                          </select>
-                                       </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
@@ -263,10 +293,10 @@
                                           <select name="mfg_year" data-parsley-required-message=""
                                              data-parsley-required="true" class="custom-select" required>
                                              <option value="{{data.mfg_year}}">{{data.mfg_year}}</option>
-                                             <option value="2021">2025</option>
-                                             <option value="2021">2024</option>
-                                             <option value="2021">2023</option>
-                                             <option value="2021">2022</option>
+                                             <option value="2025">2025</option>
+                                             <option value="2024">2024</option>
+                                             <option value="2023">2023</option>
+                                             <option value="2022">2022</option>
                                              <option value="2021">2021</option>
                                              <option value="2020">2020</option>
                                              <option value="2019">2019</option>
@@ -309,23 +339,21 @@
                                           </select>
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <div class="col-md-3 mb-4" id="cubic_capacityDiv">
                                           <label>Cubic Capacity<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select name="cubic_capacity" data-parsley-required-message=""
                                              class="custom-select" id="cubic_capacity" data-parsley-required="true"
                                              required>
-                                             <option value="{{data.cubic_capacity}}">{{data.cubic_capacity}}</option>
-                                             <option value="BELOW 1000">BELOW 1000</option>
-                                             <option value="1000-1500">1000-1500</option>
-                                             <option value="ABOVE 1500">ABOVE 1500</option>
+                                             <option value="{{data.cubic_capacity}}"> {{data.cubic_capacity}} </option>
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4">
+
+                                       <div class="col-md-3 mb-4" id="gvwDiv">
                                           <label>GVW<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="gvw" data-parsley-required-message="" class="custom-select"
                                              id="gvw" data-parsley-required="true" required>
-                                             <option value="{{data.gvw}}">{{data.gvw}} </option>
+                                             <option value="{{data.gvw}}"> {{data.gvw}} </option>
                                              <option value="BELOW 2000">BELOW 2000</option>
                                              <option value="2000-2500">2000-2500</option>
                                              <option value="2500-3500">2500-3500</option>
@@ -337,10 +365,11 @@
                                              <option value="ABOVE 40000">ABOVE 40000</option>
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4">
+
+                                       <div class="col-md-3 mb-4" id="seating_capacityDiv">
                                           <label>Seating Capacity<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select name="seating_capacity" data-parsley-required-message=""
+                                          <select name="seating_capacity" data-parsley-required-message="" type="input"
                                              class="custom-select" id="seating_capacity" data-parsley-required="true"
                                              required>
                                              <option value="{{data.seating_capacity}}"> {{data.seating_capacity}}
@@ -352,24 +381,31 @@
                                              <option value="ABOVE 18">ABOVE 18</option>
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Coverage Type <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="coverage_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.coverage_type}}">{{data.coverage_type}}</option>
-                                             <option value="1+2 PVT CAR">1+2 PVT CAR</option>
-                                             <option value="1+4 TWO WHEELER">1+4 TWO WHEELER</option>
-                                             <option value="TP ONLY">TP ONLY</option>
-                                             <option value="OD ONLY">OD ONLY</option>
-                                             <option value="STANDARD POLICY">STANDARD POLICY</option>
-                                             <option value="COMPREHENSIVE PACKAGE POLICY">COMPREHENSIVE PACKAGE POLICY
-                                             </option>
-                                             <option value="OTHERS">OTHERS</option>
-                                          </select>
+
+                                       <div class="col-md-3 mb-4" id="seating_capacityDiv1" hidden>
+                                          <label for="seating_capacity1">Seating Capacity <abbr title="Required"
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             data-parsley-group="payout" value="{{data.seating_capacity}}"
+                                             class="form-control col-lg-6 maskNumField"
+                                             data-mask-as-number-maxlength="2" data-parsley-required="true"
+                                             data-parsley-required-message="" data-parsley-maxlength="2"
+                                             data-parsley-pattern="^[0-9]+$" name="seating_capacity1"
+                                             id="seating_capacity1" maxlength="2" required
+                                             oninput="addSeatingCapacity()">
                                        </div>
 
-                                       {% endif %}
+                                       <div class="col-md-3 mb-4" id="coverage_typeDiv">
+                                          <label>Coverage Type <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select name="coverage_type" data-parsley-required="true" id="coverage_type"
+                                             data-parsley-required-message="" class="custom-select" required>
+                                             <option value="{{data.coverage_type}}">{{data.coverage_type}}</option>
+                                             <option value="NA"> NA </option>
+                                             <!-- {% for value in data_ct%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {% endfor%} -->
+                                          </select>
+                                       </div>
 
                                        <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
@@ -382,7 +418,11 @@
                                              <option value="ENDORSEMENT">ENDORSEMENT</option>
                                           </select>
                                        </div>
+
+                                       {% endif %}
+
                                        {% if is_motor_form %}
+
                                        <div class="col-md-3 mb-4">
                                           <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="cpa" data-parsley-required="true"
@@ -393,6 +433,7 @@
                                           </select>
                                        </div>
                                        {% endif %}
+
                                        <!-- <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk Start Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
@@ -401,8 +442,8 @@
                                              data-alt-input="true" data-alt-format="F j, Y"
                                              data-alt-input-class="form-control" data-date-format="Y-m-d">
                                              <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="{{data.risk_start_date}}"
-                                                name="risk_start_date" required data-input="">
+                                                placeholder="Choose date..." value="" name="risk_start_date" required
+                                                data-input="">
                                           </div>
                                        </div> -->
                                        <!-- <div class="col-md-3 mb-4">
@@ -413,8 +454,8 @@
                                              data-alt-input="true" data-alt-format="F j, Y"
                                              data-alt-input-class="form-control" data-date-format="Y-m-d">
                                              <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="{{data.risk_end_date}}"
-                                                name="risk_end_date" required data-input="">
+                                                placeholder="Choose date..." value="" name="risk_end_date" required
+                                                data-input="">
                                           </div>
                                        </div> -->
                                        <!-- <div class="col-md-3 mb-4">
@@ -425,11 +466,11 @@
                                              data-default-date="" ata-alt-format="F j, Y"
                                              data-alt-input-class="form-control" data-date-format="Y-m-d">
                                              <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="{{data.issue_date}}"
-                                                name="issue_date" required data-input="">
+                                                placeholder="Choose date..." value="" name="issue_date" required
+                                                data-input="">
                                           </div>
                                        </div> -->
-
+                                       {% if is_motor_form %}
                                        <div class="col-md-3 mb-4">
                                           <label for="insured_age">Insured Age <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="number"
@@ -437,16 +478,26 @@
                                              class="form-control" data-parsley-required="true" name="insured_age"
                                              required>
                                        </div>
+                                       {% endif %}
+
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="policy_term" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required>
                                              <option value="{{data.policy_term}}">{{data.policy_term}}</option>
+
+                                             {% if is_motor_form %}
+
                                              <option value="1">1</option>
                                              <option value="2">2</option>
                                              <option value="3">3</option>
                                              <option value="4">4</option>
                                              <option value="5">5</option>
+                                             {% else %}
+                                             <option value="1">1</option>
+                                             <option value="5">5</option>
+                                             <option value="10">10</option>
+                                             {% endif %}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -466,7 +517,7 @@
                                              data-parsley-required="true" name="pos" style="text-transform: uppercase;"
                                              required>
                                        </div>
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title="Required"
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.employee}}" data-parsley-required-message=""
@@ -511,6 +562,7 @@
                                              </div>
                                           </div>
                                        </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label>Previous Policy <small> (Accept Only<strong> PDF </strong>File)</small>
                                              <abbr title="Required" class="text-danger">*</abbr> </label>
@@ -535,6 +587,8 @@
                                              </div>
                                           </div>
                                        </div>
+
+
                                        <div class="col-md-3 mb-4">
                                           <label>Aadhar Card <small> (Accept Only<strong> PDF </strong>File)</small>
                                              <abbr title="Required" class="text-danger">*</abbr> </label>
@@ -547,6 +601,8 @@
                                              </div>
                                           </div>
                                        </div>
+                                       {% if is_motor_form %}
+
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle RC <small> (Accept Only<strong> PDF </strong>File)</small>
                                              <abbr title="Required" class="text-danger">*</abbr> </label>
@@ -559,6 +615,8 @@
                                              </div>
                                           </div>
                                        </div>
+                                       {% endif %}
+
                                        <div class="col-md-3 mb-4">
                                           <label>Inspection Report PDF <small> (Accept Only<strong> PDF
                                                 </strong>File)</small> <abbr title="Required"
@@ -575,20 +633,7 @@
 
                                     </div>
 
-                                    <div class="form-row">
-                                       <div class="col-md-12 col-sm-12">
-                                          <a href="list" class="btn btn-secondary w-100p pull-left">Back</a>
-                                          <span class="float-right">
-                                             <button type="submit" name="submit"
-                                                class="btn btn-success w-100p">Edit</button>
-                                          </span>
-                                       </div>
-                                    </div>
-
                                  </fieldset>
-
-
-
                                  <p class="mb-4"></p>
                               </div>
                               <!-- /.card-body -->
@@ -601,7 +646,7 @@
                               <!-- .card -->
                               <div class="card-body">
                                  <!-- .card-body -->
-                                 <h4 class="card-title mb-3"> Payout Details </h4>
+                                 <h4 class="card-title mb-3"> Premium Details </h4>
                                  <!-- grid row -->
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
@@ -612,7 +657,7 @@
                                        data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="od" id="od"
                                        maxlength="10" required>
                                  </div>
-                                 
+
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
                                           class="text-danger">*</abbr></label><input type="text"
@@ -639,7 +684,7 @@
                                        data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="gst" id="gst"
                                        maxlength="10" required>
                                  </div>
-                                 <div class="row mb-2"  id="gsttDiv" hidden>
+                                 <div class="row mb-2" id="gsttDiv" hidden>
                                     <label class="col-lg-5" for="gst">GST 12%<abbr title="Required"
                                           class="text-danger">*</abbr></label><input type="text"
                                        data-parsley-group="payout" value="{{data.gst_gcv_amount}}"
@@ -769,6 +814,26 @@
                      </div>
                      <hr>
 
+                     <div class="form-row">
+                        <div class="col-md-12 col-sm-12">
+                           <div id="payoutSection" class="card card-inverse bg-info">
+                              <!-- .card -->
+                              <div class="card-header p-2">
+                                 <h4 class="card-title mb-1">Payouts</h4>
+                              </div>
+                              <div class="card-body">
+                                 <p><span class="icofont icofont-hand-right ml-1"></span> The Payout will be shown as
+                                    per the Policy Details</p>
+                                 <p><span class="icofont icofont-hand-right ml-1"></span> You can add manual Payout
+                                    after the Policy saved</p>
+                                 <div class="text-center">
+                                    <button type="submit" name="submit" class="btn btn-success w-100p">Save</button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
                   </form>
                   <!-- /form -->
                </div>
@@ -781,36 +846,8 @@
       <!-- /.page -->
    </div>
    <!-- /.wrapper -->
-   <div class="modal fade" id="mdlpayout" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
-      aria-labelledby="PayoutModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 id="PayoutModalLabel" class="modal-title"> Payouts</h5>
-            </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
-               <button type="submit" name="applypayout" class="btn btn-primary w-100p" disabled="">Apply</button>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div class="modal modal-alert fade" id="mdlalready" data-backdrop="static" data-keyboard="false" tabindex="-1"
-      role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title"> Attention</h5>
-            </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-               <a href="../ins" class="btn btn-secondary w-100p">No</a>
-               <button type="submit" class="btn btn-primary w-100p" data-dismiss="modal">Yes</button>
-            </div>
-         </div>
-      </div>
-   </div>
+  
+  
 </main>
 <!-- /.app-main -->
 <div class="aside-backdrop"></div>
@@ -1200,7 +1237,538 @@
       </div>
    </div>
 </div>
+
+<script>
+
+   function setCategoryOnChange() {
+      value = document.getElementById('vehicle_catagory').value
+
+      coverage_typeDiv = document.getElementById('coverage_typeDiv')
+      cubic_capacityDiv = document.getElementById('cubic_capacityDiv')
+      seating_capacityDiv = document.getElementById('seating_capacityDiv')
+      gvwDiv = document.getElementById('gvwDiv')
+      gsttDiv = document.getElementById('gsttDiv')
+
+      if (value == 'TWO WHEELER') {
+         document.getElementById('coverage_typeDiv').hidden = false
+
+         document.getElementById('cubic_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '75CC-150CC'
+         newoption.innerHTML = '75CC-150CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '150CC-350CC'
+         newoption.innerHTML = '150CC-350CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 350CC'
+         newoption.innerHTML = 'ABOVE 350CC'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage type
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+4 YEAR PACKAGE'
+         newoption.innerHTML = '1+4 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '5 YEAR TP'
+         newoption.innerHTML = '5 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+
+      }
+
+      else if (value == 'PRIVATE CAR') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'BELOW 1000CC'
+         newoption.innerHTML = 'BELOW 1000CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1000CC-1500CC'
+         newoption.innerHTML = '1000CC-1500CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 1500CC'
+         newoption.innerHTML = 'ABOVE 1500CC'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+         document.getElementById('gvwDiv').hidden = false
+         document.getElementById('gvw').required = true
+         document.getElementById('gsttDiv').hidden = false
+         document.getElementById('gstt').required = true
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == '3 WHEELER PCV') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+
+         coverage_type.innerHTML = ''
+
+         // Coverage type        
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == '3 WHEELER GCV-PUBLIC CARRIER') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+
+         document.getElementById('gvwDiv').hidden = false
+         document.getElementById('gvw').required = true
+         document.getElementById('gsttDiv').hidden = false
+         document.getElementById('gstt').required = true
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP Only'
+         newoption.innerHTML = 'TP Only'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'TAXI 4 WHEELER') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'BELOW 1000CC'
+         newoption.innerHTML = 'BELOW 1000CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1000CC-1500CC'
+         newoption.innerHTML = '1000CC-1500CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 1500CC'
+         newoption.innerHTML = 'ABOVE 1500CC'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'BUS AND OTHERS') {
+         document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('coverage_type').required = false
+
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
+
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+         document.getElementById('seating_capacityDiv1').hidden = false
+
+      }
+
+      else if (value == 'MISC-D SPECIAL VEHICLE') {
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
+
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+
+      }
+
+      else if (value == 'SCHOOL BUS-SCHOOL NAME') {
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+      }
+      else if (value == 'SCHOOL BUS-INDIVIDUAL NAME') {
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('coverage_type').required = false
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+   }
+
+   function addSeatingCapacity() {
+      try {
+         var seating_capacity1 = document.getElementById('seating_capacity1')
+         var value = document.getElementById('seating_capacity1').value
+
+         if (value) {
+            // seating capacity
+            var newoption = document.createElement("option");
+            newoption.value = value
+            newoption.innerHTML = value
+            document.getElementById('seating_capacity').innerHTML = ''
+            document.getElementById('seating_capacity').options.add(newoption);
+         }
+      } catch (error) {
+
+      }
+   }
+
+
+</script>
+
+<body>
+
 </body>
+
 
 </html>
 {%endblock%}
