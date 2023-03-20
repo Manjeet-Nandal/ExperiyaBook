@@ -1165,8 +1165,9 @@
          document.getElementById("gstt").value = tpt * 12 / 100;
       }
       else {
-         document.getElementById("net").value = od + tpt;;
+         document.getElementById("net").value = od + tpt;
          document.getElementById("gst").value = (od + tpt) * 18 / 100;
+
       }
    }
 
@@ -1196,9 +1197,7 @@
       gsttDiv = document.getElementById('gsttDiv')
 
       if (value == 'TWO WHEELER') {
-         document.getElementById('coverage_typeDiv').hidden = false
-         // document.getElementById('coverage_typeDiv').removeChild()
-
+         document.getElementById('coverage_typeDiv').hidden = false      
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv1').hidden = true
@@ -1208,8 +1207,8 @@
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
          document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
-         document.getElementById('gstt').value = 0
+         document.getElementById('gstt').required = false    
+         document.getElementById('gstt').value = 0    
 
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
@@ -1273,6 +1272,7 @@
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
 
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
