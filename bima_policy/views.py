@@ -502,9 +502,9 @@ class create_policy(View):
         employee = request.POST['employee']
         OD_premium = request.POST['od']
         TP_terrorism = request.POST['tpt']
-        net = request.POST['net']      
-        gst_amount = request.POST['gst']        
-        gst_gcv_amount = request.POST['gstt']            
+        net = request.POST['net']
+        gst_amount = request.POST['gst']
+        gst_gcv_amount = request.POST['gstt']
         total = request.POST['total']
         payment_mode = request.POST['payment_mode']
         proposal = request.FILES.get('proposal')
@@ -539,7 +539,7 @@ class create_policy(View):
             fsvc.save(vehicle_rc.name, vehicle_rc)
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
-    
+
         if vehicle_catagory == 'TWO WHEELER':
             try:
                 reg = registration_no[0:4]
@@ -786,11 +786,11 @@ class create_policy(View):
                                     addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type, cpa=cpa,
                                     risk_start_date=risk_start_date,
                                     risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                                    employee=employee, proposal=proposal, mandate=mandate, 
-                                    OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, gst_gcv_amount= gst_gcv_amount,  total=total,
+                                    employee=employee, proposal=proposal, mandate=mandate,
+                                    OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, gst_gcv_amount=gst_gcv_amount,  total=total,
                                     policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
                                     )
-    
+
         return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': pol.policyid})
 
 
@@ -917,7 +917,7 @@ def apply_policy(request, id):
         print('apply_policy')
 
         data = Policy.objects.get(policyid=id)
-      
+
         if data.vehicle_catagory == 'TWO WHEELER':
             try:
                 reg = data.registration_no[0:4]
@@ -1246,7 +1246,7 @@ def apply_policy(request, id):
                 reg = data.registration_no[0:4]
                 cap = int(data.seating_capacity)
                 print('cap ', cap)
-              
+
                 if cap < 5:
                     cap = 'BELOW 5'
                 elif cap > 4 and cap < 8:
@@ -1257,7 +1257,7 @@ def apply_policy(request, id):
                     cap = '12-18'
                 else:
                     cap = 'ABOVE 18'
-                
+
                 print('cap ', cap)
                 data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
                                            Q(sp_name__contains=data.sp_name) &

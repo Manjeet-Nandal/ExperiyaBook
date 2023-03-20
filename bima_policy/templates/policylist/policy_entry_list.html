@@ -225,7 +225,6 @@
                                              <th class="sorting">Insured Name</th>
                                              <th class="sorting">Insurer Name</th>
                                              <th class="sorting">Service Provider</th>
-                                             <th class="sorting">Broker Code</th>
                                              <th class="sorting">Product Name</th>
                                              <th class="sorting">Registration No.</th>
                                              <th class="sorting">RTO City</th>
@@ -252,10 +251,10 @@
                                              <th class="sorting">POS</th>
                                              <th class="sorting">Employee</th>
                                              <th class="sorting">OD Premium</th>
-                                             <th class="sorting">TP Premium</th>
                                              <th class="sorting">TP / Terrorism</th>
                                              <th class="sorting">NET Premium</th>
-                                             <th class="sorting">GST</th>
+                                             <th class="sorting">GST 18%</th>
+                                             <th class="sorting">GST 12%</th>
                                              <th class="sorting">Total</th>
                                              <th class="sorting">Agent OD Reward %</th>
                                              <th class="sorting">Agent OD Amount</th>
@@ -295,7 +294,6 @@
                                              <td>{{value.customer_name}}</td>
                                              <td>{{value.insurance_company}}</td>
                                              <td>{{value.sp_name}}</td>
-                                             <td>{{value.sp_brokercode}}</td>
                                              <td>{{value.product_name}}</td>
                                              <td>{{value.registration_no}}</td>
                                              <td>{{value.rto_city}}</td>
@@ -303,7 +301,7 @@
                                              <td>{{value.vehicle_makeby}}</td>
                                              <td>{{value.vehicle_model}}</td>
                                              <td>{{value.vehicle_catagory}}</td>
-                                             <td>{{value.vehicle_fuel_type}}</td>                                            
+                                             <td>{{value.vehicle_fuel_type}}</td>                                           
                                             
                                              {% if value.mfg_year%}
                                              <td>{{value.mfg_year}}</td>
@@ -333,13 +331,7 @@
                                              {% else %}
                                              <td></td>
                                              {% endif %}
-
-                                             {% if value.TP_premium%}
-                                             <td>{{value.TP_premium}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
+                                                                                          
                                              {% if value.TP_terrorism%}
                                              <td>{{value.TP_terrorism}}</td>
                                              {% else %}
@@ -352,8 +344,14 @@
                                              <td></td>
                                              {% endif %}
                                              
-                                             {% if value.GST%}
-                                             <td>{{value.GST}}</td>
+                                             {% if value.gst_amount%}
+                                             <td>{{value.gst_amount}}</td>
+                                             {% else %}
+                                             <td></td>
+                                             {% endif %}
+                                             
+                                             {% if value.gst_gcv_amount%}
+                                             <td>{{value.gst_gcv_amount}}</td>
                                              {% else %}
                                              <td></td>
                                              {% endif %}
