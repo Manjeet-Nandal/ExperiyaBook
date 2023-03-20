@@ -643,7 +643,7 @@
                                  <!-- grid row -->
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
+                                          class="text-danger">*</abbr></label><input type="text"  oninput="calculateValue()"
                                        data-parsley-group="payout" value="{{data.OD_premium}}"
                                        class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
                                        data-parsley-required="true" data-parsley-required-message=""
@@ -653,7 +653,7 @@
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
+                                          class="text-danger">*</abbr></label><input type="text"  oninput="calculateValue()"
                                        data-parsley-group="payout" value="{{data.TP_terrorism}}"
                                        class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
                                        data-parsley-required="true" data-parsley-required-message=""
@@ -663,7 +663,7 @@
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Net Premium</label><input type="text" name="net"
-                                       onclick="add()" value="{{data.net}}"
+                                       onclick="add()" value="{{data.net}}"  oninput="calculateValue()"
                                        class="form-control col-lg-6 maskNumField bg-light"
                                        data-mask-as-number-maxlength="10" data-parsley-required-message=""
                                        data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
@@ -671,7 +671,7 @@
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
+                                          class="text-danger">*</abbr></label><input type="text"  oninput="calculateValue()"
                                        data-parsley-group="payout" value="{{data.gst_amount}}"
                                        class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
                                        data-parsley-required="true" data-parsley-required-message=""
@@ -680,7 +680,7 @@
                                  </div>
                                  <div class="row mb-2" id="gsttDiv" hidden>
                                     <label class="col-lg-5" for="gst">GST 12%<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
+                                          class="text-danger">*</abbr></label><input type="text"  oninput="calculateValue()"
                                        data-parsley-group="payout" value="{{data.gst_gcv_amount}}"
                                        class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
                                        data-parsley-required="true" data-parsley-required-message=""
@@ -689,7 +689,7 @@
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="{{data.total}}"
+                                       onclick="addgst()" value="{{data.total}}"  oninput="calculateValue()"
                                        class="form-control maskNumField col-lg-6 bg-light"
                                        data-mask-as-number-maxlength="10" data-parsley-required-message=""
                                        data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="totalnet"
@@ -909,6 +909,15 @@
       var x = document.getElementById("registration_no").value;
       document.getElementById("demo").innerHTML = x.slice(0, 4);
    }
+   
+   function calculateValue() {
+      try {
+         add()
+         addgst()
+      } catch (error) {
+
+      }
+   }
 
    function add() {
 
@@ -946,7 +955,6 @@
       }
 
    }
-
 
    function setCategoryOnChange() {
       value = document.getElementById('vehicle_catagory').value
