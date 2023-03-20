@@ -1504,13 +1504,14 @@ def policy_entrydata(request, id):
     if request.method == "POST":
         print('policy_entrydata post')
         proposal_no = request.POST['proposal_no']
-        policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
         insurance_company = request.POST['insurance_company']
         sp_name = request.POST['sp_name']
-        sp_brokercode = request.POST['sp_brokercode']
-        product_name = request.POST['product_name']
 
+        try:
+            product_name = request.POST['product_name']
+        except:
+            product_name = ''
         try:
             registration_no = request.POST['registration_no']
         except:
@@ -1542,7 +1543,7 @@ def policy_entrydata(request, id):
         try:
             mfg_year = request.POST['mfg_year']
         except:
-            mfg_year = ''
+            mfg_year = None
         try:
             addon = request.POST['addon']
         except:
@@ -1567,90 +1568,41 @@ def policy_entrydata(request, id):
             coverage_type = request.POST['coverage_type']
         except:
             coverage_type = ''
-        try:
-            cpa = request.POST['cpa']
-        except:
-            cpa = ''
 
         case_type = request.POST['case_type']
+        cpa = request.POST['cpa']
+        # risk_start_date = request.POST['risk_start_date']
+        # risk_end_date = request.POST['risk_end_date']
+        # issue_date = request.POST['issue_date']
         insured_age = request.POST['insured_age']
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
         pos = request.POST['pos']
         employee = request.POST['employee']
-
-        try:
-            OD_premium = request.POST['od']
-        except:
-            OD_premium = None
-        try:
-            TP_premium = request.POST['tp']
-        except:
-            TP_premium = None
-
-        try:
-            TP_terrorism = request.POST['tpt']
-        except:
-            TP_terrorism = None
-
-        try:
-            net = request.POST['net']
-        except:
-            net = None
-        try:
-            GST = request.POST['gst']
-        except:
-            GST = None
-        try:
-            total = request.POST['total']
-        except:
-            total = None
-        try:
-            payment_mode = request.POST['payment_mode']
-        except:
-            payment_mode = ''
-
-        proposal = request.POST['proposal']
-        mandate = request.POST['mandate']
+        OD_premium = request.POST['od']
+        TP_terrorism = request.POST['tpt']
+        net = request.POST['net']
+        gst_amount = request.POST['gst']
+        gst_gcv_amount = request.POST['gstt']
+        total = request.POST['total']
+        payment_mode = request.POST['payment_mode']
+        proposal = request.FILES.get('proposal')
+        mandate = request.FILES.get('mandate')
         policy = request.FILES.get('policy')
         previous_policy = request.FILES.get('previous_policy')
         pan_card = request.FILES.get('pan_card')
         aadhar_card = request.FILES.get('aadhar_card')
         vehicle_rc = request.FILES.get('vehicle_rc')
-
-        try:
-            vehicle_rc = request.FILES.get('vehicle_rc')
-        except Exception as ex:
-            vehicle_rc = ''
-
         inspection_report = request.FILES.get('inspection_report')
-
-        try:
-            if OD_premium:
-                data1 = Policy.objects.get(policyid=id)
-                # Agent payout
-                agent_od_amount = (int(OD_premium) *
-                                   data1.agent_od_reward) / 100
-                agent_tp_amount = (int(TP_premium) *
-                                   data1.agent_tp_reward) / 100
-
-                # # Self payout
-                self_od_amount = (int(OD_premium) * data1.self_od_reward) / 100
-                self_tp_amount = (int(TP_premium) * data1.self_tp_reward) / 100
-        except:
-            pass
 
         data = Policy.objects.filter(policyid=id)
 
-        data.update(proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name,
-                    sp_name=sp_name, sp_brokercode=sp_brokercode, insurance_company=insurance_company, product_name=product_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state,
-                    vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
-                    mfg_year=mfg_year,
-                    addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type,
-                    cpa=cpa, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+        data.update(proposal_no=proposal_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no,
+                    rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory,
+                    vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year, addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity,
+                    coverage_type=coverage_type, case_type=case_type, cpa=cpa, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                     employee=employee,
-                    OD_premium=OD_premium, TP_premium=TP_premium, TP_terrorism=TP_terrorism, net=net, GST=GST, total=total,
-                    agent_od_amount=agent_od_amount, agent_tp_amount=agent_tp_amount, self_od_amount=self_od_amount, self_tp_amount=self_tp_amount)
+                    OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, gst_gcv_amount=gst_gcv_amount,  total=total)
 
         if proposal:
             data.update(proposal=proposal)
@@ -1675,7 +1627,7 @@ def policy_entrydata(request, id):
         data = Policy.objects.get(policyid=id)
         data_sp = ServiceProvider.objects.filter(
             profile_id=get_id_from_session(request))
-       
+
         data_ins = InsuranceCompany.objects.filter(
             profile_id=get_id_from_session(request))
         data_vmb = VehicleMakeBy.objects.filter(

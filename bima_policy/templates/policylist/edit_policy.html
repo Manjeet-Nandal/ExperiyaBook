@@ -340,19 +340,16 @@
                                        </div>
 
                                        <div class="col-md-3 mb-4" id="cubic_capacityDiv">
-                                          <label>Cubic Capacity<abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="cubic_capacity" data-parsley-required-message=""
-                                             class="custom-select" id="cubic_capacity" data-parsley-required="true"
+                                          <label>Cubic Capacity<abbr class="text-danger">*</abbr></label>
+                                          <select name="cubic_capacity" class="custom-select" id="cubic_capacity"
                                              required>
                                              <option value="{{data.cubic_capacity}}"> {{data.cubic_capacity}} </option>
                                           </select>
                                        </div>
 
                                        <div class="col-md-3 mb-4" id="gvwDiv">
-                                          <label>GVW<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="gvw" data-parsley-required-message="" class="custom-select"
-                                             id="gvw" data-parsley-required="true" required>
+                                          <label>GVW<abbr class="text-danger">*</abbr></label>
+                                          <select name="gvw" class="custom-select" id="gvw" required>
                                              <option value="{{data.gvw}}"> {{data.gvw}} </option>
                                              <option value="BELOW 2000">BELOW 2000</option>
                                              <option value="2000-2500">2000-2500</option>
@@ -367,11 +364,9 @@
                                        </div>
 
                                        <div class="col-md-3 mb-4" id="seating_capacityDiv">
-                                          <label>Seating Capacity<abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="seating_capacity" data-parsley-required-message="" type="input"
-                                             class="custom-select" id="seating_capacity" data-parsley-required="true"
-                                             required>
+                                          <label>Seating Capacity<abbr class="text-danger">*</abbr></label>
+                                          <select name="seating_capacity" type="input" class="custom-select"
+                                             id="seating_capacity" required>
                                              <option value="{{data.seating_capacity}}"> {{data.seating_capacity}}
                                              </option>
                                              <option value="BELOW 5">BELOW 5</option>
@@ -383,22 +378,20 @@
                                        </div>
 
                                        <div class="col-md-3 mb-4" id="seating_capacityDiv1" hidden>
-                                          <label for="seating_capacity1">Seating Capacity <abbr title="Required"
+                                          <label for="seating_capacity1">Seating Capacity <abbr
                                                 class="text-danger">*</abbr></label><input type="text"
                                              data-parsley-group="payout" value="{{data.seating_capacity}}"
                                              class="form-control col-lg-6 maskNumField"
-                                             data-mask-as-number-maxlength="2" data-parsley-required="true"
-                                             data-parsley-required-message="" data-parsley-maxlength="2"
+                                             data-mask-as-number-maxlength="2" data-parsley-maxlength="2"
                                              data-parsley-pattern="^[0-9]+$" name="seating_capacity1"
                                              id="seating_capacity1" maxlength="2" required
                                              oninput="addSeatingCapacity()">
                                        </div>
 
                                        <div class="col-md-3 mb-4" id="coverage_typeDiv">
-                                          <label>Coverage Type <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="coverage_type" data-parsley-required="true" id="coverage_type"
-                                             data-parsley-required-message="" class="custom-select" required>
+                                          <label>Coverage Type <abbr class="text-danger">*</abbr></label>
+                                          <select name="coverage_type" id="coverage_type" class="custom-select"
+                                             required>
                                              <option value="{{data.coverage_type}}">{{data.coverage_type}}</option>
                                              <option value="NA"> NA </option>
                                              <!-- {% for value in data_ct%}
@@ -664,7 +657,8 @@
                                        data-parsley-group="payout" value="{{data.TP_terrorism}}"
                                        class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
                                        data-parsley-required="true" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt"
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" 
+                                       name="tpt" id="tpt"
                                        maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
@@ -846,8 +840,8 @@
       <!-- /.page -->
    </div>
    <!-- /.wrapper -->
-  
-  
+
+
 </main>
 <!-- /.app-main -->
 <div class="aside-backdrop"></div>
@@ -915,330 +909,44 @@
       var x = document.getElementById("registration_no").value;
       document.getElementById("demo").innerHTML = x.slice(0, 4);
    }
-</script>
-<script>
+
    function add() {
-      var numOne, numTwo, sum;
-      numOne = parseInt(document.getElementById("od").value);
-      numTwo = parseInt(document.getElementById("tp").value);
-      numThree = parseInt(document.getElementById("tpt").value);
-      sum = numOne + numTwo + numThree;
-      document.getElementById("net").value = sum;
+
+      od = parseInt(document.getElementById("od").value);
+      tpt = parseInt(document.getElementById("tpt").value);
+
+      gst = parseInt(document.getElementById("gst").value);
+      gstt = parseInt(document.getElementById("gstt").value);
+
+      vc = document.getElementById('vehicle_catagory').value
+
+      if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
+         document.getElementById("net").value = od + tpt;;
+         document.getElementById("gst").value = od * 18 / 100;
+         document.getElementById("gstt").value = tpt * 12 / 100;
+      }
+      else {
+         document.getElementById("net").value = od + tpt;;
+         document.getElementById("gst").value = (od + tpt) * 18 / 100;
+      }
    }
-</script>
-<script>
+
    function addgst() {
       var numOne, numTwo, sum;
-      numOne = parseInt(document.getElementById("net").value);
-      numTwo = parseInt(document.getElementById("gst").value);
-      sum = numOne + numTwo;
-      document.getElementById("totalnet").value = sum;
-   }
-</script>
-
-<script>
-   function mycommision(e) {
-
-      var ag_reward = document.getElementById('ag_reward_pct').value;
-      var rewards = ag_reward ? ag_reward : 0;
-
-      console.warn(rewards)
-      //console.warn(ag_reward)
-      console.log(e.value)
-      var total = ((e.value) / 100) * parseInt(rewards);
-      //var b= total/10;
-      console.log(total)
-
-      document.getElementById('ag_commision').value = Math.floor(total);
-      // console.log(b)
-
-   }
-   function ag_reward(e) {
-      console.log(e.value)
-   }
-</script>
-<script>
-   function mycommision2(x) {
-      console.log("called");
-      var ag_reward = document.getElementById('sf_reward_pct').value;
-      var rewards = ag_reward ? ag_reward : 0;
-
-      console.warn(rewards)
-      //console.warn(ag_reward)
-      console.log(x.value)
-      var total = ((x.value) / 100) * parseInt(rewards);
-      //var b= total/10;
-      console.log(total)
-
-      document.getElementById('ag_commision2').value = Math.floor(total);
-      // console.log(b)
-
-   }
-   function ag_reward2(x) {
-      console.log(x.value)
-   }
-</script>
-
-
-
-
-{% comment %}
-<script>
-   function setSelfComm() { var e = $("#od").val(), n = $("#tp").val(), t = $("#sf_reward_pct").val(), a = 0; "" == !e && $.isNumeric(e) && "" == !n && $.isNumeric(n) && "" == !t && (a = "OD" == $("select[name='sf_reward_on']").val() ? (t * e / 100).toFixed(0) : (t * (parseInt(e) + parseInt(n)) / 100).toFixed(0)); $("input[name='sf_commision']").val(a), $("input[name='sf_commision']").next("p").html(a) } $(document).ready(function () { $(document).on("change", "select[name='sf_reward_on'],#sf_reward_pct", function () { setSelfComm() }) });
-</script>
-<script>
-   $(document).on("change", "#registration", function () {
-      var t = $(this);
-      $.getJSON("../entry", { request: "getRTO", registration: t.val(), form: "new" }, function (e) {
-         $("#rto").html(e.rto), t.val(e.registration_no), t.parsley().validate();
-         if (e.oldest != '') {
-            $("#mdlalready .modal-body").html(e.oldest), $("#mdlalready").modal();
-         }
-      }).fail(function () {
-         console.log("error");
-      });
-   }),
-      $(document).on("change", "#policy_no", function () {
-         var o = $(this); o.val(o.val().replaceAll(/\s/g, ''));
-         $(o).parsley().validate();
-         $.get("../entry", { request: "checkPolicy", policy_no: o.val(), form: "new" }, function (o) { "" == o || ($("#mdlalready .modal-body").html(o), $("#mdlalready").modal()); }).fail(function () { console.log("error"); });
-      });
-</script> {% endcomment %}
-<script>
-   function hideB() {
-
-      document.getElementById("G").style.visibility = "visible";
-      document.getElementById("H").style.visibility = "visible";
-      document.getElementById("I").style.visibility = "visible";
-      document.getElementById("J").style.visibility = "hidden";
-      document.getElementById("K").style.visibility = "hidden";
-      document.getElementById("L").style.visibility = "hidden";
+      net = parseInt(document.getElementById("net").value);
+      gst = parseInt(document.getElementById("gst").value);
+      gstt = parseInt(document.getElementById("gstt").value);
+      // 3 WHEELER GCV-PUBLIC CARRIER
+      vc = document.getElementById('vehicle_catagory').value
+      if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
+         document.getElementById("totalnet").value = net + gst + gstt;
+      }
+      else {
+         document.getElementById("totalnet").value = net + gst;
+      }
 
    }
 
-   function hideA() {
-      document.getElementById("G").style.visibility = "hidden";
-      document.getElementById("H").style.visibility = "hidden";
-      document.getElementById("I").style.visibility = "hidden";
-      document.getElementById("J").style.visibility = "visible";
-      document.getElementById("K").style.visibility = "visible";
-      document.getElementById("L").style.visibility = "visible";
-
-   }
-   function aghideB() {
-
-      document.getElementById("C").style.visibility = "visible";
-      document.getElementById("A").style.visibility = "visible";
-      document.getElementById("B").style.visibility = "visible";
-      document.getElementById("D").style.visibility = "hidden";
-      document.getElementById("E").style.visibility = "hidden";
-      document.getElementById("F").style.visibility = "hidden";
-
-   }
-
-   function aghideA() {
-      document.getElementById("A").style.visibility = "hidden";
-      document.getElementById("B").style.visibility = "hidden";
-      document.getElementById("C").style.visibility = "hidden";
-      document.getElementById("D").style.visibility = "visible";
-      document.getElementById("E").style.visibility = "visible";
-      document.getElementById("F").style.visibility = "visible";
-
-
-   }
-
-</script>
-
-<div class="flatpickr-calendar animate" tabindex="-1">
-   <div class="flatpickr-months">
-      <span class="flatpickr-prev-month">
-         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 17 17">
-            <g></g>
-            <path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z"></path>
-         </svg>
-      </span>
-      <div class="flatpickr-month">
-         <div class="flatpickr-current-month">
-            <select class="flatpickr-monthDropdown-months" tabindex="-1">
-               <option class="flatpickr-monthDropdown-month" value="0" tabindex="-1">January</option>
-               <option class="flatpickr-monthDropdown-month" value="1" tabindex="-1">February</option>
-               <option class="flatpickr-monthDropdown-month" value="2" tabindex="-1">March</option>
-               <option class="flatpickr-monthDropdown-month" value="3" tabindex="-1">April</option>
-               <option class="flatpickr-monthDropdown-month" value="4" tabindex="-1">May</option>
-               <option class="flatpickr-monthDropdown-month" value="5" tabindex="-1">June</option>
-               <option class="flatpickr-monthDropdown-month" value="6" tabindex="-1">July</option>
-               <option class="flatpickr-monthDropdown-month" value="7" tabindex="-1">August</option>
-            </select>
-            <div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year"
-                  max="2022"><span class="arrowUp"></span><span class="arrowDown"></span></div>
-         </div>
-      </div>
-      <span class="flatpickr-next-month flatpickr-disabled">
-         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 17 17">
-            <g></g>
-            <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z"></path>
-         </svg>
-      </span>
-   </div>
-   <div class="flatpickr-innerContainer">
-      <div class="flatpickr-rContainer">
-         <div class="flatpickr-weekdays">
-            <div class="flatpickr-weekdaycontainer">
-               <span class="flatpickr-weekday">
-                  Sun</span><span class="flatpickr-weekday">Mon</span><span class="flatpickr-weekday">Tue</span><span
-                  class="flatpickr-weekday">Wed</span><span class="flatpickr-weekday">Thu</span><span
-                  class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
-               </span>
-            </div>
-         </div>
-         <div class="flatpickr-days" tabindex="-1">
-            <div class="dayContainer"><span class="flatpickr-day prevMonthDay" aria-label="July 31, 2022"
-                  tabindex="-1">31</span><span class="flatpickr-day " aria-label="August 1, 2022"
-                  tabindex="-1">1</span><span class="flatpickr-day " aria-label="August 2, 2022"
-                  tabindex="-1">2</span><span class="flatpickr-day " aria-label="August 3, 2022"
-                  tabindex="-1">3</span><span class="flatpickr-day " aria-label="August 4, 2022"
-                  tabindex="-1">4</span><span class="flatpickr-day " aria-label="August 5, 2022"
-                  tabindex="-1">5</span><span class="flatpickr-day " aria-label="August 6, 2022"
-                  tabindex="-1">6</span><span class="flatpickr-day " aria-label="August 7, 2022"
-                  tabindex="-1">7</span><span class="flatpickr-day today" aria-label="August 8, 2022"
-                  aria-current="date" tabindex="-1">8</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 9, 2022">9</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 10, 2022">10</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 11, 2022">11</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 12, 2022">12</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 13, 2022">13</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 14, 2022">14</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 15, 2022">15</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 16, 2022">16</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 17, 2022">17</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 18, 2022">18</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 19, 2022">19</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 20, 2022">20</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 21, 2022">21</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 22, 2022">22</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 23, 2022">23</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 24, 2022">24</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 25, 2022">25</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 26, 2022">26</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 27, 2022">27</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 28, 2022">28</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 29, 2022">29</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 30, 2022">30</span><span class="flatpickr-day flatpickr-disabled"
-                  aria-label="August 31, 2022">31</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
-                  aria-label="September 1, 2022">1</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
-                  aria-label="September 2, 2022">2</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
-                  aria-label="September 3, 2022">3</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
-                  aria-label="September 4, 2022">4</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
-                  aria-label="September 5, 2022">5</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
-                  aria-label="September 6, 2022">6</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
-                  aria-label="September 7, 2022">7</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
-                  aria-label="September 8, 2022">8</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
-                  aria-label="September 9, 2022">9</span><span class="flatpickr-day nextMonthDay flatpickr-disabled"
-                  aria-label="September 10, 2022">10</span></div>
-         </div>
-      </div>
-   </div>
-</div>
-<div class="flatpickr-calendar animate" tabindex="-1">
-   <div class="flatpickr-months">
-      <span class="flatpickr-prev-month">
-         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 17 17">
-            <g></g>
-            <path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z"></path>
-         </svg>
-      </span>
-      <div class="flatpickr-month">
-         <div class="flatpickr-current-month">
-            <select class="flatpickr-monthDropdown-months" tabindex="-1">
-               <option class="flatpickr-monthDropdown-month" value="0" tabindex="-1">January</option>
-               <option class="flatpickr-monthDropdown-month" value="1" tabindex="-1">February</option>
-               <option class="flatpickr-monthDropdown-month" value="2" tabindex="-1">March</option>
-               <option class="flatpickr-monthDropdown-month" value="3" tabindex="-1">April</option>
-               <option class="flatpickr-monthDropdown-month" value="4" tabindex="-1">May</option>
-               <option class="flatpickr-monthDropdown-month" value="5" tabindex="-1">June</option>
-               <option class="flatpickr-monthDropdown-month" value="6" tabindex="-1">July</option>
-               <option class="flatpickr-monthDropdown-month" value="7" tabindex="-1">August</option>
-               <option class="flatpickr-monthDropdown-month" value="8" tabindex="-1">September</option>
-               <option class="flatpickr-monthDropdown-month" value="9" tabindex="-1">October</option>
-               <option class="flatpickr-monthDropdown-month" value="10" tabindex="-1">November</option>
-               <option class="flatpickr-monthDropdown-month" value="11" tabindex="-1">December</option>
-            </select>
-            <div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year"
-                  max="2023"><span class="arrowUp"></span><span class="arrowDown"></span></div>
-         </div>
-      </div>
-      <span class="flatpickr-next-month">
-         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 17 17">
-            <g></g>
-            <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z"></path>
-         </svg>
-      </span>
-   </div>
-   <div class="flatpickr-innerContainer">
-      <div class="flatpickr-rContainer">
-         <div class="flatpickr-weekdays">
-            <div class="flatpickr-weekdaycontainer">
-               <span class="flatpickr-weekday">
-                  Sun</span><span class="flatpickr-weekday">Mon</span><span class="flatpickr-weekday">Tue</span><span
-                  class="flatpickr-weekday">Wed</span><span class="flatpickr-weekday">Thu</span><span
-                  class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
-               </span>
-            </div>
-         </div>
-         <div class="flatpickr-days" tabindex="-1">
-            <div class="dayContainer"><span class="flatpickr-day prevMonthDay" aria-label="July 31, 2022"
-                  tabindex="-1">31</span><span class="flatpickr-day " aria-label="August 1, 2022"
-                  tabindex="-1">1</span><span class="flatpickr-day " aria-label="August 2, 2022"
-                  tabindex="-1">2</span><span class="flatpickr-day " aria-label="August 3, 2022"
-                  tabindex="-1">3</span><span class="flatpickr-day " aria-label="August 4, 2022"
-                  tabindex="-1">4</span><span class="flatpickr-day " aria-label="August 5, 2022"
-                  tabindex="-1">5</span><span class="flatpickr-day " aria-label="August 6, 2022"
-                  tabindex="-1">6</span><span class="flatpickr-day " aria-label="August 7, 2022"
-                  tabindex="-1">7</span><span class="flatpickr-day today" aria-label="August 8, 2022"
-                  aria-current="date" tabindex="-1">8</span><span class="flatpickr-day " aria-label="August 9, 2022"
-                  tabindex="-1">9</span><span class="flatpickr-day " aria-label="August 10, 2022"
-                  tabindex="-1">10</span><span class="flatpickr-day " aria-label="August 11, 2022"
-                  tabindex="-1">11</span><span class="flatpickr-day " aria-label="August 12, 2022"
-                  tabindex="-1">12</span><span class="flatpickr-day " aria-label="August 13, 2022"
-                  tabindex="-1">13</span><span class="flatpickr-day " aria-label="August 14, 2022"
-                  tabindex="-1">14</span><span class="flatpickr-day " aria-label="August 15, 2022"
-                  tabindex="-1">15</span><span class="flatpickr-day " aria-label="August 16, 2022"
-                  tabindex="-1">16</span><span class="flatpickr-day " aria-label="August 17, 2022"
-                  tabindex="-1">17</span><span class="flatpickr-day " aria-label="August 18, 2022"
-                  tabindex="-1">18</span><span class="flatpickr-day " aria-label="August 19, 2022"
-                  tabindex="-1">19</span><span class="flatpickr-day " aria-label="August 20, 2022"
-                  tabindex="-1">20</span><span class="flatpickr-day " aria-label="August 21, 2022"
-                  tabindex="-1">21</span><span class="flatpickr-day " aria-label="August 22, 2022"
-                  tabindex="-1">22</span><span class="flatpickr-day " aria-label="August 23, 2022"
-                  tabindex="-1">23</span><span class="flatpickr-day " aria-label="August 24, 2022"
-                  tabindex="-1">24</span><span class="flatpickr-day " aria-label="August 25, 2022"
-                  tabindex="-1">25</span><span class="flatpickr-day " aria-label="August 26, 2022"
-                  tabindex="-1">26</span><span class="flatpickr-day " aria-label="August 27, 2022"
-                  tabindex="-1">27</span><span class="flatpickr-day " aria-label="August 28, 2022"
-                  tabindex="-1">28</span><span class="flatpickr-day " aria-label="August 29, 2022"
-                  tabindex="-1">29</span><span class="flatpickr-day " aria-label="August 30, 2022"
-                  tabindex="-1">30</span><span class="flatpickr-day " aria-label="August 31, 2022"
-                  tabindex="-1">31</span><span class="flatpickr-day nextMonthDay" aria-label="September 1, 2022"
-                  tabindex="-1">1</span><span class="flatpickr-day nextMonthDay" aria-label="September 2, 2022"
-                  tabindex="-1">2</span><span class="flatpickr-day nextMonthDay" aria-label="September 3, 2022"
-                  tabindex="-1">3</span><span class="flatpickr-day nextMonthDay" aria-label="September 4, 2022"
-                  tabindex="-1">4</span><span class="flatpickr-day nextMonthDay" aria-label="September 5, 2022"
-                  tabindex="-1">5</span><span class="flatpickr-day nextMonthDay" aria-label="September 6, 2022"
-                  tabindex="-1">6</span><span class="flatpickr-day nextMonthDay" aria-label="September 7, 2022"
-                  tabindex="-1">7</span><span class="flatpickr-day nextMonthDay" aria-label="September 8, 2022"
-                  tabindex="-1">8</span><span class="flatpickr-day nextMonthDay" aria-label="September 9, 2022"
-                  tabindex="-1">9</span><span class="flatpickr-day nextMonthDay" aria-label="September 10, 2022"
-                  tabindex="-1">10</span></div>
-         </div>
-      </div>
-   </div>
-</div>
-
-<script>
 
    function setCategoryOnChange() {
       value = document.getElementById('vehicle_catagory').value
@@ -1251,12 +959,10 @@
 
       if (value == 'TWO WHEELER') {
          document.getElementById('coverage_typeDiv').hidden = false
-
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
-
 
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
@@ -1264,13 +970,17 @@
          document.getElementById('gstt').required = false
          document.getElementById('gstt').value = 0
 
+         document.getElementById('seating_capacity1').required = false
+         document.getElementById('gvw').required = false
+         document.getElementById('gstt').required = false
+
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
          // Cubic_ capacity options
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         newoption.value = '{{data.cubic_capacity}}'
+         newoption.innerHTML = '{{data.cubic_capacity}}'
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1290,8 +1000,8 @@
 
          // Coverage type
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = '{{data.coverage_type}}'
+         newoption.innerHTML = '{{data.coverage_type}}'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1339,8 +1049,8 @@
 
          // Cubic_ capacity options
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         newoption.value = '{{data.cubic_capacity}}'
+         newoption.innerHTML = '{{data.cubic_capacity}}'
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1363,8 +1073,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = '{{data.coverage_type}}'
+         newoption.innerHTML = '{{data.coverage_type}}'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1410,8 +1120,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = '{{data.coverage_type}}'
+         newoption.innerHTML = '{{data.coverage_type}}'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1444,8 +1154,8 @@
 
          // Coverage type        
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = '{{data.coverage_type}}'
+         newoption.innerHTML = '{{data.coverage_type}}'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1477,8 +1187,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = '{{data.coverage_type}}'
+         newoption.innerHTML = '{{data.coverage_type}}'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1511,8 +1221,8 @@
 
          // Cubic_ capacity options
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         newoption.value = '{{data.cubic_capacity}}'
+         newoption.innerHTML = '{{data.cubic_capacity}}'
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1535,8 +1245,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = '{{data.coverage_type}}'
+         newoption.innerHTML = '{{data.coverage_type}}'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1607,8 +1317,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = '{{data.coverage_type}}'
+         newoption.innerHTML = '{{data.coverage_type}}'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1660,8 +1370,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = '{{data.coverage_type}}'
+         newoption.innerHTML = '{{data.coverage_type}}'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1712,8 +1422,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = '{{data.coverage_type}}'
+         newoption.innerHTML = '{{data.coverage_type}}'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1765,10 +1475,10 @@
 
 </script>
 
-<body>
+
+<body onload="setCategoryOnChange()">
 
 </body>
 
-
 </html>
-{%endblock%}
+{%endblock content%}
