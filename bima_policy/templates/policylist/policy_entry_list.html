@@ -165,11 +165,11 @@
                   <!-- /.card-header -->
                   <!-- .card-body -->
                   <div class="card-body">
-                     <!-- .table -->
-                     <div class="table-responsive">
-                        <div id="tblInsurance_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                           <div class="row">
-                              <div class="col-sm-12 col-md-6">
+                   
+                     <div class="">
+                        <div id="tblInsurance_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer no-scroll">
+                           <div class="form-row  mb-3">
+                              <div class="col-md-6">
                                  <div class="dataTables_length" id="tblInsurance_length">
                                     <label>
                                        Show
@@ -183,268 +183,344 @@
                                        entries
                                     </label>
                                  </div>
+
+
                               </div>
-                              <div class="col-sm-12 col-md-6">
+
+                              <div class="col-md-5" >
                                  <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input
                                           type="search" id="myInput" onkeyup="myFunction()" class="form-control"
                                           placeholder="" aria-controls="tblInsurance"></label></div>
                               </div>
+
+                              <div class="col-md-1" style="text-align: right;">
+                                 <style>
+                                    .switch {
+                                       position: relative;
+                                       display: inline-block;
+                                       width: 60px;
+                                       height: 34px;
+                                    }
+
+                                    .switch input {
+                                       opacity: 0;
+                                       width: 0;
+                                       height: 0;
+                                    }
+
+                                    .slider {
+                                       position: absolute;
+                                       cursor: pointer;
+                                       top: 0;
+                                       left: 0;
+                                       right: 0;
+                                       bottom: 0;
+                                       background-color: #ccc;
+                                       -webkit-transition: .4s;
+                                       transition: .4s;
+                                    }
+
+                                    .slider:before {
+                                       position: absolute;
+                                       content: "";
+                                       height: 26px;
+                                       width: 26px;
+                                       left: 4px;
+                                       bottom: 4px;
+                                       background-color: white;
+                                       -webkit-transition: .4s;
+                                       transition: .4s;
+                                    }
+
+                                    input:checked+.slider {
+                                       background-color: #2196F3;
+                                    }
+
+                                    input:focus+.slider {
+                                       box-shadow: 0 0 1px #2196F3;
+                                    }
+
+                                    input:checked+.slider:before {
+                                       -webkit-transform: translateX(26px);
+                                       -ms-transform: translateX(26px);
+                                       transform: translateX(26px);
+                                    }
+
+                                    /* Rounded sliders */
+                                    .slider.round {
+                                       border-radius: 34px;
+                                    }
+
+                                    .slider.round:before {
+                                       border-radius: 50%;
+                                    }
+                                 </style>
+
+                                 <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                 </label>
+                              </div>
+
                            </div>
-                           <div class="table-responsive">
-                              <div class="dataTables_scroll">
-                                 <div class="dataTables_scrollHead"
-                                    style="position: relative; border: 0px; width: 100%;">
-                                    <div class="dataTables_scrollHeadInner"
-                                       style="box-sizing: content-box; width: auto; padding-right: 0px;">
-                                       <table
-                                          class="table table-striped1 table-hover no-wrap table-bordered no-footer dataTable"
-                                          aria-describedby="tblInsurance_info" role="grid"
-                                          style="margin-left: 0px; width: 5774.97px;">
+                        </div>                      
+                     </div>
 
-                                       </table>
-                                    </div>
-                                 </div>
-                                 <div class="dataTables_scrollBody" style="position: relative;  width: 100%;">
-                                    <table id="tblInsurance"
-                                       class="table table-striped1 table-hover no-wrap table-bordered no-footer dataTable"
-                                       aria-describedby="tblInsurance_info" role="grid" style="">
+                     
+                     <div class="table-responsive">
+                        <div class="dataTables_scroll">
+                           <div class="dataTables_scrollHead"
+                              style="position: relative; border: 0px; width: 100%;">
+                              <div class="dataTables_scrollHeadInner"
+                                 style="box-sizing: content-box; width: auto; padding-right: 0px;">
+                                 <table
+                                    class="table table-striped1 table-hover no-wrap table-bordered no-footer dataTable"
+                                    aria-describedby="tblInsurance_info" role="grid"
+                                    style="margin-left: 0px; width: 5774.97px;">
 
-                                       <thead>
-                                          <tr role="row">
-                                             <th class="text-center sorting" tabindex="0" aria-controls="tblInsurance"
-                                                rowspan="1" colspan="1" style="width: 83.2344px;"
-                                                aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
-                                             <th class="text-center sorting_disabled" tabindex="0"
-                                                aria-controls="tblInsurance" rowspan="1" colspan="1"
-                                                style="width: 30px;" aria-label="">
-                                                <input type="checkbox" class="checkbox" id="chkblkrm" />
-                                             </th>
-
-                                             <th class="sorting">Proposal No.</th>
-                                             <th class="sorting">Policy No. </th>
-                                             <th class="sorting">Insured Name</th>
-                                             <th class="sorting">Insurer Name</th>
-                                             <th class="sorting">Service Provider</th>
-                                             <th class="sorting">Product Name</th>
-                                             <th class="sorting">Registration No.</th>
-                                             <th class="sorting">RTO City</th>
-                                             <th class="sorting">RTO State</th>
-                                             <th class="sorting">Vehicle Makeby </th>
-                                             <th class="sorting">Vehicle Model </th>
-                                             <th class="sorting">Vehicle Catagory </th>
-                                             <th class="sorting">Vehicle Fuel Type</th>
-                                             <th class="sorting">Manufacture Year </th>
-                                             <th class="sorting">Addon</th>
-                                             <th class="sorting">NCB</th>
-                                             <th class="sorting">Cubic Capacity</th>
-                                             <th class="sorting">GVW</th>
-                                             <th class="sorting">Seating Capacity</th>
-                                             <th class="sorting">Coverage Type</th>
-                                             <th class="sorting">Case Type</th>
-                                             <th class="sorting">CPA</th>
-                                             <th class="sorting">Risk Start Date</th>
-                                             <th class="sorting">Risk End Date</th>
-                                             <th class="sorting">Issue Date</th>
-                                             <th class="sorting">Insured Age</th>
-                                             <th class="sorting">Policy Term</th>
-                                             <th class="sorting">BQP</th>
-                                             <th class="sorting">POS</th>
-                                             <th class="sorting">Employee</th>
-                                             <th class="sorting">OD Premium</th>
-                                             <th class="sorting">TP / Terrorism</th>
-                                             <th class="sorting">NET Premium</th>
-                                             <th class="sorting">GST 18%</th>
-                                             <th class="sorting">GST 12%</th>
-                                             <th class="sorting">Total</th>
-                                             <th class="sorting">Agent OD Reward %</th>
-                                             <th class="sorting">Agent OD Amount</th>
-                                             <th class="sorting">Agent TP Reward %</th>
-                                             <th class="sorting">Agent TP Amount</th>
-                                             <th class="sorting">Self OD Reward %</th>
-                                             <th class="sorting">Self OD Amount</th>
-                                             <th class="sorting">Self TP Reward %</th>
-                                             <th class="sorting">Self TP Amount</th>
-                                             <th class="sorting">Payment Mode</th>
-                                             <th class="sorting">Proposal</th>
-                                             <th class="sorting">Mandate</th>
-                                             <th class="sorting">Policy</th>
-                                             <th class="sorting">Previous Policy</th>
-                                             <th class="sorting">Pan Card</th>
-                                             <th class="sorting">Aadhar Card</th>
-                                             <th class="sorting">Vehicle RC</th>
-                                             <th class="sorting">Inspection Report</th>
-                                             <th class="sorting">Action</th>
-                                          </tr>
-                                       </thead>
-
-                                       <tbody>
-                                          {%for value in data%}
-                                          <tr role="row" class="odd">
-                                             <td class="text-center">{{forloop.counter}}</td>
-                                             <td class="text-center"><input type="checkbox" value="2479"
-                                                   class="checkbox" id="chkblkrm1" /></td>
-
-                                             <td>{{value.proposal_no}}</td>
-                                             <td>
-                                                <a href="" class="tile tile-img" target="_blank"><i
-                                                      class="far fa-file-pdf text-danger"></i></a>
-                                                <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
-                                                   class="">{{value.policy_no}}</a>
-                                             </td>
-                                             <td>{{value.customer_name}}</td>
-                                             <td>{{value.insurance_company}}</td>
-                                             <td>{{value.sp_name}}</td>
-                                             <td>{{value.product_name}}</td>
-                                             <td>{{value.registration_no}}</td>
-                                             <td>{{value.rto_city}}</td>
-                                             <td>{{value.rto_state}}</td>
-                                             <td>{{value.vehicle_makeby}}</td>
-                                             <td>{{value.vehicle_model}}</td>
-                                             <td>{{value.vehicle_catagory}}</td>
-                                             <td>{{value.vehicle_fuel_type}}</td>                                           
-                                            
-                                             {% if value.mfg_year%}
-                                             <td>{{value.mfg_year}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-
-                                             <td>{{value.addon}}</td>
-                                             <td>{{value.ncb}}</td>
-                                             <td>{{value.cubic_capacity}}</td>
-                                             <td>{{value.gvw}}</td>
-                                             <td>{{value.seating_capacity}}</td>
-                                             <td>{{value.coverage_type}}</td>
-                                             <td>{{value.case_type}}</td>
-                                             <td>{{value.cpa}}</td>
-                                             <td>{{value.risk_start_date}}</td>
-                                             <td>{{value.risk_end_date}}</td>
-                                             <td>{{value.issue_date}}</td>
-                                             <td>{{value.insured_age}}</td>
-                                             <td>{{value.policy_term}}</td>
-                                             <td>{{value.bqp}}</td>
-                                             <td>{{value.pos}}</td>
-                                             <td>{{value.employee}}</td>
-                                             <!-- OD  -->
-                                             {% if value.OD_premium%}
-                                             <td>{{value.OD_premium}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                                                                          
-                                             {% if value.TP_terrorism%}
-                                             <td>{{value.TP_terrorism}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.net%}
-                                             <td>{{value.net}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.gst_amount%}
-                                             <td>{{value.gst_amount}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.gst_gcv_amount%}
-                                             <td>{{value.gst_gcv_amount}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.total%}
-                                             <td>{{value.total}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.agent_od_reward%}
-                                             <td>{{value.agent_od_reward}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.agent_od_amount%}
-                                             <td>{{value.agent_od_amount}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.agent_tp_reward%}
-                                             <td>{{value.agent_tp_reward}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.agent_tp_amount%}
-                                             <td>{{value.agent_tp_amount}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.self_od_reward%}
-                                             <td>{{value.self_od_reward}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.self_od_amount%}
-                                             <td>{{value.self_od_amount}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.self_tp_reward%}
-                                             <td>{{value.self_tp_reward}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}
-                                             
-                                             {% if value.self_tp_amount%}
-                                             <td>{{value.self_tp_amount}}</td>
-                                             {% else %}
-                                             <td></td>
-                                             {% endif %}                                             
-                                            
-                                             <td>{{value.payment_mode}}</td>
-                                             <td>{{value.proposal}}</td>
-                                             <td>{{value.mandate}}</td>
-                                             <td>{{value.policy}}</td>
-                                             <td>{{value.previous_policy}}</td>
-                                             <td>{{value.pan_card}}</td>
-                                             <td>{{value.aadhar_card}}</td>
-                                             <td>{{value.vehicle_rc}}</td>
-                                             <td>{{value.inspection_report}}</td>
-
-                                             <td class="text-center">
-                                                <form method="POST">
-                                                   {% csrf_token %}
-                                                   <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
-                                                      class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
-                                                      <i class="fa fa-pencil-alt mt-2"></i>
-                                                   </a>
-                                                   <a href="{%url 'bima_policy:policy_delete' value.policyid %}"
-                                                      name="Remove"
-                                                      class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
-                                                      <i class="far fa-trash-alt mt-2"></i>
-                                                   </a>
-                                             </td>
-                                          </tr>
-                                          {% endfor %}
-                                       </tbody>
-                                    </table>
-                                 </div>
+                                 </table>
                               </div>
                            </div>
+                           <div class="dataTables_scrollBody" style="position: relative;  width: 100%;">
+                              <table id="tblInsurance"
+                                 class="table table-striped1 table-hover no-wrap table-bordered no-footer dataTable"
+                                 aria-describedby="tblInsurance_info" role="grid" >
 
-                           <!-- /.card-body -->
+                                 <thead>
+                                    <tr role="row">
+                                       <th class="text-center sorting" tabindex="0" aria-controls="tblInsurance"
+                                          rowspan="1" colspan="1" style="width: 83.2344px;"
+                                          aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
+                                       <th class="text-center sorting_disabled" tabindex="0"
+                                          aria-controls="tblInsurance" rowspan="1" colspan="1"
+                                          style="width: 30px;" aria-label="">
+                                          <input type="checkbox" class="checkbox" id="chkblkrm" />
+                                       </th>
+
+                                       <th class="sorting">Proposal No.</th>
+                                       <th class="sorting">Policy No. </th>
+                                       <th class="sorting">Insured Name</th>
+                                       <th class="sorting">Insurer Name</th>
+                                       <th class="sorting">Service Provider</th>
+                                       <th class="sorting">Product Name</th>
+                                       <th class="sorting">Registration No.</th>
+                                       <th class="sorting">RTO City</th>
+                                       <th class="sorting">RTO State</th>
+                                       <th class="sorting">Vehicle Makeby </th>
+                                       <th class="sorting">Vehicle Model </th>
+                                       <th class="sorting">Vehicle Catagory </th>
+                                       <th class="sorting">Vehicle Fuel Type</th>
+                                       <th class="sorting">Manufacture Year </th>
+                                       <th class="sorting">Addon</th>
+                                       <th class="sorting">NCB</th>
+                                       <th class="sorting">Cubic Capacity</th>
+                                       <th class="sorting">GVW</th>
+                                       <th class="sorting">Seating Capacity</th>
+                                       <th class="sorting">Coverage Type</th>
+                                       <th class="sorting">Case Type</th>
+                                       <th class="sorting">CPA</th>
+                                       <th class="sorting">Risk Start Date</th>
+                                       <th class="sorting">Risk End Date</th>
+                                       <th class="sorting">Issue Date</th>
+                                       <th class="sorting">Insured Age</th>
+                                       <th class="sorting">Policy Term</th>
+                                       <th class="sorting">BQP</th>
+                                       <th class="sorting">POS</th>
+                                       <th class="sorting">Employee</th>
+                                       <th class="sorting">OD Premium</th>
+                                       <th class="sorting">TP / Terrorism</th>
+                                       <th class="sorting">NET Premium</th>
+                                       <th class="sorting">GST 18%</th>
+                                       <th class="sorting">GST 12%</th>
+                                       <th class="sorting">Total</th>
+                                       <th class="sorting">Agent OD Reward %</th>
+                                       <th class="sorting">Agent OD Amount</th>
+                                       <th class="sorting">Agent TP Reward %</th>
+                                       <th class="sorting">Agent TP Amount</th>
+                                       <th class="sorting">Self OD Reward %</th>
+                                       <th class="sorting">Self OD Amount</th>
+                                       <th class="sorting">Self TP Reward %</th>
+                                       <th class="sorting">Self TP Amount</th>
+                                       <th class="sorting">Payment Mode</th>
+                                       <th class="sorting">Proposal</th>
+                                       <th class="sorting">Mandate</th>
+                                       <th class="sorting">Policy</th>
+                                       <th class="sorting">Previous Policy</th>
+                                       <th class="sorting">Pan Card</th>
+                                       <th class="sorting">Aadhar Card</th>
+                                       <th class="sorting">Vehicle RC</th>
+                                       <th class="sorting">Inspection Report</th>
+                                       <th class="sorting">Action</th>
+                                    </tr>
+                                 </thead>
+
+                                 <tbody>
+                                    {%for value in data%}
+                                    <tr role="row" class="odd">
+                                       <td class="text-center">{{forloop.counter}}</td>
+                                       <td class="text-center"><input type="checkbox" value="2479"
+                                             class="checkbox" id="chkblkrm1" /></td>
+
+                                       <td>{{value.proposal_no}}</td>
+                                       <td>
+                                          <a href="" class="tile tile-img" target="_blank"><i
+                                                class="far fa-file-pdf text-danger"></i></a>
+                                          <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
+                                             class="">{{value.policy_no}}</a>
+                                       </td>
+                                       <td>{{value.customer_name}}</td>
+                                       <td>{{value.insurance_company}}</td>
+                                       <td>{{value.sp_name}}</td>
+                                       <td>{{value.product_name}}</td>
+                                       <td>{{value.registration_no}}</td>
+                                       <td>{{value.rto_city}}</td>
+                                       <td>{{value.rto_state}}</td>
+                                       <td>{{value.vehicle_makeby}}</td>
+                                       <td>{{value.vehicle_model}}</td>
+                                       <td>{{value.vehicle_catagory}}</td>
+                                       <td>{{value.vehicle_fuel_type}}</td>
+
+                                       {% if value.mfg_year%}
+                                       <td>{{value.mfg_year}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       <td>{{value.addon}}</td>
+                                       <td>{{value.ncb}}</td>
+                                       <td>{{value.cubic_capacity}}</td>
+                                       <td>{{value.gvw}}</td>
+                                       <td>{{value.seating_capacity}}</td>
+                                       <td>{{value.coverage_type}}</td>
+                                       <td>{{value.case_type}}</td>
+                                       <td>{{value.cpa}}</td>
+                                       <td>{{value.risk_start_date}}</td>
+                                       <td>{{value.risk_end_date}}</td>
+                                       <td>{{value.issue_date}}</td>
+                                       <td>{{value.insured_age}}</td>
+                                       <td>{{value.policy_term}}</td>
+                                       <td>{{value.bqp}}</td>
+                                       <td>{{value.pos}}</td>
+                                       <td>{{value.employee}}</td>
+                                       <!-- OD  -->
+                                       {% if value.OD_premium%}
+                                       <td>{{value.OD_premium}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.TP_terrorism%}
+                                       <td>{{value.TP_terrorism}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.net%}
+                                       <td>{{value.net}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.gst_amount%}
+                                       <td>{{value.gst_amount}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.gst_gcv_amount%}
+                                       <td>{{value.gst_gcv_amount}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.total%}
+                                       <td>{{value.total}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.agent_od_reward%}
+                                       <td>{{value.agent_od_reward}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.agent_od_amount%}
+                                       <td>{{value.agent_od_amount}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.agent_tp_reward%}
+                                       <td>{{value.agent_tp_reward}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.agent_tp_amount%}
+                                       <td>{{value.agent_tp_amount}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.self_od_reward%}
+                                       <td>{{value.self_od_reward}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.self_od_amount%}
+                                       <td>{{value.self_od_amount}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.self_tp_reward%}
+                                       <td>{{value.self_tp_reward}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       {% if value.self_tp_amount%}
+                                       <td>{{value.self_tp_amount}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       <td>{{value.payment_mode}}</td>
+                                       <td>{{value.proposal}}</td>
+                                       <td>{{value.mandate}}</td>
+                                       <td>{{value.policy}}</td>
+                                       <td>{{value.previous_policy}}</td>
+                                       <td>{{value.pan_card}}</td>
+                                       <td>{{value.aadhar_card}}</td>
+                                       <td>{{value.vehicle_rc}}</td>
+                                       <td>{{value.inspection_report}}</td>
+
+                                       <td class="text-center">
+                                          <form method="POST">
+                                             {% csrf_token %}
+                                             <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
+                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+                                                <i class="fa fa-pencil-alt mt-2"></i>
+                                             </a>
+                                             <a href="{%url 'bima_policy:policy_delete' value.policyid %}"
+                                                name="Remove"
+                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+                                                <i class="far fa-trash-alt mt-2"></i>
+                                             </a>
+                                       </td>
+                                    </tr>
+                                    {% endfor %}
+                                 </tbody>
+                              </table>
+                           </div>
                         </div>
-                        <!-- /.card -->
                      </div>
+
+
+
+
                      <!-- /.page-section -->
                      <div class="modal fade" id="mdlrpolicy" data-backdrop="static" data-keyboard="false" tabindex="-1"
                         role="dialog" aria-labelledby="mdTitle1" aria-hidden="true">
