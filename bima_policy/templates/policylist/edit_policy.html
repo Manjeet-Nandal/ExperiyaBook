@@ -612,15 +612,7 @@
                                        data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="od" id="od"
                                        maxlength="10" required>
                                  </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">TP Premium<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="{{data.TP_premium}}"
-                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
-                                       data-parsley-required="true" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="tp" id="tp"
-                                       maxlength="10" required>
-                                 </div>
+                                 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
                                           class="text-danger">*</abbr></label><input type="text"
@@ -639,12 +631,21 @@
                                        maxlength="10" readonly="" required>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="gst">GST <abbr title="Required"
+                                    <label class="col-lg-5" for="gst">GST 18%<abbr title="Required"
                                           class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="{{data.GST}}"
+                                       data-parsley-group="payout" value="{{data.gst_amount}}"
                                        class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
                                        data-parsley-required="true" data-parsley-required-message=""
                                        data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="gst" id="gst"
+                                       maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2"  id="gsttDiv" hidden>
+                                    <label class="col-lg-5" for="gst">GST 12%<abbr title="Required"
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       data-parsley-group="payout" value="{{data.gst_gcv_amount}}"
+                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
+                                       data-parsley-required="true" data-parsley-required-message=""
+                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt"
                                        maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
