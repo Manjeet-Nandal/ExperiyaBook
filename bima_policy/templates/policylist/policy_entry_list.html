@@ -165,7 +165,7 @@
                   <!-- /.card-header -->
                   <!-- .card-body -->
                   <div class="card-body">
-                   
+
                      <div class="">
                         <div id="tblInsurance_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer no-scroll">
                            <div class="form-row  mb-3">
@@ -187,7 +187,7 @@
 
                               </div>
 
-                              <div class="col-md-5" >
+                              <div class="col-md-5">
                                  <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input
                                           type="search" id="myInput" onkeyup="myFunction()" class="form-control"
                                           placeholder="" aria-controls="tblInsurance"></label></div>
@@ -257,20 +257,28 @@
                                  </style>
 
                                  <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" onchange="getPayoutLess()">
                                     <span class="slider round"></span>
                                  </label>
                               </div>
 
                            </div>
-                        </div>                      
+                        </div>
                      </div>
 
-                     
+                     <script>
+                        function getPayoutLessPolicy() {
+
+                           // var dt = "{{data}}"
+
+                           // console.log(dt);
+
+                        }
+                     </script>
+
                      <div class="table-responsive">
                         <div class="dataTables_scroll">
-                           <div class="dataTables_scrollHead"
-                              style="position: relative; border: 0px; width: 100%;">
+                           <div class="dataTables_scrollHead" style="position: relative; border: 0px; width: 100%;">
                               <div class="dataTables_scrollHeadInner"
                                  style="box-sizing: content-box; width: auto; padding-right: 0px;">
                                  <table
@@ -284,7 +292,7 @@
                            <div class="dataTables_scrollBody" style="position: relative;  width: 100%;">
                               <table id="tblInsurance"
                                  class="table table-striped1 table-hover no-wrap table-bordered no-footer dataTable"
-                                 aria-describedby="tblInsurance_info" role="grid" >
+                                 aria-describedby="tblInsurance_info" role="grid">
 
                                  <thead>
                                     <tr role="row">
@@ -292,8 +300,8 @@
                                           rowspan="1" colspan="1" style="width: 83.2344px;"
                                           aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
                                        <th class="text-center sorting_disabled" tabindex="0"
-                                          aria-controls="tblInsurance" rowspan="1" colspan="1"
-                                          style="width: 30px;" aria-label="">
+                                          aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 30px;"
+                                          aria-label="">
                                           <input type="checkbox" class="checkbox" id="chkblkrm" />
                                        </th>
 
@@ -355,11 +363,11 @@
                                  </thead>
 
                                  <tbody>
-                                    {%for value in data%}
+                                    {%for value in page_obj%}
                                     <tr role="row" class="odd">
                                        <td class="text-center">{{forloop.counter}}</td>
-                                       <td class="text-center"><input type="checkbox" value="2479"
-                                             class="checkbox" id="chkblkrm1" /></td>
+                                       <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
+                                             id="chkblkrm1" /></td>
 
                                        <td>{{value.proposal_no}}</td>
                                        <td>
@@ -504,8 +512,7 @@
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
                                                 <i class="fa fa-pencil-alt mt-2"></i>
                                              </a>
-                                             <a href="{%url 'bima_policy:policy_delete' value.policyid %}"
-                                                name="Remove"
+                                             <a href="{%url 'bima_policy:policy_delete' value.policyid %}" name="Remove"
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                                                 <i class="far fa-trash-alt mt-2"></i>
                                              </a>
@@ -518,8 +525,31 @@
                         </div>
                      </div>
 
+                     <div class="col-sm-12 col-md-7 d-flex justify-content-end" style="align-content: right; margin-left: auto; margin-right: 0;">
+                        <div class="dataTables_paginate paging_simple_numbers" id="tblList_paginate">
+                           <ul class="pagination justify-content-center">                              
+                              {% if page_obj.has_previous %}
+                              <li class="paginate_button page-item active"><a href="?page=1" aria-controls="tblList"
+                                 data-dt-idx="1" tabindex="0" class="page-link">First</a></li>
+                              <li class="paginate_button page-item active"><a href="?page={{ page_obj.previous_page_number }}" aria-controls="tblList"
+                                       data-dt-idx="1" tabindex="0" class="page-link"> &laquo; Prev</a></li>
+                              {% endif %}
+                              <li class="paginate_button page-item active"><a href=""
+                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a></li>
+                             
+                                    {% if page_obj.has_next %}
+                                
+                                 <li class="paginate_button page-item active"><a href="?page={{ page_obj.next_page_number }}"
+                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"> Next &raquo;</a></li>
+                                 
+                                 <li class="paginate_button page-item active"><a href="?page={{ page_obj.paginator.num_pages }}"
+                                       aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"> Last &raquo;</a></li>                                
+                                 
+                              {% endif %}
 
-
+                           </ul>
+                        </div>
+                     </div>
 
                      <!-- /.page-section -->
                      <div class="modal fade" id="mdlrpolicy" data-backdrop="static" data-keyboard="false" tabindex="-1"
