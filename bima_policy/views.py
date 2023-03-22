@@ -17,8 +17,10 @@ def get_id_from_session(request):
     id = request.session['id']
     return id
 
+
 def is_user(request):
-    return len( get_id_from_session(request)) == 15 
+    return len(get_id_from_session(request)) == 15
+
 
 def Index(request):
     return render(request, 'index.html')
@@ -1496,47 +1498,127 @@ def apply_policy(request, id):
         # return HttpResponse(ex)
 
 
-def policy_entryOld(request):
-    print('policy_entry method')
-    # data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').values()
-    data = Policy.objects.filter(profile_id=get_profile_id(
-        get_id_from_session(request))).order_by('-policyid').values()
-
-    print('data is ', data)
-    return render(request, 'policylist/policy_entry_list.html', {'data': data})
-
-
-def policy_entry2(request):
-    print('policy_entry 2 method')
-    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').values()    
-    paginator = Paginator(data, 5)
-    try:
-        page_obj = paginator.get_page(request.GET.get('page'))        
-        return render(request, 'policylist/policy_entry_list.html', {'data': page_obj , 'page_obj': page_obj, 'last':paginator.num_pages -1})   
-    except Exception as ex:
-        page_obj = paginator.get_page(request.GET.get(paginator.num_pages)) 
-        print (ex)
-        return render(request, 'policylist/policy_entry_list.html', {'data': page_obj , 'page_obj': page_obj, 'last':paginator.num_pages -1})
-
-
 def policy_entry(request):
     print('policy_entry method')
     current_year = datetime.now().year
-    current_month = datetime.now().month       
-    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').filter(issue_date__year=current_year).values()
-    # data = Policy.objects.filter(Q(issue_date__year = 2023)).values()
-    # data = Policy.objects.filter(Q(issue_date__gte = '2023-03-25')).values()
-    # data = data.filter(issue_date__contains= f"{current_year}-{current_month}" ).values()
+    current_month = datetime.now().month
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
+        request))).order_by('-policyid').filter(issue_date__year=current_year).values()
+    
+    paginator = Paginator(data, per_page=25)
+    try:
+        data = paginator.get_page(request.GET.get('page'))
+        return render(request, 'policylist/policy_entry_list.html', {'data': data, 'is_user': is_user(request)})
+    except Exception as ex:
+        page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'data': data, 'is_user': is_user(request)})
+
+
+def policy_entry_today(request):
+    print('policy_entry_today method')
+       
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').filter(Q(issue_date=datetime.now())).values()    
+    
+    paginator = Paginator(data, per_page=25)
+    try:
+        data = paginator.get_page(request.GET.get('page'))
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'TODAY','data': data, 'is_user': is_user(request)})
+    except Exception as ex:
+        page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'TODAY','data': data, 'is_user': is_user(request)})
+
+
+def policy_entry_yesterday(request):
+    print('policy_entry_yesterday method')
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    current_day = datetime.now().day -1
+    yesterday = datetime(current_year, current_month, current_day)
+    print(yesterday )
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').filter(Q(issue_date=yesterday)).values()    
+
+    paginator = Paginator(data, per_page=25)
+    try:
+        data = paginator.get_page(request.GET.get('page'))
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'YESTERDAY', 'data': data, 'is_user': is_user(request)})
+    except Exception as ex:
+        page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'YESTERDAY','data': data, 'is_user': is_user(request)})
+
+
+def policy_entry_this_month(request):
+    print('policy_entry_this_month method')
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
+        request))).order_by('-policyid').filter(issue_date__year=current_year).values()
+   
+
+    paginator = Paginator(data, per_page=25)
+    try:
+        data = paginator.get_page(request.GET.get('page'))
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'THIS MONTH', 'data': data, 'is_user': is_user(request)})
+    except Exception as ex:
+        page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'THIS MONTH', 'data': data, 'is_user': is_user(request)})
+
+
+def policy_entry_last_month(request):
+    print('policy_entry_last_month method')
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
+        request))).order_by('-policyid').filter(issue_date__year=current_year).values()
    
     paginator = Paginator(data, per_page=25)
     try:
-        data = paginator.get_page(request.GET.get('page'))        
-        return render(request, 'policylist/policy_entry_list.html', {'data': data , 'is_user': is_user(request)})   
+        data = paginator.get_page(request.GET.get('page'))
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'LAST MONTH', 'data': data, 'is_user': is_user(request)})
     except Exception as ex:
-        page_obj = paginator.get_page(request.GET.get(paginator.num_pages)) 
-        print (ex)
-        return render(request, 'policylist/policy_entry_list.html', {'data': data, 'is_user': is_user(request)})
-       
+        page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'LAST MONTH', 'data': data, 'is_user': is_user(request)})
+
+
+def policy_entry_year(request):
+    print('policy_entry_year method')
+    current_year = datetime.now().year
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
+        request))).order_by('-policyid').filter(issue_date__year=current_year).values()
+
+    paginator = Paginator(data, per_page=25)
+    try:
+        data = paginator.get_page(request.GET.get('page'))
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'CURRENT YEAR', 'data': data, 'is_user': is_user(request)})
+    except Exception as ex:
+        page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'CURRENT YEAR', 'data': data, 'is_user': is_user(request)})
+
+
+def policy_entry_custom(request):
+    print('policy_entry_custom method')
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
+        request))).order_by('-policyid').filter(issue_date__year=current_year).values()
+    # data = Policy.objects.filter(Q(issue_date__year = 2023)).values()
+    # data = Policy.objects.filter(Q(issue_date__gte = '2023-03-25')).values()
+    # data = data.filter(issue_date__contains= f"{current_year}-{current_month}" ).values()
+
+    paginator = Paginator(data, per_page=25)
+    try:
+        data = paginator.get_page(request.GET.get('page'))
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'CUSTOM', 'data': data, 'is_user': is_user(request)})
+    except Exception as ex:
+        page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option':'CUSTOM', 'data': data, 'is_user': is_user(request)})
+
 
 def policy_entrydata(request, id):
     print('policy_entrydata')
@@ -1698,7 +1780,7 @@ def policy_entrydata(request, id):
             data.gvw = ''
             data.seating_capacity = ''
             data.coverage_type = ''
-        return render(request, 'policylist/edit_policy.html', {'is_user': is_user(request),'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
+        return render(request, 'policylist/edit_policy.html', {'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
 
 
 def edit_policy(request, id):
