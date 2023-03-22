@@ -1503,17 +1503,30 @@ def policy_entryOld(request):
     return render(request, 'policylist/policy_entry_list.html', {'data': data})
 
 
-def policy_entry(request):
-    print('policy_entry method')
-    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').values()
+def policy_entry2(request):
+    print('policy_entry 2 method')
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').values()    
     paginator = Paginator(data, 5)
     try:
         page_obj = paginator.get_page(request.GET.get('page'))        
         return render(request, 'policylist/policy_entry_list.html', {'data': page_obj , 'page_obj': page_obj, 'last':paginator.num_pages -1})   
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages)) 
-        print   (ex)
+        print (ex)
         return render(request, 'policylist/policy_entry_list.html', {'data': page_obj , 'page_obj': page_obj, 'last':paginator.num_pages -1})
+
+
+def policy_entry(request):
+    print('policy_entry method')
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').values()    
+    paginator = Paginator(data, per_page=25)
+    try:
+        data = paginator.get_page(request.GET.get('page'))        
+        return render(request, 'policylist/policy_entry_list.html', {'data': data })   
+    except Exception as ex:
+        page_obj = paginator.get_page(request.GET.get(paginator.num_pages)) 
+        print (ex)
+        return render(request, 'policylist/policy_entry_list.html', {'data': data })
        
 
 def policy_entrydata(request, id):

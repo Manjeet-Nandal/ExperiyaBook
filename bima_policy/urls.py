@@ -37,11 +37,12 @@ urlpatterns = [
     path('policy/',create_policy.as_view(), name="create_policy"),
     path('policy/create_policy_non_motor',create_policy_non_motor.as_view(), name="create_policy_non_motor"),
     path('policy/entry/',policy_entry, name="policy_entry"),
+    path('policy/entry2/',policy_entry2, name="policy_entry2"),
+    
     path('policy/policy_entrydata/<str:id>',policy_entrydata, name="update"),
     path('policy/<str:id>/delete',policy_delete, name="policy_delete"),
     path('policy/edit/<str:id>', edit_policy,name="edit_policy"),
-    path('policy/import',policy_import, name="policy_import"),
-   
+    path('policy/import',policy_import, name="policy_import"),   
     path('policy/save/<str:id>',apply_policy, name="apply_policy"),  
     path('upcomingRenewal/',upcoming_renewal, name="upcoming_renewal"),
     path('agent_payable/',agentpayable, name="agentpayable"),

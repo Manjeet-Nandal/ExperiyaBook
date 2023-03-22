@@ -2,6 +2,17 @@
 {%block content%}
 {% load static %}
 <main class="app-main">
+
+   <script>
+      function filterPolicy() {
+         document.getElementsByClassName("showMoreNew")[0].click();
+         value = document.getElementById('select-period').value
+         if (value == 'this_month') {
+            // window.location.replace('{%url 'bima_policy:policy_entry' %}')
+         }
+         // window.location.replace('{%url 'bima_policy:create_policy' %}')
+      }
+   </script>
    <!-- .app-main -->
    <div class="wrapper">
       <!-- .wrapper -->
@@ -27,6 +38,11 @@
             </header>
             <!-- .page-section -->
             <div class="page-section">
+               <div class="col-md-2 col-sm-12" >
+                  <div class="form-group">
+                     <a href='{%url 'bima_policy:policy_entry' %}'><button class="showMoreNew">Filter</button></a>
+                  </div>
+               </div>
                <!-- .card -->
                <div class="card card-fluid">
                   <!-- .card-header -->
@@ -35,7 +51,8 @@
                         <div class="row">
                            <div class="col-md-2 col-sm-12">
                               <div class="form-group">
-                                 <select class="custom-select" name="period" id="select-period">
+                                 <select class="custom-select" name="period" id="select-period"
+                                    onchange="filterPolicy()">
                                     <option value="today">Today</option>
                                     <option value="yesterday">Yesterday</option>
                                     <option value="this_month" selected="">This Month</option>
@@ -45,6 +62,7 @@
                                  </select>
                               </div>
                            </div>
+
                            <div class="col-md-2 col-sm-12">
                               <div class="form-group">
                                  <input type="text" id="frmDate" data-alt-format="Y-m-d" data-date-format="d/m/Y"
@@ -257,7 +275,7 @@
                                  </style>
 
                                  <label class="switch">
-                                    <input type="checkbox" onchange="getPayoutLess()">
+                                    <input type="checkbox" onchange="getPayoutLessPolicy()">
                                     <span class="slider round"></span>
                                  </label>
                               </div>
@@ -266,15 +284,6 @@
                         </div>
                      </div>
 
-                     <script>
-                        function getPayoutLessPolicy() {
-
-                           // var dt = "{{data}}"
-
-                           // console.log(dt);
-
-                        }
-                     </script>
 
                      <div class="table-responsive">
                         <div class="dataTables_scroll">
@@ -363,7 +372,7 @@
                                  </thead>
 
                                  <tbody>
-                                    {%for value in page_obj%}
+                                    {% for value in data %}
                                     <tr role="row" class="odd">
                                        <td class="text-center">{{forloop.counter}}</td>
                                        <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
@@ -525,26 +534,32 @@
                         </div>
                      </div>
 
-                     <div class="col-sm-12 col-md-7 d-flex justify-content-end" style="align-content: right; margin-left: auto; margin-right: 0;">
+                     <div class="col-sm-12 col-md-7 d-flex justify-content-end"
+                        style="align-content: right; margin-left: auto; margin-right: 0;">
                         <div class="dataTables_paginate paging_simple_numbers" id="tblList_paginate">
-                           <ul class="pagination justify-content-center">                              
-                              {% if page_obj.has_previous %}
+                           <ul class="pagination justify-content-center">
+                              {% if data.has_previous %}
                               <li class="paginate_button page-item active"><a href="?page=1" aria-controls="tblList"
-                                 data-dt-idx="1" tabindex="0" class="page-link">First</a></li>
-                              <li class="paginate_button page-item active"><a href="?page={{ page_obj.previous_page_number }}" aria-controls="tblList"
-                                       data-dt-idx="1" tabindex="0" class="page-link"> &laquo; Prev</a></li>
+                                    data-dt-idx="1" tabindex="0" class="page-link">First</a></li>
+                              <li class="paginate_button page-item active"><a
+                                    href="?page={{ data.previous_page_number }}" aria-controls="tblList" data-dt-idx="1"
+                                    tabindex="0" class="page-link"> &laquo; Prev</a></li>
                               {% endif %}
-                              <li class="paginate_button page-item active"><a href=""
-                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a></li>
-                             
-                                    {% if page_obj.has_next %}
-                                
-                                 <li class="paginate_button page-item active"><a href="?page={{ page_obj.next_page_number }}"
-                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"> Next &raquo;</a></li>
-                                 
-                                 <li class="paginate_button page-item active"><a href="?page={{ page_obj.paginator.num_pages }}"
-                                       aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"> Last &raquo;</a></li>                                
-                                 
+
+                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
+                                    data-dt-idx="1" tabindex="0" class="page-link"> Page {{ data.number }} of
+                                    {{data.paginator.num_pages }}.</a></li>
+
+                              {% if data.has_next %}
+
+                              <li class="paginate_button page-item active"><a href="?page={{ data.next_page_number }}"
+                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"> Next
+                                    &raquo;</a></li>
+
+                              <li class="paginate_button page-item active"><a
+                                    href="?page={{ data.paginator.num_pages }}" aria-controls="tblList" data-dt-idx="1"
+                                    tabindex="0" class="page-link"> Last &raquo;</a></li>
+
                               {% endif %}
 
                            </ul>
@@ -1099,6 +1114,11 @@
          }
       }
    }
+
+   function getPayoutLessPolicy() {
+      // window.open("{%url 'bima_policy:policy_entry' %}");
+   }
+
 </script>
 <!-- /.modal -->
 <!-- BEGIN BASE JS -->

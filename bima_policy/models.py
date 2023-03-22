@@ -1,5 +1,6 @@
 from enum import unique
 import uuid
+from django.forms import DateTimeField
 from djongo import models
 
 # Create your models here.
@@ -300,8 +301,6 @@ class Policy(models.Model):
     aadhar_card = models.FileField(upload_to='media/documents/')
     vehicle_rc = models.FileField(upload_to='media/documents/')
     inspection_report = models.FileField(upload_to='media/documents/')
-
-    
 
     def __str__(self):
         return self.customer_name
