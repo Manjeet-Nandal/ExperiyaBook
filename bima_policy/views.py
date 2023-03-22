@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
@@ -16,6 +17,8 @@ def get_id_from_session(request):
     id = request.session['id']
     return id
 
+def is_user(request):
+    return len( get_id_from_session(request)) == 15 
 
 def Index(request):
     return render(request, 'index.html')
@@ -1518,15 +1521,21 @@ def policy_entry2(request):
 
 def policy_entry(request):
     print('policy_entry method')
-    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').values()    
+    current_year = datetime.now().year
+    current_month = datetime.now().month       
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').filter(issue_date__year=current_year).values()
+    # data = Policy.objects.filter(Q(issue_date__year = 2023)).values()
+    # data = Policy.objects.filter(Q(issue_date__gte = '2023-03-25')).values()
+    # data = data.filter(issue_date__contains= f"{current_year}-{current_month}" ).values()
+   
     paginator = Paginator(data, per_page=25)
     try:
         data = paginator.get_page(request.GET.get('page'))        
-        return render(request, 'policylist/policy_entry_list.html', {'data': data })   
+        return render(request, 'policylist/policy_entry_list.html', {'data': data , 'is_user': is_user(request)})   
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages)) 
         print (ex)
-        return render(request, 'policylist/policy_entry_list.html', {'data': data })
+        return render(request, 'policylist/policy_entry_list.html', {'data': data, 'is_user': is_user(request)})
        
 
 def policy_entrydata(request, id):
@@ -1653,7 +1662,9 @@ def policy_entrydata(request, id):
 
         return redirect('bima_policy:policy_entry')
     else:
-        print('get entrydata')
+        print('get entrydata', id)
+        print(is_user(request))
+
         data = Policy.objects.get(policyid=id)
         data_sp = ServiceProvider.objects.filter(
             profile_id=get_id_from_session(request))
@@ -1687,7 +1698,7 @@ def policy_entrydata(request, id):
             data.gvw = ''
             data.seating_capacity = ''
             data.coverage_type = ''
-        return render(request, 'policylist/edit_policy.html', {'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
+        return render(request, 'policylist/edit_policy.html', {'is_user': is_user(request),'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
 
 
 def edit_policy(request, id):

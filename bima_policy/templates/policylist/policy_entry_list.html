@@ -5,10 +5,10 @@
 
    <script>
       function filterPolicy() {
-         document.getElementsByClassName("showMoreNew")[0].click();
+         // document.getElementsByClassName("showMoreNew")[0].click();
          value = document.getElementById('select-period').value
          if (value == 'this_month') {
-            // window.location.replace('{%url 'bima_policy:policy_entry' %}')
+            window.location.replace('{%url 'bima_policy:policy_entry' %}')
          }
          // window.location.replace('{%url 'bima_policy:create_policy' %}')
       }
@@ -38,7 +38,7 @@
             </header>
             <!-- .page-section -->
             <div class="page-section">
-               <div class="col-md-2 col-sm-12" >
+               <div class="col-md-2 col-sm-12" hidden>
                   <div class="form-group">
                      <a href='{%url 'bima_policy:policy_entry' %}'><button class="showMoreNew">Filter</button></a>
                   </div>
@@ -354,10 +354,12 @@
                                        <th class="sorting">Agent OD Amount</th>
                                        <th class="sorting">Agent TP Reward %</th>
                                        <th class="sorting">Agent TP Amount</th>
+                                       {% if is_user %}
                                        <th class="sorting">Self OD Reward %</th>
                                        <th class="sorting">Self OD Amount</th>
                                        <th class="sorting">Self TP Reward %</th>
                                        <th class="sorting">Self TP Amount</th>
+                                       {% endif %}
                                        <th class="sorting">Payment Mode</th>
                                        <th class="sorting">Proposal</th>
                                        <th class="sorting">Mandate</th>
@@ -480,6 +482,8 @@
                                        <td></td>
                                        {% endif %}
 
+                                       {% if is_user %}
+
                                        {% if value.self_od_reward%}
                                        <td>{{value.self_od_reward}}</td>
                                        {% else %}
@@ -502,6 +506,8 @@
                                        <td>{{value.self_tp_amount}}</td>
                                        {% else %}
                                        <td></td>
+                                       {% endif %}
+
                                        {% endif %}
 
                                        <td>{{value.payment_mode}}</td>

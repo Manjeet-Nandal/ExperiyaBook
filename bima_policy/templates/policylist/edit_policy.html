@@ -707,7 +707,7 @@
                                        <option value="SELF CHEQUE">SELF CHEQUE</option>
                                     </select>
                                  </div>
-
+                                 {% if is_user %}
                                  <hr>
                                  <h4 class="card-title mb-3"> Agent Payout </h4>
                                  <!-- grid row -->
@@ -719,6 +719,7 @@
                                        <option value="TP">TP</option>
                                     </select>
                                  </div>
+                                
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Rewards % </label><input type="text" id="agent_od_reward"
                                        name="agent_od_reward" value="{{data.agent_od_reward}}"
@@ -732,6 +733,7 @@
                                        data-parsley-pattern="^[0-9]+$" readonly="" maxlength="10" required>
                                  </div>
 
+                                
                                  <hr>
 
                                  <h4 class="card-title mb-3"> Self Payout </h4>
@@ -756,6 +758,8 @@
                                        class="form-control maskNumField col-lg-6 bg-light" data-parsley-maxlength="10"
                                        data-parsley-pattern="^[0-9]+$" readonly="" maxlength="10" required>
                                  </div>
+
+                               {% endif %}
 
                                  <script>
 
