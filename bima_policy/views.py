@@ -1517,48 +1517,20 @@ def policy_entry(request):
         print(ex)
         return render(request, 'policylist/policy_entry_list.html', {'select_period_option': 'TODAY', 'data': data, 'is_user': is_user(request)})
 
-
-def policy_entry_filterold(request, value1, value2):
-    print('policy_entry_filter method')
-
-    value1 = value1.replace("*", "/")
-    value2 = value2.replace("*", "/")
-    print('value1 ', value1)
-    print('value2 ', value2)
-
-    date1 = parser.parse(value1)
-    date2 = parser.parse(value2)
-    print(date1)
-    print(date2)
-
-    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
-        request))).order_by('-policyid').filter(Q(issue_date__gte=date1) & Q(issue_date__lte=date2)).values()
-
-    paginator = Paginator(data, per_page=25)
-    try:
-        data = paginator.get_page(request.GET.get('page'))
-        return render(request, 'policylist/policy_entry_list.html', {'select_period_option': 'THIS MONTH', 'data': data, 'is_user': is_user(request)})
-    except Exception as ex:
-        page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
-        print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'select_period_option': 'THIS MONTH', 'data': data, 'is_user': is_user(request)})
-
-
 def policy_entry_filter(request, value1, value2):
     print('policy_entry_filter method')
 
-    value1 = value1.replace("*", "/")
-    value2 = value2.replace("*", "/")
-    print('value1 ', value1)
-    print('value2 ', value2)
+    value1 = value1.replace("*", "-")
+    value2 = value2.replace("*", "-")    
 
-    date1 = parser.parse(value1)
-    date2 = parser.parse(value2)
-    print(date1)
-    print(date2)
+    value1 = value1.split('-')
+    value2 = value2.split('-')
+
+    value1 =  datetime(int(value1[2]), int(value1[1]), int(value1[0]))
+    value2 =  datetime(int(value2[2]), int(value2[1]), int(value2[0]))
 
     data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
-        request))).order_by('-policyid').filter(Q(issue_date__gte=date1) & Q(issue_date__lte=date2)).values()
+        request))).order_by('-policyid').filter(Q(issue_date__gte=value1) & Q(issue_date__lte=value2)).values()
 
     paginator = Paginator(data, per_page=25)
     try:
