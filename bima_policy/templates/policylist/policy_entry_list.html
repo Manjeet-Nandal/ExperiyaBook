@@ -5,8 +5,10 @@
 
    <script>
       function filterPolicy() {
+         return
          // document.getElementsByClassName("showMoreNew")[0].click();
          value = document.getElementById('select-period').value
+         frmDate = document.getElementById('frmDate').value
          if (value == 'today') {           
             window.location.replace('{%url 'bima_policy:policy_entry_today' %}')
          }
@@ -24,8 +26,56 @@
          }       
          else if (value == 'custom') {
             window.location.replace('{%url 'bima_policy:policy_entry_custom' %}')
-         }   
+         }            
       }
+      
+      function filterPolicy1() {
+         // document.getElementsByClassName("showMoreNew")[0].click();
+     
+         try {
+
+            start_date = document.getElementById('frmDate').value.toString()
+            end_date = document.getElementById('toDate').value.toString()            
+
+            if (start_date == "" || end_date == "") {             
+               return
+            }
+            start_date = start_date.replace("/", "*")
+            start_date = start_date.replace("/", "*")
+            
+            end_date = end_date.replace("/", "*")
+            end_date = end_date.replace("/", "*")
+
+            try {
+               index = window.location.href.indexOf("*")
+               if (index > 0) {
+                  // window.location.reload()
+                  hostname = window.location.hostname
+                  port = window.location.port
+                  pathname = '/bima_policy/policy/entry/'
+                  href = window.location.origin + pathname + start_date  + '/' + end_date   
+                  
+                  window.location.replace( href)               
+               }
+               else
+               {                   
+                  href = window.location.href + start_date          
+                  href += "/"
+                  href += end_date     
+                  alert(start_date)     
+                  window.location.replace( href)
+               }
+            } catch (error) {
+               
+            }
+            
+         } catch (error) {
+            console.log(error);
+         }
+                
+        
+      }
+   
    </script>
    <!-- .app-main -->
    <div class="wrapper">
@@ -52,9 +102,11 @@
             </header>
             <!-- .page-section -->
             <div class="page-section">
-               <div class="col-md-2 col-sm-12" hidden>
+               <div class="col-md-2 col-sm-12" >
                   <div class="form-group">
-                     <a href='{%url 'bima_policy:policy_entry' %}'><button class="showMoreNew">Filter</button></a>
+                     <!-- <a href='{%url 'bima_policy:policy_entry_today'  %}'><button class="showMoreNew">Filter</button></a> -->
+                     <a href='{%url 'bima_policy:policy_entryy' value="123" %}'><button class="showMoreNew">Filter</button></a>
+
                   </div>
                </div>
                <!-- .card -->
@@ -66,7 +118,7 @@
                            <div class="col-md-2 col-sm-12">
                               <div class="form-group">
                                  <select class="custom-select" name="period" id="select-period"  
-                                    onchange="filterPolicy()">                                 
+                                    onchange="filterPolicy()">     
                                     <option value="{{select_period_option}}">{{select_period_option}}</option>
                                     <option value="today">Today</option>
                                     <option value="yesterday">Yesterday</option>
@@ -81,7 +133,7 @@
                            <div class="col-md-2 col-sm-12">
                               <div class="form-group">
                                  <input type="text" id="frmDate" data-alt-format="Y-m-d" data-date-format="d/m/Y"
-                                    data-toggle="flatpickr" placeholder="DD-MM-YYYY"
+                                    data-toggle="flatpickr" placeholder="DD-MM-YYYY" 
                                     class="form-control flatpickr-input" disabled="" readonly="readonly">
                               </div>
                            </div>
@@ -92,46 +144,18 @@
                                     class="form-control datepicker flatpickr-input" disabled="" readonly="readonly">
                               </div>
                            </div>
-                           <div class="col-md-3 col-sm-12">
-
-
-                              {% comment %} <label>ALL AGENT<abbr title="Required" class="text-danger">*</abbr></label>
-                              {% endcomment %}
+                           <div class="col-md-3 col-sm-12">   
                               <select name="service_provider" data-parsley-required-message="" class="custom-select"
                                  id="service_provider" data-parsley-required="true">
-
                                  <option value=""> All Agent </option>
                                  {%for value in datag%}
                                  <option value={{value.full_name}}>{{value.full_name}}</option>
-                                 {%endfor%}
-                                 {% comment %} <option value="4">Broker Indore</option>
-                                 <option value="2">PolicyBazaar</option> {% endcomment %}
+                                 {%endfor%}                           
                               </select>
                            </div>
-
-
-                           {% comment %} <div class="form-group">
-                              <select id="agent" class="custom-select select2 select2-hidden-accessible" tabindex="-1"
-                                 aria-hidden="true">
-                                 {% comment %} <option value="">All Agent</option> {% endcomment %}
-                                 {% comment %} {%for value in datag%}
-                                 <option value={{value.full_name}}>{{value.full_name}}</option>
-                                 {%endfor%}
-                              </select>
-                              <span class="select2 select2-container select2-container--default" dir="ltr"
-                                 style="width: 100%;"><span class="selection"><span
-                                       class="select2-selection select2-selection--single" role="combobox"
-                                       aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                       aria-labelledby="select2-agent-container"><span
-                                          class="select2-selection__rendered" id="select2-agent-container"
-                                          title="All Agent">All Agent</span><span class="select2-selection__arrow"
-                                          role="presentation"><b role="presentation"></b></span></span></span><span
-                                    class="dropdown-wrapper" aria-hidden="true"></span></span>
-                           </div> {% endcomment %}
-
                            <div class="col-md-3 col-sm-12">
                               <div class="form-group">
-                                 <button type="button" id="filterlist" class="btn btn-secondary " title="Filter"><i
+                                 <button onclick="srch()" type="button" id="filterlist" class="btn btn-secondary " title="Filter" ><i
                                        class="fa fa-search" aria-hidden="true"></i> </button>
                                  <button type="button" id="btnreset" class="btn btn-secondary" title="Refresh"><i
                                        class="icofont icofont-refresh" aria-hidden="true"></i> </button>
@@ -144,6 +168,13 @@
                                        Filter</small></a>
                               </div>
                            </div>
+                           <script>
+                              function srch() {
+                                        
+                                        filterPolicy1()
+                                       //  document.getElementsByClassName("showMoreNew")[0].click();
+                              }
+                           </script>
                         </div>
                         <div id="morefilter" class="row" style="display:none">
                            <div class="col-md-3 col-sm-12">
