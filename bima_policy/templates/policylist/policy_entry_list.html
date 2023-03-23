@@ -5,77 +5,46 @@
 
    <script>
       function filterPolicy() {
-         return
-         // document.getElementsByClassName("showMoreNew")[0].click();
-         value = document.getElementById('select-period').value
-         frmDate = document.getElementById('frmDate').value
-         if (value == 'today') {           
-            window.location.replace('{%url 'bima_policy:policy_entry_today' %}')
-         }
-         else if (value == 'yesterday') {
-            window.location.replace('{%url 'bima_policy:policy_entry_yesterday' %}')
-         }   
-         else if (value == 'this_month') {
-            window.location.replace('{%url 'bima_policy:policy_entry_this_month' %}')
-         }
-         else if (value == 'last_month') {
-            window.location.replace('{%url 'bima_policy:policy_entry_last_month' %}')
-         }     
-         else if (value == 'current_year') {
-            window.location.replace('{%url 'bima_policy:policy_entry_year' %}')
-         }       
-         else if (value == 'custom') {
-            window.location.replace('{%url 'bima_policy:policy_entry_custom' %}')
-         }            
-      }
-      
-      function filterPolicy1() {
-         // document.getElementsByClassName("showMoreNew")[0].click();
+          // document.getElementsByClassName("showMoreNew")[0].click();
      
-         try {
-
-            start_date = document.getElementById('frmDate').value.toString()
-            end_date = document.getElementById('toDate').value.toString()            
-
-            if (start_date == "" || end_date == "") {             
-               return
-            }
-            start_date = start_date.replace("/", "*")
-            start_date = start_date.replace("/", "*")
-            
-            end_date = end_date.replace("/", "*")
-            end_date = end_date.replace("/", "*")
-
             try {
-               index = window.location.href.indexOf("*")
-               if (index > 0) {
-                  // window.location.reload()
-                  hostname = window.location.hostname
-                  port = window.location.port
-                  pathname = '/bima_policy/policy/entry/'
-                  href = window.location.origin + pathname + start_date  + '/' + end_date   
-                  
-                  window.location.replace( href)               
-               }
-               else
-               {                   
-                  href = window.location.href + start_date          
-                  href += "/"
-                  href += end_date     
-                  alert(start_date)     
-                  window.location.replace( href)
-               }
-            } catch (error) {
-               
-            }
-            
-         } catch (error) {
-            console.log(error);
-         }
-                
-        
-      }
-   
+                  start_date = document.getElementById('frmDate').value.toString()
+                  end_date = document.getElementById('toDate').value.toString()            
+
+                  if (start_date == "" || end_date == "") {             
+                     return
+                  }
+                  start_date = start_date.replace("/", "*")
+                  start_date = start_date.replace("/", "*")
+
+                  end_date = end_date.replace("/", "*")
+                  end_date = end_date.replace("/", "*")
+
+                  try {
+                     index = window.location.href.indexOf("*")
+                     if (index > 0) {
+                        // window.location.reload()
+                        hostname = window.location.hostname
+                        port = window.location.port
+                        pathname = '/bima_policy/policy/entry/'
+                        href = window.location.origin + pathname + start_date  + '/' + end_date   
+                        
+                        window.location.replace( href)               
+                     }
+                     else
+                     {                   
+                        href = window.location.href + start_date          
+                        href += "/"
+                        href += end_date                     
+                        window.location.replace( href)
+                     }
+                  } catch (error) {
+                     
+                  }
+
+               } catch (error) {}             
+      }      
+         
    </script>
    <!-- .app-main -->
    <div class="wrapper">
@@ -101,14 +70,7 @@
                <!-- /grid row -->
             </header>
             <!-- .page-section -->
-            <div class="page-section">
-               <div class="col-md-2 col-sm-12" >
-                  <div class="form-group">
-                     <!-- <a href='{%url 'bima_policy:policy_entry_today'  %}'><button class="showMoreNew">Filter</button></a> -->
-                     <a href='{%url 'bima_policy:policy_entryy' value="123" %}'><button class="showMoreNew">Filter</button></a>
-
-                  </div>
-               </div>
+            <div class="page-section">              
                <!-- .card -->
                <div class="card card-fluid">
                   <!-- .card-header -->
@@ -117,8 +79,7 @@
                         <div class="row">
                            <div class="col-md-2 col-sm-12">
                               <div class="form-group">
-                                 <select class="custom-select" name="period" id="select-period"  
-                                    onchange="filterPolicy()">     
+                                 <select class="custom-select" name="period" id="select-period" >     
                                     <option value="{{select_period_option}}">{{select_period_option}}</option>
                                     <option value="today">Today</option>
                                     <option value="yesterday">Yesterday</option>
@@ -155,7 +116,7 @@
                            </div>
                            <div class="col-md-3 col-sm-12">
                               <div class="form-group">
-                                 <button onclick="srch()" type="button" id="filterlist" class="btn btn-secondary " title="Filter" ><i
+                                 <button onclick="filterPolicy()" type="button" id="filterlist" class="btn btn-secondary " title="Filter" ><i
                                        class="fa fa-search" aria-hidden="true"></i> </button>
                                  <button type="button" id="btnreset" class="btn btn-secondary" title="Refresh"><i
                                        class="icofont icofont-refresh" aria-hidden="true"></i> </button>
@@ -167,14 +128,7 @@
                                  <a href="#" class="no-wrap pl-0 morefilter" title="More Filter"><small>More
                                        Filter</small></a>
                               </div>
-                           </div>
-                           <script>
-                              function srch() {
-                                        
-                                        filterPolicy1()
-                                       //  document.getElementsByClassName("showMoreNew")[0].click();
-                              }
-                           </script>
+                           </div>                         
                         </div>
                         <div id="morefilter" class="row" style="display:none">
                            <div class="col-md-3 col-sm-12">
@@ -185,8 +139,6 @@
                                     <option value=""> All Service Provider</option>
                                     <option value="14">CHOLA DIRECT</option>
                                     <option value="6">DELHI BAJAJ</option>
-
-
                                  </select>
                                  <span class="select2 select2-container select2-container--default" dir="ltr"
                                     style="width: 100%;"><span class="selection"><span
