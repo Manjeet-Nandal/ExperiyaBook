@@ -1517,8 +1517,10 @@ def policy_entry(request):
         print(ex)
         return render(request, 'policylist/policy_entry_list.html', {'select_period_option': 'TODAY', 'data': data, 'is_user': is_user(request)})
 
-def policy_entry_filter(request, value1, value2):
+
+def policy_entry_filter(request, value1, value2, period):
     print('policy_entry_filter method')
+    print(period)
 
     value1 = value1.replace("*", "-")
     value2 = value2.replace("*", "-")    
@@ -1535,11 +1537,11 @@ def policy_entry_filter(request, value1, value2):
     paginator = Paginator(data, per_page=25)
     try:
         data = paginator.get_page(request.GET.get('page'))
-        return render(request, 'policylist/policy_entry_list.html', {'select_period_option': 'THIS MONTH', 'data': data, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option': period, 'data': data, 'is_user': is_user(request)})
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'select_period_option': 'THIS MONTH', 'data': data, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'select_period_option': period, 'data': data, 'is_user': is_user(request)})
 
 
 def policy_entrydata(request, id):

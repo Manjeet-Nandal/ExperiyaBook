@@ -10,6 +10,17 @@
             try {
                   start_date = document.getElementById('frmDate').value.toString()
                   end_date = document.getElementById('toDate').value.toString()            
+                  period_value = document.getElementById('select-period').value.toString().toUpperCase()    
+                 
+                  if (period_value == "LAST_MONTH") {                          
+                      period_value = "LAST MONTH"
+                  }
+                  else if (period_value == "THIS_MONTH") {                          
+                        period_value = "THIS MONTH"
+                  }
+                  else if (period_value == "CURRENT_YEAR") {                          
+                        period_value = "CURRENT YEAR"
+                  }
 
                   if (start_date == "" || end_date == "") {             
                      return
@@ -26,8 +37,9 @@
                         // window.location.reload()
                         hostname = window.location.hostname
                         port = window.location.port
-                        pathname = '/bima_policy/policy/entry/'
-                        href = window.location.origin + pathname + start_date  + '/' + end_date   
+                        pathname = '/bima_policy/policy/entry/'     
+                        
+                        href = window.location.origin + pathname + start_date  + '/' + end_date + '/' + period_value    
                         
                         window.location.replace( href)               
                      }
@@ -35,7 +47,9 @@
                      {                   
                         href = window.location.href + start_date          
                         href += "/"
-                        href += end_date                     
+                        href += end_date         
+                        href += "/"                          
+                        href += period_value               
                         window.location.replace( href)
                      }
                   } catch (error) {
