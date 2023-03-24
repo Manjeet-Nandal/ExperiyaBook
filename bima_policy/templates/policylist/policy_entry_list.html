@@ -161,6 +161,9 @@
                } catch (error) {}             
       }      
          
+      function resertDocument(){        
+        document.location.reload()
+      }
          
    </script>
    <!-- .app-main -->
@@ -195,9 +198,7 @@
                      <form id="frminslist">
                         <div class="row">                          
                            <div class="col-md-2 col-sm-12">                              
-                              <select name="select-period" data-parsley-required-message=""
-                                 class="custom-select select2 select2-hidden-accessible" id="select-period"
-                                 data-parsley-required="true" tabindex="-1" aria-hidden="true">
+                              <select class="custom-select" name="period" id="select-period">
                                     <!-- <option value="{{period}}">{{period}}</option> -->
                                     <option value="today">Today</option>
                                     <option value="yesterday">Yesterday</option>
@@ -238,7 +239,7 @@
                               <div class="form-group">
                                  <button onclick="filterPolicy()" type="button" id="filterlist" class="btn btn-secondary " title="Filter" ><i
                                        class="fa fa-search" aria-hidden="true"></i> </button>
-                                 <button type="button" id="btnreset" class="btn btn-secondary" title="Refresh"><i
+                                 <button type="button" id="btnreset" class="btn btn-secondary" title="Refresh" onclick="resertDocument()"><i
                                        class="icofont icofont-refresh" aria-hidden="true"></i> </button>
                                  <button type="button" onclick="ExportToExcel('xlsx')" id="download_inslist"
                                     class="btn btn-secondary " title="Download"><i class="fa fa-download"
