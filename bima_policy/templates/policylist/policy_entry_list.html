@@ -4,13 +4,31 @@
 <main class="app-main">
 
    <script>
+      function initialSetup() {
+         period = "{{period|safe}}"
+         payout= "{{payout|safe}}"
+
+         if (payout == 'true') {
+            document.getElementById('payout_switch').checked   = true            
+         }
+         else{
+            document.getElementById('payout_switch').checked   = false 
+         }         
+      }
       function filterPolicy() {
           // document.getElementsByClassName("showMoreNew")[0].click();
      
             try {
+                  payout_switch = document.getElementById('payout_switch').checked 
+                  if (payout_switch) {
+                     filterPolicy_nopayout();
+                     return;
+                  }
+
                   start_date = document.getElementById('frmDate').value.toString()
                   end_date = document.getElementById('toDate').value.toString()            
                   period_value = document.getElementById('select-period').value.toString().toUpperCase()    
+                                      
                  
                   if (period_value == "LAST_MONTH") {                          
                       period_value = "LAST MONTH"
@@ -49,7 +67,8 @@
                         href += "/"
                         href += end_date         
                         href += "/"                          
-                        href += period_value               
+                        href += period_value        
+                          
                         window.location.replace( href)
                      }
                   } catch (error) {
@@ -58,6 +77,68 @@
 
                } catch (error) {}             
       }      
+
+      function filterPolicy_nopayout() {
+          // document.getElementsByClassName("showMoreNew")[0].click();
+            try {
+                  payout_switch = document.getElementById('payout_switch').checked   
+                  if (payout_switch) {                   
+               
+                  start_date = document.getElementById('frmDate').value.toString()
+                  end_date = document.getElementById('toDate').value.toString()            
+                  period_value = document.getElementById('select-period').value.toString().toUpperCase()    
+                                    
+                 
+                  if (period_value == "LAST_MONTH") {                          
+                      period_value = "LAST MONTH"
+                  }
+                  else if (period_value == "THIS_MONTH") {                          
+                        period_value = "THIS MONTH"
+                  }
+                  else if (period_value == "CURRENT_YEAR") {                          
+                        period_value = "CURRENT YEAR"
+                  }
+
+                  if (start_date == "" || end_date == "") {             
+                     return
+                  }
+                  start_date = start_date.replace("/", "*")
+                  start_date = start_date.replace("/", "*")
+
+                  end_date = end_date.replace("/", "*")
+                  end_date = end_date.replace("/", "*")
+
+                  try {
+                     index = window.location.href.indexOf("*")
+                     if (index > 0) {
+                        // window.location.reload()
+                        hostname = window.location.hostname
+                        port = window.location.port
+                        pathname = '/bima_policy/policy/entry/'     
+                        
+                        href = window.location.origin + pathname + start_date  + '/' + end_date + '/' + period_value  + '/' + 'true'     
+                        
+                        window.location.replace( href)               
+                     }
+                     else
+                     {                   
+                        href = window.location.href + start_date          
+                        href += "/"
+                        href += end_date         
+                        href += "/"                          
+                        href += period_value        
+                        href += "/"                          
+                        href += 'true'        
+                          
+                        window.location.replace( href)
+                     }
+                  } catch (error) {
+                     
+                  }
+               }
+               } catch (error) {}             
+      }      
+         
          
    </script>
    <!-- .app-main -->
@@ -94,7 +175,7 @@
                            <div class="col-md-2 col-sm-12">
                               <div class="form-group">
                                  <select class="custom-select" name="period" id="select-period" >     
-                                    <option value="{{select_period_option}}">{{select_period_option}}</option>
+                                    <option value="{{period}}">{{period}}</option>
                                     <option value="today">Today</option>
                                     <option value="yesterday">Yesterday</option>
                                     <option value="this_month" >This Month</option>
@@ -109,7 +190,7 @@
                               <div class="form-group">
                                  <input type="text" id="frmDate" data-alt-format="Y-m-d" data-date-format="d/m/Y"
                                     data-toggle="flatpickr" placeholder="DD-MM-YYYY" 
-                                    class="form-control flatpickr-input" disabled="" readonly="readonly">
+                                    class="form-control flatpickr-input" >
                               </div>
                            </div>
                            <div class="col-md-2 col-sm-12">
@@ -287,7 +368,7 @@
                                  </style>
 
                                  <label class="switch">
-                                    <input type="checkbox" onchange="getPayoutLessPolicy()">
+                                    <input id="payout_switch" type="checkbox" >
                                     <span class="slider round"></span>
                                  </label>
                               </div>
@@ -1133,14 +1214,13 @@
       }
    }
 
-   function getPayoutLessPolicy() {
-      // window.open("{%url 'bima_policy:policy_entry' %}");
-   }
+   
      
 </script>
 
-<body onload="configure()">
+<body onload="initialSetup()" >
    
+
 
 </body>
 <!-- /.modal -->

@@ -1503,10 +1503,10 @@ def apply_policy(request, id):
 
 
 def policy_entry(request):
-    print('policy_entry method exe')       
-  
+    print('policy_entry method exe')
+
     data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
-        request))).order_by('-policyid').filter(Q(issue_date = datetime.now().date())).values()
+        request))).order_by('-policyid').filter(Q(issue_date=datetime.now().date())).values()
 
     paginator = Paginator(data, per_page=25)
     try:
@@ -1523,13 +1523,13 @@ def policy_entry_filter(request, value1, value2, period):
     print(period)
 
     value1 = value1.replace("*", "-")
-    value2 = value2.replace("*", "-")    
+    value2 = value2.replace("*", "-")
 
     value1 = value1.split('-')
     value2 = value2.split('-')
 
-    value1 =  datetime(int(value1[2]), int(value1[1]), int(value1[0]))
-    value2 =  datetime(int(value2[2]), int(value2[1]), int(value2[0]))
+    value1 = datetime(int(value1[2]), int(value1[1]), int(value1[0]))
+    value2 = datetime(int(value2[2]), int(value2[1]), int(value2[0]))
 
     data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
         request))).order_by('-policyid').filter(Q(issue_date__gte=value1) & Q(issue_date__lte=value2)).values()
@@ -1537,11 +1537,37 @@ def policy_entry_filter(request, value1, value2, period):
     paginator = Paginator(data, per_page=25)
     try:
         data = paginator.get_page(request.GET.get('page'))
-        return render(request, 'policylist/policy_entry_list.html', {'select_period_option': period, 'data': data, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'data': data, 'is_user': is_user(request)})
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'select_period_option': period, 'data': data, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'data': data, 'is_user': is_user(request)})
+
+
+def policy_entry_filter_nopayout(request, value1, value2, period, payout):
+    print('policy_entry_filter_nopayout method')
+    print(payout)
+
+    value1 = value1.replace("*", "-")
+    value2 = value2.replace("*", "-")
+
+    value1 = value1.split('-')
+    value2 = value2.split('-')
+
+    value1 = datetime(int(value1[2]), int(value1[1]), int(value1[0]))
+    value2 = datetime(int(value2[2]), int(value2[1]), int(value2[0]))
+
+    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
+        request))).order_by('-policyid').filter(Q(issue_date__gte=value1) & Q(issue_date__lte=value2) & Q(agent_od_reward__isnull=False)).values()
+
+    paginator = Paginator(data, per_page=25)
+    try:
+        data = paginator.get_page(request.GET.get('page'))
+        return render(request, 'policylist/policy_entry_list.html', {'period': period,  'payout': payout, 'data': data, 'is_user': is_user(request)})
+    except Exception as ex:
+        page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'payout': payout, 'data': data, 'is_user': is_user(request)})
 
 
 def policy_entrydata(request, id):
