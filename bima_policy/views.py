@@ -1536,15 +1536,18 @@ def policy_entry_filter(request, value1, value2, period):
 
     data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
         request))).order_by('-policyid').filter(Q(issue_date__gte=value1) & Q(issue_date__lte=value2)).values()
+    
+    datag = Agents.objects.filter(
+        profile_id=get_profile_id(get_id_from_session(request)))
 
     paginator = Paginator(data, per_page=25)
     try:
         data = paginator.get_page(request.GET.get('page'))
-        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'data': data, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'data': data, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
 
 def policy_entry_filter_nopayout(request, value1, value2, period, payout):
@@ -1562,15 +1565,18 @@ def policy_entry_filter_nopayout(request, value1, value2, period, payout):
 
     data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
         request))).order_by('-policyid').filter(Q(issue_date__gte=value1) & Q(issue_date__lte=value2) & Q(agent_od_reward__isnull=True)).values()
+    
+    datag = Agents.objects.filter(
+        profile_id=get_profile_id(get_id_from_session(request)))
 
     paginator = Paginator(data, per_page=25)
     try:
         data = paginator.get_page(request.GET.get('page'))
-        return render(request, 'policylist/policy_entry_list.html', {'period': period,  'payout': payout, 'data': data, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'period': period,  'payout': payout, 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'payout': payout, 'data': data, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'payout': payout, 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
 
 def policy_entrydata(request, id):

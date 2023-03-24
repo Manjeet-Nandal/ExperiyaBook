@@ -4,17 +4,17 @@
 <main class="app-main">
 
    <script>
-      function initialSetup() {
-         period = "{{period|safe}}"
-         payout= "{{payout|safe}}"
 
+      function initialSetup() {        
+         payout= "{{payout|safe}}"
+        
          if (payout == 'true') {
             document.getElementById('payout_switch').checked   = true            
          }
          else{
             document.getElementById('payout_switch').checked   = false 
-         }         
-      }
+         }   
+      }            
       
       function filterPolicy() {
           // document.getElementsByClassName("showMoreNew")[0].click();
@@ -369,7 +369,7 @@
                                  </style>
 
                                  <label class="switch">
-                                    <input id="payout_switch" type="checkbox" >
+                                    <input id="payout_switch" type="checkbox"  >
                                     <span class="slider round"></span>
                                  </label>
                               </div>
@@ -377,6 +377,9 @@
                            </div>
                         </div>
                      </div>
+
+   
+   
 
 
                      <div class="table-responsive">
