@@ -7,6 +7,7 @@
 
       function initialSetup() {        
          payout= "{{payout|safe}}"
+         period= "{{period|safe}}"
         
          if (payout == 'true') {
             document.getElementById('payout_switch').checked   = true            
@@ -14,6 +15,26 @@
          else{
             document.getElementById('payout_switch').checked   = false 
          }   
+         if (period == 'TODAY') {
+            document.getElementById('select-period').selectedIndex = 0          
+         }
+         if (period == 'YESTERDAY') {
+            document.getElementById('select-period').selectedIndex = 1         
+         }
+         if (period == 'THIS MONTH') {
+            document.getElementById('select-period').selectedIndex = 2         
+         }
+         if (period == 'LAST MONTH') {
+            document.getElementById('select-period').selectedIndex = 3         
+         }
+         if (period == 'CURRENT YEAR') {
+            document.getElementById('select-period').selectedIndex = 4         
+         }
+         if (period == 'CUSTOM') {
+            document.getElementById('select-period').selectedIndex = 5         
+         }
+         
+         
       }            
       
       function filterPolicy() {
@@ -172,26 +193,26 @@
                   <!-- .card-header -->
                   <div class="card-header">
                      <form id="frminslist">
-                        <div class="row">
-                           <div class="col-md-2 col-sm-12">
-                              <div class="form-group">
-                                 <select class="custom-select" name="period" id="select-period" >     
-                                    <option value="{{period}}">{{period}}</option>
+                        <div class="row">                          
+                           <div class="col-md-2 col-sm-12">                              
+                              <select name="select-period" data-parsley-required-message=""
+                                 class="custom-select select2 select2-hidden-accessible" id="select-period"
+                                 data-parsley-required="true" tabindex="-1" aria-hidden="true">
+                                    <!-- <option value="{{period}}">{{period}}</option> -->
                                     <option value="today">Today</option>
                                     <option value="yesterday">Yesterday</option>
                                     <option value="this_month" >This Month</option>
                                     <option value="last_month">Last Month</option>
                                     <option value="current_year">Current Year</option>
                                     <option value="custom">Custom</option>
-                                 </select>
-                              </div>
+                              </select>  
                            </div>
 
                            <div class="col-md-2 col-sm-12">
                               <div class="form-group">
                                  <input type="text" id="frmDate" data-alt-format="Y-m-d" data-date-format="d/m/Y"
                                     data-toggle="flatpickr" placeholder="DD-MM-YYYY" 
-                                    class="form-control flatpickr-input" >
+                                    class="form-control flatpickr-input"  disabled="" readonly="readonly">
                               </div>
                            </div>
                            <div class="col-md-2 col-sm-12">
@@ -201,15 +222,18 @@
                                     class="form-control datepicker flatpickr-input" disabled="" readonly="readonly">
                               </div>
                            </div>
-                           <div class="col-md-3 col-sm-12">   
-                              <select name="service_provider" data-parsley-required-message="" class="custom-select"
-                                 id="service_provider" data-parsley-required="true">
-                                 <option value=""> All Agent </option>
-                                 {%for value in datag%}
-                                 <option value={{value.full_name}}>{{value.full_name}}</option>
-                                 {%endfor%}                           
-                              </select>
+                           
+                           <div class="col-md-3 col-sm-12">                              
+                                 <select name="agents" data-parsley-required-message=""
+                                    class="custom-select select2 select2-hidden-accessible" id="agents"
+                                    data-parsley-required="true" tabindex="-1" aria-hidden="true">
+                                    <option value=""> All Agents</option>
+                                    {%for value in datag%}
+                                    <option value={{value.full_name}}>{{value.full_name}}</option>
+                                 {%endfor%}   
+                                 </select>  
                            </div>
+
                            <div class="col-md-3 col-sm-12">
                               <div class="form-group">
                                  <button onclick="filterPolicy()" type="button" id="filterlist" class="btn btn-secondary " title="Filter" ><i
@@ -226,7 +250,7 @@
                               </div>
                            </div>                         
                         </div>
-                        <div id="morefilter" class="row" style="display:none">
+                        <div id="morefilter" class="row" style="display:none" >
                            <div class="col-md-3 col-sm-12">
                               <div class="form-group">
                                  <select name="service_provider" data-parsley-required-message=""
@@ -235,17 +259,7 @@
                                     <option value=""> All Service Provider</option>
                                     <option value="14">CHOLA DIRECT</option>
                                     <option value="6">DELHI BAJAJ</option>
-                                 </select>
-                                 <span class="select2 select2-container select2-container--default" dir="ltr"
-                                    style="width: 100%;"><span class="selection"><span
-                                          class="select2-selection select2-selection--single" role="combobox"
-                                          aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                          aria-labelledby="select2-service_provider-container"><span
-                                             class="select2-selection__rendered" id="select2-service_provider-container"
-                                             title=" All Service Provider"> All Service Provider</span><span
-                                             class="select2-selection__arrow" role="presentation"><b
-                                                role="presentation"></b></span></span></span><span
-                                       class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                 </select>                                
                               </div>
                            </div>
                            <div class="col-md-3 col-sm-12">
@@ -258,18 +272,7 @@
                                  <option value="2">2w-scooter</option>
                                  <option value="3">Auto Gcv</option>
                                  <option value="4">Auto Pcv 3+1</option>
-
-                              </select>
-                              <span class="select2 select2-container select2-container--default" dir="ltr"
-                                 style="width: 100%;"><span class="selection"><span
-                                       class="select2-selection select2-selection--single" role="combobox"
-                                       aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                       aria-labelledby="select2-vehicle_category-container"><span
-                                          class="select2-selection__rendered" id="select2-vehicle_category-container"
-                                          title="All Vehicle Category">All Vehicle Category</span><span
-                                          class="select2-selection__arrow" role="presentation"><b
-                                             role="presentation"></b></span></span></span><span class="dropdown-wrapper"
-                                    aria-hidden="true"></span></span>
+                              </select>                              
                            </div>
                         </div>
                      </form>
