@@ -1561,7 +1561,7 @@ def policy_entry_filter_nopayout(request, value1, value2, period, payout):
     value2 = datetime(int(value2[2]), int(value2[1]), int(value2[0]))
 
     data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
-        request))).order_by('-policyid').filter(Q(issue_date__gte=value1) & Q(issue_date__lte=value2) & Q(agent_od_reward__isnull=False)).values()
+        request))).order_by('-policyid').filter(Q(issue_date__gte=value1) & Q(issue_date__lte=value2) & Q(agent_od_reward__isnull=True)).values()
 
     paginator = Paginator(data, per_page=25)
     try:
