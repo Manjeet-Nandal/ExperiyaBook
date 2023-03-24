@@ -1503,19 +1503,22 @@ def apply_policy(request, id):
 
 
 def policy_entry(request):
-    print('policy_entry method exe')
+    print('policy_entry method')
 
     data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
         request))).order_by('-policyid').filter(Q(issue_date=datetime.now().date())).values()
 
+    datag = Agents.objects.filter(
+        profile_id=get_profile_id(get_id_from_session(request)))
+
     paginator = Paginator(data, per_page=25)
     try:
         data = paginator.get_page(request.GET.get('page'))
-        return render(request, 'policylist/policy_entry_list.html', {'select_period_option': 'TODAY', 'data': data, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'select_period_option': 'TODAY', 'data': data, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
 
 def policy_entry_filter(request, value1, value2, period):
