@@ -213,7 +213,7 @@
                               </div>
 
                               <div class="col-md-6">
-                                 <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input onclick="Hello()"
+                                 <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input 
                                           type="search" id="myInput" onkeyup="searchName()" class="form-control" 
                                           placeholder="" aria-controls="tblInsurance"></label></div>
                               </div>
@@ -1039,7 +1039,7 @@
 </div>
 
 
-<body onload="initialSetup()">  
+<body onload="load_values()">  
 </body>
 
 <!-- /.modal -->
@@ -1292,59 +1292,33 @@
                   class="flatpickr-weekday">Wed</span><span class="flatpickr-weekday">Thu</span><span
                   class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
                </span>
-               <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
-               <script>
-                  function ExportToExcel(type, fn, dl) {
-                     var elt = document.getElementById('tblInsurance');
-                     var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
-                     return dl ?
-                        XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
-                        XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
-                  }
-               </script>
 
-               <script>
+<script>
 
-                  function initialSetup() {
-                     alert('heee')
-                     payout = "{{payout|safe}}"
-                     period = "{{period|safe}}"
-                     select_length = "{{select_length|safe}}"
-                 
-                     if (payout == 'true') {
-                         document.getElementById('payout_switch').checked = true
-                     }
-                     else {
-                         document.getElementById('payout_switch').checked = false
-                     }
-                     if (period == 'TODAY') {
-                         document.getElementById('select-period').selectedIndex = 0
-                     }
-                     if (period == 'YESTERDAY') {
-                         document.getElementById('select-period').selectedIndex = 1
-                     }
-                     if (period == 'THIS MONTH') {
-                         document.getElementById('select-period').selectedIndex = 2
-                     }
-                     if (period == 'LAST MONTH') {
-                         document.getElementById('select-period').selectedIndex = 3
-                     }
-                     if (period == 'CURRENT YEAR') {
-                         document.getElementById('select-period').selectedIndex = 4
-                     }
-                     if (period == 'CUSTOM') {
-                         document.getElementById('select-period').selectedIndex = 5
-                     }
-                 
-                     document.getElementById('select_length').value = select_length     
-                 }
-               
-               </script>
+function load_values() {                               
+   payout = "{{payout|safe}}"
+   period = "{{period|safe}}"
+   select_length = "{{select_length|safe}}"
 
-<script src="{% static 'js/test.js' %}"></script>               
+   document.getElementById('payout_switch').checked = payout == 'true' ? true : false;
 
+   document.getElementById('select-period').selectedIndex =
+      period == 'TODAY' ? 0 :
+            period == 'YESTERDAY' ? 1 :
+               period == 'THIS MONTH' ? 2 :
+                  period == 'LAST MONTH' ? 3 :
+                        period == 'CURRENT YEAR' ? 4 :
+                           period == 'CUSTOM' ? 5 : 0
 
-               {%endblock%}
+   document.getElementById('select_length').value = select_length
+}
+
+</script>
+
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>     
+<script src="{% static 'js/policy_entry_list.js' %}"></script>               
+
+{%endblock%}
 
 
                

@@ -1,39 +1,3 @@
-function Hello() {
-    alert(`I am Manjeet Nandal`);
-}
-
-// function initialSetup() {
-//     payout = "{{payout|safe}}"
-//     period = "{{period|safe}}"
-//     select_length = "{{select_length|safe}}"
-
-//     if (payout == 'true') {
-//         document.getElementById('payout_switch').checked = true
-//     }
-//     else {
-//         document.getElementById('payout_switch').checked = false
-//     }
-//     if (period == 'TODAY') {
-//         document.getElementById('select-period').selectedIndex = 0
-//     }
-//     if (period == 'YESTERDAY') {
-//         document.getElementById('select-period').selectedIndex = 1
-//     }
-//     if (period == 'THIS MONTH') {
-//         document.getElementById('select-period').selectedIndex = 2
-//     }
-//     if (period == 'LAST MONTH') {
-//         document.getElementById('select-period').selectedIndex = 3
-//     }
-//     if (period == 'CURRENT YEAR') {
-//         document.getElementById('select-period').selectedIndex = 4
-//     }
-//     if (period == 'CUSTOM') {
-//         document.getElementById('select-period').selectedIndex = 5
-//     }
-
-//     document.getElementById('select_length').value = select_length 
-// }
 
 function filterPolicy() {
     // document.getElementsByClassName("showMoreNew")[0].click();
@@ -255,4 +219,12 @@ function searchName() {
             }
         }
     }
+}
+
+function ExportToExcel(type, fn, dl) {
+    var elt = document.getElementById('tblInsurance');
+    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+    return dl ?
+        XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+        XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
 }
