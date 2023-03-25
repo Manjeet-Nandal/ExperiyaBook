@@ -1512,11 +1512,11 @@ def policy_entry(request):
     paginator = Paginator(data, per_page=25)
     try:
         data = paginator.get_page(request.GET.get('page'))
-        return render(request, 'policylist/policy_entry_list.html', {'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
 
 def policy_entry_filter(request, value1, value2, period, select_length):
