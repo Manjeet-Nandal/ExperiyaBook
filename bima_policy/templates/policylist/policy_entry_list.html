@@ -160,13 +160,59 @@
                }
                } catch (error) {}             
       }      
+            
+      function selectAllPolicy() {
+
+var tblInsurance = document.getElementById('tblInsurance')  
+var rowLength = tblInsurance.rows.length;
+chkblkrm_isChecked = document.getElementById('chkblkrm').checked  
+
+ids = ''
+
+if (chkblkrm_isChecked) {     
+   for (i = 1; i < rowLength; i++){   
+      id= `chkblkrm${i}`
+      document.getElementById(id).checked = true
+   }        
+}  
+else  {     
+   for (i = 1; i < rowLength; i++){   
+      id= `chkblkrm${i}`
+      document.getElementById(id).checked = false
+   }        
+}                                
+}
+
+      function bulk_policy_remove() {
+  
+      var tblInsurance = document.getElementById('tblInsurance')  
+      var rowLength = tblInsurance.rows.length;
+      ids = ''
+
+      for (i = 1; i < rowLength; i++){                                                                  
+
+         id= `chkblkrm${i}`
          
+         isChecked = document.getElementById(id).checked
+         
+         if (isChecked) {
+
+            ids += '|' + tblInsurance.rows.item(i).cells[3].innerText.trim() 
+           // document.getElementById(anchor_id).click();
+         }
+      }                                                               
+      pathname = `/bima_policy/policy/${ids}/delete`                                                                
+     
+      window.location.replace(  window.location.origin + pathname ) 
+}
+
       function resertDocument(){        
         document.location.reload()
       }
                
 
    </script>
+
    <!-- .app-main -->
    <div class="wrapper">
       <!-- .wrapper -->
@@ -409,7 +455,7 @@
                                        <th class="text-center sorting_disabled" tabindex="0"
                                           aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 30px;"
                                           aria-label="">
-                                          <input type="checkbox" class="checkbox" id="chkblkrm" />
+                                          <input type="checkbox" class="checkbox" id="chkblkrm" onchange="selectAllPolicy()"/>
                                        </th>
 
                                        <th class="sorting">Proposal No.</th>
@@ -470,32 +516,7 @@
                                        <th class="sorting">Action</th>
                                     </tr>
                                  </thead>
-                                                   <script>
-                                                         function bulk_policy_remove() {
-                                                           
-                                                               var tblInsurance = document.getElementById('tblInsurance')  
-                                                               var rowLength = tblInsurance.rows.length;
-                                                               ids = ''
-
-                                                               for (i = 1; i < rowLength; i++){                                                                  
-
-                                                                  id= `chkblkrm${i}`
-                                                                  
-                                                                  isChecked = document.getElementById(id).checked
-                                                                  
-                                                                  if (isChecked) {
-
-                                                                     ids += '|' + tblInsurance.rows.item(i).cells[3].innerText.trim() 
-                                                                    // document.getElementById(anchor_id).click();
-                                                                  }
-                                                               }                                                               
-                                                               pathname = `/bima_policy/policy/${ids}/delete`                                                                
-                                                              
-                                                               window.location.replace(  window.location.origin + pathname ) 
-                                                         }
-
-                                                         
-                                                   </script>
+                                                
                                  <tbody>
                                     {% for value in data %}
                                     <tr role="row" class="odd">
