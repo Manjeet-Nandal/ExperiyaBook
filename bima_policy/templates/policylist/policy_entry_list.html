@@ -164,7 +164,8 @@
       function resertDocument(){        
         document.location.reload()
       }
-         
+               
+
    </script>
    <!-- .app-main -->
    <div class="wrapper">
@@ -244,7 +245,7 @@
                                  <button type="button" onclick="ExportToExcel('xlsx')" id="download_inslist"
                                     class="btn btn-secondary " title="Download"><i class="fa fa-download"
                                        aria-hidden="true"></i> </button>
-                                 <button type="button" id="bulk_remove" class="btn btn-secondary" title="Delete"><i
+                                 <button type="button" id="bulk_remove" class="btn btn-secondary" title="Delete"  onclick="bulk_policy_remove()"><i
                                        class="icofont icofont-trash" aria-hidden="true"></i> </button>
                                  <a href="#" class="no-wrap pl-0 morefilter" title="More Filter"><small>More
                                        Filter</small></a>
@@ -382,10 +383,6 @@
                         </div>
                      </div>
 
-   
-   
-
-
                      <div class="table-responsive">
                         <div class="dataTables_scroll">
                            <div class="dataTables_scrollHead" style="position: relative; border: 0px; width: 100%;">
@@ -473,13 +470,38 @@
                                        <th class="sorting">Action</th>
                                     </tr>
                                  </thead>
+                                                   <script>
+                                                         function bulk_policy_remove() {
+                                                           
+                                                               var tblInsurance = document.getElementById('tblInsurance')  
+                                                               var rowLength = tblInsurance.rows.length;
+                                                               ids = ''
 
+                                                               for (i = 1; i < rowLength; i++){                                                                  
+
+                                                                  id= `chkblkrm${i}`
+                                                                  
+                                                                  isChecked = document.getElementById(id).checked
+                                                                  
+                                                                  if (isChecked) {
+
+                                                                     ids += '|' + tblInsurance.rows.item(i).cells[3].innerText.trim() 
+                                                                    // document.getElementById(anchor_id).click();
+                                                                  }
+                                                               }                                                               
+                                                               pathname = `/bima_policy/policy/${ids}/delete`                                                                
+                                                              
+                                                               window.location.replace(  window.location.origin + pathname ) 
+                                                         }
+
+                                                         
+                                                   </script>
                                  <tbody>
                                     {% for value in data %}
                                     <tr role="row" class="odd">
                                        <td class="text-center">{{forloop.counter}}</td>
                                        <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
-                                             id="chkblkrm1" /></td>
+                                             id= "chkblkrm{{forloop.counter}}" /></td>
 
                                        <td>{{value.proposal_no}}</td>
                                        <td>
@@ -631,7 +653,7 @@
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
                                                 <i class="fa fa-pencil-alt mt-2"></i>
                                              </a>
-                                             <a href="{%url 'bima_policy:policy_delete' value.policyid %}" name="Remove"
+                                             <a  href="{%url 'bima_policy:policy_delete' value.policyid %}" name="Remove"
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                                                 <i class="far fa-trash-alt mt-2"></i>
                                              </a>

@@ -1804,9 +1804,26 @@ def edit_policy(request, id):
         return redirect('bima_policy:policy_entry')
 
 
-def policy_delete(request, id):
+def policy_deleteo(request, id):
     if request.method == 'GET':
         Policy.objects.get(policyid=id).delete()
+        return redirect('bima_policy:policy_entry')
+
+
+def policy_delete(request, id):
+    print('policy_delete')
+
+    try:
+        if id.__contains__("|"):
+            arrays = id.split("|")
+            for i in arrays:                
+                Policy.objects.filter(policy_no=i).delete()
+                print('Deleted: ', i)
+    except Exception as ex:
+        print(ex)    
+    
+    if request.method == 'GET':
+        # Policy.objects.get(policyid=id).delete()
         return redirect('bima_policy:policy_entry')
 
 
