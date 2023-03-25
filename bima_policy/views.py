@@ -920,8 +920,6 @@ class create_policy_non_motor(View):
         return render(request, 'policylist/policy_entry_list.html', {'data': data})
 
 
-# Policy Entry Function by Pragati/ shubham
-
 def apply_policy(request, id):
     try:
         print('apply_policy')
@@ -1521,9 +1519,9 @@ def policy_entry(request):
         return render(request, 'policylist/policy_entry_list.html', {'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
 
-def policy_entry_filter(request, value1, value2, period):
+def policy_entry_filter(request, value1, value2, period, select_length):
     print('policy_entry_filter method')
-    print(period)
+    print(select_length)
 
     value1 = value1.replace("*", "-")
     value2 = value2.replace("*", "-")
@@ -1540,17 +1538,17 @@ def policy_entry_filter(request, value1, value2, period):
     datag = Agents.objects.filter(
         profile_id=get_profile_id(get_id_from_session(request)))
 
-    paginator = Paginator(data, per_page=25)
+    paginator = Paginator(data, per_page=select_length)
     try:
         data = paginator.get_page(request.GET.get('page'))
-        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': select_length, 'period': period, 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': select_length, 'period': period, 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
 
-def policy_entry_filter_nopayout(request, value1, value2, period, payout):
+def policy_entry_filter_nopayout(request, value1, value2, period,select_length, payout):
     print('policy_entry_filter_nopayout method')
     print(payout)
 
@@ -1572,11 +1570,11 @@ def policy_entry_filter_nopayout(request, value1, value2, period, payout):
     paginator = Paginator(data, per_page=25)
     try:
         data = paginator.get_page(request.GET.get('page'))
-        return render(request, 'policylist/policy_entry_list.html', {'period': period,  'payout': payout, 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': select_length, 'period': period,  'payout': payout, 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'period': period, 'payout': payout, 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': select_length, 'period': period, 'payout': payout, 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
 
 def policy_entrydata(request, id):

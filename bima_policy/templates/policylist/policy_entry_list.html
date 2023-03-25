@@ -8,6 +8,7 @@
       function initialSetup() {        
          payout= "{{payout|safe}}"
          period= "{{period|safe}}"
+         select_length= "{{select_length|safe}}"
         
          if (payout == 'true') {
             document.getElementById('payout_switch').checked   = true            
@@ -34,7 +35,8 @@
             document.getElementById('select-period').selectedIndex = 5         
          }
          
-         
+         document.getElementById('select_length').value = select_length  == "" ? 25 :  select_length    
+                  
       }            
       
       function filterPolicy() {
@@ -50,8 +52,8 @@
                   start_date = document.getElementById('frmDate').value.toString()
                   end_date = document.getElementById('toDate').value.toString()            
                   period_value = document.getElementById('select-period').value.toString().toUpperCase()    
-                                      
-                 
+                  select_length = document.getElementById('select_length').value   
+                                  
                   if (period_value == "LAST_MONTH") {                          
                       period_value = "LAST MONTH"
                   }
@@ -79,7 +81,7 @@
                         port = window.location.port
                         pathname = '/bima_policy/policy/entry/'     
                         
-                        href = window.location.origin + pathname + start_date  + '/' + end_date + '/' + period_value    
+                        href = window.location.origin + pathname + start_date  + '/' + end_date + '/' + period_value  + '/' + select_length    
                         
                         window.location.replace( href)               
                      }
@@ -89,7 +91,9 @@
                         href += "/"
                         href += end_date         
                         href += "/"                          
-                        href += period_value        
+                        href += period_value      
+                        href += "/"                          
+                        href += select_length        
                           
                         window.location.replace( href)
                      }
@@ -108,8 +112,8 @@
                
                   start_date = document.getElementById('frmDate').value.toString()
                   end_date = document.getElementById('toDate').value.toString()            
-                  period_value = document.getElementById('select-period').value.toString().toUpperCase()    
-                                    
+                  period_value = document.getElementById('select-period').value.toString().toUpperCase()   
+                  select_length = document.getElementById('select_length').value   
                  
                   if (period_value == "LAST_MONTH") {                          
                       period_value = "LAST MONTH"
@@ -136,10 +140,8 @@
                         // window.location.reload()
                         hostname = window.location.hostname
                         port = window.location.port
-                        pathname = '/bima_policy/policy/entry/'     
-                        
-                        href = window.location.origin + pathname + start_date  + '/' + end_date + '/' + period_value  + '/' + 'true'     
-                        
+                        pathname = '/bima_policy/policy/entry/'  
+                        href = window.location.origin + pathname + start_date  + '/' + end_date + '/' + period_value  + '/' + select_length  + '/' + 'true'                             
                         window.location.replace( href)               
                      }
                      else
@@ -148,7 +150,9 @@
                         href += "/"
                         href += end_date         
                         href += "/"                          
-                        href += period_value        
+                        href += period_value     
+                        href += "/"                          
+                        href += select_length        
                         href += "/"                          
                         href += 'true'        
                           
@@ -368,8 +372,6 @@ else  {
                               </label>
                            </div>
 
-
-
                         </div>
                         <div id="morefilter" class="row" style="display:none" >
                            <div class="col-md-3 col-sm-12">
@@ -409,7 +411,7 @@ else  {
                                  <div class="dataTables_length" id="tblInsurance_length">
                                     <label>
                                        Show
-                                       <select name="tblInsurance_length" aria-controls="tblInsurance"
+                                       <select id="select_length" name="tblInsurance_length" aria-controls="tblInsurance"
                                           class="custom-select">
                                           <option value="10">10</option>
                                           <option value="25">25</option>
