@@ -823,13 +823,13 @@ class create_policy_non_motor(View):
     def get(self, request):
         print('create_policy Non get')
         pid = get_profile_id(get_id_from_session(request))
-        agents_dict = json.dumps(list(Agents.objects.filter(profile_id=pid).values()))
+        data_ag = json.dumps(list(Agents.objects.filter(profile_id=pid).values()))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
         data_bc = BrokerCode.objects.filter(profile_id=pid)
         data_ins = InsuranceCompany.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
 
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': False,  'agents_dict': agents_dict, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': False,  'data_ag': data_ag, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_bqp': data_bqp})
 
     def post(self, request):
         print('create_policy post')
@@ -840,23 +840,9 @@ class create_policy_non_motor(View):
         customer_name = request.POST['customer_name']
         insurance_company = request.POST['insurance_company']
         sp_name = request.POST['sp_name']
-        # sp_brokercode = request.POST['sp_brokercode']
-        product_name = request.POST['product_name']
-        registration_no = ''
-        rto_city = ''
-        rto_state = ''
-        vehicle_makeby = ''
-        vehicle_model = ''
-        vehicle_catagory = ''
-        vehicle_fuel_type = ''
-        mfg_year = None
-        addon = ''
-        ncb = ''
-        cubic_capacity = ''
-        gvw = ''
-        seating_capacity = ''
-        coverage_type = ''
-        case_type = request.POST['case_type']
+        sp_brokercode = request.POST['sp_brokercode']
+        product_name = request.POST['product_name']        
+        policy_type = request.POST['policy_type']
         risk_start_date = request.POST['risk_start_date']
         risk_end_date = request.POST['risk_end_date']
         issue_date = request.POST['issue_date']
@@ -868,7 +854,6 @@ class create_policy_non_motor(View):
         TP_terrorism = request.POST['tpt']
         net = request.POST['net']
         gst_amount = request.POST['gst']
-        # gst_gcv_amount = request.POST['gstt']
         total = request.POST['total']
         payment_mode = request.POST['payment_mode']
         proposal = request.FILES.get('proposal')
@@ -902,8 +887,9 @@ class create_policy_non_motor(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
-        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  product_name=product_name, registration_no=registration_no,
-                              coverage_type=coverage_type, case_type=case_type,
+        print('policy type ', policy_type )
+        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  
+                              product_name=product_name, policy_type=policy_type,
                               risk_start_date=risk_start_date,
                               risk_end_date=risk_end_date, issue_date=issue_date,  policy_term=policy_term,  bqp=bqp, pos=pos,
                               employee=employee, proposal=proposal, mandate=mandate,
