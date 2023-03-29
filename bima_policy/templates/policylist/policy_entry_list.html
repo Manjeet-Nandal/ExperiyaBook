@@ -358,7 +358,13 @@
                                        <td>{{value.risk_start_date}}</td>
                                        <td>{{value.risk_end_date}}</td>
                                        <td>{{value.issue_date}}</td>
+                                       
+                                       {% if value.insured_age%}
                                        <td>{{value.insured_age}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
                                        <td>{{value.policy_term}}</td>
                                        <td>{{value.bqp}}</td>
                                        <td>{{value.pos}}</td>
@@ -371,8 +377,13 @@
                                        <td>{{value.net}}</td>
 
                                        <td>{{value.gst_amount}}</td>
-
-                                       <td>{{value.gst_gcv_amount}}</td>
+                                      
+                                       
+                                       {% if value.gst_gcv_amount %}
+                                       <td>{{ value.gst_gcv_amount }}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
 
                                        <td>{{value.total}}</td>
 

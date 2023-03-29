@@ -437,9 +437,9 @@ class create_policy(View):
 
     def post(self, request):
         print('create_policy post method')
+        
         profile_id = ProfileModel.objects.get(
             id=get_profile_id(get_id_from_session(request)))
-        
         proposal_no = request.POST['proposal_no']
         policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
@@ -512,7 +512,10 @@ class create_policy(View):
         risk_start_date = request.POST['risk_start_date']
         risk_end_date = request.POST['risk_end_date']
         issue_date = request.POST['issue_date']
-        insured_age = request.POST['insured_age']
+        try:
+            insured_age = request.POST['insured_age']
+        except:
+            insured_age = 0
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
         pos = request.POST['pos']
@@ -521,7 +524,11 @@ class create_policy(View):
         TP_terrorism = request.POST['tpt']
         net = request.POST['net']
         gst_amount = request.POST['gst']
-        gst_gcv_amount = request.POST['gstt']
+        try:
+            gst_gcv_amount = request.POST['gstt']
+        except:
+            gst_gcv_amount = 0
+        
         total = request.POST['total']
         payment_mode = request.POST['payment_mode']
         proposal = request.FILES.get('proposal')
@@ -811,10 +818,7 @@ class create_policy(View):
                                     gst_gcv_amount=gst_gcv_amount,  total=total,
                                     policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
                                     )
-        print('data is ', data)
-        print('pol is ', pol)
-        print('pol ID is ', pol.policyid)
-
+       
         return render(request, 'policylist/list_apply_payout.html', {'data':data,'policyid':pol.policyid})
 
 
@@ -870,7 +874,7 @@ class create_policy_non_motor(View):
         fspp = FileSystemStorage()
         fspc = FileSystemStorage()
         fsac = FileSystemStorage()
-        fsvc = FileSystemStorage()
+     
         fsis = FileSystemStorage()
         if proposal is not None:
             fspr.save(proposal.name, proposal)
@@ -1619,7 +1623,11 @@ def policy_entrydata(request, id):
         # risk_start_date = request.POST['risk_start_date']
         # risk_end_date = request.POST['risk_end_date']
         # issue_date = request.POST['issue_date']
-        insured_age = request.POST['insured_age']
+        try:
+            insured_age = request.POST['insured_age']
+        except:
+            insured_age = 0
+        
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
         pos = request.POST['pos']
@@ -1628,7 +1636,11 @@ def policy_entrydata(request, id):
         TP_terrorism = request.POST['tpt']
         net = request.POST['net']
         gst_amount = request.POST['gst']
-        gst_gcv_amount = request.POST['gstt']
+        try:
+            gst_gcv_amount = request.POST['gstt']
+        except:
+            gst_gcv_amount = 0
+        
         total = request.POST['total']
         payment_mode = request.POST['payment_mode']
         proposal = request.FILES.get('proposal')
@@ -1649,7 +1661,11 @@ def policy_entrydata(request, id):
                     rto_state=rto_state, rto_city=rto_city,  vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                     mfg_year=mfg_year, 
                     addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, policy_type=policy_type, cpa=cpa,
-                    insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+                    
+                  
+                    insured_age=insured_age, 
+                    
+                    policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                     employee=employee, proposal=proposal, mandate=mandate,
                     OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, 
                     gst_gcv_amount=gst_gcv_amount,  total=total,
