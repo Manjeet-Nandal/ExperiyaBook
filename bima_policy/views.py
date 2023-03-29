@@ -12,11 +12,12 @@ from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.views import View
+
+from Bima.settings import MEDIA_ROOT
 from .models import *
 from .forms import *
 from django.db.models import Q
 from django.core.paginator import Paginator
-
 
 def get_id_from_session(request):
     id = request.session['id']
@@ -1643,6 +1644,7 @@ def policy_entrydata(request, id):
         
         total = request.POST['total']
         payment_mode = request.POST['payment_mode']
+
         proposal = request.FILES.get('proposal')
         mandate = request.FILES.get('mandate')
         policy = request.FILES.get('policy')
@@ -1661,16 +1663,13 @@ def policy_entrydata(request, id):
                     rto_state=rto_state, rto_city=rto_city,  vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                     mfg_year=mfg_year, 
                     addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, policy_type=policy_type, cpa=cpa,
-                    
-                  
+                                   
                     insured_age=insured_age, 
                     
                     policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                    employee=employee, proposal=proposal, mandate=mandate,
+                    employee=employee, 
                     OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, 
-                    gst_gcv_amount=gst_gcv_amount,  total=total,
-                    policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
-                    )
+                    gst_gcv_amount=gst_gcv_amount,  total=total )
         
         if proposal:
             data.update(proposal=proposal)
