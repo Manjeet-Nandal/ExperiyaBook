@@ -252,13 +252,14 @@
 
                                        <th class="sorting">Proposal No.</th>
                                        <th class="sorting">Policy No. </th>
-                                       <th class="sorting">Insured Name</th>
+                                       <th class="sorting">Customer Name</th>
                                        <th class="sorting">Insurer Name</th>
                                        <th class="sorting">Service Provider</th>
+                                       <th class="sorting">Broker Code</th>
                                        <th class="sorting">Product Name</th>
                                        <th class="sorting">Registration No.</th>
-                                       <th class="sorting">RTO City</th>
                                        <th class="sorting">RTO State</th>
+                                       <th class="sorting">RTO City</th>
                                        <th class="sorting">Vehicle Makeby </th>
                                        <th class="sorting">Vehicle Model </th>
                                        <th class="sorting">Vehicle Catagory </th>
@@ -286,6 +287,8 @@
                                        <th class="sorting">GST 18%</th>
                                        <th class="sorting">GST 12%</th>
                                        <th class="sorting">Total</th>
+                                       <th class="sorting">Payment Mode</th>
+
                                        <th class="sorting">Agent OD Reward %</th>
                                        <th class="sorting">Agent OD Amount</th>
                                        <th class="sorting">Agent TP Reward %</th>
@@ -296,7 +299,6 @@
                                        <th class="sorting">Self TP Reward %</th>
                                        <th class="sorting">Self TP Amount</th>
                                        {% endif %}
-                                       <th class="sorting">Payment Mode</th>
                                        <th class="sorting">Proposal</th>
                                        <th class="sorting">Mandate</th>
                                        <th class="sorting">Policy</th>
@@ -326,10 +328,11 @@
                                        <td>{{value.customer_name}}</td>
                                        <td>{{value.insurance_company}}</td>
                                        <td>{{value.sp_name}}</td>
+                                       <td>{{value.sp_brokercode}}</td>
                                        <td>{{value.product_name}}</td>
                                        <td>{{value.registration_no}}</td>
-                                       <td>{{value.rto_city}}</td>
                                        <td>{{value.rto_state}}</td>
+                                       <td>{{value.rto_city}}</td>
                                        <td>{{value.vehicle_makeby}}</td>
                                        <td>{{value.vehicle_model}}</td>
                                        <td>{{value.vehicle_catagory}}</td>
@@ -372,6 +375,9 @@
                                        <td>{{value.gst_gcv_amount}}</td>
 
                                        <td>{{value.total}}</td>
+
+                                       <td>{{value.payment_mode}}</td>
+
 
                                        {% if value.agent_od_reward%}
                                        <td>{{value.agent_od_reward}}</td>
@@ -425,7 +431,6 @@
 
                                        {% endif %}
 
-                                       <td>{{value.payment_mode}}</td>
                                        <td>{{value.proposal}}</td>
                                        <td>{{value.mandate}}</td>
                                        <td>{{value.policy}}</td>

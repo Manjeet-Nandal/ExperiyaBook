@@ -276,7 +276,6 @@ class Policy(models.Model):
     issue_date = models.DateField()
     insured_age = models.IntegerField()
     policy_term = models.IntegerField()
-    payment_mode = models.CharField(max_length=100)
     bqp = models.CharField(max_length=100)
     pos = models.CharField(max_length=100)
     employee = models.CharField(max_length=100)
@@ -286,6 +285,7 @@ class Policy(models.Model):
     gst_amount = models.IntegerField()
     gst_gcv_amount = models.IntegerField(blank=True)   
     total = models.IntegerField()
+    payment_mode = models.CharField(max_length=100)
     agent_od_reward = models.IntegerField(blank=True)
     agent_od_amount = models.IntegerField(blank=True)
     agent_tp_reward = models.IntegerField(blank=True)
@@ -294,6 +294,7 @@ class Policy(models.Model):
     self_od_amount = models.IntegerField(blank=True)
     self_tp_reward = models.IntegerField(blank=True)
     self_tp_amount = models.IntegerField(blank=True)
+    
     proposal = models.FileField(upload_to='media/documents/')
     mandate = models.FileField(upload_to='media/documents/')
     policy = models.FileField(upload_to='media/documents/')

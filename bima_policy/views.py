@@ -849,6 +849,7 @@ class create_policy_non_motor(View):
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
         pos = request.POST['pos']
+        cpa = request.POST['cpa']
         employee = request.POST['employee']
         OD_premium = request.POST['od']
         TP_terrorism = request.POST['tpt']
@@ -888,13 +889,16 @@ class create_policy_non_motor(View):
             fsis.save(inspection_report.name, inspection_report)
 
         print('policy type ', policy_type )
-        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  
-                              product_name=product_name, policy_type=policy_type,
+        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, 
+                              insurance_company=insurance_company, sp_name=sp_name,  sp_brokercode=sp_brokercode,
+                              product_name=product_name, policy_type=policy_type,  
                               risk_start_date=risk_start_date,
-                              risk_end_date=risk_end_date, issue_date=issue_date,  policy_term=policy_term,  bqp=bqp, pos=pos,
+                              risk_end_date=risk_end_date, issue_date=issue_date,  
+                              policy_term=policy_term,  bqp=bqp, pos=pos, cpa=cpa,
                               employee=employee, proposal=proposal, mandate=mandate,
                               policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, inspection_report=inspection_report,
-                              OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount,total=total)
+                              OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount,total=total,
+                              payment_mode=payment_mode)
 
         data = Policy.objects.filter(profile_id=get_profile_id(
             get_id_from_session(request))).order_by('-policyid').values()
@@ -1541,10 +1545,13 @@ def policy_entrydata(request, id):
     print('policy_entrydata')
     if request.method == "POST":
         print('policy_entrydata post')
+        
         proposal_no = request.POST['proposal_no']
+        policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
         insurance_company = request.POST['insurance_company']
         sp_name = request.POST['sp_name']
+        sp_brokercode = request.POST['sp_brokercode']
 
         try:
             product_name = request.POST['product_name']
@@ -1607,7 +1614,7 @@ def policy_entrydata(request, id):
         except:
             coverage_type = ''
 
-        # policy_type = request.POST['policy_type']
+        policy_type = request.POST['policy_type']
         cpa = request.POST['cpa']
         # risk_start_date = request.POST['risk_start_date']
         # risk_end_date = request.POST['risk_end_date']
@@ -1632,16 +1639,23 @@ def policy_entrydata(request, id):
         aadhar_card = request.FILES.get('aadhar_card')
         vehicle_rc = request.FILES.get('vehicle_rc')
         inspection_report = request.FILES.get('inspection_report')
-
+       
         data = Policy.objects.filter(policyid=id)
 
-        data.update(proposal_no=proposal_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no,
-                    rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory,
-                    vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year, addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity,
-                    coverage_type=coverage_type,  cpa=cpa, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                    employee=employee,
-                    OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, gst_gcv_amount=gst_gcv_amount,  total=total)
-
+        print('sp_brokercode', sp_brokercode)
+        print('cpa', cpa)
+        data.update(proposal_no=proposal_no, policy_no=policy_no, product_name=product_name, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, 
+                    sp_brokercode=sp_brokercode,  registration_no=registration_no,
+                    rto_state=rto_state, rto_city=rto_city,  vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
+                    mfg_year=mfg_year, 
+                    addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, policy_type=policy_type, cpa=cpa,
+                    insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+                    employee=employee, proposal=proposal, mandate=mandate,
+                    OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, 
+                    gst_gcv_amount=gst_gcv_amount,  total=total,
+                    policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
+                    )
+        
         if proposal:
             data.update(proposal=proposal)
         if mandate:

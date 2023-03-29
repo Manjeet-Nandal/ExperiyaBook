@@ -3,22 +3,16 @@
 {%block content%}
 {% load static %}
 
+
 <main class="app-main">
-   <!-- .app-main -->
    <div class="wrapper">
-      <!-- .wrapper -->
       <div class="page ">
-         <!-- .page -->
          <div class="page-inner">
-            <!-- .page-inner -->
             <div class="ajax-progressBar">
                <div class="postProgress"></div>
             </div>
             <header class="page-title-bar">
-               <!-- .page-title-bar -->
                <div class="d-flex justify-content-between align-items-center">
-                  <!-- .d-flex -->
-                  <!-- .breadcrumb -->
                   <nav aria-label="breadcrumb">
                      <ol class="breadcrumb">
                         <li class="breadcrumb-item active">
@@ -26,46 +20,36 @@
                         </li>
                      </ol>
                   </nav>
-                  <!-- /.breadcrumb -->
                </div>
-               <!-- /.d-flex -->
-               <!-- grid row -->
                <div class="row text-center text-sm-left">
-                  <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> {% if is_motor_form %}  Motor Policy  {% else %} Non-Motor Policy  
+                     <h1 class="page-title"> {% if is_motor_form %} Motor Policy {% else %} Non-Motor Policy
                         {% endif %}<small class="text-muted"> All * marks Fields are
                            mandatory.
                         </small></h1>
                   </div>
-                  <!-- /grid column -->
                </div>
-               <!-- /grid row -->
             </header>
-            <!-- .page-section -->
             <div class="page-section">
-               <!-- .section-block -->
                <div class="section-block">
                   <form id="frminsurance" method="post" enctype="multipart/form-data" class="" autocomplete="off"
                      data-parsley-validate="true" novalidate="">
                      {%csrf_token%}
 
+                     {% if is_motor_form %}
+
                      <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-12">
                            <div class="card">
-                              <!-- .card -->
                               <div class="card-body">
                                  <fieldset>
                                     <legend>Policy Details</legend>
 
                                     <div class="form-row">
 
-                                       {% if is_motor_form %}
                                        <div class="col-md-3 mb-4">
-                                          <label>Vehicle Catagory <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="vehicle_catagory" data-parsley-required-message=""
-                                             id="vehicle_catagory" data-parsley-required="true" class="custom-select "
+                                          <label>Vehicle Catagory <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="vehicle_catagory" id="vehicle_catagory" class="custom-select "
                                              required onchange="setCategoryOnChange()">
                                              <option value="{{data.vehicle_catagory}}"> {{data.vehicle_catagory}}
                                              </option>
@@ -88,60 +72,29 @@
                                              {%endfor%} -->
                                           </select>
                                        </div>
-                                       {% else %}
-                                       <div class="col-md-3 mb-4">
-                                          <label>Product Name <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="vehicle_catagory" data-parsley-required-message=""
-                                             id="vehicle_catagory" data-parsley-required="true" class="custom-select "
-                                             required onchange="setCategoryOnChange()">
-                                             <option value="{{data.product_name}}"> {{data.product_name}} </option>
-                                             <option value="FIRE">FIRE</option>
-                                             <option value="MARINE CARGO">MARINE CARGO</option>
-                                             <option value="MARINE HULL">MARINE HULL</option>
-                                             <option value="ENGINEERING">ENGINEERING</option>
-                                             <option value="MISCELLANEOUS">MISCELLANEOUS</option>
-
-                                             <!-- {%for value in data_vc%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%} -->
-                                          </select>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
-                                          <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="policy_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.policy_type}}">{{data.policy_type}}</option>
-                                             <option value="FRESH">FRESH</option>
-                                             <option value="RENEWAL">RENEWAL</option>
-                                             <option value="ROLLOVER">ROLLOVER</option>
-                                             <option value="ENDORSEMENT">ENDORSEMENT</option>
-                                          </select>
-                                       </div>
-                                       {% endif %}
 
                                        <div class="col-md-3 mb-4">
-                                          <label for="proposal_no">Proposal No. <abbr title="Required"
+                                          <label for="proposal_no">Proposal No. <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.proposal_no}}" data-parsley-required-message=""
-                                             class="form-control" data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$"
-                                             name="proposal_no" id="proposal_no" style="text-transform: uppercase;"
-                                             required>
+                                             value="{{data.proposal_no}}" class="form-control" name="proposal_no"
+                                             id="proposal_no" style="text-transform: uppercase;" required>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="policy_no">Policy No. <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.policy_no}}" class="form-control" name="policy_no"
+                                             id="policy_no" style="text-transform: uppercase;" required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label for="customer_name">Insured Name <abbr title="Required"
+                                          <label for="customer_name">Insured Name <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.customer_name}}" data-parsley-required-message=""
-                                             class="form-control" data-parsley-required="true" name="customer_name"
+                                             value="{{data.customer_name}}" class="form-control" name="customer_name"
                                              style="text-transform: uppercase;" required>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Insurer Name<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="insurance_company" data-parsley-required-message=""
-                                             class="custom-select" id="insurance_company" data-parsley-required="true"
+                                          <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="insurance_company" class="custom-select" id="insurance_company"
                                              required>
                                              <option value="{{data.insurance_company}}"> {{data.insurance_company}}
                                              </option>
@@ -150,23 +103,9 @@
                                              {%endfor%}
                                           </select>
                                        </div>
-
-                                       {% if is_motor_form %}
-                                       {% else %}
                                        <div class="col-md-3 mb-4">
-                                          <label for="customer_name">Sum Insured <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true" name="customer_name"
-                                             style="text-transform: uppercase;" required>
-                                       </div>
-                                       {% endif %}
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Serving Office <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="sp_name" data-parsley-required-message="" class="custom-select"
-                                             id="sp_name" data-parsley-required="true" required>
+                                          <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="sp_name" class="custom-select" id="sp_name" required>
                                              <option value="{{data.sp_name}}"> {{data.sp_name}} </option>
                                              <option value="DELHI">Delhi</option>
                                              <option value="ROHTAK">Rohtak</option>
@@ -175,20 +114,25 @@
                                              <option value="LUCKHNOW">Luckhnow</option>
                                           </select>
                                        </div>
-
-                                       {% if is_motor_form %}
-
                                        <div class="col-md-3 mb-4">
-                                          <label for="registration_no">Registration No. <abbr
-                                                title="Required Minimum 8 Character Length"
+                                          <label>Office Code <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
+                                             required>
+                                             <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}} </option>
+                                             <option value="123">123</option>
+                                             <option value="1234">1234</option>
+                                             <option value="12345">12345</option>
+                                          </select>
+                                          <!-- {%for value in data_ins%}
+                                          <option value="{{value}}">{{value}}</option>
+                                          {%endfor%} -->
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="registration_no">Registration No. <abbr title=""
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt">
-                                             <input type="text" data-parsley-group="payout" oninput="myFunction()"
-                                                class="form-control" value="{{data.registration_no}}"
-                                                data-mask-as-number-minlength="8" placeholder="Minimum 8 Characters"
-                                                data-parsley-required="true" data-parsley-minlength="8"
-                                                data-parsley-maxlength="14"
-                                                data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$"
+                                             <input type="text" oninput="myFunction()" class="form-control"
+                                                value="{{data.registration_no}}" placeholder="Minimum 8 Characters"
                                                 id="registration_no" name="registration_no" maxlength="14" required
                                                 style="text-transform: uppercase;">
                                              <div class="input-group-append">
@@ -198,10 +142,9 @@
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label>RTO State<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="rto_state" data-parsley-required-message=""
-                                             class="custom-select" id="rto_state" data-parsley-required="true" required>
-                                             <option value="{{data.rto_state}}">{{data.rto_state}}</option>
+                                          <label>RTO State<abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="rto_state" class="custom-select" id="rto_state" required>
+                                             <option value="{{data.rto_state}}"> {{data.rto_state}} </option>
                                              <option value="Andama And Nicobar Island">Andama And Nicobar Island
                                              </option>
                                              <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -244,42 +187,33 @@
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label for="rto_city">RTO City <abbr title="Required"
+                                          <label for="rto_city">RTO City <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.rto_city}}" data-parsley-required-message=""
-                                             class="form-control" data-parsley-required="true" name="rto_city"
+                                             value="{{data.rto_city}}" class="form-control" name="rto_city"
                                              style="text-transform: uppercase;" required>
                                        </div>
-
                                        <div class="col-md-3 mb-4">
-                                          <label> Vehicle Make By <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="vehicle_makeby" data-parsley-required-message=""
-                                             data-parsley-required="true" class="custom-select" required>
-                                             <option value="{{data.vehicle_makeby}}">{{data.vehicle_makeby}}</option>
+                                          <label> Vehicle Make By <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="vehicle_makeby" class="custom-select" required>
+                                             <option value="{{data.vehicle_makeby}}"> {{data.vehicle_makeby}} </option>
                                              {%for value in data_vmb%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Vehicle Model <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="vehicle_model" data-parsley-required-message=""
-                                             data-parsley-required="true" class="custom-select" required>
-                                             <option value="{{data.vehicle_model}}">{{data.vehicle_model}}</option>
+                                          <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="vehicle_model" class="custom-select" required>
+                                             <option value="{{data.vehicle_model}}"> {{data.vehicle_model}} </option>
                                              {%for value in data_vm%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
-
                                        <div class="col-md-3 mb-4">
-                                          <label>Vehicle Fuel Type <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select name="vehicle_fuel_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.vehicle_fuel_type}}">{{data.vehicle_fuel_type}}
+                                          <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="vehicle_fuel_type" class="custom-select" required>
+                                             <option value="{{data.vehicle_fuel_type}}"> {{data.vehicle_fuel_type}}
                                              </option>
                                              <option value="PETROL">PETROL</option>
                                              <option value="DIESEL">DIESEL</option>
@@ -288,11 +222,10 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label for="mfg_year">Manufacture Year <abbr title="Required"
+                                          <label for="mfg_year">Manufacture Year <abbr title=""
                                                 class="text-danger">*</abbr></label>
-                                          <select name="mfg_year" data-parsley-required-message=""
-                                             data-parsley-required="true" class="custom-select" required>
-                                             <option value="{{data.mfg_year}}">{{data.mfg_year}}</option>
+                                          <select name="mfg_year" class="custom-select" required>
+                                             <option value="{{data.mfg_year}}"> {{data.mfg_year}} </option>
                                              <option value="2025">2025</option>
                                              <option value="2024">2024</option>
                                              <option value="2023">2023</option>
@@ -321,24 +254,21 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Addon <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="addon" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.addon}}">{{data.addon}}</option>
+                                          <label>Addon <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="addon" class="custom-select" required>
+                                             <option value="{{data.addon}}"> {{data.addon}} </option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>NCB <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="ncb" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.ncb}}">{{data.ncb}}</option>
+                                          <label>NCB <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="ncb" class="custom-select" required>
+                                             <option value="{{data.ncb}}"> {{data.ncb}} </option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                           </select>
                                        </div>
-
                                        <div class="col-md-3 mb-4" id="cubic_capacityDiv">
                                           <label>Cubic Capacity<abbr class="text-danger">*</abbr></label>
                                           <select name="cubic_capacity" class="custom-select" id="cubic_capacity"
@@ -362,7 +292,6 @@
                                              <option value="ABOVE 40000">ABOVE 40000</option>
                                           </select>
                                        </div>
-
                                        <div class="col-md-3 mb-4" id="seating_capacityDiv">
                                           <label>Seating Capacity<abbr class="text-danger">*</abbr></label>
                                           <select name="seating_capacity" type="input" class="custom-select"
@@ -380,10 +309,8 @@
                                        <div class="col-md-3 mb-4" id="seating_capacityDiv1" hidden>
                                           <label for="seating_capacity1">Seating Capacity <abbr
                                                 class="text-danger">*</abbr></label><input type="text"
-                                             data-parsley-group="payout" value="{{data.seating_capacity}}"
-                                             class="form-control col-lg-6 maskNumField"
-                                             data-mask-as-number-maxlength="2" data-parsley-maxlength="2"
-                                             data-parsley-pattern="^[0-9]+$" name="seating_capacity1"
+                                             value="{{data.seating_capacity}}"
+                                             class="form-control col-lg-6 maskNumField" name="seating_capacity1"
                                              id="seating_capacity1" maxlength="2" required
                                              oninput="addSeatingCapacity()">
                                        </div>
@@ -392,235 +319,198 @@
                                           <label>Coverage Type <abbr class="text-danger">*</abbr></label>
                                           <select name="coverage_type" id="coverage_type" class="custom-select"
                                              required>
-                                             <option value="{{data.coverage_type}}">{{data.coverage_type}}</option>
+                                             <option value="{{data.coverage_type}}"> {{data.coverage_type}} </option>
                                              <option value="NA"> NA </option>
                                              <!-- {% for value in data_ct%}
                                              <option value="{{value}}">{{value}}</option>
                                              {% endfor%} -->
                                           </select>
                                        </div>
-
-                                       <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
-                                          <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="case_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.case_type}}">{{data.case_type}}</option>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="policy_type" id="policy_type" class="custom-select" required>
+                                             <option value="{{data.policy_type}}"> {{data.policy_type}} </option>
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
                                              <option value="ENDORSEMENT">ENDORSEMENT</option>
                                           </select>
                                        </div>
-
-                                       {% endif %}
-
-                                       {% if is_motor_form %}
-
                                        <div class="col-md-3 mb-4">
-                                          <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="cpa" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.cpa}}">{{data.cpa}}</option>
+                                          <label>CPA <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="cpa" class="custom-select" required>
+                                             <option value="{{data.cpa}}"> {{data.cpa}} </option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                           </select>
                                        </div>
-                                       {% endif %}
 
-                                       <!-- <div class="col-md-3 mb-4">
-                                          <label for="flatpickr-wrap">Risk Start Date <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="risk_flatpickr" data-default-date="" data-wrap="true"
-                                             data-alt-input="true" data-alt-format="F j, Y"
-                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
-                                             <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="" name="risk_start_date" required
-                                                data-input="">
-                                          </div>
-                                       </div> -->
-                                       <!-- <div class="col-md-3 mb-4">
-                                          <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="risk_flatpickr" data-default-date="" data-wrap="true"
-                                             data-alt-input="true" data-alt-format="F j, Y"
-                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
-                                             <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="" name="risk_end_date" required
-                                                data-input="">
-                                          </div>
-                                       </div> -->
-                                       <!-- <div class="col-md-3 mb-4">
-                                          <label for="flatpickr-wrap">Issued Date <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
-                                             data-default-date="" ata-alt-format="F j, Y"
-                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
-                                             <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="" name="issue_date" required
-                                                data-input="">
-                                          </div>
-                                       </div> -->
-                                       {% if is_motor_form %}
+
                                        <div class="col-md-3 mb-4">
-                                          <label for="insured_age">Insured Age <abbr title="Required"
+                                          <label for="insured_age">Insured Age <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="number"
-                                             value="{{data.insured_age}}" data-parsley-required-message=""
-                                             class="form-control" data-parsley-required="true" name="insured_age"
+                                             value="{{data.insured_age}}" class="form-control" name="insured_age"
                                              required>
                                        </div>
-                                       {% endif %}
-
                                        <div class="col-md-3 mb-4">
-                                          <label>Policy Term <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="policy_term" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.policy_term}}">{{data.policy_term}}</option>
-
-                                             {% if is_motor_form %}
-
+                                          <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="policy_term" class="custom-select" required>
+                                             <option value="{{data.policy_term}}"> {{data.policy_term}} </option>
                                              <option value="1">1</option>
                                              <option value="2">2</option>
                                              <option value="3">3</option>
                                              <option value="4">4</option>
                                              <option value="5">5</option>
-                                             {% else %}
-                                             <option value="1">1</option>
-                                             <option value="5">5</option>
-                                             <option value="10">10</option>
-                                             {% endif %}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>BQP <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="bqp" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.bqp}}">{{data.bqp}}</option>
+                                          <label>BQP <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="bqp" class="custom-select" required>
+                                             <option value="{{data.bqp}}"> {{data.bqp}} </option>
                                              {%for value in data_bqp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label for="pos">POS <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.pos}}" data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true" name="pos" style="text-transform: uppercase;"
-                                             required>
+                                          <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
+                                             id="pos" type="text" value="{{data.pos}}" data-toggle="modal"
+                                             data-target="#mdlcolsetting" class="form-control" name="pos"
+                                             style="text-transform: uppercase;" required readonly>
                                        </div>
+
+
+                                       <div class="modal fade" id="mdlcolsetting" data-backdrop="static"
+                                          data-keyboard="false" style="height: 400px" tabindex="-1" role="dialog"
+                                          aria-labelledby="rtoModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                             <div class="modal-content">
+                                                <div class="modal-header">
+                                                   <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
+                                                </div>
+                                                <div class="modal-body ">
+                                                   <div class="form-row">
+                                                      <div class="col-md-6 mb-4">
+                                                         <div class=""><label>Search:<input id="inp_search" type="text"
+                                                                  value="" class="form-control" name="agent"
+                                                                  style="text-transform: uppercase;"
+                                                                  title="Search POS using Name, mobile no, email, pan/aadhar number"
+                                                                  oninput="searchPOS()">
+                                                            </label></div>
+                                                      </div>
+                                                      <div class="col-md-6 mb-4">
+                                                         <div class=""><label>POS:<input id="inp_pos" type="text"
+                                                                  value="" class="form-control" name="agent"
+                                                                  style="text-transform: uppercase;"
+                                                                  title="POS should be automatically fetched">
+                                                            </label>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+
+                                                   <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary w-100p"
+                                                         data-dismiss="modal">Close</button>
+                                                      <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
+                                                            class="btn btn-primary w-100p">Save</button> -->
+                                                   </div>
+                                                </div>
+
+                                             </div>
+
+
+                                          </div>
+
+                                       </div>
+
+
+
                                        <div class="col-md-3 mb-4">
-                                          <label for="employee">Employee <abbr title="Required"
+                                          <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.employee}}" data-parsley-required-message=""
-                                             class="form-control" data-parsley-required="true" name="employee"
+                                             value="{{data.employee}}" class="form-control" name="employee"
                                              style="text-transform: uppercase;" required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label>Proposal PDF <small> (Accept Only<strong> PDF </strong>File)</small>
-                                             <abbr title="Required" class="text-danger">*</abbr> </label>
-                                          <div class="">
-                                             <input type="file" value="{{data.proposal}}" name="proposal" accept=".pdf"
-                                                data-parsley-required="false" id="proposal" class="form-control p-1"
-                                                style="background: #fcfcfd">
-                                             <div class="f-14 m-t-5">
-                                                <i class="fa fa-file" aria-hidden="true"></i> {{data.proposal}}
-                                             </div>
+                                          <label>Proposal <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="proposal" accept=".pdf,image/" id="proposal"
+                                                value="{{data.proposal}}" class="custom-file-input">
+                                             <label class="custom-file-label" for="proposal">{{data.proposal}}</label>
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Mandate PDF <small> (Accept Only<strong> PDF </strong>File)</small>
-                                             <abbr title="Required" class="text-danger">*</abbr> </label>
-                                          <div class="">
-                                             <input type="file" value="{{data.mandate}}" name="mandate" accept=".pdf"
-                                                data-parsley-required="false" id="mandate" class="form-control p-1"
-                                                style="background: #fcfcfd">
-                                             <div class="f-14 m-t-5">
-                                                <i class="fa fa-file" aria-hidden="true"></i> {{data.mandate}}
-                                             </div>
+                                          <label>Mandate <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="mandate" accept=".pdf,image/" id="mandate"
+                                                value="{{data.mandate}}" class="custom-file-input">
+                                             <label class="custom-file-label" for="mandate">{{data.mandate}}</label>
                                           </div>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label>Policy PDF <small> (Accept Only<strong> PDF </strong>File)</small>
-                                             <abbr title="Required" class="text-danger">*</abbr> </label>
-                                          <div class="">
-                                             <input type="file" value="{{data.policy}}" name="policy" accept=".pdf"
-                                                data-parsley-required="false" id="policy" class="form-control p-1"
-                                                style="background: #fcfcfd">
-                                             <div class="f-14 m-t-5">
-                                                <i class="fa fa-file" aria-hidden="true"></i> {{data.policy}}
-                                             </div>
+                                          <label>Policy <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="policy" accept=".pdf,image/" id="policy"
+                                                value="{{data.policy}}" class="custom-file-input">
+                                             <label class="custom-file-label" for="policy">{{data.policy}}</label>
                                           </div>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label>Previous Policy <small> (Accept Only<strong> PDF </strong>File)</small>
-                                             <abbr title="Required" class="text-danger">*</abbr> </label>
-                                          <div class="">
-                                             <input type="file" value="{{data.previous_policy}}" name="previous_policy"
-                                                accept=".pdf" data-parsley-required="false" id="previous_policy"
-                                                class="form-control p-1" style="background: #fcfcfd">
-                                             <div class="f-14 m-t-5">
-                                                <i class="fa fa-file" aria-hidden="true"></i> {{data.previous_policy}}
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>PAN Card <small> (Accept Only<strong> PDF </strong>File)</small> <abbr
-                                                title="Required" class="text-danger">*</abbr> </label>
-                                          <div class="">
-                                             <input type="file" value="" name="pan_card" accept=".pdf"
-                                                data-parsley-required="false" id="pan_card" class="form-control p-1"
-                                                style="background: #fcfcfd">
-                                             <div class="f-14 m-t-5">
-                                                <i class="fa fa-file" aria-hidden="true"></i> {{data.pan_card}}
-                                             </div>
+                                          <label>Prev. Policy <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="previous_policy" accept=".pdf,image/"
+                                                value="{{data.previous_policy}}" id="previous_policy"
+                                                class="custom-file-input">
+                                             <label class="custom-file-label"
+                                                for="previous_policy">{{data.previous_policy}}</label>
                                           </div>
                                        </div>
 
-
                                        <div class="col-md-3 mb-4">
-                                          <label>Aadhar Card <small> (Accept Only<strong> PDF </strong>File)</small>
-                                             <abbr title="Required" class="text-danger">*</abbr> </label>
-                                          <div class="">
-                                             <input type="file" value="" name="aadhar_card" accept=".pdf"
-                                                data-parsley-required="false" id="aadhar_card" class="form-control p-1"
-                                                style="background: #fcfcfd">
-                                             <div class="f-14 m-t-5">
-                                                <i class="fa fa-file" aria-hidden="true"></i> {{data.aadhar_card}}
-                                             </div>
+                                          <label>Pan Card <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
+                                                value="{{data.pan_card}}" class="custom-file-input">
+                                             <label class="custom-file-label" for="pan_card">{{data.pan_card}}</label>
                                           </div>
                                        </div>
-                                       {% if is_motor_form %}
-
                                        <div class="col-md-3 mb-4">
-                                          <label>Vehicle RC <small> (Accept Only<strong> PDF </strong>File)</small>
-                                             <abbr title="Required" class="text-danger">*</abbr> </label>
-                                          <div class="">
-                                             <input type="file" value="" name="vehicle_rc" accept=".pdf"
-                                                data-parsley-required="false" id="vehicle_rc" class="form-control p-1"
-                                                style="background: #fcfcfd">
-                                             <div class="f-14 m-t-5">
-                                                <i class="fa fa-file" aria-hidden="true"></i> {{data.vehicle_rc}}
-                                             </div>
+                                          <label>Aadhar Card <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
+                                                value="{{data.aadhar_card}}" class="custom-file-input">
+                                             <label class="custom-file-label"
+                                                for="aadhar_card">{{data.aadhar_card}}</label>
                                           </div>
                                        </div>
-                                       {% endif %}
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Inspection Report PDF <small> (Accept Only<strong> PDF
-                                                </strong>File)</small> <abbr title="Required"
-                                                class="text-danger">*</abbr> </label>
-                                          <div class="">
-                                             <input type="file" value="" name="inspection_report" accept=".pdf"
-                                                data-parsley-required="false" id="inspection_report"
-                                                class="form-control p-1" style="background: #fcfcfd">
-                                             <div class="f-14 m-t-5">
-                                                <i class="fa fa-file" aria-hidden="true"></i> {{data.inspection_report}}
-                                             </div>
+                                       <div class="col-md-4 mb-4">
+                                          <label> Vehicle RC <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="vehicle_rc" accept=".pdf,image/" id="vehicle_rc"
+                                                value="{{data.vehicle_rc}}" class="custom-file-input">
+                                             <label class="custom-file-label"
+                                                for="vehicle_rc">{{data.vehicle_rc}}</label>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-4 mb-4">
+                                          <label>Inspection Report <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="inspection_report" accept=".pdf,image/"
+                                                value="{{data.inspection_report}}" id="inspection_report"
+                                                class="custom-file-input">
+                                             <label class="custom-file-label"
+                                                for="vehicle_rc">{{data.inspection_report}}</label>
                                           </div>
                                        </div>
 
@@ -633,67 +523,58 @@
                            </div>
                            <!-- /.card -->
                         </div>
-                      
+
                         <div class="col-lg-3 col-md-3 col-sm-12">
+
                            <div class="card">
-                              <!-- .card -->
+
                               <div class="card-body">
                                  <!-- .card-body -->
                                  <h4 class="card-title mb-3"> Premium Details </h4>
                                  <!-- grid row -->
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"  oninput="calculateValue()"
-                                       data-parsley-group="payout" value="{{data.OD_premium}}"
-                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
-                                       data-parsley-required="true" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="od" id="od"
-                                       maxlength="10" required>
+                                    <label class="col-lg-5" for="od">OD Premium <abbr title=""
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       oninput="calculateValue()" value="{{data.OD_premium}}"
+                                       class="form-control col-lg-6 maskNumField" data-parsley-pattern="^[0-9]+$"
+                                       name="od" id="od" maxlength="10" required>
                                  </div>
-
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"  oninput="calculateValue()"
-                                       data-parsley-group="payout" value="{{data.TP_terrorism}}"
-                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
-                                       data-parsley-required="true" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" 
-                                       name="tpt" id="tpt"
-                                       maxlength="10" required>
+                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       oninput="calculateValue()" value="{{data.TP_terrorism}}"
+                                       class="form-control col-lg-6 maskNumField" data-parsley-pattern="^[0-9]+$"
+                                       name="tpt" id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Net Premium</label><input type="text" name="net"
-                                       onclick="add()" value="{{data.net}}"  oninput="calculateValue()"
+                                       onclick="add()" value="{{data.net}}"
                                        class="form-control col-lg-6 maskNumField bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
+                                       data-mask-as-number-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
                                        maxlength="10" readonly="" required>
                                  </div>
+
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="gst">GST 18%<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"  oninput="calculateValue()"
-                                       data-parsley-group="payout" value="{{data.gst_amount}}"
-                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
-                                       data-parsley-required="true" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="gst" id="gst"
-                                       maxlength="10" required>
+                                    <label class="col-lg-5" for="gst">GST 18%<abbr title=""
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       value="{{data.gst_amount}}" class="form-control col-lg-6 maskNumField"
+                                       data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10" required
+                                       oninput="calculateValue()">
                                  </div>
+
                                  <div class="row mb-2" id="gsttDiv" hidden>
-                                    <label class="col-lg-5" for="gst">GST 12%<abbr title="Required"
-                                          class="text-danger">*</abbr></label><input type="text"  oninput="calculateValue()"
-                                       data-parsley-group="payout" value="{{data.gst_gcv_amount}}"
-                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
-                                       data-parsley-required="true" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt"
-                                       maxlength="10" required>
+                                    <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       value="{{data.gst_gcv_amount}}" class="form-control col-lg-6 maskNumField"
+                                       data-mask-as-number-maxlength="10" data-parsley-pattern="^[0-9]+$" name="gstt"
+                                       id="gstt" maxlength="10" oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="{{data.total}}"  oninput="calculateValue()"
+                                       onclick="addgst()" value="{{data.total}}"
                                        class="form-control maskNumField col-lg-6 bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="totalnet"
-                                       readonly="" maxlength="10" required>
+                                       data-parsley-pattern="^[0-9]+$" id="totalnet" readonly="" maxlength="10" required
+                                       oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
@@ -707,179 +588,459 @@
                                        <option value="SELF CHEQUE">SELF CHEQUE</option>
                                     </select>
                                  </div>
-                                 {% if is_user %}
-                                 <hr>
-                                 <h4 class="card-title mb-3"> Agent Payout </h4>
-                                 <!-- grid row -->
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5 pr-0 ">Rewards on: </label>
-                                    <select class="custom-select col-lg-6" onchange="onAgentODTPChange()"
-                                       id="agent_od_tp">
-                                       <option value="OD" selected>OD</option>
-                                       <option value="TP">TP</option>
-                                    </select>
-                                 </div>
-                                
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards % </label><input type="text" id="agent_od_reward"
-                                       name="agent_od_reward" value="{{data.agent_od_reward}}"
-                                       class="form-control maskNumField col-lg-6 bg-light" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$"  maxlength="10" >
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Amount </label><input type="text" id="agent_od_amount"
-                                       name="agent_od_amount" value="{{data.agent_od_amount}}"
-                                       class="form-control maskNumField col-lg-6 bg-light" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$"  maxlength="10" >
-                                 </div>
-
-                                
-                                 <hr>
-
-                                 <h4 class="card-title mb-3"> Self Payout </h4>
-                                 <!-- grid row -->
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5 pr-0 ">Rewards on: </label>
-                                    <select class="custom-select col-lg-6" onchange="onSelf_ODTPChange()"
-                                       id="self_od_tp">
-                                       <option value="OD" selected>OD</option>
-                                       <option value="TP">TP</option>
-                                    </select>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Rewards % </label><input type="text" id="self_od_reward"
-                                       name="self_od_reward" value="{{data.self_od_reward}}"
-                                       class="form-control maskNumField col-lg-6 bg-light" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$"  maxlength="10" >
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Amount </label><input type="text" id="self_od_amount"
-                                       name="self_od_amount" value="{{data.self_od_amount}}"
-                                       class="form-control maskNumField col-lg-6 bg-light" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$"  maxlength="10" >
-                                 </div>
-
-                               {% endif %}
-
-                                 <script>
-
-
-                                    function onAgentODTPChange() {
-                                       agent_od_tp = document.getElementById('agent_od_tp')
-                                       agent_od_amount = document.getElementById('agent_od_amount')
-
-                                       if (agent_od_tp.value == 'OD') {
-                                          agent_od_reward.value = "{{data.agent_od_reward}}"
-                                          agent_od_amount.value = "{{data.agent_od_amount}}"
-                                       }
-                                       if (agent_od_tp.value == 'TP') {
-                                          agent_od_reward.value = "{{data.agent_tp_reward}}"
-                                          agent_od_amount.value = "{{data.agent_tp_amount}}"
-                                       }
-                                    }
-
-                                    function onSelf_ODTPChange() {
-                                       self_od_tp = document.getElementById('self_od_tp')
-                                       self_od_reward = document.getElementById('self_od_reward')
-                                       self_od_amount = document.getElementById('self_od_amount')
-
-                                       if (self_od_tp.value == 'OD') {
-                                          self_od_reward.value = "{{data.self_od_reward}}"
-                                          self_od_amount.value = "{{data.self_od_amount}}"
-                                       }
-                                       if (self_od_tp.value == 'TP') {
-                                          self_od_reward.value = "{{data.self_tp_reward}}"
-                                          self_od_amount.value = "{{data.self_tp_amount}}"
-                                       }
-                                    }
-
-                                 </script>
-
 
                               </div>
 
+
+                           </div>
+
+                           <script>
+                              function calculateAgentPayout() {
+                                 try {
+
+                                    od = document.getElementById('od').value
+                                    agent_od_reward = document.getElementById('agent_od_reward').value
+                                    agent_od_amount = document.getElementById('agent_od_amount')
+                                    agent_od_amount.value = od * agent_od_reward / 100
+
+                                    tp = document.getElementById('tpt').value
+                                    agent_tp_reward = document.getElementById('agent_tp_reward').value
+                                    agent_tp_amount = document.getElementById('agent_tp_amount')
+                                    agent_tp_amount.value = tp * agent_tp_reward / 100
+
+                                 } catch (error) {
+                                 }
+                              }
+
+                              function calculateSelfPayout() {
+                                 try {
+
+                                    od = document.getElementById('od').value
+                                    tpt = document.getElementById('tpt').value
+
+                                    self_od_reward_value = document.getElementById('self_od_reward').value
+                                    self_tp_reward_value = document.getElementById('self_tp_reward').value
+
+                                    document.getElementById('self_od_amount').value = od * self_od_reward_value / 100
+                                    document.getElementById('self_tp_amount').value = tpt * self_tp_reward_value / 100
+
+                                 } catch (error) {
+                                 }
+                              }
+
+                           </script>
+
+                        </div>
+
+
+                     </div>
+
+                     {% else %}
+
+
+                     <div class="row">
+                        <div class="col-lg-9 col-md-9 col-sm-12">
+                           <div class="card">
+                              <div class="card-body">
+                                 <fieldset>
+                                    <legend>Policy Details</legend>
+
+                                    <div class="form-row">
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Product Name <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="product_name" id="product_name" class="custom-select " required>
+                                             <option value="{{data.product_name}}"> {{data.product_name}} </option>
+                                             <option value="FIRE">FIRE</option>
+                                             <option value="MARINE CARGO">MARINE CARGO</option>
+                                             <option value="MARINE HULL">MARINE HULL</option>
+                                             <option value="ENGINEERING">ENGINEERING</option>
+                                             <option value="MISCELLANEOUS">MISCELLANEOUS</option>
+
+                                             <!-- {%for value in data_vc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%} -->
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="policy_type" id="policy_type" class="custom-select" required>
+                                             <option value="{{data.policy_type}}"> {{data.policy_type}} </option>
+                                             <option value="FRESH">FRESH</option>
+                                             <option value="RENEWAL">RENEWAL</option>
+                                             <option value="ROLLOVER">ROLLOVER</option>
+                                             <option value="ENDORSEMENT">ENDORSEMENT</option>
+                                          </select>
+                                       </div>
+
+
+                                       <div class="col-md-3 mb-4">
+                                          <label for="proposal_no">Proposal No. <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.proposal_no}}" class="form-control" name="proposal_no"
+                                             id="proposal_no" style="text-transform: uppercase;" required>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="policy_no">Policy No. <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.policy_no}}" class="form-control" name="policy_no"
+                                             id="policy_no" style="text-transform: uppercase;" required>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label for="customer_name">Insured Name <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.customer_name}}" class="form-control" name="customer_name"
+                                             style="text-transform: uppercase;" required>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="insurance_company" class="custom-select" id="insurance_company"
+                                             required>
+                                             <option value="{{data.insurance_company}}"> {{data.insurance_company}}
+                                             </option>
+                                             {%for value in data_ins%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="sp_name" class="custom-select" id="sp_name" required>
+                                             <option value="{{data.sp_name}}"> {{data.sp_name}} </option>
+                                             <option value="DELHI">Delhi</option>
+                                             <option value="ROHTAK">Rohtak</option>
+                                             <option value="CHANDIGARH">Chandigarh</option>
+                                             <option value="GURGAON">Gurgaon</option>
+                                             <option value="LUCKHNOW">Luckhnow</option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Office Code <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
+                                             required>
+                                             <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}} </option>
+                                             <option value="123">123</option>
+                                             <option value="1234">1234</option>
+                                             <option value="12345">12345</option>
+                                          </select>
+                                          <!-- {%for value in data_ins%}
+                                          <option value="{{value}}">{{value}}</option>
+                                          {%endfor%} -->
+                                       </div>
+
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>CPA <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="cpa" class="custom-select" required>
+                                             <option value="{{data.cpa}}"> {{data.cpa}} </option>
+                                             <option value="YES">YES</option>
+                                             <option value="NO">NO</option>
+                                          </select>
+                                       </div>
+
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="policy_term" class="custom-select" required>
+                                             <option value="{{data.policy_term}}"> {{data.policy_term}} </option>
+                                             <option value="1">1</option>
+                                             <option value="5">5</option>
+                                             <option value="10">10</option>
+
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>BQP <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="bqp" class="custom-select" required>
+                                             <option value="{{data.bqp}}"> {{data.bqp}} </option>
+                                             {%for value in data_bqp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
+                                             id="pos" type="text" value="{{data.pos}}" data-toggle="modal"
+                                             data-target="#mdlcolsetting" class="form-control" name="pos"
+                                             style="text-transform: uppercase;" required readonly>
+                                       </div>
+
+
+                                       <div class="modal fade" id="mdlcolsetting" data-backdrop="static"
+                                          data-keyboard="false" style="height: 400px" tabindex="-1" role="dialog"
+                                          aria-labelledby="rtoModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                             <div class="modal-content">
+                                                <div class="modal-header">
+                                                   <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
+                                                </div>
+                                                <div class="modal-body ">
+                                                   <div class="form-row">
+                                                      <div class="col-md-6 mb-4">
+                                                         <div class=""><label>Search:<input id="inp_search" type="text"
+                                                                  value="" class="form-control" name="agent"
+                                                                  style="text-transform: uppercase;"
+                                                                  title="Search POS using Name, mobile no, email, pan/aadhar number"
+                                                                  oninput="searchPOS()">
+                                                            </label></div>
+                                                      </div>
+                                                      <div class="col-md-6 mb-4">
+                                                         <div class=""><label>POS:<input id="inp_pos" type="text"
+                                                                  value="" class="form-control" name="agent"
+                                                                  style="text-transform: uppercase;"
+                                                                  title="POS should be automatically fetched">
+                                                            </label>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+
+                                                   <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary w-100p"
+                                                         data-dismiss="modal">Close</button>
+                                                      <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
+                                                            class="btn btn-primary w-100p">Save</button> -->
+                                                   </div>
+                                                </div>
+
+                                             </div>
+
+
+                                          </div>
+
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label for="employee">Employee <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.employee}}" class="form-control" name="employee"
+                                             style="text-transform: uppercase;" required>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Proposal <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="proposal" accept=".pdf,image/" id="proposal"
+                                                value="{{data.proposal}}" class="custom-file-input">
+                                             <label class="custom-file-label" for="proposal">{{data.proposal}}</label>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Mandate <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="mandate" accept=".pdf,image/" id="mandate"
+                                                value="{{data.mandate}}" class="custom-file-input">
+                                             <label class="custom-file-label" for="mandate">{{data.mandate}}</label>
+                                          </div>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Policy <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="policy" accept=".pdf,image/" id="policy"
+                                                value="{{data.policy}}" class="custom-file-input">
+                                             <label class="custom-file-label" for="policy">{{data.policy}}</label>
+                                          </div>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Prev. Policy <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="previous_policy" accept=".pdf,image/"
+                                                value="{{data.previous_policy}}" id="previous_policy"
+                                                class="custom-file-input">
+                                             <label class="custom-file-label"
+                                                for="previous_policy">{{data.previous_policy}}</label>
+                                          </div>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Pan Card <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
+                                                value="{{data.pan_card}}" class="custom-file-input">
+                                             <label class="custom-file-label" for="pan_card">{{data.pan_card}}</label>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Aadhar Card <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
+                                                value="{{data.aadhar_card}}" class="custom-file-input">
+                                             <label class="custom-file-label"
+                                                for="aadhar_card">{{data.aadhar_card}}</label>
+                                          </div>
+                                       </div>
+
+                                       <div class="col-md-4 mb-4">
+                                          <label>Inspection Report <small>(Only<strong> PDF &amp; Image
+                                                </strong>)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="inspection_report" accept=".pdf,image/"
+                                                value="{{data.inspection_report}}" id="inspection_report"
+                                                class="custom-file-input">
+                                             <label class="custom-file-label"
+                                                for="vehicle_rc">{{data.inspection_report}}</label>
+                                          </div>
+                                       </div>
+
+                                    </div>
+
+                                 </fieldset>
+                                 <p class="mb-4"></p>
+                              </div>
                               <!-- /.card-body -->
                            </div>
                            <!-- /.card -->
-                           <!-- /.card -->
+                        </div>
 
-                           <!-- /.card-body -->
-                           <!-- /.card -->
+                        <div class="col-lg-3 col-md-3 col-sm-12">
 
+                           <div class="card">
+
+                              <div class="card-body">
+                                 <!-- .card-body -->
+                                 <h4 class="card-title mb-3"> Premium Details </h4>
+                                 <!-- grid row -->
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="od">OD Premium <abbr title=""
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       oninput="calculateValue()" value="{{data.OD_premium}}" class="form-control col-lg-6 maskNumField"
+                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       oninput="calculateValue()" value="{{data.TP_terrorism}}" class="form-control col-lg-6 maskNumField"
+                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
+                                       onclick="add()" value="{{data.net}}" class="form-control col-lg-6 maskNumField bg-light"
+                                       data-mask-as-number-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
+                                       maxlength="10" readonly="" required>
+                                 </div>
+
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5" for="gst">GST 18%<abbr title=""
+                                          class="text-danger">*</abbr></label><input type="text" value="{{data.gst_amount}}"
+                                       class="form-control col-lg-6 maskNumField" data-parsley-pattern="^[0-9]+$"
+                                       name="gst" id="gst" maxlength="10" required oninput="calculateValue()">
+                                 </div>
+
+                                 <!-- <div class="row mb-2" id="gsttDiv" hidden>
+                                    <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
+                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
+                                       data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt" maxlength="10"
+                                       oninput="calculateValue()">
+                                 </div> -->
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
+                                       onclick="addgst()" value="{{data.total}}" class="form-control maskNumField col-lg-6 bg-light"
+                                       data-parsley-pattern="^[0-9]+$" id="totalnet" readonly="" maxlength="10" required
+                                       oninput="calculateValue()">
+                                 </div>
+                                 <div class="row mb-2">
+                                    <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
+                                    <select class="custom-select col-lg-6" name="payment_mode" required>
+                                       <option value="{{data.payment_mode}}"> {{data.payment_mode}} </option>
+                                       <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
+                                       <option value="SELF ONLINE">SELF ONLINE</option>
+                                       <option value="CASH">CASH</option>
+                                       <option value="CUT PAY">CUT PAY</option>
+                                       <option value="CUSTOMER CHEQUE">CUSTOMER CHEQUE</option>
+                                       <option value="SELF CHEQUE">SELF CHEQUE</option>
+                                    </select>
+                                 </div>
+
+                              </div>
+
+
+                           </div>
+
+                           <script>
+                              function calculateAgentPayout() {
+                                 try {
+
+                                    od = document.getElementById('od').value
+                                    agent_od_reward = document.getElementById('agent_od_reward').value
+                                    agent_od_amount = document.getElementById('agent_od_amount')
+                                    agent_od_amount.value = od * agent_od_reward / 100
+
+                                    tp = document.getElementById('tpt').value
+                                    agent_tp_reward = document.getElementById('agent_tp_reward').value
+                                    agent_tp_amount = document.getElementById('agent_tp_amount')
+                                    agent_tp_amount.value = tp * agent_tp_reward / 100
+
+                                 } catch (error) {
+                                 }
+                              }
+
+                              function calculateSelfPayout() {
+                                 try {
+
+                                    od = document.getElementById('od').value
+                                    tpt = document.getElementById('tpt').value
+
+                                    self_od_reward_value = document.getElementById('self_od_reward').value
+                                    self_tp_reward_value = document.getElementById('self_tp_reward').value
+
+                                    document.getElementById('self_od_amount').value = od * self_od_reward_value / 100
+                                    document.getElementById('self_tp_amount').value = tpt * self_tp_reward_value / 100
+
+                                 } catch (error) {
+                                 }
+                              }
+
+                           </script>
 
                         </div>
-                      
-                     </div>
-                     <hr>
 
-                     <div class="form-row">
-                        <div class="col-md-12 col-sm-12">
-                           <div id="payoutSection" class="card card-inverse bg-info">
-                              <!-- .card -->
-                              <div class="card-header p-2">
-                                 <h4 class="card-title mb-1">Payouts</h4>
-                              </div>
-                              <div class="card-body">
-                                 <p><span class="icofont icofont-hand-right ml-1"></span> The Payout will be shown as
-                                    per the Policy Details</p>
-                                 <p><span class="icofont icofont-hand-right ml-1"></span> You can add manual Payout
-                                    after the Policy saved</p>
-                                 <div class="text-center">
-                                    <button type="submit" name="submit" class="btn btn-success w-100p">Save</button>
-                                 </div>
-                              </div>
+
+                     </div>
+
+
+                     {% endif %}
+               </div>
+               <hr>
+
+               <div class="form-row">
+                  <div class="col-md-12 col-sm-12">
+                     <div id="payoutSection" class="card card-inverse bg-info">
+                        <!-- .card -->
+                        <div class="card-header p-2">
+                           <h4 class="card-title mb-1">Payouts</h4>
+                        </div>
+                        <div class="card-body">
+                           <p><span class="icofont icofont-hand-right ml-1"></span> The Payout will be shown as
+                              per the Policy Details</p>
+                           <p><span class="icofont icofont-hand-right ml-1"></span> You can add manual Payout
+                              after the Policy saved</p>
+                           <div class="text-center">
+                              <button type="submit" name="submit" class="btn btn-success w-100p">Save</button>
                            </div>
                         </div>
                      </div>
-
-                  </form>
-                  <!-- /form -->
+                  </div>
                </div>
-               <!-- /.section-block -->
+               </form>
             </div>
-            <!-- /.page-section -->
-         </div>
-         <!-- /.page-inner -->
-      </div>
-      <!-- /.page -->
-   </div>
-   <!-- /.wrapper -->
 
+         </div>
+      </div>
+   </div>
+   </div>
 
 </main>
-<!-- /.app-main -->
-<div class="aside-backdrop"></div>
-</div>
-<!-- /.app -->
-{% comment %} <div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1"
-   role="dialog" aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
-   <!-- .modal-dialog -->
-   <div class="modal-dialog" role="document">
-      <!-- .modal-content -->
-      <div class="modal-content">
-         <!-- .modal-header -->
-         <div class="modal-header">
-            <h5 class="modal-title">
-               <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
-            </h5>
-         </div>
-         <!-- /.modal-header -->
-         <!-- .modal-body -->
-         <div class="modal-body">
-            <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error
-               remains the same, you need to contact your Administrator immediately.</p>
-         </div>
-         <!-- /.modal-body -->
-         <!-- .modal-footer -->
-         <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-dismiss="modal">OK</button>
-         </div>
-         <!-- /.modal-footer -->
-      </div>
-      <!-- /.modal-content -->
-   </div>
-   <!-- /.modal-dialog -->
-</div> {% endcomment %}
+
+
 <!-- /.modal -->
 <!-- BEGIN BASE JS -->
 {% comment %}
@@ -910,21 +1071,363 @@
 
 <script>
    function myFunction() {
+      document.getElementById("registration_no").value = document.getElementById("registration_no").value.toUpperCase();
       var x = document.getElementById("registration_no").value;
       document.getElementById("demo").innerHTML = x.slice(0, 4);
+
+      if (x.startsWith('AN')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Andama And Nicobar Island') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('AP')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Andhra Pradesh') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('AR')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Arunachal Pradesh') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('AS')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Assam') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('BR')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Bihar') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('CH')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Chandigarh') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('CG')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Chattisgarh') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('DD')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Daman And Diu') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('DL')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Delhi') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('GA')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'GOA') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('GJ')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Gujrat') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('HR')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Haryana') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('HP')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Himachal Pradesh') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('JK')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Jammu And Kashmir') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('JH')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Jharkhand') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('KA')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Karnataka') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('KL')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Kerala') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('LD')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Lakshadweep') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('LA')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Leh') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('MP')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Madhya Pradesh') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('MH')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Maharashtra') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('MN')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Manipur') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('ML')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Meghalaya') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('MZ')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Mizoram') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('NL')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Nagaland') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('OD')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Odisha') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('PY')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Puducherry') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('PB')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Punjab') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('RJ')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Rajasthan') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('SK')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Sikkim') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('TN')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Tamil Nadu') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('TR')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Telangana') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('TS')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Telangana') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('UK')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Uttrakhand') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('UP')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'Uttar Pradesh') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+      else if (x.startsWith('WB')) {
+         var rto_state = document.getElementById("rto_state");
+         for (let index = 0; index < rto_state.options.length; index++) {
+
+            if (rto_state[index].value == 'West Bengal') {
+               rto_state[index].selected = true;
+            }
+         }
+      }
+
    }
-   
+</script>
+<script>
+
    function calculateValue() {
-      try {
-         add()
-         addgst()
-      } catch (error) {
+
+      is_motor_form = "{{is_motor_form | safe}}"
+
+      if (is_motor_form) {
+
+         try {
+            add_non_motor()
+            addgst_non_motor()
+         } catch (error) { }
 
       }
+      else {
+         try {
+            add()
+            addgst()
+         } catch (error) { }
+      }
+
+
+
    }
 
    function add() {
-
       od = parseInt(document.getElementById("od").value);
       tpt = parseInt(document.getElementById("tpt").value);
 
@@ -939,9 +1442,11 @@
          document.getElementById("gstt").value = tpt * 12 / 100;
       }
       else {
-         document.getElementById("net").value = od + tpt;;
+         document.getElementById("net").value = od + tpt;
          document.getElementById("gst").value = (od + tpt) * 18 / 100;
+
       }
+
    }
 
    function addgst() {
@@ -957,7 +1462,25 @@
       else {
          document.getElementById("totalnet").value = net + gst;
       }
+   }
 
+
+   function add_non_motor() {
+      od = parseInt(document.getElementById("od").value);
+      tpt = parseInt(document.getElementById("tpt").value);
+
+      gst = parseInt(document.getElementById("gst").value);
+
+      document.getElementById("net").value = od + tpt;
+      document.getElementById("gst").value = (od + tpt) * 18 / 100;
+
+   }
+
+   function addgst_non_motor() {
+      var numOne, numTwo, sum;
+      net = parseInt(document.getElementById("net").value);
+      gst = parseInt(document.getElementById("gst").value);
+      document.getElementById("totalnet").value = net + gst;
    }
 
    function setCategoryOnChange() {
@@ -976,10 +1499,12 @@
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
 
+
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
+
          document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
+         document.getElementById('gstt').required = false         
          document.getElementById('gstt').value = 0
 
          cubic_capacity.innerHTML = ''
@@ -987,8 +1512,8 @@
 
          // Cubic_ capacity options
          var newoption = document.createElement("option");
-         newoption.value = '{{data.cubic_capacity}}'
-         newoption.innerHTML = '{{data.cubic_capacity}}'
+         newoption.value = "{{data.cubic_capacity | safe}}"
+         newoption.innerHTML = "{{data.cubic_capacity | safe}}"
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1008,8 +1533,8 @@
 
          // Coverage type
          var newoption = document.createElement("option");
-         newoption.value = '{{data.coverage_type}}'
-         newoption.innerHTML = '{{data.coverage_type}}'
+         newoption.value = "{{data.coverage_type | safe}}"
+         newoption.innerHTML = "{{data.coverage_type | safe}}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1044,6 +1569,7 @@
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
 
          document.getElementById('gvwDiv').hidden = true
          document.getElementById('gvw').required = false
@@ -1057,8 +1583,8 @@
 
          // Cubic_ capacity options
          var newoption = document.createElement("option");
-         newoption.value = '{{data.cubic_capacity}}'
-         newoption.innerHTML = '{{data.cubic_capacity}}'
+         newoption.value = "{{data.cubic_capacity | safe}}"
+         newoption.innerHTML = "{{data.cubic_capacity | safe}}"
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1081,8 +1607,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = '{{data.coverage_type}}'
-         newoption.innerHTML = '{{data.coverage_type}}'
+         newoption.value = "{{data.coverage_type | safe}}"
+         newoption.innerHTML = "{{data.coverage_type | safe}}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1112,6 +1638,7 @@
       }
 
       else if (value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
+
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
@@ -1124,12 +1651,14 @@
          document.getElementById('gsttDiv').hidden = false
          document.getElementById('gstt').required = true
 
+
+
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = '{{data.coverage_type}}'
-         newoption.innerHTML = '{{data.coverage_type}}'
+         newoption.value = "{{data.coverage_type | safe}}"
+         newoption.innerHTML = "{{data.coverage_type | safe}}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1141,6 +1670,11 @@
          newoption.value = 'TP ONLY'
          newoption.innerHTML = 'TP ONLY'
          coverage_type.options.add(newoption);
+
+         try {
+            calculateValue()
+         } catch (error) {
+         }
       }
 
       else if (value == '3 WHEELER PCV') {
@@ -1162,8 +1696,8 @@
 
          // Coverage type        
          var newoption = document.createElement("option");
-         newoption.value = '{{data.coverage_type}}'
-         newoption.innerHTML = '{{data.coverage_type}}'
+         newoption.value = "{{data.coverage_type | safe}}"
+         newoption.innerHTML = "{{data.coverage_type | safe}}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1195,8 +1729,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = '{{data.coverage_type}}'
-         newoption.innerHTML = '{{data.coverage_type}}'
+         newoption.value = "{{data.coverage_type | safe}}"
+         newoption.innerHTML = "{{data.coverage_type | safe}}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1229,8 +1763,8 @@
 
          // Cubic_ capacity options
          var newoption = document.createElement("option");
-         newoption.value = '{{data.cubic_capacity}}'
-         newoption.innerHTML = '{{data.cubic_capacity}}'
+         newoption.value = "{{data.cubic_capacity | safe}}"
+         newoption.innerHTML = "{{data.cubic_capacity | safe}}"
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1253,8 +1787,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = '{{data.coverage_type}}'
-         newoption.innerHTML = '{{data.coverage_type}}'
+         newoption.value = "{{data.coverage_type | safe}}"
+         newoption.innerHTML = "{{data.coverage_type | safe}}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1325,8 +1859,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = '{{data.coverage_type}}'
-         newoption.innerHTML = '{{data.coverage_type}}'
+         newoption.value = "{{data.coverage_type | safe}}"
+         newoption.innerHTML = "{{data.coverage_type | safe}}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1378,8 +1912,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = '{{data.coverage_type}}'
-         newoption.innerHTML = '{{data.coverage_type}}'
+         newoption.value = "{{data.coverage_type | safe}}"
+         newoption.innerHTML = "{{data.coverage_type | safe}}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1430,8 +1964,8 @@
          coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
-         newoption.value = '{{data.coverage_type}}'
-         newoption.innerHTML = '{{data.coverage_type}}'
+         newoption.value = "{{data.coverage_type | safe}}"
+         newoption.innerHTML = "{{data.coverage_type | safe}}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -1480,13 +2014,57 @@
       }
    }
 
+</script>
+
+<script>
+
+   function searchPOS() {
+      try {
+         // alert('test')
+         var data_ag = JSON.parse("{{data_ag|escapejs}}");
+         console.log(data_ag);
+
+         value = document.getElementById('inp_search').value.toUpperCase();
+         inp_pos = document.getElementById('inp_pos');
+         pos = document.getElementById('pos');
+
+         data_ag.forEach(element => {
+            console.log(element.full_name);
+
+            if (value == element.full_name.toUpperCase()) {
+               inp_pos.value = element.full_name
+               pos.value = element.full_name
+            }
+            else if (value == element.mob_no.toUpperCase()) {
+               inp_pos.value = element.full_name
+               pos.value = element.full_name
+            }
+            else if (value == element.PAN.toUpperCase()) {
+               inp_pos.value = element.full_name
+               pos.value = element.full_name
+            }
+            else if (value == element.aadhar_no.toUpperCase()) {
+               inp_pos.value = element.full_name
+               pos.value = element.full_name
+            }
+            else if (value == element.email_id.toUpperCase()) {
+               inp_pos.value = element.full_name
+               pos.value = element.full_name
+            }
+         });
+
+      } catch (error) {
+
+      }
+
+   }
 
 </script>
 
 
 <body onload="setCategoryOnChange()">
 
-</body>
+</body> 
 
 </html>
 {%endblock content%}

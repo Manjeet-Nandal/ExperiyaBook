@@ -2,6 +2,7 @@
 
 {%block content%}
 {% load static %}
+
 <main class="app-main">
    <div class="wrapper">
       <div class="page ">
@@ -42,9 +43,9 @@
                            <div class="card">
                               <div class="card-body">
                                  <fieldset>
-                                    <legend>Policy Details</legend>                                                                   
+                                    <legend>Policy Details</legend>
 
-                                    <div class="form-row">                                     
+                                    <div class="form-row">
 
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Catagory <abbr title="" class="text-danger">*</abbr></label>
@@ -537,7 +538,7 @@
                                              <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
-                                     
+
                                     </div>
 
                                  </fieldset>
@@ -547,7 +548,7 @@
                            </div>
                            <!-- /.card -->
                         </div>
-                                    
+
                         <div class="col-lg-3 col-md-3 col-sm-12">
 
                            <div class="card">
@@ -656,22 +657,19 @@
 
                      {% else %}
 
-                     
+
                      <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-12">
                            <div class="card">
                               <div class="card-body">
                                  <fieldset>
-                                    <legend>Policy Details</legend>                                                                   
+                                    <legend>Policy Details</legend>
 
-                                    <div class="form-row">                                     
-                                      
+                                    <div class="form-row">
+
                                        <div class="col-md-3 mb-4">
-                                          <label>Product Name <abbr title=""
-                                                class="text-danger">*</abbr></label>
-                                          <select name="product_name" 
-                                             id="product_name" class="custom-select "
-                                             required >
+                                          <label>Product Name <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="product_name" id="product_name" class="custom-select " required>
                                              <option value=""> -- Select Product -- </option>
                                              <option value="FIRE">FIRE</option>
                                              <option value="MARINE CARGO">MARINE CARGO</option>
@@ -684,10 +682,9 @@
                                              {%endfor%} -->
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4"> 
+                                       <div class="col-md-3 mb-4">
                                           <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="policy_type"  id="policy_type"
-                                             class="custom-select" required>
+                                          <select name="policy_type" id="policy_type" class="custom-select" required>
                                              <option value="">-- Select Case Type --</option>
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
@@ -695,7 +692,7 @@
                                              <option value="ENDORSEMENT">ENDORSEMENT</option>
                                           </select>
                                        </div>
-                                      
+
 
                                        <div class="col-md-3 mb-4">
                                           <label for="proposal_no">Proposal No. <abbr title=""
@@ -750,8 +747,8 @@
                                           <option value="{{value}}">{{value}}</option>
                                           {%endfor%} -->
                                        </div>
-                                                                           
-                                     
+
+
                                        <div class="col-md-3 mb-4">
                                           <label>CPA <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="cpa" class="custom-select" required>
@@ -806,7 +803,7 @@
                                              <option value="1">1</option>
                                              <option value="5">5</option>
                                              <option value="10">10</option>
-                                           
+
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -935,7 +932,7 @@
                                              <label class="custom-file-label" for="aadhar_card">Choose file</label>
                                           </div>
                                        </div>
-                                    
+
                                        <div class="col-md-4 mb-4">
                                           <label>Inspection Report <small>(Only<strong> PDF &amp; Image
                                                 </strong>)</small> </label>
@@ -945,7 +942,7 @@
                                              <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
-                                     
+
                                     </div>
 
                                  </fieldset>
@@ -955,7 +952,7 @@
                            </div>
                            <!-- /.card -->
                         </div>
-                                    
+
                         <div class="col-lg-3 col-md-3 col-sm-12">
 
                            <div class="card">
@@ -1087,64 +1084,17 @@
                   </div>
                </div>
                </form>
+            </div>
 
-            </div>
          </div>
       </div>
    </div>
    </div>
-   <div class="modal fade" id="mdlpayout" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
-      aria-labelledby="PayoutModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 id="PayoutModalLabel" class="modal-title"> Payouts</h5>
-            </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
-               <button type="submit" name="applypayout" class="btn btn-primary w-100p" disabled="">Apply</button>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div class="modal modal-alert fade" id="mdlalready" data-backdrop="static" data-keyboard="false" tabindex="-1"
-      role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title"> Attention</h5>
-            </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-               <a href="../ins" class="btn btn-secondary w-100p">No</a>
-               <button type="submit" class="btn btn-primary w-100p" data-dismiss="modal">Yes</button>
-            </div>
-         </div>
-      </div>
-   </div>
+
 </main>
-<div class="aside-backdrop"></div>
-</div>
-<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog"
-   aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title">
-               <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
-            </h5>
-         </div>
-         <div class="modal-body">
-            <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error
-               remains the same, you need to contact your Administrator immediately.</p>
-         </div>
-         <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-dismiss="modal">OK</button>
-         </div>
-      </div>
-   </div>
-</div>
+
+
+
 {% comment %}
 <script src="{%static 'js/jquery.min.js' %}"></script> {% endcomment %}
 <script src="{%static 'js/popper.min.js' %}"></script>
@@ -2161,7 +2111,6 @@
 
 </script>
 
-</body>
 
 </html>
 {%endblock%}
