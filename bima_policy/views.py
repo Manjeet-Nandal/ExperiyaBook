@@ -1,3 +1,4 @@
+import json
 from dateutil import parser
 from django.utils import timezone
 from datetime import datetime, timedelta
@@ -419,8 +420,9 @@ def get_profile_id(id):
 
 class create_policy(View):
     def get(self, request):
-        print('create_policy get')
+        print('create_policy get method')
         pid = get_profile_id(get_id_from_session(request))
+        data_ag = json.dumps(list(Agents.objects.filter(profile_id=pid).values()))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
         data_bc = BrokerCode.objects.filter(profile_id=pid)
         data_ins = InsuranceCompany.objects.filter(profile_id=pid)
@@ -429,16 +431,21 @@ class create_policy(View):
         data_vc = VehicleCategory.objects.filter(profile_id=pid)
         data_ct = CoverageType.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
+        # print(datag)
+
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
 
     def post(self, request):
-        print('create_policy post')
+        print('create_policy post method')
         profile_id = ProfileModel.objects.get(
             id=get_profile_id(get_id_from_session(request)))
+        
         proposal_no = request.POST['proposal_no']
+        policy_no = request.POST['policy_no']
         customer_name = request.POST['customer_name']
         insurance_company = request.POST['insurance_company']
         sp_name = request.POST['sp_name']
+        sp_brokercode = request.POST['sp_brokercode']
         try:
             product_name = request.POST['product_name']
         except:
@@ -500,7 +507,7 @@ class create_policy(View):
         except:
             coverage_type = ''
 
-        case_type = request.POST['case_type']
+        policy_type = request.POST['policy_type']
         cpa = request.POST['cpa']
         risk_start_date = request.POST['risk_start_date']
         risk_end_date = request.POST['risk_end_date']
@@ -549,7 +556,8 @@ class create_policy(View):
             fsvc.save(vehicle_rc.name, vehicle_rc)
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
-
+        
+        print(vehicle_catagory)
         if vehicle_catagory == 'TWO WHEELER':
             try:
                 reg = registration_no[0:4]
@@ -566,7 +574,7 @@ class create_policy(View):
                                              Q(cubic_capacity__contains=cubic_capacity) &
                                              Q(seating_capacity__contains=seating_capacity) &
                                              Q(coverage_type__contains=coverage_type) &
-                                             Q(case_type__contains=case_type) &
+                                             Q(case_type__contains=policy_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)
                                              ).values()
@@ -590,7 +598,7 @@ class create_policy(View):
                                              Q(cubic_capacity__contains=cubic_capacity) &
                                              Q(seating_capacity__contains=seating_capacity) &
                                              Q(coverage_type__contains=coverage_type) &
-                                             Q(case_type__contains=case_type) &
+                                             Q(case_type__contains=policy_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
 
@@ -612,7 +620,7 @@ class create_policy(View):
                                              Q(gvw__contains=gvw) &
                                              Q(seating_capacity__contains=seating_capacity) &
                                              Q(coverage_type__contains=coverage_type) &
-                                             Q(case_type__contains=case_type) &
+                                             Q(case_type__contains=policy_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
                 print('data is ', data)
@@ -634,7 +642,7 @@ class create_policy(View):
                                              Q(ncb__contains=ncb) &
                                              Q(seating_capacity__contains=seating_capacity) &
                                              Q(coverage_type__contains=coverage_type) &
-                                             Q(case_type__contains=case_type) &
+                                             Q(case_type__contains=policy_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
                 print('data is ', data)
@@ -657,7 +665,7 @@ class create_policy(View):
                                              Q(gvw__contains=gvw) &
                                              Q(seating_capacity__contains=seating_capacity) &
                                              Q(coverage_type__contains=coverage_type) &
-                                             Q(case_type__contains=case_type) &
+                                             Q(case_type__contains=policy_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
                 print('data is ', data)
@@ -680,7 +688,7 @@ class create_policy(View):
                                              Q(cubic_capacity__contains=cubic_capacity) &
                                              Q(seating_capacity__contains=seating_capacity) &
                                              Q(coverage_type__contains=coverage_type) &
-                                             Q(case_type__contains=case_type) &
+                                             Q(case_type__contains=policy_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
                 print('data is ', data)
@@ -716,7 +724,7 @@ class create_policy(View):
                                              Q(addon__contains=addon) &
                                              Q(ncb__contains=ncb) &
                                              Q(seating_capacity__contains=cap) &
-                                             Q(case_type__contains=case_type) &
+                                             Q(case_type__contains=policy_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
                 print('data is ', data)
@@ -738,7 +746,7 @@ class create_policy(View):
                                              Q(addon__contains=addon) &
                                              Q(ncb__contains=ncb) &
                                              Q(coverage_type__contains=coverage_type) &
-                                             Q(case_type__contains=case_type) &
+                                             Q(case_type__contains=policy_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
                 print('data is ', data)
@@ -761,7 +769,7 @@ class create_policy(View):
                                              Q(addon__contains=addon) &
                                              Q(ncb__contains=ncb) &
                                              Q(coverage_type__contains=coverage_type) &
-                                             Q(case_type__contains=case_type) &
+                                             Q(case_type__contains=policy_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
                 print('data is ', data)
@@ -783,7 +791,7 @@ class create_policy(View):
                                              Q(addon__contains=addon) &
                                              Q(ncb__contains=ncb) &
                                              Q(coverage_type__contains=coverage_type) &
-                                             Q(case_type__contains=case_type) &
+                                             Q(case_type__contains=policy_type) &
                                              Q(policy_term__contains=policy_term) &
                                              Q(cpa__contains=cpa)).values()
                 print('data is ', data)
@@ -791,50 +799,37 @@ class create_policy(View):
             except Exception as ex:
                 print(ex)
 
-        pol = Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no, rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
+        pol = Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, 
+                                    sp_brokercode=sp_brokercode,  registration_no=registration_no,
+                                    rto_state=rto_state, rto_city=rto_city,  vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
                                     mfg_year=mfg_year,
-                                    addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, case_type=case_type, cpa=cpa,
+                                    addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, policy_type=policy_type, cpa=cpa,
                                     risk_start_date=risk_start_date,
                                     risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                                     employee=employee, proposal=proposal, mandate=mandate,
-                                    OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, gst_gcv_amount=gst_gcv_amount,  total=total,
+                                    OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, 
+                                    gst_gcv_amount=gst_gcv_amount,  total=total,
                                     policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
                                     )
+        print('data is ', data)
+        print('pol is ', pol)
+        print('pol ID is ', pol.policyid)
 
-        return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policy_no': pol.policyid})
+        return render(request, 'policylist/list_apply_payout.html', {'data':data,'policyid':pol.policyid})
 
-
-def all_payout_options(data):
-    data1 = Payout.objects.get(Q(insurer__contains=data.insurance_company) &
-                               Q(sp_name__contains=data.sp_name) &
-                               Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                               Q(vehicle_model__contains=data.vehicle_model) &
-                               Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                               Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                               Q(mfg_year__contains=data.mfg_year) &
-                               Q(rto_city__contains=data.registration_no[0:4]) &
-                               Q(addon__contains=data.addon) &
-                               Q(ncb__contains=data.ncb) &
-                               Q(gvw__contains=data.gvw) &
-                               Q(cubic_capacity__contains=data.cubic_capacity) &
-                               Q(seating_capacity__contains=data.seating_capacity) &
-                               Q(coverage_type__contains=data.coverage_type) &
-                               Q(case_type__contains=data.case_type) &
-                               Q(cpa__contains=data.cpa))
-    print(data1)
-    return data1
 
 
 class create_policy_non_motor(View):
     def get(self, request):
         print('create_policy Non get')
         pid = get_profile_id(get_id_from_session(request))
+        agents_dict = json.dumps(list(Agents.objects.filter(profile_id=pid).values()))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
         data_bc = BrokerCode.objects.filter(profile_id=pid)
         data_ins = InsuranceCompany.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
 
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': False, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': False,  'agents_dict': agents_dict, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_bqp': data_bqp})
 
     def post(self, request):
         print('create_policy post')
@@ -845,7 +840,7 @@ class create_policy_non_motor(View):
         customer_name = request.POST['customer_name']
         insurance_company = request.POST['insurance_company']
         sp_name = request.POST['sp_name']
-        sp_brokercode = request.POST['sp_brokercode']
+        # sp_brokercode = request.POST['sp_brokercode']
         product_name = request.POST['product_name']
         registration_no = ''
         rto_city = ''
@@ -865,18 +860,17 @@ class create_policy_non_motor(View):
         risk_start_date = request.POST['risk_start_date']
         risk_end_date = request.POST['risk_end_date']
         issue_date = request.POST['issue_date']
-        insured_age = request.POST['insured_age']
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
         pos = request.POST['pos']
         employee = request.POST['employee']
-        # OD_premium = request.POST['od']
-        # TP_premium = request.POST['tp']
-        # TP_terrorism = request.POST['tpt']
-        # net = request.POST['net']
-        # GST = request.POST['gst']
-        # total = request.POST['total']
-        # payment_mode = request.POST['payment_mode']
+        OD_premium = request.POST['od']
+        TP_terrorism = request.POST['tpt']
+        net = request.POST['net']
+        gst_amount = request.POST['gst']
+        # gst_gcv_amount = request.POST['gstt']
+        total = request.POST['total']
+        payment_mode = request.POST['payment_mode']
         proposal = request.FILES.get('proposal')
         mandate = request.FILES.get('mandate')
         policy = request.FILES.get('policy')
@@ -908,12 +902,13 @@ class create_policy_non_motor(View):
         if inspection_report is not None:
             fsis.save(inspection_report.name, inspection_report)
 
-        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name, sp_brokercode=sp_brokercode, product_name=product_name, registration_no=registration_no,
+        Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  product_name=product_name, registration_no=registration_no,
                               coverage_type=coverage_type, case_type=case_type,
                               risk_start_date=risk_start_date,
-                              risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term,  bqp=bqp, pos=pos,
+                              risk_end_date=risk_end_date, issue_date=issue_date,  policy_term=policy_term,  bqp=bqp, pos=pos,
                               employee=employee, proposal=proposal, mandate=mandate,
-                              policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, inspection_report=inspection_report)
+                              policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, inspection_report=inspection_report,
+                              OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount,total=total)
 
         data = Policy.objects.filter(profile_id=get_profile_id(
             get_id_from_session(request))).order_by('-policyid').values()
@@ -925,7 +920,8 @@ def apply_policy(request, id):
         print('apply_policy')
 
         data = Policy.objects.get(policyid=id)
-
+        print(data)
+        
         if data.vehicle_catagory == 'TWO WHEELER':
             try:
                 reg = data.registration_no[0:4]
@@ -942,7 +938,7 @@ def apply_policy(request, id):
                                            Q(cubic_capacity__contains=data.cubic_capacity) &
                                            Q(seating_capacity__contains=data.seating_capacity) &
                                            Q(coverage_type__contains=data.coverage_type) &
-                                           Q(case_type__contains=data.case_type) &
+                                           Q(case_type__contains=data.policy_type) &
                                            Q(policy_term__contains=data.policy_term) &
                                            Q(cpa__contains=data.cpa)
                                            )
@@ -996,7 +992,7 @@ def apply_policy(request, id):
                                            Q(cubic_capacity__contains=data.cubic_capacity) &
                                            Q(seating_capacity__contains=data.seating_capacity) &
                                            Q(coverage_type__contains=data.coverage_type) &
-                                           Q(case_type__contains=data.case_type) &
+                                           Q(case_type__contains=data.policy_type) &
                                            Q(policy_term__contains=data.policy_term) &
                                            Q(cpa__contains=data.cpa)
                                            )
@@ -1050,7 +1046,7 @@ def apply_policy(request, id):
                                            Q(gvw__contains=data.gvw) &
                                            Q(seating_capacity__contains=data.seating_capacity) &
                                            Q(coverage_type__contains=data.coverage_type) &
-                                           Q(case_type__contains=data.case_type) &
+                                           Q(case_type__contains=data.policy_type) &
                                            Q(policy_term__contains=data.policy_term) &
                                            Q(cpa__contains=data.cpa)
                                            )
@@ -1103,7 +1099,7 @@ def apply_policy(request, id):
                                            Q(ncb__contains=data.ncb) &
                                            Q(seating_capacity__contains=data.seating_capacity) &
                                            Q(coverage_type__contains=data.coverage_type) &
-                                           Q(case_type__contains=data.case_type) &
+                                           Q(case_type__contains=data.policy_type) &
                                            Q(policy_term__contains=data.policy_term) &
                                            Q(cpa__contains=data.cpa)
                                            )
@@ -1157,7 +1153,7 @@ def apply_policy(request, id):
                                            Q(gvw__contains=data.gvw) &
                                            Q(seating_capacity__contains=data.seating_capacity) &
                                            Q(coverage_type__contains=data.coverage_type) &
-                                           Q(case_type__contains=data.case_type) &
+                                           Q(case_type__contains=data.policy_type) &
                                            Q(policy_term__contains=data.policy_term) &
                                            Q(cpa__contains=data.cpa)
                                            )
@@ -1211,7 +1207,7 @@ def apply_policy(request, id):
                                            Q(cubic_capacity__contains=data.cubic_capacity) &
                                            Q(seating_capacity__contains=data.seating_capacity) &
                                            Q(coverage_type__contains=data.coverage_type) &
-                                           Q(case_type__contains=data.case_type) &
+                                           Q(case_type__contains=data.policy_type) &
                                            Q(policy_term__contains=data.policy_term) &
                                            Q(cpa__contains=data.cpa)
                                            )
@@ -1278,7 +1274,7 @@ def apply_policy(request, id):
                                            Q(addon__contains=data.addon) &
                                            Q(ncb__contains=data.ncb) &
                                            Q(seating_capacity__contains=cap) &
-                                           Q(case_type__contains=data.case_type) &
+                                           Q(case_type__contains=data.policy_type) &
                                            Q(policy_term__contains=data.policy_term) &
                                            Q(cpa__contains=data.cpa)
                                            )
@@ -1330,7 +1326,7 @@ def apply_policy(request, id):
                                            Q(addon__contains=data.addon) &
                                            Q(ncb__contains=data.ncb) &
                                            Q(coverage_type__contains=data.coverage_type) &
-                                           Q(case_type__contains=data.case_type) &
+                                           Q(case_type__contains=data.policy_type) &
                                            Q(policy_term__contains=data.policy_term) &
                                            Q(cpa__contains=data.cpa)
                                            )
@@ -1382,7 +1378,7 @@ def apply_policy(request, id):
                                            Q(addon__contains=data.addon) &
                                            Q(ncb__contains=data.ncb) &
                                            Q(coverage_type__contains=data.coverage_type) &
-                                           Q(case_type__contains=data.case_type) &
+                                           Q(case_type__contains=data.policy_type) &
                                            Q(policy_term__contains=data.policy_term) &
                                            Q(cpa__contains=data.cpa)
                                            )
@@ -1434,7 +1430,7 @@ def apply_policy(request, id):
                                            Q(addon__contains=data.addon) &
                                            Q(ncb__contains=data.ncb) &
                                            Q(coverage_type__contains=data.coverage_type) &
-                                           Q(case_type__contains=data.case_type) &
+                                           Q(case_type__contains=data.policy_type) &
                                            Q(policy_term__contains=data.policy_term) &
                                            Q(cpa__contains=data.cpa)
                                            )
@@ -1471,33 +1467,11 @@ def apply_policy(request, id):
 
             except Exception as ex:
                 print(ex)
-
-        pid = get_profile_id(get_id_from_session(request))
-        data_sp = ServiceProvider.objects.filter(profile_id=pid)
-        data_bc = BrokerCode.objects.filter(profile_id=pid)
-        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
-        data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
-        data_vm = VehicleModelName.objects.filter(profile_id=pid)
-        data_vc = VehicleCategory.objects.filter(profile_id=pid)
-        data_ct = CoverageType.objects.filter(profile_id=pid)
-        data_bqp = BQP.objects.filter(profile_id=pid)
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
-
-        # return render(request, 'policylist/policy_save.html', {'data': data, 'data1': data1})
+       
+        return redirect('bima_policy:create_policy')
     except Exception as ex:
         print(ex)
-        pid = get_profile_id(get_id_from_session(request))
-        data_sp = ServiceProvider.objects.filter(profile_id=pid)
-        data_bc = BrokerCode.objects.filter(profile_id=pid)
-        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
-        data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
-        data_vm = VehicleModelName.objects.filter(profile_id=pid)
-        data_vc = VehicleCategory.objects.filter(profile_id=pid)
-        data_ct = CoverageType.objects.filter(profile_id=pid)
-        data_bqp = BQP.objects.filter(profile_id=pid)
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
-
-        # return HttpResponse(ex)
+        return HttpResponse(ex)
 
 
 def policy_entry(request):
@@ -1534,7 +1508,7 @@ def policy_entry_filter(request, value1, value2, period, select_length):
 
     data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
         request))).order_by('-policyid').filter(Q(issue_date__gte=value1) & Q(issue_date__lte=value2)).values()
-    
+
     datag = Agents.objects.filter(
         profile_id=get_profile_id(get_id_from_session(request)))
 
@@ -1548,7 +1522,7 @@ def policy_entry_filter(request, value1, value2, period, select_length):
         return render(request, 'policylist/policy_entry_list.html', {'select_length': select_length, 'period': period, 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
 
-def policy_entry_filter_nopayout(request, value1, value2, period,select_length, payout):
+def policy_entry_filter_nopayout(request, value1, value2, period, select_length, payout):
     print('policy_entry_filter_nopayout method')
     print(payout)
 
@@ -1563,7 +1537,7 @@ def policy_entry_filter_nopayout(request, value1, value2, period,select_length, 
 
     data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
         request))).order_by('-policyid').filter(Q(issue_date__gte=value1) & Q(issue_date__lte=value2) & Q(agent_od_reward__isnull=True)).values()
-    
+
     datag = Agents.objects.filter(
         profile_id=get_profile_id(get_id_from_session(request)))
 
@@ -1647,7 +1621,7 @@ def policy_entrydata(request, id):
         except:
             coverage_type = ''
 
-        case_type = request.POST['case_type']
+        # policy_type = request.POST['policy_type']
         cpa = request.POST['cpa']
         # risk_start_date = request.POST['risk_start_date']
         # risk_end_date = request.POST['risk_end_date']
@@ -1678,7 +1652,7 @@ def policy_entrydata(request, id):
         data.update(proposal_no=proposal_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,  registration_no=registration_no,
                     rto_city=rto_city, rto_state=rto_state, vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory,
                     vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year, addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity,
-                    coverage_type=coverage_type, case_type=case_type, cpa=cpa, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+                    coverage_type=coverage_type,  cpa=cpa, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                     employee=employee,
                     OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, gst_gcv_amount=gst_gcv_amount,  total=total)
 
@@ -1814,12 +1788,12 @@ def policy_delete(request, id):
     try:
         if id.__contains__("|"):
             arrays = id.split("|")
-            for i in arrays:                
+            for i in arrays:
                 Policy.objects.filter(policy_no=i).delete()
                 print('Deleted: ', i)
     except Exception as ex:
-        print(ex)    
-    
+        print(ex)
+
     if request.method == 'GET':
         # Policy.objects.get(policyid=id).delete()
         return redirect('bima_policy:policy_entry')
@@ -1831,7 +1805,11 @@ def logout(request):
 
 
 def agent(request):
-    data = Agents.objects.filter(profile_id=get_id_from_session(request))
+    print('agent method')
+    # data = Agents.objects.filter(profile_id=get_id_from_session(request))
+    data = Agents.objects.all()
+
+    print(data)
     return render(request, 'agents/agent.html', {'data': data})
 
 
@@ -1858,6 +1836,8 @@ def add_agent(request):
             agent_slab = request.POST['agent_slab']
             gstin = request.POST['gstin']
             pan = request.POST['pan']
+            aadhar_no = request.POST['aadhar_no']
+            rural_urban = request.POST['rural_urban']
             docs = request.POST.get('docs')
             password = request.POST['password']
             # a=Agents.objects.get(full_name=full_name)
@@ -1866,7 +1846,8 @@ def add_agent(request):
             #     return redirect('bima_policy:add_agent',{'error_message':error_message})
             # else:
             Agents.objects.create(full_name=full_name, email_id=email_id, mob_no=phone, address=address, state=state,
-                                  city=city, slab=agent_slab, GSTIN=gstin, PAN=pan, document=docs, password=password, profile_id=data)
+                                  city=city, slab=agent_slab, GSTIN=gstin, PAN=pan,  aadhar_no=aadhar_no,  rural_urban=rural_urban,
+                                  document=docs, password=password, profile_id=data)
             return redirect('bima_policy:agent')
 
 

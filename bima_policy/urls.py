@@ -11,7 +11,7 @@ urlpatterns = [
     path('profile/bank_details/<str:id>',delete_bank_details,name='del_bank'),
     path('user/',staffmanage, name='staff'),
     path('user/edit/<str:id>',staff_edit,name='staff_edit'),
-    path('agent/',agent, name='agent'),
+    path('agent/',agent, name='agent'),      
     path('agent/add_agent/',add_agent, name='add_agent'),
     path('agent/profile',agent_profile , name='agent_profile'),
     path('service_provider/', service_provider, name='service_p'),
@@ -45,6 +45,7 @@ urlpatterns = [
     path('policy/edit/<str:id>', edit_policy,name="edit_policy"),
     path('policy/import',policy_import, name="policy_import"),   
     path('policy/save/<str:id>',apply_policy, name="apply_policy"),  
+    
     path('upcomingRenewal/',upcoming_renewal, name="upcoming_renewal"),
     path('agent_payable/',agentpayable, name="agentpayable"),
     path('agent_statement/',agent_statement, name="agent_statement"),

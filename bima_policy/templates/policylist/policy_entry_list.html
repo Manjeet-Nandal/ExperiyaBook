@@ -270,7 +270,7 @@
                                        <th class="sorting">GVW</th>
                                        <th class="sorting">Seating Capacity</th>
                                        <th class="sorting">Coverage Type</th>
-                                       <th class="sorting">Case Type</th>
+                                       <th class="sorting">Policy Type</th>
                                        <th class="sorting">CPA</th>
                                        <th class="sorting">Risk Start Date</th>
                                        <th class="sorting">Risk End Date</th>
@@ -350,7 +350,7 @@
                                        <td>&nbsp;{{value.seating_capacity}}</td>
 
                                        <td>{{value.coverage_type}}</td>
-                                       <td>{{value.case_type}}</td>
+                                       <td>{{value.policy_type}}</td>
                                        <td>{{value.cpa}}</td>
                                        <td>{{value.risk_start_date}}</td>
                                        <td>{{value.risk_end_date}}</td>
@@ -361,41 +361,17 @@
                                        <td>{{value.pos}}</td>
                                        <td>{{value.employee}}</td>
                                        <!-- OD  -->
-                                       {% if value.OD_premium%}
-                                       <td>{{value.OD_premium}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
+                                     
+                                       <td>{{value.OD_premium}}</td>                                     
 
-                                       {% if value.TP_terrorism%}
                                        <td>{{value.TP_terrorism}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       {% if value.net%}
                                        <td>{{value.net}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
 
-                                       {% if value.gst_amount%}
                                        <td>{{value.gst_amount}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
 
-                                       {% if value.gst_gcv_amount%}
                                        <td>{{value.gst_gcv_amount}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
 
-                                       {% if value.total%}
                                        <td>{{value.total}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
 
                                        {% if value.agent_od_reward%}
                                        <td>{{value.agent_od_reward}}</td>

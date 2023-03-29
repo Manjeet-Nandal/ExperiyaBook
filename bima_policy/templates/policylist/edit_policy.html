@@ -110,9 +110,9 @@
 
                                        <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="case_type" data-parsley-required="true"
+                                          <select name="policy_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required>
-                                             <option value="{{data.case_type}}">{{data.case_type}}</option>
+                                             <option value="{{data.policy_type}}">{{data.policy_type}}</option>
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
@@ -633,7 +633,7 @@
                            </div>
                            <!-- /.card -->
                         </div>
-                        {% if is_motor_form %}
+                      
                         <div class="col-lg-3 col-md-3 col-sm-12">
                            <div class="card">
                               <!-- .card -->
@@ -724,13 +724,13 @@
                                     <label class="col-lg-5">Rewards % </label><input type="text" id="agent_od_reward"
                                        name="agent_od_reward" value="{{data.agent_od_reward}}"
                                        class="form-control maskNumField col-lg-6 bg-light" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" readonly="" maxlength="10" required>
+                                       data-parsley-pattern="^[0-9]+$"  maxlength="10" >
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Amount </label><input type="text" id="agent_od_amount"
                                        name="agent_od_amount" value="{{data.agent_od_amount}}"
                                        class="form-control maskNumField col-lg-6 bg-light" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" readonly="" maxlength="10" required>
+                                       data-parsley-pattern="^[0-9]+$"  maxlength="10" >
                                  </div>
 
                                 
@@ -750,13 +750,13 @@
                                     <label class="col-lg-5">Rewards % </label><input type="text" id="self_od_reward"
                                        name="self_od_reward" value="{{data.self_od_reward}}"
                                        class="form-control maskNumField col-lg-6 bg-light" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" readonly="" maxlength="10" required>
+                                       data-parsley-pattern="^[0-9]+$"  maxlength="10" >
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Amount </label><input type="text" id="self_od_amount"
                                        name="self_od_amount" value="{{data.self_od_amount}}"
                                        class="form-control maskNumField col-lg-6 bg-light" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" readonly="" maxlength="10" required>
+                                       data-parsley-pattern="^[0-9]+$"  maxlength="10" >
                                  </div>
 
                                {% endif %}
@@ -808,7 +808,7 @@
 
 
                         </div>
-                        {% endif %}
+                      
                      </div>
                      <hr>
 

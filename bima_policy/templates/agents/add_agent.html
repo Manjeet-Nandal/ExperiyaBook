@@ -144,7 +144,7 @@
                           </div>
                         </div>
                         <div class="form-row">
-                          <div class="col-md-4 mb-3">
+                          <div class="col-md-2 mb-3">
                             <label>Agent Slab<abbr title="Required" class="text-danger">*</abbr></label>  
                             <select name="agent_slab" class="custom-select select2 select2-hidden-accessible" aria-hidden="true">
                               <option value="">Choose...</option>
@@ -153,14 +153,27 @@
                               {% endfor %}
                             </select>
                           </div>
-                          <div class="col-md-4 mb-3">
+                          <div class="col-md-2 mb-3">
                             <label>GSTIN</label>
                             <input type="text" class="form-control" name="gstin">
                           </div>
-                          <div class="col-md-4 mb-3">
+                          <div class="col-md-3 mb-3">
                             <label>PAN</label>
                             <input type="text" class="form-control" name="pan">
                           </div>
+                          <div class="col-md-3 mb-3">
+                            <label>Aadhar No.</label>
+                            <input type="text" class="form-control" name="aadhar_no">
+                          </div>
+                          <div class="col-md-2 mb-3" >
+                            <label>Rural / Urban<abbr class="text-danger">*</abbr></label>
+                            <select name="rural_urban" class="custom-select" id="rural_urban"
+                               required>
+                               <option value=""> -- Select Rural -- </option>
+                               <option value="RURAL">Rural</option>
+                               <option value="URBAN">Urban</option>
+                            </select>
+                         </div>
                         </div>
                       </fieldset>
                       <div class="form-row">

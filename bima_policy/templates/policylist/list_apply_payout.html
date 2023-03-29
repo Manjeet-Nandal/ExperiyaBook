@@ -1,7 +1,7 @@
 {%extends "base.html"%}
 {%block content%}
 {% load static %}
-<form method='POST' action="save/{{policy_no}}">
+<form method='POST' action="save/{{policyid}}">
     {% csrf_token %}
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

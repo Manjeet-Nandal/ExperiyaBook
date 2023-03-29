@@ -91,9 +91,9 @@ DATABASES = {
             'ENGINE': 'djongo',
             'NAME': 'demodb',
             # 'CLIENT': {
-            #     'host': 'mongodb+srv://Raj12345:Raj123456789@cluster0.aedpiub.mongodb.net/bimabook?retryWrites=true&w=majority',
-            #     'username': 'Raj12345',
-            #     'password': 'Raj123456789',
+            #     'host': 'mongodb+srv://bhavi:123abc@experiya.bi2f9gh.mongodb.net/test',
+            #     'username': 'bhavi',
+            #     'password': '123abc',
             # }  
         }
 }

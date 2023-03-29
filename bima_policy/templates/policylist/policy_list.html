@@ -21,7 +21,7 @@
                </div>
                <div class="row text-center text-sm-left">
                   <div class="col">
-                     <h1 class="page-title"> {% if is_motor_form %} Policy Motor Form {% else %} Policy Non-Motor Form
+                     <h1 class="page-title"> {% if is_motor_form %} Motor Policy  {% else %} Non-Motor Policy  
                         {% endif %}<small class="text-muted"> All * marks Fields are
                            mandatory.
                         </small></h1>
@@ -45,10 +45,10 @@
 
                                        {% if is_motor_form %}
                                        <div class="col-md-3 mb-4">
-                                          <label>Vehicle Catagory <abbr title="Required"
+                                          <label>Vehicle Catagory <abbr title=""
                                                 class="text-danger">*</abbr></label>
-                                          <select name="vehicle_catagory" data-parsley-required-message=""
-                                             id="vehicle_catagory" data-parsley-required="true" class="custom-select "
+                                          <select name="vehicle_catagory" 
+                                             id="vehicle_catagory" class="custom-select "
                                              required onchange="setCategoryOnChange()">
                                              <option value=""> -- Select Category -- </option>
                                              <option value="TWO WHEELER">TWO WHEELER</option>
@@ -72,11 +72,11 @@
                                        </div>
                                        {% else %}
                                        <div class="col-md-3 mb-4">
-                                          <label>Product Type <abbr title="Required"
+                                          <label>Product Name <abbr title=""
                                                 class="text-danger">*</abbr></label>
-                                          <select name="vehicle_catagory" data-parsley-required-message=""
-                                             id="vehicle_catagory" data-parsley-required="true" class="custom-select "
-                                             required onchange="setCategoryOnChange()">
+                                          <select name="product_name" 
+                                             id="product_name" class="custom-select "
+                                             required >
                                              <option value=""> -- Select Product -- </option>
                                              <option value="FIRE">FIRE</option>
                                              <option value="MARINE CARGO">MARINE CARGO</option>
@@ -90,11 +90,11 @@
                                           </select>
                                        </div>
 
-                                       <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
-                                          <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="case_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="">-- Select Policy Type --</option>
+                                       <div class="col-md-3 mb-4"> 
+                                          <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="policy_type"  id="policy_type"
+                                             class="custom-select" required>
+                                             <option value="">-- Select Case Type --</option>
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
@@ -104,26 +104,32 @@
                                        {% endif %}
 
                                        <div class="col-md-3 mb-4">
-                                          <label for="proposal_no">Proposal No. <abbr title="Required"
+                                          <label for="proposal_no">Proposal No. <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text" value=""
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true"
-                                             data-parsley-pattern="^(?:[A-Za-z0-9]+[-/])*[A-Za-z0-9]+$"
-                                             name="proposal_no" id="proposal_no" style="text-transform: uppercase;"
-                                             required>
+                                                class="form-control" 
+                                                name="proposal_no" id="proposal_no" style="text-transform: uppercase;"
+                                                required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label for="customer_name">Insured Name <abbr title="Required"
+                                          <label for="policy_no">Policy No. <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text" value=""
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true" name="customer_name"
-                                             style="text-transform: uppercase;" required>
+                                                class="form-control" 
+                                                name="policy_no" id="policy_no" style="text-transform: uppercase;"
+                                                required>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label for="customer_name">Insured Name <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                                class="form-control"
+                                                name="customer_name"
+                                                style="text-transform: uppercase;" required>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Insurer Name<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="insurance_company" data-parsley-required-message=""
-                                             class="custom-select" id="insurance_company" data-parsley-required="true"
+                                          <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="insurance_company" 
+                                             class="custom-select" id="insurance_company" 
                                              required>
                                              <option value=""> -- Select Insurer -- </option>
                                              {%for value in data_ins%}
@@ -135,19 +141,19 @@
                                        {% if is_motor_form %}
                                        {% else %}
                                        <div class="col-md-3 mb-4">
-                                          <label for="customer_name">Sum Insured <abbr title="Required"
+                                          <label for="customer_name">Sum Insured <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text" value=""
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true" name="customer_name"
-                                             style="text-transform: uppercase;" required>
+                                                class="form-control"
+                                                name="customer_name"
+                                                style="text-transform: uppercase;" required>
                                        </div>
                                        {% endif %}
 
                                        <div class="col-md-3 mb-4">
-                                          <label>Serving Office <abbr title="Required"
+                                          <label>Serving Office <abbr title=""
                                                 class="text-danger">*</abbr></label>
-                                          <select name="sp_name" data-parsley-required-message="" class="custom-select"
-                                             id="sp_name" data-parsley-required="true" required>
+                                          <select name="sp_name"  class="custom-select"
+                                             id="sp_name"  required>
                                              <option value=""> -- Select Provider -- </option>
                                              <option value="DELHI">Delhi</option>
                                              <option value="ROHTAK">Rohtak</option>
@@ -156,19 +162,31 @@
                                              <option value="LUCKHNOW">Luckhnow</option>
                                           </select>
                                        </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Office Code <abbr title=""
+                                                class="text-danger">*</abbr></label>
+                                          <select name="sp_brokercode"  class="custom-select"
+                                             id="sp_brokercode"  required>
+                                             <option value=""> -- Select Office Code -- </option>
+                                             <option value="123">123</option>
+                                             <option value="1234">1234</option>
+                                             <option value="12345">12345</option>
+                                          </select>
+                                          <!-- {%for value in data_ins%}
+                                          <option value="{{value}}">{{value}}</option>
+                                          {%endfor%} -->
+                                       </div>
 
                                        {% if is_motor_form %}
 
                                        <div class="col-md-3 mb-4">
                                           <label for="registration_no">Registration No. <abbr
-                                                title="Required Minimum 8 Character Length"
+                                                title=""
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt">
-                                             <input type="text" data-parsley-group="payout" oninput="myFunction()"
-                                                class="form-control" value="" data-mask-as-number-minlength="8"
-                                                placeholder="Minimum 8 Characters" data-parsley-required="true"
-                                                data-parsley-minlength="8" data-parsley-maxlength="14"
-                                                data-parsley-pattern="^(?:[A-Za-z0-9]+[-])*[A-Za-z0-9]+$"
+                                             <input type="text" oninput="myFunction()"
+                                                class="form-control" value="" 
+                                                placeholder="Minimum 8 Characters"                                                                                             
                                                 id="registration_no" name="registration_no" maxlength="14" required
                                                 style="text-transform: uppercase;">
                                              <div class="input-group-append">
@@ -178,9 +196,9 @@
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label>RTO State<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="rto_state" data-parsley-required-message=""
-                                             class="custom-select" id="rto_state" data-parsley-required="true" required>
+                                          <label>RTO State<abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="rto_state" 
+                                             class="custom-select" id="rto_state"  required>
                                              <option value="">-- Select State --</option>
                                              <option value="Andama And Nicobar Island">Andama And Nicobar Island
                                              </option>
@@ -224,18 +242,18 @@
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label for="rto_city">RTO City <abbr title="Required"
+                                          <label for="rto_city">RTO City <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text" value=""
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true" name="rto_city"
-                                             style="text-transform: uppercase;" required>
+                                                class="form-control"
+                                                name="rto_city"
+                                                style="text-transform: uppercase;" required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label> Vehicle Make By <abbr title="Required"
+                                          <label> Vehicle Make By <abbr title=""
                                                 class="text-danger">*</abbr></label>
-                                          <select name="vehicle_makeby" data-parsley-required-message=""
-                                             data-parsley-required="true" class="custom-select" required>
+                                          <select name="vehicle_makeby" 
+                                                class="custom-select" required>
                                              <option value="">-- Select Make --</option>
                                              {%for value in data_vmb%}
                                              <option value="{{value}}">{{value}}</option>
@@ -243,10 +261,10 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Vehicle Model <abbr title="Required"
+                                          <label>Vehicle Model <abbr title=""
                                                 class="text-danger">*</abbr></label>
-                                          <select name="vehicle_model" data-parsley-required-message=""
-                                             data-parsley-required="true" class="custom-select" required>
+                                          <select name="vehicle_model" 
+                                              class="custom-select" required>
                                              <option value="">-- Select Model --</option>
                                              {%for value in data_vm%}
                                              <option value="{{value}}">{{value}}</option>
@@ -255,10 +273,10 @@
                                        </div>
 
                                        <div class="col-md-3 mb-4">
-                                          <label>Vehicle Fuel Type <abbr title="Required"
+                                          <label>Vehicle Fuel Type <abbr title=""
                                                 class="text-danger">*</abbr></label>
-                                          <select name="vehicle_fuel_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
+                                          <select name="vehicle_fuel_type" 
+                                              class="custom-select" required>
                                              <option value="">-- Select Fuel Type --</option>
                                              <option value="PETROL">PETROL</option>
                                              <option value="DIESEL">DIESEL</option>
@@ -267,10 +285,10 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label for="mfg_year">Manufacture Year <abbr title="Required"
+                                          <label for="mfg_year">Manufacture Year <abbr title=""
                                                 class="text-danger">*</abbr></label>
-                                          <select name="mfg_year" data-parsley-required-message=""
-                                             data-parsley-required="true" class="custom-select" required>
+                                          <select name="mfg_year" 
+                                              class="custom-select" required>
                                              <option value="">-- Select Year --</option>
                                              <option value="2025">2025</option>
                                              <option value="2024">2024</option>
@@ -300,18 +318,18 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Addon <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="addon" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
+                                          <label>Addon <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="addon" 
+                                              class="custom-select" required>
                                              <option value="">-- Select Addon --</option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>NCB <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="ncb" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
+                                          <label>NCB <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="ncb" 
+                                              class="custom-select" required>
                                              <option value="">-- Select NCB --</option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
@@ -358,12 +376,11 @@
                                        <div class="col-md-3 mb-4" id="seating_capacityDiv1" hidden>
                                           <label for="seating_capacity1">Seating Capacity <abbr
                                                 class="text-danger">*</abbr></label><input type="text"
-                                             data-parsley-group="payout" value=""
-                                             class="form-control col-lg-6 maskNumField"
-                                             data-mask-as-number-maxlength="2" data-parsley-maxlength="2"
-                                             data-parsley-pattern="^[0-9]+$" name="seating_capacity1"
-                                             id="seating_capacity1" maxlength="2" required
-                                             oninput="addSeatingCapacity()">
+                                                value=""
+                                                class="form-control col-lg-6 maskNumField"                                              
+                                                name="seating_capacity1"
+                                                id="seating_capacity1" maxlength="2" required
+                                                oninput="addSeatingCapacity()">
                                        </div>
 
                                        <div class="col-md-3 mb-4" id="coverage_typeDiv">
@@ -379,9 +396,9 @@
                                        </div>
 
                                        <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
-                                          <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="case_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
+                                          <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="policy_type" id="policy_type" 
+                                                class="custom-select" required>
                                              <option value="">-- Select Policy Type --</option>
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
@@ -395,9 +412,9 @@
                                        {% if is_motor_form %}
 
                                        <div class="col-md-3 mb-4">
-                                          <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="cpa" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
+                                          <label>CPA <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="cpa" 
+                                             class="custom-select" required>
                                              <option value="">-- Select CPA --</option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
@@ -406,10 +423,10 @@
                                        {% endif %}
 
                                        <div class="col-md-3 mb-4">
-                                          <label for="flatpickr-wrap">Risk Start Date <abbr title="Required"
+                                          <label for="flatpickr-wrap">Risk Start Date <abbr title=""
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="risk_flatpickr" data-default-date="" data-wrap="true"
+                                             data-toggle="risk_flatpickr"  data-wrap="true"
                                              data-alt-input="true" data-alt-format="F j, Y"
                                              data-alt-input-class="form-control" data-date-format="Y-m-d">
                                              <input type="date" class="form-control flatpickr-input"
@@ -421,7 +438,7 @@
                                           <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="risk_flatpickr" data-default-date="" data-wrap="true"
+                                             data-toggle="risk_flatpickr"  data-wrap="true"
                                              data-alt-input="true" data-alt-format="F j, Y"
                                              data-alt-input-class="form-control" data-date-format="Y-m-d">
                                              <input type="date" class="form-control flatpickr-input"
@@ -430,12 +447,12 @@
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label for="flatpickr-wrap">Issued Date <abbr title="Required"
+                                          <label for="flatpickr-wrap">Issued Date <abbr title=""
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
-                                             data-default-date="" ata-alt-format="F j, Y"
-                                             data-alt-input-class="form-control" data-date-format="Y-m-d">
+                                                data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
+                                                ata-alt-format="F j, Y"
+                                                data-alt-input-class="form-control" data-date-format="Y-m-d">
                                              <input type="date" class="form-control flatpickr-input"
                                                 placeholder="Choose date..." value="" name="issue_date" required
                                                 data-input="">
@@ -443,17 +460,16 @@
                                        </div>
                                        {% if is_motor_form %}
                                        <div class="col-md-3 mb-4">
-                                          <label for="insured_age">Insured Age <abbr title="Required"
+                                          <label for="insured_age">Insured Age <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="number" value=""
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true" name="insured_age" required>
+                                                class="form-control"
+                                                name="insured_age" required>
                                        </div>
                                        {% endif %}
 
                                        <div class="col-md-3 mb-4">
-                                          <label>Policy Term <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="policy_term" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
+                                          <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="policy_term" class="custom-select" required>
                                              <option value="">-- Select Term --</option>
 
                                              {% if is_motor_form %}
@@ -471,9 +487,9 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>BQP <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="bqp" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required>
+                                          <label>BQP <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="bqp" 
+                                              class="custom-select" required>
                                              <option value="">-- Select BQP --</option>
                                              {%for value in data_bqp%}
                                              <option value="{{value}}">{{value}}</option>
@@ -481,18 +497,65 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label for="pos">POS <abbr title="Required"
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true" name="pos" style="text-transform: uppercase;"
-                                             required>
+                                          <label for="pos">POS <abbr title=""
+                                                class="text-danger">*</abbr></label><input id="pos" type="text" value=""  
+                                                data-toggle="modal"
+                                                data-target="#mdlcolsetting" 
+                                                class="form-control"
+                                                name="pos" style="text-transform: uppercase;"
+                                                required readonly >
                                        </div>
+                                       
+                                       <div class="modal fade" id="mdlcolsetting" data-backdrop="static" data-keyboard="false" style="height: 400px"
+                                          tabindex="-1" role="dialog" aria-labelledby="rtoModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                             <div class="modal-content">
+                                                <div class="modal-header">
+                                                   <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
+                                                </div>
+                                                <div class="modal-body ">     
+                                                   <div class="form-row">
+                                                      <div class="col-md-6 mb-4">
+                                                         <div class=""><label>Search:<input id="inp_search" type="text" value=""
+                                                               class="form-control"
+                                                               name="agent"
+                                                               style="text-transform: uppercase;" required  
+                                                               title="Search POS using Name, mobile no, email, pan/aadhar number"
+                                                               oninput="searchPOS()">
+                                                         </label></div>
+                                                      </div>  
+                                                      <div class="col-md-6 mb-4">
+                                                         <div class=""><label>POS:<input id="inp_pos" type="text" value=""
+                                                               class="form-control"
+                                                               name="agent"
+                                                               style="text-transform: uppercase;" required
+                                                               title="POS should be automatically fetched">
+                                                         </label>
+                                                         </div>
+                                                      </div>                                                      
+                                                   </div>  
+                                                 
+                                                      <div class="modal-footer">
+                                                         <button type="button" class="btn btn-secondary w-100p"
+                                                            data-dismiss="modal">Close</button>
+                                                         <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
+                                                            class="btn btn-primary w-100p">Save</button> -->
+                                                      </div>
+                                                </div>
+                                              
+                                             </div>
+                                             
+                                         
+                                          </div>
+
+                                       </div>
+
                                        <div class="col-md-3 mb-4">
-                                          <label for="employee">Employee <abbr title="Required"
+                                          <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text" value=""
-                                             data-parsley-required-message="" class="form-control"
-                                             data-parsley-required="true" name="employee"
-                                             style="text-transform: uppercase;" required>
+                                                class="form-control"
+                                                name="employee"
+                                                style="text-transform: uppercase;" required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -586,66 +649,63 @@
                         </div>
 
                         <div class="col-lg-3 col-md-3 col-sm-12">
+                        
                            <div class="card">
+
                               <div class="card-body">
                                  <!-- .card-body -->
                                  <h4 class="card-title mb-3"> Premium Details </h4>
                                  <!-- grid row -->
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="od">OD Premium <abbr title="Required"
+                                    <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" data-parsley-group="payout" value=""
-                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
-                                       data-parsley-required="true" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="od" id="od"
-                                       maxlength="10" required>
+                                          oninput="calculateValue()"  value=""
+                                          class="form-control col-lg-6 maskNumField"                                        
+                                          data-parsley-pattern="^[0-9]+$" name="od" id="od"
+                                          maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title="Required"
+                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" data-parsley-group="payout" value=""
-                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
-                                       data-parsley-required="true" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt"
+                                       oninput="calculateValue()" value=""
+                                       class="form-control col-lg-6 maskNumField"                                        
+                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt"
                                        maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Net Premium</label><input type="text" name="net"
                                        onclick="add()" value="" class="form-control col-lg-6 maskNumField bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
-                                       maxlength="10" readonly="" required oninput="calculateValue()">
+                                       data-mask-as-number-maxlength="10" 
+                                       data-parsley-pattern="^[0-9]+$" id="net"
+                                       maxlength="10" readonly="" required >
                                  </div>
 
                                  <div class="row mb-2">
-                                    <label class="col-lg-5" for="gst">GST 18%<abbr title="Required"
+                                    <label class="col-lg-5" for="gst">GST 18%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10" required
-                                       oninput="calculateValue()">
+                                          value="" class="form-control col-lg-6 maskNumField"                                     
+                                          data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10" required
+                                          oninput="calculateValue()">
                                  </div>
+                               
                                  <div class="row mb-2" id="gsttDiv" hidden>
-                                    <label class="col-lg-5" for="gstt">GST 12%<abbr title="Required"
+                                    <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       data-parsley-group="payout" value="" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-required="true"
-                                       data-parsley-required-message="" data-parsley-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt" maxlength="10" required
-                                       oninput="calculateValue()">
+                                          value="" class="form-control col-lg-6 maskNumField" 
+                                          data-mask-as-number-maxlength="10"                                         
+                                          data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt" maxlength="10" 
+                                          oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-required-message=""
-                                       data-parsley-maxlength="10" data-parsley-pattern="^[0-9]+$" id="totalnet"
+                                       onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"                                       
+                                       data-parsley-pattern="^[0-9]+$" id="totalnet"
                                        readonly="" maxlength="10" required oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value=""> -- Mode -- </option>
+                                       <option value=""> -- Select Payment Mode -- </option>
                                        <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
                                        <option value="SELF ONLINE">SELF ONLINE</option>
                                        <option value="CASH">CASH</option>
@@ -659,7 +719,7 @@
 
 
                            </div>
-
+                           
                            <script>
                               function calculateAgentPayout() {
                                  try {
@@ -1141,16 +1201,29 @@
 <script>
 
    function calculateValue() {
-      try {
-         add()
-         addgst()
-      } catch (error) {
 
+      is_motor_form = "{{is_motor_form | safe}}"
+
+      if (is_motor_form) {
+
+         try {
+            add_non_motor()
+            addgst_non_motor()
+         } catch (error) { }
+        
       }
+      else{        
+         try {
+            add()
+            addgst()
+         } catch (error) { }
+      }
+
+
+     
    }
 
    function add() {
-
       od = parseInt(document.getElementById("od").value);
       tpt = parseInt(document.getElementById("tpt").value);
 
@@ -1169,6 +1242,7 @@
          document.getElementById("gst").value = (od + tpt) * 18 / 100;
 
       }
+      
    }
 
    function addgst() {
@@ -1183,8 +1257,26 @@
       }
       else {
          document.getElementById("totalnet").value = net + gst;
-      }
+      }    
+   }
 
+   
+   function add_non_motor() {
+      od = parseInt(document.getElementById("od").value);
+      tpt = parseInt(document.getElementById("tpt").value);
+
+      gst = parseInt(document.getElementById("gst").value);
+
+      document.getElementById("net").value = od + tpt;
+      document.getElementById("gst").value = (od + tpt) * 18 / 100;
+      
+   }
+
+   function addgst_non_motor() {
+      var numOne, numTwo, sum;
+      net = parseInt(document.getElementById("net").value);
+      gst = parseInt(document.getElementById("gst").value);
+      document.getElementById("totalnet").value = net + gst;
    }
 
    function setCategoryOnChange() {
@@ -1341,6 +1433,7 @@
       }
 
       else if (value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
+
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
@@ -1352,6 +1445,8 @@
          document.getElementById('gvw').required = true
          document.getElementById('gsttDiv').hidden = false
          document.getElementById('gstt').required = true
+         
+         
 
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
@@ -1370,6 +1465,11 @@
          newoption.value = 'TP ONLY'
          newoption.innerHTML = 'TP ONLY'
          coverage_type.options.add(newoption);
+
+         try {
+            calculateValue()
+         } catch (error) {            
+         }
       }
 
       else if (value == '3 WHEELER PCV') {
@@ -1708,6 +1808,51 @@
 
       }
    }
+
+</script>
+
+<script>
+                                                         
+   function searchPOS() {
+      try {
+         // alert('test')
+         var data_ag = JSON.parse("{{data_ag|escapejs}}");    
+         console.log(data_ag);
+    
+         value = document.getElementById('inp_search').value.toUpperCase();
+         inp_pos = document.getElementById('inp_pos');
+         pos = document.getElementById('pos');
+         
+         data_ag.forEach(element => {
+         console.log(element.full_name);
+         
+         if (value == element.full_name.toUpperCase()) {
+            inp_pos.value = element.full_name
+            pos.value = element.full_name
+         }
+         else if (value == element.mob_no.toUpperCase()) {
+            inp_pos.value = element.full_name
+            pos.value = element.full_name
+         }
+         else if (value == element.PAN.toUpperCase()) {
+            inp_pos.value = element.full_name
+            pos.value = element.full_name
+         }
+         else if (value == element.aadhar_no.toUpperCase()) {
+            inp_pos.value = element.full_name
+            pos.value = element.full_name
+         }
+         else if (value == element.email_id.toUpperCase()) {
+            inp_pos.value = element.full_name
+            pos.value = element.full_name
+         }
+      });
+   
+      } catch (error) {
+         
+      }
+      
+   }  
 
 </script>
 
