@@ -105,11 +105,9 @@
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_name" class="custom-select" id="sp_name" required>
                                              <option value=""> -- Select Provider -- </option>
-                                             <option value="DELHI">Delhi</option>
-                                             <option value="ROHTAK">Rohtak</option>
-                                             <option value="CHANDIGARH">Chandigarh</option>
-                                             <option value="GURGAON">Gurgaon</option>
-                                             <option value="LUCKHNOW">Luckhnow</option>
+                                             {%for value in data_sp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -117,13 +115,11 @@
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
                                              <option value=""> -- Select Office Code -- </option>
-                                             <option value="123">123</option>
-                                             <option value="1234">1234</option>
-                                             <option value="12345">12345</option>
-                                          </select>
-                                          <!-- {%for value in data_ins%}
+                                            {%for value in data_bc%}
                                           <option value="{{value}}">{{value}}</option>
-                                          {%endfor%} -->
+                                          {%endfor%}
+                                          </select>
+                                        
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="registration_no">Registration No. <abbr title=""
@@ -739,13 +735,14 @@
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
                                              <option value=""> -- Select Office Code -- </option>
-                                             <option value="123">123</option>
+                                             <!-- <option value="123">123</option>
                                              <option value="1234">1234</option>
-                                             <option value="12345">12345</option>
+                                             <option value="12345">12345</option> -->
+                                             {%for value in data_bc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
-                                          <!-- {%for value in data_ins%}
-                                          <option value="{{value}}">{{value}}</option>
-                                          {%endfor%} -->
+                                        
                                        </div>
 
 

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-0v_0p6s6#68rtu!3t=hqk$l)*z391o2vtx11q+ew-r8s@@u5r*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'Bima.wsgi.application'
 DATABASES = {
         'default': {
             'ENGINE': 'djongo',
-            'NAME': 'demodb',
+            'NAME': 'ExperiyaBook',
             # 'CLIENT': {
             #     'host': 'mongodb+srv://bhavi:123abc@experiya.bi2f9gh.mongodb.net/test',
             #     'username': 'bhavi',

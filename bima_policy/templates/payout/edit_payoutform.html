@@ -11,7 +11,7 @@
             <!-- .page-title-bar -->
             <header class="page-title-bar">
 
-               <h1 class="page-title"> Payout Form <small class="text-muted">All * marks Fields are mandatory. </small>
+               <h1 class="page-title"> Edit Payout Form<small class="text-muted">All * marks Fields are mandatory. </small>
                </h1>
             </header>
             <!-- .page-section -->
@@ -87,6 +87,19 @@
                                              class="custom-select" multiple id="sp_name" data-parsley-required="true"
                                              required onchange="selectAllItems('sp_name')">
                                              {%for value in data_sp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                             <option value="*"> select all </option>
+                                          </select>
+
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Serving Office Code<abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select id="sp_brokercode" name="sp_brokercode" data-parsley-required-message=""
+                                             class="custom-select" multiple id="sp_brokercode" data-parsley-required="true"
+                                             required onchange="selectAllItems('sp_brokercode')">
+                                             {%for value in data_bc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                              <option value="*"> select all </option>
@@ -285,11 +298,11 @@
                                              <option value="*">select all </option>
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
+                                       <div class="col-md-3 mb-4"> 
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select id="case_type" name="case_type" data-parsley-required="true"
+                                          <select id="policy_type" name="policy_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required multiple
-                                             onchange="selectAllItems('case_type')">
+                                             onchange="selectAllItems('policy_type')">
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
@@ -728,8 +741,9 @@
 
       function initialSelection() {
          selectionOnLoad('product_name', "{{data.product_name|safe}}")
-         selectionOnLoad('insurer', "{{data.insurer|safe}}")
+         selectionOnLoad('insurer', "{{data.insurance_company|safe}}")
          selectionOnLoad('sp_name', "{{data.sp_name|safe}}")
+         selectionOnLoad('sp_brokercode', "{{data.sp_brokercode|safe}}")
          selectionOnLoad('vehicle_makeby', "{{data.vehicle_makeby|safe}}")
          selectionOnLoad('vehicle_model', "{{data.vehicle_model|safe}}")
          selectionOnLoad('vehicle_catagory', "{{data.vehicle_catagory|safe}}")
@@ -741,7 +755,7 @@
          selectionOnLoad('cubic_capacity', "{{data.cubic_capacity|safe}}")
          selectionOnLoad('seating_capacity', "{{data.seating_capacity|safe}}")
          selectionOnLoad('coverage_type', "{{data.coverage_type|safe}}")
-         selectionOnLoad('case_type', "{{data.case_type|safe}}")
+         selectionOnLoad('policy_type', "{{data.policy_type|safe}}")
          selectionOnLoad('policy_term', "{{data.policy_term|safe}}")
          selectionOnLoad('cpa', "{{data.cpa|safe}}")
          selectionOnLoadRto('rto', "{{data.rto_city|safe}}")

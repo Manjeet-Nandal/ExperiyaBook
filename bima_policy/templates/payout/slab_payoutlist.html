@@ -60,7 +60,8 @@
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Payout Name: activate to sort column ascending" style="width: 0px;">Payout Name</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Product Name</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Insurer</th>
-                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">SP</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Serving Office</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Serving Office Code</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Make</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Model</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Catagory</th>
@@ -73,7 +74,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Cubic Capacity</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Seating Capacity</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Case Type: activate to sort column ascending" style="width: 0px;">Coverage Type</th>
-                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Coverage: activate to sort column ascending" style="width: 0px;">Case Type</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Coverage: activate to sort column ascending" style="width: 0px;">Policy Type</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Coverage: activate to sort column ascending" style="width: 0px;">CPA</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Coverage: activate to sort column ascending" style="width: 0px;">Agent OD Reward %</th>
                                     <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Coverage: activate to sort column ascending" style="width: 0px;">Agent TP Reward %</th>
@@ -97,8 +98,9 @@
                                     </td>
                                     
                                           <td>{{value.product_name}}</td>
-                                          <td>{{value.insurer}}</td>
+                                          <td>{{value.insurance_company}}</td>
                                           <td>{{value.sp_name}}</td>
+                                          <td>{{value.sp_brokercode}}</td>
                                           <td>{{value.vehicle_makeby}}</td>
                                           <td>{{value.vehicle_model}}</td>
                                           <td>{{value.vehicle_catagory}}</td>
@@ -111,7 +113,7 @@
                                           <td>{{value.cubic_capacity}}</td>
                                           <td>{{value.seating_capacity}}</td>
                                           <td>{{value.coverage_type}}</td>
-                                          <td>{{value.case_type}}</td>                                  
+                                          <td>{{value.policy_type}}</td>                                  
                                           <td>{{value.cpa}}</td>                                  
                                           <td>{{value.agent_od_reward}}</td>                                  
                                           <td>{{value.agent_tp_reward}}</td>                                  

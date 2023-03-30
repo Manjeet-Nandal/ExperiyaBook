@@ -84,9 +84,9 @@
                                              <option value="WC">WC</option>
                                              <option value="OTHERS">OTHERS</option>
                                              <option value="*"> select all </option>
-
                                           </select>
-                                       </div>
+                                       </div>                                      
+                                      
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select id="insurer" name="insurer" data-parsley-required-message=""
@@ -100,12 +100,25 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Service Provider<abbr title="Required"
+                                          <label>Serving Office<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select id="sp_name" name="sp_name" data-parsley-required-message=""
                                              class="custom-select" multiple id="sp_name" data-parsley-required="true"
                                              required onchange="selectAllItems('sp_name')">
                                              {%for value in data_sp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                             <option value="*"> select all </option>
+                                          </select>
+
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Serving Office Code<abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select id="sp_brokercode" name="sp_brokercode" data-parsley-required-message=""
+                                             class="custom-select" multiple id="sp_brokercode" data-parsley-required="true"
+                                             required onchange="selectAllItems('sp_brokercode')">
+                                             {%for value in data_bc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                              <option value="*"> select all </option>
@@ -305,11 +318,11 @@
                                              <option value="*">select all </option>
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4"> <!-- it is case_type in model -->
+                                       <div class="col-md-3 mb-4"> 
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select id="case_type" name="case_type" data-parsley-required="true"
+                                          <select id="policy_type" name="policy_type" data-parsley-required="true"
                                              data-parsley-required-message="" class="custom-select" required multiple
-                                             onchange="selectAllItems('case_type')">
+                                             onchange="selectAllItems('policy_type')">
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
