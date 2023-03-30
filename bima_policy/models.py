@@ -252,7 +252,7 @@ class Policy(models.Model):
     insurance_company = models.CharField(max_length=100)
     sp_name = models.CharField(max_length=100)
     sp_brokercode = models.CharField(max_length=100)
-    product_name = models.CharField(max_length=100 )
+    product_name = models.CharField(max_length=100, blank=True )
     registration_no = models.CharField(max_length=50 )
     rto_state = models.CharField(max_length=100 )
     rto_city = models.CharField(max_length=5000 )

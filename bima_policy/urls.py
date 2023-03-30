@@ -34,7 +34,8 @@ urlpatterns = [
     path('slab/slab_payoutformshow/<str:id>',slab_payoutformshow, name="slab_payoutformshow"),
     path('slab/slab_payoutlist/payout/<str:id>/delete',payout_delete, name="payout_delete"),
     path('slab/slab_payoutlist/payout/<str:id>/edit',payout_edit, name="payout_edit"),
-    path('policy/',create_policy.as_view(), name="create_policy"),
+    path('policy',create_policy.as_view(), name="create_policy"),
+
     path('policy/create_policy_non_motor',create_policy_non_motor.as_view(), name="create_policy_non_motor"),
     path('policy/entry/',policy_entry, name="policy_entry"),
     path('policy/entry/<str:value1>/<str:value2>/<str:period>/<str:select_length>/',policy_entry_filter, name="policy_entry_filter"), 
