@@ -1955,7 +1955,7 @@ def slab_payoutform(request):
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
 
         # print(state_rto.rto_id)
-        print(data_bc)
+        # print(data_bc)
         return render(request, 'payout/slab_payoutform.html', {'slab': slab, 'data_sp': data_sp, 'data_bc': data_bc,'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct})
 
     if request.method == 'POST' and 'savepayout' in request.POST:
