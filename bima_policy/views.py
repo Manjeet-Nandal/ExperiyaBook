@@ -433,9 +433,10 @@ class create_policy(View ):
         data_vc = VehicleCategory.objects.filter(profile_id=pid)
         data_ct = CoverageType.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
-        # print(datag)
-
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
+        
+        # print(datag)        
+        
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'user_id':get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
 
     def post(self, request):
         try:
@@ -540,8 +541,7 @@ class create_policy(View ):
                                                 Q(ncb__contains=ncb)    &
                                                 Q(cubic_capacity__contains=cubic_capacity) &
                                                 Q(seating_capacity__contains=seating_capacity) &
-
-
+                                                Q(coverage_type__contains=coverage_type) &
                                                 Q(policy_type__contains=policy_type) &
                                                 Q(policy_term__contains=policy_term) &
                                                 Q(cpa__contains=cpa)).values()
@@ -797,7 +797,6 @@ class create_policy(View ):
             return HttpResponse("Error occurred! ", ex)
 
 
-
 class create_policy_non_motor(View):
     def get(self, request):
         print('create_policy Non get')
@@ -808,7 +807,7 @@ class create_policy_non_motor(View):
         data_ins = InsuranceCompany.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
 
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': False,  'data_ag': data_ag, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': False, 'user_id':get_id_from_session(request), 'data_ag': data_ag, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_bqp': data_bqp})
 
     def post(self, request):
         print('create_policy non post')

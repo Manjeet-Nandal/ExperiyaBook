@@ -134,34 +134,6 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Vehicle Catagory <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select id="vehicle_catagory" name="vehicle_catagory"
-                                             data-parsley-required-message="" multiple
-                                             onchange="selectAllItems('vehicle_catagory')" data-parsley-required="true"
-                                             class="custom-select " required>
-                                             <!-- {%for value in data_vc%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%} -->
-                                             <option value="TWO WHEELER">TWO WHEELER</option>
-                                             <option value="PRIVATE CAR">PRIVATE CAR</option>
-                                             <option value="GCV-PUBLIC CARRIER OTHER THAN 3 W">GCV-PUBLIC CARRIER OTHER
-                                                THAN 3 W</option>
-                                             <option value="3 WHEELER PCV">3 WHEELER PCV</option>
-                                             <option value="3 WHEELER GCV-PUBLIC CARRIER">3 WHEELER GCV-PUBLIC CARRIER
-                                             </option>
-                                             <option value="TAXI 4 WHEELER">TAXI 4 WHEELER</option>
-                                             <option value="BUS AND OTHERS">BUS AND OTHERS</option>
-                                             <option value="MISC-D SPECIAL VEHICLE">MISC-D SPECIAL VEHICLE</option>
-                                             <option value="SCHOOL BUS-SCHOOL NAME">SCHOOL BUS-SCHOOL NAME</option>
-                                             <option value="SCHOOL BUS-INDIVIDUAL NAME">SCHOOL BUS-INDIVIDUAL NAME
-                                             </option>
-                                             <option value="*"> select all </option>
-
-
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select id="vehicle_fuel_type" name="vehicle_fuel_type"
@@ -175,6 +147,107 @@
                                              <option value="*"> select all </option>
                                           </select>
                                        </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Vehicle Catagory <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select id="vehicle_catagory" name="vehicle_catagory"
+                                             data-parsley-required-message="" multiple
+                                             onchange="selectAndSetCat('vehicle_catagory')" data-parsley-required="true"
+                                             class="custom-select " required>
+                                             {%for value in data_vc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                         
+                                             <option value="*"> select all </option>
+
+
+                                          </select>
+                                       </div>
+
+                                       
+                                       <div class="col-md-3 mb-4">
+                                          <label>Cubic Capacity<abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select id="cubic_capacity" name="cubic_capacity"
+                                             data-parsley-required-message="" class="custom-select" id="cubic_capacity"
+                                             data-parsley-required="true" multiple required
+                                             onchange="selectAllItems('cubic_capacity')">
+                                             <option value="75CC-150CC">75CC-150CC</option>
+                                             <option value="150CC-350CC">150CC-350CC</option>
+                                             <option value="ABOVE 350CC">ABOVE 350CC</option>
+                                             <option value="BELOW 1000CC">BELOW 1000CC</option>
+                                             <option value="1000CC-1500CC">1000CC-1500CC</option>
+                                             <option value="ABOVE 1500CC">ABOVE 1500CC</option>
+                                             <option value="*"> select all </option>
+
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Seating Capacity<abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select id="seating_capacity" name="seating_capacity"
+                                             data-parsley-required-message="" class="custom-select"
+                                             id="seating_capacity" data-parsley-required="true" multiple required
+                                             onchange="selectAllItems('seating_capacity')">
+                                             <option value="BELOW 5">BELOW 5</option>
+                                             <option value="5-7">5-7</option>
+                                             <option value="7-12">7-12</option>
+                                             <option value="12-18">12-18</option>
+                                             <option value="ABOVE 18">ABOVE 18</option>
+                                             <option value="*"> select all </option>
+
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Coverage Type <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <select id="coverage_type" name="coverage_type" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required multiple
+                                             onchange="selectAllItems('coverage_type')">
+                                             <!-- {% for value in data_ct%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {% endfor%} -->
+                                             <option value="1 YEAR PACKAGE">1 YEAR PACKAGE</option>
+                                             <option value="1+2 YEAR PACKAGE">1+2 YEAR PACKAGE</option>
+                                             <option value="1+4 YEAR PACKAGE">1+4 YEAR PACKAGE</option>
+                                             <option value="3 YEAR TP">3 YEAR TP</option>
+                                             <option value="5 YEAR TP">5 YEAR TP</option>
+                                             <option value="TP ONLY">TP ONLY</option>
+                                             <option value="OD ONLY">OD ONLY</option>             
+                                             <option value="*">select all </option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>GVW<abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select name="gvw" data-parsley-required-message="" class="custom-select"
+                                             id="gvw" data-parsley-required="true" required
+                                             onchange="selectAllItems('gvw')" multiple>
+                                             <option value="BELOW 2000">BELOW 2000</option>
+                                             <option value="2000-2500">2000-2500</option>
+                                             <option value="2500-3500">2500-3500</option>
+                                             <option value="3500-7000">3500-7000</option>
+                                             <option value="7000-7500">7000-7500</option>
+                                             <option value="7500-12000">7500-12000</option>
+                                             <option value="12000-25000">12000-25000</option>
+                                             <option value="25000-40000">25000-40000</option>
+                                             <option value="ABOVE 40000">ABOVE 40000</option>
+                                             <option value="*"> select all </option>
+                                          </select>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4"> 
+                                          <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
+                                          <select id="policy_type" name="policy_type" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required multiple
+                                             onchange="selectAllItems('policy_type')">
+                                             <option value="FRESH">FRESH</option>
+                                             <option value="RENEWAL">RENEWAL</option>
+                                             <option value="ROLLOVER">ROLLOVER</option>
+                                             <option value="ENDORSEMENT">ENDORSEMENT</option>
+                                             <option value="*"> select all </option>
+                                          </select>
+                                       </div>
+                                      
                                        <div class="col-md-3 mb-4">
                                           <label for="mfg_year">Manufacture Year <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
@@ -228,88 +301,7 @@
                                              <option value="*"> select all </option>
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>GVW<abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select name="gvw" data-parsley-required-message="" class="custom-select"
-                                             id="gvw" data-parsley-required="true" required
-                                             onchange="selectAllItems('gvw')" multiple>
-                                             <option value="BELOW 2000">BELOW 2000</option>
-                                             <option value="2000-2500">2000-2500</option>
-                                             <option value="2500-3500">2500-3500</option>
-                                             <option value="3500-7000">3500-7000</option>
-                                             <option value="7000-7500">7000-7500</option>
-                                             <option value="7500-12000">7500-12000</option>
-                                             <option value="12000-25000">12000-25000</option>
-                                             <option value="25000-40000">25000-40000</option>
-                                             <option value="ABOVE 40000">ABOVE 40000</option>
-                                             <option value="*"> select all </option>
-                                          </select>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Cubic Capacity<abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select id="cubic_capacity" name="cubic_capacity"
-                                             data-parsley-required-message="" class="custom-select" id="cubic_capacity"
-                                             data-parsley-required="true" multiple required
-                                             onchange="selectAllItems('cubic_capacity')">
-                                             <option value="75CC-150CC">75CC-150CC</option>
-                                             <option value="150CC-350CC">150CC-350CC</option>
-                                             <option value="ABOVE 350CC">ABOVE 350CC</option>
-                                             <option value="BELOW 1000CC">BELOW 1000CC</option>
-                                             <option value="1000CC-1500CC">1000CC-1500CC</option>
-                                             <option value="ABOVE 1500CC">ABOVE 1500CC</option>
-                                             <option value="*"> select all </option>
-
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Seating Capacity<abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select id="seating_capacity" name="seating_capacity"
-                                             data-parsley-required-message="" class="custom-select"
-                                             id="seating_capacity" data-parsley-required="true" multiple required
-                                             onchange="selectAllItems('seating_capacity')">
-                                             <option value="BELOW 5">BELOW 5</option>
-                                             <option value="5-7">5-7</option>
-                                             <option value="7-12">7-12</option>
-                                             <option value="12-18">12-18</option>
-                                             <option value="ABOVE 18">ABOVE 18</option>
-                                             <option value="*"> select all </option>
-
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Coverage Type <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select id="coverage_type" name="coverage_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required multiple
-                                             onchange="selectAllItems('coverage_type')">
-                                             <!-- {% for value in data_ct%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {% endfor%} -->
-                                             <option value="1 YEAR PACKAGE">1 YEAR PACKAGE</option>
-                                             <option value="1+2 YEAR PACKAGE">1+2 YEAR PACKAGE</option>
-                                             <option value="1+4 YEAR PACKAGE">1+4 YEAR PACKAGE</option>
-                                             <option value="3 YEAR TP">3 YEAR TP</option>
-                                             <option value="5 YEAR TP">5 YEAR TP</option>
-                                             <option value="TP ONLY">TP ONLY</option>
-                                             <option value="OD ONLY">OD ONLY</option>             
-                                             <option value="*">select all </option>
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4"> 
-                                          <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select id="policy_type" name="policy_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required multiple
-                                             onchange="selectAllItems('policy_type')">
-                                             <option value="FRESH">FRESH</option>
-                                             <option value="RENEWAL">RENEWAL</option>
-                                             <option value="ROLLOVER">ROLLOVER</option>
-                                             <option value="ENDORSEMENT">ENDORSEMENT</option>
-                                             <option value="*"> select all </option>
-                                          </select>
-                                       </div>
+                                    
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select  id="policy_term"  name="policy_term" data-parsley-required="true"
@@ -810,6 +802,12 @@
          selectAllOptions()
       }
 
+
+      function selectAndSetCat(params) {
+      selectAllItems(params) 
+      setCategoryOnChange()
+   }
+
       function selectAllItems(name) {
          var item = document.getElementById(name)
          if (item.value == '*') {
@@ -819,6 +817,371 @@
          }
          item.options[item.options.length - 1].selected = false
       }
+
+      
+   function setCategoryOnChange() {
+      value = document.getElementById('vehicle_catagory').value
+
+      cubic_capacity = document.getElementById('cubic_capacity')
+      seating_capacity = document.getElementById('seating_capacity')
+      coverage_type = document.getElementById('coverage_type')
+      gvw = document.getElementById('gvw')
+      
+      if (value == 'TWO WHEELER') {
+                 
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options         
+         var newoption = document.createElement("option");
+         newoption.value = '75CC-150CC'
+         newoption.innerHTML = '75CC-150CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '150CC-350CC'
+         newoption.innerHTML = '150CC-350CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 350CC'
+         newoption.innerHTML = 'ABOVE 350CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML = 'select all'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage type        
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+4 YEAR PACKAGE'
+         newoption.innerHTML = '1+4 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '5 YEAR TP'
+         newoption.innerHTML = '5 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML =  'select all'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'PRIVATE CAR') {        
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options        
+         var newoption = document.createElement("option");
+         newoption.value = 'BELOW 1000CC'
+         newoption.innerHTML = 'BELOW 1000CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1000CC-1500CC'
+         newoption.innerHTML = '1000CC-1500CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 1500CC'
+         newoption.innerHTML = 'ABOVE 1500CC'
+         cubic_capacity.options.add(newoption);
+         
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML = 'select all'
+         cubic_capacity.options.add(newoption);
+
+
+         // Coverage Type
+         
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+         
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML =  'select all'
+         coverage_type.options.add(newoption);
+
+      }
+
+      else if (value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
+
+         // cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+         
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML =  'select all'
+         coverage_type.options.add(newoption);
+        
+      }
+
+      else if (value == '3 WHEELER PCV') {
+        
+         coverage_type.innerHTML = ''
+
+         // Coverage type                
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+         
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML =  'select all'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == '3 WHEELER GCV-PUBLIC CARRIER') {
+        
+         // cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+        
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP Only'
+         newoption.innerHTML = 'TP Only'
+         coverage_type.options.add(newoption);
+         
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML =  'select all'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'TAXI 4 WHEELER') {
+         
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options         
+         var newoption = document.createElement("option");
+         newoption.value = 'BELOW 1000CC'
+         newoption.innerHTML = 'BELOW 1000CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1000CC-1500CC'
+         newoption.innerHTML = '1000CC-1500CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 1500CC'
+         newoption.innerHTML = 'ABOVE 1500CC'
+         cubic_capacity.options.add(newoption);
+         
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML = 'select all'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage Type  
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+         
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML =  'select all'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'BUS AND OTHERS') {
+         
+
+      }
+
+      else if (value == 'MISC-D SPECIAL VEHICLE') {
+         
+         // Coverage Type
+         coverage_type.innerHTML = ''
+        
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML =  'select all'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'SCHOOL BUS-SCHOOL NAME') {         
+        
+         // Coverage Type
+         coverage_type.innerHTML = ''         
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+         
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML =  'select all'
+         coverage_type.options.add(newoption);
+      }
+      else if (value == 'SCHOOL BUS-INDIVIDUAL NAME') {
+         
+         // Coverage Type
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+         
+         var newoption = document.createElement("option");
+         newoption.value = '*'
+         newoption.innerHTML =  'select all'
+         coverage_type.options.add(newoption);
+      }
+
+   }
+
 
    </script>
 
