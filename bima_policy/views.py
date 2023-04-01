@@ -523,28 +523,28 @@ class create_policy(View ):
             if inspection_report is not None:
                 fsis.save(inspection_report.name, inspection_report)
             
-            # print(vehicle_catagory)
+            print(vehicle_catagory)
             if vehicle_catagory == 'TWO WHEELER':
                 try:
                     reg = registration_no[0:4]
                     data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
                                                 Q(sp_name__contains=sp_name) &
                                                 Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(rto_city__contains=reg) &
                                                 Q(vehicle_makeby__contains=vehicle_makeby) &
                                                 Q(vehicle_model__contains=vehicle_model) &
                                                 Q(vehicle_catagory__contains=vehicle_catagory) &
                                                 Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
                                                 Q(mfg_year__contains=mfg_year) &
+                                                Q(rto_city__contains=reg) &
                                                 Q(addon__contains=addon) &
-                                                Q(ncb__contains=ncb) &
+                                                Q(ncb__contains=ncb)    &
                                                 Q(cubic_capacity__contains=cubic_capacity) &
                                                 Q(seating_capacity__contains=seating_capacity) &
-                                                Q(coverage_type__contains=coverage_type) &
+
+
                                                 Q(policy_type__contains=policy_type) &
                                                 Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)
-                                                ).values()
+                                                Q(cpa__contains=cpa)).values()
                 
 
                 except Exception as ex:
@@ -2016,7 +2016,7 @@ def slab_payoutform(request):
 
         # my_list = product_names.split(",")
         # print( my_list)
-        Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name, 
+        data = Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name, 
                               insurance_company=insurance_company, sp_name=sp_name,  sp_brokercode=sp_brokercode,
                               vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
                               vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
@@ -2028,6 +2028,7 @@ def slab_payoutform(request):
                               self_tp_reward=self_tp_reward,
                               profile_id=data)
         print("insert data")
+        print(data)
         return redirect('bima_policy:slab')
 
 
