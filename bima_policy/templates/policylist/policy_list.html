@@ -1533,6 +1533,7 @@
 
    function setCategoryOnChange() {
       value = document.getElementById('vehicle_catagory').value
+      value2 = document.getElementById('vehicle_catagory').value
 
       coverage_typeDiv = document.getElementById('coverage_typeDiv')
       cubic_capacityDiv = document.getElementById('cubic_capacityDiv')
@@ -1540,7 +1541,7 @@
       gvwDiv = document.getElementById('gvwDiv')
       gsttDiv = document.getElementById('gsttDiv')
 
-      if (value == 'TWO WHEELER') {
+      if (value == 'TWO WHEELER' || value == 'TWO WHEELER COMMERCIAL') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
