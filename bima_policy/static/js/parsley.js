@@ -40,7 +40,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         for (i in obj) {
           if (obj.hasOwnProperty(i)) delete obj[i];
         }
-      }
+      } 
 
       if (!element) return obj;
 
