@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0v_0p6s6#68rtu!3t=hqk$l)*z391o2vtx11q+ew-r8s@@u5r*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -90,11 +90,11 @@ DATABASES = {
         'default': {
             'ENGINE': 'djongo',
             'NAME': 'ExperiyaBook',
-            # 'CLIENT': {
-            #     'host': 'mongodb+srv://bhavi:123abc@experiya.bi2f9gh.mongodb.net/test',
-            #     'username': 'bhavi',
-            #     'password': '123abc',
-            # }  
+            'CLIENT': {
+                'host': 'mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority',
+                'username': 'bhavi',
+                'password': 'Rqw7dAxrzY3UUj1S',
+            }  
         }
 }
 
