@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'widget_tweaks',
     'django_cleanup.apps.CleanupConfig',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'login/'
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+AWS_ACCESS_KEY_ID = "AKIAQHVWIUX56OGJLSBN"
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = "experiya-book-bucket"
