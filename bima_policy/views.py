@@ -418,11 +418,23 @@ def get_profile_id(id):
         login_id = StaffModel.objects.get(login_id=id).profile_id
     return ProfileModel.objects.get(id=login_id).id
 
+import boto3
+from django.http import HttpResponse
+
+import boto3
+
+import boto3
+from django.shortcuts import render
+
+import boto3
+
+
 
 class create_policy(View ):
+    
     def get(self, request):
-        print('create_policy get method')        
-
+        print('create_policy get method')       
+       
         pid = get_profile_id(get_id_from_session(request))
         data_ag = json.dumps(list(Agents.objects.filter(profile_id=pid).values()))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
@@ -522,29 +534,31 @@ class create_policy(View ):
                 fsvc.save(vehicle_rc.name, vehicle_rc)
             if inspection_report is not None:
                 fsis.save(inspection_report.name, inspection_report)
-            
+                        
             print(vehicle_catagory)
-            if vehicle_catagory == 'TWO WHEELER':
+
+            if vehicle_catagory == 'TWO WHEELER' or  vehicle_catagory == 'TWO WHEELER COMMERCIAL':
                 try:
                     reg = registration_no[0:4]
-                    data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
-                                                Q(sp_name__contains=sp_name) &
-                                                Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(vehicle_makeby__contains=vehicle_makeby) &
-                                                Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory__contains=vehicle_catagory) &
-                                                Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
+                    print(vehicle_model.upper())
+                    data = Payout.objects.filter(Q(insurance_company__icontains=insurance_company) &
+                                                Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                                Q(rto_city__icontains=reg) &
+                                                Q(vehicle_makeby__icontains=vehicle_makeby) &                                                
+                                                Q(vehicle_model__icontains=vehicle_model) &
+                                                Q(vehicle_fuel_type__icontains=vehicle_fuel_type) &
                                                 Q(mfg_year__contains=mfg_year) &
-                                                Q(rto_city__contains=reg) &
                                                 Q(addon__contains=addon) &
                                                 Q(ncb__contains=ncb)    &
-                                                Q(cubic_capacity__contains=cubic_capacity) &
-                                                Q(seating_capacity__contains=seating_capacity) &
-                                                Q(coverage_type__contains=coverage_type) &
-                                                Q(policy_type__contains=policy_type) &
-                                                Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)).values()
-                
+                                                Q(cubic_capacity__icontains=cubic_capacity) &
+                                                Q(seating_capacity__icontains=seating_capacity) &
+                                                Q(coverage_type__icontains=coverage_type) &
+
+                                                Q(policy_type__icontains=policy_type) &
+                                                Q(policy_term__icontains=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values()             
 
                 except Exception as ex:
                     print(ex)
@@ -556,15 +570,18 @@ class create_policy(View ):
                                                 Q(sp_brokercode__contains=sp_brokercode) &
                                                 Q(vehicle_makeby__contains=vehicle_makeby) &
                                                 Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory__contains=vehicle_catagory) &
+                                                Q(vehicle_catagory=vehicle_catagory) &
+
                                                 Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
                                                 Q(mfg_year__contains=mfg_year) &
                                                 Q(rto_city__contains=reg) &
                                                 Q(addon__contains=addon) &
                                                 Q(ncb__contains=ncb) &
-                                                Q(cubic_capacity__contains=cubic_capacity) &
-                                                Q(seating_capacity__contains=seating_capacity) &
-                                                Q(coverage_type__contains=coverage_type) &
+
+                                                Q(cubic_capacity=cubic_capacity) &
+                                                Q(seating_capacity=seating_capacity) &
+                                                Q(coverage_type=coverage_type) &
+                                                
                                                 Q(policy_type__contains=policy_type) &
                                                 Q(policy_term__contains=policy_term) &
                                                 Q(cpa__contains=cpa)).values()
@@ -786,10 +803,8 @@ class create_policy(View ):
                                         gst_gcv_amount=gst_gcv_amount,  total=total,
                                         policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
                                         )
-        
-            print('payoot data ', data)
-            print('pol ', pol)
 
+            print(data)
             return render(request, 'policylist/list_apply_payout.html', {'data':data,'policyid':pol.policyid})
         except Exception as ex:
             print('ex ', ex)

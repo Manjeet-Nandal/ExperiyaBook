@@ -186,7 +186,7 @@
                                              class="form-control" name="rto_city" style="text-transform: uppercase;"
                                              required>
                                        </div>
-                                       <div class="col-md-3 mb-4">
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label> Vehicle Make By <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_makeby" class="custom-select" required>
                                              <option value="">-- Select Make --</option>
@@ -194,8 +194,14 @@
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
-                                       </div>
+                                       </div> -->
                                        <div class="col-md-3 mb-4">
+                                          <label for="vehicle_makeby">Vehicle Make <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             class="form-control" name="vehicle_makeby"
+                                             style="text-transform: uppercase;" required>
+                                       </div>
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_model" class="custom-select" required>
                                              <option value="">-- Select Model --</option>
@@ -203,7 +209,15 @@
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
+                                       </div> -->
+
+                                       <div class="col-md-3 mb-4">
+                                          <label for="vehicle_model">Vehicle Model <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             class="form-control" name="vehicle_model"
+                                             style="text-transform: uppercase;" required>
                                        </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_fuel_type" class="custom-select" required>

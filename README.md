@@ -8,3 +8,5 @@ NOTE: FIREWALL AND ANTIVIRUS SHOULD BE TURNED OFF WHEN USE LOCAL TUNNEL!!!
 
 sudo apt install python3-pip -y
 pip install -r requirements.txt
+pip install boto3
+

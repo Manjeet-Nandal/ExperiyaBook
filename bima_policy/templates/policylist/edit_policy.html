@@ -192,7 +192,7 @@
                                              value="{{data.rto_city}}" class="form-control" name="rto_city"
                                              style="text-transform: uppercase;" required>
                                        </div>
-                                       <div class="col-md-3 mb-4">
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label> Vehicle Make By <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_makeby" class="custom-select" required>
                                              <option value="{{data.vehicle_makeby}}"> {{data.vehicle_makeby}} </option>
@@ -200,8 +200,14 @@
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
+                                       </div> -->
+                                        <div class="col-md-3 mb-4">
+                                          <label for="vehicle_makeby">Vehicle Make <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text" value="{{data.vehicle_makeby}}"
+                                             class="form-control" name="vehicle_makeby"
+                                             style="text-transform: uppercase;" required>
                                        </div>
-                                       <div class="col-md-3 mb-4">
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_model" class="custom-select" required>
                                              <option value="{{data.vehicle_model}}"> {{data.vehicle_model}} </option>
@@ -209,6 +215,12 @@
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
+                                       </div> -->
+                                       <div class="col-md-3 mb-4">
+                                          <label for="vehicle_model">Vehicle Model <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text" value="{{data.vehicle_model}}"
+                                             class="form-control" name="vehicle_model"
+                                             style="text-transform: uppercase;" required>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
