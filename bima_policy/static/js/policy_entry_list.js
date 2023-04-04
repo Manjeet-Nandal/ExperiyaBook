@@ -149,6 +149,7 @@ function selectAllPolicy() {
 }
 
 function bulk_policy_remove() {
+    alert('i am callind')
 
     var tblInsurance = document.getElementById('tblInsurance')
     var rowLength = tblInsurance.rows.length;
@@ -162,7 +163,7 @@ function bulk_policy_remove() {
 
         if (isChecked) {
 
-            ids += '|' + tblInsurance.rows.item(i).cells[3].innerText.trim()
+            ids += '|' + tblInsurance.rows.item(i).cells[2].innerText.trim()
             // document.getElementById(anchor_id).click();
         }
     }

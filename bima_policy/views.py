@@ -431,12 +431,11 @@ class create_policy(View ):
         data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
         data_vm = VehicleModelName.objects.filter(profile_id=pid)
         data_vc = VehicleCategory.objects.filter(profile_id=pid)
-        data_ct = CoverageType.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
         
         # print(datag)        
         
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'user_id':get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'user_id':get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc,  'data_bqp': data_bqp})
 
     def post(self, request):
         try:
@@ -1805,7 +1804,7 @@ def edit_policy(request, id):
         return redirect('bima_policy:policy_entry')
 
 
-def policy_deleteo(request, id):
+def policy_deleteO(request, id):
     if request.method == 'GET':
         Policy.objects.get(policyid=id).delete()
         return redirect('bima_policy:policy_entry')
@@ -1816,16 +1815,17 @@ def policy_delete(request, id):
 
     if request.method == 'GET':
         try:
+            print('id', id)
             if id.__contains__("|"):
-                arrays = id.split("|")
-                for i in arrays:
-                    Policy.objects.filter(policy_no=i).delete()
-                    print('Deleted: ', i)
+                ids = id.split("|")
+                for id in ids:
+                    pp = Policy.objects.filter(policyid=id).delete()  
             else :
                 Policy.objects.get(policyid=id).delete()
+                print('Single Deleted: ', id)
+
         except Exception as ex:
-            print(ex)
-        # Policy.objects.get(policyid=id).delete()
+            print(ex)        
         return redirect('bima_policy:policy_entry')
 
 
