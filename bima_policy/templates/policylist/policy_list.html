@@ -1485,12 +1485,12 @@
 
       if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
 
-         document.getElementById("net").value = (od + tpt);
+         document.getElementById("net").value = Number(od + tpt).toFixed(2);
          document.getElementById("gst").value = Number(od * 18 / 100).toFixed(2);
          document.getElementById("gstt").value = Number(tpt * 12 / 100).toFixed(2);
       }
       else {
-         document.getElementById("net").value = (od + tpt);
+         document.getElementById("net").value = Number(od + tpt).toFixed(2);
          document.getElementById("gst").value = Number((od + tpt) * 18 / 100).toFixed(2);
 
       }
@@ -1505,10 +1505,10 @@
       // 3 WHEELER GCV-PUBLIC CARRIER
       vc = document.getElementById('vehicle_catagory').value
       if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
-         document.getElementById("totalnet").value = (net + gst + gstt);
+         document.getElementById("totalnet").value = Number(net + gst + gstt).toFixed(2);
       }
       else {
-         document.getElementById("totalnet").value = (net + gst);
+         document.getElementById("totalnet").value = Number(net + gst).toFixed(2);
       }
    }
 
@@ -1519,8 +1519,8 @@
 
       gst = parseFloat(document.getElementById("gst").value);
 
-      document.getElementById("net").value = Math.round(od + tpt);
-      document.getElementById("gst").value = (od + tpt) * 18 / 100;
+      document.getElementById("net").value = Number(od + tpt).toFixed((2));
+      document.getElementById("gst").value = Number((od + tpt) * 18 / 100).toFixed(2);
 
    }
 
