@@ -435,7 +435,7 @@ import xlwings as xw
 
 def get_vehicle_data():
     # Connect to MongoDB
-    xw.App(visible=False)
+    # xw.App(visible=False)
     # filepath = os.path.join(STATICFILES_DIRS,  'vhdata.xlsx')
     # ws = xw.Book("C:\\Users\\Manjeet Nandal\\OneDrive\\Desktop\\vhdata.xlsx").sheets['data']
     ws = xw.Book('bima_policy//static//vhdata.xlsx').sheets['data']
