@@ -2108,42 +2108,40 @@
    }
 
    function addVehicleMakes() {
-                 
-      vm = document.getElementById('vehicle_makeby')
+     
+      vmb = document.getElementById('vehicle_makeby')
       //   alert(vm.options.length)
-      if (vm.options.length > 0) return
+      if (vmb.options.length > 0) return
 
       "{{ context.makes |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
+
             var newoption = document.createElement("option");
-            newoption.value = item.replace("'", "").replace("'", "")
-            newoption.innerHTML = item.replace("'", "").replace("'", "")
-            vm.options.add(newoption);
+            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
+            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
+            vmb.options.add(newoption);           
          })
    }
-
-   
 
    function addVehicleModels() {
 
       vm = document.getElementById('vehicle_model')
-      // alert(vm.options.length)
+      //   alert(vm.options.length)
       if (vm.options.length > 0) return
 
       "{{ context.models |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
+
             var newoption = document.createElement("option");
-            newoption.value = item.replace("'", "").replace("'", "")
-            newoption.innerHTML = item.replace("'", "").replace("'", "")
+            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
+            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
             vm.options.add(newoption);
+
+            console.log(newoption.value);
          })
-
-
    }
-
-
 
 </script>
 
