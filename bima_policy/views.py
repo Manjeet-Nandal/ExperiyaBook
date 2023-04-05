@@ -537,149 +537,205 @@ class create_policy(View ):
                         
             print(vehicle_catagory)
 
-            if vehicle_catagory == 'TWO WHEELER' or  vehicle_catagory == 'TWO WHEELER COMMERCIAL':
+            if vehicle_catagory == 'TWO WHEELER':
                 try:
                     reg = registration_no[0:4]
-                    print(vehicle_model.upper())
-                    data = Payout.objects.filter(Q(insurance_company__icontains=insurance_company) &
-                                                Q(sp_name=sp_name) &
+                 
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
                                                 Q(sp_brokercode=sp_brokercode) &
-                                                Q(rto_city__icontains=reg) &
-                                                Q(vehicle_makeby__icontains=vehicle_makeby) &                                                
-                                                Q(vehicle_model__icontains=vehicle_model) &
-                                                Q(vehicle_fuel_type__icontains=vehicle_fuel_type) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
+
                                                 Q(mfg_year__contains=mfg_year) &
+                                                Q(rto_city__icontains=reg) &
                                                 Q(addon__contains=addon) &
                                                 Q(ncb__contains=ncb)    &
-                                                Q(cubic_capacity__icontains=cubic_capacity) &
-                                                Q(seating_capacity__icontains=seating_capacity) &
-                                                Q(coverage_type__icontains=coverage_type) &
 
-                                                Q(policy_type__icontains=policy_type) &
-                                                Q(policy_term__icontains=policy_term) &
+                                                Q(cubic_capacity=cubic_capacity) &
+                                                Q(seating_capacity=seating_capacity) &
+                                                Q(coverage_type=coverage_type) &
 
-                                                Q(cpa__contains=cpa)).values()             
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
 
+                                                Q(cpa__contains=cpa)).values() 
+
+                except Exception as ex:
+                    print(ex)
+            elif vehicle_catagory == 'TWO WHEELER COMMERCIAL':
+                try:
+                    reg = registration_no[0:4]
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
+
+                                                Q(mfg_year__contains=mfg_year) &
+                                                Q(rto_city__icontains=reg) &
+                                                Q(addon__contains=addon) &
+                                                Q(ncb__contains=ncb)    &
+
+                                                Q(cubic_capacity=cubic_capacity) &
+                                                Q(seating_capacity=seating_capacity) &
+                                                Q(coverage_type=coverage_type) &
+
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values() 
+                   
                 except Exception as ex:
                     print(ex)
             elif vehicle_catagory == 'PRIVATE CAR':
                 try:
                     reg = registration_no[0:4]
-                    data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
-                                                Q(sp_name__contains=sp_name) &
-                                                Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(vehicle_makeby__contains=vehicle_makeby) &
-                                                Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory=vehicle_catagory) &
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
 
-                                                Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
                                                 Q(mfg_year__contains=mfg_year) &
-                                                Q(rto_city__contains=reg) &
+                                                Q(rto_city__icontains=reg) &
                                                 Q(addon__contains=addon) &
-                                                Q(ncb__contains=ncb) &
+                                                Q(ncb__contains=ncb)    &
 
                                                 Q(cubic_capacity=cubic_capacity) &
                                                 Q(seating_capacity=seating_capacity) &
                                                 Q(coverage_type=coverage_type) &
-                                                
-                                                Q(policy_type__contains=policy_type) &
-                                                Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)).values()
 
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values() 
+                   
                 except Exception as ex:
                     print(ex)
             elif vehicle_catagory == 'GCV-PUBLIC CARRIER OTHER THAN 3 W':
                 try:
                     reg = registration_no[0:4]
-                    data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
-                                                Q(sp_name__contains=sp_name) &
-                                                Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(vehicle_makeby__contains=vehicle_makeby) &
-                                                Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory__contains=vehicle_catagory) &
-                                                Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
+
                                                 Q(mfg_year__contains=mfg_year) &
-                                                Q(rto_city__contains=reg) &
+                                                Q(rto_city__icontains=reg) &
                                                 Q(addon__contains=addon) &
-                                                Q(ncb__contains=ncb) &
-                                                Q(gvw__contains=gvw) &
-                                                Q(seating_capacity__contains=seating_capacity) &
-                                                Q(coverage_type__contains=coverage_type) &
-                                                Q(policy_type__contains=policy_type) &
-                                                Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)).values()
-                    print('data is ', data)
+                                                Q(ncb__contains=ncb)    &
+                                                
+                                                Q(gvw=gvw)    &                                                
+                                                Q(seating_capacity=seating_capacity) &
+                                                Q(coverage_type=coverage_type) &
+
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values() 
+                   
 
                 except Exception as ex:
                     print(ex)
             elif vehicle_catagory == '3 WHEELER PCV':
                 try:
                     reg = registration_no[0:4]
-                    data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
-                                                Q(sp_name__contains=sp_name) &
-                                                Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(vehicle_makeby__contains=vehicle_makeby) &
-                                                Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory__contains=vehicle_catagory) &
-                                                Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
+
                                                 Q(mfg_year__contains=mfg_year) &
-                                                Q(rto_city__contains=reg) &
+                                                Q(rto_city__icontains=reg) &
                                                 Q(addon__contains=addon) &
-                                                Q(ncb__contains=ncb) &
-                                                Q(seating_capacity__contains=seating_capacity) &
-                                                Q(coverage_type__contains=coverage_type) &
-                                                Q(policy_type__contains=policy_type) &
-                                                Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)).values()
-                    print('data is ', data)
+                                                Q(ncb__contains=ncb)    &
+
+                                                
+                                                Q(seating_capacity=seating_capacity) &
+                                                Q(coverage_type=coverage_type) &
+
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values() 
+                   
 
                 except Exception as ex:
                     print(ex)
             elif vehicle_catagory == '3 WHEELER GCV-PUBLIC CARRIER':
                 try:
                     reg = registration_no[0:4]
-                    data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
-                                                Q(sp_name__contains=sp_name) &
-                                                Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(vehicle_makeby__contains=vehicle_makeby) &
-                                                Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory__contains=vehicle_catagory) &
-                                                Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
+
                                                 Q(mfg_year__contains=mfg_year) &
-                                                Q(rto_city__contains=reg) &
+                                                Q(rto_city__icontains=reg) &
                                                 Q(addon__contains=addon) &
-                                                Q(ncb__contains=ncb) &
-                                                Q(gvw__contains=gvw) &
-                                                Q(seating_capacity__contains=seating_capacity) &
-                                                Q(coverage_type__contains=coverage_type) &
-                                                Q(policy_type__contains=policy_type) &
-                                                Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)).values()
-                    print('data is ', data)
+                                                Q(ncb__contains=ncb)    &
+
+                                                Q(gvw=gvw) &
+                                                Q(seating_capacity=seating_capacity) &
+                                                Q(coverage_type=coverage_type) &
+
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values() 
+                   
 
                 except Exception as ex:
                     print(ex)
             elif vehicle_catagory == 'TAXI 4 WHEELER':
                 try:
                     reg = registration_no[0:4]
-                    data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
-                                                Q(sp_name__contains=sp_name) &
-                                                Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(vehicle_makeby__contains=vehicle_makeby) &
-                                                Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory__contains=vehicle_catagory) &
-                                                Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
+
                                                 Q(mfg_year__contains=mfg_year) &
-                                                Q(rto_city__contains=reg) &
+                                                Q(rto_city__icontains=reg) &
                                                 Q(addon__contains=addon) &
-                                                Q(ncb__contains=ncb) &
-                                                Q(cubic_capacity__contains=cubic_capacity) &
-                                                Q(seating_capacity__contains=seating_capacity) &
-                                                Q(coverage_type__contains=coverage_type) &
-                                                Q(policy_type__contains=policy_type) &
-                                                Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)).values()
-                    print('data is ', data)
+                                                Q(ncb__contains=ncb)    &
+
+                                                Q(cubic_capacity=cubic_capacity) &
+                                                Q(seating_capacity=seating_capacity) &
+                                                Q(coverage_type=coverage_type) &
+
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values() 
+
+                    
 
                 except Exception as ex:
                     print(ex)
@@ -701,45 +757,56 @@ class create_policy(View ):
                     elif cap > 18:
                         cap = 'ABOVE 18'
 
-                    data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
-                                                Q(sp_name__contains=sp_name) &
-                                                Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(vehicle_makeby__contains=vehicle_makeby) &
-                                                Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory__contains=vehicle_catagory) &
-                                                Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
+
                                                 Q(mfg_year__contains=mfg_year) &
-                                                Q(rto_city__contains=reg) &
+                                                Q(rto_city__icontains=reg) &
                                                 Q(addon__contains=addon) &
-                                                Q(ncb__contains=ncb) &
-                                                Q(seating_capacity__contains=cap) &
-                                                Q(policy_type__contains=policy_type) &
-                                                Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)).values()
-                    print('data is ', data)
+                                                Q(ncb__contains=ncb)    &
+                                                
+                                                Q(seating_capacity=cap) &
+
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values() 
+
 
                 except Exception as ex:
                     print(ex)
             elif vehicle_catagory == 'MISC-D SPECIAL VEHICLE':
                 try:
                     reg = registration_no[0:4]
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
 
-                    data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
-                                                Q(sp_name__contains=sp_name) &
-                                                Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(vehicle_makeby__contains=vehicle_makeby) &
-                                                Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory__contains=vehicle_catagory) &
-                                                Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
                                                 Q(mfg_year__contains=mfg_year) &
-                                                Q(rto_city__contains=reg) &
+                                                Q(rto_city__icontains=reg) &
                                                 Q(addon__contains=addon) &
-                                                Q(ncb__contains=ncb) &
-                                                Q(coverage_type__contains=coverage_type) &
-                                                Q(policy_type__contains=policy_type) &
-                                                Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)).values()
-                    print('data is ', data)
+                                                Q(ncb__contains=ncb)    &
+                                                
+                                                Q(coverage_type=coverage_type) &
+
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values() 
+
+
+                    
 
                 except Exception as ex:
                     print(ex)
@@ -748,45 +815,53 @@ class create_policy(View ):
                     reg = registration_no[0:4]
                     print('cap ', reg)
 
-                    data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
-                                                Q(sp_name__contains=sp_name) &
-                                                Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(vehicle_makeby__contains=vehicle_makeby) &
-                                                Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory__contains=vehicle_catagory) &
-                                                Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
+
                                                 Q(mfg_year__contains=mfg_year) &
-                                                Q(rto_city__contains=reg) &
+                                                Q(rto_city__icontains=reg) &
                                                 Q(addon__contains=addon) &
-                                                Q(ncb__contains=ncb) &
-                                                Q(coverage_type__contains=coverage_type) &
-                                                Q(policy_type__contains=policy_type) &
-                                                Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)).values()
-                    print('data is ', data)
+                                                Q(ncb__contains=ncb)    &
+                                                
+                                                Q(coverage_type=coverage_type) &
+
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values() 
+
 
                 except Exception as ex:
                     print(ex)
             elif vehicle_catagory == 'SCHOOL BUS-INDIVIDUAL NAME':
                 try:
-                    reg = registration_no[0:4]
+                    reg = registration_no[0:4]                    
+                    data = Payout.objects.filter(Q(insurance_company=insurance_company) &
+                                                 Q(sp_name=sp_name) &
+                                                Q(sp_brokercode=sp_brokercode) &
+                                               
+                                                Q(vehicle_catagory=vehicle_catagory) & 
+                                                Q(vehicle_makeby=vehicle_makeby) &
+                                                Q(vehicle_model=vehicle_model) &
+                                                Q(vehicle_fuel_type=vehicle_fuel_type) &
 
-                    data = Payout.objects.filter(Q(insurance_company__contains=insurance_company) &
-                                                Q(sp_name__contains=sp_name) &
-                                                Q(sp_brokercode__contains=sp_brokercode) &
-                                                Q(vehicle_makeby__contains=vehicle_makeby) &
-                                                Q(vehicle_model__contains=vehicle_model) &
-                                                Q(vehicle_catagory__contains=vehicle_catagory) &
-                                                Q(vehicle_fuel_type__contains=vehicle_fuel_type) &
                                                 Q(mfg_year__contains=mfg_year) &
-                                                Q(rto_city__contains=reg) &
+                                                Q(rto_city__icontains=reg) &
                                                 Q(addon__contains=addon) &
-                                                Q(ncb__contains=ncb) &
-                                                Q(coverage_type__contains=coverage_type) &
-                                                Q(policy_type__contains=policy_type) &
-                                                Q(policy_term__contains=policy_term) &
-                                                Q(cpa__contains=cpa)).values()
-                    print('data is ', data)
+                                                Q(ncb__contains=ncb)    &
+                                                
+                                                Q(coverage_type=coverage_type) &
+
+                                                Q(policy_type=policy_type) &
+                                                Q(policy_term=policy_term) &
+
+                                                Q(cpa__contains=cpa)).values() 
 
                 except Exception as ex:
                     print(ex)
@@ -910,24 +985,29 @@ def apply_policy(request, id):
         if data.vehicle_catagory == 'TWO WHEELER':
             try:
                 reg = data.registration_no[0:4]
-                data1 = Payout.objects.get(Q(insurance_company__contains=data.insurance_company) &
-                                           Q(sp_name__contains=data.sp_name) &
-                                           Q(sp_brokercode__contains=data.sp_brokercode) &
-                                           Q(rto_city__contains=reg) &
-                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                           Q(vehicle_model__contains=data.vehicle_model) &
-                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                           Q(mfg_year__contains=data.mfg_year) &
-                                           Q(addon__contains=data.addon) &
-                                           Q(ncb__contains=data.ncb) &
-                                           Q(cubic_capacity__contains=data.cubic_capacity) &
-                                           Q(seating_capacity__contains=data.seating_capacity) &
-                                           Q(coverage_type__contains=data.coverage_type) &
-                                           Q(policy_type__contains=data.policy_type) &
-                                           Q(policy_term__contains=data.policy_term) &
-                                           Q(cpa__contains=data.cpa)
-                                           )
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(cubic_capacity=data.cubic_capacity) &
+                                            Q(seating_capacity=data.seating_capacity) &
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+               
                 print('payout data ', data1)
                 # Agent payout
                 agent_od_reward = data1.agent_od_reward
@@ -961,28 +1041,93 @@ def apply_policy(request, id):
 
             except Exception as ex:
                 print(ex)
+
+        elif data.vehicle_catagory == 'TWO WHEELER COMMERCIAL':
+            try:
+                reg = data.registration_no[0:4]
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(cubic_capacity=data.cubic_capacity) &
+                                            Q(seating_capacity=data.seating_capacity) &
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+                print('payout data ', data1)
+                # Agent payout
+                agent_od_reward = data1.agent_od_reward
+                agent_od_amount = (data.OD_premium * agent_od_reward) / 100
+                agent_tp_reward = data1.agent_tp_reward
+                agent_tp_amount = (data.TP_terrorism * agent_tp_reward) / 100
+                # Self payout
+                self_od_reward = data1.self_od_reward
+                self_od_amount = (data.OD_premium * self_od_reward) / 100
+                self_tp_reward = data1.self_tp_reward
+                self_tp_amount = (data.TP_terrorism * self_tp_reward) / 100
+
+                print('payout data ', agent_od_reward)
+                print('payout data ', agent_od_amount)
+                print('payout data ', agent_tp_reward)
+                print('payout data ', agent_tp_amount)
+
+                print('payout data ', agent_od_reward)
+
+                data = Policy.objects.filter(policyid=id)
+
+                data.update(agent_od_reward=agent_od_reward,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=agent_tp_reward,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=self_od_reward,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=self_tp_reward,
+                            self_tp_amount=self_tp_amount)
+
+            except Exception as ex:
+                print(ex)
+
 
         elif data.vehicle_catagory == 'PRIVATE CAR':
             try:
                 reg = data.registration_no[0:4]
-                data1 = Payout.objects.get(Q(insurance_company__contains=data.insurance_company) &
-                                           Q(sp_name__contains=data.sp_name) &
-                                           Q(sp_brokercode__contains=data.sp_brokercode) &
-                                           Q(rto_city__contains=reg) &
-                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                           Q(vehicle_model__contains=data.vehicle_model) &
-                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                           Q(mfg_year__contains=data.mfg_year) &
-                                           Q(addon__contains=data.addon) &
-                                           Q(ncb__contains=data.ncb) &
-                                           Q(cubic_capacity__contains=data.cubic_capacity) &
-                                           Q(seating_capacity__contains=data.seating_capacity) &
-                                           Q(coverage_type__contains=data.coverage_type) &
-                                           Q(policy_type__contains=data.policy_type) &
-                                           Q(policy_term__contains=data.policy_term) &
-                                           Q(cpa__contains=data.cpa)
-                                           )
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(cubic_capacity=data.cubic_capacity) &
+                                            Q(seating_capacity=data.seating_capacity) &
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+                
                 print('payout data ', data1)
                 # Agent payout
                 agent_od_reward = data1.agent_od_reward
@@ -1017,27 +1162,33 @@ def apply_policy(request, id):
             except Exception as ex:
                 print(ex)
 
+
         elif data.vehicle_catagory == 'GCV-PUBLIC CARRIER OTHER THAN 3 W':
             try:
                 reg = data.registration_no[0:4]
-                data1 = Payout.objects.get(Q(insurance_company__contains=data.insurance_company) &
-                                           Q(sp_name__contains=data.sp_name) &
-                                           Q(sp_brokercode__contains=data.sp_brokercode) &
-                                           Q(rto_city__contains=reg) &
-                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                           Q(vehicle_model__contains=data.vehicle_model) &
-                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                           Q(mfg_year__contains=data.mfg_year) &
-                                           Q(addon__contains=data.addon) &
-                                           Q(ncb__contains=data.ncb) &
-                                           Q(gvw__contains=data.gvw) &
-                                           Q(seating_capacity__contains=data.seating_capacity) &
-                                           Q(coverage_type__contains=data.coverage_type) &
-                                           Q(policy_type__contains=data.policy_type) &
-                                           Q(policy_term__contains=data.policy_term) &
-                                           Q(cpa__contains=data.cpa)
-                                           )
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(gvw=data.gvw) &
+                                            Q(seating_capacity=data.seating_capacity) &
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+                
                 print('payout data ', data1)
                 # Agent payout
                 agent_od_reward = data1.agent_od_reward
@@ -1075,23 +1226,28 @@ def apply_policy(request, id):
         elif data.vehicle_catagory == '3 WHEELER PCV':
             try:
                 reg = data.registration_no[0:4]
-                data1 = Payout.objects.get(Q(insurance_company__contains=data.insurance_company) &
-                                           Q(sp_name__contains=data.sp_name) &
-                                           Q(sp_brokercode__contains=data.sp_brokercode) &
-                                           Q(rto_city__contains=reg) &
-                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                           Q(vehicle_model__contains=data.vehicle_model) &
-                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                           Q(mfg_year__contains=data.mfg_year) &
-                                           Q(addon__contains=data.addon) &
-                                           Q(ncb__contains=data.ncb) &
-                                           Q(seating_capacity__contains=data.seating_capacity) &
-                                           Q(coverage_type__contains=data.coverage_type) &
-                                           Q(policy_type__contains=data.policy_type) &
-                                           Q(policy_term__contains=data.policy_term) &
-                                           Q(cpa__contains=data.cpa)
-                                           )
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(seating_capacity=data.seating_capacity) &
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+                
                 print('payout data ', data1)
                 # Agent payout
                 agent_od_reward = data1.agent_od_reward
@@ -1129,24 +1285,29 @@ def apply_policy(request, id):
         elif data.vehicle_catagory == '3 WHEELER GCV-PUBLIC CARRIER':
             try:
                 reg = data.registration_no[0:4]
-                data1 = Payout.objects.get(Q(insurance_company__contains=data.insurance_company) &
-                                           Q(sp_name__contains=data.sp_name) &
-                                           Q(sp_brokercode__contains=data.sp_brokercode) &
-                                           Q(rto_city__contains=reg) &
-                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                           Q(vehicle_model__contains=data.vehicle_model) &
-                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                           Q(mfg_year__contains=data.mfg_year) &
-                                           Q(addon__contains=data.addon) &
-                                           Q(ncb__contains=data.ncb) &
-                                           Q(gvw__contains=data.gvw) &
-                                           Q(seating_capacity__contains=data.seating_capacity) &
-                                           Q(coverage_type__contains=data.coverage_type) &
-                                           Q(policy_type__contains=data.policy_type) &
-                                           Q(policy_term__contains=data.policy_term) &
-                                           Q(cpa__contains=data.cpa)
-                                           )
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(gvw=data.gvw) &
+                                            Q(seating_capacity=data.seating_capacity) &
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+                
                 print('payout data ', data1)
                 # Agent payout
                 agent_od_reward = data1.agent_od_reward
@@ -1184,24 +1345,29 @@ def apply_policy(request, id):
         elif data.vehicle_catagory == 'TAXI 4 WHEELER':
             try:
                 reg = data.registration_no[0:4]
-                data1 = Payout.objects.get(Q(insurance_company__contains=data.insurance_company) &
-                                           Q(sp_name__contains=data.sp_name) &
-                                           Q(sp_brokercode__contains=data.sp_brokercode) &
-                                           Q(rto_city__contains=reg) &
-                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                           Q(vehicle_model__contains=data.vehicle_model) &
-                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                           Q(mfg_year__contains=data.mfg_year) &
-                                           Q(addon__contains=data.addon) &
-                                           Q(ncb__contains=data.ncb) &
-                                           Q(cubic_capacity__contains=data.cubic_capacity) &
-                                           Q(seating_capacity__contains=data.seating_capacity) &
-                                           Q(coverage_type__contains=data.coverage_type) &
-                                           Q(policy_type__contains=data.policy_type) &
-                                           Q(policy_term__contains=data.policy_term) &
-                                           Q(cpa__contains=data.cpa)
-                                           )
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(cubic_capacity=data.cubic_capacity) &
+                                            Q(seating_capacity=data.seating_capacity) &
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+               
                 print('payout data ', data1)
                 # Agent payout
                 agent_od_reward = data1.agent_od_reward
@@ -1254,22 +1420,30 @@ def apply_policy(request, id):
                     cap = 'ABOVE 18'
 
                 print('cap ', cap)
-                data1 = Payout.objects.get(Q(insurance_company__contains=data.insurance_company) &
-                                           Q(sp_name__contains=data.sp_name) &
-                                           Q(sp_brokercode__contains=data.sp_brokercode) &
-                                           Q(rto_city__contains=reg) &
-                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                           Q(vehicle_model__contains=data.vehicle_model) &
-                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                           Q(mfg_year__contains=data.mfg_year) &
-                                           Q(addon__contains=data.addon) &
-                                           Q(ncb__contains=data.ncb) &
-                                           Q(seating_capacity__contains=cap) &
-                                           Q(policy_type__contains=data.policy_type) &
-                                           Q(policy_term__contains=data.policy_term) &
-                                           Q(cpa__contains=data.cpa)
-                                           )
+               
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(cubic_capacity=data.cubic_capacity) &
+                                            Q(seating_capacity=cap) &
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+               
                 print('payout data ', data1)
                 # Agent payout
                 agent_od_reward = data1.agent_od_reward
@@ -1307,22 +1481,27 @@ def apply_policy(request, id):
         elif data.vehicle_catagory == 'MISC-D SPECIAL VEHICLE':
             try:
                 reg = data.registration_no[0:4]
-                data1 = Payout.objects.get(Q(insurance_company__contains=data.insurance_company) &
-                                           Q(sp_name__contains=data.sp_name) &
-                                           Q(sp_brokercode__contains=data.sp_brokercode) &
-                                           Q(rto_city__contains=reg) &
-                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                           Q(vehicle_model__contains=data.vehicle_model) &
-                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                           Q(mfg_year__contains=data.mfg_year) &
-                                           Q(addon__contains=data.addon) &
-                                           Q(ncb__contains=data.ncb) &
-                                           Q(coverage_type__contains=data.coverage_type) &
-                                           Q(policy_type__contains=data.policy_type) &
-                                           Q(policy_term__contains=data.policy_term) &
-                                           Q(cpa__contains=data.cpa)
-                                           )
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+               
                 print('payout data ', data1)
                 # Agent payout
                 agent_od_reward = data1.agent_od_reward
@@ -1360,22 +1539,28 @@ def apply_policy(request, id):
         elif data.vehicle_catagory == 'SCHOOL BUS-SCHOOL NAME':
             try:
                 reg = data.registration_no[0:4]
-                data1 = Payout.objects.get(Q(insurance_company__contains=data.insurance_company) &
-                                           Q(sp_name__contains=data.sp_name) &
-                                           Q(sp_brokercode__contains=data.sp_brokercode) &
-                                           Q(rto_city__contains=reg) &
-                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                           Q(vehicle_model__contains=data.vehicle_model) &
-                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                           Q(mfg_year__contains=data.mfg_year) &
-                                           Q(addon__contains=data.addon) &
-                                           Q(ncb__contains=data.ncb) &
-                                           Q(coverage_type__contains=data.coverage_type) &
-                                           Q(policy_type__contains=data.policy_type) &
-                                           Q(policy_term__contains=data.policy_term) &
-                                           Q(cpa__contains=data.cpa)
-                                           )
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+               
+                
                 print('payout data ', data1)
                 # Agent payout
                 agent_od_reward = data1.agent_od_reward
@@ -1413,22 +1598,27 @@ def apply_policy(request, id):
         elif data.vehicle_catagory == 'SCHOOL BUS-INDIVIDUAL NAME':
             try:
                 reg = data.registration_no[0:4]
-                data1 = Payout.objects.get(Q(insurance_company__contains=data.insurance_company) &
-                                           Q(sp_name__contains=data.sp_name) &
-                                           Q(sp_brokercode__contains=data.sp_brokercode) &
-                                           Q(rto_city__contains=reg) &
-                                           Q(vehicle_makeby__contains=data.vehicle_makeby) &
-                                           Q(vehicle_model__contains=data.vehicle_model) &
-                                           Q(vehicle_catagory__contains=data.vehicle_catagory) &
-                                           Q(vehicle_fuel_type__contains=data.vehicle_fuel_type) &
-                                           Q(mfg_year__contains=data.mfg_year) &
-                                           Q(addon__contains=data.addon) &
-                                           Q(ncb__contains=data.ncb) &
-                                           Q(coverage_type__contains=data.coverage_type) &
-                                           Q(policy_type__contains=data.policy_type) &
-                                           Q(policy_term__contains=data.policy_term) &
-                                           Q(cpa__contains=data.cpa)
-                                           )
+                data1 = Payout.objects.get(Q(insurance_company=data.insurance_company) &
+                                            Q(sp_name=data.sp_name) &
+                                            Q(sp_brokercode=data.sp_brokercode) &
+                                            
+                                            Q(vehicle_catagory=data.vehicle_catagory) & 
+                                            Q(vehicle_makeby=data.vehicle_makeby) &
+                                            Q(vehicle_model=data.vehicle_model) &
+                                            Q(vehicle_fuel_type=data.vehicle_fuel_type) &
+
+                                            Q(mfg_year__contains=data.mfg_year) &
+                                            Q(rto_city__icontains=reg) &
+                                            Q(addon__contains=data.addon) &
+                                            Q(ncb__contains=data.ncb)    &
+
+                                            Q(coverage_type=data.coverage_type) &
+
+                                            Q(policy_type=data.policy_type) &
+                                            Q(policy_term=data.policy_term) &
+
+                                            Q(cpa__contains=data.cpa))
+               
                 print('payout data ', data1)
                 # Agent payout
                 agent_od_reward = data1.agent_od_reward

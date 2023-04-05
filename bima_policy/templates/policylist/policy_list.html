@@ -186,7 +186,7 @@
                                              class="form-control" name="rto_city" style="text-transform: uppercase;"
                                              required>
                                        </div>
-                                       <!-- <div class="col-md-3 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label> Vehicle Make By <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_makeby" class="custom-select" required>
                                              <option value="">-- Select Make --</option>
@@ -194,14 +194,14 @@
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
-                                       </div> -->
-                                       <div class="col-md-3 mb-4">
+                                       </div>
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label for="vehicle_makeby">Vehicle Make <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text" value=""
                                              class="form-control" name="vehicle_makeby"
                                              style="text-transform: uppercase;" required>
-                                       </div>
-                                       <!-- <div class="col-md-3 mb-4">
+                                       </div> -->
+                                       <div class="col-md-3 mb-4">
                                           <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_model" class="custom-select" required>
                                              <option value="">-- Select Model --</option>
@@ -209,14 +209,14 @@
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
-                                       </div> -->
+                                       </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label for="vehicle_model">Vehicle Model <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text" value=""
                                              class="form-control" name="vehicle_model"
                                              style="text-transform: uppercase;" required>
-                                       </div>
+                                       </div> -->
 
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
@@ -570,40 +570,40 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="" class="form-control col-lg-6 maskNumField"
-                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
+                                       oninput="calculateValue()" value="" class="form-control col-lg-6 " 
+                                       name="od" id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="" class="form-control col-lg-6 maskNumField"
-                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
+                                       oninput="calculateValue()" value="" class="form-control col-lg-6 "
+                                       name="tpt" id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Net Premium</label><input type="text" name="net"
-                                       onclick="add()" value="" class="form-control col-lg-6 maskNumField bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
+                                       onclick="add()" value="" class="form-control col-lg-6  bg-light"
+                                       id="net"
                                        maxlength="10" readonly="" required>
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 maskNumField" data-parsley-pattern="^[0-9]+$"
+                                       class="form-control col-lg-6 " 
                                        name="gst" id="gst" maxlength="10" required oninput="calculateValue()">
                                  </div>
 
                                  <div class="row mb-2" id="gsttDiv" hidden>
                                     <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt" maxlength="10"
+                                       class="form-control col-lg-6 " 
+                                       name="gstt" id="gstt" maxlength="10"
                                        oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"
-                                       data-parsley-pattern="^[0-9]+$" id="totalnet" readonly="" maxlength="10" required
+                                       onclick="addgst()" value="" class="form-control  col-lg-6 bg-light"
+                                       id="totalnet" readonly="" maxlength="10" required
                                        oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
@@ -1490,22 +1490,24 @@
    }
 
    function add() {
-      od = parseInt(document.getElementById("od").value);
-      tpt = parseInt(document.getElementById("tpt").value);
+      
+      od = parseFloat(document.getElementById("od").value);
+      tpt = parseFloat(document.getElementById("tpt").value);
 
-      gst = parseInt(document.getElementById("gst").value);
-      gstt = parseInt(document.getElementById("gstt").value);
+      gst = parseFloat(document.getElementById("gst").value);
+      gstt = parseFloat(document.getElementById("gstt").value);
 
       vc = document.getElementById('vehicle_catagory').value
 
       if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
-         document.getElementById("net").value = od + tpt;;
-         document.getElementById("gst").value = od * 18 / 100;
-         document.getElementById("gstt").value = tpt * 12 / 100;
+          
+         document.getElementById("net").value = ( od + tpt);
+         document.getElementById("gst").value = Number (od * 18 / 100).toFixed(2);
+         document.getElementById("gstt").value = Number(tpt * 12 / 100).toFixed(2);
       }
-      else {
-         document.getElementById("net").value = od + tpt;
-         document.getElementById("gst").value = (od + tpt) * 18 / 100;
+      else {         
+         document.getElementById("net").value = (od + tpt);
+         document.getElementById("gst").value = Number((od + tpt) * 18 / 100).toFixed(2); 
 
       }
 
@@ -1513,35 +1515,35 @@
 
    function addgst() {
       var numOne, numTwo, sum;
-      net = parseInt(document.getElementById("net").value);
-      gst = parseInt(document.getElementById("gst").value);
-      gstt = parseInt(document.getElementById("gstt").value);
+      net = parseFloat(document.getElementById("net").value);
+      gst = parseFloat(document.getElementById("gst").value);
+      gstt = parseFloat(document.getElementById("gstt").value);
       // 3 WHEELER GCV-PUBLIC CARRIER
       vc = document.getElementById('vehicle_catagory').value
       if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
-         document.getElementById("totalnet").value = net + gst + gstt;
+         document.getElementById("totalnet").value = (net + gst + gstt);
       }
       else {
-         document.getElementById("totalnet").value = net + gst;
+         document.getElementById("totalnet").value = (net + gst);
       }
    }
 
 
    function add_non_motor() {
-      od = parseInt(document.getElementById("od").value);
-      tpt = parseInt(document.getElementById("tpt").value);
+      od =  parseFloat(document.getElementById("od").value);
+      tpt = parseFloat(document.getElementById("tpt").value);
 
-      gst = parseInt(document.getElementById("gst").value);
+      gst = parseFloat(document.getElementById("gst").value);
 
-      document.getElementById("net").value = od + tpt;
+      document.getElementById("net").value = Math.round( od + tpt);
       document.getElementById("gst").value = (od + tpt) * 18 / 100;
 
    }
 
    function addgst_non_motor() {
       var numOne, numTwo, sum;
-      net = parseInt(document.getElementById("net").value);
-      gst = parseInt(document.getElementById("gst").value);
+      net = parseFloat(document.getElementById("net").value);
+      gst = parseFloat(document.getElementById("gst").value);
       document.getElementById("totalnet").value = net + gst;
    }
 
