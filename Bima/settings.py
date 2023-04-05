@@ -91,14 +91,13 @@ DATABASES = {
         'default': {
             'ENGINE': 'djongo',
             'NAME': 'ExperiyaBook',
-            # 'CLIENT': {
-            #     'host': 'mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority',
-            #     'username': 'bhavi',
-            #     'password': 'Rqw7dAxrzY3UUj1S',
-            # }  
+            'CLIENT': {
+                'host': 'mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority',
+                'username': 'bhavi',
+                'password': 'Rqw7dAxrzY3UUj1S',
+            }  
         }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

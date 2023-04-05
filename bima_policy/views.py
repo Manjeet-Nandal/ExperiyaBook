@@ -14,7 +14,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.views import View
 
-from Bima.settings import MEDIA_ROOT
+from Bima.settings import MEDIA_ROOT, STATIC_URL, STATICFILES_DIRS
 from .models import *
 from .forms import *
 from django.db.models import Q
@@ -459,11 +459,12 @@ def write_data():
         print(i)
     return;
 
-
-def write_data1():
+def get_vehicle_data():
     # Connect to MongoDB
     xw.App(visible=False)
-    ws = xw.Book("C:\\Users\\Manjeet Nandal\\OneDrive\\Desktop\\vhdata.xlsx").sheets['data']
+    # filepath = os.path.join(STATICFILES_DIRS,  'vhdata.xlsx')
+    # ws = xw.Book("C:\\Users\\Manjeet Nandal\\OneDrive\\Desktop\\vhdata.xlsx").sheets['data']
+    ws = xw.Book('bima_policy//static//vhdata.xlsx').sheets['data']
        
     makes = ws.range("A1:A1675").value   
     models = ws.range("B1:B9762").value   
@@ -491,7 +492,7 @@ class create_policy(View ):
         data_bqp = BQP.objects.filter(profile_id=pid)      
                         
 
-        return render(request, 'policylist/policy_list.html', { "context":write_data1(), 'is_motor_form': True, 'user_id':get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc,  'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', { "context":get_vehicle_data(), 'is_motor_form': True, 'user_id':get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc,  'data_bqp': data_bqp})
 
     def post(self, request):
         try:
@@ -579,7 +580,7 @@ class create_policy(View ):
             if inspection_report is not None:
                 fsis.save(inspection_report.name, inspection_report)
                         
-            print(vehicle_catagory)
+            print(vehicle_makeby)
 
             if vehicle_catagory == 'TWO WHEELER':
                 try:
@@ -923,7 +924,7 @@ class create_policy(View ):
                                         policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
                                         )
 
-            print(data)
+            # print(data)
             return render(request, 'policylist/list_apply_payout.html', {'data':data,'policyid':pol.policyid})
         except Exception as ex:
             print('ex ', ex)
