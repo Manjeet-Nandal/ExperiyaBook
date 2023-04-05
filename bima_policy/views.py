@@ -14,7 +14,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.views import View
 
-from Bima.settings import MEDIA_ROOT, STATIC_URL, STATICFILES_DIRS
+from Bima.settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL, STATICFILES_DIRS
 from .models import *
 from .forms import *
 from django.db.models import Q
@@ -423,8 +423,6 @@ import boto3
 from django.http import HttpResponse
 
 import boto3
-
-import boto3
 from django.shortcuts import render
 
 import boto3
@@ -434,30 +432,6 @@ import pymongo
 import pandas as pd
 
 import xlwings as xw
-
-def write_data():
-    # Connect to MongoDB
-    ws = xw.Book("C:\\Users\\Manjeet Nandal\\OneDrive\\Desktop\\vhdata.xlsx").sheets['data']
-   
-    
-
-    # makes = ws.range("A1:A1675").value   
-    # models = ws.range("B1:B9762").value   
-
-    makes = ws.range("A1:A10").value   
-    models = ws.range("B1:B9762").value   
-
-    context = {
-        "makes": makes,
-        "models": models
-    }
-    ws.quit()
-    # print("Result:", context) 
-    return makes
-
-    for i in makes:
-        print(i)
-    return;
 
 def get_vehicle_data():
     # Connect to MongoDB
@@ -475,6 +449,7 @@ def get_vehicle_data():
     }   
     
     return context
+
 
 class create_policy(View ):  
 
