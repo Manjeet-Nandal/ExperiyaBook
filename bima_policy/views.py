@@ -428,8 +428,8 @@ from django.shortcuts import render
 import boto3
 
 
-import pymongo
-import pandas as pd
+# import pymongo
+# import pandas as pd
 
 import xlwings as xw
 
