@@ -1,4 +1,5 @@
 import json
+import os
 from dateutil import parser
 from django.utils import timezone
 from datetime import datetime, timedelta
@@ -429,12 +430,56 @@ from django.shortcuts import render
 import boto3
 
 
+import pymongo
+import pandas as pd
 
-class create_policy(View ):
+import xlwings as xw
+
+def write_data():
+    # Connect to MongoDB
+    ws = xw.Book("C:\\Users\\Manjeet Nandal\\OneDrive\\Desktop\\vhdata.xlsx").sheets['data']
+   
     
-    def get(self, request):
-        print('create_policy get method')       
+
+    # makes = ws.range("A1:A1675").value   
+    # models = ws.range("B1:B9762").value   
+
+    makes = ws.range("A1:A10").value   
+    models = ws.range("B1:B9762").value   
+
+    context = {
+        "makes": makes,
+        "models": models
+    }
+    ws.quit()
+    # print("Result:", context) 
+    return makes
+
+    for i in makes:
+        print(i)
+    return;
+
+
+def write_data1():
+    # Connect to MongoDB
+    xw.App(visible=False)
+    ws = xw.Book("C:\\Users\\Manjeet Nandal\\OneDrive\\Desktop\\vhdata.xlsx").sheets['data']
        
+    makes = ws.range("A1:A1675").value   
+    models = ws.range("B1:B9762").value   
+   
+    context = {
+        "makes": makes,
+        "models": models
+    }   
+    
+    return context
+
+class create_policy(View ):  
+
+    def get(self, request):
+        print('create_policy get method')   
+               
         pid = get_profile_id(get_id_from_session(request))
         data_ag = json.dumps(list(Agents.objects.filter(profile_id=pid).values()))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
@@ -443,11 +488,10 @@ class create_policy(View ):
         data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
         data_vm = VehicleModelName.objects.filter(profile_id=pid)
         data_vc = VehicleCategory.objects.filter(profile_id=pid)
-        data_bqp = BQP.objects.filter(profile_id=pid)
-        
-        # print(datag)        
-        
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': True, 'user_id':get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc,  'data_bqp': data_bqp})
+        data_bqp = BQP.objects.filter(profile_id=pid)      
+                        
+
+        return render(request, 'policylist/policy_list.html', { "context":write_data1(), 'is_motor_form': True, 'user_id':get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc,  'data_bqp': data_bqp})
 
     def post(self, request):
         try:

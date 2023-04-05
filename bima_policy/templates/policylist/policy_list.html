@@ -115,11 +115,11 @@
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
                                              <option value=""> -- Select Office Code -- </option>
-                                            {%for value in data_bc%}
-                                          <option value="{{value}}">{{value}}</option>
-                                          {%endfor%}
+                                             {%for value in data_bc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
-                                        
+
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="registration_no">Registration No. <abbr title=""
@@ -186,37 +186,24 @@
                                              class="form-control" name="rto_city" style="text-transform: uppercase;"
                                              required>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label> Vehicle Make By <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="vehicle_makeby" class="custom-select" required>
-                                             <option value="">-- Select Make --</option>
-                                             {%for value in data_vmb%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}
-                                          </select>
-                                       </div>
-                                       <!-- <div class="col-md-3 mb-4">
-                                          <label for="vehicle_makeby">Vehicle Make <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             class="form-control" name="vehicle_makeby"
-                                             style="text-transform: uppercase;" required>
-                                       </div> -->
-                                       <div class="col-md-3 mb-4">
-                                          <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="vehicle_model" class="custom-select" required>
-                                             <option value="">-- Select Model --</option>
-                                             {%for value in data_vm%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}
+
+                                       <div class="col-md-3 mb-4" onclick="addVehicleMakes()">
+                                          <label>Vehicle Make By <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="vehicle_makeby"
+                                             class="custom-select select2 select2-hidden-accessible" id="vehicle_makeby"
+                                             data-parsley-required="true" tabindex="-1" aria-hidden="true">
                                           </select>
                                        </div>
 
-                                       <!-- <div class="col-md-3 mb-4">
-                                          <label for="vehicle_model">Vehicle Model <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             class="form-control" name="vehicle_model"
-                                             style="text-transform: uppercase;" required>
-                                       </div> -->
+                                       <div class="col-md-3 mb-4" onclick="addVehicleModels()">
+                                          <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="vehicle_model"
+                                             class="custom-select select2 select2-hidden-accessible" id="vehicle_model"
+                                             data-parsley-required="true" tabindex="-1" aria-hidden="true">
+                                          </select>
+                                       </div>
+
+
 
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
@@ -415,7 +402,7 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos" type="text" value="" data-toggle="modal" 
+                                             id="pos" type="text" value="" data-toggle="modal"
                                              data-target="#mdlcolsetting" class="form-control" name="pos"
                                              style="text-transform: uppercase;" required readonly>
                                        </div>
@@ -468,9 +455,9 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value="{{user_id}}"
-                                             class="form-control" name="employee" style="text-transform: uppercase; "
-                                             required readonly >
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{user_id}}" class="form-control" name="employee"
+                                             style="text-transform: uppercase; " required readonly>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -570,41 +557,38 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="" class="form-control col-lg-6 " 
-                                       name="od" id="od" maxlength="10" required>
+                                       oninput="calculateValue()" value="" class="form-control col-lg-6 " name="od"
+                                       id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="" class="form-control col-lg-6 "
-                                       name="tpt" id="tpt" maxlength="10" required>
+                                       oninput="calculateValue()" value="" class="form-control col-lg-6 " name="tpt"
+                                       id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Net Premium</label><input type="text" name="net"
-                                       onclick="add()" value="" class="form-control col-lg-6  bg-light"
-                                       id="net"
+                                       onclick="add()" value="" class="form-control col-lg-6  bg-light" id="net"
                                        maxlength="10" readonly="" required>
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 " 
-                                       name="gst" id="gst" maxlength="10" required oninput="calculateValue()">
+                                       class="form-control col-lg-6 " name="gst" id="gst" maxlength="10" required
+                                       oninput="calculateValue()">
                                  </div>
 
                                  <div class="row mb-2" id="gsttDiv" hidden>
                                     <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 " 
-                                       name="gstt" id="gstt" maxlength="10"
+                                       class="form-control col-lg-6 " name="gstt" id="gstt" maxlength="10"
                                        oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="" class="form-control  col-lg-6 bg-light"
-                                       id="totalnet" readonly="" maxlength="10" required
-                                       oninput="calculateValue()">
+                                       onclick="addgst()" value="" class="form-control  col-lg-6 bg-light" id="totalnet"
+                                       readonly="" maxlength="10" required oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
@@ -756,7 +740,7 @@
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
-                                        
+
                                        </div>
 
 
@@ -881,9 +865,9 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value="{{user_id}}"
-                                             class="form-control" name="employee" style="text-transform: uppercase;"
-                                             required readonly>
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{user_id}}" class="form-control" name="employee"
+                                             style="text-transform: uppercase;" required readonly>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -1490,7 +1474,7 @@
    }
 
    function add() {
-      
+
       od = parseFloat(document.getElementById("od").value);
       tpt = parseFloat(document.getElementById("tpt").value);
 
@@ -1500,14 +1484,14 @@
       vc = document.getElementById('vehicle_catagory').value
 
       if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
-          
-         document.getElementById("net").value = ( od + tpt);
-         document.getElementById("gst").value = Number (od * 18 / 100).toFixed(2);
+
+         document.getElementById("net").value = (od + tpt);
+         document.getElementById("gst").value = Number(od * 18 / 100).toFixed(2);
          document.getElementById("gstt").value = Number(tpt * 12 / 100).toFixed(2);
       }
-      else {         
+      else {
          document.getElementById("net").value = (od + tpt);
-         document.getElementById("gst").value = Number((od + tpt) * 18 / 100).toFixed(2); 
+         document.getElementById("gst").value = Number((od + tpt) * 18 / 100).toFixed(2);
 
       }
 
@@ -1530,12 +1514,12 @@
 
 
    function add_non_motor() {
-      od =  parseFloat(document.getElementById("od").value);
+      od = parseFloat(document.getElementById("od").value);
       tpt = parseFloat(document.getElementById("tpt").value);
 
       gst = parseFloat(document.getElementById("gst").value);
 
-      document.getElementById("net").value = Math.round( od + tpt);
+      document.getElementById("net").value = Math.round(od + tpt);
       document.getElementById("gst").value = (od + tpt) * 18 / 100;
 
    }
@@ -2123,8 +2107,43 @@
 
    }
 
-</script>
+   function addVehicleMakes() {
 
+      vm = document.getElementById('vehicle_makeby')
+      //   alert(vm.options.length)
+      if (vm.options.length > 0) return
+
+      "{{ context.makes |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            var newoption = document.createElement("option");
+            newoption.value = item.replace("'", "").replace("'", "")
+            newoption.innerHTML = item.replace("'", "").replace("'", "")
+            vm.options.add(newoption);
+         })
+   }
+
+   function addVehicleModels() {
+
+      vm = document.getElementById('vehicle_model')
+      // alert(vm.options.length)
+      if (vm.options.length > 0) return
+
+      "{{ context.models |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            var newoption = document.createElement("option");
+            newoption.value = item.replace("'", "").replace("'", "")
+            newoption.innerHTML = item.replace("'", "").replace("'", "")
+            vm.options.add(newoption);
+         })
+
+
+   }
+
+
+
+</script>
 
 </html>
 {%endblock%}
