@@ -423,17 +423,19 @@ def get_profile_id(id):
     return ProfileModel.objects.get(id=login_id).id
 
 
-def get_vehicle_data():    
-    with open('bima_policy//static//makes.txt', 'rb') as f:
-        data1 = f.readlines()
-    with open('bima_policy//static//vmname.txt', 'rb') as f:
-        data2 = f.readlines()
-
-    context = {
-        "makes": data1,
-        "models": data2
+def fetch_vehicle_data():    
+    # with open('bima_policy//static//vehicle data//vcat.txt', 'rb') as f:
+    #     vcat = f.readlines()
+    with open('bima_policy//static//vehicle data//vmake.txt', 'rb') as f:
+        vmake = f.readlines()
+    with open('bima_policy//static//vehicle data//vmodel.txt', 'rb') as f:
+        vmodel = f.readlines()
+    vdata = {
+        # "vcat": vcat,
+        "vmake": vmake,
+        "vmodel": vmodel
     }
-    return context
+    return vdata
 
 
 class create_policy(View):
@@ -442,17 +444,15 @@ class create_policy(View):
         print('create_policy get method')
 
         pid = get_profile_id(get_id_from_session(request))
-        data_ag = json.dumps(
-            list(Agents.objects.filter(profile_id=pid).values()))
+        data_ag = json.dumps( list(Agents.objects.filter(profile_id=pid).values()))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
         data_bc = BrokerCode.objects.filter(profile_id=pid)
         data_ins = InsuranceCompany.objects.filter(profile_id=pid)
-        data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
-        data_vm = VehicleModelName.objects.filter(profile_id=pid)
+       
         data_vc = VehicleCategory.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
 
-        return render(request, 'policylist/policy_list.html', {"context": get_vehicle_data(), 'is_motor_form': True, 'user_id': get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc,  'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', {"vdata": fetch_vehicle_data(), 'is_motor_form': True, 'user_id': get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc':data_vc, 'data_bqp': data_bqp})
 
     def post(self, request):
         try:

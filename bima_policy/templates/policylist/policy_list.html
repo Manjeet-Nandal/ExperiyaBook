@@ -50,26 +50,14 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Catagory <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_catagory" id="vehicle_catagory" class="custom-select "
-                                             required onchange="setCategoryOnChange()">
-                                             <option value=""> -- Select Category -- </option>
-                                             <!-- <option value="TWO WHEELER">TWO WHEELER</option>
-                                             <option value="PRIVATE CAR">PRIVATE CAR</option>
-                                             <option value="GCV-PUBLIC CARRIER OTHER THAN 3 W">GCV-PUBLIC CARRIER OTHER
-                                                THAN 3 W</option>
-                                             <option value="3 WHEELER PCV">3 WHEELER PCV</option>
-                                             <option value="3 WHEELER GCV-PUBLIC CARRIER">3 WHEELER GCV-PUBLIC CARRIER
-                                             </option>
-                                             <option value="TAXI 4 WHEELER">TAXI 4 WHEELER</option>
-                                             <option value="BUS AND OTHERS">BUS AND OTHERS</option>
-                                             <option value="MISC-D SPECIAL VEHICLE">MISC-D SPECIAL VEHICLE</option>
-                                             <option value="SCHOOL BUS-SCHOOL NAME">SCHOOL BUS-SCHOOL NAME</option>
-                                             <option value="SCHOOL BUS-INDIVIDUAL NAME">SCHOOL BUS-INDIVIDUAL NAME
-                                             </option> -->
-
-                                             {%for value in data_vc%}
+                                             required onclick="setCategoryOnChange()">
+                                             <option value="" hidden> -- Select Catagory -- </option>
+                                             {% for value in data_vc %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
+
                                           </select>
+
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -95,7 +83,7 @@
                                           <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="insurance_company" class="custom-select" id="insurance_company"
                                              required>
-                                             <option value=""> -- Select Insurer -- </option>
+                                             <option value="" hidden> -- Select Insurer -- </option>
                                              {%for value in data_ins%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -104,7 +92,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_name" class="custom-select" id="sp_name" required>
-                                             <option value=""> -- Select Provider -- </option>
+                                             <option value="" hidden> -- Select Provider -- </option>
                                              {%for value in data_sp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -114,7 +102,7 @@
                                           <label>Office Code <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
-                                             <option value=""> -- Select Office Code -- </option>
+                                             <option value="" hidden> -- Select Office Code -- </option>
                                              {%for value in data_bc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -138,7 +126,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>RTO State<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="rto_state" class="custom-select" id="rto_state" required>
-                                             <option value="">-- Select State --</option>
+                                             <option value="" hidden>-- Select State --</option>
                                              <option value="Andama And Nicobar Island">Andama And Nicobar Island
                                              </option>
                                              <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -187,28 +175,30 @@
                                              required>
                                        </div>
 
-                                       <div class="col-md-3 mb-4" onclick="addVehicleMakes()">
-                                          <label>Vehicle Make By <abbr title="" class="text-danger">*</abbr></label>
+                                       <div class="col-md-3 mb-4" ">
+                                          <label>Vehicle Make By <abbr title="" class=" text-danger">*</abbr></label>
                                           <select name="vehicle_makeby"
                                              class="custom-select select2 select2-hidden-accessible" id="vehicle_makeby"
-                                             data-parsley-required="true" tabindex="-1" aria-hidden="true" required>
+                                             aria-hidden="true" required>
+                                             <option value="" hidden>-- Select Make By --</option>
                                           </select>
+
                                        </div>
 
-                                       <div class="col-md-3 mb-4" onclick="addVehicleModels()">
+                                       <div class="col-md-3 mb-4">
                                           <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_model"
                                              class="custom-select select2 select2-hidden-accessible" id="vehicle_model"
-                                             data-parsley-required="true" tabindex="-1" aria-hidden="true" required>
+                                             aria-hidden="true" required>
+                                             <option value="" hidden>-- Select Make By --</option>
                                           </select>
                                        </div>
-
 
 
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_fuel_type" class="custom-select" required>
-                                             <option value="">-- Select Fuel Type --</option>
+                                             <option value="" hidden>-- Select Fuel Type --</option>
                                              <option value="PETROL">PETROL</option>
                                              <option value="DIESEL">DIESEL</option>
                                              <option value="CNG">CNG</option>
@@ -219,7 +209,7 @@
                                           <label for="mfg_year">Manufacture Year <abbr title=""
                                                 class="text-danger">*</abbr></label>
                                           <select name="mfg_year" class="custom-select" required>
-                                             <option value="">-- Select Year --</option>
+                                             <option value="" hidden>-- Select Year --</option>
                                              <option value="2025">2025</option>
                                              <option value="2024">2024</option>
                                              <option value="2023">2023</option>
@@ -250,7 +240,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Addon <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="addon" class="custom-select" required>
-                                             <option value="">-- Select Addon --</option>
+                                             <option value="" hidden>-- Select Addon --</option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                           </select>
@@ -258,7 +248,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>NCB <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="ncb" class="custom-select" required>
-                                             <option value="">-- Select NCB --</option>
+                                             <option value="" hidden>-- Select NCB --</option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                           </select>
@@ -267,14 +257,14 @@
                                           <label>Cubic Capacity<abbr class="text-danger">*</abbr></label>
                                           <select name="cubic_capacity" class="custom-select" id="cubic_capacity"
                                              required>
-                                             <option value=""> -- Select Capacity -- </option>
+                                             <option value="" hidden> -- Select Capacity -- </option>
                                           </select>
                                        </div>
 
                                        <div class="col-md-3 mb-4" id="gvwDiv">
                                           <label>GVW<abbr class="text-danger">*</abbr></label>
                                           <select name="gvw" class="custom-select" id="gvw" required>
-                                             <option value=""> -- Select GVW -- </option>
+                                             <option value="" hidden> -- Select GVW -- </option>
                                              <option value="BELOW 2000">BELOW 2000</option>
                                              <option value="2000-2500">2000-2500</option>
                                              <option value="2500-3500">2500-3500</option>
@@ -290,7 +280,7 @@
                                           <label>Seating Capacity<abbr class="text-danger">*</abbr></label>
                                           <select name="seating_capacity" type="input" class="custom-select"
                                              id="seating_capacity" required>
-                                             <option value=""> -- Select Seating Capacity -- </option>
+                                             <option value="" hidden> -- Select Seating Capacity -- </option>
                                              <option value="BELOW 5">BELOW 5</option>
                                              <option value="5-7">5-7</option>
                                              <option value="7-12">7-12</option>
@@ -298,6 +288,7 @@
                                              <option value="ABOVE 18">ABOVE 18</option>
                                           </select>
                                        </div>
+
 
                                        <div class="col-md-3 mb-4" id="seating_capacityDiv1" hidden>
                                           <label for="seating_capacity1">Seating Capacity <abbr
@@ -311,14 +302,14 @@
                                           <label>Coverage Type <abbr class="text-danger">*</abbr></label>
                                           <select name="coverage_type" id="coverage_type" class="custom-select"
                                              required>
-                                             <option value="">-- Select Coverage --</option>
-                                      
+                                             <option value="" hidden>-- Select Coverage --</option>
+
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="policy_type" id="policy_type" class="custom-select" required>
-                                             <option value="">-- Select Policy Type --</option>
+                                             <option value="" hidden>-- Select Policy Type --</option>
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
@@ -328,11 +319,12 @@
                                        <div class="col-md-3 mb-4">
                                           <label>CPA <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="cpa" class="custom-select" required>
-                                             <option value="">-- Select CPA --</option>
+                                             <option value="" hidden>-- Select CPA --</option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                           </select>
                                        </div>
+
 
 
                                        <div class="col-md-3 mb-4">
@@ -380,7 +372,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="policy_term" class="custom-select" required>
-                                             <option value="">-- Select Term --</option>
+                                             <option value="" hidden>-- Select Term --</option>
                                              <option value="1">1</option>
                                              <option value="2">2</option>
                                              <option value="3">3</option>
@@ -391,7 +383,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
-                                             <option value="">-- Select BQP --</option>
+                                             <option value="" hidden>-- Select BQP --</option>
                                              {%for value in data_bqp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -454,7 +446,8 @@
                                           <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{user_id}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase;  background-color: lightgray;" required readonly>
+                                             style="text-transform: uppercase;  background-color: lightgray;" required
+                                             readonly>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -591,9 +584,9 @@
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
                                        <option value="" hidden> -- Select Payment Mode -- </option>
-                                       <option value="ONLINE">ONLINE</option>                                    
+                                       <option value="ONLINE">ONLINE</option>
                                        <option value="CHEQUE"> CHEQUE</option>
-                                       <option value="CASH">CASH</option>    
+                                       <option value="CASH">CASH</option>
                                     </select>
                                  </div>
 
@@ -658,7 +651,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Product Name <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="product_name" id="product_name" class="custom-select " required>
-                                             <option value=""> -- Select Product -- </option>
+                                             <option value="" hidden> -- Select Product -- </option>
                                              <option value="FIRE">FIRE</option>
                                              <option value="MARINE CARGO">MARINE CARGO</option>
                                              <option value="MARINE HULL">MARINE HULL</option>
@@ -673,7 +666,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="policy_type" id="policy_type" class="custom-select" required>
-                                             <option value="">-- Select Case Type --</option>
+                                             <option value="" hidden>-- Select Case Type --</option>
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
@@ -705,7 +698,7 @@
                                           <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="insurance_company" class="custom-select" id="insurance_company"
                                              required>
-                                             <option value=""> -- Select Insurer -- </option>
+                                             <option value="" hidden> -- Select Insurer -- </option>
                                              {%for value in data_ins%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -714,17 +707,17 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_name" class="custom-select" id="sp_name" required>
-                                             <option value=""> -- Select Provider -- </option>        
+                                             <option value="" hidden> -- Select Provider -- </option>
                                              {%for value in data_sp%}
                                              <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}                                  
+                                             {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Office Code <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
-                                             <option value=""> -- Select Office Code -- </option>                                          
+                                             <option value="" hidden> -- Select Office Code -- </option>
                                              {%for value in data_bc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -772,7 +765,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="policy_term" class="custom-select" required>
-                                             <option value="">-- Select Term --</option>
+                                             <option value="" hidden>-- Select Term --</option>
                                              <option value="1">1</option>
                                              <option value="5">5</option>
                                              <option value="10">10</option>
@@ -782,7 +775,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
-                                             <option value="">-- Select BQP --</option>
+                                             <option value="" hidden>-- Select BQP --</option>
                                              {%for value in data_bqp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -843,7 +836,8 @@
                                           <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{user_id}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase; background-color: lightgray;" required readonly>
+                                             style="text-transform: uppercase; background-color: lightgray;" required
+                                             readonly>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -935,49 +929,48 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="" class="form-control col-lg-6 maskNumField"
-                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
+                                       oninput="calculateValue()" value="" class="form-control col-lg-6"
+                                       name="od" id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="" class="form-control col-lg-6 maskNumField"
-                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
+                                       oninput="calculateValue()" value="" class="form-control col-lg-6"
+                                       name="tpt" id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Net Premium</label><input type="text" name="net"
-                                       onclick="add()" value="" class="form-control col-lg-6 maskNumField bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
-                                       maxlength="10" readonly="" required>
+                                       onclick="add()" value="" class="form-control col-lg-6 bg-light"
+                                       id="net"  maxlength="10" readonly="" required>
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 maskNumField" data-parsley-pattern="^[0-9]+$"
+                                       class="form-control col-lg-6" 
                                        name="gst" id="gst" maxlength="10" required oninput="calculateValue()">
                                  </div>
 
                                  <div class="row mb-2" id="gsttDiv" hidden>
                                     <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt" maxlength="10"
-                                       oninput="calculateValue()">
+                                          class="form-control col-lg-6" 
+                                          name="gstt" id="gstt" maxlength="10"
+                                          oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="" class="form-control maskNumField col-lg-6 bg-light"
-                                       data-parsley-pattern="^[0-9]+$" id="totalnet" readonly="" maxlength="10" required
+                                       onclick="addgst()" value="" class="form-control col-lg-6 bg-light"
+                                       id="totalnet" readonly="" maxlength="10" required
                                        oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
                                        <option value="" hidden> -- Select Payment Mode -- </option>
-                                       <option value="ONLINE">ONLINE</option>                                    
+                                       <option value="ONLINE">ONLINE</option>
                                        <option value="CHEQUE"> CHEQUE</option>
-                                       <option value="CASH">CASH</option>    
+                                       <option value="CASH">CASH</option>
                                     </select>
                                  </div>
 
@@ -1435,6 +1428,7 @@
          } catch (error) { }
 
       }
+     
       else {
          try {
             add()
@@ -1501,7 +1495,7 @@
       var numOne, numTwo, sum;
       net = parseFloat(document.getElementById("net").value);
       gst = parseFloat(document.getElementById("gst").value);
-      document.getElementById("totalnet").value = net + gst;
+      document.getElementById("totalnet").value = Number( net + gst).toFixed(2);
    }
 
    function setCategoryOnChange() {
@@ -1977,6 +1971,7 @@
          document.getElementById('gstt').required = false
          document.getElementById('gstt').value = 0
 
+         console.log(document.getElementById('vehicle_catagory').value)
 
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('coverage_type').required = true
@@ -2037,6 +2032,9 @@
 
 </script>
 
+<body onload="initialConfig()">
+
+</body>
 <script>
 
    function searchPOS() {
@@ -2080,39 +2078,40 @@
 
    }
 
+   function initialConfig() {
+      addVehicleMakes()
+      addVehicleModels()
+
+   }
+
+
    function addVehicleMakes() {
-     
-      vmb = document.getElementById('vehicle_makeby')
-      //   alert(vm.options.length)
-      if (vmb.options.length > 0) return
 
-      "{{ context.makes |safe}}".replace('[', '').replace(']', '').split(',')
+      vmake = document.getElementById('vehicle_makeby')
+
+      "{{ vdata.vmake |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
-
 
             var newoption = document.createElement("option");
             newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
             newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
-            vmb.options.add(newoption);           
+            vmake.options.add(newoption);
+
          })
    }
 
    function addVehicleModels() {
 
-      vm = document.getElementById('vehicle_model')
-      //   alert(vm.options.length)
-      if (vm.options.length > 0) return
+      vmodel = document.getElementById('vehicle_model')
 
-      "{{ context.models |safe}}".replace('[', '').replace(']', '').split(',')
+      "{{ vdata.vmodel |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
-
 
             var newoption = document.createElement("option");
             newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
             newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
-            vm.options.add(newoption);
+            vmodel.options.add(newoption);
 
-            console.log(newoption.value);
          })
    }
 
