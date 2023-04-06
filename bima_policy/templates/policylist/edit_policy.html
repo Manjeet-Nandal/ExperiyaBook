@@ -52,21 +52,7 @@
                                           <select name="vehicle_catagory" id="vehicle_catagory" class="custom-select "
                                              required onchange="setCategoryOnChange()">
                                              <option value="{{data.vehicle_catagory}}"> {{data.vehicle_catagory}}
-                                             </option>
-                                             <!-- <option value="TWO WHEELER">TWO WHEELER</option>
-                                             <option value="PRIVATE CAR">PRIVATE CAR</option>
-                                             <option value="GCV-PUBLIC CARRIER OTHER THAN 3 W">GCV-PUBLIC CARRIER OTHER
-                                                THAN 3 W</option>
-                                             <option value="3 WHEELER PCV">3 WHEELER PCV</option>
-                                             <option value="3 WHEELER GCV-PUBLIC CARRIER">3 WHEELER GCV-PUBLIC CARRIER
-                                             </option>
-                                             <option value="TAXI 4 WHEELER">TAXI 4 WHEELER</option>
-                                             <option value="BUS AND OTHERS">BUS AND OTHERS</option>
-                                             <option value="MISC-D SPECIAL VEHICLE">MISC-D SPECIAL VEHICLE</option>
-                                             <option value="SCHOOL BUS-SCHOOL NAME">SCHOOL BUS-SCHOOL NAME</option>
-                                             <option value="SCHOOL BUS-INDIVIDUAL NAME">SCHOOL BUS-INDIVIDUAL NAME
-                                             </option> -->
-
+                                             </option>  
                                              {%for value in data_vc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -188,36 +174,25 @@
                                              value="{{data.rto_city}}" class="form-control" name="rto_city"
                                              style="text-transform: uppercase;" required>
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label> Vehicle Make By <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="vehicle_makeby" class="custom-select" required>
-                                             <option value="{{data.vehicle_makeby}}"> {{data.vehicle_makeby}} </option>
-                                             {%for value in data_vmb%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}
+                                       <div class="col-md-3 mb-4" ">
+                                          <label>Vehicle Make By <abbr title="" class=" text-danger">*</abbr></label>
+                                          <select name="vehicle_makeby"
+                                             class="custom-select select2 select2-hidden-accessible" id="vehicle_makeby"
+                                             aria-hidden="true" required>
+                                             <option value="{{data.vehicle_makeby}}" > {{data.vehicle_makeby}} </option>
                                           </select>
+
                                        </div>
-                                        <!-- <div class="col-md-3 mb-4">
-                                          <label for="vehicle_makeby">Vehicle Make <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value="{{data.vehicle_makeby}}"
-                                             class="form-control" name="vehicle_makeby"
-                                             style="text-transform: uppercase;" required>
-                                       </div> -->
+                                      
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="vehicle_model" class="custom-select" required>
-                                             <option value="{{data.vehicle_model}}"> {{data.vehicle_model}} </option>
-                                             {%for value in data_vm%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}
+                                          <select name="vehicle_model"
+                                             class="custom-select select2 select2-hidden-accessible" id="vehicle_model"
+                                             aria-hidden="true" required>
+                                             <option value="{{data.vehicle_model}}" > {{data.vehicle_model}}</option>
                                           </select>
                                        </div>
-                                       <!-- <div class="col-md-3 mb-4">
-                                          <label for="vehicle_model">Vehicle Model <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value="{{data.vehicle_model}}"
-                                             class="form-control" name="vehicle_model"
-                                             style="text-transform: uppercase;" required>
-                                       </div> -->
+                                      
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_fuel_type" class="custom-select" required>
@@ -2064,9 +2039,49 @@
 </script>
 
 
-<body onload="setCategoryOnChange()">
+<body onload="initialConfig()">
 
 </body> 
+
+<script>
+   function initialConfig() {
+      addVehicleMakes()
+      addVehicleModels()
+   }
+
+   
+function addVehicleMakes() {
+
+vmake = document.getElementById('vehicle_makeby')
+
+"{{ vdata.vmake |safe}}".replace('[', '').replace(']', '').split(',')
+   .forEach(item => {
+
+      var newoption = document.createElement("option");
+      newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
+      newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
+      vmake.options.add(newoption);
+
+   })
+}
+
+function addVehicleModels() {
+
+vmodel = document.getElementById('vehicle_model')
+
+"{{ vdata.vmodel |safe}}".replace('[', '').replace(']', '').split(',')
+   .forEach(item => {
+
+      var newoption = document.createElement("option");
+      newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
+      newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
+      vmodel.options.add(newoption);
+
+   })
+}
+
+
+</script>
 
 </html>
 {%endblock content%}

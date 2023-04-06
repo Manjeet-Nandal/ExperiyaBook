@@ -1906,10 +1906,8 @@ def policy_entrydata(request, id):
         print('get entrydata', id)
         print(is_user(request))
 
-
         pid = get_profile_id(get_id_from_session(request))
-        data_ag = json.dumps(
-            list(Agents.objects.filter(profile_id=pid).values()))
+        data_ag = json.dumps(list(Agents.objects.filter(profile_id=pid).values()))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
         data_bc = BrokerCode.objects.filter(profile_id=pid)
         data_ins = InsuranceCompany.objects.filter(profile_id=pid)
@@ -1937,7 +1935,7 @@ def policy_entrydata(request, id):
             data.gvw = ''
             data.seating_capacity = ''
             data.coverage_type = ''
-        return render(request, 'policylist/edit_policy.html', {'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_bqp': data_bqp})
+        return render(request, 'policylist/edit_policy.html', {"vdata": fetch_vehicle_data(), 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_bqp': data_bqp})
 
 
 def edit_policy(request, id):
