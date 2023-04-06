@@ -423,7 +423,17 @@ def get_profile_id(id):
     return ProfileModel.objects.get(id=login_id).id
 
 
-def fetch_vehicle_data():    
+def get_user_name(request):
+    try:
+        name = ProfileModel.objects.filter(
+            id=get_id_from_session(request)).values()[0]['full_name']        
+    except Exception as ex: 
+        name = StaffModel.objects.filter(
+            login_id=get_id_from_session(request)).values().first()['staffname']
+    return name
+
+
+def fetch_vehicle_data():
     # with open('bima_policy//static//vehicle data//vcat.txt', 'rb') as f:
     #     vcat = f.readlines()
     with open('bima_policy//static//vehicle data//vmake.txt', 'rb') as f:
@@ -444,15 +454,16 @@ class create_policy(View):
         print('create_policy get method')
 
         pid = get_profile_id(get_id_from_session(request))
-        data_ag = json.dumps( list(Agents.objects.filter(profile_id=pid).values()))
+        data_ag = json.dumps(
+            list(Agents.objects.filter(profile_id=pid).values()))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
         data_bc = BrokerCode.objects.filter(profile_id=pid)
         data_ins = InsuranceCompany.objects.filter(profile_id=pid)
-       
+
         data_vc = VehicleCategory.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
-
-        return render(request, 'policylist/policy_list.html', {"vdata": fetch_vehicle_data(), 'is_motor_form': True, 'user_id': get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc':data_vc, 'data_bqp': data_bqp})
+               
+        return render(request, 'policylist/policy_list.html', {"name": get_user_name(request), "vdata": fetch_vehicle_data(), 'is_motor_form': True, 'user_id': get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc, 'data_bqp': data_bqp})
 
     def post(self, request):
         try:
@@ -1803,7 +1814,7 @@ def policy_entrydata(request, id):
             coverage_type = ''
 
         policy_type = request.POST['policy_type']
-        
+
         try:
             cpa = request.POST['cpa']
         except:
@@ -1907,7 +1918,8 @@ def policy_entrydata(request, id):
         print(is_user(request))
 
         pid = get_profile_id(get_id_from_session(request))
-        data_ag = json.dumps(list(Agents.objects.filter(profile_id=pid).values()))
+        data_ag = json.dumps(
+            list(Agents.objects.filter(profile_id=pid).values()))
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
         data_bc = BrokerCode.objects.filter(profile_id=pid)
         data_ins = InsuranceCompany.objects.filter(profile_id=pid)
@@ -1917,7 +1929,7 @@ def policy_entrydata(request, id):
         data_bqp = BQP.objects.filter(profile_id=pid)
 
         data = Policy.objects.get(policyid=id)
-        
+
         is_motor_form = True
         if data.registration_no is '':
             is_motor_form = False
