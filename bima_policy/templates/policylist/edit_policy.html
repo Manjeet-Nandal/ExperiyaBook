@@ -107,11 +107,9 @@
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_name" class="custom-select" id="sp_name" required>
                                              <option value="{{data.sp_name}}"> {{data.sp_name}} </option>
-                                             <option value="DELHI">Delhi</option>
-                                             <option value="ROHTAK">Rohtak</option>
-                                             <option value="CHANDIGARH">Chandigarh</option>
-                                             <option value="GURGAON">Gurgaon</option>
-                                             <option value="LUCKHNOW">Luckhnow</option>
+                                             {%for value in data_sp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -119,13 +117,11 @@
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
                                              <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}} </option>
-                                             <option value="123">123</option>
-                                             <option value="1234">1234</option>
-                                             <option value="12345">12345</option>
+                                             {%for value in data_bc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
-                                          <!-- {%for value in data_ins%}
-                                          <option value="{{value}}">{{value}}</option>
-                                          {%endfor%} -->
+                                         
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="registration_no">Registration No. <abbr title=""
@@ -599,13 +595,10 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value="{{data.payment_mode}}"> {{data.payment_mode}} </option>
-                                       <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
-                                       <option value="SELF ONLINE">SELF ONLINE</option>
-                                       <option value="CASH">CASH</option>
-                                       <option value="CUT PAY">CUT PAY</option>
-                                       <option value="CUSTOMER CHEQUE">CUSTOMER CHEQUE</option>
-                                       <option value="SELF CHEQUE">SELF CHEQUE</option>
+                                       <option value="{{data.payment_mode}}" > {{data.payment_mode}} </option>
+                                       <option value="ONLINE">ONLINE</option>                                    
+                                       <option value="CHEQUE"> CHEQUE</option>
+                                       <option value="CASH">CASH</option>    
                                     </select>
                                  </div>
 
@@ -728,37 +721,21 @@
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_name" class="custom-select" id="sp_name" required>
                                              <option value="{{data.sp_name}}"> {{data.sp_name}} </option>
-                                             <option value="DELHI">Delhi</option>
-                                             <option value="ROHTAK">Rohtak</option>
-                                             <option value="CHANDIGARH">Chandigarh</option>
-                                             <option value="GURGAON">Gurgaon</option>
-                                             <option value="LUCKHNOW">Luckhnow</option>
+                                             {%for value in data_sp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Office Code <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
-                                             <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}} </option>
-                                             <option value="123">123</option>
-                                             <option value="1234">1234</option>
-                                             <option value="12345">12345</option>
-                                          </select>
-                                          <!-- {%for value in data_ins%}
-                                          <option value="{{value}}">{{value}}</option>
-                                          {%endfor%} -->
+                                             <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}} </option>                                             
+                                             {%for value in data_bc%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>                                    
                                        </div>
-
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>CPA <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="cpa" class="custom-select" required>
-                                             <option value="{{data.cpa}}"> {{data.cpa}} </option>
-                                             <option value="YES">YES</option>
-                                             <option value="NO">NO</option>
-                                          </select>
-                                       </div>
-
 
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
@@ -978,12 +955,9 @@
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
                                        <option value="{{data.payment_mode}}"> {{data.payment_mode}} </option>
-                                       <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
-                                       <option value="SELF ONLINE">SELF ONLINE</option>
-                                       <option value="CASH">CASH</option>
-                                       <option value="CUT PAY">CUT PAY</option>
-                                       <option value="CUSTOMER CHEQUE">CUSTOMER CHEQUE</option>
-                                       <option value="SELF CHEQUE">SELF CHEQUE</option>
+                                       <option value="ONLINE">ONLINE</option>                                    
+                                       <option value="CHEQUE"> CHEQUE</option>
+                                       <option value="CASH">CASH</option>    
                                     </select>
                                  </div>
 

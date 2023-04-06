@@ -907,7 +907,6 @@ class create_policy_non_motor(View):
         insurance_company = request.POST['insurance_company']
         sp_name = request.POST['sp_name']
         sp_brokercode = request.POST['sp_brokercode']
-        cpa = request.POST['cpa']
 
         risk_start_date = request.POST['risk_start_date']
         risk_end_date = request.POST['risk_end_date']
@@ -958,7 +957,7 @@ class create_policy_non_motor(View):
         data = Policy.objects.create(profile_id=profile_id, product_name=product_name, policy_type=policy_type,
                                      proposal_no=proposal_no, policy_no=policy_no, customer_name=customer_name,
                                      insurance_company=insurance_company, sp_name=sp_name,  sp_brokercode=sp_brokercode,
-                                     cpa=cpa, risk_start_date=risk_start_date,
+                                     risk_start_date=risk_start_date,
                                      risk_end_date=risk_end_date, issue_date=issue_date,
                                      policy_term=policy_term,  bqp=bqp, pos=pos,
                                      employee=employee, proposal=proposal, mandate=mandate,
@@ -1804,7 +1803,11 @@ def policy_entrydata(request, id):
             coverage_type = ''
 
         policy_type = request.POST['policy_type']
-        cpa = request.POST['cpa']
+        
+        try:
+            cpa = request.POST['cpa']
+        except:
+            cpa = ''
         # risk_start_date = request.POST['risk_start_date']
         # risk_end_date = request.POST['risk_end_date']
         # issue_date = request.POST['issue_date']
@@ -1903,22 +1906,20 @@ def policy_entrydata(request, id):
         print('get entrydata', id)
         print(is_user(request))
 
-        data = Policy.objects.get(policyid=id)
-        data_sp = ServiceProvider.objects.filter(
-            profile_id=get_id_from_session(request))
 
-        data_ins = InsuranceCompany.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vmb = VehicleMakeBy.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vm = VehicleModelName.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vc = VehicleCategory.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_ct = CoverageType.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_bqp = BQP.objects.filter(
-            profile_id=get_id_from_session(request))
+        pid = get_profile_id(get_id_from_session(request))
+        data_ag = json.dumps(
+            list(Agents.objects.filter(profile_id=pid).values()))
+        data_sp = ServiceProvider.objects.filter(profile_id=pid)
+        data_bc = BrokerCode.objects.filter(profile_id=pid)
+        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
+        data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
+        data_vm = VehicleModelName.objects.filter(profile_id=pid)
+        data_vc = VehicleCategory.objects.filter(profile_id=pid)
+        data_bqp = BQP.objects.filter(profile_id=pid)
+
+        data = Policy.objects.get(policyid=id)
+        
         is_motor_form = True
         if data.registration_no is '':
             is_motor_form = False
@@ -1936,7 +1937,7 @@ def policy_entrydata(request, id):
             data.gvw = ''
             data.seating_capacity = ''
             data.coverage_type = ''
-        return render(request, 'policylist/edit_policy.html', {'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct, 'data_bqp': data_bqp})
+        return render(request, 'policylist/edit_policy.html', {'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_bqp': data_bqp})
 
 
 def edit_policy(request, id):

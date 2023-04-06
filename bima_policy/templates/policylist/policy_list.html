@@ -312,10 +312,7 @@
                                           <select name="coverage_type" id="coverage_type" class="custom-select"
                                              required>
                                              <option value="">-- Select Coverage --</option>
-                                             <option value="NA"> NA </option>
-                                             <!-- {% for value in data_ct%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {% endfor%} -->
+                                      
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -457,7 +454,7 @@
                                           <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{user_id}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase; " required readonly>
+                                             style="text-transform: uppercase;  background-color: lightgray;" required readonly>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -593,13 +590,10 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value=""> -- Select Payment Mode -- </option>
-                                       <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
-                                       <option value="SELF ONLINE">SELF ONLINE</option>
-                                       <option value="CASH">CASH</option>
-                                       <option value="CUT PAY">CUT PAY</option>
-                                       <option value="CUSTOMER CHEQUE">CUSTOMER CHEQUE</option>
-                                       <option value="SELF CHEQUE">SELF CHEQUE</option>
+                                       <option value="" hidden> -- Select Payment Mode -- </option>
+                                       <option value="ONLINE">ONLINE</option>                                    
+                                       <option value="CHEQUE"> CHEQUE</option>
+                                       <option value="CASH">CASH</option>    
                                     </select>
                                  </div>
 
@@ -720,39 +714,23 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_name" class="custom-select" id="sp_name" required>
-                                             <option value=""> -- Select Provider -- </option>
-                                             <option value="DELHI">Delhi</option>
-                                             <option value="ROHTAK">Rohtak</option>
-                                             <option value="CHANDIGARH">Chandigarh</option>
-                                             <option value="GURGAON">Gurgaon</option>
-                                             <option value="LUCKHNOW">Luckhnow</option>
+                                             <option value=""> -- Select Provider -- </option>        
+                                             {%for value in data_sp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}                                  
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Office Code <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
-                                             <option value=""> -- Select Office Code -- </option>
-                                             <!-- <option value="123">123</option>
-                                             <option value="1234">1234</option>
-                                             <option value="12345">12345</option> -->
+                                             <option value=""> -- Select Office Code -- </option>                                          
                                              {%for value in data_bc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
 
                                        </div>
-
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>CPA <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="cpa" class="custom-select" required>
-                                             <option value="">-- Select CPA --</option>
-                                             <option value="YES">YES</option>
-                                             <option value="NO">NO</option>
-                                          </select>
-                                       </div>
-
 
                                        <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk Start Date <abbr title=""
@@ -861,13 +839,11 @@
 
                                        </div>
 
-
-
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{user_id}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase;" required readonly>
+                                             style="text-transform: uppercase; background-color: lightgray;" required readonly>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -998,13 +974,10 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value=""> -- Select Payment Mode -- </option>
-                                       <option value="CUSTOMER ONLINE">CUSTOMER ONLINE</option>
-                                       <option value="SELF ONLINE">SELF ONLINE</option>
-                                       <option value="CASH">CASH</option>
-                                       <option value="CUT PAY">CUT PAY</option>
-                                       <option value="CUSTOMER CHEQUE">CUSTOMER CHEQUE</option>
-                                       <option value="SELF CHEQUE">SELF CHEQUE</option>
+                                       <option value="" hidden> -- Select Payment Mode -- </option>
+                                       <option value="ONLINE">ONLINE</option>                                    
+                                       <option value="CHEQUE"> CHEQUE</option>
+                                       <option value="CASH">CASH</option>    
                                     </select>
                                  </div>
 
