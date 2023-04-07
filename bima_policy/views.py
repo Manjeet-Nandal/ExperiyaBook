@@ -448,6 +448,7 @@ def fetch_vehicle_data():
     return vdata
 
 
+
 class create_policy(View):
 
     def get(self, request):
@@ -1660,7 +1661,8 @@ def apply_policy(request, id):
         print(ex)
         return HttpResponse(ex)
 
-
+from django.views.decorators.cache import cache_page
+@cache_page(3600)
 def policy_entry(request):
     print('policy_entry method')
     print(get_id_from_session(request))
