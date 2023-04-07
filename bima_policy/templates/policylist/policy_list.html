@@ -397,22 +397,35 @@
                                        </div>
 
 
-                                       <div class="modal fade" id="mdlcolsetting" data-backdrop="static"
-                                          data-keyboard="false" style="height: 400px" tabindex="-1" role="dialog"
-                                          aria-labelledby="rtoModalLabel" aria-hidden="true">
-                                          <div class="modal-dialog" role="document">
+                                       <div class="modal fade" id="mdlcolsetting"  
+                                       onmouseenter="document.getElementById('inp_search').focus()"
+                                           style="height: 400px"     >
+                                         
+                                          <div class="modal-dialog" role="document" >                                            
+
                                              <div class="modal-content">
                                                 <div class="modal-header">
                                                    <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
                                                 </div>
                                                 <div class="modal-body ">
                                                    <div class="form-row">
-                                                      <div class="col-md-6 mb-4">
-                                                         <div class=""><label>Search:<input id="inp_search" type="text"
+                                                      <div class="col-md-6 mb-4"  >
+                                                         <div class=""><label>Search:<input id="inp_search" type="text" 
                                                                   value="" class="form-control" name="agent"
                                                                   style="text-transform: uppercase;" required
                                                                   title="Search POS using Name, mobile no, email, pan/aadhar number"
-                                                                  oninput="searchPOS()">
+                                                                  oninput="searchPOS()"
+                                                                  onkeypress="handle(event)">
+
+                                                                  <script>
+                                                                     function handle(e){
+                                                                        if(e.keyCode === 13){
+                                                                              e.preventDefault(); // Ensure it is only this code that runs
+
+                                                                              $( "#btnExit" ).click();
+                                                                        }
+                                                                     }
+                                                                  </script>
                                                             </label></div>
                                                       </div>
                                                       <div class="col-md-6 mb-4">
@@ -426,7 +439,7 @@
                                                    </div>
 
                                                    <div class="modal-footer">
-                                                      <button type="button" class="btn btn-secondary w-100p"
+                                                      <button id="btnExit" type="button" class="btn btn-secondary w-100p"
                                                          data-dismiss="modal">Close</button>
                                                       <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
                                                             class="btn btn-primary w-100p">Save</button> -->
@@ -437,7 +450,10 @@
 
 
                                           </div>
-
+                                                   <!-- <body onload="setFocus()">
+                                                      
+                                                   </body> -->
+                                         
                                        </div>
 
 
@@ -2114,6 +2130,7 @@
          })
    }
 
+   
 </script>
 
 </html>

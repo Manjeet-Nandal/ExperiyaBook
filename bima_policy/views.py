@@ -550,9 +550,7 @@ class create_policy(View):
                 fsvc.save(vehicle_rc.name, vehicle_rc)
             if inspection_report is not None:
                 fsis.save(inspection_report.name, inspection_report)
-
-            print(vehicle_makeby)
-
+                        
             if vehicle_catagory == 'TWO WHEELER':
                 try:
                     reg = registration_no[0:4]
@@ -884,12 +882,11 @@ class create_policy(View):
                                         gst_gcv_amount=gst_gcv_amount,  total=total,
                                         policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
                                         )
-
-            # print(data)
+            
             return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policyid': pol.policyid})
         except Exception as ex:
             print('ex ', ex)
-            return HttpResponse("Error occurred! ", ex)
+            return HttpResponse("Error occurred! When Creating New Policy! Contact Your Admin", ex)
 
 
 class create_policy_non_motor(View):
