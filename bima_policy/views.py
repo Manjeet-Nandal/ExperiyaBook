@@ -550,7 +550,7 @@ class create_policy(View):
                 fsvc.save(vehicle_rc.name, vehicle_rc)
             if inspection_report is not None:
                 fsis.save(inspection_report.name, inspection_report)
-                        
+            
             if vehicle_catagory == 'TWO WHEELER':
                 try:
                     reg = registration_no[0:4]
@@ -883,7 +883,8 @@ class create_policy(View):
                                         policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
                                         )
             
-            return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policyid': pol.policyid})
+            return redirect('bima_policy:create_policy')            
+            # return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policyid': pol.policyid})
         except Exception as ex:
             print('ex ', ex)
             return HttpResponse("Error occurred! When Creating New Policy! Contact Your Admin", ex)
