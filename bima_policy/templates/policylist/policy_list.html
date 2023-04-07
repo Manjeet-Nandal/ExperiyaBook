@@ -50,14 +50,13 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Catagory <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_catagory" id="vehicle_catagory" class="custom-select "
-                                             required onclick="setCategoryOnChange()">
+                                             required onclick="setCategoryOnChange()" >
                                              <option value="" hidden> -- Select Catagory -- </option>
                                              {% for value in data_vc %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
 
                                           </select>
-
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -82,7 +81,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="insurance_company" class="custom-select" id="insurance_company"
-                                             required>
+                                             required  onclick="sortItems(this.id)" >
                                              <option value="" hidden> -- Select Insurer -- </option>
                                              {%for value in data_ins%}
                                              <option value="{{value}}">{{value}}</option>
@@ -91,7 +90,7 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="sp_name" class="custom-select" id="sp_name" required>
+                                          <select name="sp_name" class="custom-select" id="sp_name" required  onclick="sortItems(this.id)" >
                                              <option value="" hidden> -- Select Provider -- </option>
                                              {%for value in data_sp%}
                                              <option value="{{value}}">{{value}}</option>
@@ -197,7 +196,7 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="vehicle_fuel_type" class="custom-select" required>
+                                          <select name="vehicle_fuel_type" class="custom-select" required  onclick="sortItems(this.id)" >
                                              <option value="" hidden>-- Select Fuel Type --</option>
                                              <option value="PETROL">PETROL</option>
                                              <option value="DIESEL">DIESEL</option>
@@ -397,11 +396,11 @@
                                        </div>
 
 
-                                       <div class="modal fade" id="mdlcolsetting"  
-                                       onmouseenter="document.getElementById('inp_search').focus()"
-                                           style="height: 400px"     >
-                                         
-                                          <div class="modal-dialog" role="document" >                                            
+                                       <div class="modal fade" id="mdlcolsetting"
+                                          onmouseenter="document.getElementById('inp_search').focus()"
+                                          style="height: 400px">
+
+                                          <div class="modal-dialog" role="document">
 
                                              <div class="modal-content">
                                                 <div class="modal-header">
@@ -409,23 +408,22 @@
                                                 </div>
                                                 <div class="modal-body ">
                                                    <div class="form-row">
-                                                      <div class="col-md-6 mb-4"  >
-                                                         <div class=""><label>Search:<input id="inp_search" type="text" 
+                                                      <div class="col-md-6 mb-4">
+                                                         <div class=""><label>Search:<input id="inp_search" type="text"
                                                                   value="" class="form-control" name="agent"
                                                                   style="text-transform: uppercase;" required
                                                                   title="Search POS using Name, mobile no, email, pan/aadhar number"
-                                                                  oninput="searchPOS()"
-                                                                  onkeypress="handle(event)">
+                                                                  oninput="searchPOS()" onkeypress="handle(event)">
 
-                                                                  <script>
-                                                                     function handle(e){
-                                                                        if(e.keyCode === 13){
-                                                                              e.preventDefault(); // Ensure it is only this code that runs
+                                                               <script>
+                                                                  function handle(e) {
+                                                                     if (e.keyCode === 13) {
+                                                                        e.preventDefault(); // Ensure it is only this code that runs
 
-                                                                              $( "#btnExit" ).click();
-                                                                        }
+                                                                        $("#btnExit").click();
                                                                      }
-                                                                  </script>
+                                                                  }
+                                                               </script>
                                                             </label></div>
                                                       </div>
                                                       <div class="col-md-6 mb-4">
@@ -439,7 +437,8 @@
                                                    </div>
 
                                                    <div class="modal-footer">
-                                                      <button id="btnExit" type="button" class="btn btn-secondary w-100p"
+                                                      <button id="btnExit" type="button"
+                                                         class="btn btn-secondary w-100p"
                                                          data-dismiss="modal">Close</button>
                                                       <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
                                                             class="btn btn-primary w-100p">Save</button> -->
@@ -450,18 +449,18 @@
 
 
                                           </div>
-                                                   <!-- <body onload="setFocus()">
+                                          <!-- <body onload="setFocus()">
                                                       
                                                    </body> -->
-                                         
+
                                        </div>
 
 
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{name}}" class="form-control" name="employee"
+                                                class="text-danger">*</abbr></label><input type="text" value="{{name}}"
+                                             class="form-control" name="employee"
                                              style="text-transform: uppercase;  background-color: lightgray;" required
                                              readonly>
                                        </div>
@@ -945,40 +944,38 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="" class="form-control col-lg-6"
-                                       name="od" id="od" maxlength="10" required>
+                                       oninput="calculateValue()" value="" class="form-control col-lg-6" name="od"
+                                       id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="" class="form-control col-lg-6"
-                                       name="tpt" id="tpt" maxlength="10" required>
+                                       oninput="calculateValue()" value="" class="form-control col-lg-6" name="tpt"
+                                       id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Net Premium</label><input type="text" name="net"
-                                       onclick="add()" value="" class="form-control col-lg-6 bg-light"
-                                       id="net"  maxlength="10" readonly="" required>
+                                       onclick="add()" value="" class="form-control col-lg-6 bg-light" id="net"
+                                       maxlength="10" readonly="" required>
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6" 
-                                       name="gst" id="gst" maxlength="10" required oninput="calculateValue()">
+                                       class="form-control col-lg-6" name="gst" id="gst" maxlength="10" required
+                                       oninput="calculateValue()">
                                  </div>
 
                                  <div class="row mb-2" id="gsttDiv" hidden>
                                     <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text" value=""
-                                          class="form-control col-lg-6" 
-                                          name="gstt" id="gstt" maxlength="10"
-                                          oninput="calculateValue()">
+                                       class="form-control col-lg-6" name="gstt" id="gstt" maxlength="10"
+                                       oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="" class="form-control col-lg-6 bg-light"
-                                       id="totalnet" readonly="" maxlength="10" required
-                                       oninput="calculateValue()">
+                                       onclick="addgst()" value="" class="form-control col-lg-6 bg-light" id="totalnet"
+                                       readonly="" maxlength="10" required oninput="calculateValue()">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
@@ -1444,7 +1441,7 @@
          } catch (error) { }
 
       }
-     
+
       else {
          try {
             add()
@@ -1511,10 +1508,11 @@
       var numOne, numTwo, sum;
       net = parseFloat(document.getElementById("net").value);
       gst = parseFloat(document.getElementById("gst").value);
-      document.getElementById("totalnet").value = Number( net + gst).toFixed(2);
+      document.getElementById("totalnet").value = Number(net + gst).toFixed(2);
    }
 
    function setCategoryOnChange() {
+      sortItems("vehicle_catagory")
       value = document.getElementById('vehicle_catagory').value
       value2 = document.getElementById('vehicle_catagory').value
 
@@ -1524,7 +1522,7 @@
       gvwDiv = document.getElementById('gvwDiv')
       gsttDiv = document.getElementById('gsttDiv')
 
-      if (value == 'TWO WHEELER' || value == 'TWO WHEELER COMMERCIAL') {
+      if (value == 'TWO WHEELER' || value == 'TWO WHEELER COMMERCIAL'  || value == 'TWO WHEELER SCOOTER') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
@@ -2129,8 +2127,12 @@
 
          })
    }
+   function sortItems(id) {
+      $("#"+id).html($("#" + id + " option").sort(function (a, b) {
+         return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+      }))
+   }
 
-   
 </script>
 
 </html>

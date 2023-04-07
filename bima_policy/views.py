@@ -426,8 +426,8 @@ def get_profile_id(id):
 def get_user_name(request):
     try:
         name = ProfileModel.objects.filter(
-            id=get_id_from_session(request)).values()[0]['full_name']        
-    except Exception as ex: 
+            id=get_id_from_session(request)).values()[0]['full_name']
+    except Exception as ex:
         name = StaffModel.objects.filter(
             login_id=get_id_from_session(request)).values().first()['staffname']
     return name
@@ -462,7 +462,7 @@ class create_policy(View):
 
         data_vc = VehicleCategory.objects.filter(profile_id=pid)
         data_bqp = BQP.objects.filter(profile_id=pid)
-               
+
         return render(request, 'policylist/policy_list.html', {"name": get_user_name(request), "vdata": fetch_vehicle_data(), 'is_motor_form': True, 'user_id': get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc, 'data_bqp': data_bqp})
 
     def post(self, request):
@@ -550,7 +550,7 @@ class create_policy(View):
                 fsvc.save(vehicle_rc.name, vehicle_rc)
             if inspection_report is not None:
                 fsis.save(inspection_report.name, inspection_report)
-            
+
             if vehicle_catagory == 'TWO WHEELER':
                 try:
                     reg = registration_no[0:4]
@@ -882,8 +882,8 @@ class create_policy(View):
                                         gst_gcv_amount=gst_gcv_amount,  total=total,
                                         policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
                                         )
-            
-            return redirect('bima_policy:create_policy')            
+
+            return redirect('bima_policy:create_policy')
             # return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policyid': pol.policyid})
         except Exception as ex:
             print('ex ', ex)
@@ -1663,15 +1663,18 @@ def apply_policy(request, id):
 
 def policy_entry(request):
     print('policy_entry method')
+    print(get_id_from_session(request))
+    
+    # data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
+    #     request))).order_by('-policyid').filter(Q(issue_date=datetime.now().date())).values()
 
-    data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
-        request))).order_by('-policyid').filter(Q(issue_date=datetime.now().date())).values()
-
-    datag = Agents.objects.filter(
-        profile_id=get_profile_id(get_id_from_session(request)))
-
-    paginator = Paginator(data, per_page=25)
     try:
+        data = Policy.objects.filter().order_by('-policyid').values()
+        datag = Agents.objects.filter(
+            profile_id=get_profile_id(get_id_from_session(request)))
+
+        paginator = Paginator(data, per_page=25)
+
         data = paginator.get_page(request.GET.get('page'))
         return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
