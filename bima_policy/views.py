@@ -448,7 +448,6 @@ def fetch_vehicle_data():
     return vdata
 
 
-
 class create_policy(View):
 
     def get(self, request):
@@ -473,18 +472,17 @@ class create_policy(View):
             profile_id = ProfileModel.objects.get(
                 id=get_profile_id(get_id_from_session(request)))
 
-            proposal_no = request.POST['proposal_no']
-            policy_no = request.POST['policy_no']
-            customer_name = request.POST['customer_name']
+            proposal_no = str.strip(request.POST['proposal_no'])
+            policy_no = str.strip(request.POST['policy_no'])
+            customer_name = str.strip(request.POST['customer_name'])
             insurance_company = request.POST['insurance_company']
             sp_name = request.POST['sp_name']
             sp_brokercode = request.POST['sp_brokercode']
-
-            registration_no = request.POST['registration_no']
+            registration_no = str.strip(request.POST['registration_no'])
             rto_state = request.POST['rto_state']
-            rto_city = request.POST['rto_city']
-            vehicle_makeby = request.POST['vehicle_makeby']
-            vehicle_model = request.POST['vehicle_model']
+            rto_city = str.strip(request.POST['rto_city']     )     
+            vehicle_makeby = str.strip(request.POST['vehicle_makeby'])            
+            vehicle_model = str.strip(request.POST['vehicle_model'])
             vehicle_catagory = request.POST['vehicle_catagory']
             vehicle_fuel_type = request.POST['vehicle_fuel_type']
             mfg_year = request.POST['mfg_year']
@@ -507,8 +505,8 @@ class create_policy(View):
             bqp = request.POST['bqp']
             pos = request.POST['pos']
             employee = request.POST['employee']
-            OD_premium = request.POST['od']
-            TP_terrorism = request.POST['tpt']
+            OD_premium = str.strip(request.POST['od'])
+            TP_terrorism = str.strip(request.POST['tpt'])
             net = request.POST['net']
             gst_amount = request.POST['gst']
             try:
@@ -870,6 +868,9 @@ class create_policy(View):
 
                 except Exception as ex:
                     print(ex)
+            
+           
+            print(vehicle_makeby )
 
             pol = Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,
                                         sp_brokercode=sp_brokercode,  registration_no=registration_no,
