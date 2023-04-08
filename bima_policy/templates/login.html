@@ -98,10 +98,25 @@
 				<div class="input-group input-group-lg">
 					<input type="password" name="password" data-parsley-required="true" data-parsley-required-message="" value="" class="form-control-lg form-control" id="inputPassword">
 					<div class="input-group-prepend">
-						<button class="btn btn-reset text-primary px-3" id='btnshowpass' type="button"><i class="icofont-eye-blocked"></i></button>
+						<button onclick="Toggle()" class="btn btn-reset text-primary px-3" id='btnshowpass' type="button"><i class="icofont-eye-blocked"></i></button>
 					</div>
-				</div>
+				</div>        
 			</div>
+      
+      <script>
+        // Change the type of input to password or text
+        function Toggle() {
+            var temp = document.getElementById("inputPassword");
+            if (temp.type === "password") {
+                temp.type = "text";
+            }
+            else {
+                temp.type = "password";
+            }
+        }
+    </script>
+
+      
       <!-- /.form-group -->
 			<!-- .form-group -->
 			<div class="form-group">

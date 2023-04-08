@@ -1,3 +1,7 @@
 bima_policy/static/~$vhdata.xlsx
 *.png
+*.pyc
 # *.pdf
+
+
+**/__pycache__/
