@@ -31,7 +31,6 @@ def get_id_from_session(request):
 def is_user(request):
     return len(get_id_from_session(request)) == 15
 
-
 def Index(request):
     return render(request, 'index.html')
 
@@ -418,19 +417,61 @@ def get_profile_id(id):
     login_id = ''
     try:
         login_id = ProfileModel.objects.get(id=id).id
+        return login_id
     except Exception as ex:
+        pass
+    try:
+        login_id = Agents.objects.get(login_id=id).profile_id
+        return login_id
+    except Exception as ex:
+        pass
+    try:
         login_id = StaffModel.objects.get(login_id=id).profile_id
-    return ProfileModel.objects.get(id=login_id).id
-
-
+        return login_id
+    except Exception as ex:
+        pass   
+        
+    return ''
+    
+    
 def get_user_name(request):
     try:
-        name = ProfileModel.objects.filter(
-            id=get_id_from_session(request)).values()[0]['full_name']
+        name = ProfileModel.objects.filter( id=get_id_from_session(request)).values()[0]['full_name']
+        return name 
     except Exception as ex:
-        name = StaffModel.objects.filter(
-            login_id=get_id_from_session(request)).values().first()['staffname']
-    return name
+        pass
+    try:
+        name = StaffModel.objects.filter( login_id=get_id_from_session(request)).values().first()['staffname']
+        return name 
+    except Exception as ex:
+        pass
+    try:
+        name = Agents.objects.filter( login_id=get_id_from_session(request)).values().first()['full_name']
+        return name 
+    except Exception as ex:
+        pass
+
+    return ''   
+
+   
+def get_user_role(request):
+    try:
+        name = ProfileModel.objects.filter( id=get_id_from_session(request)).values()[0]['full_name']
+        return 'admin' 
+    except Exception as ex:
+        pass
+    try:
+        name = StaffModel.objects.filter( login_id=get_id_from_session(request)).values().first()['staffname']
+        return 'user' 
+    except Exception as ex:
+        pass
+    try:
+        name = Agents.objects.filter( login_id=get_id_from_session(request)).values().first()['full_name']
+        return 'agent' 
+    except Exception as ex:
+        pass
+
+    return ''   
 
 
 def fetch_vehicle_data():
@@ -451,20 +492,31 @@ def fetch_vehicle_data():
 class create_policy(View):
 
     def get(self, request):
-        print('create_policy get method')
-
-        pid = get_profile_id(get_id_from_session(request))
+        print('create_policy get method') 
+        
+        pid = get_profile_id( get_id_from_session(request))
+        
         data_ag = json.dumps(
             list(Agents.objects.filter(profile_id=pid).values()))
+        
         data_sp = ServiceProvider.objects.filter(profile_id=pid)
         data_bc = BrokerCode.objects.filter(profile_id=pid)
         data_ins = InsuranceCompany.objects.filter(profile_id=pid)
 
         data_vc = VehicleCategory.objects.filter(profile_id=pid)
-        data_bqp = BQP.objects.filter(profile_id=pid)
+        data_bqp = BQP.objects.filter(profile_id=pid)      
 
-        return render(request, 'policylist/policy_list.html', {"name": get_user_name(request), "vdata": fetch_vehicle_data(), 'is_motor_form': True, 'user_id': get_id_from_session(request), 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc, 'data_bqp': data_bqp})
-
+        user_info = {
+                "user_id" : get_id_from_session(request),
+                "user_name" : get_user_name(request),
+                "user_role" : get_user_role(request)
+        }
+        
+        print(get_user_name(request))
+       
+        return render(request, 'policylist/policy_list.html', {"user_info" : user_info, "vdata": fetch_vehicle_data(), 'is_motor_form': True, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc, 'data_bqp': data_bqp})
+        
+                      
     def post(self, request):
         try:
             print('create_policy post method')
@@ -504,6 +556,7 @@ class create_policy(View):
             policy_term = request.POST['policy_term']
             bqp = request.POST['bqp']
             pos = request.POST['pos']
+
             employee = request.POST['employee']
             OD_premium = str.strip(request.POST['od'])
             TP_terrorism = str.strip(request.POST['tpt'])
@@ -1662,17 +1715,27 @@ def apply_policy(request, id):
         print(ex)
         return HttpResponse(ex)
 
-from django.views.decorators.cache import cache_page
-@cache_page(3600)
+
 def policy_entry(request):
     print('policy_entry method')
     print(get_id_from_session(request))
     
-    # data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(
-    #     request))).order_by('-policyid').filter(Q(issue_date=datetime.now().date())).values()
+    # data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').filter(Q(issue_date=datetime.now().date())).values()
 
     try:
+        user_info = {
+                "user_id" : get_id_from_session(request),
+                "user_name" : get_user_name(request),
+                "user_role" : get_user_role(request)
+        }
+        # if user_info['user_role'] == 'admin':
+        #     data = Policy.objects.filter(profile_id = user_info['user_id']).order_by('-policyid').values()
+        # if user_info['user_role'] == 'user':
+        #     data = Policy.objects.filter(employee = user_info['user_id']).order_by('-policyid').values()
+        
         data = Policy.objects.filter().order_by('-policyid').values()
+        
+        print(data.values().count())
         datag = Agents.objects.filter(
             profile_id=get_profile_id(get_id_from_session(request)))
 

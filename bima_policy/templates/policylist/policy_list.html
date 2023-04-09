@@ -379,10 +379,39 @@
                                              <option value="5">5</option>
                                           </select>
                                        </div>
+                                     
+                                       <!-- if it is profile model -->
+                                       {% if  user_info.user_role == 'admin' %}
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="bqp" class="custom-select" required  >
+                                             <option value="" >-- Select BQP --</option>
+                                             {%for value in data_bqp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
+                                             id="pos" type="text" value="" data-toggle="modal"
+                                             data-target="#mdlcolsetting" class="form-control" name="pos"
+                                             style="text-transform: uppercase;" required readonly>
+                                       </div>
+                                       <div class="col-md-3 mb-4" hidden >
+                                          <label for="employee">Employee <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text" 
+                                                value="{{user_info.user_id}}"
+                                             class="form-control" name="employee"
+                                             style="text-transform: uppercase;  background-color: lightgray;" 
+                                             readonly required>
+                                       </div>
+
+                                       {% elif  user_info.user_role == 'user' %}
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>BQP<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
-                                             <option value="" hidden>-- Select BQP --</option>
+                                             <option value="" >-- Select BQP --</option>
                                              {%for value in data_bqp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -395,7 +424,44 @@
                                              style="text-transform: uppercase;" required readonly>
                                        </div>
 
+                                       <div class="col-md-3 mb-4">
+                                          <label for="employee">Employee <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text" 
+                                                value="{{user_info.user_id}}"
+                                             class="form-control" name="employee"
+                                             style="text-transform: uppercase;  background-color: lightgray;"  readonly required>
+                                       </div>
 
+                                       {% elif  user_info.user_role == 'agent' %}
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>BQP<abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="bqp" class="custom-select" required>
+                                             <option value="" >-- Select BQP --</option>
+                                             {%for value in data_bqp%}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
+                                          </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
+                                             id="pos" type="text" value="{{user_info.user_name}}" 
+                                             data-target="" class="form-control" name="pos"
+                                             style="text-transform: uppercase; background-color: lightgray;" readonly required>
+                                       </div>
+
+                                       <div class="col-md-3 mb-4" >
+                                          <label for="employee">Employee <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text" 
+                                                value="{{user_info.user_id}}"
+                                             class="form-control" name="employee"
+                                             style="text-transform: uppercase;  background-color: lightgray;" 
+                                             readonly required>
+                                       </div>
+
+                                       {% endif %}
+
+                                       {% if  user_info.user_role == 'admin' or user_info.user_role == 'user'  %}
                                        <div class="modal fade" id="mdlcolsetting"
                                           onmouseenter="document.getElementById('inp_search').focus()"
                                           style="height: 400px">
@@ -455,15 +521,10 @@
 
                                        </div>
 
+                                       {% endif %}
 
 
-                                       <div class="col-md-3 mb-4">
-                                          <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value="{{name}}"
-                                             class="form-control" name="employee"
-                                             style="text-transform: uppercase;  background-color: lightgray;" required
-                                             readonly>
-                                       </div>
+                                     
 
                                        <div class="col-md-3 mb-4">
                                           <label>Proposal <small>(Only<strong> PDF &amp; Image
