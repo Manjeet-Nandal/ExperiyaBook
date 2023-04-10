@@ -28,37 +28,38 @@
             <!-- .nav-tabs -->
             <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a class="nav-link show" data-toggle="tab" href="#Category">Category</a>
+                <a class="nav-link show active" data-toggle="tab" href="#Category">Category</a>
               </li>
-              <!-- <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#Model">Models</a>
-              </li>  -->
-              <!-- <li class="nav-item">
+              <li class="nav-item">
+                <a class="nav-link " data-toggle="tab" href="#Model">Models</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#Makeby">Make By</a>
-              </li> -->
+              </li>
             </ul>
             <!-- /.nav-tabs -->
           </div>
           <!-- /.nav-scroller -->
           <div class="tab-content pt-2">
             <!-- .tab-pane -->
-            <div class="tab-pane fade" id="Category" role="tabpanel" aria-labelledby="Category-Tab">
+            <div class="tab-pane fade show active" id="Category" role="tabpanel" aria-labelledby="Category-Tab">
               <!-- .card -->
               <div class="card card-fluid">
                 <div class="card-header">
                   Vehicle Category
-                  <button data-toggle="modal" data-target="#mdlvehiclecategory" class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
+                  <button data-toggle="modal" data-target="#mdlvehiclecategory"
+                    class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
                 </div>
                 <!-- .card-body -->
                 <div class="card-body">
                   <!-- .table -->
                   <div class="table-responsive">
                     <div id="tblList_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                      {% comment %} <div class="row">
+                      <div class="row">
                         <div class="col-sm-12 col-md-6">
                           <div class="dataTables_length" id="tblList_length">
                             <label>
-                              Show 
+                              Show
                               <select name="tblList_length" aria-controls="tblList" class="custom-select">
                                 <option value="10">10</option>
                                 <option value="25">25</option>
@@ -70,17 +71,27 @@
                           </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                          <div id="tblList_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="tblList"></label></div>
+                          <div id="tblList_filter" class="dataTables_filter"><label>Search:<input type="search"
+                                class="form-control" placeholder="" aria-controls="tblList"></label></div>
                         </div>
-                      </div> {% endcomment %}
+                      </div>
                       <div class="table-responsive">
-                        <table id="tblList" class="table table-bordered1 dataTable no-footer" role="grid" aria-describedby="tblList_info">
+                        <table id="tblList" class="table table-bordered1 dataTable no-footer" role="grid"
+                          aria-describedby="tblList_info">
                           <thead>
                             <tr role="row">
-                              <th class="text-center w-10pc sorting_asc" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.</th>
-                              <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Vehicle Category: activate to sort column ascending" style="width: 0px;">Vehicle Category</th>
-                              <th class="text-center w-10pc sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th>
-                              <th class="text-center w-10pc nowrap sorting_disabled" rowspan="1" colspan="1" aria-label="#" style="width: 0px;">#</th>
+                              <th class="text-center w-10pc sorting_asc" tabindex="0" aria-controls="tblList"
+                                rowspan="1" colspan="1" aria-sort="ascending"
+                                aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1"
+                                aria-label="Vehicle Category: activate to sort column ascending" style="width: 0px;" >
+                                Vehicle Category</th>
+                              <th class="text-center w-10pc sorting" tabindex="0" aria-controls="tblList" rowspan="1"
+                                colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">
+                                Status</th>
+                              <th class="text-center w-10pc nowrap sorting_disabled" rowspan="1" colspan="1"
+                                aria-label="#" style="width: 0px;">#</th>
                             </tr>
                           </thead>
                           {% for value in datavc %}
@@ -88,68 +99,81 @@
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc sorting_1">{{forloop.counter}}</td>
                               <td>{{value.category}}</td>
-                              <td class=" text-center w-10pc"><span class="badge badge-success">{{value.status}}</span></td>
+                              <td class=" text-center w-10pc"><span class="badge badge-success">{{value.status}}</span>
+                              </td>
                               <td class=" text-center w-10pc nowrap">
                                 <form method='POST' action="{{value.id}}">
                                   {% csrf_token %}
-                                     <a type='submit' href = "{{value.id}}/edit" class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit" >
-                                        <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
-                                     </a>
-                                     <button type='submit'class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete" >
-                                        <i class="fa fa-trash-alt text-danger" aria-hidden="true"></i>
-                                     </button>
+                                  <a type='submit' href="{{value.id}}/edit"
+                                    class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
+                                    <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
+                                  </a>
+                                  <button type='submit' class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete">
+                                    <i class="fa fa-trash-alt text-danger" aria-hidden="true"></i>
+                                  </button>
                                 </form>
                               </td>
                             </tr>
-                            </tbody>
-                            {% endfor %}
+                          </tbody>
+                          {% endfor %}
                         </table>
                       </div>
-                      {% comment %} <div class="row align-items-center">
+                      <div class="row align-items-center">
                         <div class="col-sm-12 col-md-5">
-                          <div class="dataTables_info" id="tblList_info" role="status" aria-live="polite">Showing 1 to 10 of 26 entries</div>
+                          <div class="dataTables_info" id="tblList_info" role="status" aria-live="polite">Showing 1 to
+                            10 of 26 entries</div>
                         </div>
                         <div class="col-sm-12 col-md-7 d-flex justify-content-end">
                           <div class="dataTables_paginate paging_simple_numbers" id="tblList_paginate">
                             <ul class="pagination justify-content-center">
-                              <li class="paginate_button page-item previous disabled" id="tblList_previous"><a href="#" aria-controls="tblList" data-dt-idx="0" tabindex="0" class="page-link"><i class="fa fa-lg fa-angle-left"></i></a></li>
-                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                              <li class="paginate_button page-item "><a href="#" aria-controls="tblList" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                              <li class="paginate_button page-item "><a href="#" aria-controls="tblList" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-                              <li class="paginate_button page-item next" id="tblList_next"><a href="#" aria-controls="tblList" data-dt-idx="4" tabindex="0" class="page-link"><i class="fa fa-lg fa-angle-right"></i></a></li>
+                              <li class="paginate_button page-item previous disabled" id="tblList_previous"><a href="#"
+                                  aria-controls="tblList" data-dt-idx="0" tabindex="0" class="page-link"><i
+                                    class="fa fa-lg fa-angle-left"></i></a></li>
+                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
+                                  data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                              <li class="paginate_button page-item "><a href="#" aria-controls="tblList" data-dt-idx="2"
+                                  tabindex="0" class="page-link">2</a></li>
+                              <li class="paginate_button page-item "><a href="#" aria-controls="tblList" data-dt-idx="3"
+                                  tabindex="0" class="page-link">3</a></li>
+                              <li class="paginate_button page-item next" id="tblList_next"><a href="#"
+                                  aria-controls="tblList" data-dt-idx="4" tabindex="0" class="page-link"><i
+                                    class="fa fa-lg fa-angle-right"></i></a></li>
                             </ul>
                           </div>
                         </div>
-                      </div> {% endcomment %}
+                      </div>
                     </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
-              <div class="modal fade" id="mdlvehiclecategory" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="ModalvcLabel" aria-hidden="true">
+              <div class="modal fade" id="mdlvehiclecategory" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                role="dialog" aria-labelledby="ModalvcLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h6 id="ModalvcLabel" class="modal-title"> Add New Category </h6>
                     </div>
-                    <form method="post"  autocomplete="off" data-parsley-validate="true" name="frmvc">
+                    <form method="post" autocomplete="off" data-parsley-validate="true" name="frmvc">
                       <div class="modal-body">
                         <div class="form-group">
                           {% csrf_token %}
                           <label class="col-form-label">Category<em class="text-danger">*</em></label>
                           <input type="text" class="form-control" data-parsley-required="true" name="category">
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
                           <label class="form-label">Status</label>
                           <select name="vcstatus" class="custom-select">
                             <option value="Active">Active</option>
                           </select>
-                        </div> 
+                        </div>
                       </div>
                       <div class="modal-footer">
                         <div class="custom-control custom-control-inline custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="vncckreload" data-parsley-multiple="vncckreload"> <label class="custom-control-label" for="vncckreload">Stay on this page after Save.</label>
+                          <input type="checkbox" class="custom-control-input" id="vncckreload"
+                            data-parsley-multiple="vncckreload"> <label class="custom-control-label"
+                            for="vncckreload">Stay on this page after Save.</label>
                         </div>
                         <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
                         <button type="submit" name="vc_add" class="btn btn-primary w-100p">Save</button>
@@ -158,7 +182,8 @@
                   </div>
                 </div>
               </div>
-              <div class="modal fade" id="mdlvehiclecategoryedit" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+              <div class="modal fade" id="mdlvehiclecategoryedit" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -168,7 +193,8 @@
                       <div class="modal-body">
                         <div class="form-group">
                           <label class="col-form-label">Name<em class="text-danger">*</em></label>
-                          <input type="text" class="form-control" data-parsley-required="true" id="category" disabled="">
+                          <input type="text" class="form-control" data-parsley-required="true" id="category"
+                            disabled="">
                           <input type="hidden" id="vcid" name="vcid" data-parsley-required="true" readonly="">
                         </div>
                         <div class="form-group">
@@ -187,7 +213,8 @@
                   </div>
                 </div>
               </div>
-              <div class="modal fade" id="mdlvehiclecategorydel" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+              <div class="modal fade" id="mdlvehiclecategorydel" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -205,12 +232,13 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade active show" id="Model" role="tabpanel" aria-labelledby="Model-Tab">
+            <div class="tab-pane fade  show" id="Model" role="tabpanel" aria-labelledby="Model-Tab">
               <!-- .card -->
               <div class="card card-fluid">
                 <div class="card-header">
                   Vehicle Models
-                  <button data-toggle="modal" data-target="#mdlvehiclemodel" class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
+                  <button data-toggle="modal" data-target="#mdlvehiclemodel"
+                    class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
                 </div>
                 <!-- .card-body -->
                 <div class="card-body">
@@ -218,14 +246,23 @@
                   <div class="table-responsive">
                     <div id="tblModelsList_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                       <div class="table-responsive">
-                        <table id="tblModelsList" class="table table-bordered1 dataTable no-footer" role="grid" aria-describedby="tblModelsList_info">
+                        <table id="tblModelsList" class="table table-bordered1 dataTable no-footer" role="grid"
+                          aria-describedby="tblModelsList_info">
                           <thead>
                             <tr role="row">
-                              <th class="text-center w-10pc sorting_asc" tabindex="0" aria-controls="tblModelsList" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.</th>
-                              <th class="sorting" tabindex="0" aria-controls="tblModelsList" rowspan="1" colspan="1" aria-label="Model: activate to sort column ascending" style="width: 0px;">Model</th>
-                              <th class="sorting" tabindex="0" aria-controls="tblModelsList" rowspan="1" colspan="1" aria-label="Company: activate to sort column ascending" style="width: 0px;">Company</th>
-                              <th class="text-center w-10pc sorting" tabindex="0" aria-controls="tblModelsList" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th>
-                              <th class="text-center nowrap sorting_disabled" rowspan="1" colspan="1" aria-label="#" style="width: 0px;">#</th>
+                              <th class="text-center w-10pc sorting_asc" tabindex="0" aria-controls="tblModelsList"
+                                rowspan="1" colspan="1" aria-sort="ascending"
+                                aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="tblModelsList" rowspan="1" colspan="1"
+                                aria-label="Model: activate to sort column ascending" style="width: 0px;">Model</th>
+                              <th class="sorting" tabindex="0" aria-controls="tblModelsList" rowspan="1" colspan="1"
+                                aria-label="Company: activate to sort column ascending" style="width: 0px;">Company</th>
+                              <th class="text-center w-10pc sorting" tabindex="0" aria-controls="tblModelsList"
+                                rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending"
+                                style="width: 0px;">Status</th>
+                              <th class="text-center nowrap sorting_disabled" rowspan="1" colspan="1" aria-label="#"
+                                style="width: 0px;">#</th>
                             </tr>
                           </thead>
                           {% for item1,item2 in list %}
@@ -234,46 +271,55 @@
                               <td class="text-center w-10pc sorting_1">{{forloop.counter}}</td>
                               <td>{{item1.model}}</td>
                               <td>{{item2.company}}</td>
-                              <td class=" text-center w-10pc"><span class="badge badge-success">{{item1.status}}</span></td>
+                              <td class=" text-center w-10pc"><span class="badge badge-success">{{item1.status}}</span>
+                              </td>
                               <td class=" text-center nowrap">
                                 <form method='POST' action="{{item1.id}}">
                                   {% csrf_token %}
-                                      <a type='submit' href = "{{item1.id}}/edit" class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit" >
-                                        <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
-                                      </a>
-                                     <button type='submit'class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete" >
-                                        <i class="fa fa-trash-alt text-danger" aria-hidden="true"></i>
-                                     </button>
+                                  <a type='submit' href="{{item1.id}}/edit"
+                                    class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
+                                    <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
+                                  </a>
+                                  <button type='submit' class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete">
+                                    <i class="fa fa-trash-alt text-danger" aria-hidden="true"></i>
+                                  </button>
                                 </form>
                               </td>
                             </tr>
-                           
+
                           </tbody>
-                          
+
                           {%endfor%}
                         </table>
                       </div>
-                      {% comment %} <div class="row align-items-center">
+                      <div class="row align-items-center">
                         <div class="col-sm-12 col-md-5">
-                          <div class="dataTables_info" id="tblModelsList_info" role="status" aria-live="polite">Showing 1 to 4 of 4 entries</div>
+                          <div class="dataTables_info" id="tblModelsList_info" role="status" aria-live="polite">Showing
+                            1 to 4 of 4 entries</div>
                         </div>
                         <div class="col-sm-12 col-md-7 d-flex justify-content-end">
                           <div class="dataTables_paginate paging_simple_numbers" id="tblModelsList_paginate">
                             <ul class="pagination justify-content-center">
-                              <li class="paginate_button page-item previous disabled" id="tblModelsList_previous"><a href="#" aria-controls="tblModelsList" data-dt-idx="0" tabindex="0" class="page-link"><i class="fa fa-lg fa-angle-left"></i></a></li>
-                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblModelsList" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                              <li class="paginate_button page-item next disabled" id="tblModelsList_next"><a href="#" aria-controls="tblModelsList" data-dt-idx="2" tabindex="0" class="page-link"><i class="fa fa-lg fa-angle-right"></i></a></li>
+                              <li class="paginate_button page-item previous disabled" id="tblModelsList_previous"><a
+                                  href="#" aria-controls="tblModelsList" data-dt-idx="0" tabindex="0"
+                                  class="page-link"><i class="fa fa-lg fa-angle-left"></i></a></li>
+                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblModelsList"
+                                  data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                              <li class="paginate_button page-item next disabled" id="tblModelsList_next"><a href="#"
+                                  aria-controls="tblModelsList" data-dt-idx="2" tabindex="0" class="page-link"><i
+                                    class="fa fa-lg fa-angle-right"></i></a></li>
                             </ul>
                           </div>
                         </div>
-                      </div> {% endcomment %}
+                      </div>
                     </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
-              <div class="modal fade" id="mdlvehiclemodel" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+              <div class="modal fade" id="mdlvehiclemodel" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -284,20 +330,30 @@
                         <div class="form-group">
                           {% csrf_token %}
                           <label>Vehicle Make By <abbr title="Required" class="text-danger">*</abbr></label>
-                          <select name="vehicle_makeby" data-parsley-required-message="" data-parsley-required="true" class="custom-select select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                          <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-vehicle_makeby-rf-container"><span class="select2-selection__rendered" id="select2-vehicle_makeby-rf-container" title="Choose...">Choose...</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                          <select name="vehicle_makeby" data-parsley-required-message="" data-parsley-required="true"
+                            class="custom-select select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                            <span class="select2 select2-container select2-container--default" dir="ltr"
+                              style="width: 100%;"><span class="selection"><span
+                                  class="select2-selection select2-selection--single" role="combobox"
+                                  aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                  aria-labelledby="select2-vehicle_makeby-rf-container"><span
+                                    class="select2-selection__rendered" id="select2-vehicle_makeby-rf-container"
+                                    title="Choose...">Choose...</span><span class="select2-selection__arrow"
+                                    role="presentation"><b role="presentation"></b></span></span></span><span
+                                class="dropdown-wrapper" aria-hidden="true"></span></span>
                             <option>Choose...</option>
                             {%for item in data %}
                             <option value="{{item.company}}">{{item.company}}</option>
                             {%endfor%}
-                            
+
                           </select>
-                          
+
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">Model<em class="text-danger">*</em></label>
                           <input type="text" class="form-control" data-parsley-required="true" name="model">
-                          <input type="hidden" name="csrf_token" data-parsley-required="true" value="c4a6edc470bf3d819b4e783b2afe2f15" readonly="">
+                          <input type="hidden" name="csrf_token" data-parsley-required="true"
+                            value="c4a6edc470bf3d819b4e783b2afe2f15" readonly="">
                         </div>
                         <div class="form-group">
                           <label class="form-label">Status</label>
@@ -308,7 +364,9 @@
                       </div>
                       <div class="modal-footer">
                         <div class="custom-control custom-control-inline custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="vnmckreload" data-parsley-multiple="vnmckreload"> <label class="custom-control-label" for="vnmckreload">Stay on this page after Save.</label>
+                          <input type="checkbox" class="custom-control-input" id="vnmckreload"
+                            data-parsley-multiple="vnmckreload"> <label class="custom-control-label"
+                            for="vnmckreload">Stay on this page after Save.</label>
                         </div>
                         <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
                         <button type="submit" name="vm_add" class="btn btn-primary w-100p">Save</button>
@@ -317,7 +375,8 @@
                   </div>
                 </div>
               </div>
-              <div class="modal fade" id="mdlvehiclemodeledit" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="ModaleLabel" aria-hidden="true">
+              <div class="modal fade" id="mdlvehiclemodeledit" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" role="dialog" aria-labelledby="ModaleLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -327,7 +386,8 @@
                       <div class="modal-body">
                         <div class="form-group">
                           <label>Vehicle Make By <abbr title="Required" class="text-danger">*</abbr></label>
-                          <input type="text" class="form-control" data-parsley-required="true" id="vehicle_makeby" disabled="">
+                          <input type="text" class="form-control" data-parsley-required="true" id="vehicle_makeby"
+                            disabled="">
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">Name<em class="text-danger">*</em></label>
@@ -350,7 +410,8 @@
                   </div>
                 </div>
               </div>
-              <div class="modal fade" id="mdlvehiclemodeldel" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="ModalrLabel" aria-hidden="true">
+              <div class="modal fade" id="mdlvehiclemodeldel" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                role="dialog" aria-labelledby="ModalrLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -373,42 +434,53 @@
               <div class="card card-fluid">
                 <div class="card-header">
                   Atomobile Companies
-                  <button data-toggle="modal" data-target="#mdlvehiclemakeby" class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
+                  <button data-toggle="modal" data-target="#mdlvehiclemakeby"
+                    class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
                 </div>
                 <!-- .card-body -->
                 <div class="card-body">
                   <!-- .table -->
                   <div class="table-responsive">
                     <div id="tblMakeby_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                      {% comment %} <div class="row">
+                      <div class="row">
                         <div class="col-sm-12 col-md-6">
                           <div class="dataTables_length" id="tblMakeby_length">
                             <label>
-                              Show 
+                              Show
 
                             </label>
-                              <select name="tblMakeby_length" aria-controls="tblMakeby" class="custom-select">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                              </select> 
-                              entries
-                            
+                            <select name="tblMakeby_length" aria-controls="tblMakeby" class="custom-select">
+                              <option value="10">10</option>
+                              <option value="25">25</option>
+                              <option value="50">50</option>
+                              <option value="100">100</option>
+                            </select>
+                            entries
+
                           </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                          <div id="tblMakeby_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="tblMakeby"></label></div>
+                          <div id="tblMakeby_filter" class="dataTables_filter"><label>Search:<input type="search"
+                                class="form-control" placeholder="" aria-controls="tblMakeby"></label></div>
                         </div>
-                      </div> {% endcomment %}
+                      </div>
                       <div class="table-responsive">
-                        <table id="tblMakeby" class="table table-bordered1 dataTable no-footer" role="grid" aria-describedby="tblMakeby_info">
+                        <table id="tblMakeby" class="table table-bordered1 dataTable no-footer" role="grid"
+                          aria-describedby="tblMakeby_info">
                           <thead>
                             <tr role="row">
-                              <th class="text-center w-10pc nowrap sorting_asc" tabindex="0" aria-controls="tblMakeby" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.</th>
-                              <th class="sorting" tabindex="0" aria-controls="tblMakeby" rowspan="1" colspan="1" aria-label="Company Name: activate to sort column ascending" style="width: 0px;">Company Name</th>
-                              <th class="text-center w-10pc nowrap sorting" tabindex="0" aria-controls="tblMakeby" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th>
-                              <th class="text-center nowrap w-10pc sorting_disabled" rowspan="1" colspan="1" aria-label="#" style="width: 0px;">#</th>
+                              <th class="text-center w-10pc nowrap sorting_asc" tabindex="0" aria-controls="tblMakeby"
+                                rowspan="1" colspan="1" aria-sort="ascending"
+                                aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="tblMakeby" rowspan="1" colspan="1"
+                                aria-label="Company Name: activate to sort column ascending" style="width: 0px;">Company
+                                Name</th>
+                              <th class="text-center w-10pc nowrap sorting" tabindex="0" aria-controls="tblMakeby"
+                                rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending"
+                                style="width: 0px;">Status</th>
+                              <th class="text-center nowrap w-10pc sorting_disabled" rowspan="1" colspan="1"
+                                aria-label="#" style="width: 0px;">#</th>
                             </tr>
                           </thead>
                           {%for value in data%}
@@ -416,52 +488,61 @@
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc nowrap sorting_1">{{forloop.counter}}</td>
                               <td>{{value.company}}</td>
-                              <td class=" text-center w-10pc nowrap"><span class="badge badge-success">{{value.status}}</span></td>
+                              <td class=" text-center w-10pc nowrap"><span
+                                  class="badge badge-success">{{value.status}}</span></td>
                               <td class=" text-center nowrap w-10pc">
                                 <form method='POST' action="{{value.id}}">
                                   {% csrf_token %}
-                                    <a type='submit' href = "{{value.id}}/edit" class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit" >
-                                      <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
-                                    </a>
-                                    <button type='submit' class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete" >
-                                      <i class="fa fa-trash-alt text-danger" aria-hidden="true"></i>
-                                    </button>
+                                  <a type='submit' href="{{value.id}}/edit"
+                                    class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
+                                    <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
+                                  </a>
+                                  <button type='submit' class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete">
+                                    <i class="fa fa-trash-alt text-danger" aria-hidden="true"></i>
+                                  </button>
                                 </form>
                               </td>
                             </tr>
-                           </tbody>
-                           {%endfor%}
+                          </tbody>
+                          {%endfor%}
                         </table>
                       </div>
-                      {% comment %} <div class="row align-items-center">
+                      <div class="row align-items-center">
                         <div class="col-sm-12 col-md-5">
-                          <div class="dataTables_info" id="tblMakeby_info" role="status" aria-live="polite">Showing 1 to 7 of 7 entries</div>
+                          <div class="dataTables_info" id="tblMakeby_info" role="status" aria-live="polite">Showing 1 to
+                            7 of 7 entries</div>
                         </div>
                         <div class="col-sm-12 col-md-7 d-flex justify-content-end">
                           <div class="dataTables_paginate paging_simple_numbers" id="tblMakeby_paginate">
                             <ul class="pagination justify-content-center">
-                              <li class="paginate_button page-item previous disabled" id="tblMakeby_previous"><a href="#" aria-controls="tblMakeby" data-dt-idx="0" tabindex="0" class="page-link"><i class="fa fa-lg fa-angle-left"></i></a></li>
-                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblMakeby" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                              <li class="paginate_button page-item next disabled" id="tblMakeby_next"><a href="#" aria-controls="tblMakeby" data-dt-idx="2" tabindex="0" class="page-link"><i class="fa fa-lg fa-angle-right"></i></a></li>
+                              <li class="paginate_button page-item previous disabled" id="tblMakeby_previous"><a
+                                  href="#" aria-controls="tblMakeby" data-dt-idx="0" tabindex="0" class="page-link"><i
+                                    class="fa fa-lg fa-angle-left"></i></a></li>
+                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblMakeby"
+                                  data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                              <li class="paginate_button page-item next disabled" id="tblMakeby_next"><a href="#"
+                                  aria-controls="tblMakeby" data-dt-idx="2" tabindex="0" class="page-link"><i
+                                    class="fa fa-lg fa-angle-right"></i></a></li>
                             </ul>
                           </div>
                         </div>
-                      </div> {% endcomment %}
+                      </div>
                     </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
-              <div class="modal fade" id="mdlvehiclemakeby" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="ModalmbLabel" aria-hidden="true">
+              <div class="modal fade" id="mdlvehiclemakeby" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                role="dialog" aria-labelledby="ModalmbLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 id="ModalmbLabel" class="modal-title"> Add New Make By </h5>
                     </div>
-                  
+
                     <form method="post" autocomplete="off" data-parsley-validate="true" name="frmmb" novalidate="">
-                     
+
                       <div class="modal-body">
                         <div class="form-group">
                           {% csrf_token %}
@@ -477,7 +558,9 @@
                       </div>
                       <div class="modal-footer">
                         <div class="custom-control custom-control-inline custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="mbckreload" data-parsley-multiple="mbckreload"> <label class="custom-control-label" for="mbckreload">Stay on this page after Save.</label>
+                          <input type="checkbox" class="custom-control-input" id="mbckreload"
+                            data-parsley-multiple="mbckreload"> <label class="custom-control-label"
+                            for="mbckreload">Stay on this page after Save.</label>
                         </div>
                         <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
                         <button type="submit" name="mb_add" class="btn btn-primary w-100p">Save</button>
@@ -486,7 +569,8 @@
                   </div>
                 </div>
               </div>
-              <div class="modal fade" id="mdlvehiclemakebyedit" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="ModalmbeLabel" aria-hidden="true">
+              <div class="modal fade" id="mdlvehiclemakebyedit" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" role="dialog" aria-labelledby="ModalmbeLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -497,7 +581,8 @@
                         <div class="form-group">
                           <label class="col-form-label">Name<em class="text-danger">*</em></label>
                           <input type="text" class="form-control" data-parsley-required="true" id="makeby" disabled="">
-                          <input type="hidden" name="csrf_token" data-parsley-required="true" value="c4a6edc470bf3d819b4e783b2afe2f15" readonly="">
+                          <input type="hidden" name="csrf_token" data-parsley-required="true"
+                            value="c4a6edc470bf3d819b4e783b2afe2f15" readonly="">
                           <input type="hidden" id="mbid" name="mbid" data-parsley-required="true" readonly="">
                         </div>
                         <div class="form-group">
@@ -516,14 +601,16 @@
                   </div>
                 </div>
               </div>
-              <div class="modal fade" id="mdlvehiclemakebydel" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="ModalmbrLabel" aria-hidden="true">
+              <div class="modal fade" id="mdlvehiclemakebydel" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" role="dialog" aria-labelledby="ModalmbrLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 id="ModalmbrLabel" class="modal-title">Confirmation</h5>
                     </div>
                     <div class="modal-body">
-                      <p>Attention! If the Company is deleted, then all its all Models will also be deleted. Do you want to Continue for selected Company?</p>
+                      <p>Attention! If the Company is deleted, then all its all Models will also be deleted. Do you want
+                        to Continue for selected Company?</p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">No</button>
@@ -545,9 +632,10 @@
   <!-- /.wrapper -->
 </main>
 <!-- /.app-main -->
-{% comment %} <div class="aside-backdrop"></div>
+<div class="aside-backdrop"></div>
 </div><!-- /.app -->
-<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
+<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
   <!-- .modal-dialog -->
   <div class="modal-dialog" role="document">
     <!-- .modal-content -->
@@ -555,13 +643,14 @@
       <!-- .modal-header -->
       <div class="modal-header">
         <h5 class="modal-title">
-          <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error 
+          <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
         </h5>
       </div>
       <!-- /.modal-header -->
       <!-- .modal-body -->
       <div class="modal-body">
-        <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error remains the same, you need to contact your Administrator immediately.</p>
+        <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error remains
+          the same, you need to contact your Administrator immediately.</p>
       </div>
       <!-- /.modal-body -->
       <!-- .modal-footer -->
@@ -575,7 +664,7 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-<script src="{%static 'js/jquery.min.js' %}"></script> 
+<script src="{%static 'js/jquery.min.js' %}"></script>
 <script src="{%static 'js/popper.min.js' %}"></script>
 <script src="{%static 'js/bootstrap.min.js' %}"></script> <!-- END BASE JS -->
 <!-- BEGIN PLUGINS JS -->
@@ -585,7 +674,7 @@
 <!-- Parsley -->
 <script src="{%static 'js/parsley.js' %}"></script>
 <!-- BEGIN THEME JS -->
-<script src="{%static 'js/theme.js' %}"></script> 
+<script src="{%static 'js/theme.js' %}"></script>
 <script src="{%static 'js/toastr.min.js' %}"></script>
 <script src="{%static 'js/flatpickr.min.js' %}"></script>
 <script src="{%static 'js/select2.full.min.js' %}"></script>
@@ -596,5 +685,7 @@
 <script src="{%static 'js/jquery.form.js' %}"></script>
 <script src="{%static 'js/custom.min.js' %}"></script>
 <script src="{%static 'js/vechicles.js' %}"></script>
-</body></html> {% endcomment %}
+</body>
+
+</html>
 {%endblock%}
