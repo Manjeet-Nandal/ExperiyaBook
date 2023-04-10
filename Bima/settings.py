@@ -86,17 +86,16 @@ WSGI_APPLICATION = 'Bima.wsgi.application'
 # }
 
 
-
 DATABASES = {
-        'default': {
-            'ENGINE': 'djongo',
-            'NAME': 'ExperiyaBook',
-            # 'CLIENT': {
-            #     'host': 'mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority',
-            #     'username': 'bhavi',
-            #     'password': 'Rqw7dAxrzY3UUj1S',
-            # }  
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'ExperiyaBook',
+        'CLIENT': {
+                'host': 'mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority',
+                'username': 'bhavi',
+                'password': 'Rqw7dAxrzY3UUj1S',
         }
+    }
 }
 
 # Password validation
@@ -138,9 +137,9 @@ STATIC_URL = 'static/'
 # AUTH_USER_MODEL='bima_policy.ProfileModel'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,"bima_policy/static")
+    os.path.join(BASE_DIR, "bima_policy/static")
 ),
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
