@@ -29,7 +29,7 @@ def get_id_from_session(request):
 
 
 def is_user(request):
-    return len(get_id_from_session(request)) == 15
+    return len(get_id_from_session(request)) >= 15
 
 def Index(request):
     return render(request, 'index.html')
@@ -37,14 +37,13 @@ def Index(request):
 
 # DashBoardView
 def dashboard(request):
-    agentcount = Agents.objects.filter(
-        profile_id=get_id_from_session(request)).count()
-    staffcount = StaffModel.objects.filter(
-        profile_id=get_id_from_session(request)).count()
-    spcount = ServiceProvider.objects.filter(
-        profile_id=get_id_from_session(request)).count()
-    policycount = Agents.objects.filter(
-        profile_id=get_id_from_session(request)).count()
+    agentcount = Agents.objects.count()
+    staffcount = StaffModel.objects.count()
+    spcount = ServiceProvider.objects.count()
+    if is_user(request):
+        policycount = Policy.objects.filter(profile_id=get_id_from_session(request)).count()
+    else:
+        policycount = Policy.objects.filter(employee=get_id_from_session(request)).count()
     print('total agents are:', agentcount)
     return render(request, 'dashboard.html', {'agentcount': agentcount, 'staffcount': staffcount, 'spcount': spcount, 'totalpolicy': policycount})
 
@@ -509,9 +508,7 @@ class create_policy(View):
                 "user_name" : get_user_name(request),
                 "user_role" : get_user_role(request)
         }
-        
-        print(get_user_name(request))
-       
+          
         return render(request, 'policylist/policy_list.html', {"user_info" : user_info, "vdata": fetch_vehicle_data(), 'is_motor_form': True, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc, 'data_bqp': data_bqp})
         
                       
@@ -1718,11 +1715,14 @@ def policy_entry(request):
     print('policy_entry method')
     print(get_id_from_session(request))
      
-    try:        
-        # data = Policy.objects.filter().order_by('-policyid').values()
-        data = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-policyid').values()
-                
-        print(data.values().count())
+    try:    
+        if is_user(request):
+            data = Policy.objects.filter(profile_id = get_profile_id( get_id_from_session(request))).order_by('-policyid').values()
+        else:            
+            # data = Policy.objects.filter().order_by('-policyid').values()
+            data = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-policyid').values()
+            
+        print("total policy: ", data.values().count())
         datag = Agents.objects.all()
 
         # paginator = Paginator(data, data.count())
