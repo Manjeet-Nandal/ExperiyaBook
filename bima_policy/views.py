@@ -1719,8 +1719,8 @@ def policy_entry(request):
     print(get_id_from_session(request))
      
     try:        
+        # data = Policy.objects.filter().order_by('-policyid').values()
         data = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-policyid').values()
-        # data = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-policyid').values()
                 
         print(data.values().count())
         datag = Agents.objects.all()
