@@ -28,7 +28,7 @@
                                     <!-- metric column -->
                                     <div class="col">
                                         <!-- .metric -->
-                                        <a href=""
+                                        <a href="{%url 'bima_policy:staff' %}"
                                             class="metric metric-bordered align-items-center">
                                             <h2 class="metric-label">Staff </h2>
                                             <p class="metric-value h3">
@@ -39,7 +39,7 @@
                                         </a> <!-- /.metric -->
                                     </div><!-- /metric column -->
                                     <div class="col">
-                                        <a href="agent/"
+                                        <a href="{%url 'bima_policy:agent' %}"
                                             class="metric metric-bordered align-items-center">
                                             <h2 class="metric-label">Agent </h2>
                                             <p class="metric-value h3">
@@ -50,7 +50,7 @@
                                     </div><!-- /metric column -->
                                     <div class="col">
                                         <!-- .metric -->
-                                        <a href=""
+                                        <a href="{%url 'bima_policy:service_p' %}"
                                             class="metric metric-bordered align-items-center">
                                             <h2 class="metric-label">Service Providers </h2>
                                             <p class="metric-value h3">
@@ -61,7 +61,7 @@
                                     </div><!-- /metric column -->
                                     <div class="col">
                                         <!-- .metric -->
-                                        <a href=""
+                                        <a href="{%url 'bima_policy:policy_entry' %}"
                                             class="metric metric-bordered align-items-center">
                                             <h2 class="metric-label">Total Policies </h2>
                                             <p class="metric-value h3">
@@ -284,7 +284,7 @@
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
+   
   <script>
     const ctx = document.getElementById('totalPolicy');
   
@@ -307,14 +307,5 @@
       }
     });
   </script>
-
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> -->
-
-<body onload='drawLineGraph()'" >
-    
-</body>
-
-
 
 {%endblock%}
