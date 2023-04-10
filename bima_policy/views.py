@@ -1710,14 +1710,17 @@ def apply_policy(request, id):
         print(ex)
         return HttpResponse(ex)
 
-
+from django.utils.timezone import now
 def policy_entry(request):
     print('policy_entry method')
     print(get_id_from_session(request))
+    print(now().date())
      
     try:    
         if is_user(request):
-            data = Policy.objects.filter(profile_id = get_profile_id( get_id_from_session(request))).order_by('-policyid').values()
+            # data = Policy.objects.filter(issue_date__gte=now().date()).order_by('-policyid').values()
+            data = Policy.objects.order_by('-policyid').values()
+
         else:            
             # data = Policy.objects.filter().order_by('-policyid').values()
             data = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-policyid').values()
