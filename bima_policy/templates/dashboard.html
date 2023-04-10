@@ -81,7 +81,7 @@
                             <div class="col-xl-9">
                                 <div class="row">
                                     <div class="col-xl-6">
-                                        (01-Jan-2022 to 27-Jul-2022)
+                                        (01-Jan-2023 to 01-Jan-2024)
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="text-right mb-2">
@@ -104,7 +104,7 @@
                                                                 checked=""> <label
                                                                 class="custom-control-label d-flex justify-content-between"
                                                                 for="dpYear"><span>This Year</span> <span
-                                                                    class="text-muted">2022</span></label>
+                                                                    class="text-muted">2023</span></label>
                                                         </div><!-- /.custom-control -->
                                                         <!-- .custom-control -->
                                                         <div class="custom-control custom-radio">
@@ -130,7 +130,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="card card-body">
+                                    <div class="card card-body" >
                                         <div class="card-header p-0 mb-3 pb-2">Policies</div>
                                         <!-- legend -->
                                         <ul class="list-inline small">
@@ -141,18 +141,16 @@
                                                 <i class="fa fa-fw fa-circle text-red"></i> Cancelled Policies
                                             </li>
                                         </ul><!-- /legend -->
-                                        <div class="chartjs" style="height: 268px">
-                                            <div class="chartjs-size-monitor">
-                                                <div class="chartjs-size-monitor-expand">
-                                                    <div class=""></div>
-                                                </div>
-                                                <div class="chartjs-size-monitor-shrink">
-                                                    <div class=""></div>
-                                                </div>
-                                            </div>
+                                        <!-- <div >
+                                           
                                             <canvas id="canvas-total-policy"
-                                                style="display: block; width: 771px; height: 268px;" width="771"
-                                                height="268" class="chartjs-render-monitor"></canvas>
+                                                style="display: block; width: 771px; height: 268px;" width="771" 
+                                                height="268" ></canvas>
+                                        </div> -->
+                                        <div>
+                                            <canvas id="totalPolicy"
+                                                style="display: block; width: 771px; height: 268px;" width="771" 
+                                                height="268" ></canvas>
                                         </div>
                                     </div><!-- /.card -->
                                 </div>
@@ -186,10 +184,10 @@
                                                 <h2 class="metric-label">Expire On</h2>
                                                 <p class="metric-value h3">
                                                     <sub><i class="icofont icofont-ui-calendar"></i></sub>
-                                                    <span class="value">15/08/2022</span>
+                                                    <span class="value" style="color: green;">Never</span>
                                                 </p>
                                                 <p class="pt-3">
-                                                    <small class="text-muted"> (19 days left)</small>
+                                                    <small class="text-muted"> (Life-time Activation)</small>
                                                 </p>
                                             </div><!-- /.card-body -->
                                         </div><!-- /.card -->
@@ -279,4 +277,44 @@
         </div><!-- /.page -->
     </div><!-- /.wrapper -->
 </main><!-- /.app-main -->
+
+
+<div>
+    <canvas id="myChart"></canvas>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    const ctx = document.getElementById('totalPolicy');
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [{
+          label: '# Policies',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> -->
+
+<body onload='drawLineGraph()'" >
+    
+</body>
+
+
+
 {%endblock%}

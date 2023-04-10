@@ -41,10 +41,11 @@ def dashboard(request):
     staffcount = StaffModel.objects.count()
     spcount = ServiceProvider.objects.count()
     if is_user(request):
-        policycount = Policy.objects.filter(profile_id=get_id_from_session(request)).count()
+        policycount = Policy.objects.count()
     else:
         policycount = Policy.objects.filter(employee=get_id_from_session(request)).count()
     print('total agents are:', agentcount)
+    
     return render(request, 'dashboard.html', {'agentcount': agentcount, 'staffcount': staffcount, 'spcount': spcount, 'totalpolicy': policycount})
 
 
