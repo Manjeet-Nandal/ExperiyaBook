@@ -494,17 +494,15 @@ class create_policy(View):
     def get(self, request):
         print('create_policy get method') 
         
-        pid = get_profile_id( get_id_from_session(request))
-        
         data_ag = json.dumps(
-            list(Agents.objects.filter(profile_id=pid).values()))
+            list(Agents.objects.all().values()))
         
-        data_sp = ServiceProvider.objects.filter(profile_id=pid)
-        data_bc = BrokerCode.objects.filter(profile_id=pid)
-        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
+        data_sp = ServiceProvider.objects.all()
+        data_bc = BrokerCode.objects.all()
+        data_ins = InsuranceCompany.objects.all()
 
-        data_vc = VehicleCategory.objects.filter(profile_id=pid)
-        data_bqp = BQP.objects.filter(profile_id=pid)      
+        data_vc = VehicleCategory.objects.all()
+        data_bqp = BQP.objects.all()      
 
         user_info = {
                 "user_id" : get_id_from_session(request),
@@ -1719,29 +1717,17 @@ def apply_policy(request, id):
 def policy_entry(request):
     print('policy_entry method')
     print(get_id_from_session(request))
-    
-    # data = Policy.objects.filter(profile_id=get_profile_id(get_id_from_session(request))).order_by('-policyid').filter(Q(issue_date=datetime.now().date())).values()
-
-    try:
-        user_info = {
-                "user_id" : get_id_from_session(request),
-                "user_name" : get_user_name(request),
-                "user_role" : get_user_role(request)
-        }
-        # if user_info['user_role'] == 'admin':
-        #     data = Policy.objects.filter(profile_id = user_info['user_id']).order_by('-policyid').values()
-        # if user_info['user_role'] == 'user':
-        #     data = Policy.objects.filter(employee = user_info['user_id']).order_by('-policyid').values()
-        
-        data = Policy.objects.filter().order_by('-policyid').values()
-        
+     
+    try:        
+        data = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-policyid').values()
+        # data = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-policyid').values()
+                
         print(data.values().count())
-        datag = Agents.objects.filter(
-            profile_id=get_profile_id(get_id_from_session(request)))
+        datag = Agents.objects.all()
 
-        paginator = Paginator(data, per_page=25)
+        # paginator = Paginator(data, data.count())
 
-        data = paginator.get_page(request.GET.get('page'))
+        # data = paginator.get_page(request.GET.get('page'))
         return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         page_obj = paginator.get_page(request.GET.get(paginator.num_pages))

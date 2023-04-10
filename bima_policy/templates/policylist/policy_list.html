@@ -50,7 +50,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Catagory <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_catagory" id="vehicle_catagory" class="custom-select "
-                                             required onclick="setCategoryOnChange()" >
+                                             required onclick="setCategoryOnChange()">
                                              <option value="" hidden> -- Select Catagory -- </option>
                                              {% for value in data_vc %}
                                              <option value="{{value}}">{{value}}</option>
@@ -81,7 +81,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="insurance_company" class="custom-select" id="insurance_company"
-                                             required  onclick="sortItems(this.id)" >
+                                             required onclick="sortItems(this.id)">
                                              <option value="" hidden> -- Select Insurer -- </option>
                                              {%for value in data_ins%}
                                              <option value="{{value}}">{{value}}</option>
@@ -90,7 +90,8 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="sp_name" class="custom-select" id="sp_name" required  onclick="sortItems(this.id)" >
+                                          <select name="sp_name" class="custom-select" id="sp_name" required
+                                             onclick="sortItems(this.id)">
                                              <option value="" hidden> -- Select Provider -- </option>
                                              {%for value in data_sp%}
                                              <option value="{{value}}">{{value}}</option>
@@ -196,7 +197,8 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="vehicle_fuel_type" class="custom-select" required  onclick="sortItems(this.id)" >
+                                          <select name="vehicle_fuel_type" class="custom-select" required
+                                             onclick="sortItems(this.id)">
                                              <option value="" hidden>-- Select Fuel Type --</option>
                                              <option value="PETROL">PETROL</option>
                                              <option value="DIESEL">DIESEL</option>
@@ -379,13 +381,11 @@
                                              <option value="5">5</option>
                                           </select>
                                        </div>
-                                     
-                                       <!-- if it is profile model -->
-                                       {% if  user_info.user_role == 'admin' %}
+
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="bqp" class="custom-select" required  >
-                                             <option value="" >-- Select BQP --</option>
+                                          <select name="bqp" class="custom-select" required>
+                                             <option value="">-- Select BQP --</option>
                                              {%for value in data_bqp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -396,135 +396,77 @@
                                              id="pos" type="text" value="" data-toggle="modal"
                                              data-target="#mdlcolsetting" class="form-control" name="pos"
                                              style="text-transform: uppercase;" required readonly>
-                                       </div>
-                                       <div class="col-md-3 mb-4" hidden >
-                                          <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" 
-                                                value="{{user_info.user_id}}"
-                                             class="form-control" name="employee"
-                                             style="text-transform: uppercase;  background-color: lightgray;" 
-                                             readonly required>
-                                       </div>
 
-                                       {% elif  user_info.user_role == 'user' %}
 
-                                       <div class="col-md-3 mb-4">
-                                          <label>BQP<abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="bqp" class="custom-select" required>
-                                             <option value="" >-- Select BQP --</option>
-                                             {%for value in data_bqp%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos" type="text" value="" data-toggle="modal"
-                                             data-target="#mdlcolsetting" class="form-control" name="pos"
-                                             style="text-transform: uppercase;" required readonly>
-                                       </div>
+                                          <div class="modal fade" id="mdlcolsetting"
+                                             onmouseenter="document.getElementById('inp_search').focus()"
+                                             style="height: 400px">
 
-                                       <div class="col-md-3 mb-4">
-                                          <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" 
-                                                value="{{user_info.user_id}}"
-                                             class="form-control" name="employee"
-                                             style="text-transform: uppercase;  background-color: lightgray;"  readonly required>
-                                       </div>
+                                             <div class="modal-dialog" role="document">
 
-                                       {% elif  user_info.user_role == 'agent' %}
+                                                <div class="modal-content">
+                                                   <div class="modal-header">
+                                                      <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
+                                                   </div>
+                                                   <div class="modal-body ">
+                                                      <div class="form-row">
+                                                         <div class="col-md-6 mb-4">
+                                                            <div class=""><label>Search:<input id="inp_search"
+                                                                     type="text" value="" class="form-control"
+                                                                     name="agent" style="text-transform: uppercase;"
+                                                                     title="Search POS using Name, mobile no, email, pan/aadhar number"
+                                                                     oninput="searchPOS()" onkeypress="handle(event)">
 
-                                       <div class="col-md-3 mb-4">
-                                          <label>BQP<abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="bqp" class="custom-select" required>
-                                             <option value="" >-- Select BQP --</option>
-                                             {%for value in data_bqp%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%}
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos" type="text" value="{{user_info.user_name}}" 
-                                             data-target="" class="form-control" name="pos"
-                                             style="text-transform: uppercase; background-color: lightgray;" readonly required>
-                                       </div>
+                                                                  <script>
+                                                                     function handle(e) {
+                                                                        if (e.keyCode === 13) {
+                                                                           e.preventDefault(); // Ensure it is only this code that runs
 
-                                       <div class="col-md-3 mb-4" >
-                                          <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" 
-                                                value="{{user_info.user_id}}"
-                                             class="form-control" name="employee"
-                                             style="text-transform: uppercase;  background-color: lightgray;" 
-                                             readonly required>
-                                       </div>
-
-                                       {% endif %}
-
-                                       {% if  user_info.user_role == 'admin' or user_info.user_role == 'user'  %}
-                                       <div class="modal fade" id="mdlcolsetting"
-                                          onmouseenter="document.getElementById('inp_search').focus()"
-                                          style="height: 400px">
-
-                                          <div class="modal-dialog" role="document">
-
-                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                   <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
-                                                </div>
-                                                <div class="modal-body ">
-                                                   <div class="form-row">
-                                                      <div class="col-md-6 mb-4">
-                                                         <div class=""><label>Search:<input id="inp_search" type="text"
-                                                                  value="" class="form-control" name="agent"
-                                                                  style="text-transform: uppercase;" required
-                                                                  title="Search POS using Name, mobile no, email, pan/aadhar number"
-                                                                  oninput="searchPOS()" onkeypress="handle(event)">
-
-                                                               <script>
-                                                                  function handle(e) {
-                                                                     if (e.keyCode === 13) {
-                                                                        e.preventDefault(); // Ensure it is only this code that runs
-
-                                                                        $("#btnExit").click();
+                                                                           $("#btnExit").click();
+                                                                        }
                                                                      }
-                                                                  }
-                                                               </script>
-                                                            </label></div>
-                                                      </div>
-                                                      <div class="col-md-6 mb-4">
-                                                         <div class=""><label>POS:<input id="inp_pos" type="text"
-                                                                  value="" class="form-control" name="agent"
-                                                                  style="text-transform: uppercase;" required
-                                                                  title="POS should be automatically fetched">
-                                                            </label>
+                                                                  </script>
+                                                               </label></div>
+                                                         </div>
+                                                         <div class="col-md-6 mb-4">
+                                                            <div class=""><label>POS:<input id="inp_pos" type="text"
+                                                                     value="" class="form-control" name="agent"
+                                                                     style="text-transform: uppercase;"
+                                                                     title="POS should be automatically fetched">
+                                                               </label>
+                                                            </div>
                                                          </div>
                                                       </div>
+
+                                                      <div class="modal-footer">
+                                                         <button id="btnExit" type="button"
+                                                            class="btn btn-secondary w-100p"
+                                                            data-dismiss="modal">Close</button>
+                                                         <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
+                                                            class="btn btn-primary w-100p">Save</button> -->
+                                                      </div>
                                                    </div>
 
-                                                   <div class="modal-footer">
-                                                      <button id="btnExit" type="button"
-                                                         class="btn btn-secondary w-100p"
-                                                         data-dismiss="modal">Close</button>
-                                                      <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
-                                                            class="btn btn-primary w-100p">Save</button> -->
-                                                   </div>
                                                 </div>
 
                                              </div>
-
-
-                                          </div>
-                                          <!-- <body onload="setFocus()">
+                                             <!-- <body onload="setFocus()">
                                                       
                                                    </body> -->
 
+                                          </div>
                                        </div>
 
-                                       {% endif %}
+
+                                       <div class="col-md-3 mb-4">
+                                          <label for="employee">Employee <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{user_info.user_id}}" class="form-control" name="employee"
+                                             style="text-transform: uppercase;  background-color: lightgray;" readonly
+                                             required>
+                                       </div>
 
 
-                                     
 
                                        <div class="col-md-3 mb-4">
                                           <label>Proposal <small>(Only<strong> PDF &amp; Image
@@ -878,7 +820,7 @@
                                                       <div class="col-md-6 mb-4">
                                                          <div class=""><label>Search:<input id="inp_search" type="text"
                                                                   value="" class="form-control" name="agent"
-                                                                  style="text-transform: uppercase;" required
+                                                                  style="text-transform: uppercase;"
                                                                   title="Search POS using Name, mobile no, email, pan/aadhar number"
                                                                   oninput="searchPOS()">
                                                             </label></div>
@@ -886,7 +828,7 @@
                                                       <div class="col-md-6 mb-4">
                                                          <div class=""><label>POS:<input id="inp_pos" type="text"
                                                                   value="" class="form-control" name="agent"
-                                                                  style="text-transform: uppercase;" required
+                                                                  style="text-transform: uppercase;"
                                                                   title="POS should be automatically fetched">
                                                             </label>
                                                          </div>
@@ -1583,7 +1525,7 @@
       gvwDiv = document.getElementById('gvwDiv')
       gsttDiv = document.getElementById('gsttDiv')
 
-      if (value == 'TWO WHEELER' || value == 'TWO WHEELER COMMERCIAL'  || value == 'TWO WHEELER SCOOTER') {
+      if (value == 'TWO WHEELER' || value == 'TWO WHEELER COMMERCIAL' || value == 'TWO WHEELER SCOOTER') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
@@ -2189,7 +2131,7 @@
          })
    }
    function sortItems(id) {
-      $("#"+id).html($("#" + id + " option").sort(function (a, b) {
+      $("#" + id).html($("#" + id + " option").sort(function (a, b) {
          return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
       }))
    }

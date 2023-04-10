@@ -24,7 +24,7 @@ class ProfileModel(models.Model):
         return self.id
 
     def save(self, *args, **kwargs):
-        self.login_id = uuid.uuid4().hex[:10].upper()
+        self.login_id = 'P' + uuid.uuid4().hex[:10].upper()
         super(ProfileModel, self).save(*args, **kwargs)
 
 
@@ -38,7 +38,7 @@ class StaffModel(models.Model):
     # reload UUID after inserting data
 
     def save(self, *args, **kwargs):
-        self.login_id = uuid.uuid4().hex[:10].upper()
+        self.login_id = 'S' + uuid.uuid4().hex[:10].upper()
         super(StaffModel, self).save(*args, **kwargs)
 
 
@@ -107,7 +107,7 @@ class Agents(models.Model):
         return self.full_name
 
     def save(self, *args, **kwargs):
-        self.login_id = uuid.uuid4().hex[:10].upper()
+        self.login_id = 'A' + uuid.uuid4().hex[:10].upper()
         super(Agents, self).save(*args, **kwargs)
 
 
@@ -163,15 +163,15 @@ class Payout(models.Model):
     ).hex[:7].upper(), editable=False, max_length=7)
     slab_name = models.ForeignKey(Slab, on_delete=models.CASCADE)
     payout_name = models.CharField(max_length=255)
-    product_name = models.CharField(max_length=255)     
+    product_name = models.CharField(max_length=255)
     insurance_company = models.CharField(max_length=255)
     sp_name = models.CharField(max_length=255)
-    sp_brokercode = models.CharField(max_length=255)    
+    sp_brokercode = models.CharField(max_length=255)
     vehicle_catagory = models.CharField(max_length=255)
     vehicle_makeby = models.CharField(max_length=255)
     vehicle_model = models.CharField(max_length=255)
     vehicle_fuel_type = models.CharField(max_length=255)
-    mfg_year = models.CharField(max_length=255)    
+    mfg_year = models.CharField(max_length=255)
     rto_city = models.TextField()
     addon = models.CharField(max_length=50)
     ncb = models.CharField(max_length=50)
@@ -181,7 +181,7 @@ class Payout(models.Model):
     coverage_type = models.CharField(max_length=255)
     policy_type = models.CharField(max_length=100)
     cpa = models.CharField(max_length=50)
-    policy_term = models.CharField(max_length=50)    
+    policy_term = models.CharField(max_length=50)
 
     agent_od_reward = models.IntegerField(max_length=50)
     agent_tp_reward = models.IntegerField(max_length=50)
@@ -252,21 +252,21 @@ class Policy(models.Model):
     insurance_company = models.CharField(max_length=100)
     sp_name = models.CharField(max_length=100)
     sp_brokercode = models.CharField(max_length=100)
-    product_name = models.CharField(max_length=100, default='' )
-    registration_no = models.CharField(max_length=50 )
-    rto_state = models.CharField(max_length=100 )
-    rto_city = models.CharField(max_length=100 )
-    vehicle_makeby = models.CharField(max_length=100 )
-    vehicle_model = models.CharField(max_length=100 )
-    vehicle_catagory = models.CharField(max_length=50 )
-    vehicle_fuel_type = models.CharField(max_length=50 )
+    product_name = models.CharField(max_length=100, default='')
+    registration_no = models.CharField(max_length=50)
+    rto_state = models.CharField(max_length=100)
+    rto_city = models.CharField(max_length=100)
+    vehicle_makeby = models.CharField(max_length=100)
+    vehicle_model = models.CharField(max_length=100)
+    vehicle_catagory = models.CharField(max_length=50)
+    vehicle_fuel_type = models.CharField(max_length=50)
     mfg_year = models.IntegerField()
-    addon = models.CharField(max_length=50 )
-    ncb = models.CharField(max_length=50 )
-    cubic_capacity = models.CharField(max_length=50 )
-    gvw = models.CharField(max_length=50 )
-    seating_capacity = models.CharField(max_length=50 )
-    coverage_type = models.CharField(max_length=100 )
+    addon = models.CharField(max_length=50)
+    ncb = models.CharField(max_length=50)
+    cubic_capacity = models.CharField(max_length=50)
+    gvw = models.CharField(max_length=50)
+    seating_capacity = models.CharField(max_length=50)
+    coverage_type = models.CharField(max_length=100)
     policy_type = models.CharField(max_length=50)
     cpa = models.CharField(max_length=50)
     risk_start_date = models.DateField()
@@ -281,7 +281,7 @@ class Policy(models.Model):
     TP_terrorism = models.CharField(max_length=10)
     net = models.CharField(max_length=10)
     gst_amount = models.CharField(max_length=10)
-    gst_gcv_amount = models.CharField(max_length=10)   
+    gst_gcv_amount = models.CharField(max_length=10)
     total = models.CharField(max_length=10)
     payment_mode = models.CharField(max_length=50)
     agent_od_reward = models.CharField(max_length=10)
@@ -292,7 +292,7 @@ class Policy(models.Model):
     self_od_amount = models.CharField(max_length=10)
     self_tp_reward = models.CharField(max_length=10)
     self_tp_amount = models.CharField(max_length=10)
-    
+
     proposal = models.FileField(upload_to='media/documents/')
     mandate = models.FileField(upload_to='media/documents/')
     policy = models.FileField(upload_to='media/documents/')
