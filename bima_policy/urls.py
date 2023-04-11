@@ -21,7 +21,10 @@ urlpatterns = [
     path('service_provider/broker/<str:id>/del',del_broker_code, name='del_broker_code'),
     path('vehicle/',vehicle_view, name='vehi'),
     path('vehicle/<str:id>',delete_vehicle,name='del_vehicle'),
-    path('vehicle/<str:id>/edit',edit_vehicle,name='edit_vehicle'),
+    path('vehicle/<str:id>/<str:id2>/edit',edit_vehicle,name='edit_vehicle'),
+    
+    path('vehicle_model/',read_vehical_model_data, name='read_vehical_model_data'),
+
     path('insurance_comp/', ins_comp, name="ins_comp"),
     path('insurance_comp/<str:id>',ins_del, name='ins_del'),
     path('rto/',rto_list , name="rto"),

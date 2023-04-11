@@ -1,3 +1,5 @@
+from django.utils.timezone import now
+import pymongo
 import boto3
 from django.shortcuts import render
 import json
@@ -31,21 +33,23 @@ def get_id_from_session(request):
 def is_user(request):
     return len(get_id_from_session(request)) >= 15
 
+
 def Index(request):
     return render(request, 'index.html')
 
-
 # DashBoardView
 def dashboard(request):
+    # print(get_profile_id(get_id_from_session(request)))
     agentcount = Agents.objects.count()
     staffcount = StaffModel.objects.count()
     spcount = ServiceProvider.objects.count()
     if is_user(request):
         policycount = Policy.objects.count()
     else:
-        policycount = Policy.objects.filter(employee=get_id_from_session(request)).count()
+        policycount = Policy.objects.filter(
+            employee=get_id_from_session(request)).count()
     print('total agents are:', agentcount)
-    
+
     return render(request, 'dashboard.html', {'agentcount': agentcount, 'staffcount': staffcount, 'spcount': spcount, 'totalpolicy': policycount})
 
 
@@ -251,23 +255,95 @@ def ins_del(request, id):
         return redirect('bima_policy:ins_comp')
 
 
+def write_vehicle_data():
+    return;
+    # Connect to MongoDB
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    db = client["ExperiyaBook"]
+    make_col = db["make"]
+    model_col = db["model"]
+    # Open the text file and read the record
+    with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+        for line in file:
+            record = line.strip()            
+            record_json = {"make": record}
+            make_col.insert_one(record_json)
+    print('done')
+
+    with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
+        for line in file:
+            record = line.strip()            
+            record_json = {"model": record}
+            model_col.insert_one(record_json)
+
+    print('done')
+
+def read_vehical_data():
+    # Connect to MongoDB
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    db = client.vehical_data
+    collection = db.make
+
+    # Retrieve data from MongoDB collection
+    data = list(collection.find())
+
+    # print(data)
+    # Pass data to template for rendering
+    return data
+
+def read_vehical_model_data(request):
+    print('read_vehical_model_data')
+    # Connect to MongoDB
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    db = client.ExperiyaBook
+    collection = db.model
+
+    # Retrieve data from MongoDB collection
+    data = list(collection.find())
+
+    # print(data)
+    # Pass data to template for rendering
+    return redirect('bima_policy:vehi')
+
+
+def read_all_vehical_data():
+    # Connect to MongoDB
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    db = client.ExperiyaBook
+    make_col = db.make
+    # model_col = db.model
+
+    # Retrieve data from MongoDB collection
+    context = {
+        "make" : list(make_col.find())
+        # "model" : list(model_col.find())
+    } 
+
+    # print(data)
+    # Pass data to template for rendering
+    return context
+
+
 # VehicleView
 def vehicle_view(request):
+    print("vehicle_view method calling")
+    # write_vehicle_data()
     if request.method == "GET":
         try:
-            data = VehicleMakeBy.objects.filter(
-                profile_id_id=get_id_from_session(request))
-            datamn = VehicleModelName.objects.filter(
-                profile_id_id=get_id_from_session(request))
+            context = read_all_vehical_data()            
+            model = ' ' #read_vehical_model_data()
+
+            # print(context)
             datavc = VehicleCategory.objects.filter(
                 profile_id_id=get_id_from_session(request))
-            mylist = zip(datamn, data)
-            return render(request, 'vehicle/vehicle.html', {'list': mylist, 'datavc': datavc, 'data': data, 'datamn': datamn})
+            # mylist = zip(datamn, data)
+            return render(request, 'vehicle/vehicle.html', {'context': context, 'model': model, 'datavc': datavc})
         except(VehicleMakeBy.DoesNotExist, VehicleModelName.DoesNotExist, VehicleCategory.DoesNotExist):
             return render(request, 'vehicle/vehicle.html')
     else:
         p = ProfileModel.objects.get(id=get_id_from_session(request))
         if 'mb_add' in request.POST:
+            print('im here')
             VehicleMakeBy.objects.create(
                 company=request.POST['makeby'], status=request.POST['mbstatus'], profile_id=p)
             return redirect('bima_policy:vehi')
@@ -279,64 +355,47 @@ def vehicle_view(request):
             VehicleCategory.objects.create(
                 category=request.POST['category'], status=request.POST['vcstatus'], profile_id=p)
             return redirect('bima_policy:vehi')
+        print('here')
         return redirect('bima_policy:vehi')
 
 
 def delete_vehicle(request, id):
-    if request.method == "POST" and 'delete' in request.POST:
-        data1 = VehicleCategory.objects.filter(id=id)
-        data2 = VehicleMakeBy.objects.filter(id=id)
-        data3 = VehicleModelName.objects.filter(id=id)
-        if data1:
-            data1.delete()
-        elif data2:
-            data2.delete()
-        elif data3:
-            data3.delete()
+    print('delete_vehicle method')
+    try:       
+        client = pymongo.MongoClient('mongodb://localhost:27017/')
+        db = client.ExperiyaBook
+        collection = db.make
+        document = collection.delete_one({'make': id})
+        if document.deleted_count == 1:
+            print('deleted: ', id)
+        else:        
+            print('deletion failed: ', id)
         return redirect('bima_policy:vehi')
-    elif request.method == "POST" and 'edit' in request.POST:
-        return edit_vehicle(request, id)
+    except Exception as ex:
+        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
+      
+def edit_vehicle(request, id, id2):
+    print('edit_vehicle method')
+    try:  
+        client = pymongo.MongoClient('mongodb://localhost:27017/')
+        db = client.vehical_data
+        collection = db.make        
+        document = collection.find_one({'make': id})
+        new_data = { 'make': id2   }           
+        collection.update_one({'make': id}, {'$set': new_data})
+        print('updated')        
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
+
+    
+
+    print('done')
+    return redirect('bima_policy:vehi')
 
 
-def edit_vehicle(request, id):
-    vcd = VehicleCategory.objects.filter(id=id)
-    vmbd = VehicleMakeBy.objects.filter(id=id)
-    vmd = VehicleModelName.objects.filter(id=id)
-    if request.method == "GET":
-        if vcd:
-            data = VehicleCategory.objects.filter(id=id)
-            return render(request, 'vehicle/vehicle_edit.html', {'data': data})
-        elif vmbd:
-            data = VehicleMakeBy.objects.filter(id=id)
-            return render(request, 'vehicle/vmb_edit.html', {'data': data})
-        elif vmd:
-            data1 = VehicleModelName.objects.filter(id=id)
-            data = VehicleMakeBy.objects.filter(
-                profile_id=get_id_from_session(request))
-            return render(request, 'vehicle/vm_edit.html', {'data': data, 'data1': data1})
-
-    if request.method == 'POST':
-        if 'vc_update' in request.POST:
-            category = request.POST['category']
-            status_update = request.POST['status_update']
-            VehicleCategory.objects.filter(id=id).update(
-                category=category, status=status_update)
-            return redirect('bima_policy:vehi')
-        if 'vmb_update' in request.POST:
-            company = request.POST['company']
-            status_update = request.POST['status_update']
-            VehicleMakeBy.objects.filter(id=id).update(
-                company=company, status=status_update)
-            return redirect('bima_policy:vehi')
-        if 'vm_update' in request.POST:
-            company = request.POST.get('company')
-            model = request.POST['model']
-            status_update = request.POST['status_update']
-            VehicleModelName.objects.filter(id=id).update(
-                company=company, model=model, status=status_update)
-            return redirect('bima_policy:vehi')
-
-
+    # print('id is' , document[0][0])
+   
 # ServiceProviderView
 def service_provider(request):
     if request.method == "GET":
@@ -429,49 +488,55 @@ def get_profile_id(id):
         login_id = StaffModel.objects.get(login_id=id).profile_id
         return login_id
     except Exception as ex:
-        pass   
-        
+        pass
+
     return ''
-    
-    
+
+
 def get_user_name(request):
     try:
-        name = ProfileModel.objects.filter( id=get_id_from_session(request)).values()[0]['full_name']
-        return name 
+        name = ProfileModel.objects.filter(
+            id=get_id_from_session(request)).values()[0]['full_name']
+        return name
     except Exception as ex:
         pass
     try:
-        name = StaffModel.objects.filter( login_id=get_id_from_session(request)).values().first()['staffname']
-        return name 
+        name = StaffModel.objects.filter(
+            login_id=get_id_from_session(request)).values().first()['staffname']
+        return name
     except Exception as ex:
         pass
     try:
-        name = Agents.objects.filter( login_id=get_id_from_session(request)).values().first()['full_name']
-        return name 
+        name = Agents.objects.filter(login_id=get_id_from_session(
+            request)).values().first()['full_name']
+        return name
     except Exception as ex:
         pass
 
-    return ''   
+    return ''
 
-   
+
 def get_user_role(request):
     try:
-        name = ProfileModel.objects.filter( id=get_id_from_session(request)).values()[0]['full_name']
-        return 'admin' 
+        name = ProfileModel.objects.filter(
+            id=get_id_from_session(request)).values()[0]['full_name']
+        return 'admin'
     except Exception as ex:
         pass
     try:
-        name = StaffModel.objects.filter( login_id=get_id_from_session(request)).values().first()['staffname']
-        return 'user' 
+        name = StaffModel.objects.filter(
+            login_id=get_id_from_session(request)).values().first()['staffname']
+        return 'user'
     except Exception as ex:
         pass
     try:
-        name = Agents.objects.filter( login_id=get_id_from_session(request)).values().first()['full_name']
-        return 'agent' 
+        name = Agents.objects.filter(login_id=get_id_from_session(
+            request)).values().first()['full_name']
+        return 'agent'
     except Exception as ex:
         pass
 
-    return ''   
+    return ''
 
 
 def fetch_vehicle_data():
@@ -492,27 +557,26 @@ def fetch_vehicle_data():
 class create_policy(View):
 
     def get(self, request):
-        print('create_policy get method') 
-        
+        print('create_policy get method')
+
         data_ag = json.dumps(
             list(Agents.objects.all().values()))
-        
+
         data_sp = ServiceProvider.objects.all()
         data_bc = BrokerCode.objects.all()
         data_ins = InsuranceCompany.objects.all()
 
         data_vc = VehicleCategory.objects.all()
-        data_bqp = BQP.objects.all()      
+        data_bqp = BQP.objects.all()
 
         user_info = {
-                "user_id" : get_id_from_session(request),
-                "user_name" : get_user_name(request),
-                "user_role" : get_user_role(request)
+            "user_id": get_id_from_session(request),
+            "user_name": get_user_name(request),
+            "user_role": get_user_role(request)
         }
-          
-        return render(request, 'policylist/policy_list.html', {"user_info" : user_info, "vdata": fetch_vehicle_data(), 'is_motor_form': True, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc, 'data_bqp': data_bqp})
-        
-                      
+
+        return render(request, 'policylist/policy_list.html', {"user_info": user_info, "vdata": fetch_vehicle_data(), 'is_motor_form': True, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc, 'data_bqp': data_bqp})
+
     def post(self, request):
         try:
             print('create_policy post method')
@@ -528,8 +592,8 @@ class create_policy(View):
             sp_brokercode = request.POST['sp_brokercode']
             registration_no = str.strip(request.POST['registration_no'])
             rto_state = request.POST['rto_state']
-            rto_city = str.strip(request.POST['rto_city']     )     
-            vehicle_makeby = str.strip(request.POST['vehicle_makeby'])            
+            rto_city = str.strip(request.POST['rto_city'])
+            vehicle_makeby = str.strip(request.POST['vehicle_makeby'])
             vehicle_model = str.strip(request.POST['vehicle_model'])
             vehicle_catagory = request.POST['vehicle_catagory']
             vehicle_fuel_type = request.POST['vehicle_fuel_type']
@@ -917,9 +981,8 @@ class create_policy(View):
 
                 except Exception as ex:
                     print(ex)
-            
-           
-            print(vehicle_makeby )
+
+            print(vehicle_makeby)
 
             pol = Policy.objects.create(profile_id=profile_id, proposal_no=proposal_no, policy_no=policy_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,
                                         sp_brokercode=sp_brokercode,  registration_no=registration_no,
@@ -1711,21 +1774,22 @@ def apply_policy(request, id):
         print(ex)
         return HttpResponse(ex)
 
-from django.utils.timezone import now
+
 def policy_entry(request):
     print('policy_entry method')
     print(get_id_from_session(request))
     print(now().date())
-     
-    try:    
+
+    try:
         if is_user(request):
             # data = Policy.objects.filter(issue_date__gte=now().date()).order_by('-policyid').values()
             data = Policy.objects.order_by('-policyid').values()
 
-        else:            
+        else:
             # data = Policy.objects.filter().order_by('-policyid').values()
-            data = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-policyid').values()
-            
+            data = Policy.objects.filter(employee=get_id_from_session(
+                request)).order_by('-policyid').values()
+
         print("total policy: ", data.values().count())
         datag = Agents.objects.all()
 

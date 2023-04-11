@@ -1495,7 +1495,6 @@
       }
    }
 
-
    function add_non_motor() {
       od = parseFloat(document.getElementById("od").value);
       tpt = parseFloat(document.getElementById("tpt").value);
@@ -1525,10 +1524,83 @@
       gvwDiv = document.getElementById('gvwDiv')
       gsttDiv = document.getElementById('gsttDiv')
 
-      if (value == 'TWO WHEELER' || value == 'TWO WHEELER COMMERCIAL' || value == 'TWO WHEELER SCOOTER') {
+      if (value == 'TWO WHEELER' ||  value == 'TWO WHEELER SCOOTER') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '75CC-150CC'
+         newoption.innerHTML = '75CC-150CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '150CC-350CC'
+         newoption.innerHTML = '150CC-350CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 350CC'
+         newoption.innerHTML = 'ABOVE 350CC'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage type
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+4 YEAR PACKAGE'
+         newoption.innerHTML = '1+4 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '5 YEAR TP'
+         newoption.innerHTML = '5 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+
+      }
+      
+      else if (value == 'TWO WHEELER COMMERCIAL') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
 
@@ -1599,7 +1671,8 @@
       else if (value == 'PRIVATE CAR') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
-         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
 
@@ -1674,7 +1747,8 @@
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
-         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
 
@@ -1714,6 +1788,7 @@
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
          document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
 
@@ -1748,6 +1823,7 @@
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
          document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
 
@@ -1779,6 +1855,7 @@
       else if (value == 'TAXI 4 WHEELER') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
          document.getElementById('seating_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
@@ -1872,8 +1949,8 @@
       else if (value == 'MISC-D SPECIAL VEHICLE') {
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
-         document.getElementById('seating_capacityDiv').hidden = true
-         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
          document.getElementById('gvwDiv').hidden = true
@@ -1926,8 +2003,8 @@
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
 
-         document.getElementById('seating_capacityDiv').hidden = true
-         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
          document.getElementById('gvwDiv').hidden = true
@@ -1973,13 +2050,14 @@
          newoption.innerHTML = 'OD ONLY'
          coverage_type.options.add(newoption);
       }
+     
       else if (value == 'SCHOOL BUS-INDIVIDUAL NAME') {
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
          document.getElementById('coverage_typeDiv').hidden = true
          document.getElementById('coverage_type').required = false
-         document.getElementById('seating_capacityDiv').hidden = true
-         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
          document.getElementById('seating_capacityDiv1').hidden = true
          document.getElementById('seating_capacity1').required = false
          document.getElementById('gvwDiv').hidden = true

@@ -30,10 +30,10 @@
               <li class="nav-item">
                 <a class="nav-link show active" data-toggle="tab" href="#Category">Category</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item"  >
                 <a class="nav-link " data-toggle="tab" href="#Model">Models</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item ">
                 <a class="nav-link" data-toggle="tab" href="#Makeby">Make By</a>
               </li>
             </ul>
@@ -85,7 +85,7 @@
                                 aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1"
-                                aria-label="Vehicle Category: activate to sort column ascending" style="width: 0px;" >
+                                aria-label="Vehicle Category: activate to sort column ascending" style="width: 0px;">
                                 Vehicle Category</th>
                               <th class="text-center w-10pc sorting" tabindex="0" aria-controls="tblList" rowspan="1"
                                 colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">
@@ -265,13 +265,12 @@
                                 style="width: 0px;">#</th>
                             </tr>
                           </thead>
-                          {% for item1,item2 in list %}
+                          {% for value in model %}
                           <tbody>
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc sorting_1">{{forloop.counter}}</td>
-                              <td>{{item1.model}}</td>
-                              <td>{{item2.company}}</td>
-                              <td class=" text-center w-10pc"><span class="badge badge-success">{{item1.status}}</span>
+                              <td>{{value.model}}</td>                            
+                              <td class=" text-center w-10pc"><span class="badge badge-success">Active</span>
                               </td>
                               <td class=" text-center nowrap">
                                 <form method='POST' action="{{item1.id}}">
@@ -483,28 +482,78 @@
                                 aria-label="#" style="width: 0px;">#</th>
                             </tr>
                           </thead>
-                          {%for value in data%}
+                          {%for value in context.make%}
                           <tbody>
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc nowrap sorting_1">{{forloop.counter}}</td>
-                              <td>{{value.company}}</td>
-                              <td class=" text-center w-10pc nowrap"><span
-                                  class="badge badge-success">{{value.status}}</span></td>
+                              <td>{{value.make}}</td>
+                              <td class=" text-center w-10pc nowrap"><span class="badge badge-success">Active</span>
+                              </td>
                               <td class=" text-center nowrap w-10pc">
-                                <form method='POST' action="{{value.id}}">
+                                <form method='' action="{{value.id}}">
+
                                   {% csrf_token %}
-                                  <a type='submit' href="{{value.id}}/edit"
+                                  <a data-toggle="modal" data-target="#mdledit"
+                                    onclick="document.getElementById('makeby1').value = '{{value.make}}'"
                                     class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
                                     <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
                                   </a>
-                                  <button type='submit' class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete">
-                                    <i class="fa fa-trash-alt text-danger" aria-hidden="true"></i>
-                                  </button>
+                                  <a type='submit' href="./{{value.make}}"
+                                    class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete">
+                                    <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
+                                  </a>
                                 </form>
                               </td>
                             </tr>
                           </tbody>
                           {%endfor%}
+
+                          <div class="modal fade" id="mdledit" data-backdrop="static" data-keyboard="false"
+                            tabindex="-1" role="dialog" aria-labelledby="ModalmbeLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 id="ModalmbeLabel" class="modal-title">Update Vehicle Company</h5>
+                                </div>
+                                <form>
+                                  <div class="modal-body">
+                                    <div class="form-group">
+                                      <label class="col-form-label">Name<em class="text-danger">*</em></label>
+                                      <input type="text" class="form-control" readonly id="makeby1">
+                                      <input type="text" class="form-control" data-parsley-required="true" id="makeby2">
+                                      <input type="hidden" name="csrf_token" data-parsley-required="true"
+                                        value="c4a6edc470bf3d819b4e783b2afe2f15" readonly="">
+                                      <input type="hidden" id="mbid" name="mbid" data-parsley-required="true"
+                                        readonly="">
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label">Status</label>
+                                      <select name="mbstatus_update" id="mbstatus_update" class="custom-select">
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary w-100p"
+                                      data-dismiss="modal">Close</button>
+                                      
+                                    <button onclick="updateMake()"  name="edit" class="btn btn-primary w-100p">
+                                    update
+                                    </button>
+                                  <script>
+                                    function updateMake() {
+                                      // bima_policy/vehicle/AERORIDE/edit
+                                      href = (window.location.pathname + document.getElementById('makeby1').value + '/' + document.getElementById('makeby2').value + '/edit') 
+                                      window.location.replace(href)
+                                    }
+                                  </script>
+                                  </div>
+                                 
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </table>
                       </div>
                       <div class="row align-items-center">
@@ -547,7 +596,8 @@
                         <div class="form-group">
                           {% csrf_token %}
                           <label class="col-form-label">Make By<em class="text-danger">*</em></label>
-                          <input type="text" class="form-control" data-parsley-required="true" name="makeby">
+                          <input id="makeby" type="text" class="form-control" data-parsley-required="true"
+                            name="makeby">
                         </div>
                         <div class="form-group">
                           <label class="form-label">Status</label>
@@ -565,6 +615,7 @@
                         <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
                         <button type="submit" name="mb_add" class="btn btn-primary w-100p">Save</button>
                       </div>
+
                     </form>
                   </div>
                 </div>
