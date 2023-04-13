@@ -30,7 +30,7 @@
               <li class="nav-item">
                 <a class="nav-link show active" data-toggle="tab" href="#Category">Category</a>
               </li>
-              <li class="nav-item"  >
+              <li class="nav-item">
                 <a class="nav-link " data-toggle="tab" href="#Model">Models</a>
               </li>
               <li class="nav-item ">
@@ -94,28 +94,76 @@
                                 aria-label="#" style="width: 0px;">#</th>
                             </tr>
                           </thead>
-                          {% for value in datavc %}
+                          {% for value in vcat %}
                           <tbody>
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc sorting_1">{{forloop.counter}}</td>
-                              <td>{{value.category}}</td>
-                              <td class=" text-center w-10pc"><span class="badge badge-success">{{value.status}}</span>
+                              <td>{{value}}</td>
+                              <td class=" text-center w-10pc"><span class="badge badge-success">Active</span>
                               </td>
                               <td class=" text-center w-10pc nowrap">
-                                <form method='POST' action="{{value.id}}">
+                                <form method='POST' action="{{value.id}}/vcat">
                                   {% csrf_token %}
-                                  <a type='submit' href="{{value.id}}/edit"
+                                  <a data-toggle="modal" data-target="#vcatedit"
+                                    onclick="document.getElementById('vcat1').value = '{{value}}'"
                                     class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
                                     <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
                                   </a>
-                                  <button type='submit' class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete">
-                                    <i class="fa fa-trash-alt text-danger" aria-hidden="true"></i>
-                                  </button>
+                                  <a type='submit' href="./{{value}}" class="mr-1 btn btn-sm btn-icon btn-secondary"
+                                    name="delete">
+                                    <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
+                                  </a>
                                 </form>
                               </td>
                             </tr>
                           </tbody>
                           {% endfor %}
+                          <div class="modal fade" id="vcatedit" data-backdrop="static" data-keyboard="false"
+                            tabindex="-1" role="dialog" aria-labelledby="ModalmbeLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">Update Vehicle Model</h5>
+                                </div>
+                                <form>
+                                  <div class="modal-body">
+                                    <div class="form-group">
+                                      <label class="col-form-label">Category<em class="text-danger">*</em></label>
+                                      <input type="text" class="form-control" readonly id="vcat1">
+                                      <label class="col-form-label">Category<em class="text-danger">*</em></label>
+                                      <input type="text" class="form-control" data-parsley-required="true" id="vcat2">
+                                      <input type="hidden" name="csrf_token" data-parsley-required="true"
+                                        value="c4a6edc470bf3d819b4e783b2afe2f15" readonly="">
+                                      <input type="hidden" data-parsley-required="true" readonly="">
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label">Status</label>
+                                      <select name="mbstatus_update" id="mbstatus_update" class="custom-select">
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary w-100p"
+                                      data-dismiss="modal">Close</button>
+
+                                    <button onclick="updateCat()" name="edit1" class="btn btn-primary w-100p">
+                                      update
+                                    </button>
+                                    <script>
+                                      function updateCat() {
+                                        // bima_policy/vehicle/AERORIDE/edit
+                                        href = (window.location.pathname + document.getElementById('vcat1').value + '/' + document.getElementById('vcat2').value + '/vcat')
+                                        window.location.replace(href)
+                                      }
+                                    </script>
+                                  </div>
+
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </table>
                       </div>
                       <div class="row align-items-center">
@@ -195,7 +243,7 @@
                           <label class="col-form-label">Name<em class="text-danger">*</em></label>
                           <input type="text" class="form-control" data-parsley-required="true" id="category"
                             disabled="">
-                          <input type="hidden" id="vcid" name="vcid" data-parsley-required="true" readonly="">
+                          <input type="hidden" id="vcaid" name="vcid" data-parsley-required="true" readonly="">
                         </div>
                         <div class="form-group">
                           <label class="form-label">Status</label>
@@ -269,26 +317,76 @@
                           <tbody>
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc sorting_1">{{forloop.counter}}</td>
-                              <td>{{value.model}}</td>                            
+                              <td>{{value}}</td>
                               <td class=" text-center w-10pc"><span class="badge badge-success">Active</span>
                               </td>
                               <td class=" text-center nowrap">
-                                <form method='POST' action="{{item1.id}}">
+                                <form method='POST' action="{{value}}/cat">
                                   {% csrf_token %}
-                                  <a type='submit' href="{{item1.id}}/edit"
+                                  <a data-toggle="modal" data-target="#mdledit"
+                                    onclick="document.getElementById('model1').value = '{{value}}'"
                                     class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
                                     <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
                                   </a>
-                                  <button type='submit' class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete">
-                                    <i class="fa fa-trash-alt text-danger" aria-hidden="true"></i>
-                                  </button>
+                                  <a type='submit' href="./{{value}}/cat" class="mr-1 btn btn-sm btn-icon btn-secondary"
+                                    name="delete">
+                                    <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
+                                  </a>
                                 </form>
                               </td>
                             </tr>
 
                           </tbody>
-
                           {%endfor%}
+
+                          <div class="modal fade" id="mdledit" data-backdrop="static" data-keyboard="false"
+                            tabindex="-1" role="dialog" aria-labelledby="ModalmbeLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 id="ModalmbeLabel" class="modal-title">Update Vehicle Model</h5>
+                                </div>
+                                <form>
+                                  <div class="modal-body">
+                                    <div class="form-group">
+                                      <label class="col-form-label">Model<em class="text-danger">*</em></label>
+                                      <input type="text" class="form-control" readonly id="model1">
+                                      <label class="col-form-label">Model<em class="text-danger">*</em></label>
+                                      <input type="text" class="form-control" data-parsley-required="true" id="model2">
+                                      <input type="hidden" name="csrf_token" data-parsley-required="true"
+                                        value="c4a6edc470bf3d819b4e783b2afe2f15" readonly="">
+                                      <input type="hidden" id="mdlid" name="mdlid" data-parsley-required="true"
+                                        readonly="">
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label">Status</label>
+                                      <select name="mbstatus_update" id="mbstatus_update" class="custom-select">
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary w-100p"
+                                      data-dismiss="modal">Close</button>
+
+                                    <button onclick="updateModel()" name="edit" class="btn btn-primary w-100p">
+                                      update
+                                    </button>
+                                    <script>
+                                      function updateModel() {
+                                        // bima_policy/vehicle/AERORIDE/edit
+                                        href = (window.location.pathname + document.getElementById('model1').value + '/' + document.getElementById('model2').value + '/model')
+                                        window.location.replace(href)
+                                      }
+                                    </script>
+                                  </div>
+
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
                         </table>
                       </div>
                       <div class="row align-items-center">
@@ -486,20 +584,20 @@
                           <tbody>
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc nowrap sorting_1">{{forloop.counter}}</td>
-                              <td>{{value.make}}</td>
+                              <td>{{value}}</td>
                               <td class=" text-center w-10pc nowrap"><span class="badge badge-success">Active</span>
                               </td>
                               <td class=" text-center nowrap w-10pc">
                                 <form method='' action="{{value.id}}">
 
                                   {% csrf_token %}
-                                  <a data-toggle="modal" data-target="#mdledit"
-                                    onclick="document.getElementById('makeby1').value = '{{value.make}}'"
+                                  <a data-toggle="modal" data-target="#mkedit"
+                                    onclick="document.getElementById('makeby1').value = '{{value}}'"
                                     class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
                                     <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
                                   </a>
-                                  <a type='submit' href="./{{value.make}}"
-                                    class="mr-1 btn btn-sm btn-icon btn-secondary" name="delete">
+                                  <a type='submit' href="./{{value}}" class="mr-1 btn btn-sm btn-icon btn-secondary"
+                                    name="delete">
                                     <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
                                   </a>
                                 </form>
@@ -508,18 +606,19 @@
                           </tbody>
                           {%endfor%}
 
-                          <div class="modal fade" id="mdledit" data-backdrop="static" data-keyboard="false"
-                            tabindex="-1" role="dialog" aria-labelledby="ModalmbeLabel" aria-hidden="true">
+                          <div class="modal fade" id="mkedit" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                            role="dialog" aria-labelledby="ModalmbeLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 id="ModalmbeLabel" class="modal-title">Update Vehicle Company</h5>
+                                  <h5 id="ModalmbeLabel" class="modal-title">Update Vehicle Make</h5>
                                 </div>
                                 <form>
                                   <div class="modal-body">
                                     <div class="form-group">
-                                      <label class="col-form-label">Name<em class="text-danger">*</em></label>
+                                      <label class="col-form-label">Make<em class="text-danger">*</em></label>
                                       <input type="text" class="form-control" readonly id="makeby1">
+                                      <label class="col-form-label">Make<em class="text-danger">*</em></label>
                                       <input type="text" class="form-control" data-parsley-required="true" id="makeby2">
                                       <input type="hidden" name="csrf_token" data-parsley-required="true"
                                         value="c4a6edc470bf3d819b4e783b2afe2f15" readonly="">
@@ -537,19 +636,19 @@
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary w-100p"
                                       data-dismiss="modal">Close</button>
-                                      
-                                    <button onclick="updateMake()"  name="edit" class="btn btn-primary w-100p">
-                                    update
+
+                                    <button onclick="updateMake()" name="edit" class="btn btn-primary w-100p">
+                                      update
                                     </button>
-                                  <script>
-                                    function updateMake() {
-                                      // bima_policy/vehicle/AERORIDE/edit
-                                      href = (window.location.pathname + document.getElementById('makeby1').value + '/' + document.getElementById('makeby2').value + '/edit') 
-                                      window.location.replace(href)
-                                    }
-                                  </script>
+                                    <script>
+                                      function updateMake() {
+                                        // bima_policy/vehicle/AERORIDE/edit
+                                        href = (window.location.pathname + document.getElementById('makeby1').value + '/' + document.getElementById('makeby2').value + '/make')
+                                        window.location.replace(href)
+                                      }
+                                    </script>
                                   </div>
-                                 
+
                                 </form>
                               </div>
                             </div>

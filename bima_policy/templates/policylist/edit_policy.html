@@ -260,7 +260,7 @@
                                           </select>
                                        </div>
 
-                                       <div class="col-md-3 mb-4" id="gvwDiv">
+                                       <div class="col-md-3 mb-4" id="gvwDiv" >
                                           <label>GVW<abbr class="text-danger">*</abbr></label>
                                           <select name="gvw" class="custom-select" id="gvw" required>
                                              <option value="{{data.gvw}}"> {{data.gvw}} </option>
@@ -327,7 +327,6 @@
                                              <option value="NO">NO</option>
                                           </select>
                                        </div>
-
 
                                        <div class="col-md-3 mb-4">
                                           <label for="insured_age">Insured Age <abbr title=""
@@ -405,8 +404,6 @@
                                           </div>
 
                                        </div>
-
-
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
@@ -526,54 +523,48 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="{{data.OD_premium}}"
-                                       class="form-control col-lg-6 maskNumField" data-parsley-pattern="^[0-9]+$"
-                                       name="od" id="od" maxlength="10" required>
+                                       oninput="calculateValue()" value="{{data.OD_premium}}" class="form-control col-lg-6 " name="od"
+                                       id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="{{data.TP_terrorism}}"
-                                       class="form-control col-lg-6 maskNumField" data-parsley-pattern="^[0-9]+$"
-                                       name="tpt" id="tpt" maxlength="10" required>
+                                       oninput="calculateValue()" value="{{data.TP_terrorism}}" class="form-control col-lg-6 " name="tpt"
+                                       id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
-                                       onclick="add()" value="{{data.net}}"
-                                       class="form-control col-lg-6 maskNumField bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
-                                       maxlength="10" readonly="" required>
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net" value="{{data.net}}"
+                                       class="form-control col-lg-6  bg-light" id="net" maxlength="10" readonly=""
+                                       required tabindex="-1">
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       value="{{data.gst_amount}}" class="form-control col-lg-6 maskNumField"
-                                       data-parsley-pattern="^[0-9]+$" name="gst" id="gst" maxlength="10" required
-                                       oninput="calculateValue()">
+                                          class="text-danger">*</abbr></label><input type="text" value="{{data.gst_amount}}"
+                                       class="form-control col-lg-6 bg-light" name="gst" id="gst" maxlength="10"
+                                       required readonly tabindex="-1">
                                  </div>
 
                                  <div class="row mb-2" id="gsttDiv" hidden>
                                     <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       value="{{data.gst_gcv_amount}}" class="form-control col-lg-6 maskNumField"
-                                       data-mask-as-number-maxlength="10" data-parsley-pattern="^[0-9]+$" name="gstt"
-                                       id="gstt" maxlength="10" oninput="calculateValue()">
+                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                       class="form-control col-lg-6 bg-light" name="gstt" id="gstt" maxlength="10"
+                                       readonly tabindex="-1">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="{{data.total}}"
-                                       class="form-control maskNumField col-lg-6 bg-light"
-                                       data-parsley-pattern="^[0-9]+$" id="totalnet" readonly="" maxlength="10" required
-                                       oninput="calculateValue()">
+                                       value="{{data.total}}" class="form-control  col-lg-6 bg-light" id="totalnet" readonly=""
+                                       maxlength="10" required tabindex="-1">
                                  </div>
+
+
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value="{{data.payment_mode}}" > {{data.payment_mode}} </option>
-                                       <option value="ONLINE">ONLINE</option>                                    
+                                       <option value="" hidden> -- Select Payment Mode -- </option>
+                                       <option value="ONLINE" selected>ONLINE</option>
                                        <option value="CHEQUE"> CHEQUE</option>
-                                       <option value="CASH">CASH</option>    
+                                       <option value="CASH">CASH</option>
                                     </select>
                                  </div>
 
@@ -890,49 +881,48 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="{{data.OD_premium}}" class="form-control col-lg-6 maskNumField"
-                                       data-parsley-pattern="^[0-9]+$" name="od" id="od" maxlength="10" required>
+                                       oninput="calculateValue()" value="{{data.OD_premium}}" class="form-control col-lg-6 " name="od"
+                                       id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="{{data.TP_terrorism}}" class="form-control col-lg-6 maskNumField"
-                                       data-parsley-pattern="^[0-9]+$" name="tpt" id="tpt" maxlength="10" required>
+                                       oninput="calculateValue()" value="{{data.TP_terrorism}}" class="form-control col-lg-6 " name="tpt"
+                                       id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
-                                       onclick="add()" value="{{data.net}}" class="form-control col-lg-6 maskNumField bg-light"
-                                       data-mask-as-number-maxlength="10" data-parsley-pattern="^[0-9]+$" id="net"
-                                       maxlength="10" readonly="" required>
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net" value="{{data.net}}"
+                                       class="form-control col-lg-6  bg-light" id="net" maxlength="10" readonly=""
+                                       required tabindex="-1">
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text" value="{{data.gst_amount}}"
-                                       class="form-control col-lg-6 maskNumField" data-parsley-pattern="^[0-9]+$"
-                                       name="gst" id="gst" maxlength="10" required oninput="calculateValue()">
+                                       class="form-control col-lg-6 bg-light" name="gst" id="gst" maxlength="10"
+                                       required readonly tabindex="-1">
                                  </div>
 
                                  <!-- <div class="row mb-2" id="gsttDiv" hidden>
                                     <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 maskNumField" data-mask-as-number-maxlength="10"
-                                       data-parsley-pattern="^[0-9]+$" name="gstt" id="gstt" maxlength="10"
-                                       oninput="calculateValue()">
+                                       class="form-control col-lg-6 bg-light" name="gstt" id="gstt" maxlength="10"
+                                       readonly tabindex="-1">
                                  </div> -->
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       onclick="addgst()" value="{{data.total}}" class="form-control maskNumField col-lg-6 bg-light"
-                                       data-parsley-pattern="^[0-9]+$" id="totalnet" readonly="" maxlength="10" required
-                                       oninput="calculateValue()">
+                                       value="{{data.total}}" class="form-control  col-lg-6 bg-light" id="totalnet" readonly=""
+                                       maxlength="10" required tabindex="-1">
                                  </div>
+
+
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value="{{data.payment_mode}}"> {{data.payment_mode}} </option>
-                                       <option value="ONLINE">ONLINE</option>                                    
+                                       <option value="" hidden> -- Select Payment Mode -- </option>
+                                       <option value="ONLINE" selected>ONLINE</option>
                                        <option value="CHEQUE"> CHEQUE</option>
-                                       <option value="CASH">CASH</option>    
+                                       <option value="CASH">CASH</option>
                                     </select>
                                  </div>
 
@@ -1382,26 +1372,12 @@
 
    function calculateValue() {
 
-      is_motor_form = "{{is_motor_form | safe}}"
-
-      if (is_motor_form) {
-
-         try {
-            add_non_motor()
-            addgst_non_motor()
-         } catch (error) { }
-
-      }
-      else {
-         try {
-            add()
-            addgst()
-         } catch (error) { }
-      }
-
-
-
+      try {
+         add_non_motor()
+         addgst_non_motor()
+      } catch (error) {
    }
+}
 
    function add() {
       od = parseInt(document.getElementById("od").value);
@@ -1440,26 +1416,49 @@
       }
    }
 
-
+   
    function add_non_motor() {
-      od = parseInt(document.getElementById("od").value);
-      tpt = parseInt(document.getElementById("tpt").value);
+      // Removes space
+      odel = document.getElementById("od");
+      odel.value = odel.value.toString().trim()
+      tptel = document.getElementById("tpt");
+      tptel.value = tptel.value.toString().trim()
 
-      gst = parseInt(document.getElementById("gst").value);
+      od = parseFloat(document.getElementById("od").value);
+      tpt = parseFloat(document.getElementById("tpt").value);
+      net = document.getElementById("net")
+      gst = document.getElementById("gst")
 
-      document.getElementById("net").value = od + tpt;
-      document.getElementById("gst").value = (od + tpt) * 18 / 100;
-
+      net.value = Number(od + tpt).toFixed((2));
+      gst.value = Number((od + tpt) * 18 / 100).toFixed(2);
    }
 
    function addgst_non_motor() {
+
       var numOne, numTwo, sum;
-      net = parseInt(document.getElementById("net").value);
-      gst = parseInt(document.getElementById("gst").value);
-      document.getElementById("totalnet").value = net + gst;
+      tpt = parseFloat(document.getElementById("tpt").value);
+
+      net = parseFloat(document.getElementById("net").value);
+      gst = parseFloat(document.getElementById("gst").value);
+
+      try {
+         vc = document.getElementById('vehicle_catagory').value
+         if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
+
+            gstt = document.getElementById("gstt");
+            gstt.value = Number(tpt * 12 / 100).toFixed(2);
+            document.getElementById("totalnet").value = Number(net + gst + parseFloat(gstt.value)).toFixed(2);
+            return
+         };
+      }
+      catch { }
+
+      document.getElementById("totalnet").value = Number(net + gst).toFixed(2);
+
    }
 
-   function setCategoryOnChange() {
+
+   function setCategoryOnChangeOld() {
       value = document.getElementById('vehicle_catagory').value
 
       coverage_typeDiv = document.getElementById('coverage_typeDiv')
@@ -1646,11 +1645,7 @@
          newoption.value = 'TP ONLY'
          newoption.innerHTML = 'TP ONLY'
          coverage_type.options.add(newoption);
-
-         try {
-            calculateValue()
-         } catch (error) {
-         }
+       
       }
 
       else if (value == '3 WHEELER PCV') {
@@ -1973,6 +1968,598 @@
 
    }
 
+   
+   function setCategoryOnChange() {
+
+      // sortItems("vehicle_catagory")
+
+      value = document.getElementById('vehicle_catagory').value
+
+      coverage_typeDiv = document.getElementById('coverage_typeDiv')
+      cubic_capacityDiv = document.getElementById('cubic_capacityDiv')
+      seating_capacityDiv = document.getElementById('seating_capacityDiv')
+      gvwDiv = document.getElementById('gvwDiv')
+      gsttDiv = document.getElementById('gsttDiv')
+
+      if (value == 'TWO WHEELER' || value == 'TWO WHEELER SCOOTER') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '75CC-150CC'
+         newoption.innerHTML = '75CC-150CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '150CC-350CC'
+         newoption.innerHTML = '150CC-350CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 350CC'
+         newoption.innerHTML = 'ABOVE 350CC'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage type
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+4 YEAR PACKAGE'
+         newoption.innerHTML = '1+4 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '5 YEAR TP'
+         newoption.innerHTML = '5 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+
+      }
+
+      else if (value == 'TWO WHEELER COMMERCIAL') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '75CC-150CC'
+         newoption.innerHTML = '75CC-150CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '150CC-350CC'
+         newoption.innerHTML = '150CC-350CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 350CC'
+         newoption.innerHTML = 'ABOVE 350CC'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage type
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+4 YEAR PACKAGE'
+         newoption.innerHTML = '1+4 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '5 YEAR TP'
+         newoption.innerHTML = '5 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+
+      }
+
+      else if (value == 'PRIVATE CAR') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'BELOW 1000CC'
+         newoption.innerHTML = 'BELOW 1000CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1000CC-1500CC'
+         newoption.innerHTML = '1000CC-1500CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 1500CC'
+         newoption.innerHTML = 'ABOVE 1500CC'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
+
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+         document.getElementById('gvwDiv').hidden = false
+         document.getElementById('gvw').required = true
+         document.getElementById('gsttDiv').hidden = false
+         document.getElementById('gstt').required = true
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == '3 WHEELER PCV') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+         coverage_type.innerHTML = ''
+
+         // Coverage type        
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == '3 WHEELER GCV-PUBLIC CARRIER') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+
+         document.getElementById('gvwDiv').hidden = false
+         document.getElementById('gvw').required = true
+         document.getElementById('gsttDiv').hidden = false
+         document.getElementById('gstt').required = true
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP Only'
+         newoption.innerHTML = 'TP Only'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'TAXI 4 WHEELER') {
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('cubic_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+
+         cubic_capacity.innerHTML = ''
+         coverage_type.innerHTML = ''
+
+         // Cubic_ capacity options
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'BELOW 1000CC'
+         newoption.innerHTML = 'BELOW 1000CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1000CC-1500CC'
+         newoption.innerHTML = '1000CC-1500CC'
+         cubic_capacity.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'ABOVE 1500CC'
+         newoption.innerHTML = 'ABOVE 1500CC'
+         cubic_capacity.options.add(newoption);
+
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'BUS AND OTHERS') {
+         document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('coverage_type').required = false
+
+         document.getElementById('seating_capacityDiv').hidden = true
+         document.getElementById('seating_capacity').required = false
+
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+         document.getElementById('seating_capacityDiv1').hidden = false
+
+      }
+
+      else if (value == 'MISC-D SPECIAL VEHICLE') {
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
+
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+
+      }
+
+      else if (value == 'SCHOOL BUS-SCHOOL NAME') {
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+      else if (value == 'SCHOOL BUS-INDIVIDUAL NAME') {
+         document.getElementById('cubic_capacityDiv').hidden = true
+         document.getElementById('cubic_capacity').required = false
+         document.getElementById('coverage_typeDiv').hidden = true
+         document.getElementById('coverage_type').required = false
+         document.getElementById('seating_capacityDiv').hidden = false
+         document.getElementById('seating_capacity').required = true
+         document.getElementById('seating_capacityDiv1').hidden = true
+         document.getElementById('seating_capacity1').required = false
+         document.getElementById('gvwDiv').hidden = true
+         document.getElementById('gvw').required = false
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').required = false
+         document.getElementById('gstt').value = 0
+
+         console.log(document.getElementById('vehicle_catagory').value)
+
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
+         // Coverage Type
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1+2 YEAR PACKAGE'
+         newoption.innerHTML = '1+2 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '3 YEAR TP'
+         newoption.innerHTML = '3 YEAR TP'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'OD ONLY'
+         newoption.innerHTML = 'OD ONLY'
+         coverage_type.options.add(newoption);
+      }
+
+      try {
+         calculateValue()
+      } catch (error) {
+      }
+      
+   }
+
    function addSeatingCapacity() {
       try {
          var seating_capacity1 = document.getElementById('seating_capacity1')
@@ -2039,14 +2626,22 @@
 </script>
 
 
-<body onload="initialConfig()">
+<body onload="initialConfig()"  >
 
 </body> 
 
 <script>
    function initialConfig() {
+     
       addVehicleMakes()
       addVehicleModels()
+
+      value = document.getElementById('vehicle_catagory').value
+      if (value == 'TWO WHEELER' || value == 'TWO WHEELER SCOOTER') {
+         
+
+         alert(value)
+      }
    }
 
    

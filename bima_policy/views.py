@@ -38,6 +38,8 @@ def Index(request):
     return render(request, 'index.html')
 
 # DashBoardView
+
+
 def dashboard(request):
     # print(get_profile_id(get_id_from_session(request)))
     agentcount = Agents.objects.count()
@@ -256,27 +258,31 @@ def ins_del(request, id):
 
 
 def write_vehicle_data():
-    return;
+    # return;
     # Connect to MongoDB
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
-    db = client["ExperiyaBook"]
+    client = pymongo.MongoClient(
+        "mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority")
+
+    # client = pymongo.MongoClient("mongodb://localhost:27017/")
+    db = client["vehicle_data"]
     make_col = db["make"]
     model_col = db["model"]
     # Open the text file and read the record
     with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
         for line in file:
-            record = line.strip()            
+            record = line.strip()
             record_json = {"make": record}
             make_col.insert_one(record_json)
     print('done')
 
     with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
         for line in file:
-            record = line.strip()            
+            record = line.strip()
             record_json = {"model": record}
             model_col.insert_one(record_json)
 
     print('done')
+
 
 def read_vehical_data():
     # Connect to MongoDB
@@ -291,8 +297,10 @@ def read_vehical_data():
     # Pass data to template for rendering
     return data
 
+
 def read_vehical_model_data(request):
     print('read_vehical_model_data')
+    return
     # Connect to MongoDB
     client = pymongo.MongoClient('mongodb://localhost:27017/')
     db = client.ExperiyaBook
@@ -306,18 +314,67 @@ def read_vehical_model_data(request):
     return redirect('bima_policy:vehi')
 
 
+def read_vehicle_data_file():
+    # return;
+    make_list = []
+    model_list = []
+    cat_list = []
+    # Open the text file and read the record
+    with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+        for line in file:
+            make_list.append(line.strip())
+
+    print('done')
+
+    with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
+        for line in file:
+            model_list.append(line.strip())
+    with open('bima_policy//static//vehicle data//vcat.txt', "r") as file:
+        for line in file:
+            cat_list.append(line.strip())
+    context = {
+        "make": make_list,
+        "model": model_list,
+        "vcat": cat_list
+    }
+    print('done')
+    return context
+
+
 def read_all_vehical_data():
     # Connect to MongoDB
+    # client = pymongo.MongoClient("mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority")
     client = pymongo.MongoClient('mongodb://localhost:27017/')
+
     db = client.ExperiyaBook
     make_col = db.make
     # model_col = db.model
 
     # Retrieve data from MongoDB collection
     context = {
-        "make" : list(make_col.find())
+        "make": list(make_col.find())
         # "model" : list(model_col.find())
-    } 
+    }
+
+    # print(data)
+    # Pass data to template for rendering
+    return context
+
+
+def read_all_vehical_data_file():
+    # Connect to MongoDB
+    # client = pymongo.MongoClient("mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority")
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+
+    db = client.ExperiyaBook
+    make_col = db.make
+    # model_col = db.model
+
+    # Retrieve data from MongoDB collection
+    context = {
+        "make": list(make_col.find())
+        # "model" : list(model_col.find())
+    }
 
     # print(data)
     # Pass data to template for rendering
@@ -327,17 +384,25 @@ def read_all_vehical_data():
 # VehicleView
 def vehicle_view(request):
     print("vehicle_view method calling")
-    # write_vehicle_data()
+
     if request.method == "GET":
         try:
-            context = read_all_vehical_data()            
-            model = ' ' #read_vehical_model_data()
+            context = read_vehicle_data_file()
+            # make = context["make"]
+            model = context["model"]
+            vcat = context["vcat"]
+
+            paginator = Paginator(model, 25)
+
+            model_data = paginator.get_page(request.GET.get('page'))
+
+            print(len(model_data))
 
             # print(context)
             datavc = VehicleCategory.objects.filter(
                 profile_id_id=get_id_from_session(request))
             # mylist = zip(datamn, data)
-            return render(request, 'vehicle/vehicle.html', {'context': context, 'model': model, 'datavc': datavc})
+            return render(request, 'vehicle/vehicle.html', {'context': context, 'model': model_data, 'vcat': vcat, 'datavc': datavc})
         except(VehicleMakeBy.DoesNotExist, VehicleModelName.DoesNotExist, VehicleCategory.DoesNotExist):
             return render(request, 'vehicle/vehicle.html')
     else:
@@ -355,48 +420,199 @@ def vehicle_view(request):
             VehicleCategory.objects.create(
                 category=request.POST['category'], status=request.POST['vcstatus'], profile_id=p)
             return redirect('bima_policy:vehi')
-        print('here')
+
         return redirect('bima_policy:vehi')
 
 
-def delete_vehicle(request, id):
+def delete_vehicleo(request, id):
     print('delete_vehicle method')
-    try:       
+    try:
         client = pymongo.MongoClient('mongodb://localhost:27017/')
         db = client.ExperiyaBook
         collection = db.make
         document = collection.delete_one({'make': id})
         if document.deleted_count == 1:
             print('deleted: ', id)
-        else:        
+        else:
             print('deletion failed: ', id)
         return redirect('bima_policy:vehi')
     except Exception as ex:
         return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
-      
-def edit_vehicle(request, id, id2):
-    print('edit_vehicle method')
-    try:  
-        client = pymongo.MongoClient('mongodb://localhost:27017/')
-        db = client.vehical_data
-        collection = db.make        
-        document = collection.find_one({'make': id})
-        new_data = { 'make': id2   }           
-        collection.update_one({'make': id}, {'$set': new_data})
-        print('updated')        
+
+
+def delete_vehicle(request, id):
+    print('delete_vehicle method')
+
+    print(id)
+
+    try:
+        temp_list = []
+        found = False
+        with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+            for line in file:
+                if line.strip() == id:
+                    record = line.strip()
+                    continue
+                else:
+                    temp_list.append(line.strip())
+
+        with open('bima_policy//static//vehicle data//vmake.txt', "w") as file:
+            for i in temp_list:
+                file.write(i + '\n')
+
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        print(ex)
+        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
+
+
+def delete_vehicle_vcat(request, id):
+    print('delete_vehicle_vcat method')
+
+    print(id)
+
+    try:
+        temp_list = []
+        with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
+            for line in file:
+                if line.strip() == id:
+                    record = line.strip()
+                    continue
+                else:
+                    temp_list.append(line.strip())
+
+        with open('bima_policy//static//vehicle data//vmodel.txt', "w") as file:
+            for i in temp_list:
+                file.write(i + '\n')
+
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        print(ex)
+        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
+
+
+def delete_vehicle_make(request, id):
+    print('delete_vehicle method')
+
+    print(id)
+
+    try:
+        temp_list = []
+        with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+            for line in file:
+                if line.strip() == id:
+                    record = line.strip()
+                    continue
+                else:
+                    temp_list.append(line.strip())
+
+        with open('bima_policy//static//vehicle data//vmake.txt', "w") as file:
+            for i in temp_list:
+                print(i)
+                file.write(i + '\n')
+
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        print(ex)
+        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
+
+
+def update_vehicle_model(request, id, id2):
+    print('update_vehicle_model method')
+    try:
+        temp_list = []
+        with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
+            for line in file:
+                if line.strip() == id:
+                    temp_list.append(id2)
+                    continue
+                else:
+                    temp_list.append(line.strip())
+        with open('bima_policy//static//vehicle data//vmodel.txt', "w") as file:
+            for i in temp_list:
+                file.write(i + '\n')
+
+        print('vehicle model updated')
         return redirect('bima_policy:vehi')
     except Exception as ex:
         return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
 
-    
+
+def update_vehicle_make(request, id, id2):
+    print('update_vehicle_make method')
+    try:
+        temp_list = []
+        with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+            for line in file:
+                if line.strip() == id:
+                    temp_list.append(id2)
+                    continue
+                else:
+                    temp_list.append(line.strip())
+        with open('bima_policy//static//vehicle data//vmake.txt', "w") as file:
+            for i in temp_list:
+                file.write(i + '\n')
+
+        print('vehicle make updated')
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
+
+
+def update_vehicle_cat(request, id, id2):
+    print('update_vehicle_cat method')
+    try:
+        temp_list = []
+        with open('bima_policy//static//vehicle data//vcat.txt', "r") as file:
+            for line in file:
+                if line.strip() == id:
+                    temp_list.append(id2)
+                    continue
+                else:
+                    temp_list.append(line.strip())
+        with open('bima_policy//static//vehicle data//vcat.txt', "w") as file:
+            for i in temp_list:
+                file.write(i + '\n')
+
+        print('vehicle cat updated')
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
+
+
+def edit_vehicle(request, id, id2):
+    print('edit_vehicle method')
+    # print(id)
+    # print(id2)
+    try:
+        temp_list = []
+        with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+            for line in file:
+                if line.strip() == id:
+                    temp_list.append(id2)
+                    continue
+                else:
+                    temp_list.append(line.strip())
+        # print(temp_list.__len__())
+        # print(temp_list)
+        with open('bima_policy//static//vehicle data//vmake.txt', "w") as file:
+            for i in temp_list:
+                # print(i)
+                file.write(i + '\n')
+
+        print('updated')
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
 
     print('done')
     return redirect('bima_policy:vehi')
 
-
     # print('id is' , document[0][0])
-   
+
 # ServiceProviderView
+
+
 def service_provider(request):
     if request.method == "GET":
         try:
@@ -1007,13 +1223,16 @@ class create_policy(View):
 class create_policy_non_motor(View):
     def get(self, request):
         print('create_policy Non get')
-        pid = get_profile_id(get_id_from_session(request))
+        
         data_ag = json.dumps(
-            list(Agents.objects.filter(profile_id=pid).values()))
-        data_sp = ServiceProvider.objects.filter(profile_id=pid)
-        data_bc = BrokerCode.objects.filter(profile_id=pid)
-        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
-        data_bqp = BQP.objects.filter(profile_id=pid)
+            list(Agents.objects.all().values()))
+
+        data_sp = ServiceProvider.objects.all()
+        data_bc = BrokerCode.objects.all()
+        data_ins = InsuranceCompany.objects.all()
+
+        # data_vc = VehicleCategory.objects.all()
+        data_bqp = BQP.objects.all()
 
         return render(request, 'policylist/policy_list.html', {'is_motor_form': False, 'user_id': get_id_from_session(request), 'data_ag': data_ag, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_bqp': data_bqp})
 
@@ -2036,22 +2255,21 @@ def policy_entrydata(request, id):
         return redirect('bima_policy:policy_entry')
     else:
         print('get entrydata', id)
-        print(is_user(request))
-
-        pid = get_profile_id(get_id_from_session(request))
+        print(id)
+        data = Policy.objects.get(policyid = id)
+        print(data)
         data_ag = json.dumps(
-            list(Agents.objects.filter(profile_id=pid).values()))
-        data_sp = ServiceProvider.objects.filter(profile_id=pid)
-        data_bc = BrokerCode.objects.filter(profile_id=pid)
-        data_ins = InsuranceCompany.objects.filter(profile_id=pid)
-        data_vmb = VehicleMakeBy.objects.filter(profile_id=pid)
-        data_vm = VehicleModelName.objects.filter(profile_id=pid)
-        data_vc = VehicleCategory.objects.filter(profile_id=pid)
-        data_bqp = BQP.objects.filter(profile_id=pid)
+            list(Agents.objects.all().values()))
 
-        data = Policy.objects.get(policyid=id)
+        data_sp = ServiceProvider.objects.all()
+        data_bc = BrokerCode.objects.all()
+        data_ins = InsuranceCompany.objects.all()
 
+        data_vc = VehicleCategory.objects.all()
+        data_bqp = BQP.objects.all()
+       
         is_motor_form = True
+
         if data.registration_no is '':
             is_motor_form = False
             data.registration_no = ''
@@ -2068,7 +2286,8 @@ def policy_entrydata(request, id):
             data.gvw = ''
             data.seating_capacity = ''
             data.coverage_type = ''
-        return render(request, 'policylist/edit_policy.html', {"vdata": fetch_vehicle_data(), 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_bqp': data_bqp})
+       
+        return render(request, 'policylist/edit_policy.html', {'data_ag': data_ag, "vdata": fetch_vehicle_data(), 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_vc': data_vc, 'data_bqp': data_bqp})
 
 
 def edit_policy(request, id):
