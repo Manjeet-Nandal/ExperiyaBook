@@ -2145,29 +2145,32 @@
          inp_pos = document.getElementById('inp_pos');
          pos = document.getElementById('pos');
 
+         // data_ag.sort();
+
          data_ag.forEach(element => {
+
             console.log(element.full_name);
 
             if (value == element.full_name.toUpperCase()) {
                inp_pos.value = element.full_name
                pos.value = element.full_name
             }
-            else if (value == element.mob_no.toUpperCase()) {
-               inp_pos.value = element.full_name
-               pos.value = element.full_name
-            }
-            else if (value == element.PAN.toUpperCase()) {
-               inp_pos.value = element.full_name
-               pos.value = element.full_name
-            }
-            else if (value == element.aadhar_no.toUpperCase()) {
-               inp_pos.value = element.full_name
-               pos.value = element.full_name
-            }
-            else if (value == element.email_id.toUpperCase()) {
-               inp_pos.value = element.full_name
-               pos.value = element.full_name
-            }
+            // else if (value == element.mob_no.toUpperCase()) {
+            //    inp_pos.value = element.full_name
+            //    pos.value = element.full_name
+            // }
+            // else if (value == element.PAN.toUpperCase()) {
+            //    inp_pos.value = element.full_name
+            //    pos.value = element.full_name
+            // }
+            // else if (value == element.aadhar_no.toUpperCase()) {
+            //    inp_pos.value = element.full_name
+            //    pos.value = element.full_name
+            // }
+            // else if (value == element.email_id.toUpperCase()) {
+            //    inp_pos.value = element.full_name
+            //    pos.value = element.full_name
+            // }
          });
 
       } catch (error) {

@@ -28,30 +28,30 @@
                <!-- /grid row -->
             </header>
             <!-- .page-section -->
-            <div class="page-section">              
+            <div class="page-section">
                <!-- .card -->
                <div class="card card-fluid">
                   <!-- .card-header -->
                   <div class="card-header">
                      <form id="frminslist">
-                        <div class="row">                          
-                           <div class="col-md-2 col-sm-12">                              
+                        <div class="row">
+                           <div class="col-md-2 col-sm-12">
                               <select class="custom-select" name="period" id="select-period">
-                                    <!-- <option value="{{period}}">{{period}}</option> -->
-                                    <option value="today">Today</option>
-                                    <option value="yesterday">Yesterday</option>
-                                    <option value="this_month" >This Month</option>
-                                    <option value="last_month">Last Month</option>
-                                    <option value="current_year">Current Year</option>
-                                    <option value="custom">Custom</option>
-                              </select>  
+                                 <!-- <option value="{{period}}">{{period}}</option> -->
+                                 <option value="today">Today</option>
+                                 <option value="yesterday">Yesterday</option>
+                                 <option value="this_month">This Month</option>
+                                 <option value="last_month">Last Month</option>
+                                 <option value="current_year">Current Year</option>
+                                 <option value="custom">Custom</option>
+                              </select>
                            </div>
 
                            <div class="col-md-2 col-sm-12">
                               <div class="form-group">
                                  <input type="text" id="frmDate" data-alt-format="Y-m-d" data-date-format="d/m/Y"
-                                    data-toggle="flatpickr" placeholder="DD-MM-YYYY" 
-                                    class="form-control flatpickr-input"  disabled="" readonly="readonly">
+                                    data-toggle="flatpickr" placeholder="DD-MM-YYYY"
+                                    class="form-control flatpickr-input" disabled="" readonly="readonly">
                               </div>
                            </div>
                            <div class="col-md-2 col-sm-12">
@@ -61,35 +61,78 @@
                                     class="form-control datepicker flatpickr-input" disabled="" readonly="readonly">
                               </div>
                            </div>
-                           
-                           <div class="col-md-3 col-sm-12">                              
-                                 <select name="agents" data-parsley-required-message=""
-                                    class="custom-select select2 select2-hidden-accessible" id="agents"
-                                    data-parsley-required="true" tabindex="-1" aria-hidden="true">
-                                    <option value=""> All Agents</option>
-                                    {%for value in datag%}
-                                    <option value={{value.full_name}}>{{value.full_name}}</option>
-                                 {%endfor%}   
-                                 </select>  
+
+                           <div class="col-md-3 col-sm-12">
+                              <select name="agents" data-parsley-required-message=""
+                                 class="custom-select select2 select2-hidden-accessible" id="agents"
+                                 data-parsley-required="true" tabindex="-1" aria-hidden="true">
+                                 <option value=""> All Agents</option>
+                                 {%for value in datag%}
+                                 <option value={{value.full_name}}>{{value.full_name}}</option>
+                                 {%endfor%}
+                              </select>
                            </div>
 
-                           <div class="col-md-2 col-sm-12">
+                           <div class="col-md-2 ">
                               <div class="form-group">
-                                 <button onclick="filterPolicy()" type="button" id="filterlist" class="btn btn-secondary " title="Filter" ><i
-                                       class="fa fa-search" aria-hidden="true"></i> </button>
-                                 <button type="button" id="btnreset" class="btn btn-secondary" title="Refresh" onclick="resertDocument()"><i
-                                       class="icofont icofont-refresh" aria-hidden="true"></i> </button>
+                                 <button onclick="filterPolicy()" type="button" id="filterlist"
+                                    class="btn btn-secondary " title="Filter"><i class="fa fa-search"
+                                       aria-hidden="true"></i> </button>
+                                 <button type="button" id="btnreset" class="btn btn-secondary" title="Refresh"
+                                    onclick="resertDocument()"><i class="icofont icofont-refresh"
+                                       aria-hidden="true"></i> </button>
                                  <button type="button" onclick="ExportToExcel('xlsx')" id="download_inslist"
                                     class="btn btn-secondary " title="Download"><i class="fa fa-download"
                                        aria-hidden="true"></i> </button>
-                                 <button type="button" id="bulk_remove" class="btn btn-secondary" title="Delete"  onclick="bulk_policy_remove()"><i
-                                       class="icofont icofont-trash" aria-hidden="true"></i> </button>
+                                 <button data-toggle="modal" data-target="#mdlcolsetting" type="button" id="bulk_remove" class="btn btn-secondary" title="Delete"
+                                    ><i class="icofont icofont-trash"
+                                       aria-hidden="true"></i> </button>
                                  <!-- <a href="#" class="no-wrap pl-0 morefilter" title="More Filter"><small>More
                                        Filter</small></a> -->
+
+                                 <div class="modal fade" id="mdlcolsetting"
+                                    onmouseenter="document.getElementById('inp_search').focus()" style="height: 400px">
+
+                                    <div class="modal-dialog" role="document">
+
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <h5 id="rtoModalLabel" class="modal-title"> Delete </h5>
+                                          </div>
+                                          <div class="modal-body ">
+                                             <div class="form-row">
+                                                <div class="col-md-12 mb-4">
+                                                   <div class=""><label>Are You Sure? You want to delete the Record(s)..<input hidden id="inp_search" type="text"
+                                                            value="" class="form-control" name="agent"
+                                                            style="text-transform: uppercase;"
+                                                            title="Search POS using Name, mobile no, email, pan/aadhar number"  >                                                       
+                                                      </label></div>
+                                                </div>
+                                               
+                                             </div>
+
+                                             <div class="modal-footer">
+                                                <button id="btnExit" type="button" class="btn btn-secondary w-100p"
+                                                      data-dismiss="modal">Cancel</button>
+                                                
+                                                <button type="button" id="posUpdate" onclick="bulk_policy_remove()"
+                                                      class="btn btn-primary w-100p " style="background: red;">Sure</button>                                               
+                                                
+                                             </div>
+                                          </div>
+
+                                       </div>
+
+                                    </div>
+                                    <!-- <body onload="setFocus()">
+                                                
+                                             </body> -->
+
+                                 </div>
                               </div>
-                           </div>     
-                           
-                           {% if  is_user %}
+                           </div>
+
+                           {% if is_user %}
                            <div class="col-md-1" style="text-align: right;">
                               <style>
                                  .switch {
@@ -154,13 +197,13 @@
                               </style>
 
                               <label class="switch">
-                                 <input id="payout_switch" type="checkbox"  >
+                                 <input id="payout_switch" type="checkbox">
                                  <span class="slider round"></span>
                               </label>
                            </div>
                            {% endif %}
                         </div>
-                        <div id="morefilter" class="row" style="display:none" >
+                        <div id="morefilter" class="row" style="display:none">
                            <div class="col-md-3 col-sm-12">
                               <div class="form-group">
                                  <select name="service_provider" data-parsley-required-message=""
@@ -169,7 +212,7 @@
                                     <option value=""> All Service Provider</option>
                                     <option value="14">CHOLA DIRECT</option>
                                     <option value="6">DELHI BAJAJ</option>
-                                 </select>                                
+                                 </select>
                               </div>
                            </div>
                            <div class="col-md-3 col-sm-12">
@@ -182,7 +225,7 @@
                                  <option value="2">2w-scooter</option>
                                  <option value="3">Auto Gcv</option>
                                  <option value="4">Auto Pcv 3+1</option>
-                              </select>                              
+                              </select>
                            </div>
                         </div>
                      </form>
@@ -198,8 +241,8 @@
                                  <div class="dataTables_length" id="tblInsurance_length">
                                     <label>
                                        Show
-                                       <select id="select_length" name="tblInsurance_length" aria-controls="tblInsurance"
-                                          class="custom-select">
+                                       <select id="select_length" name="tblInsurance_length"
+                                          aria-controls="tblInsurance" class="custom-select">
                                           <option value="10">10</option>
                                           <option value="25">25</option>
                                           <option value="50">50</option>
@@ -213,8 +256,8 @@
                               </div>
 
                               <div class="col-md-6">
-                                 <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input 
-                                          type="search" id="myInput" onkeyup="searchName()" class="form-control" 
+                                 <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input
+                                          type="search" id="myInput" onkeyup="searchName()" class="form-control"
                                           placeholder="" aria-controls="tblInsurance"></label></div>
                               </div>
                            </div>
@@ -241,13 +284,14 @@
 
                                  <thead style="border-bottom: inset;">
                                     <tr role="row" ">
-                                       <th class="text-center sorting" tabindex="0" aria-controls="tblInsurance"
-                                          rowspan="1" colspan="1" style="width: 83.2344px;"
-                                          aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
+                                       <th class=" text-center sorting" tabindex="0" aria-controls="tblInsurance"
+                                       rowspan="1" colspan="1" style="width: 83.2344px;"
+                                       aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
                                        <th class="text-center sorting_disabled" tabindex="0"
                                           aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 30px;"
                                           aria-label="">
-                                          <input type="checkbox" class="checkbox" id="chkblkrm" onchange="selectAllPolicy()"/>
+                                          <input type="checkbox" class="checkbox" id="chkblkrm"
+                                             onchange="selectAllPolicy()" />
                                        </th>
 
                                        <th class="sorting">PolicyID</th>
@@ -311,13 +355,13 @@
                                        <th class="sorting">Action</th>
                                     </tr>
                                  </thead>
-                                                
-                                 <tbody >
+
+                                 <tbody>
                                     {% for value in data %}
-                                    <tr role="row" class="odd"  onclick="highlight(this)" >
-                                       <td class="text-center">{{forloop.counter}}</td>                                       
-                                       <td class="text-center"><input type="checkbox" value="2479" class="checkbox" 
-                                             id= "chkblkrm{{forloop.counter}}" /></td>
+                                    <tr role="row" class="odd" onclick="highlight(this)">
+                                       <td class="text-center">{{forloop.counter}}</td>
+                                       <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
+                                             id="chkblkrm{{forloop.counter}}" /></td>
 
                                        <td>{{value.policyid}}</td>
                                        <td>{{value.proposal_no}}</td>
@@ -351,7 +395,7 @@
                                        <td>{{value.cubic_capacity}}</td>
                                        <td>{{value.gvw}}</td>
 
-                                       <!-- Note: Space added because Excel converts 5-7 or 7-12 as date formate -->                                                                       
+                                       <!-- Note: Space added because Excel converts 5-7 or 7-12 as date formate -->
                                        <td>&nbsp;{{value.seating_capacity}}</td>
 
                                        <td>{{value.coverage_type}}</td>
@@ -360,7 +404,7 @@
                                        <td>{{value.risk_start_date}}</td>
                                        <td>{{value.risk_end_date}}</td>
                                        <td>{{value.issue_date}}</td>
-                                       
+
                                        {% if value.insured_age%}
                                        <td>{{value.insured_age}}</td>
                                        {% else %}
@@ -372,15 +416,15 @@
                                        <td>{{value.pos}}</td>
                                        <td>{{value.employee}}</td>
                                        <!-- OD  -->
-                                     
-                                       <td>{{value.OD_premium}}</td>                                     
+
+                                       <td>{{value.OD_premium}}</td>
 
                                        <td>{{value.TP_terrorism}}</td>
                                        <td>{{value.net}}</td>
 
                                        <td>{{value.gst_amount}}</td>
-                                      
-                                       
+
+
                                        {% if value.gst_gcv_amount %}
                                        <td>{{ value.gst_gcv_amount }}</td>
                                        {% else %}
@@ -445,13 +489,15 @@
                                        {% endif %}
 
                                        <td> <a href="/media/{{value.proposal}}">{{value.proposal}}</a> </td>
-                                       <td> <a href="/media/{{value.mandate}}">{{value.mandate}}</a> </td>                                      
+                                       <td> <a href="/media/{{value.mandate}}">{{value.mandate}}</a> </td>
                                        <td> <a href="/media/{{value.policy}}">{{value.policy}}</a> </td>
-                                       <td> <a href="/media/{{value.previous_policy}}">{{value.previous_policy}}</a> </td>
+                                       <td> <a href="/media/{{value.previous_policy}}">{{value.previous_policy}}</a>
+                                       </td>
                                        <td> <a href="/media/{{value.pan_card}}">{{value.pan_card}}</a> </td>
                                        <td> <a href="/media/{{value.aadhar_card}}">{{value.aadhar_card}}</a> </td>
                                        <td> <a href="/media/{{value.vehicle_rc}}">{{value.vehicle_rc}}</a> </td>
-                                       <td> <a href="/media/{{value.inspection_report}}">{{value.inspection_report}}</a> </td>
+                                       <td> <a href="/media/{{value.inspection_report}}">{{value.inspection_report}}</a>
+                                       </td>
 
                                        <td class="text-center">
                                           <form method="POST">
@@ -460,12 +506,12 @@
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
                                                 <i class="fa fa-pencil-alt mt-2"></i>
                                              </a>
-                                             <a  href="{%url 'bima_policy:policy_delete' value.policyid %}"  name="Remove"
+                                             <a href="{%url 'bima_policy:policy_delete' value.policyid %}" name="Remove"
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                                                 <i class="far fa-trash-alt mt-2"></i>
                                              </a>
                                        </td>
-                                      
+
                                     </tr>
                                     {% endfor %}
                                  </tbody>
@@ -1034,7 +1080,7 @@
 </div>
 
 
-<body onload="load_values()">  
+<body onload="load_values()">
 </body>
 
 <!-- /.modal -->
@@ -1288,266 +1334,268 @@
                   class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
                </span>
 
-<script>
+               <script>
 
-function load_values() {                               
-   payout = "{{payout|safe}}"
-   period = "{{period|safe}}"
-   select_length = "{{select_length|safe}}"
+                  function load_values() {
+                     payout = "{{payout|safe}}"
+                     period = "{{period|safe}}"
+                     select_length = "{{select_length|safe}}"
 
-   document.getElementById('payout_switch').checked = payout == 'true' ? true : false;
+                     document.getElementById('payout_switch').checked = payout == 'true' ? true : false;
 
-   document.getElementById('select-period').selectedIndex =
-      period == 'TODAY' ? 0 :
-            period == 'YESTERDAY' ? 1 :
-               period == 'THIS MONTH' ? 2 :
-                  period == 'LAST MONTH' ? 3 :
-                        period == 'CURRENT YEAR' ? 4 :
-                           period == 'CUSTOM' ? 5 : 0
+                     document.getElementById('select-period').selectedIndex =
+                        period == 'TODAY' ? 0 :
+                           period == 'YESTERDAY' ? 1 :
+                              period == 'THIS MONTH' ? 2 :
+                                 period == 'LAST MONTH' ? 3 :
+                                    period == 'CURRENT YEAR' ? 4 :
+                                       period == 'CUSTOM' ? 5 : 0
 
-   document.getElementById('select_length').value = select_length
-}
+                     document.getElementById('select_length').value = select_length
+                  }
 
-</script>
+               </script>
 
-<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>     
-<!-- <script src="{% static 'js/policy_entry_list.js' %}"></script>      -->
+               <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+               <!-- <script src="{% static 'js/policy_entry_list.js' %}"></script>      -->
 
-<script>
-   
-function filterPolicy() {
-    // document.getElementsByClassName("showMoreNew")[0].click();
+               <script>
 
-    try {
-        payout_switch = document.getElementById('payout_switch').checked
-        if (payout_switch) {
-            filterPolicy_nopayout();
-            return;
-        }
+                  function filterPolicy() {
+                     // document.getElementsByClassName("showMoreNew")[0].click();
 
-        start_date = document.getElementById('frmDate').value.toString()
-        end_date = document.getElementById('toDate').value.toString()
-        period_value = document.getElementById('select-period').value.toString().toUpperCase()
-        select_length = document.getElementById('select_length').value
+                     try {
+                        payout_switch = document.getElementById('payout_switch').checked
+                        if (payout_switch) {
+                           filterPolicy_nopayout();
+                           return;
+                        }
 
-        if (period_value == "LAST_MONTH") {
-            period_value = "LAST MONTH"
-        }
-        else if (period_value == "THIS_MONTH") {
-            period_value = "THIS MONTH"
-        }
-        else if (period_value == "CURRENT_YEAR") {
-            period_value = "CURRENT YEAR"
-        }
+                        start_date = document.getElementById('frmDate').value.toString()
+                        end_date = document.getElementById('toDate').value.toString()
+                        period_value = document.getElementById('select-period').value.toString().toUpperCase()
+                        select_length = document.getElementById('select_length').value
 
-        if (start_date == "" || end_date == "") {
-            return
-        }
-        start_date = start_date.replace("/", "*")
-        start_date = start_date.replace("/", "*")
+                        if (period_value == "LAST_MONTH") {
+                           period_value = "LAST MONTH"
+                        }
+                        else if (period_value == "THIS_MONTH") {
+                           period_value = "THIS MONTH"
+                        }
+                        else if (period_value == "CURRENT_YEAR") {
+                           period_value = "CURRENT YEAR"
+                        }
 
-        end_date = end_date.replace("/", "*")
-        end_date = end_date.replace("/", "*")
+                        if (start_date == "" || end_date == "") {
+                           return
+                        }
+                        start_date = start_date.replace("/", "*")
+                        start_date = start_date.replace("/", "*")
 
-        try {
-            index = window.location.href.indexOf("*")
-            if (index > 0) {
-                // window.location.reload()
-                hostname = window.location.hostname
-                port = window.location.port
-                pathname = '/bima_policy/policy/entry/'
+                        end_date = end_date.replace("/", "*")
+                        end_date = end_date.replace("/", "*")
 
-                href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length
+                        try {
+                           index = window.location.href.indexOf("*")
+                           if (index > 0) {
+                              // window.location.reload()
+                              hostname = window.location.hostname
+                              port = window.location.port
+                              pathname = '/bima_policy/policy/entry/'
 
-                window.location.replace(href)
-            }
-            else {
-                href = window.location.href + start_date
-                href += "/"
-                href += end_date
-                href += "/"
-                href += period_value
-                href += "/"
-                href += select_length
+                              href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length
 
-                window.location.replace(href)
-            }
-        } catch (error) {
+                              window.location.replace(href)
+                           }
+                           else {
+                              href = window.location.href + start_date
+                              href += "/"
+                              href += end_date
+                              href += "/"
+                              href += period_value
+                              href += "/"
+                              href += select_length
 
-        }
+                              window.location.replace(href)
+                           }
+                        } catch (error) {
 
-    } catch (error) { }
-}
+                        }
 
-function filterPolicy_nopayout() {
-    // document.getElementsByClassName("showMoreNew")[0].click();
-    try {
-        payout_switch = document.getElementById('payout_switch').checked
-        if (payout_switch) {
+                     } catch (error) { }
+                  }
 
-            start_date = document.getElementById('frmDate').value.toString()
-            end_date = document.getElementById('toDate').value.toString()
-            period_value = document.getElementById('select-period').value.toString().toUpperCase()
-            select_length = document.getElementById('select_length').value
+                  function filterPolicy_nopayout() {
+                     // document.getElementsByClassName("showMoreNew")[0].click();
+                     try {
+                        payout_switch = document.getElementById('payout_switch').checked
+                        if (payout_switch) {
 
-            if (period_value == "LAST_MONTH") {
-                period_value = "LAST MONTH"
-            }
-            else if (period_value == "THIS_MONTH") {
-                period_value = "THIS MONTH"
-            }
-            else if (period_value == "CURRENT_YEAR") {
-                period_value = "CURRENT YEAR"
-            }
+                           start_date = document.getElementById('frmDate').value.toString()
+                           end_date = document.getElementById('toDate').value.toString()
+                           period_value = document.getElementById('select-period').value.toString().toUpperCase()
+                           select_length = document.getElementById('select_length').value
 
-            if (start_date == "" || end_date == "") {
-                return
-            }
-            start_date = start_date.replace("/", "*")
-            start_date = start_date.replace("/", "*")
+                           if (period_value == "LAST_MONTH") {
+                              period_value = "LAST MONTH"
+                           }
+                           else if (period_value == "THIS_MONTH") {
+                              period_value = "THIS MONTH"
+                           }
+                           else if (period_value == "CURRENT_YEAR") {
+                              period_value = "CURRENT YEAR"
+                           }
 
-            end_date = end_date.replace("/", "*")
-            end_date = end_date.replace("/", "*")
+                           if (start_date == "" || end_date == "") {
+                              return
+                           }
+                           start_date = start_date.replace("/", "*")
+                           start_date = start_date.replace("/", "*")
 
-            try {
-                index = window.location.href.indexOf("*")
-                if (index > 0) {
-                    // window.location.reload()
-                    hostname = window.location.hostname
-                    port = window.location.port
-                    pathname = '/bima_policy/policy/entry/'
-                    href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length + '/' + 'true'
-                    window.location.replace(href)
-                }
-                else {
-                    href = window.location.href + start_date
-                    href += "/"
-                    href += end_date
-                    href += "/"
-                    href += period_value
-                    href += "/"
-                    href += select_length
-                    href += "/"
-                    href += 'true'
+                           end_date = end_date.replace("/", "*")
+                           end_date = end_date.replace("/", "*")
 
-                    window.location.replace(href)
-                }
-            } catch (error) {
+                           try {
+                              index = window.location.href.indexOf("*")
+                              if (index > 0) {
+                                 // window.location.reload()
+                                 hostname = window.location.hostname
+                                 port = window.location.port
+                                 pathname = '/bima_policy/policy/entry/'
+                                 href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length + '/' + 'true'
+                                 window.location.replace(href)
+                              }
+                              else {
+                                 href = window.location.href + start_date
+                                 href += "/"
+                                 href += end_date
+                                 href += "/"
+                                 href += period_value
+                                 href += "/"
+                                 href += select_length
+                                 href += "/"
+                                 href += 'true'
 
-            }
-        }
-    } catch (error) { }
-}
+                                 window.location.replace(href)
+                              }
+                           } catch (error) {
 
-function selectAllPolicy() {
+                           }
+                        }
+                     } catch (error) { }
+                  }
 
-    var tblInsurance = document.getElementById('tblInsurance')
-    var rowLength = tblInsurance.rows.length;
-    chkblkrm_isChecked = document.getElementById('chkblkrm').checked
-    tr = tblInsurance.getElementsByTagName("tr");
+                  function selectAllPolicy() {
 
-    ids = ''
+                     var tblInsurance = document.getElementById('tblInsurance')
+                     var rowLength = tblInsurance.rows.length;
+                     chkblkrm_isChecked = document.getElementById('chkblkrm').checked
+                     tr = tblInsurance.getElementsByTagName("tr");
 
-    if (chkblkrm_isChecked) {
-        for (i = 1; i < rowLength; i++) {
-            id = `chkblkrm${i}`
-            document.getElementById(id).checked = true
-            highlight(tr[i])
-        }
-    }
-    else {
-        for (i = 1; i < rowLength; i++) {
-            id = `chkblkrm${i}`
-            document.getElementById(id).checked = false
-            highlight(tr[i])
-        }
-    }
-}
+                     ids = ''
 
-function bulk_policy_remove() {
-   
-    var tblInsurance = document.getElementById('tblInsurance')
-    var rowLength = tblInsurance.rows.length;
-    ids = ''
+                     if (chkblkrm_isChecked) {
+                        for (i = 1; i < rowLength; i++) {
+                           id = `chkblkrm${i}`
+                           document.getElementById(id).checked = true
+                           highlight(tr[i])
+                        }
+                     }
+                     else {
+                        for (i = 1; i < rowLength; i++) {
+                           id = `chkblkrm${i}`
+                           document.getElementById(id).checked = false
+                           highlight(tr[i])
+                        }
+                     }
+                  }
 
-    for (i = 1; i < rowLength; i++) {
+                  function bulk_policy_remove() {
+                     // return;
+                     var tblInsurance = document.getElementById('tblInsurance')
+                     var rowLength = tblInsurance.rows.length;
+                     ids = ''
 
-        id = `chkblkrm${i}`
+                     for (i = 1; i < rowLength; i++) {
 
-        isChecked = document.getElementById(id).checked
+                        id = `chkblkrm${i}`
 
-        if (isChecked) {
+                        isChecked = document.getElementById(id).checked
 
-            ids += '|' + tblInsurance.rows.item(i).cells[2].innerText.trim()            
-            // document.getElementById(anchor_id).click();
-        }
-    }
-    pathname = `/bima_policy/policy/${ids}/delete`
+                        if (isChecked) {
 
-    window.location.replace(window.location.origin + pathname)
-}
+                           ids += '|' + tblInsurance.rows.item(i).cells[2].innerText.trim()
+                           // document.getElementById(anchor_id).click();
+                        }
+                        else
+                        {
+                           alert('You have not selected any record to delete!')
+                           return;
+                        }
+                     }
+                     pathname = `/bima_policy/policy/${ids}/delete`
 
-function resertDocument() {
-    document.location.reload()
-}
+                     window.location.replace(window.location.origin + pathname)
+                  }
 
-function highlight(row) {
-    SelectedRow = row.cells[0].textContent;
-    deHighlight();
-    row.style.backgroundColor = 'silver';
-    row.classList.toggle("selectedRow");
-}
+                  function resertDocument() {
+                     document.location.reload()
+                  }
 
-function deHighlight() {
-    let table = document.getElementById("tblInsurance");
-    let rows = table.rows;
-    for (let i = 0; i < rows.length; i++) {
-        // to avoid checked 
-        try {
-            is_checked = document.getElementById(`chkblkrm${i}`).checked
-            if (is_checked) {
-                continue;
-            }
-        } catch { }
+                  function highlight(row) {
+                     SelectedRow = row.cells[0].textContent;
+                     deHighlight();
+                     row.style.backgroundColor = 'silver';
+                     row.classList.toggle("selectedRow");
+                  }
 
-        // default this line is
-        rows[i].style.backgroundColor = "transparent";
-    }
-}
+                  function deHighlight() {
+                     let table = document.getElementById("tblInsurance");
+                     let rows = table.rows;
+                     for (let i = 0; i < rows.length; i++) {
+                        // to avoid checked 
+                        try {
+                           is_checked = document.getElementById(`chkblkrm${i}`).checked
+                           if (is_checked) {
+                              continue;
+                           }
+                        } catch { }
 
-function searchName() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("tblInsurance");
-    tr = table.getElementsByTagName("tr");
+                        // default this line is
+                        rows[i].style.backgroundColor = "transparent";
+                     }
+                  }
 
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[3];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            console.log(txtValue);
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
+                  function searchName() {
+                     // Declare variables
+                     var input, filter, table, tr, td, i, txtValue;
+                     input = document.getElementById("myInput");
+                     filter = input.value.toUpperCase();
+                     table = document.getElementById("tblInsurance");
+                     tr = table.getElementsByTagName("tr");
 
-function ExportToExcel(type, fn, dl) {
-    var elt = document.getElementById('tblInsurance');
-    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
-    return dl ?
-        XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
-        XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
-}
-</script>
+                     // Loop through all table rows, and hide those who don't match the search query
+                     for (i = 0; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[3];
+                        if (td) {
+                           txtValue = td.textContent || td.innerText;
+                           console.log(txtValue);
+                           if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                              tr[i].style.display = "";
+                           } else {
+                              tr[i].style.display = "none";
+                           }
+                        }
+                     }
+                  }
 
-{%endblock%}
+                  function ExportToExcel(type, fn, dl) {
+                     var elt = document.getElementById('tblInsurance');
+                     var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+                     return dl ?
+                        XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+                        XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+                  }
+               </script>
 
-
-               
+               {%endblock%}
