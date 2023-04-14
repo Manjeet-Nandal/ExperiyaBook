@@ -1887,8 +1887,8 @@
       }
 
       else if (value == 'BUS AND OTHERS') {
-         document.getElementById('coverage_typeDiv').hidden = true
-         document.getElementById('coverage_type').required = false
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
 
          document.getElementById('seating_capacityDiv').hidden = true
          document.getElementById('seating_capacity').required = false
@@ -1903,6 +1903,24 @@
          document.getElementById('gstt').value = 0
 
          document.getElementById('seating_capacityDiv1').hidden = false
+
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+         
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
 
       }
 
