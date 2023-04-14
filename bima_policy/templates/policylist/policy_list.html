@@ -1443,45 +1443,6 @@
 
    }
 
-   function add() {
-
-      od = parseFloat(document.getElementById("od").value);
-      tpt = parseFloat(document.getElementById("tpt").value);
-
-      gst = parseFloat(document.getElementById("gst").value);
-      gstt = parseFloat(document.getElementById("gstt").value);
-
-      vc = document.getElementById('vehicle_catagory').value
-
-      if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
-
-         document.getElementById("net").value = Number(od + tpt).toFixed(2);
-         document.getElementById("gst").value = Number(od * 18 / 100).toFixed(2);
-         document.getElementById("gstt").value = Number(tpt * 12 / 100).toFixed(2);
-      }
-      else {
-         document.getElementById("net").value = Number(od + tpt).toFixed(2);
-         document.getElementById("gst").value = Number((od + tpt) * 18 / 100).toFixed(2);
-
-      }
-
-   }
-
-   function addgst() {
-      var numOne, numTwo, sum;
-      net = parseFloat(document.getElementById("net").value);
-      gst = parseFloat(document.getElementById("gst").value);
-      gstt = parseFloat(document.getElementById("gstt").value);
-      // 3 WHEELER GCV-PUBLIC CARRIER
-      vc = document.getElementById('vehicle_catagory').value
-      if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
-         document.getElementById("totalnet").value = Number(net + gst + gstt).toFixed(2);
-      }
-      else {
-         document.getElementById("totalnet").value = Number(net + gst).toFixed(2);
-      }
-   }
-
    function add_non_motor() {
       // Removes space
       odel = document.getElementById("od");
@@ -1492,9 +1453,9 @@
       od = parseFloat(document.getElementById("od").value);
       tpt = parseFloat(document.getElementById("tpt").value);
       net = document.getElementById("net")
-      gst = document.getElementById("gst")
-
-      net.value = Number(od + tpt).toFixed((2));
+      gst = document.getElementById("gst")      
+     
+      net.value = Number(od + tpt).toFixed((2))
       gst.value = Number((od + tpt) * 18 / 100).toFixed(2);
    }
 

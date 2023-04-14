@@ -1223,7 +1223,7 @@ class create_policy(View):
 class create_policy_non_motor(View):
     def get(self, request):
         print('create_policy Non get')
-        
+
         data_ag = json.dumps(
             list(Agents.objects.all().values()))
 
@@ -2256,7 +2256,7 @@ def policy_entrydata(request, id):
     else:
         print('get entrydata', id)
         print(id)
-        data = Policy.objects.get(policyid = id)
+        data = Policy.objects.get(policyid=id)
         print(data)
         data_ag = json.dumps(
             list(Agents.objects.all().values()))
@@ -2267,7 +2267,7 @@ def policy_entrydata(request, id):
 
         data_vc = VehicleCategory.objects.all()
         data_bqp = BQP.objects.all()
-       
+
         is_motor_form = True
 
         if data.registration_no is '':
@@ -2286,7 +2286,7 @@ def policy_entrydata(request, id):
             data.gvw = ''
             data.seating_capacity = ''
             data.coverage_type = ''
-       
+
         return render(request, 'policylist/edit_policy.html', {'data_ag': data_ag, "vdata": fetch_vehicle_data(), 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_vc': data_vc, 'data_bqp': data_bqp})
 
 
@@ -2486,25 +2486,18 @@ def slab_payoutform(request):
 
     if request.method == "GET":
         print('slab_payoutform get')
-        data_sp = ServiceProvider.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_bc = BrokerCode.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_ins = InsuranceCompany.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vmb = VehicleMakeBy.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vm = VehicleModelName.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vc = VehicleCategory.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_ct = CoverageType.objects.filter(
-            profile_id=get_id_from_session(request))
+        data_sp = ServiceProvider.objects.all()
+        data_bc = BrokerCode.objects.all()
+        data_ins = InsuranceCompany.objects.all()
+        # data_vmb = VehicleMakeBy.objects.all()
+        # data_vm = VehicleModelName.objects.all()
+        data_vc = VehicleCategory.objects.all()
+        vdata = fetch_vehicle_data()
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
 
         # print(state_rto.rto_id)
         # print(data_bc)
-        return render(request, 'payout/slab_payoutform.html', {'slab': slab, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct})
+        return render(request, 'payout/slab_payoutform.html', {'slab': slab, "vdata": vdata, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc})
 
     if request.method == 'POST' and 'savepayout' in request.POST:
         print("data enter")
@@ -2647,25 +2640,16 @@ def slab_payoutformshow(request, id):
 
     else:
         data = Payout.objects.get(payoutid=id)
-        data_sp = ServiceProvider.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_bc = BrokerCode.objects.filter(
-            profile_id=get_id_from_session(request))
-
-        data_ins = InsuranceCompany.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vmb = VehicleMakeBy.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vm = VehicleModelName.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_vc = VehicleCategory.objects.filter(
-            profile_id=get_id_from_session(request))
-        data_ct = CoverageType.objects.filter(
-            profile_id=get_id_from_session(request))
-
+        data_sp = ServiceProvider.objects.all()
+        data_bc = BrokerCode.objects.all()
+        data_ins = InsuranceCompany.objects.all()
+        # data_vmb = VehicleMakeBy.objects.all()
+        # data_vm = VehicleModelName.objects.all()
+        data_vc = VehicleCategory.objects.all()
+        vdata = fetch_vehicle_data()
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
 
-        return render(request, 'payout/edit_payoutform.html', {'data': data, 'slab': slab, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vmb': data_vmb, 'data_vm': data_vm, 'data_vc': data_vc, 'data_ct': data_ct})
+        return render(request, 'payout/edit_payoutform.html', {"vdata": vdata, 'data': data, 'slab': slab, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc})
 
 
 def payout_delete(request, id):
