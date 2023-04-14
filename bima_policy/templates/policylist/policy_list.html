@@ -1437,10 +1437,54 @@
    function calculateValue() {
 
       try {
-         add_non_motor()
-         addgst_non_motor()
+         // add_non_motor()
+         // addgst_non_motor()
+         calc()
+         addGST()
+         addSubTotal()
+
       } catch (error) { }
 
+   }
+
+   function calc() {
+      // Removes space      
+      
+      document.getElementById("od").value= document.getElementById("od").value.toString().trim()
+      document.getElementById("tpt").value= document.getElementById("tpt").value.toString().trim()      
+     
+      od = parseFloat(document.getElementById("od").value);
+      tpt = parseFloat(document.getElementById("tpt").value);
+
+      document.getElementById("net") .value = Number(od + tpt).toFixed((2))     
+      
+   }
+
+   function addGST() {  
+      net = parseFloat(document.getElementById("net").value);
+      gst = parseFloat(document.getElementById("gst").value);
+      gstt = parseFloat(document.getElementById("gstt").value);
+
+      try {
+         vc = document.getElementById('vehicle_catagory').value
+         if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
+               document.getElementById("gst") .value = Number(od * 18 / 100) .toFixed((2))
+               document.getElementById("gstt") .value = Number(tpt * 12 / 100) .toFixed((2))
+         }
+         else
+         {
+            document.getElementById("gst") .value = Number(od + tpt * 18 / 100) .toFixed((2))            
+         };
+      }
+      catch { }
+   }
+
+   function addSubTotal() {
+      net = parseFloat(document.getElementById("net").value);
+      gst = parseFloat(document.getElementById("gst").value);
+      gstt = parseFloat(document.getElementById("gstt").value);
+      
+      document.getElementById("totalnet") .value = Number(net + gst + gstt).toFixed((2))
    }
 
    function add_non_motor() {
