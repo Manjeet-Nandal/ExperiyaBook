@@ -1445,18 +1445,27 @@
 
    function add_non_motor() {
       // Removes space
+      
       odel = document.getElementById("od");
       odel.value = odel.value.toString().trim()
+      
       tptel = document.getElementById("tpt");
       tptel.value = tptel.value.toString().trim()
 
       od = parseFloat(document.getElementById("od").value);
       tpt = parseFloat(document.getElementById("tpt").value);
       net = document.getElementById("net")
-      gst = document.getElementById("gst")      
-     
+      gst = document.getElementById("gst")
+      
       net.value = Number(od + tpt).toFixed((2))
-      gst.value = Number((od + tpt) * 18 / 100).toFixed(2);
+      if (od > 0 && tpt > 0) {
+         gst.value = Number((od + tpt) * 18 / 100).toFixed(2);        
+      }
+      else
+      {
+         gst.value = 0  
+      }
+    
    }
 
    function addgst_non_motor() {
@@ -1472,9 +1481,14 @@
          if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
 
             gstt = document.getElementById("gstt");
-            gstt.value = Number(tpt * 12 / 100).toFixed(2);
-            document.getElementById("totalnet").value = Number(net + gst + parseFloat(gstt.value)).toFixed(2);
-            return
+            if (tpt > 0  ) {
+               gstt.value = Number(tpt * 12 / 100).toFixed(2);
+            }
+            else{
+               gstt.value = 0;
+            }
+            document.getElementById("totalnet").value = Number(net + gst + parseFloat(gstt.value)).toFixed(2);         
+            
          };
       }
       catch { }
@@ -1486,7 +1500,7 @@
    function setCategoryOnChange() {
       sortItems("vehicle_catagory")
       value = document.getElementById('vehicle_catagory').value
-  
+
       coverage_typeDiv = document.getElementById('coverage_typeDiv')
       cubic_capacityDiv = document.getElementById('cubic_capacityDiv')
       seating_capacityDiv = document.getElementById('seating_capacityDiv')
@@ -1916,7 +1930,7 @@
          newoption.value = '1 YEAR PACKAGE'
          newoption.innerHTML = '1 YEAR PACKAGE'
          coverage_type.options.add(newoption);
-         
+
          var newoption = document.createElement("option");
          newoption.value = 'TP ONLY'
          newoption.innerHTML = 'TP ONLY'
@@ -2192,7 +2206,7 @@
 
          })
    }
- 
+
    function sortItems(id) {
       $("#" + id).html($("#" + id + " option").sort(function (a, b) {
          return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
