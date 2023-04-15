@@ -284,6 +284,30 @@ def write_vehicle_data():
     print('done')
 
 
+def write_vehicle_data2():
+    # return;
+    # Connect to MongoDB
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    db = client["experiya"]
+    make_col = db["make"]
+    model_col = db["model"]
+    # Open the text file and read the record
+    with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+        for line in file:
+            record = line.strip()
+            record_json = {"make": record}
+            make_col.insert_one(record_json)
+    print('done')
+
+    with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
+        for line in file:
+            record = line.strip()
+            record_json = {"model": record}
+            model_col.insert_one(record_json)
+
+    print('done')
+
+
 def read_vehical_data():
     # Connect to MongoDB
     client = pymongo.MongoClient('mongodb://localhost:27017/')
@@ -834,6 +858,12 @@ class create_policy(View):
             pos = request.POST['pos']
 
             employee = request.POST['employee']
+
+            try:
+                remark = request.POST['remark']
+            except Exception as ex:
+                remark = ''
+
             OD_premium = str.strip(request.POST['od'])
             TP_terrorism = str.strip(request.POST['tpt'])
             net = request.POST['net']
@@ -1210,8 +1240,8 @@ class create_policy(View):
                                         employee=employee, proposal=proposal, mandate=mandate,
                                         OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount,
                                         gst_gcv_amount=gst_gcv_amount,  total=total,
-                                        policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report
-                                        )
+                                        policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report,
+                                        remark=remark)
 
             return redirect('bima_policy:create_policy')
             # return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policyid': pol.policyid})
@@ -1257,6 +1287,11 @@ class create_policy_non_motor(View):
         bqp = request.POST['bqp']
         pos = request.POST['pos']
         employee = request.POST['employee']
+        try:
+            remark = request.POST['remark']
+        except Exception as ex:
+            remark = ''
+
         OD_premium = request.POST['od']
         TP_terrorism = request.POST['tpt']
         net = request.POST['net']
@@ -1305,7 +1340,7 @@ class create_policy_non_motor(View):
                                      employee=employee, proposal=proposal, mandate=mandate,
                                      policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, inspection_report=inspection_report,
                                      OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, total=total,
-                                     payment_mode=payment_mode)
+                                     payment_mode=payment_mode, remark=remark)
         print('pol data ', data)
         data = Policy.objects.filter(
             profile_id=profile_id).order_by('-policyid').values()
@@ -2171,6 +2206,12 @@ def policy_entrydata(request, id):
         bqp = request.POST['bqp']
         pos = request.POST['pos']
         employee = request.POST['employee']
+
+        try:
+            remark = request.POST['remark']
+        except:
+            remark = ''
+
         OD_premium = request.POST['od']
         TP_terrorism = request.POST['tpt']
         net = request.POST['net']
@@ -2207,7 +2248,7 @@ def policy_entrydata(request, id):
                     policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
                     employee=employee,
                     OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount,
-                    gst_gcv_amount=gst_gcv_amount,  total=total)
+                    gst_gcv_amount=gst_gcv_amount,  total=total, remark=remark)
 
         fspr = FileSystemStorage()
         fsm = FileSystemStorage()

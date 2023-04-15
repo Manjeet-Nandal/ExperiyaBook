@@ -302,6 +302,8 @@ class Policy(models.Model):
     vehicle_rc = models.FileField(upload_to='media/documents/')
     inspection_report = models.FileField(upload_to='media/documents/')
 
+    remark = models.CharField(max_length=255)
+    
     def __str__(self):
         return self.customer_name
 
@@ -346,6 +348,7 @@ class PolicyNonMotor(models.Model):
     pan_card = models.FileField(upload_to='media/documents/')
     aadhar_card = models.FileField(upload_to='media/documents/')
     inspection_report = models.FileField(upload_to='media/documents/')
+    remark = models.CharField(max_length=255)
 
     def __str__(self):
         return self.customer_name

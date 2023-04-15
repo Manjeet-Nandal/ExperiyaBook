@@ -407,9 +407,9 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
+                                                class="text-danger">*</abbr></label><input type="text" readonly
                                              value="{{data.employee}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase;" required>
+                                             style="text-transform: uppercase; background-color: lightgray;" required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -478,7 +478,7 @@
                                           </div>
                                           <a href="/media/{{data.aadhar_card}}">{{data.aadhar_card}}</a> 
                                        </div>
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label> Vehicle RC <small>(Only<strong> PDF &amp; Image
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
@@ -489,7 +489,7 @@
                                           </div>
                                           <a href="/media/{{data.vehicle_rc}}">{{data.vehicle_rc}}</a> 
                                        </div>
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label>Inspection Report <small>(Only<strong> PDF &amp; Image
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
@@ -500,6 +500,13 @@
                                                 for="vehicle_rc">Choose File</label>
                                           </div>
                                           <a href="/media/{{data.inspection_report}}">{{data.inspection_report}}</a> 
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label for="remark">Remarks <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text" value="{{data.remark}}" maxlength="255"
+                                             class="form-control" name="remark" 
+                                             style="text-transform: uppercase;" >
                                        </div>
 
                                     </div>
@@ -775,9 +782,9 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
+                                                class="text-danger">*</abbr></label><input type="text" readonly
                                              value="{{data.employee}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase;" required>
+                                             style="text-transform: uppercase; background-color: lightgray;" required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -847,7 +854,7 @@
                                           <a href="/media/{{data.aadhar_card}}">{{data.aadhar_card}}</a> 
                                        </div>
 
-                                       <div class="col-md-4 mb-4">
+                                       <div class="col-md-3 mb-4">
                                           <label>Inspection Report <small>(Only<strong> PDF &amp; Image
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
@@ -858,6 +865,13 @@
                                                 for="vehicle_rc">Choose File</label>
                                           </div>
                                           <a href="/media/{{data.inspection_report}}">{{data.inspection_report}}</a> 
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label for="remark">Remarks <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text" value="{{data.remark}}" maxlength="255"
+                                             class="form-control" name="remark" 
+                                             style="text-transform: uppercase;" >
                                        </div>
 
                                     </div>

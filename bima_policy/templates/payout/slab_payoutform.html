@@ -140,10 +140,11 @@
                                           </select>
                                        </div>
                                                                           
-                                       <div class="col-md-3 mb-4" >
+                                       <div class="col-md-3 mb-4" ondblclick="deselect()">
                                           <label>Vehicle Make By <abbr title="" class=" text-danger">*</abbr></label>
-                                          <select name="vehicle_makeby" height="200" 
-                                             class="custom-select select2 select2-hidden-accessible" id="vehicle_makeby" onchange="selectAllItemsMake('vehicle_makeby')" 
+                                          <select name="vehicle_makeby"  
+                                             class="custom-select select2 select2-hidden-accessible" id="vehicle_makeby" 
+                                             onchange="selectAllItemsMake('vehicle_makeby')"
                                              aria-hidden="true" required  multiple >
                                              <option value="*" >-- select all -- </option>
                                           </select>
@@ -160,21 +161,31 @@
                                        </div>
 
                                        <script>
+
                                           function selectAllItemsMake(name) {
      
                                              var item = document.getElementById(name)
                                           
                                              if (item.value == '*') {
-                                             // alert('hello')
-
+                                           
                                                 for (i = 1; i <= item.length; i++) {
-                                                   item.options[i].selected = true
+                                                   item.options[i].selected = true                                                
                                                 }         
-                                             }
-                                             // item.options[item.options.length - 1].selected = false
+                                             }  
 
+                                          }                                         
+                                                 
+                                          function deselect(){
+                                             val = document.getElementById('vehicle_makeby').value
+                                             if (val == '*') {        
+                                                
+                                                document.getElementById('vehicle_makeby').innerHTML = ''
+                                                initialConfig()
+                                             }
+                                             
+                                             
                                           }
-                                        </script>
+                                    </script>
 
 
                                     
@@ -830,15 +841,15 @@
 
 
 
-<script type="text/javascript">
-   {% comment %} $(document).ready(function () {
+<!-- <script type="text/javascript">
+    $(document).ready(function () {
       $('#boot-multiselect-demo').multiselect({
          includeSelectAllOption: true,
          buttonWidth: 250,
          enableFiltering: true
       });
-   }); {% endcomment %}
-</script>
+   }); 
+</script> -->
 
 <script>
    $('#selectAll').click(function () {
