@@ -1370,16 +1370,60 @@
 </script>
 <script>
 
-   function calculateValue() {
+function calculateValue() {
 
       try {
-         add_non_motor()
-         addgst_non_motor()
+         // add_non_motor()
+         // addgst_non_motor()
+         calc()
+         addGST()
+         addSubTotal()
       } catch (error) {
    }
 }
 
-   function add() {
+function calc() {
+      // Removes space      
+      
+      document.getElementById("od").value= document.getElementById("od").value.toString().trim()
+      document.getElementById("tpt").value= document.getElementById("tpt").value.toString().trim()      
+     
+      od = parseFloat(document.getElementById("od").value);
+      tpt = parseFloat(document.getElementById("tpt").value);
+
+      document.getElementById("net") .value = Number(od + tpt).toFixed((2))     
+      
+   }
+
+function addGST() {  
+      net = parseFloat(document.getElementById("net").value);
+      gst = parseFloat(document.getElementById("gst").value);
+      gstt = parseFloat(document.getElementById("gstt").value);
+      
+      try {
+         vc = document.getElementById('vehicle_catagory').value
+         if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
+               document.getElementById("gst") .value = Number(od * 18 / 100) .toFixed((2))
+               document.getElementById("gstt") .value = Number(tpt * 12 / 100) .toFixed((2))
+         }
+         else
+         {            
+            document.getElementById("gst") .value = Number(net * 18 / 100) .toFixed((2))            
+         };
+      }
+      catch { }
+   }
+
+function addSubTotal() {
+      net = parseFloat(document.getElementById("net").value);
+      gst = parseFloat(document.getElementById("gst").value);
+      gstt = parseFloat(document.getElementById("gstt").value);
+      
+      document.getElementById("totalnet") .value = Number(net + gst + gstt).toFixed((2))
+   }
+
+
+function add() {
       od = parseInt(document.getElementById("od").value);
       tpt = parseInt(document.getElementById("tpt").value);
 
@@ -1401,7 +1445,7 @@
 
    }
 
-   function addgst() {
+function addgst() {
       var numOne, numTwo, sum;
       net = parseInt(document.getElementById("net").value);
       gst = parseInt(document.getElementById("gst").value);
@@ -1417,7 +1461,7 @@
    }
 
    
-   function add_non_motor() {
+function add_non_motor() {
       // Removes space
       odel = document.getElementById("od");
       odel.value = odel.value.toString().trim()
@@ -1433,7 +1477,7 @@
       gst.value = Number((od + tpt) * 18 / 100).toFixed(2);
    }
 
-   function addgst_non_motor() {
+function addgst_non_motor() {
 
       var numOne, numTwo, sum;
       tpt = parseFloat(document.getElementById("tpt").value);
@@ -1458,7 +1502,7 @@
    }
 
 
-   function setCategoryOnChangeOld() {
+function setCategoryOnChangeOld() {
       value = document.getElementById('vehicle_catagory').value
 
       coverage_typeDiv = document.getElementById('coverage_typeDiv')
@@ -2640,7 +2684,7 @@
       if (value == 'TWO WHEELER' || value == 'TWO WHEELER SCOOTER') {
          
 
-         alert(value)
+        
       }
    }
 
