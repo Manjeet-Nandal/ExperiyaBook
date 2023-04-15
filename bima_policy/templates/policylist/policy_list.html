@@ -194,7 +194,6 @@
                                           </select>
                                        </div>
 
-
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_fuel_type" class="custom-select" required
@@ -1464,7 +1463,7 @@
       net = parseFloat(document.getElementById("net").value);
       gst = parseFloat(document.getElementById("gst").value);
       gstt = parseFloat(document.getElementById("gstt").value);
-
+      
       try {
          vc = document.getElementById('vehicle_catagory').value
          if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
@@ -1472,8 +1471,8 @@
                document.getElementById("gstt") .value = Number(tpt * 12 / 100) .toFixed((2))
          }
          else
-         {
-            document.getElementById("gst") .value = Number(od + tpt * 18 / 100) .toFixed((2))            
+         {            
+            document.getElementById("gst") .value = Number(net * 18 / 100) .toFixed((2))            
          };
       }
       catch { }

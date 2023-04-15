@@ -139,34 +139,45 @@
                                              {%endfor%}
                                           </select>
                                        </div>
-                                     
-                                       <div class="col-md-3 mb-4">
-                                          <label>Vehicle Make By <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select id="vehicle_makeby" name="vehicle_makeby"
-                                             data-parsley-required-message="" multiple
-                                             data-parsley-required="true"
-                                             class="custom-select" required>
-                                             <!-- {%for value in data_vmb%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%} -->
-                                             <option value="*" onclick="selectAllItems('vehicle_makeby')" >-- select all -- </option>
+                                                                          
+                                       <div class="col-md-3 mb-4" >
+                                          <label>Vehicle Make By <abbr title="" class=" text-danger">*</abbr></label>
+                                          <select name="vehicle_makeby" height="200" 
+                                             class="custom-select select2 select2-hidden-accessible" id="vehicle_makeby" onchange="selectAllItemsMake('vehicle_makeby')" 
+                                             aria-hidden="true" required  multiple >
+                                             <option value="*" >-- select all -- </option>
+                                          </select>
 
-                                          </select>
                                        </div>
+
                                        <div class="col-md-3 mb-4">
-                                          <label>Vehicle Model <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <select id="vehicle_model" d name="vehicle_model"
-                                             ata-parsley-required-message="" multiple
-                                             data-parsley-required="true"
-                                             class="custom-select" required>
-                                             <!-- {%for value in data_vm%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%} -->
-                                             <option value="*" onclick="selectAllItems('vehicle_model')" >-- select all -- </option>
+                                          <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
+                                          <select name="vehicle_model" multiple
+                                             class="custom-select select2 select2-hidden-accessible" id="vehicle_model"
+                                             aria-hidden="true" required onchange="selectAllItemsMake('vehicle_model')" >
+                                             <option value="*"  >-- select all -- </option>
                                           </select>
                                        </div>
+
+                                       <script>
+                                          function selectAllItemsMake(name) {
+     
+                                             var item = document.getElementById(name)
+                                          
+                                             if (item.value == '*') {
+                                             // alert('hello')
+
+                                                for (i = 1; i <= item.length; i++) {
+                                                   item.options[i].selected = true
+                                                }         
+                                             }
+                                             // item.options[item.options.length - 1].selected = false
+
+                                          }
+                                        </script>
+
+
+                                    
                                     
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="Required"
