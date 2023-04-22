@@ -90,11 +90,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'ExperiyaBook',
-        'CLIENT': {
-                'host': 'mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority',
-                'username': 'bhavi',
-                'password': 'Rqw7dAxrzY3UUj1S',
-        }
+        # 'CLIENT': {
+        #         'host': 'mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority',
+        #         'username': 'bhavi',
+        #         'password': 'Rqw7dAxrzY3UUj1S',
+        # }
     }
 }
 
@@ -155,7 +155,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 
 AWS_ACCESS_KEY_ID = "AKIAQHVWIUX56OGJLSBN"

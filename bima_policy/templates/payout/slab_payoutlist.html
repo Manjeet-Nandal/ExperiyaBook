@@ -94,7 +94,8 @@
                                     <td class="text-center w-10pc sorting_1">{{forloop.counter}}</td>
                                     <td>
                                        {% comment %} <a href="{%url 'bima_policy:slab_payoutform'%}">{{value.payout_name}}</a> {% endcomment %}
-                                       <a href="/bima_policy/slab/slab_payoutformshow/{{value.payoutid}}" class="">{{value.payout_name}}</a>
+                                       <a href="#" class="">{{value.payout_name}}</a>
+                                       <!-- href="/bima_policy/slab/slab_payoutformshow/{{value.payoutid}}" -->
                                     </td>
                                     
                                           <td>{{value.product_name}}</td>
@@ -123,10 +124,12 @@
                                     <td class=" text-center">
                                        <form method="post">
                                           {% csrf_token %}
-                                          <a href="/bima_policy/slab/slab_payoutformshow/{{value.payoutid}}" class="mr-1 btn btn-sm btn-icon btn-secondary" title="Edit">
+                                          <a href="#" class="mr-1 btn btn-sm btn-icon btn-secondary" title="Edit">
+                                             <!-- href="/bima_policy/slab/slab_payoutformshow/{{value.payoutid}}" -->
                                           <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
                                           </a>
                                           <a href="{%url 'bima_policy:payout_delete' value.payoutid %}" class="mr-1 btn btn-sm btn-icon btn-secondary " title="Remove">
+                                             <!-- href="{%url 'bima_policy:payout_delete' value.payoutid %}" -->
                                           <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
                                           </a>
                                        </form>

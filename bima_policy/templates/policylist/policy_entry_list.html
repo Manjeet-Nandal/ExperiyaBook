@@ -369,8 +369,9 @@
                                        <td>
                                           <a href="" class="tile tile-img" target="_blank"><i
                                                 class="far fa-file-pdf text-danger"></i></a>
-                                          <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
+                                          <a href="#"
                                              class="">{{value.policy_no}}</a>
+                                             <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
                                        </td>
                                        <td>{{value.customer_name}}</td>
                                        <td>{{value.insurance_company}}</td>
@@ -426,7 +427,6 @@
 
                                        <td>{{value.gst_amount}}</td>
 
-
                                        {% if value.gst_gcv_amount %}
                                        <td>{{ value.gst_gcv_amount }}</td>
                                        {% else %}
@@ -436,7 +436,6 @@
                                        <td>{{value.total}}</td>
 
                                        <td>{{value.payment_mode}}</td>
-
 
                                        {% if value.agent_od_reward%}
                                        <td>{{value.agent_od_reward}}</td>
@@ -504,16 +503,18 @@
                                        <td class="text-center">
                                           <form method="POST">
                                              {% csrf_token %}
-                                             <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
+                                             <a href="#"
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
                                                 <i class="fa fa-pencil-alt mt-2"></i>
+                                                <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
                                              </a>
-                                             <a href="{%url 'bima_policy:policy_delete' value.policyid %}" name="Remove"
+                                             <a href="#" name="Remove"
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                                                 <i class="far fa-trash-alt mt-2"></i>
+                                                <!-- href="{%url 'bima_policy:policy_delete' value.policyid %}" -->
                                              </a>
+                                             
                                        </td>
-
                                     </tr>
                                     {% endfor %}
                                  </tbody>

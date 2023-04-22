@@ -35,6 +35,9 @@
                </nav>
                <h1 class="page-title"> Payout Form <small class="text-muted">All * marks Fields are mandatory. </small>
                </h1>
+
+               <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+               <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
             </header>
             <!-- .page-section -->
             <div class="page-section">
@@ -74,8 +77,9 @@
                                           <label>Product Name<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select id="product_name" name="product_name" data-parsley-required-message=""
                                              class="custom-select" id="product_name" data-parsley-required="true"
-                                             multiple required >
-                                             <option value="*" onclick="selectAllItems('product_name')" >-- select all -- </option>
+                                             multiple required>
+                                             <option value="*" onclick="selectAllItems('product_name')">-- select all --
+                                             </option>
                                              <option value="MOTOR">MOTOR</option>
                                              <option value="FIRE">FIRE</option>
                                              <option value="MARINE">MARINE</option>
@@ -85,14 +89,15 @@
                                              <option value="WC">WC</option>
                                              <option value="OTHERS">OTHERS</option>
                                           </select>
-                                       </div>                                      
+                                       </div>
                                        <!-- onchange="selectAllItems('product_name')" -->
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select id="insurer" name="insurer" data-parsley-required-message=""
                                              class="custom-select" multiple id="insurer" data-parsley-required="true"
                                              required>
-                                             <option value="*"  onclick="selectAllItems('insurer')">-- select all -- </option>
+                                             <option value="*" onclick="selectAllItems('insurer')">-- select all --
+                                             </option>
                                              {%for value in data_ins%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -104,8 +109,9 @@
                                                 class="text-danger">*</abbr></label>
                                           <select id="sp_name" name="sp_name" data-parsley-required-message=""
                                              class="custom-select" multiple id="sp_name" data-parsley-required="true"
-                                             required >
-                                             <option value="*" onclick="selectAllItems('sp_name')">-- select all -- </option>
+                                             required>
+                                             <option value="*" onclick="selectAllItems('sp_name')">-- select all --
+                                             </option>
                                              {%for value in data_sp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -115,10 +121,11 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office Code<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
-                                          <select id="sp_brokercode" name="sp_brokercode" data-parsley-required-message=""
-                                             class="custom-select" multiple id="sp_brokercode" data-parsley-required="true"
-                                             required >
-                                             <option value="*" onclick="selectAllItems('sp_brokercode')" >-- select all -- </option>
+                                          <select id="sp_brokercode" name="sp_brokercode"
+                                             data-parsley-required-message="" class="custom-select" multiple
+                                             id="sp_brokercode" data-parsley-required="true" required>
+                                             <option value="*" onclick="selectAllItems('sp_brokercode')">-- select all
+                                                -- </option>
                                              {%for value in data_bc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -126,93 +133,167 @@
 
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <div class="col-md-6 mb-4">
                                           <label>Vehicle Catagory <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select id="vehicle_catagory" name="vehicle_catagory"
-                                             data-parsley-required-message="" multiple
-                                             data-parsley-required="true"
+                                             data-parsley-required-message="" multiple data-parsley-required="true"
                                              class="custom-select " required>
-                                             <option value="*" onclick="selectAndSetCat('vehicle_catagory')">-- select all -- </option>
+                                             <option value="*" onclick="selectAndSetCat('vehicle_catagory')">-- select
+                                                all -- </option>
                                              {%for value in data_vc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
-                                                                          
-                                       <div class="col-md-3 mb-4" ondblclick="deselect()">
-                                          <label>Vehicle Make By <abbr title="" class=" text-danger">*</abbr></label>
-                                          <select name="vehicle_makeby"  
-                                             class="custom-select select2 select2-hidden-accessible" id="vehicle_makeby" 
-                                             onchange="selectAllItemsMake('vehicle_makeby')"
-                                             aria-hidden="true" required  multiple >
-                                             <option value="*" >-- select all -- </option>
-                                          </select>
 
-                                       </div>
 
-                                       <div class="col-md-3 mb-4">
-                                          <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="vehicle_model" multiple
-                                             class="custom-select select2 select2-hidden-accessible" id="vehicle_model"
-                                             aria-hidden="true" required onchange="selectAllItemsMake('vehicle_model')" >
-                                             <option value="*"  >-- select all -- </option>
-                                          </select>
-                                       </div>
-
-                                       <script>
-
-                                          function selectAllItemsMake(name) {
-     
-                                             var item = document.getElementById(name)
-                                          
-                                             if (item.value == '*') {
-                                           
-                                                for (i = 1; i <= item.length; i++) {
-                                                   item.options[i].selected = true                                                
-                                                }         
-                                             }  
-
-                                          }                                         
-                                                 
-                                          function deselect(){
-                                             val = document.getElementById('vehicle_makeby').value
-                                             if (val == '*') {        
-                                                
-                                                document.getElementById('vehicle_makeby').innerHTML = ''
-                                                initialConfig()
-                                             }
-                                             
-                                             
+                                       <style>
+                                          .select-container {
+                                             position: relative;
+                                             display: inline-block;
+                                             font-size: 16px;
+                                             line-height: 1.3;
+                                             width: 200px;
+                                             margin: 10px;
                                           }
-                                    </script>
 
+                                          .select-container select {
+                                             width: 100%;
+                                             padding: 8px;
+                                             border: 1px solid #ccc;
+                                             border-radius: 4px;
+                                             box-shadow: none;
+                                             background-color: #fff;
+                                             font-size: inherit;
+                                             line-height: inherit;
+                                          }
 
-                                    
-                                    
-                                       <div class="col-md-3 mb-4">
+                                          .select-container button {
+                                             position: absolute;
+                                             top: 0;
+                                             right: 0;
+                                             padding: 8px;
+                                             border: none;
+                                             background-color: #f2f2f2;
+                                             font-size: inherit;
+                                             line-height: inherit;
+                                             cursor: pointer;
+                                          }
+
+                                          .search-container {
+                                             margin-top: 10px;
+                                          }
+
+                                          .search-container label {
+                                             display: block;
+                                             font-size: 14px;
+                                             margin-bottom: 5px;
+                                          }
+
+                                          .search-container input[type="text"] {
+                                             width: 100%;
+                                             padding: 8px;
+                                             border: 1px solid #ccc;
+                                             border-radius: 4px;
+                                             box-shadow: none;
+                                             font-size: inherit;
+                                             line-height: inherit;
+                                          }
+                                       </style>
+
+                                       <div class="col-md-6 mb-4">
+                                          <label for="my-select">Vehicle Make:</label>
+                                          <input type="text" id="search-select" class="form-control">
+                                          <select id="vehicle_makeby" name="vehicle_makeby" class="form-control" multiple>
+
+                                          </select>
+                                          <button id="select-all">Select All</button>
+                                          <button id="deselect-all">Deselect All</button>
+
+                                          <script>
+                                             const select = document.getElementById("vehicle_makeby");
+                                             const selectAllButton = document.getElementById("select-all");
+                                             const deselectAllButton = document.getElementById("deselect-all");
+                                             const searchInput = document.getElementById("search-select");
+
+                                             selectAllButton.addEventListener("click", () => {
+                                                Array.from(select.options).forEach(option => option.selected = true);
+                                             });
+
+                                             deselectAllButton.addEventListener("click", () => {
+                                                Array.from(select.options).forEach(option => option.selected = false);
+                                             });
+
+                                             searchInput.addEventListener("input", () => {
+                                                const searchValue = searchInput.value.toLowerCase();
+                                                Array.from(select.options).forEach(option => {
+                                                   const optionText = option.textContent.toLowerCase();
+                                                   option.style.display = optionText.includes(searchValue) ? "" : "none";
+                                                });
+                                             });
+
+                                          </script>
+                                       </div>
+
+                                       <div class="col-md-6 mb-4">
+                                          <label for="search-select2">Vehicle Model:</label>
+                                          <input type="text" id="search-select2" class="form-control">
+                                          <select id="vehicle_model" name="vehicle_model"  class="form-control" multiple>
+
+                                          </select>
+                                          <button id="select-all2">Select All</button>
+                                          <button id="deselect-all2">Deselect All</button>
+
+                                          <script>
+                                             const select2 = document.getElementById("vehicle_model");
+                                             const selectAllButton2 = document.getElementById("select-all2");
+                                             const deselectAllButton2 = document.getElementById("deselect-all2");
+                                             const searchInput2 = document.getElementById("search-select2");
+
+                                             selectAllButton2.addEventListener("click", () => {
+                                                Array.from(select2.options).forEach(option => option.selected = true);
+                                             });
+
+                                             deselectAllButton2.addEventListener("click", () => {
+                                                Array.from(select2.options).forEach(option => option.selected = false);
+                                             });
+
+                                             searchInput2.addEventListener("input", () => {
+                                                const searchValue = searchInput2.value.toLowerCase();
+                                                Array.from(select2.options).forEach(option => {
+                                                   const optionText = option.textContent.toLowerCase();
+                                                   option.style.display = optionText.includes(searchValue) ? "" : "none";
+                                                });
+                                             });
+
+                                          </script>
+                                       </div>
+
+                                       <div class="col-md-4 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select id="vehicle_fuel_type" name="vehicle_fuel_type"
-                                             data-parsley-required="true" multiple
-                                             
-                                             data-parsley-required-message="" class="custom-select" required>
-                                             <option value="*" onclick="selectAllItems('vehicle_fuel_type')">-- select all -- </option>
+                                             data-parsley-required="true" multiple data-parsley-required-message=""
+                                             class="custom-select" required>
+                                             <option value="*" onclick="selectAllItems('vehicle_fuel_type')">-- select
+                                                all -- </option>
                                              <option value="PETROL">PETROL</option>
                                              <option value="DIESEL">DIESEL</option>
                                              <option value="CNG">CNG</option>
                                              <option value="ELECTRIC">ELECTRIC</option>
                                           </select>
                                        </div>
-                                      
 
-                                       <div class="col-md-3 mb-4">
+
+                                       <div class="col-md-4 mb-4">
                                           <label>Cubic Capacity<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select id="cubic_capacity" name="cubic_capacity"
                                              data-parsley-required-message="" class="custom-select" id="cubic_capacity"
-                                             data-parsley-required="true" multiple required >
-                                             <option value="*" onclick="selectAllItems('cubic_capacity')">-- select all -- </option>
+                                             data-parsley-required="true" multiple required>
+                                             <option value="*" onclick="selectAllItems('cubic_capacity')">-- select all
+                                                -- </option>
                                              <option value="75CC-150CC">75CC-150CC</option>
                                              <option value="150CC-350CC">150CC-350CC</option>
                                              <option value="ABOVE 350CC">ABOVE 350CC</option>
@@ -223,14 +304,14 @@
                                           </select>
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <div class="col-md-4 mb-4">
                                           <label>Seating Capacity<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select id="seating_capacity" name="seating_capacity"
                                              data-parsley-required-message="" class="custom-select"
-                                             id="seating_capacity" data-parsley-required="true" multiple required
-                                             >
-                                             <option value="*" onclick="selectAllItems('seating_capacity')">-- select all -- </option>
+                                             id="seating_capacity" data-parsley-required="true" multiple required>
+                                             <option value="*" onclick="selectAllItems('seating_capacity')">-- select
+                                                all -- </option>
                                              <option value="BELOW 5">BELOW 5</option>
                                              <option value="5-7">5-7</option>
                                              <option value="7-12">7-12</option>
@@ -243,27 +324,27 @@
                                           <label>Coverage Type <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select id="coverage_type" name="coverage_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required multiple
-                                             >
+                                             data-parsley-required-message="" class="custom-select" required multiple>
                                              <!-- {% for value in data_ct%}
                                              <option value="{{value}}">{{value}}</option>
                                              {% endfor%} -->
-                                             <option value="*" onclick="selectAllItems('coverage_type')">-- select all -- </option>
+                                             <option value="*" onclick="selectAllItems('coverage_type')">-- select all
+                                                -- </option>
                                              <option value="1 YEAR PACKAGE">1 YEAR PACKAGE</option>
                                              <option value="1+2 YEAR PACKAGE">1+2 YEAR PACKAGE</option>
                                              <option value="1+4 YEAR PACKAGE">1+4 YEAR PACKAGE</option>
                                              <option value="3 YEAR TP">3 YEAR TP</option>
                                              <option value="5 YEAR TP">5 YEAR TP</option>
                                              <option value="TP ONLY">TP ONLY</option>
-                                             <option value="OD ONLY">OD ONLY</option>                                             
+                                             <option value="OD ONLY">OD ONLY</option>
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>GVW<abbr title="Required" class="text-danger">*</abbr></label>
                                           <select name="gvw" data-parsley-required-message="" class="custom-select"
-                                             id="gvw" data-parsley-required="true" required
-                                             multiple>
-                                             <option value="*" onclick="selectAllItems('gvw')">-- select all -- </option>
+                                             id="gvw" data-parsley-required="true" required multiple>
+                                             <option value="*" onclick="selectAllItems('gvw')">-- select all --
+                                             </option>
                                              <option value="BELOW 2000">BELOW 2000</option>
                                              <option value="2000-2500">2000-2500</option>
                                              <option value="2500-3500">2500-3500</option>
@@ -275,12 +356,12 @@
                                              <option value="ABOVE 40000">ABOVE 40000</option>
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4"> 
+                                       <div class="col-md-3 mb-4">
                                           <label>Policy Type <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select id="policy_type" name="policy_type" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required multiple
-                                             >
-                                             <option value="*" onclick="selectAllItems('policy_type')">-- select all -- </option>
+                                             data-parsley-required-message="" class="custom-select" required multiple>
+                                             <option value="*" onclick="selectAllItems('policy_type')">-- select all --
+                                             </option>
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
@@ -324,9 +405,9 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Addon <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select id="addon" name="addon" data-parsley-required="true"
-                                             data-parsley-required-message=""
-                                             class="custom-select" required multiple>
-                                             <option value="*" onclick="selectAllItems('addon')">-- select all -- </option>
+                                             data-parsley-required-message="" class="custom-select" required multiple>
+                                             <option value="*" onclick="selectAllItems('addon')">-- select all --
+                                             </option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
 
@@ -335,22 +416,22 @@
                                        <div class="col-md-3 mb-4">
                                           <label>NCB <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select id="ncb" name="ncb" data-parsley-required="true" multiple
-                                             data-parsley-required-message=""
-                                             class="custom-select" required>
-                                             <option value="*" onclick="selectAllItems('ncb')" >-- select all -- </option>
+                                             data-parsley-required-message="" class="custom-select" required>
+                                             <option value="*" onclick="selectAllItems('ncb')">-- select all --
+                                             </option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                           </select>
                                        </div>
-                                    
 
-                                      
+
+
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="Required" class="text-danger">*</abbr></label>
-                                          <select  id="policy_term"  name="policy_term" data-parsley-required="true"
-                                             data-parsley-required-message="" class="custom-select" required multiple
-                                             >
-                                             <option value="*" onclick="selectAllItems('policy_term')">-- select all -- </option>                                      
+                                          <select id="policy_term" name="policy_term" data-parsley-required="true"
+                                             data-parsley-required-message="" class="custom-select" required multiple>
+                                             <option value="*" onclick="selectAllItems('policy_term')">-- select all --
+                                             </option>
                                              <option value="1">1</option>
                                              <option value="2">2</option>
                                              <option value="3">3</option>
@@ -362,9 +443,9 @@
                                        <div class="col-md-3 mb-4">
                                           <label>CPA <abbr title="Required" class="text-danger">*</abbr></label>
                                           <select id="cpa" name="cpa" data-parsley-required="true" multiple
-                                             data-parsley-required-message=""
-                                             class="custom-select" required>
-                                             <option value="*" onclick="selectAllItems('cpa')">-- select all -- </option>
+                                             data-parsley-required-message="" class="custom-select" required>
+                                             <option value="*" onclick="selectAllItems('cpa')">-- select all --
+                                             </option>
                                              <option value="YES">YES</option>
                                              <option value="NO">NO</option>
                                           </select>
@@ -893,16 +974,16 @@
       s2.innerHTML = "";
 
       if (s1.value == "1") {
-         var optionArray = ['AN01|AN01', 'AN02|AN02', 'AN03|AN03', 'AN04|AN04', 'AN05|AN05', 'AN06|AN06', 'AN07|AN07', 'AN08|AN08', 
-            'AN09|AN09', 
-            'AN10|AN10', 
-            'AN11|AN11', 
-            'AN12|AN12', 
-            'AN13|AN13', 
-            'AN14|AN14', 
-            'AN15|AN15', 
-            'AN16|AN16', 
-            'AN17|AN17', 
+         var optionArray = ['AN01|AN01', 'AN02|AN02', 'AN03|AN03', 'AN04|AN04', 'AN05|AN05', 'AN06|AN06', 'AN07|AN07', 'AN08|AN08',
+            'AN09|AN09',
+            'AN10|AN10',
+            'AN11|AN11',
+            'AN12|AN12',
+            'AN13|AN13',
+            'AN14|AN14',
+            'AN15|AN15',
+            'AN16|AN16',
+            'AN17|AN17',
             'AN18|AN18',
             'AN21|AN21',
             'AN26|AN26',
@@ -1568,18 +1649,18 @@
             , 'GJ36|GJ36', 'GJ37|GJ37', 'GJ38|GJ38'];
       }
       else if (s1.value == "13") {
-            var optionArray = ['HR01|HR01', 'HR02|HR02', 'HR03|HR03', 'HR04|HR04', 'HR05|HR05', 'HR06|HR06', 'HR07|HR07', 'HR08|HR08'
-               , 'HR09|HR09', 'HR10|HR10', 'HR11|HR11', 'HR12|HR12', 'HR13|HR13', 'HR14|HR14', 'HR15|HR15', 'HR16|HR16', 'HR17|HR17'
-               , 'HR18|HR18', 'HR19|HR19', 'HR20|HR20', 'HR21|HR21', 'HR22|HR22', 'HR23|HR23', 'HR24|HR24', 'HR25|HR25', 'HR26|HR26'
-               , 'HR27|HR27', 'HR28|HR28', 'HR29|HR29', 'HR30|HR30', 'HR31|HR31', 'HR32|HR32', 'HR33|HR33', 'HR34|HR34', 'HR35|HR35'
-               , 'HR36|HR36', 'HR37|HR37', 'HR38|HR38', 'HR39|HR39', 'HR40|HR40', 'HR41|HR41', 'HR42|HR42', 'HR43|HR43', 'HR44|HR44'
-               , 'HR45|HR45', 'HR46|HR46', 'HR47|HR47', 'HR48|HR48', 'HR49|HR49', 'HR50|HR50', 'HR51|HR51', 'HR52|HR52', 'HR53|HR53'
-               , 'HR54|HR54', 'HR55|HR55', 'HR56|HR56', 'HR57|HR57', 'HR58|HR58', 'HR59|HR59', 'HR60|HR60', 'HR61|HR61', 'HR62|HR62'
-               , 'HR63|HR63', 'HR64|HR64', 'HR65|HR65', 'HR66|HR66', 'HR67|HR67', 'HR68|HR68', 'HR69|HR69', 'HR71|HR71', 'HR72|HR72'
-               , 'HR73|HR73', 'HR74|HR74', 'HR75|HR75', 'HR76|HR76', 'HR77|HR77', 'HR78|HR78', 'HR79|HR79', 'HR80|HR80', 'HR81|HR81'
-               , 'HR82|HR82', 'HR83|HR83', 'HR84|HR84', 'HR85|HR85', 'HR86|HR86', 'HR87|HR87', 'HR88|HR88', 'HR89|HR89', 'HR90|HR90'
-               , 'HR91|HR91', 'HR92|HR92', 'HR93|HR93', 'HR94|HR94', 'HR95|HR95', 'HR96|HR96', 'HR97|HR97', 'HR98|HR98'];
-         }
+         var optionArray = ['HR01|HR01', 'HR02|HR02', 'HR03|HR03', 'HR04|HR04', 'HR05|HR05', 'HR06|HR06', 'HR07|HR07', 'HR08|HR08'
+            , 'HR09|HR09', 'HR10|HR10', 'HR11|HR11', 'HR12|HR12', 'HR13|HR13', 'HR14|HR14', 'HR15|HR15', 'HR16|HR16', 'HR17|HR17'
+            , 'HR18|HR18', 'HR19|HR19', 'HR20|HR20', 'HR21|HR21', 'HR22|HR22', 'HR23|HR23', 'HR24|HR24', 'HR25|HR25', 'HR26|HR26'
+            , 'HR27|HR27', 'HR28|HR28', 'HR29|HR29', 'HR30|HR30', 'HR31|HR31', 'HR32|HR32', 'HR33|HR33', 'HR34|HR34', 'HR35|HR35'
+            , 'HR36|HR36', 'HR37|HR37', 'HR38|HR38', 'HR39|HR39', 'HR40|HR40', 'HR41|HR41', 'HR42|HR42', 'HR43|HR43', 'HR44|HR44'
+            , 'HR45|HR45', 'HR46|HR46', 'HR47|HR47', 'HR48|HR48', 'HR49|HR49', 'HR50|HR50', 'HR51|HR51', 'HR52|HR52', 'HR53|HR53'
+            , 'HR54|HR54', 'HR55|HR55', 'HR56|HR56', 'HR57|HR57', 'HR58|HR58', 'HR59|HR59', 'HR60|HR60', 'HR61|HR61', 'HR62|HR62'
+            , 'HR63|HR63', 'HR64|HR64', 'HR65|HR65', 'HR66|HR66', 'HR67|HR67', 'HR68|HR68', 'HR69|HR69', 'HR71|HR71', 'HR72|HR72'
+            , 'HR73|HR73', 'HR74|HR74', 'HR75|HR75', 'HR76|HR76', 'HR77|HR77', 'HR78|HR78', 'HR79|HR79', 'HR80|HR80', 'HR81|HR81'
+            , 'HR82|HR82', 'HR83|HR83', 'HR84|HR84', 'HR85|HR85', 'HR86|HR86', 'HR87|HR87', 'HR88|HR88', 'HR89|HR89', 'HR90|HR90'
+            , 'HR91|HR91', 'HR92|HR92', 'HR93|HR93', 'HR94|HR94', 'HR95|HR95', 'HR96|HR96', 'HR97|HR97', 'HR98|HR98'];
+      }
       else if (s1.value == "12") {
          var optionArray = ['HP03|HP03', 'HP04|HP04', 'HP05|HP05', 'HP06|HP06', 'HP07|HP07', 'HP08|HP08'
             , 'HP09|HP09', 'HP10|HP10', 'HP11|HP11', 'HP12|HP12', 'HP13|HP13', 'HP14|HP14', 'HP15|HP15', 'HP16|HP16', 'HP17|HP17'
@@ -2114,6 +2195,7 @@
          document.getElementById('rto').innerHTML = '';
       }
    }
+
 
    function clearRtoList() {
       for (let index = 0; index <= 36; index++) {
@@ -2697,24 +2779,24 @@
 <script>
 
    function selectAndSetCat(params) {
-      selectAllItems(params) 
+      selectAllItems(params)
       setCategoryOnChange()
    }
-   
- 
+
+
    function selectAllItems(name) {
-     
+
       var item = document.getElementById(name)
-     
+
       if (item.value == '*') {
          for (i = 0; i <= item.length; i++) {
             item.options[i].selected = true
-         }         
+         }
       }
       item.options[item.options.length - 1].selected = false
    }
 
-   
+
    function setCategoryOnChangeOld() {
       value = document.getElementById('vehicle_catagory').value
 
@@ -2722,9 +2804,9 @@
       seating_capacity = document.getElementById('seating_capacity')
       coverage_type = document.getElementById('coverage_type')
       gvw = document.getElementById('gvw')
-      
-      if (value == 'TWO WHEELER' || value == 'TWO WHEELER COMMERCIAL'  || value == 'TWO WHEELER SCOOTER') {
-                 
+
+      if (value == 'TWO WHEELER' || value == 'TWO WHEELER COMMERCIAL' || value == 'TWO WHEELER SCOOTER') {
+
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
@@ -2777,11 +2859,11 @@
 
          var newoption = document.createElement("option");
          newoption.value = '*'
-         newoption.innerHTML =  'select all'
+         newoption.innerHTML = 'select all'
          coverage_type.options.add(newoption);
       }
 
-      else if (value == 'PRIVATE CAR') {        
+      else if (value == 'PRIVATE CAR') {
 
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
@@ -2801,7 +2883,7 @@
          newoption.value = 'ABOVE 1500CC'
          newoption.innerHTML = 'ABOVE 1500CC'
          cubic_capacity.options.add(newoption);
-         
+
          var newoption = document.createElement("option");
          newoption.value = '*'
          newoption.innerHTML = 'select all'
@@ -2809,7 +2891,7 @@
 
 
          // Coverage Type
-         
+
          var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
          newoption.innerHTML = '1 YEAR PACKAGE'
@@ -2834,10 +2916,10 @@
          newoption.value = 'OD ONLY'
          newoption.innerHTML = 'OD ONLY'
          coverage_type.options.add(newoption);
-         
+
          var newoption = document.createElement("option");
          newoption.value = '*'
-         newoption.innerHTML =  'select all'
+         newoption.innerHTML = 'select all'
          coverage_type.options.add(newoption);
 
       }
@@ -2856,16 +2938,16 @@
          newoption.value = 'TP ONLY'
          newoption.innerHTML = 'TP ONLY'
          coverage_type.options.add(newoption);
-         
+
          var newoption = document.createElement("option");
          newoption.value = '*'
-         newoption.innerHTML =  'select all'
+         newoption.innerHTML = 'select all'
          coverage_type.options.add(newoption);
-        
+
       }
 
       else if (value == '3 WHEELER PCV') {
-        
+
          coverage_type.innerHTML = ''
 
          // Coverage type                
@@ -2878,18 +2960,18 @@
          newoption.value = 'TP ONLY'
          newoption.innerHTML = 'TP ONLY'
          coverage_type.options.add(newoption);
-         
+
          var newoption = document.createElement("option");
          newoption.value = '*'
-         newoption.innerHTML =  'select all'
+         newoption.innerHTML = 'select all'
          coverage_type.options.add(newoption);
       }
 
       else if (value == '3 WHEELER GCV-PUBLIC CARRIER') {
-        
+
          // cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
-        
+
          var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
          newoption.innerHTML = '1 YEAR PACKAGE'
@@ -2899,15 +2981,15 @@
          newoption.value = 'TP Only'
          newoption.innerHTML = 'TP Only'
          coverage_type.options.add(newoption);
-         
+
          var newoption = document.createElement("option");
          newoption.value = '*'
-         newoption.innerHTML =  'select all'
+         newoption.innerHTML = 'select all'
          coverage_type.options.add(newoption);
       }
 
       else if (value == 'TAXI 4 WHEELER') {
-         
+
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
@@ -2926,7 +3008,7 @@
          newoption.value = 'ABOVE 1500CC'
          newoption.innerHTML = 'ABOVE 1500CC'
          cubic_capacity.options.add(newoption);
-         
+
          var newoption = document.createElement("option");
          newoption.value = '*'
          newoption.innerHTML = 'select all'
@@ -2957,23 +3039,23 @@
          newoption.value = 'OD ONLY'
          newoption.innerHTML = 'OD ONLY'
          coverage_type.options.add(newoption);
-         
+
          var newoption = document.createElement("option");
          newoption.value = '*'
-         newoption.innerHTML =  'select all'
+         newoption.innerHTML = 'select all'
          coverage_type.options.add(newoption);
       }
 
       else if (value == 'BUS AND OTHERS') {
-         
+
 
       }
 
       else if (value == 'MISC-D SPECIAL VEHICLE') {
-         
+
          // Coverage Type
          coverage_type.innerHTML = ''
-        
+
          var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
          newoption.innerHTML = '1 YEAR PACKAGE'
@@ -3001,14 +3083,14 @@
 
          var newoption = document.createElement("option");
          newoption.value = '*'
-         newoption.innerHTML =  'select all'
+         newoption.innerHTML = 'select all'
          coverage_type.options.add(newoption);
       }
 
-      else if (value == 'SCHOOL BUS-SCHOOL NAME') {         
-        
+      else if (value == 'SCHOOL BUS-SCHOOL NAME') {
+
          // Coverage Type
-         coverage_type.innerHTML = ''         
+         coverage_type.innerHTML = ''
 
          var newoption = document.createElement("option");
          newoption.value = '1 YEAR PACKAGE'
@@ -3034,14 +3116,14 @@
          newoption.value = 'OD ONLY'
          newoption.innerHTML = 'OD ONLY'
          coverage_type.options.add(newoption);
-         
+
          var newoption = document.createElement("option");
          newoption.value = '*'
-         newoption.innerHTML =  'select all'
+         newoption.innerHTML = 'select all'
          coverage_type.options.add(newoption);
       }
       else if (value == 'SCHOOL BUS-INDIVIDUAL NAME') {
-         
+
          // Coverage Type
          coverage_type.innerHTML = ''
 
@@ -3069,20 +3151,20 @@
          newoption.value = 'OD ONLY'
          newoption.innerHTML = 'OD ONLY'
          coverage_type.options.add(newoption);
-         
+
          var newoption = document.createElement("option");
          newoption.value = '*'
-         newoption.innerHTML =  'select all'
+         newoption.innerHTML = 'select all'
          coverage_type.options.add(newoption);
       }
 
    }
 
-   
+
    function setCategoryOnChange() {
       sortItems("vehicle_catagory")
       value = document.getElementById('vehicle_catagory').value
-  
+
       coverage_typeDiv = document.getElementById('coverage_typeDiv')
       cubic_capacityDiv = document.getElementById('cubic_capacityDiv')
       seating_capacityDiv = document.getElementById('seating_capacityDiv')
@@ -3667,7 +3749,7 @@
       }
    }
 
-   
+
    function initialConfig() {
       addVehicleMakes()
       addVehicleModels()
@@ -3702,7 +3784,7 @@
 
          })
    }
- 
+
 
 
 </script>
@@ -3727,4 +3809,3 @@
 </body>
 
 {%endblock%}
-

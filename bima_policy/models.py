@@ -83,7 +83,6 @@ class InsuranceCompany(models.Model):
         self.id = uuid.uuid4().hex[:6].upper()
         super(InsuranceCompany, self).save(*args, **kwargs)
 
-
 class Agents(models.Model):
     login_id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:10].upper(), editable=False, max_length=30)
@@ -109,7 +108,6 @@ class Agents(models.Model):
     def save(self, *args, **kwargs):
         self.login_id = 'A' + uuid.uuid4().hex[:10].upper()
         super(Agents, self).save(*args, **kwargs)
-
 
 class ServiceProvider(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
@@ -156,32 +154,32 @@ class Slab(models.Model):
     def __str__(self):
         return self.slab_name
 
-
+ 
 class Payout(models.Model):
     profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
     payoutid = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:7].upper(), editable=False, max_length=7)
     slab_name = models.ForeignKey(Slab, on_delete=models.CASCADE)
     payout_name = models.CharField(max_length=255)
-    product_name = models.CharField(max_length=255)
-    insurance_company = models.CharField(max_length=255)
-    sp_name = models.CharField(max_length=255)
-    sp_brokercode = models.CharField(max_length=255)
-    vehicle_catagory = models.CharField(max_length=255)
-    vehicle_makeby = models.CharField(max_length=255)
-    vehicle_model = models.CharField(max_length=255)
-    vehicle_fuel_type = models.CharField(max_length=255)
-    mfg_year = models.CharField(max_length=255)
+    product_name = models.TextField()
+    insurance_company = models.CharField(max_length=1000)
+    sp_name = models.CharField(max_length=1000)
+    sp_brokercode = models.CharField(max_length=1000)
+    vehicle_catagory = models.CharField(max_length=1000)
+    vehicle_makeby = models.TextField()
+    vehicle_model = models.TextField()
+    vehicle_fuel_type = models.CharField(max_length=1000)
+    mfg_year = models.CharField(max_length=1000)
     rto_city = models.TextField()
-    addon = models.CharField(max_length=50)
-    ncb = models.CharField(max_length=50)
-    gvw = models.CharField(max_length=255)
-    cubic_capacity = models.CharField(max_length=255)
-    seating_capacity = models.CharField(max_length=255)
-    coverage_type = models.CharField(max_length=255)
-    policy_type = models.CharField(max_length=100)
-    cpa = models.CharField(max_length=50)
-    policy_term = models.CharField(max_length=50)
+    addon = models.CharField(max_length=255)
+    ncb = models.CharField(max_length=255)
+    gvw = models.CharField(max_length=1000)
+    cubic_capacity = models.CharField(max_length=1000)
+    seating_capacity = models.CharField(max_length=1000)
+    coverage_type = models.CharField(max_length=1000)
+    policy_type = models.CharField(max_length=1000)
+    cpa = models.CharField(max_length=255)
+    policy_term = models.CharField(max_length=255)
 
     agent_od_reward = models.IntegerField(max_length=50)
     agent_tp_reward = models.IntegerField(max_length=50)
@@ -303,7 +301,7 @@ class Policy(models.Model):
     inspection_report = models.FileField(upload_to='media/documents/')
 
     remark = models.CharField(max_length=255)
-    
+
     def __str__(self):
         return self.customer_name
 
