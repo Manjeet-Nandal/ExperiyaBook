@@ -2110,13 +2110,13 @@ def policy_entry(request):
 
     try:
         if is_user(request):
-            # data = Policy.objects.filter(issue_date__gte=now().date()).order_by('-policyid').values()
-            data = Policy.objects.order_by('-policyid').values()
+            data = Policy.objects.filter(issue_date__gte=now().date()).order_by('-policyid').values()
+            # data = Policy.objects.order_by('-policyid').values()
 
         else:
             # data = Policy.objects.filter().order_by('-policyid').values()
             data = Policy.objects.filter(employee=get_id_from_session(
-                request)).order_by('-policyid').values()
+                request)).filter(issue_date__icontains=now().date()).order_by('-policyid').values()
 
         print("total policy: ", data.values().count())
         datag = Agents.objects.all()
