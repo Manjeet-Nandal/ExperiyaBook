@@ -41,6 +41,7 @@ urlpatterns = [
     path('slab/slab_payoutform/',slab_payoutform, name="slab_payoutform"),
     path('slab/slab_payoutformshow/<str:id>',slab_payoutformshow, name="slab_payoutformshow"),
     path('slab/slab_payoutlist/payout/<str:id>/delete',payout_delete, name="payout_delete"),
+    path('slab/slab_payoutlist/payout/<str:id>/copy',payout_copy, name="payout_copy"),
     path('slab/slab_payoutlist/payout/<str:id>/edit',payout_edit, name="payout_edit"),
     path('policy',create_policy.as_view(), name="create_policy"),
     

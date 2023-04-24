@@ -127,6 +127,10 @@
                                           <a href="/bima_policy/slab/slab_payoutformshow/{{value.payoutid}}" class="mr-1 btn btn-sm btn-icon btn-secondary" title="Edit">
                                              <!-- href="/bima_policy/slab/slab_payoutformshow/{{value.payoutid}}" -->
                                           <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
+                                          </a>                                        
+                                          <a href="{%url 'bima_policy:payout_copy' value.payoutid %}" class="mr-1 btn btn-sm btn-icon btn-secondary " title="Copy">
+                                             <!-- href="{%url 'bima_policy:payout_delete' value.payoutid %}" -->
+                                          <i class="fas fa-copy mt-2" aria-hidden="true"></i>
                                           </a>
                                           <a href="{%url 'bima_policy:payout_delete' value.payoutid %}" class="mr-1 btn btn-sm btn-icon btn-secondary " title="Remove">
                                              <!-- href="{%url 'bima_policy:payout_delete' value.payoutid %}" -->
