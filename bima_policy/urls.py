@@ -36,6 +36,7 @@ urlpatterns = [
     path('rto/<str:id>',update_rto, name='rto_delete'),
     path('slab/', slab, name="slab"),
     path('slab/<str:id>',slab_delete,name="del_slab"),
+    path('slab/<str:id>/copy',slab_copy,name="copy_slab"),
     path('slab/<str:id>/edit',slab_edit,name="edit_slab"),
     path('slab/slab_payoutlist/<str:id>', slab_payout, name="slab_payout"),
     path('slab/slab_payoutform/',slab_payoutform, name="slab_payoutform"),

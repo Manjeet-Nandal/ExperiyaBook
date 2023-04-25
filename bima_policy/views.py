@@ -2114,19 +2114,16 @@ def policy_entry(request):
             data = Policy.objects.order_by('-policyid').values()
 
         else:
-            data = Policy.objects.filter().order_by('-policyid').values()
+            data = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-policyid').values()                                   
             # data = Policy.objects.filter(employee=get_id_from_session(
             #     request)).filter(issue_date__icontains=now().date()).order_by('-policyid').values()
 
         print("total policy: ", data.values().count())
         datag = Agents.objects.all()
-
-        # paginator = Paginator(data, data.count())
-
-        # data = paginator.get_page(request.GET.get('page'))
+     
         return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
-        page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
         return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
@@ -2570,6 +2567,81 @@ def slab_delete(request, id):
     data = Slab.objects.filter(slab_name=id)
     data.delete()
     return redirect('bima_policy:slab')
+
+def slab_copy(request, id):
+    print('slab copy method')
+    try:
+        data = Slab.objects.filter(slab_name=id).values()       
+        
+        slab_name=data[0]['slab_name'] + '_copy_' + uuid.uuid4().hex[:3].upper()
+                      
+        new_slab = Slab.objects.create(profile_id_id = data[0]['profile_id_id'], slab_name=slab_name)
+                       
+        temp = Payout.objects.filter(slab_name=data[0]['slab_name']).values()    
+       
+        for i in temp:
+            print(i['payoutid'])
+            payout_copy_all(request, i['payoutid'], new_slab)
+    except:
+        return HttpResponse('Error occurred in slab_copy' )
+
+    return redirect('bima_policy:slab')
+
+
+def payout_copy_all(request, id, slab):
+    data = ProfileModel.objects.get(id=get_id_from_session(request))    
+    temp = Payout.objects.filter(payoutid=id).values()    
+    payout_name = temp[0]['payout_name']  + '_copy_' + uuid.uuid4().hex[:3].upper() 
+    s = slab
+    product_name = temp[0]['product_name']
+    insurance_company = temp[0]['insurance_company']        
+    sp_name = temp[0]['sp_name']
+    sp_brokercode = temp[0]['sp_brokercode']
+    vehicle_makeby = temp[0]['vehicle_makeby']
+    vehicle_model = temp[0]['vehicle_model']
+    vehicle_catagory = temp[0]['vehicle_catagory']
+    vehicle_fuel_type = temp[0]['vehicle_fuel_type']
+    mfg_year = temp[0]['mfg_year']
+    addon = temp[0]['addon']
+    ncb = temp[0]['ncb']
+    gvw = temp[0]['gvw']
+    cubic_capacity = temp[0]['cubic_capacity']
+    seating_capacity = temp[0]['seating_capacity']
+    coverage_type = temp[0]['coverage_type']
+    policy_type = temp[0]['policy_type']
+    policy_term = temp[0]['policy_term']
+    cpa = temp[0]['cpa']
+    rto = temp[0]['rto_city']
+
+    # agent payout
+    agent_od_reward =  temp[0]['agent_od_reward']
+    agent_tp_reward =  temp[0]['agent_tp_reward']
+    # self payout
+    self_od_reward =  temp[0]['self_od_reward']
+    self_tp_reward =  temp[0]['self_tp_reward']
+
+    data = Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name,
+                                    insurance_company=insurance_company, sp_name=sp_name,  sp_brokercode=sp_brokercode,
+                                    vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
+                                    vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type, mfg_year=mfg_year,
+                                    rto_city=rto, addon=addon, ncb=ncb, gvw=gvw, cubic_capacity=cubic_capacity, seating_capacity=seating_capacity,
+                                    coverage_type=coverage_type, policy_type=policy_type, cpa=cpa, policy_term=policy_term,
+                                    agent_od_reward=agent_od_reward,
+                                    agent_tp_reward=agent_tp_reward,
+                                    self_od_reward=self_od_reward,
+                                    self_tp_reward=self_tp_reward,
+                                    profile_id=data)
+    print("insert data")
+    print(data)
+    return 'done'
+
+    try:
+        pdata = Payout.objects.filter(
+            profile_id=get_id_from_session(request))
+       
+        return render(request, 'payout/slab_payoutlist.html', {'data1': pdata})
+    except Payout.DoesNotExist:
+        return render(request, 'payout/slab_payoutlist.html')
 
 
 def slab_edit(request, id):
