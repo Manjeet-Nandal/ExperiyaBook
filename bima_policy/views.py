@@ -2719,14 +2719,12 @@ def slab_payoutform(request):
         self_od_reward = request.POST['self_od_reward']
         self_tp_reward = request.POST['self_tp_reward']
 
-        product_name = ' , '.join(product_name)
-
+        product_name = ' , '.join(product_name)        
         insurance_company = ' , '.join(insurance_company)
-
         sp_name = ' , '.join(sp_name)
         sp_brokercode = ' , '.join(sp_brokercode)
-        vehicle_makeby = ' , '.join(vehicle_makeby)
-        vehicle_model = ' , '.join(vehicle_model)
+        # vehicle_makeby = ' , '.join(vehicle_makeby)
+        # vehicle_model = ' , '.join(vehicle_model)
         vehicle_catagory = ' , '.join(vehicle_catagory)
         vehicle_fuel_type = ' , '.join(vehicle_fuel_type)
         mfg_year = ' , '.join(mfg_year)
@@ -2748,10 +2746,13 @@ def slab_payoutform(request):
         if vehicle_model.__contains__('*'):
             vehicle_model = vehicle_model.replace('*', ' ')
 
-        print(vehicle_model)
+        print(vehicle_makeby)
 
+        vehicle_makeby = str(vehicle_makeby).replace('\\r\\n', '')
+        print( vehicle_makeby)
         # my_list = product_names.split(",")
         # print( my_list)
+        product_name
         data = Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name,
                                      insurance_company=insurance_company, sp_name=sp_name,  sp_brokercode=sp_brokercode,
                                      vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
@@ -2834,7 +2835,7 @@ def slab_payoutformshow(request, id):
         print("done")
         return redirect('bima_policy:slab')
 
-    else:
+    else:        
         data = Payout.objects.get(payoutid=id)
         data_sp = ServiceProvider.objects.all()
         data_bc = BrokerCode.objects.all()
@@ -2844,7 +2845,7 @@ def slab_payoutformshow(request, id):
         data_vc = VehicleCategory.objects.all()
         vdata = fetch_vehicle_data()
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
-
+        print(data.vehicle_makeby)
         return render(request, 'payout/edit_payoutform.html', {"vdata": vdata, 'data': data, 'slab': slab, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc})
 
 
