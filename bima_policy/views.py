@@ -2719,40 +2719,36 @@ def slab_payoutform(request):
         self_od_reward = request.POST['self_od_reward']
         self_tp_reward = request.POST['self_tp_reward']
 
-        product_name = ' , '.join(product_name)        
-        insurance_company = ' , '.join(insurance_company)
-        sp_name = ' , '.join(sp_name)
-        sp_brokercode = ' , '.join(sp_brokercode)
-        # vehicle_makeby = ' , '.join(vehicle_makeby)
-        # vehicle_model = ' , '.join(vehicle_model)
-        vehicle_catagory = ' , '.join(vehicle_catagory)
-        vehicle_fuel_type = ' , '.join(vehicle_fuel_type)
-        mfg_year = ' , '.join(mfg_year)
-        rto_city = ' , '.join(rto)
-        addon = ' , '.join(addon)
-        ncb = ' , '.join(ncb)
-        gvw = ' , '.join(gvw)
-        cubic_capacity = ' , '.join(cubic_capacity)
-        seating_capacity = ' , '.join(seating_capacity)
-        coverage_type = ' , '.join(coverage_type)
-        policy_type = ' , '.join(policy_type)
-        cpa = ' , '.join(cpa)
-        policy_term = ' , '.join(policy_term)
-
-        if vehicle_model.__contains__('/'):
-            vehicle_model = vehicle_model.replace('/', ' ')
-        if vehicle_model.__contains__('+'):
-            vehicle_model = vehicle_model.replace('+', ' ')
-        if vehicle_model.__contains__('*'):
-            vehicle_model = vehicle_model.replace('*', ' ')
-
-        print(vehicle_makeby)
-
         vehicle_makeby = str(vehicle_makeby).replace('\\r\\n', '')
-        print( vehicle_makeby)
+        vehicle_model = str(vehicle_model).replace('\\r\\n', '')
+        vehicle_makeby = str(vehicle_makeby).replace("['", '').replace("']", '').replace("'", '')
+        vehicle_model = str(vehicle_model).replace("['", '').replace("']", '').replace("'", '')
+
+        rto = str(rto).replace("['", '').replace("']", '').replace("'", '')
+        
+        product_name = ', '.join(product_name)        
+        insurance_company = ', '.join(insurance_company)
+        sp_name = ', '.join(sp_name)
+        sp_brokercode = ', '.join(sp_brokercode)
+        # vehicle_makeby = ', '.join(vehicle_makeby)
+        # vehicle_model = ', '.join(vehicle_model)
+        vehicle_catagory = ', '.join(vehicle_catagory)
+        vehicle_fuel_type = ', '.join(vehicle_fuel_type)
+        mfg_year = ', '.join(mfg_year)
+        rto_city = ', '.join(rto)
+        addon = ', '.join(addon)
+        ncb = ', '.join(ncb)
+        gvw = ', '.join(gvw)
+        cubic_capacity = ', '.join(cubic_capacity)
+        seating_capacity = ', '.join(seating_capacity)
+        coverage_type = ', '.join(coverage_type)
+        policy_type = ', '.join(policy_type)
+        cpa = ', '.join(cpa)
+        policy_term = ', '.join(policy_term)
+        
         # my_list = product_names.split(",")
         # print( my_list)
-        product_name
+        
         data = Payout.objects.create(payout_name=payout_name, slab_name=s, product_name=product_name,
                                      insurance_company=insurance_company, sp_name=sp_name,  sp_brokercode=sp_brokercode,
                                      vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model,
@@ -2764,8 +2760,7 @@ def slab_payoutform(request):
                                      self_od_reward=self_od_reward,
                                      self_tp_reward=self_tp_reward,
                                      profile_id=data)
-        print("insert data")
-        print(data)
+        
         return redirect('bima_policy:slab')
 
 
@@ -2792,6 +2787,7 @@ def slab_payoutformshow(request, id):
         policy_term = request.POST.getlist('policy_term')
         cpa = request.POST.getlist('cpa')
         rto = request.POST.getlist('rto')
+       
         # agent payout
         agent_od_reward = request.POST['agent_od_reward']
         agent_tp_reward = request.POST['agent_tp_reward']
@@ -2799,16 +2795,23 @@ def slab_payoutformshow(request, id):
         self_od_reward = request.POST['self_od_reward']
         self_tp_reward = request.POST['self_tp_reward']
 
+        vehicle_makeby = str(vehicle_makeby).replace('\\r\\n', '')
+        vehicle_model = str(vehicle_model).replace('\\r\\n', '')
+        vehicle_makeby = str(vehicle_makeby).replace("['", '').replace("']", '').replace("'", '')
+        vehicle_model = str(vehicle_model).replace("['", '').replace("']", '').replace("'", '')
+
+        rto_city = str(rto).replace("['", '').replace("']", '').replace("'", '')
+        
         product_name = ','.join(product_name)
         insurance_company = ','.join(insurance_company)
         sp_name = ','.join(sp_name)
         sp_brokercode = ','.join(sp_brokercode)
-        vehicle_makeby = ','.join(vehicle_makeby)
-        vehicle_model = ','.join(vehicle_model)
+        # vehicle_makeby = ','.join(vehicle_makeby)
+        # vehicle_model = ','.join(vehicle_model)
         vehicle_catagory = ','.join(vehicle_catagory)
         vehicle_fuel_type = ','.join(vehicle_fuel_type)
         mfg_year = ','.join(mfg_year)
-        rto_city = ','.join(rto)
+        # rto_city = ','.join(rto)
         addon = ','.join(addon)
         ncb = ','.join(ncb)
         gvw = ','.join(gvw)

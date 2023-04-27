@@ -677,6 +677,7 @@
                                           <select name="product_name" id="product_name" class="custom-select " required>
                                              <option value="" hidden> -- Select Product -- </option>
                                              <option value="FIRE">FIRE</option>
+                                             <option value="LIABILITY">LIABILITY</option>                                              
                                              <option value="MARINE CARGO">MARINE CARGO</option>
                                              <option value="MARINE HULL">MARINE HULL</option>
                                              <option value="ENGINEERING">ENGINEERING</option>
@@ -961,13 +962,13 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="" class="form-control col-lg-6 " name="od"
+                                       oninput="calculateValue2()" value="" class="form-control col-lg-6 " name="od"
                                        id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="" class="form-control col-lg-6 " name="tpt"
+                                       oninput="calculateValue2()" value="" class="form-control col-lg-6 " name="tpt"
                                        id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
@@ -982,13 +983,7 @@
                                        class="form-control col-lg-6 bg-light" name="gst" id="gst" maxlength="10"
                                        required readonly tabindex="-1">
                                  </div>
-
-                                 <div class="row mb-2" id="gsttDiv" hidden>
-                                    <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 bg-light" name="gstt" id="gstt" maxlength="10"
-                                       readonly tabindex="-1">
-                                 </div>
+                                 
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
                                        value="" class="form-control  col-lg-6 bg-light" id="totalnet" readonly=""
@@ -1449,12 +1444,11 @@
 
    function calculateValue() {
 
-      try {
-         // add_non_motor()
-         // addgst_non_motor()
+      try {        
          calc()
          addGST()
          addSubTotal()
+         
 
       } catch (error) { }
 
@@ -1499,6 +1493,49 @@
       
       document.getElementById("totalnet") .value = Number(net + gst + gstt).toFixed((2))
    }
+
+   
+   function calculateValue2() {
+
+      try {        
+         calc2()
+         addGST2()
+         addSubTotal2()        
+
+      } catch (error) { }
+
+      }
+
+   
+   function calc2() {
+      // Removes space      
+      
+      document.getElementById("od").value= document.getElementById("od").value.toString().trim()
+      document.getElementById("tpt").value= document.getElementById("tpt").value.toString().trim()      
+     
+      od = parseFloat(document.getElementById("od").value);
+      tpt = parseFloat(document.getElementById("tpt").value);
+
+      document.getElementById("net") .value = Number(od + tpt).toFixed((2)) 
+           
+   }
+
+   function addGST2() {  
+      try {
+         od = parseFloat(document.getElementById("od").value);
+         net = parseFloat(document.getElementById("net").value);    
+         document.getElementById("gst") .value = Number(od * 18 / 100) .toFixed((2))
+      }
+      catch { }
+   }
+
+   function addSubTotal2() {
+      net = parseFloat(document.getElementById("net").value);
+      gst = parseFloat(document.getElementById("gst").value);      
+      
+      document.getElementById("totalnet") .value = Number(net + gst ).toFixed((2))
+   }
+
 
    function add_non_motor() {
       // Removes space

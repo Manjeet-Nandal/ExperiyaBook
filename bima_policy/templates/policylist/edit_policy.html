@@ -637,6 +637,7 @@
                                           <select name="product_name" id="product_name" class="custom-select " required>
                                              <option value="{{data.product_name}}"> {{data.product_name}} </option>
                                              <option value="FIRE">FIRE</option>
+                                             <option value="LIABILITY">LIABILITY</option>    
                                              <option value="MARINE CARGO">MARINE CARGO</option>
                                              <option value="MARINE HULL">MARINE HULL</option>
                                              <option value="ENGINEERING">ENGINEERING</option>
@@ -894,13 +895,13 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="{{data.OD_premium}}" class="form-control col-lg-6 " name="od"
+                                       oninput="calculateValue2()" value="{{data.OD_premium}}" class="form-control col-lg-6 " name="od"
                                        id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="{{data.TP_terrorism}}" class="form-control col-lg-6 " name="tpt"
+                                       oninput="calculateValue2()" value="{{data.TP_terrorism}}" class="form-control col-lg-6 " name="tpt"
                                        id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
@@ -1395,6 +1396,18 @@ function calculateValue() {
    }
 }
 
+function calculateValue2() {
+
+try {        
+   calc2()
+   addGST2()
+   addSubTotal2()        
+
+} catch (error) { }
+
+}
+
+
 function calc() {
       // Removes space      
       
@@ -1434,6 +1447,37 @@ function addSubTotal() {
       
       document.getElementById("totalnet") .value = Number(net + gst + gstt).toFixed((2))
    }
+
+
+   function calc2() {
+      // Removes space      
+      
+      document.getElementById("od").value= document.getElementById("od").value.toString().trim()
+      document.getElementById("tpt").value= document.getElementById("tpt").value.toString().trim()      
+     
+      od = parseFloat(document.getElementById("od").value);
+      tpt = parseFloat(document.getElementById("tpt").value);
+
+      document.getElementById("net") .value = Number(od + tpt).toFixed((2)) 
+           
+   }
+
+   function addGST2() {  
+      try {
+         od = parseFloat(document.getElementById("od").value);
+         net = parseFloat(document.getElementById("net").value);    
+         document.getElementById("gst") .value = Number(od * 18 / 100) .toFixed((2))
+      }
+      catch { }
+   }
+
+   function addSubTotal2() {
+      net = parseFloat(document.getElementById("net").value);
+      gst = parseFloat(document.getElementById("gst").value);      
+      
+      document.getElementById("totalnet") .value = Number(net + gst ).toFixed((2))
+   }
+
 
 
 function add() {

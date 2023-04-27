@@ -78,7 +78,7 @@
                                           <select id="product_name" name="product_name" data-parsley-required-message=""
                                              class="custom-select" id="product_name" data-parsley-required="true"
                                              multiple required>
-                                             <option value="" onclick="selectAllItems('product_name')">-- select all --
+                                             <option value="" onclick="selectAllItems('product_name')" >-- select all --
                                              </option>
                                              <option value="MOTOR">MOTOR</option>
                                              <option value="FIRE">FIRE</option>
@@ -119,7 +119,7 @@
 
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Serving Office Code<abbr title="Required"
+                                          <label>Office Code<abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <select id="sp_brokercode" name="sp_brokercode"
                                              data-parsley-required-message="" class="custom-select" multiple
@@ -185,8 +185,8 @@
                                           <select id="vehicle_catagory" name="vehicle_catagory"
                                              data-parsley-required-message="" multiple data-parsley-required="true"
                                              class="custom-select " required>
-                                             <option value="" onclick="selectAndSetCat('vehicle_catagory')">-- select
-                                                all -- </option>
+                                             <!-- <option value="" onclick="selectAndSetCat('vehicle_catagory')">-- select
+                                                all -- </option> -->
                                              {%for value in data_vc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -219,6 +219,7 @@
                                              });
 
                                           </script>
+
                                        </div>
 
 
@@ -2826,12 +2827,17 @@
 
       var item = document.getElementById(name)
 
-      if (item.value == '') {
-         for (i = 0; i <= item.length; i++) {
+      try {
+         if (item.value == '') {
+         for (i = 1; i <= item.length -1 ; i++) {
             item.options[i].selected = true
          }
       }
-      // item.options[item.options.length - 1].selected = false
+      } catch (error) {
+         
+      }
+
+      item.options[item.options.length - item.options.length].selected = false
    }
 
    
