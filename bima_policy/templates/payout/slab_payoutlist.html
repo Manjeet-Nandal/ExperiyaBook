@@ -119,25 +119,30 @@
                                           <td>{{value.agent_od_reward}}</td>                                  
                                           <td>{{value.agent_tp_reward}}</td>                                  
                                           <td>{{value.self_od_reward}}</td>                                  
-                                          <td>{{value.self_tp_reward}}</td>                                  
-                                 
-                                    <td class=" text-center">
-                                       <form method="post">
-                                          {% csrf_token %}
-                                          <a href="/bima_policy/slab/slab_payoutformshow/{{value.payoutid}}" class="mr-1 btn btn-sm btn-icon btn-secondary" title="Edit">
-                                             <!-- href="/bima_policy/slab/slab_payoutformshow/{{value.payoutid}}" -->
-                                          <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
-                                          </a>                                        
-                                          <a href="{%url 'bima_policy:payout_copy' value.payoutid %}" class="mr-1 btn btn-sm btn-icon btn-secondary " title="Copy">
-                                             <!-- href="{%url 'bima_policy:payout_delete' value.payoutid %}" -->
-                                          <i class="fas fa-copy mt-2" aria-hidden="true"></i>
-                                          </a>
-                                          <a href="{%url 'bima_policy:payout_delete' value.payoutid %}" class="mr-1 btn btn-sm btn-icon btn-secondary " title="Remove">
-                                             <!-- href="{%url 'bima_policy:payout_delete' value.payoutid %}" -->
-                                          <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
-                                          </a>
+                                          <td>{{value.self_tp_reward}}</td>   
+                               
+                                    <td  class="text-center"> 
+                                       <div class="list-group-item-figure mt-2">
+                                          <form method="POST">
+                                             {%csrf_token%}
+                                          <ul class="list-inline text-muted mb-0 text-center">
+                                             <li class="list-inline-item" data-toggle="tooltip" title="Edit" data-original-title="Edit">
+                                                <a href="/bima_policy/slab/slab_payoutformshow/{{value.payoutid}}" >
+                                                <i class="text-info icofont-ui-edit"></i></a>
+                                             </li>
+                                             <li class="list-inline-item">
+                                                <a href="{%url 'bima_policy:payout_copy' value.payoutid %}" title="Copy" >
+                                                <i class="text-info icofont-ui-copy"></i></a>
+                                             </li>
+                                             <li class="list-inline-item">
+                                                <a href="{%url 'bima_policy:payout_delete' value.payoutid %}" title="Remove"  >
+                                                <i class="text-danger fa fa-trash-alt"></i></a>
+                                             </li>
+                                          </ul>
                                        </form>
+                                       </div>
                                     </td>
+
                                  </tr>
                               </tbody>
                               {%endfor%}

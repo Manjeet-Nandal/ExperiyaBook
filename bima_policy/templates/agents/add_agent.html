@@ -73,7 +73,6 @@
                             <label>Full Name<abbr title="Required" class="text-danger">*</abbr></label>
                             <input type="text" name="full_name" data-parsley-pattern="^(?:[A-Za-z]+[- ])*[A-Za-z]+$"
                               data-parsley-required="true" class="form-control">
-
                           </div>
                           <div class="col-md-6 mb-3">
                             <label>Email Id<abbr title="Required" class="text-danger">*</abbr></label>
@@ -94,9 +93,9 @@
                           </div>
                           <div class="col-md-3 mb-3">
                             <label>Pincode<abbr title="Required" class="text-danger">*</abbr></label>
-                            <input type="text" class="form-control maskNumField" data-mask-as-number-maxlength="10"
-                              data-parsley-required="true" data-parsley-minlength="10" data-parsley-maxlength="10"
-                              data-parsley-pattern="^[0-9]+$" name="phone" maxlength="10">
+                            <input type="text" class="form-control maskNumField" data-mask-as-number-maxlength="6"
+                              data-parsley-required="true" data-parsley-minlength="6" data-parsley-maxlength="6"
+                              data-parsley-pattern="^[0-9]+$" name="phone" maxlength="6">
                           </div>
 
                           <div class="col-md-3 mb-3">
@@ -105,8 +104,8 @@
                               data-parsley-required="true" tabindex="-1" aria-hidden="true">
                               <option value=""> Choose Gender... </option>
                               <option value="MALE"> MALE </option>
+                              <option value="FEMALE"> FEMALE </option>
                               <option value="OTHER"> OTHER </option>
-
                             </select>
                           </div>
                           <div class="col-md-3 mb-3">
@@ -183,11 +182,13 @@
                               {% endfor %}
                             </select>
                           </div>
-
-                          <div class="col-md-2 mb-3">
-                            <label>GSTIN</label>
-                            <input type="text" class="form-control" name="gstin">
+                          <div class="col-md-3 mb-3">
+                            <label>GSTIN<abbr title="Required" class="text-danger">*</abbr></label>
+                            <input type="text" class="form-control maskNumField" data-mask-as-number-maxlength="15"
+                              data-parsley-required="true" data-parsley-minlength="15" data-parsley-maxlength="15"
+                              data-parsley-pattern="^[0-9]+$" name="gstin" maxlength="15">
                           </div>
+                         
                           <div class="col-md-2 mb-3">
                             <label>PAN</label>
                             <input type="text" class="form-control" name="pan">

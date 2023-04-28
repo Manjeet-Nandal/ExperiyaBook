@@ -181,10 +181,10 @@ class Payout(models.Model):
     cpa = models.CharField(max_length=255)
     policy_term = models.CharField(max_length=255)
 
-    agent_od_reward = models.IntegerField(max_length=50)
-    agent_tp_reward = models.IntegerField(max_length=50)
-    self_od_reward = models.IntegerField(max_length=50)
-    self_tp_reward = models.IntegerField(max_length=50)
+    agent_od_reward = models.CharField(max_length=10)
+    agent_tp_reward = models.CharField(max_length=10)
+    self_od_reward = models.CharField(max_length=10)
+    self_tp_reward = models.CharField(max_length=10)
 
     def __str__(self):
         return self.payout_name
