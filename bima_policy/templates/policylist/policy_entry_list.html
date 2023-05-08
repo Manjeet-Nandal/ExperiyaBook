@@ -84,8 +84,8 @@
                                  <button type="button" onclick="ExportToExcel('xlsx')" id="download_inslist"
                                     class="btn btn-secondary " title="Download"><i class="fa fa-download"
                                        aria-hidden="true"></i> </button>
-                                 <button data-toggle="modal" data-target="#mdlcolsetting" type="button" id="bulk_remove" class="btn btn-secondary" title="Delete"
-                                    ><i class="icofont icofont-trash"
+                                 <button data-toggle="modal" data-target="#mdlcolsetting" type="button" id="bulk_remove"
+                                    class="btn btn-secondary" title="Delete"><i class="icofont icofont-trash"
                                        aria-hidden="true"></i> </button>
                                  <!-- <a href="#" class="no-wrap pl-0 morefilter" title="More Filter"><small>More
                                        Filter</small></a> -->
@@ -102,22 +102,24 @@
                                           <div class="modal-body ">
                                              <div class="form-row">
                                                 <div class="col-md-12 mb-4">
-                                                   <div class=""><label>Are You Sure? You want to delete the Record(s)..<input hidden id="inp_search" type="text"
-                                                            value="" class="form-control" name="agent"
+                                                   <div class=""><label>Are You Sure? You want to delete the
+                                                         Record(s)..<input hidden id="inp_search" type="text" value=""
+                                                            class="form-control" name="agent"
                                                             style="text-transform: uppercase;"
-                                                            title="Search POS using Name, mobile no, email, pan/aadhar number"  >                                                       
+                                                            title="Search POS using Name, mobile no, email, pan/aadhar number">
                                                       </label></div>
                                                 </div>
-                                               
+
                                              </div>
 
                                              <div class="modal-footer">
                                                 <button id="btnExit" type="button" class="btn btn-secondary w-100p"
-                                                      data-dismiss="modal">Cancel</button>
-                                                
+                                                   data-dismiss="modal">Cancel</button>
+
                                                 <button type="button" id="posUpdate" onclick="bulk_policy_remove()"
-                                                      class="btn btn-primary w-100p " style="background: red;">Delete</button>                                               
-                                                
+                                                   class="btn btn-primary w-100p "
+                                                   style="background: red;">Delete</button>
+
                                              </div>
                                           </div>
 
@@ -203,30 +205,294 @@
                            </div>
                            {% endif %}
                         </div>
-                        <div id="morefilter" class="row" style="display:none">
-                           <div class="col-md-3 col-sm-12">
-                              <div class="form-group">
-                                 <select name="service_provider" data-parsley-required-message=""
-                                    class="custom-select select2 select2-hidden-accessible" id="service_provider"
-                                    data-parsley-required="true" tabindex="-1" aria-hidden="true">
-                                    <option value=""> All Service Provider</option>
-                                    <option value="14">CHOLA DIRECT</option>
-                                    <option value="6">DELHI BAJAJ</option>
-                                 </select>
-                              </div>
-                           </div>
-                           <div class="col-md-3 col-sm-12">
-                              <select name="vehicle_category" data-parsley-required-message=""
-                                 data-parsley-required="true" id="vehicle_category"
-                                 class="select2 custom-select select2-hidden-accessible" tabindex="-1"
-                                 aria-hidden="true">
-                                 <option value="">All Vehicle Category</option>
-                                 <option value="1">2w-bike</option>
-                                 <option value="2">2w-scooter</option>
-                                 <option value="3">Auto Gcv</option>
-                                 <option value="4">Auto Pcv 3+1</option>
+                        <div id="morefilter" class="row">
+
+                           <div class="col-md-5 mb-4">
+                              <input type="text" id="search-select_vc" class="form-control"
+                                 placeholder="Select any field">
+                              <select id="filter_type" name="filter_type" data-parsley-required-message="" multiple
+                                 data-parsley-required="true" class="custom-select " required
+                                 onchange="add_filter_type()">                              
+                                 <option value="insurer">Insurers</option>
+                                 <option value="vehicle_catagory">Vehicle Catagory</option>
+                                 <option value="vehicle_makeby" hidden>Vehicle Makeby</option>
+                                 <option value="vehicle_model" hidden>Vehicle Model</option>
+                                 <option value="fuel_type">Fuel Type</option>
+                                 <option value="cc">Cubic Capacity</option>
+                                 <option value="sc">Seating Capacity</option>
+                                 <option value="ct">Coverage Type</option>
+                                 <option value="gvw">GVW</option>
+                                 <option value="policy_type">Policy Type</option>
+                                 <option value="addon">Addon</option>
+                                 <option value="ncb">NCB</option>
+                                 <option value="cpa">CPA</option>                               
+
                               </select>
+                              <!-- <input type="text" id="search-select_vc" class="form-control"> -->
+
+                              <button id="select-all_vc" hidden>Select All</button>
+                              <button id="deselect-all_vc" hidden>Deselect All</button>
+
+                              <script>
+                                 const select_vc = document.getElementById("vehicle_catagory");
+                                 const selectAllButton_vc = document.getElementById("select-all_vc");
+                                 const deselectAllButton_vc = document.getElementById("deselect-all_vc");
+                                 const searchInput_vc = document.getElementById("search-select_vc");
+
+                                 selectAllButton_vc.addEventListener("click", () => {
+                                    Array.from(select.options).forEach(option => option.selected = true);
+                                 });
+
+                                 deselectAllButton_vc.addEventListener("click", () => {
+                                    Array.from(select.options).forEach(option => option.selected = false);
+                                 });
+
+                                 searchInput_vc.addEventListener("input", () => {
+                                    const searchValue = searchInput_vc.value.toLowerCase();
+                                    Array.from(select_vc.options).forEach(option => {
+                                       const optionText = option.textContent.toLowerCase();
+                                       option.style.display = optionText.includes(searchValue) ? "" : "none";
+                                    });
+                                 });
+
+                              </script>
+
+                              <script>
+
+                                 function add_filter_type() {
+                                    document.getElementById('btnFilter').disabled = false
+                                    document.getElementById('divFilterContent').hidden = false
+
+                                    filter_type_value = document.getElementById('filter_type').value
+                                    filter_content = document.getElementById('filter_content')
+
+                                    comp_col = ['HDFC ERGO', 'TATA AIG', 'ICICI LOMBARD', 'IFFCO TOKIO', 'UNITED INDIA INSURANCE', 'NEW INDIA ASSURANCE', 'BAJAJ ALLIANZ GIC', 'SBI GENERAL INSURANCE', 'GO DIGIT GIC', 'RELIANCE GIC', 'FUTURE GENERALI', 'KOTAK MAHINDRA', 'LIBERTY GIC', 'ROYAL SUNDRAM', 'SHRIRAM GIC', 'MAGMA HDI', 'UNIVERSAL SOMPO']
+                                    vcat_col = ['TWO WHEELER', 'TWO WHEELER SCOOTER', 'TWO WHEELER COMMERCIAL', 'PRIVATE CAR', 'GCV-PUBLIC CARRIER OTHER THAN 3 W', '3 WHEELER PCV', '3 WHEELER GCV-PUBLIC CARRIER', 'TAXI 4 WHEELER', 'BUS AND OTHERS', 'MISC-D SPECIAL VEHICLE', 'SCHOOL BUS-SCHOOL NAME', 'SCHOOL BUS-INDIVIDUAL NAME']
+                                    fuel_col = ['PETROL', 'DIESEL', 'CNG', 'ELECTRIC']
+                                    cc_col = ['75CC-150CC', '150CC-350CC', 'ABOVE 350CC', 'BELOW 1000CC', '1000CC-1500CC', 'ABOVE 1500CC']
+                                    ct_col = ['1 YEAR PACKAGE', '1+2 YEAR PACKAGE', '1+4 YEAR PACKAGE', '3 YEAR TP', '5 YEAR TP', 'TP ONLY', 'OD ONLY']
+                                    sc_col = ['BELOW 5', '5-7', '7-12', '12-18', 'ABOVE 18']
+                                    gvw_col = ['BELOW 2000', '2000-2500', '2500-3500', '3500-7000', '7000-7500', '7500-12000', '12000-25000', '25000-40000', 'ABOVE 40000']
+                                    policy_type_col = ['FRESH', 'RENEWAL', 'ROLLOVER', 'ENDORSEMENT']
+                                    addon_col = ['YES', 'NO']
+                                    ncb_col = ['YES', 'NO']
+                                    cpa_col = ['YES', 'NO']
+
+
+                                    if (filter_type_value == 'insurer') {
+                                       add_items(comp_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'vehicle_catagory') {
+                                       add_items(vcat_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'fuel_type') {
+                                       add_items(fuel_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'cc') {
+                                       add_items(cc_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'ct') {
+                                       add_items(ct_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'sc') {
+                                       add_items(sc_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'gvw') {
+                                       add_items(gvw_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'policy_type') {
+                                       add_items(policy_type_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'addon') {
+                                       add_items(addon_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'ncb') {
+                                       add_items(ncb_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'cpa') {
+                                       add_items(cpa_col, filter_content)
+                                    }
+                                 }
+                              </script>
+
                            </div>
+
+                           <div id="divFilterContent" class="col-md-5 mb-4" hidden>
+                              <!-- <label for="my-select">Vehicle Make:</label> -->
+                              <input type="text" id="search-select" class="form-control" placeholder="Search..">
+                              <select id="filter_content" name="filter_content" class="form-control" multiple>
+                                 <option id="op_select_all" value="" onclick="select_all_Items('filter_content')"> 
+                                 </option>
+
+                              </select>
+                              <!-- <input type="text" id="search-select" class="form-control"> -->
+
+                              <button id="select-all" hidden>Select All</button>
+                              <button id="deselect-all" hidden>Deselect All</button>
+
+                              <script>
+                                 const select = document.getElementById("vehicle_makeby");
+                                 const selectAllButton = document.getElementById("select-all");
+                                 const deselectAllButton = document.getElementById("deselect-all");
+                                 const searchInput = document.getElementById("search-select");
+
+                                 selectAllButton.addEventListener("click", () => {
+                                    Array.from(select.options).forEach(option => option.selected = true);
+                                 });
+
+                                 deselectAllButton.addEventListener("click", () => {
+                                    Array.from(select.options).forEach(option => option.selected = false);
+                                 });
+
+                                 searchInput.addEventListener("input", () => {
+                                    const searchValue = searchInput.value.toLowerCase();
+                                    Array.from(select.options).forEach(option => {
+                                       const optionText = option.textContent.toLowerCase();
+                                       option.style.display = optionText.includes(searchValue) ? "" : "none";
+                                    });
+                                 });
+
+                              </script>
+                              <script>
+
+                                 function add_select_all_option() {
+
+                                    filter_content = document.getElementById('filter_content')
+                                    filter_content.innerHTML = ''
+
+                                    var newoption = document.createElement("option");
+                                    newoption.value = ''
+                                    newoption.innerHTML = '--select all--'
+
+                                    // newoption.onclick = function() { alert('Hello'); };
+                                    newoption.onclick = function () {
+                                       for (i = 1; i <= filter_content.options.length - 1; i++) {
+                                          filter_content.options[i].selected = true
+                                       }
+                                       filter_content.options[filter_content.options.length - filter_content.options.length].selected = false
+
+                                    };
+
+                                    filter_content.options.add(newoption);
+                                 }
+
+                                 function add_items(data, element) {
+
+                                    add_select_all_option()
+
+                                    data.forEach(item => {
+                                       var newoption = document.createElement("option");
+                                       newoption.value = item
+                                       newoption.innerHTML = item
+                                       element.options.add(newoption);
+                                    });
+
+                                    select_all_Items(element.id)
+                                 }
+
+                                 function select_all_Items(name) {
+
+                                    var item = document.getElementById(name)
+
+                                    try {
+                                       if (item.value == '') {
+                                          for (i = 1; i <= item.length - 1; i++) {
+                                             item.options[i].selected = true
+                                          }
+                                       }
+                                    } catch (error) {
+
+                                    }
+
+                                    item.options[item.options.length - item.options.length].selected = false
+                                 }
+
+                              </script>
+                           </div>
+
+                           <div class="col-md-1 mb-4">
+
+                              <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
+                              <button id="btnFilter" type="button" class="btn btn-primary mt-1" onclick="searchName2()">Filter</button>
+                              <button type="button" class="btn btn-primary " onclick="addName3()" hidden >Add</button>
+                              <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1" onclick="saveFilter()" disabled >Save</button>
+                              <button type="button" class="btn btn-primary mt-1" onclick="clearFilterList()">Clear</button>
+
+                              <script>
+
+                                 function filterForPayout() {
+
+                                    // alert('hello')
+
+                                    // document.getElementsByClassName("showMoreNew")[0].click();
+
+                                    try {
+                                       payout_switch = document.getElementById('payout_switch').checked
+                                       if (payout_switch) {
+                                          filterPolicy_nopayout();
+                                          return;
+                                       }
+
+                                       start_date = document.getElementById('frmDate').value.toString()
+                                       end_date = document.getElementById('toDate').value.toString()
+                                       period_value = document.getElementById('select-period').value.toString().toUpperCase()
+                                       select_length = document.getElementById('select_length').value
+
+                                       if (period_value == "LAST_MONTH") {
+                                          period_value = "LAST MONTH"
+                                       }
+                                       else if (period_value == "THIS_MONTH") {
+                                          period_value = "THIS MONTH"
+                                       }
+                                       else if (period_value == "CURRENT_YEAR") {
+                                          period_value = "CURRENT YEAR"
+                                       }
+
+                                       if (start_date == "" || end_date == "") {
+                                          return
+                                       }
+                                       start_date = start_date.replace("/", "*")
+                                       start_date = start_date.replace("/", "*")
+
+                                       end_date = end_date.replace("/", "*")
+                                       end_date = end_date.replace("/", "*")
+
+                                       try {
+                                          index = window.location.href.indexOf("*")
+                                          if (index > 0) {
+                                             // window.location.reload()
+                                             hostname = window.location.hostname
+                                             port = window.location.port
+                                             pathname = '/bima_policy/policy/entry/'
+
+                                             href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length
+
+                                             window.location.replace(href)
+                                          }
+                                          else {
+                                             href = window.location.href + start_date
+                                             href += "/"
+                                             href += end_date
+                                             href += "/"
+                                             href += period_value
+                                             href += "/"
+                                             href += select_length
+
+                                             window.location.replace(href)
+                                          }
+                                       } catch (error) {
+
+                                       }
+
+                                    } catch (error) { }
+
+                                 }
+
+                              </script>
+                           </div>
+
+
+
                         </div>
                      </form>
                   </div>
@@ -284,10 +550,10 @@
 
                                  <thead style="border-bottom: inset;">
                                     <tr role="row" ">
-                                       <th class=" text-center sorting" tabindex="0" aria-controls="tblInsurance"
-                                       rowspan="1" colspan="1" style="width: 83.2344px;"
+                                       <th class=" text-center sorting thShow" tabindex="0"
+                                       aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 83.2344px;"
                                        aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
-                                       <th class="text-center sorting_disabled" tabindex="0"
+                                       <th class="text-center sorting_disabled sorting" tabindex="0"
                                           aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 30px;"
                                           aria-label="">
                                           <input type="checkbox" class="checkbox" id="chkblkrm"
@@ -295,10 +561,10 @@
                                        </th>
 
                                        <th class="sorting">PolicyID</th>
-                                       <th class="sorting">Proposal No.</th>
+                                       <th class="sorting thShow">Proposal No.</th>
                                        <th class="sorting">Policy No. </th>
-                                       <th class="sorting">Customer Name</th>
-                                       <th class="sorting">Insurer Name</th>
+                                       <th class="sorting thShow">Customer Name</th>
+                                       <th class="sorting  thShow">Insurer Name</th>
                                        <th class="sorting">Service Provider</th>
                                        <th class="sorting">Broker Code</th>
                                        <th class="sorting">Product Name</th>
@@ -307,7 +573,7 @@
                                        <th class="sorting">RTO City</th>
                                        <th class="sorting">Vehicle Makeby </th>
                                        <th class="sorting">Vehicle Model </th>
-                                       <th class="sorting">Vehicle Catagory </th>
+                                       <th class="sorting thShow">Vehicle Catagory </th>
                                        <th class="sorting">Vehicle Fuel Type</th>
                                        <th class="sorting">Manufacture Year </th>
                                        <th class="sorting">Addon</th>
@@ -327,23 +593,23 @@
                                        <th class="sorting">POS</th>
                                        <th class="sorting">Employee</th>
                                        <th class="sorting">Remark</th>
-                                       <th class="sorting">OD Premium</th>
-                                       <th class="sorting">TP / Terrorism</th>
-                                       <th class="sorting">NET Premium</th>
-                                       <th class="sorting">GST 18%</th>
-                                       <th class="sorting">GST 12%</th>
-                                       <th class="sorting">Total</th>
+                                       <th class="sorting thShow">OD Premium</th>
+                                       <th class="sorting thShow">TP / Terrorism</th>
+                                       <th class="sorting thShow">NET Premium</th>
+                                       <th class="sorting thShow">GST 18%</th>
+                                       <th class="sorting thShow">GST 12%</th>
+                                       <th class="sorting thShow">Total</th>
                                        <th class="sorting">Payment Mode</th>
 
-                                       <th class="sorting">Agent OD Reward %</th>
-                                       <th class="sorting">Agent OD Amount</th>
-                                       <th class="sorting">Agent TP Reward %</th>
-                                       <th class="sorting">Agent TP Amount</th>
+                                       <th class="sorting thShow">Agent OD Reward %</th>
+                                       <th class="sorting thShow">Agent OD Amount</th>
+                                       <th class="sorting thShow">Agent TP Reward %</th>
+                                       <th class="sorting thShow">Agent TP Amount</th>
                                        {% if is_user %}
-                                       <th class="sorting">Self OD Reward %</th>
-                                       <th class="sorting">Self OD Amount</th>
-                                       <th class="sorting">Self TP Reward %</th>
-                                       <th class="sorting">Self TP Amount</th>
+                                       <th class="sorting thShow">Self OD Reward %</th>
+                                       <th class="sorting thShow">Self OD Amount</th>
+                                       <th class="sorting thShow">Self TP Reward %</th>
+                                       <th class="sorting thShow">Self TP Amount</th>
                                        {% endif %}
                                        <th class="sorting">Proposal</th>
                                        <th class="sorting">Mandate</th>
@@ -357,9 +623,9 @@
                                     </tr>
                                  </thead>
 
-                                 <tbody>
+                                 <tbody id="tbdy">
                                     {% for value in data %}
-                                    <tr role="row" class="odd" onclick="highlight(this)">
+                                    <tr role="row" class="odd" onclick="highlight(this)" id="tr1">
                                        <td class="text-center">{{forloop.counter}}</td>
                                        <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
                                              id="chkblkrm{{forloop.counter}}" /></td>
@@ -369,9 +635,8 @@
                                        <td>
                                           <a href="" class="tile tile-img" target="_blank"><i
                                                 class="far fa-file-pdf text-danger"></i></a>
-                                          <a href="#"
-                                             class="">{{value.policy_no}}</a>
-                                             <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
+                                          <a href="#" class="">{{value.policy_no}}</a>
+                                          <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
                                        </td>
                                        <td>{{value.customer_name}}</td>
                                        <td>{{value.insurance_company}}</td>
@@ -503,8 +768,8 @@
                                        <td class="text-center">
                                           <form method="POST">
                                              {% csrf_token %}
-                                             <a href="#"
-                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+                                             <a href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary"
+                                                name="Edit">
                                                 <i class="fa fa-pencil-alt mt-2"></i>
                                                 <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
                                              </a>
@@ -513,7 +778,7 @@
                                                 <i class="far fa-trash-alt mt-2"></i>
                                                 <!-- href="{%url 'bima_policy:policy_delete' value.policyid %}" -->
                                              </a>
-                                             
+
                                        </td>
                                     </tr>
                                     {% endfor %}
@@ -1111,8 +1376,8 @@
 <script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
 <script src="{%static 'js/jquery.form.js' %}"></script>
 <script src="{%static 'js/custom.min.js' %}"></script>
-{% comment %}
-<script src="{%static 'js/insurance.min.js' %}"></script> {% endcomment %}
+
+<script src="{%static 'js/insurance.min.js' %}"></script>
 <script src="{%static 'js/sortable.min.js' %}"></script>
 <script>
    $(document).ready(function () {
@@ -1197,460 +1462,745 @@
          ],
       });
    }
+
 </script>
-<div class="flatpickr-calendar animate" tabindex="-1">
-   <div class="flatpickr-months">
-      <span class="flatpickr-prev-month">
-         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 17 17">
-            <g></g>
-            <path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z"></path>
-         </svg>
-      </span>
-      <div class="flatpickr-month">
-         <div class="flatpickr-current-month">
-            <select class="flatpickr-monthDropdown-months" tabindex="-1">
-               <option class="flatpickr-monthDropdown-month" value="0" tabindex="-1">January</option>
-               <option class="flatpickr-monthDropdown-month" value="1" tabindex="-1">February</option>
-               <option class="flatpickr-monthDropdown-month" value="2" tabindex="-1">March</option>
-               <option class="flatpickr-monthDropdown-month" value="3" tabindex="-1">April</option>
-               <option class="flatpickr-monthDropdown-month" value="4" tabindex="-1">May</option>
-               <option class="flatpickr-monthDropdown-month" value="5" tabindex="-1">June</option>
-               <option class="flatpickr-monthDropdown-month" value="6" tabindex="-1">July</option>
-               <option class="flatpickr-monthDropdown-month" value="7" tabindex="-1">August</option>
-               <option class="flatpickr-monthDropdown-month" value="8" tabindex="-1">September</option>
-               <option class="flatpickr-monthDropdown-month" value="9" tabindex="-1">October</option>
-               <option class="flatpickr-monthDropdown-month" value="10" tabindex="-1">November</option>
-               <option class="flatpickr-monthDropdown-month" value="11" tabindex="-1">December</option>
-            </select>
-            <div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year"
-                  max="2023"><span class="arrowUp"></span><span class="arrowDown"></span></div>
-         </div>
-      </div>
-      <span class="flatpickr-next-month">
-         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 17 17">
-            <g></g>
-            <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z"></path>
-         </svg>
-      </span>
-   </div>
-   <div class="flatpickr-innerContainer">
-      <div class="flatpickr-rContainer">
-         <div class="flatpickr-weekdays">
-            <div class="flatpickr-weekdaycontainer">
-               <span class="flatpickr-weekday">
-                  Sun</span><span class="flatpickr-weekday">Mon</span><span class="flatpickr-weekday">Tue</span><span
-                  class="flatpickr-weekday">Wed</span><span class="flatpickr-weekday">Thu</span><span
-                  class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
-               </span>
-            </div>
-         </div>
-         <div class="flatpickr-days" tabindex="-1">
-            <div class="dayContainer"><span class="flatpickr-day prevMonthDay" aria-label="July 31, 2022"
-                  tabindex="-1">31</span><span class="flatpickr-day " aria-label="August 1, 2022"
-                  tabindex="-1">1</span><span class="flatpickr-day " aria-label="August 2, 2022"
-                  tabindex="-1">2</span><span class="flatpickr-day " aria-label="August 3, 2022"
-                  tabindex="-1">3</span><span class="flatpickr-day " aria-label="August 4, 2022"
-                  tabindex="-1">4</span><span class="flatpickr-day " aria-label="August 5, 2022"
-                  tabindex="-1">5</span><span class="flatpickr-day " aria-label="August 6, 2022"
-                  tabindex="-1">6</span><span class="flatpickr-day " aria-label="August 7, 2022"
-                  tabindex="-1">7</span><span class="flatpickr-day " aria-label="August 8, 2022"
-                  tabindex="-1">8</span><span class="flatpickr-day " aria-label="August 9, 2022"
-                  tabindex="-1">9</span><span class="flatpickr-day " aria-label="August 10, 2022"
-                  tabindex="-1">10</span><span class="flatpickr-day " aria-label="August 11, 2022"
-                  tabindex="-1">11</span><span class="flatpickr-day " aria-label="August 12, 2022"
-                  tabindex="-1">12</span><span class="flatpickr-day " aria-label="August 13, 2022"
-                  tabindex="-1">13</span><span class="flatpickr-day " aria-label="August 14, 2022"
-                  tabindex="-1">14</span><span class="flatpickr-day " aria-label="August 15, 2022"
-                  tabindex="-1">15</span><span class="flatpickr-day " aria-label="August 16, 2022"
-                  tabindex="-1">16</span><span class="flatpickr-day " aria-label="August 17, 2022"
-                  tabindex="-1">17</span><span class="flatpickr-day " aria-label="August 18, 2022"
-                  tabindex="-1">18</span><span class="flatpickr-day " aria-label="August 19, 2022"
-                  tabindex="-1">19</span><span class="flatpickr-day " aria-label="August 20, 2022"
-                  tabindex="-1">20</span><span class="flatpickr-day " aria-label="August 21, 2022"
-                  tabindex="-1">21</span><span class="flatpickr-day " aria-label="August 22, 2022"
-                  tabindex="-1">22</span><span class="flatpickr-day " aria-label="August 23, 2022"
-                  tabindex="-1">23</span><span class="flatpickr-day " aria-label="August 24, 2022"
-                  tabindex="-1">24</span><span class="flatpickr-day today" aria-label="August 25, 2022"
-                  aria-current="date" tabindex="-1">25</span><span class="flatpickr-day " aria-label="August 26, 2022"
-                  tabindex="-1">26</span><span class="flatpickr-day " aria-label="August 27, 2022"
-                  tabindex="-1">27</span><span class="flatpickr-day " aria-label="August 28, 2022"
-                  tabindex="-1">28</span><span class="flatpickr-day " aria-label="August 29, 2022"
-                  tabindex="-1">29</span><span class="flatpickr-day " aria-label="August 30, 2022"
-                  tabindex="-1">30</span><span class="flatpickr-day " aria-label="August 31, 2022"
-                  tabindex="-1">31</span><span class="flatpickr-day nextMonthDay" aria-label="September 1, 2022"
-                  tabindex="-1">1</span><span class="flatpickr-day nextMonthDay" aria-label="September 2, 2022"
-                  tabindex="-1">2</span><span class="flatpickr-day nextMonthDay" aria-label="September 3, 2022"
-                  tabindex="-1">3</span><span class="flatpickr-day nextMonthDay" aria-label="September 4, 2022"
-                  tabindex="-1">4</span><span class="flatpickr-day nextMonthDay" aria-label="September 5, 2022"
-                  tabindex="-1">5</span><span class="flatpickr-day nextMonthDay" aria-label="September 6, 2022"
-                  tabindex="-1">6</span><span class="flatpickr-day nextMonthDay" aria-label="September 7, 2022"
-                  tabindex="-1">7</span><span class="flatpickr-day nextMonthDay" aria-label="September 8, 2022"
-                  tabindex="-1">8</span><span class="flatpickr-day nextMonthDay" aria-label="September 9, 2022"
-                  tabindex="-1">9</span><span class="flatpickr-day nextMonthDay" aria-label="September 10, 2022"
-                  tabindex="-1">10</span></div>
-         </div>
-      </div>
-   </div>
-</div>
-<div class="flatpickr-calendar animate showTimeInput" tabindex="-1">
-   <div class="flatpickr-months">
-      <span class="flatpickr-prev-month">
-         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 17 17">
-            <g></g>
-            <path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z"></path>
-         </svg>
-      </span>
-      <div class="flatpickr-month">
-         <div class="flatpickr-current-month">
-            <select class="flatpickr-monthDropdown-months" tabindex="-1">
-               <option class="flatpickr-monthDropdown-month" value="0" tabindex="-1">January</option>
-               <option class="flatpickr-monthDropdown-month" value="1" tabindex="-1">February</option>
-               <option class="flatpickr-monthDropdown-month" value="2" tabindex="-1">March</option>
-               <option class="flatpickr-monthDropdown-month" value="3" tabindex="-1">April</option>
-               <option class="flatpickr-monthDropdown-month" value="4" tabindex="-1">May</option>
-               <option class="flatpickr-monthDropdown-month" value="5" tabindex="-1">June</option>
-               <option class="flatpickr-monthDropdown-month" value="6" tabindex="-1">July</option>
-               <option class="flatpickr-monthDropdown-month" value="7" tabindex="-1">August</option>
-            </select>
-            <div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year"
-                  max="2022"><span class="arrowUp"></span><span class="arrowDown"></span></div>
-         </div>
-      </div>
-      <span class="flatpickr-next-month flatpickr-disabled">
-         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 17 17">
-            <g></g>
-            <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z"></path>
-         </svg>
-      </span>
-   </div>
-   <div class="flatpickr-innerContainer">
-      <div class="flatpickr-rContainer">
-         <div class="flatpickr-weekdays">
-            <div class="flatpickr-weekdaycontainer">
-               <span class="flatpickr-weekday">
-                  Sun</span><span class="flatpickr-weekday">Mon</span><span class="flatpickr-weekday">Tue</span><span
-                  class="flatpickr-weekday">Wed</span><span class="flatpickr-weekday">Thu</span><span
-                  class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
-               </span>
 
-               <script>
 
-                  function load_values() {
-                     payout = "{{payout|safe}}"
-                     period = "{{period|safe}}"
-                     select_length = "{{select_length|safe}}"
+<script>
 
-                     document.getElementById('payout_switch').checked = payout == 'true' ? true : false;
+   function load_values() {
+      payout = "{{payout|safe}}"
+      period = "{{period|safe}}"
+      select_length = "{{select_length|safe}}"
 
-                     document.getElementById('select-period').selectedIndex =
-                        period == 'TODAY' ? 0 :
-                           period == 'YESTERDAY' ? 1 :
-                              period == 'THIS MONTH' ? 2 :
-                                 period == 'LAST MONTH' ? 3 :
-                                    period == 'CURRENT YEAR' ? 4 :
-                                       period == 'CUSTOM' ? 5 : 0
+      document.getElementById('payout_switch').checked = payout == 'true' ? true : false;
 
-                     document.getElementById('select_length').value = select_length
-                  }
+      document.getElementById('select-period').selectedIndex =
+         period == 'TODAY' ? 0 :
+            period == 'YESTERDAY' ? 1 :
+               period == 'THIS MONTH' ? 2 :
+                  period == 'LAST MONTH' ? 3 :
+                     period == 'CURRENT YEAR' ? 4 :
+                        period == 'CUSTOM' ? 5 : 0
 
-               </script>
+      document.getElementById('select_length').value = select_length
+   }
 
-               <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
-               <!-- <script src="{% static 'js/policy_entry_list.js' %}"></script>      -->
+</script>
 
-               <script>
+<script>
 
-                  function filterPolicy() {
-                     // document.getElementsByClassName("showMoreNew")[0].click();
+   function filterPolicy() {
+      // document.getElementsByClassName("showMoreNew")[0].click();
 
-                     try {
-                        payout_switch = document.getElementById('payout_switch').checked
-                        if (payout_switch) {
-                           filterPolicy_nopayout();
-                           return;
-                        }
+      try {
+         payout_switch = document.getElementById('payout_switch').checked
+         if (payout_switch) {
+            filterPolicy_nopayout();
+            return;
+         }
 
-                        start_date = document.getElementById('frmDate').value.toString()
-                        end_date = document.getElementById('toDate').value.toString()
-                        period_value = document.getElementById('select-period').value.toString().toUpperCase()
-                        select_length = document.getElementById('select_length').value
+         start_date = document.getElementById('frmDate').value.toString()
+         end_date = document.getElementById('toDate').value.toString()
+         period_value = document.getElementById('select-period').value.toString().toUpperCase()
+         select_length = document.getElementById('select_length').value
 
-                        if (period_value == "LAST_MONTH") {
-                           period_value = "LAST MONTH"
-                        }
-                        else if (period_value == "THIS_MONTH") {
-                           period_value = "THIS MONTH"
-                        }
-                        else if (period_value == "CURRENT_YEAR") {
-                           period_value = "CURRENT YEAR"
-                        }
+         if (period_value == "LAST_MONTH") {
+            period_value = "LAST MONTH"
+         }
+         else if (period_value == "THIS_MONTH") {
+            period_value = "THIS MONTH"
+         }
+         else if (period_value == "CURRENT_YEAR") {
+            period_value = "CURRENT YEAR"
+         }
 
-                        if (start_date == "" || end_date == "") {
-                           return
-                        }
-                        start_date = start_date.replace("/", "*")
-                        start_date = start_date.replace("/", "*")
+         if (start_date == "" || end_date == "") {
+            return
+         }
+         start_date = start_date.replace("/", "*")
+         start_date = start_date.replace("/", "*")
 
-                        end_date = end_date.replace("/", "*")
-                        end_date = end_date.replace("/", "*")
+         end_date = end_date.replace("/", "*")
+         end_date = end_date.replace("/", "*")
 
-                        try {
-                           index = window.location.href.indexOf("*")
-                           if (index > 0) {
-                              // window.location.reload()
-                              hostname = window.location.hostname
-                              port = window.location.port
-                              pathname = '/bima_policy/policy/entry/'
+         try {
+            index = window.location.href.indexOf("*")
+            if (index > 0) {
+               // window.location.reload()
+               hostname = window.location.hostname
+               port = window.location.port
+               pathname = '/bima_policy/policy/entry/'
 
-                              href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length
+               href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length
 
-                              window.location.replace(href)
-                           }
-                           else {
-                              href = window.location.href + start_date
-                              href += "/"
-                              href += end_date
-                              href += "/"
-                              href += period_value
-                              href += "/"
-                              href += select_length
+               window.location.replace(href)
+            }
+            else {
+               href = window.location.href + start_date
+               href += "/"
+               href += end_date
+               href += "/"
+               href += period_value
+               href += "/"
+               href += select_length
 
-                              window.location.replace(href)
-                           }
-                        } catch (error) {
+               window.location.replace(href)
+            }
+         } catch (error) {
 
-                        }
+         }
 
-                     } catch (error) { }
-                  }
+      } catch (error) { }
 
-                  function filterPolicy_nopayout() {
-                     // document.getElementsByClassName("showMoreNew")[0].click();
-                     try {
-                        payout_switch = document.getElementById('payout_switch').checked
-                        if (payout_switch) {
+   }
 
-                           start_date = document.getElementById('frmDate').value.toString()
-                           end_date = document.getElementById('toDate').value.toString()
-                           period_value = document.getElementById('select-period').value.toString().toUpperCase()
-                           select_length = document.getElementById('select_length').value
+   function filterPolicy_nopayout() {
+      // document.getElementsByClassName("showMoreNew")[0].click();
+      try {
+         payout_switch = document.getElementById('payout_switch').checked
+         if (payout_switch) {
 
-                           if (period_value == "LAST_MONTH") {
-                              period_value = "LAST MONTH"
-                           }
-                           else if (period_value == "THIS_MONTH") {
-                              period_value = "THIS MONTH"
-                           }
-                           else if (period_value == "CURRENT_YEAR") {
-                              period_value = "CURRENT YEAR"
-                           }
+            start_date = document.getElementById('frmDate').value.toString()
+            end_date = document.getElementById('toDate').value.toString()
+            period_value = document.getElementById('select-period').value.toString().toUpperCase()
+            select_length = document.getElementById('select_length').value
 
-                           if (start_date == "" || end_date == "") {
-                              return
-                           }
-                           start_date = start_date.replace("/", "*")
-                           start_date = start_date.replace("/", "*")
+            if (period_value == "LAST_MONTH") {
+               period_value = "LAST MONTH"
+            }
+            else if (period_value == "THIS_MONTH") {
+               period_value = "THIS MONTH"
+            }
+            else if (period_value == "CURRENT_YEAR") {
+               period_value = "CURRENT YEAR"
+            }
 
-                           end_date = end_date.replace("/", "*")
-                           end_date = end_date.replace("/", "*")
+            if (start_date == "" || end_date == "") {
+               return
+            }
+            start_date = start_date.replace("/", "*")
+            start_date = start_date.replace("/", "*")
 
-                           try {
-                              index = window.location.href.indexOf("*")
-                              if (index > 0) {
-                                 // window.location.reload()
-                                 hostname = window.location.hostname
-                                 port = window.location.port
-                                 pathname = '/bima_policy/policy/entry/'
-                                 href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length + '/' + 'true'
-                                 window.location.replace(href)
-                              }
-                              else {
-                                 href = window.location.href + start_date
-                                 href += "/"
-                                 href += end_date
-                                 href += "/"
-                                 href += period_value
-                                 href += "/"
-                                 href += select_length
-                                 href += "/"
-                                 href += 'true'
+            end_date = end_date.replace("/", "*")
+            end_date = end_date.replace("/", "*")
 
-                                 window.location.replace(href)
-                              }
-                           } catch (error) {
+            try {
+               index = window.location.href.indexOf("*")
+               if (index > 0) {
+                  // window.location.reload()
+                  hostname = window.location.hostname
+                  port = window.location.port
+                  pathname = '/bima_policy/policy/entry/'
+                  href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length + '/' + 'true'
+                  window.location.replace(href)
+               }
+               else {
+                  href = window.location.href + start_date
+                  href += "/"
+                  href += end_date
+                  href += "/"
+                  href += period_value
+                  href += "/"
+                  href += select_length
+                  href += "/"
+                  href += 'true'
 
-                           }
-                        }
-                     } catch (error) { }
-                  }
+                  window.location.replace(href)
+               }
+            } catch (error) {
 
-                  function selectAllPolicy() {
+            }
+         }
+      } catch (error) { }
+   }
 
-                     var tblInsurance = document.getElementById('tblInsurance')
-                     var rowLength = tblInsurance.rows.length;
-                     chkblkrm_isChecked = document.getElementById('chkblkrm').checked
-                     tr = tblInsurance.getElementsByTagName("tr");
+   function selectAllPolicy() {
 
-                     ids = ''
+      var tblInsurance = document.getElementById('tblInsurance')
+      var rowLength = tblInsurance.rows.length;
+      chkblkrm_isChecked = document.getElementById('chkblkrm').checked
+      tr = tblInsurance.getElementsByTagName("tr");
 
-                     if (chkblkrm_isChecked) {
-                        for (i = 1; i < rowLength; i++) {
-                           id = `chkblkrm${i}`
-                           document.getElementById(id).checked = true
-                           highlight(tr[i])
+      ids = ''
+
+      if (chkblkrm_isChecked) {
+         for (i = 1; i < rowLength; i++) {
+            id = `chkblkrm${i}`
+            document.getElementById(id).checked = true
+            highlight(tr[i])
+         }
+      }
+      else {
+         for (i = 1; i < rowLength; i++) {
+            id = `chkblkrm${i}`
+            document.getElementById(id).checked = false
+            highlight(tr[i])
+         }
+      }
+   }
+
+   function bulk_policy_remove() {
+      // return;
+      var tblInsurance = document.getElementById('tblInsurance')
+      var rowLength = tblInsurance.rows.length;
+      ids = ''
+
+      for (i = 1; i < rowLength; i++) {
+
+         id = `chkblkrm${i}`
+
+         isChecked = document.getElementById(id).checked
+
+         if (isChecked) {
+
+            ids += '|' + tblInsurance.rows.item(i).cells[2].innerText.trim()
+            // document.getElementById(anchor_id).click();
+         }
+         else {
+            alert('You have not selected any record to delete!')
+            return;
+         }
+      }
+      pathname = `/bima_policy/policy/${ids}/delete`
+
+      window.location.replace(window.location.origin + pathname)
+   }
+
+   function resertDocument() {
+      document.location.reload()
+   }
+
+   function highlight(row) {
+      SelectedRow = row.cells[0].textContent;
+      deHighlight();
+      row.style.backgroundColor = 'silver';
+      row.classList.toggle("selectedRow");
+   }
+
+   function deHighlight() {
+      let table = document.getElementById("tblInsurance");
+      let rows = table.rows;
+      for (let i = 0; i < rows.length; i++) {
+         // to avoid checked 
+         try {
+            is_checked = document.getElementById(`chkblkrm${i}`).checked
+            if (is_checked) {
+               continue;
+            }
+         } catch { }
+
+         // default this line is
+         rows[i].style.backgroundColor = "transparent";
+      }
+   }
+
+   function searchNameD() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tblInsurance");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+         td = tr[i].getElementsByTagName("td")[3];
+         if (td) {
+            txtValue = td.textContent || td.innerText;
+            console.log(txtValue);
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+               tr[i].style.display = "";
+            } else {
+               tr[i].style.display = "none";
+            }
+         }
+      }
+   }
+
+
+   function searchName() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tblInsurance");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+         td = tr[i].getElementsByTagName("td")[3];
+         if (td) {
+            txtValue = td.textContent || td.innerText;
+            console.log(txtValue);
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+               tr[i].style.display = "";
+            } else {
+               // tr[i].style.display = "none";
+
+               td4 = tr[i].getElementsByTagName("td")[4];
+
+               if (td4) {
+                  txtValue = td4.textContent || td4.innerText;
+                  console.log(txtValue);
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                     tr[i].style.display = "";
+                  } else {
+                     // tr[i].style.display = "none";
+
+                     td5 = tr[i].getElementsByTagName("td")[5];
+
+                     if (td5) {
+                        txtValue = td5.textContent || td5.innerText;
+                        console.log(txtValue);
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                           tr[i].style.display = "";
+                        } else {
+                           tr[i].style.display = "none";
+
                         }
                      }
-                     else {
-                        for (i = 1; i < rowLength; i++) {
-                           id = `chkblkrm${i}`
-                           document.getElementById(id).checked = false
-                           highlight(tr[i])
-                        }
-                     }
+
                   }
+               }
 
-                  function bulk_policy_remove() {
-                     // return;
-                     var tblInsurance = document.getElementById('tblInsurance')
-                     var rowLength = tblInsurance.rows.length;
-                     ids = ''
+            }
+         }
+      }
+   }
 
-                     for (i = 1; i < rowLength; i++) {
+   var c = [];
+   var filterList = []
+   var filterListMultiple = []
+   var isMultiFilter = false
+   var isNone = false
+   var NoneList = []
+   var rowList = []
 
-                        id = `chkblkrm${i}`
+   function clearFilterList() {
 
-                        isChecked = document.getElementById(id).checked
+      filterList = []
+      filterListMultiple = []
+      isMultiFilter = false
+      rowList = []
+      document.getElementById('filter_type').selectedIndex = -1
+      document.getElementById('filter_content').innerHTML = ''
+      document.getElementById('btnFilter').disabled = true      
+   }
 
-                        if (isChecked) {
+   function getCellNumber() {
 
-                           ids += '|' + tblInsurance.rows.item(i).cells[2].innerText.trim()
-                           // document.getElementById(anchor_id).click();
-                        }
-                        else
-                        {
-                           alert('You have not selected any record to delete!')
-                           return;
-                        }
-                     }
-                     pathname = `/bima_policy/policy/${ids}/delete`
+      value = document.getElementById('filter_type').value
 
-                     window.location.replace(window.location.origin + pathname)
-                  }
+      cell_no = 0
 
-                  function resertDocument() {
-                     document.location.reload()
-                  }
+      if (value == 'insurer') {
+         cell_no = '#6'  //6
+      }
+      else if (value == 'vehicle_catagory') {
+         cell_no = 15
+      }
+      else if (value == 'vehicle_makeby') {
+         cell_no = 13
+      }
+      else if (value == 'fuel_type') {
+         cell_no = 16
+      }
+      else if (value == 'cc') {
+         cell_no = 20
+      }
+      else if (value == 'sc') {
+         cell_no = 22
+      }
+      else if (value == 'ct') {
+         cell_no = 23
+      }
+      else if (value == 'gvw') {
+         cell_no = 21
+      }
+      else if (value == 'policy_type') {
+         cell_no = 24
+      }
+      else if (value == 'addon') {
+         cell_no = 18
+      }
+      else if (value == 'ncb') {
+         cell_no = 19
+      }
+      else if (value == 'cpa') {
+         cell_no = 25
+      }
+      return cell_no
+   }
 
-                  function highlight(row) {
-                     SelectedRow = row.cells[0].textContent;
-                     deHighlight();
-                     row.style.backgroundColor = 'silver';
-                     row.classList.toggle("selectedRow");
-                  }
+   function getCellName() {
 
-                  function deHighlight() {
-                     let table = document.getElementById("tblInsurance");
-                     let rows = table.rows;
-                     for (let i = 0; i < rows.length; i++) {
-                        // to avoid checked 
-                        try {
-                           is_checked = document.getElementById(`chkblkrm${i}`).checked
-                           if (is_checked) {
-                              continue;
-                           }
-                        } catch { }
+      value = document.getElementById('filter_type').value
 
-                        // default this line is
-                        rows[i].style.backgroundColor = "transparent";
-                     }
-                  }
+      cell_no = 0
+      
+      if (isMultiFilter) {
 
-                  function searchNameD() {
-                     // Declare variables
-                     var input, filter, table, tr, td, i, txtValue;
-                     input = document.getElementById("myInput");
-                     filter = input.value.toUpperCase();
-                     table = document.getElementById("tblInsurance");
-                     tr = table.getElementsByTagName("tr");
+         if (value == 'insurer') {
+            cell_no = "##ins"
+         }
+         else if (value == 'vehicle_catagory') {
+            cell_no = "##vc"
+         }
+         else if (value == 'vehicle_makeby') {
+            cell_no = "##vm"
+         }
+         else if (value == 'fuel_type') {
+            cell_no = "##ft"
+         }
+         else if (value == 'cc') {
+            cell_no = "##cc"
+         }
+         else if (value == 'sc') {
+            cell_no = "##sc"
+         }
+         else if (value == 'ct') {
+            cell_no = "##ct"
+         }
+         else if (value == 'gvw') {
+            cell_no = "##gvw"
+         }
+         else if (value == 'policy_type') {
+            cell_no = "##pt"
+         }
+         else if (value == 'addon') {
+            cell_no = "##addon"
+         }
+         else if (value == 'ncb') {
+            cell_no = "##ncb"
+         }
+         else if (value == 'cpa') {
+            cell_no = "##cpa"
+         }
 
-                     // Loop through all table rows, and hide those who don't match the search query
-                     for (i = 0; i < tr.length; i++) {
-                        td = tr[i].getElementsByTagName("td")[3];
-                        if (td) {
-                           txtValue = td.textContent || td.innerText;
-                           console.log(txtValue);
-                           if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                              tr[i].style.display = "";
-                           } else {
-                              tr[i].style.display = "none";
-                           }
-                        }
-                     }
-                  }
+      }
+     
+      else {
+
+         if (value == 'insurer') {
+            cell_no = '#ins'
+         }
+         else if (value == 'vehicle_catagory') {
+            cell_no = "#vc"
+         }
+         else if (value == 'vehicle_makeby') {
+            cell_no = "#vm"
+         }
+         else if (value == 'fuel_type') {
+            cell_no = "#ft"
+         }
+         else if (value == 'cc') {
+            cell_no = "#cc"
+         }
+         else if (value == 'sc') {
+            cell_no = "#sc"
+         }
+         else if (value == 'ct') {
+            cell_no = "#ct"
+         }
+         else if (value == 'gvw') {
+            cell_no = "#gvw"
+         }
+         else if (value == 'policy_type') {
+            cell_no = "#pt"
+         }
+         else if (value == 'addon') {
+            cell_no = "#addon"
+         }
+         else if (value == 'ncb') {
+            cell_no = "#ncb"
+         }
+         else if (value == 'cpa') {
+            cell_no = "#cpa"
+         }
+
+      }
+
+      return cell_no
+   }
+
+   function addName2() {
+      // Declare variables
+      value = document.getElementById('filter_type').value
+
+      filter_content = document.getElementById('filter_content')
+
+      filterList = []
+      tempfilterList = []
+
+      for (i = 1; i <= filter_content.options.length - 1; i++) {
+
+         if (filter_content.options[i].selected == true) {
+            tempfilterList.push(filter_content.options[i].value)
+         }
+      }
+
+      // const obj = { index: getCellNumber(), items: tempfilterList }
+      const obj = { index: getCellName(), items: tempfilterList }
+      is_found = filterList.find(item => item.index == obj.index)
+
+      if (is_found == null) {
+         filterList.push(obj)
+      }
+      console.log(filterList);
+
+      return filterList
+   }
+
+   function addName3() {
+      // Declare variables
+
+      isMultiFilter = true
+      
+      value = document.getElementById('filter_type').value
+
+      filter_content = document.getElementById('filter_content')
+
+      tempfilterList = []
+
+      for (i = 1; i <= filter_content.options.length - 1; i++) {
+
+         if (filter_content.options[i].selected == true) {
+            tempfilterList.push(filter_content.options[i].value)
+         }
+      }
+
+      // const obj = { index: getCellNumber(), items: tempfilterList }
+      const obj = { index: getCellName(), items: tempfilterList }
+      is_found = filterListMultiple.find(item => item.index == obj.index)
+
+      if (is_found == null) {
+         filterListMultiple.push(obj)
+      }
+      else {
+         // alert('This option already exists in filter list!')
+      }
+      console.log(filterListMultiple);
+      
+      return filterListMultiple
+   }
+
+   function addNameNone(src) {
+      // Declare variables
+
+      isMultiFilter = true
+            
+      // const obj = { index: getCellNumber(), items: tempfilterList }
+      const obj = { index: src, items: 'none' }
+      is_found = filterListMultiple.find(item => item.index == obj.index)
+
+      if (is_found == null) {
+         filterListMultiple.push(obj)
+      }      
+      console.log(filterListMultiple);
+      
+      return filterListMultiple
+   }
+
+   
+
+   function searchName2() {
+      // Declare variables
+      // print(filterList)    
+      jsonData = ''
+
+      if (isMultiFilter) {
+         addName3()
+         jsonData = JSON.stringify(filterListMultiple);
+      }
+      else {
+         addName2()
+         jsonData = JSON.stringify(filterList);
+      }
+
+      filter_content = document.getElementById('filter_content')
+      if (filter_content.options.length == 1) {
+         alert('You have not selected any filter option! ')
+         return;
+      }
+
+      // var jsonData = JSON.stringify(filterList);
+
+      // pathname = '/bima_policy/policy/entry/list/'
+      // pathname = '/bima_policy/policy/entry/list'
+      pathname = '/bima_policy/policy/entry_list'
+
+      href = window.location.origin + pathname
+
+      // window.location.replace(href) 
+
+      $.ajax({
+         url: href,
+         type: 'POST',
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: { 'data': jsonData },
+         dataType: 'json',
+         success: function (response) {
+            responseHandler(response)
+         },
+         error: function (xhr, status, error) {
+            // Handle any errors that occurred during the request
+            console.log('error occurred ', error);
+         }
+      });
 
 
-                  function searchName() {
-                     // Declare variables
-                     var input, filter, table, tr, td, i, txtValue;
-                     input = document.getElementById("myInput");
-                     filter = input.value.toUpperCase();
-                     table = document.getElementById("tblInsurance");
-                     tr = table.getElementsByTagName("tr");
+   }
 
-                     // Loop through all table rows, and hide those who don't match the search query
-                     for (i = 0; i < tr.length; i++) {
-                        td = tr[i].getElementsByTagName("td")[3];
-                        if (td) {
-                           txtValue = td.textContent || td.innerText;
-                           console.log(txtValue);
-                           if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                              tr[i].style.display = "";
-                           } else {
-                              // tr[i].style.display = "none";
-
-                              td4 = tr[i].getElementsByTagName("td")[4];
-
-                              if (td4) {
-                                 txtValue = td4.textContent || td4.innerText;
-                                 console.log(txtValue);
-                                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                    tr[i].style.display = "";
-                                 } else {
-                                    // tr[i].style.display = "none";
-
-                                    td5 = tr[i].getElementsByTagName("td")[5];
-
-                                       if (td5) {
-                                             txtValue = td5.textContent || td5.innerText;
-                                             console.log(txtValue);
-                                             if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                                tr[i].style.display = "";
-                                             } else {
-                                                tr[i].style.display = "none";                                               
-
-                                             }
-                                       }
-
-                                 }
-                              }
-
-                           }
-                        }
-                     }
-                  }
+   function responseHandler(response) {
+      console.log('responseHandler');
+      // console.log(response.data);
+      // console.log(response.data[0]);
+      var ytt = JSON.parse(JSON.stringify(response.data))
+      console.log(ytt);
 
 
-                  function ExportToExcel(type, fn, dl) {
-                     var elt = document.getElementById('tblInsurance');
-                     var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
-                     return dl ?
-                        XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
-                        XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
-                  }
-               </script>
+      th_coll = document.getElementsByClassName("sorting");
+      for (const item of th_coll) {
+         item.hidden = true
+      }
+      th_coll = document.getElementsByClassName("thShow");
+      for (const item of th_coll) {
+         item.hidden = false
+      }
 
-               {%endblock%}
+      document.getElementById("tbdy").innerHTML = '';
+      c = []
+      index = 0
+      ytt.forEach(element => {
+         // Creating table row
+         index++;
+         gt(index, element)
+
+      });
+
+   }
+
+   function gt(index, item) {
+      // Generate tables after ajax call done
+      // <input type="checkbox" value="2479" class="checkbox"
+      //                                        id="chkblkrm{{forloop.counter}}" />
+
+      // id="chkblkrm{{forloop.counter}}"
+
+      c.push("<tr>");
+      c.push("<td>" + index + "</td>");
+      c.push("<td hidden > " + item.policyid + "</td>");
+      c.push("<td>" + item.proposal_no + "</td>");
+      c.push("<td>" + item.customer_name + "</td>");
+      c.push("<td>" + item.insurance_company + "</td>");
+      c.push("<td>" + item.vehicle_catagory + "</td>");
+
+      c.push("<td>" + item.OD_premium + "</td>");
+      c.push("<td>" + item.TP_terrorism + "</td>");
+      c.push("<td>" + item.net + "</td>");
+      c.push("<td>" + item.gst_amount + "</td>");
+      c.push("<td>" + item.gst_gcv_amount + "</td>");
+      c.push("<td>" + item.total + "</td>");
+
+      c.push("<td>" + item.agent_od_reward + "</td>");
+      c.push("<td>" + item.agent_od_amount + "</td>");
+      c.push("<td>" + item.agent_tp_reward + "</td>");
+      c.push("<td>" + item.agent_tp_amount + "</td>");
+
+      c.push("<td>" + item.self_od_reward + "</td>");
+      c.push("<td>" + item.self_od_amount + "</td>");
+      c.push("<td>" + item.self_tp_reward + "</td>");
+      c.push("<td>" + item.self_tp_amount + "</td>");
+      c.push("</tr>");
+      $('#tbdy').html(c.join(""));
+
+      return
+      c.push("<tr>");
+      c.push("<td>" + i + "</td>");
+      c.push("<td>" + "</td>");
+      c.push("<td>" + item.policyid + "</td>");
+      c.push("<td>" + item.proposal_no + "</td>");
+      c.push("<td>" + item.policy_no + "</td>");
+      c.push("<td>" + item.customer_name + "</td>");
+      c.push("<td>" + item.insurance_company + "</td>");
+      c.push("<td>" + item.sp_name + "</td>");
+      c.push("<td>" + item.sp_brokercode + "</td>");
+      c.push("<td>" + item.product_name + "</td>");
+      c.push("<td>" + item.registration_no + "</td>");
+      c.push("<td>" + item.rto_state + "</td>");
+      c.push("<td>" + item.rto_city + "</td>");
+      c.push("<td>" + item.vehicle_makeby + "</td>");
+      c.push("<td>" + item.vehicle_model + "</td>");
+      c.push("<td>" + item.vehicle_catagory + "</td>");
+      c.push("<td>" + item.vehicle_fuel_type + "</td>");
+      c.push("<td>" + item.mfg_year + "</td>");
+      c.push("<td>" + item.addon + "</td>");
+      c.push("<td>" + item.ncb + "</td>");
+      c.push("<td>" + item.cubic_capacity + "</td>");
+      c.push("<td>" + item.gvw + "</td>");
+      c.push("<td>" + item.seating_capacity + "</td>");
+      c.push("<td>" + item.coverage_type + "</td>");
+      c.push("<td>" + item.policy_type + "</td>");
+      c.push("<td>" + item.cpa + "</td>");
+      c.push("<td>" + item.risk_start_date + "</td>");
+      c.push("<td>" + item.risk_end_date + "</td>");
+      c.push("<td>" + item.issue_date + "</td>");
+      c.push("<td>" + item.insured_age + "</td>");
+      c.push("<td>" + item.policy_term + "</td>");
+      c.push("<td>" + item.bqp + "</td>");
+      c.push("<td>" + item.pos + "</td>");
+      c.push("<td>" + item.employee + "</td>");
+      c.push("<td>" + item.remark + "</td>");
+      c.push("<td>" + item.OD_premium + "</td>");
+      c.push("<td>" + item.TP_terrorism + "</td>");
+      c.push("<td>" + item.gst_amount + "</td>");
+      c.push("<td>" + item.gst_gcv_amount + "</td>");
+      c.push("<td>" + item.total + "</td>");
+      c.push("<td>" + item.payment_mode + "</td>");
+      c.push("<td>" + item.agent_od_reward + "</td>");
+      c.push("<td>" + item.agent_od_amount + "</td>");
+      c.push("<td>" + item.agent_tp_reward + "</td>");
+      c.push("<td>" + item.agent_tp_amount + "</td>");
+
+      c.push("<td>" + item.self_od_reward + "</td>");
+      c.push("<td>" + item.self_od_amount + "</td>");
+      c.push("<td>" + item.self_tp_reward + "</td>");
+      c.push("<td>" + item.self_tp_amount + "</td>");
+      c.push("</tr>");
+      // tblInsurance
+
+      $('#tbdy').html(c.join(""));
+
+   }
+
+   function responseHandler_old(response) {
+      console.log('responseHandler');
+      console.log(response.data);
+
+      var c = [];
+      $.each(response.data, function (i, item) {
+         c.push("<td>" + item['policyid'] + "</td>");
+         c.push("<td>" + item.insurance_company + "</td>");
+         c.push("<td>" + item.customer_name + "</td>");
+      });
+
+      $('#tr1').html(c.join(""));
+   }
+
+   function ExportToExcel(type, fn, dl) {
+      var elt = document.getElementById('tblInsurance');
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+      return dl ?
+         XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+         XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+   }
+
+</script>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<!-- <script src="{% static 'js/policy_entry_list.js' %}"></script>      -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+
+{%endblock%}

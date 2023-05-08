@@ -46,7 +46,7 @@
           <!-- .section-block -->
           <div class="section-block">
             <form name="frmagent" method="post" class="" autocomplete="off" data-parsley-validate="true" novalidate=""
-              enctype="multipart/form-data" encoding="multipart/form-data">
+              enctype="multipart/form-data" encoding="multipart/form-data" >
               {%csrf_token%}
               {% if messages %}
               <ul class="messages">
@@ -69,64 +69,61 @@
                         <!-- fieldset -->
                         <legend class="mb-2">Agent Information</legend>
                         <div class="form-row">
-                          <div class="col-md-6 mb-3">
-                            <label>Full Name<abbr title="Required" class="text-danger">*</abbr></label>
+                          <div class="col-md-3 mb-3">
+                            <label>Full Name<abbr title=" " class="text-danger">*</abbr></label>
                             <input type="text" name="full_name" data-parsley-pattern="^(?:[A-Za-z]+[- ])*[A-Za-z]+$"
-                              data-parsley-required="true" class="form-control">
-                          </div>
-                          <div class="col-md-6 mb-3">
-                            <label>Email Id<abbr title="Required" class="text-danger">*</abbr></label>
-                            <input type="text" class="form-control" name="email_id" data-parsley-type="email"
-                              data-parsley-required="true">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="col-md-3 mb-3">
-                            <label>Mobile No<abbr title="Required" class="text-danger">*</abbr></label>
-                            <input type="text" class="form-control maskNumField" data-mask-as-number-maxlength="10"
-                              data-parsley-required="true" data-parsley-minlength="10" data-parsley-maxlength="10"
-                              data-parsley-pattern="^[0-9]+$" name="phone" maxlength="10">
+                              data-parsley- ="true" class="form-control"  required  >
                           </div>
                           <div class="col-md-3 mb-3">
-                            <label>Address<abbr title="Required" class="text-danger">*</abbr></label>
-                            <input type="text" class="form-control" name="address" data-parsley-required="true">
-                          </div>
-                          <div class="col-md-3 mb-3">
-                            <label>Pincode<abbr title="Required" class="text-danger">*</abbr></label>
-                            <input type="text" class="form-control maskNumField" data-mask-as-number-maxlength="6"
-                              data-parsley-required="true" data-parsley-minlength="6" data-parsley-maxlength="6"
-                              data-parsley-pattern="^[0-9]+$" name="phone" maxlength="6">
-                          </div>
-
-                          <div class="col-md-3 mb-3">
-                            <label>Gender<abbr title="Required" class="text-danger">*</abbr></label>
-                            <select name="city" id="city_list" data-parsley-required-message="" class="custom-select"
-                              data-parsley-required="true" tabindex="-1" aria-hidden="true">
-                              <option value=""> Choose Gender... </option>
+                            <label>Gender<abbr title=" " class="text-danger">*</abbr></label>
+                            <select name="gender" id="gender" data-parsley- -message="" class="custom-select"  required 
+                              data-parsley- ="true"   aria-hidden="true"    >
+                              <option value="" hidden> Choose Gender... </option>
                               <option value="MALE"> MALE </option>
                               <option value="FEMALE"> FEMALE </option>
                               <option value="OTHER"> OTHER </option>
                             </select>
                           </div>
                           <div class="col-md-3 mb-3">
-                            <label>Basic Qualification<abbr title="Required" class="text-danger">*</abbr></label>
-                            <input type="text" class="form-control" name="address" data-parsley-required="true">
+                            <label>Email Id<abbr title=" " class="text-danger">*</abbr></label>
+                            <input type="text" class="form-control" name="email_id" data-parsley-type="email" required 
+                              data-parsley- ="true"  value="ss@sd.com"  >
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <label>Mobile No<abbr title=" " class="text-danger">*</abbr></label>
+                            <input type="text" class="form-control maskNumField" data-mask-as-number-maxlength="10"
+                              data-parsley- ="true" data-parsley-minlength="10" data-parsley-maxlength="10"
+                              data-parsley-pattern="^[0-9]+$" name="phone" maxlength="10"   required    >
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <label>Address<abbr title=" " class="text-danger">*</abbr></label>
+                            <input type="text" class="form-control" name="address" data-parsley- ="true"  required     >
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <label>Pincode<abbr title=" " class="text-danger">*</abbr></label>
+                            <input type="text" class="form-control maskNumField" data-mask-as-number-maxlength="6"
+                              data-parsley- ="true" data-parsley-minlength="6" data-parsley-maxlength="6"
+                              data-parsley-pattern="^[0-9]+$" name="pincode" maxlength="6"  required     >
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <label>Basic Qualification<abbr title=" " class="text-danger">*</abbr></label>
+                            <input type="text" class="form-control" name="basic_qualification" data-parsley- ="true"   required    >
                           </div>
 
                           <div class="col-md-3 mb-3">
-                            <label>Training Language<abbr title="Required" class="text-danger">*</abbr></label>
-                            <input type="text" class="form-control" name="address" data-parsley-required="true">
+                            <label>Training Language<abbr title=" " class="text-danger">*</abbr></label>
+                            <input type="text" class="form-control" name="training_language" data-parsley- ="true"   required    >
                           </div>
                           <div class="col-md-3 mb-3">
-                            <label>Exam Language<abbr title="Required" class="text-danger">*</abbr></label>
-                            <input type="text" class="form-control" name="address" data-parsley-required="true">
+                            <label>Exam Language<abbr title=" " class="text-danger">*</abbr></label>
+                            <input type="text" class="form-control" name="exam_language" data-parsley- ="true"   required    >
                           </div>
-
+                          
                           <div class="col-md-3 mb-3">
-                            <label>State<abbr title="Required" class="text-danger">*</abbr></label>
-                            <select name="state" data-parsley-required-message=""
-                              onchange="getCities(this.value,city_list);" id="state_list" data-parsley-required="true"
-                              class="custom-select select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                            <label>State<abbr title=" " class="text-danger">*</abbr></label>
+                            <select name="state" data-parsley- -message=""    required 
+                              onchange="getCities(this.value,city_list);" id="state_list" data-parsley- ="true"
+                              class="custom-select select2 select2-hidden-accessible"   aria-hidden="true">
                               <option value="">Choose State</option>
                               <option value="1">Andama And Nicobar Island</option>
                               <option value="2">Andhra Pradesh</option>
@@ -168,13 +165,13 @@
                             </select>
                           </div>
                           <div class="col-md-3 mb-3">
-                            <label>City<abbr title="Required" class="text-danger">*</abbr></label>
-                            <input type="text" class="form-control" name="city" data-parsley-required="true">
+                            <label>City<abbr title=" " class="text-danger">*</abbr></label>
+                            <input type="text" class="form-control" name="city" data-parsley- ="true"   required    >
                           </div>
 
-                          <div class="col-md-2 mb-3">
-                            <label>Agent Slab<abbr title="Required" class="text-danger">*</abbr></label>
-                            <select name="agent_slab" class="custom-select select2 select2-hidden-accessible"
+                          <div class="col-md-3 mb-3">
+                            <label>Agent Slab<abbr title=" " class="text-danger">*</abbr></label>
+                            <select name="agent_slab" class="custom-select select2 select2-hidden-accessible"      required 
                               aria-hidden="true">
                               <option value="">Choose...</option>
                               {% for value in Adata %}
@@ -182,77 +179,88 @@
                               {% endfor %}
                             </select>
                           </div>
+
                           <div class="col-md-3 mb-3">
-                            <label>GSTIN<abbr title="Required" class="text-danger">*</abbr></label>
-                            <input type="text" class="form-control maskNumField" data-mask-as-number-maxlength="15"
-                              data-parsley-required="true" data-parsley-minlength="15" data-parsley-maxlength="15"
-                              data-parsley-pattern="^[0-9]+$" name="gstin" maxlength="15">
+                            <label>GSTIN<abbr title=" " class="text-danger">*</abbr></label>
+                            <input type="text" class="form-control maskNumField" data-mask-as-number-maxlength="15"   required 
+                              data-parsley- ="true" data-parsley-minlength="15" data-parsley-maxlength="15"
+                              data-parsley-pattern="^[0-9]+$" name="gstin" maxlength="15"   >
                           </div>
                          
-                          <div class="col-md-2 mb-3">
+                          <div class="col-md-3 mb-3">
                             <label>PAN</label>
-                            <input type="text" class="form-control" name="pan">
+                            <input type="text" class="form-control" name="pan"  required     >
                           </div>
 
                           <div class="col-md-3 mb-3">
                             <label>Aadhar No.</label>
-                            <input type="text" class="form-control" name="aadhar_no">
+                            <input type="text" class="form-control" name="aadhar_no"   required    >
                           </div>
-                          <div class="col-md-2 mb-3">
+                          
+                          <div class="col-md-3 mb-3">
                             <label>Rural / Urban<abbr class="text-danger">*</abbr></label>
-                            <select name="rural_urban" class="custom-select" id="rural_urban" required>
+                            <select name="rural_urban" class="custom-select" id="rural_urban"    required   >
                               <option value=""> -- Select Rural -- </option>
                               <option value="RURAL">Rural</option>
                               <option value="URBAN">Urban</option>
                             </select>
                           </div>
-
                           <div class="col-md-3 mb-3">
                             <label>Account No:</label>
-                            <input type="text" class="form-control" name="pan">
+                            <input type="text" class="form-control" name="account_no"   required    >
                           </div>
-                          <div class="col-md-2 mb-3">
+                          <div class="col-md-3 mb-3">
                             <label>IFSC Code:</label>
-                            <input type="text" class="form-control" name="pan">
+                            <input type="text" class="form-control" name="ifsc_code"   required    >
                           </div>
                           <div class="col-md-3 mb-3">
                             <label>Bank Name:</label>
-                            <input type="text" class="form-control" name="pan">
+                            <input type="text" class="form-control" name="bank_name"   required    >
                           </div>
-                          <div class="col-md-2 mb-3">
+                          <div class="col-md-3 mb-3">
                             <label>Branch Name:</label>
-                            <input type="text" class="form-control" name="pan">
+                            <input type="text" class="form-control" name="branch_name"  required     >
                           </div>
+                          
+                          <div class="col-md-3 mb-4">
+                            <label>Documents <small>(Only<strong> PDF &amp; Image
+                                  </strong>File)</small> </label>
+                            <div class="custom-file">
+                               <input type="file" name="docs" accept=".pdf,image/" id="docs"
+                                  class="custom-file-input" required>
+                               <label class="custom-file-label" for="docs">Choose file</label>
+                            </div>
+                         </div>
 
-                          <div class="col-md-4 mb-4">
+                          <!-- <div class="col-md-4 mb-4">
                             <legend class="mb-2">Documents</legend>
                             <label><small>(Accept Only<strong> PDF &amp; Image </strong>File) </small> <span
                                 class="docerror text-red"></span></label>
                             <div class="k-content">
                               <div class="k-widget k-upload k-header k-upload-sync k-upload-empty">
-                                <div class="k-button k-upload-button" aria-label="Select files..."><input name="docs"
+                                <div class="k-button k-upload-button" aria-label="Select files..."><input name="docs"  
                                     id="documents" accept=".pdf,image/*" type="file" aria-label="files" data-role="upload"
-                                    multiple="multiple" autocomplete="off"><span>Select files...</span></div>
+                                    multiple="multiple" autocomplete="off"   ><span>Select files...</span></div>
                               </div>
                             </div>
-                          </div>
+                          </div> -->
 
                           <div class="col-md-8 mb-3">
-                            <legend class="mb-2">Security</legend>
+                            <!-- <legend class="mb-2">Security</legend> -->
                             <div class="row">
                               <div class="col-md-6">
-                                <label>Password<abbr title="Required" class="text-danger">*</abbr></label>
-                                <input type="password" id="password" name="password" class="form-control"
-                                  data-parsley-minlength="6" data-parsley-maxlength="15"
+                                <label>Password<abbr title=" " class="text-danger">*</abbr></label>
+                                <input type="password" id="password" name="password" class="form-control"     
+                                  data-parsley-minlength="6" data-parsley-maxlength="15"  required 
                                   data-parsley-pattern="/^(?=.*[0-9])(?=.*[!@#$%^&amp;*])[a-zA-Z0-9!@#$%^&amp;*]{6,20}$/"
-                                  data-parsley-required="true"
+                                  data-parsley- ="true"
                                   parsley-pattern-message="The string must contain at least 1 lowercase alphabetical character<br>The Password must contain at least 1 uppercase alphabetical character<br>The Password must contain at least 1 numeric character <br>The string must contain at least one special character">
                               </div>
                               <div class="col-md-6">
-                                <label>Retype Password<abbr title="Required" class="text-danger">*</abbr></label>
-                                <input type="password" id="confirm_password" name="confirm_password"
+                                <label>Retype Password<abbr title=" " class="text-danger">*</abbr></label>
+                                <input type="password" id="confirm_password" name="confirm_password"   required 
                                   data-parsley-error-message="Password &amp; confirm password should be same"
-                                  data-parsley-equalto="#password" class="form-control" data-parsley-required="true">
+                                  data-parsley-equalto="#password" class="form-control" data-parsley- ="true"   > 
                               </div>
                               <div class="col-md-12">
                                 <p><small>
@@ -264,17 +272,13 @@
                               </div>
                             </div>
                           </div>
-
                         </div>
-
+                                           
                     </div>
 
 
                     </fieldset>
-                    <div class="form-row">
-                     
-                     
-                    </div>
+                
                   </div>
                   <!-- /.card-body -->
                 </div>
@@ -283,9 +287,9 @@
           </div>
           <hr>
           <div>
-            <a href="{%url 'bima_policy:agent' %}" class="btn btn-secondary w-100p pull-left">Back</a>
+            <a href="{%url 'bima_policy:agent' %}" class="btn btn-secondary w-100p pull-left"  >Back</a>
             <span class="float-right">
-              <button type="submit" name="subagent" class="btn btn-success w-100p">Save</button>
+              <button type="submit" name="subagent" class="btn btn-success w-100p"  >Save</button>
             </span>
           </div>
           </form>
@@ -304,7 +308,7 @@
 <!-- /.app-main -->
 {% comment %} <div class="aside-backdrop"></div>
 </div><!-- /.app -->
-<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog"
+<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static"   role="dialog"
   aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
   <!-- .modal-dialog -->
   <div class="modal-dialog" role="document">

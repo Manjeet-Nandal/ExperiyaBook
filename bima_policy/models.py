@@ -87,7 +87,7 @@ class Agents(models.Model):
     login_id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:10].upper(), editable=False, max_length=30)
     profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=100, unique=True)
+    full_name = models.CharField(max_length=100)
     password = models.CharField(max_length=20)
     mob_no = models.CharField(max_length=12)
     email_id = models.EmailField(max_length=30)
@@ -98,8 +98,21 @@ class Agents(models.Model):
     GSTIN = models.CharField(max_length=100)
     PAN = models.CharField(max_length=100)
     aadhar_no = models.CharField(max_length=100)
-    rural_urban = models.CharField(max_length=100)
-    document = models.FileField()
+    rural_urban = models.CharField(max_length=50)
+    # document = models.FileField(upload_to='media/documents/')
+    docs = models.FileField(upload_to='media/documents/')
+
+    pincode = models.CharField(max_length=10)
+    gender = models.CharField(max_length=50)
+    basic_qualification = models.CharField(max_length=100)
+    training_language = models.CharField(max_length=100)
+    exam_language = models.CharField(max_length=100)
+    account_no = models.CharField(max_length=100)
+    ifsc_code = models.CharField(max_length=100)
+    bank_name = models.CharField(max_length=100)
+    branch_name = models.CharField(max_length=100)
+    created_by = models.CharField(max_length=100)
+
     status = models.CharField(default='Active', max_length=20)
 
     def __str__(self):

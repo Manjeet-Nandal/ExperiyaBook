@@ -437,6 +437,23 @@
                                                          </div>
                                                       </div>
 
+                                                      <button  class="btn btn-primary" style="margin-bottom: -60px;"
+                                                      onclick="add_agent()" >Add New POS</button>
+
+                                                      <script>
+                                                         function add_agent() {
+
+                                                            hostname = window.location.hostname
+                                                            port = window.location.port
+                                                            pathname = '/bima_policy/agent/add_agent/'
+
+                                                            href = window.location.origin + pathname 
+
+                                                            window.location.replace(href)
+                                                         }
+                                                      </script>
+
+
                                                       <div class="modal-footer">
                                                          <button id="btnExit" type="button"
                                                             class="btn btn-secondary w-100p"
@@ -840,9 +857,24 @@
                                                             </label>
                                                          </div>
                                                       </div>
-                                                   </div>
+                                                   </div>                                                
+                                                   <button  class="btn btn-primary" style="margin-bottom: -60px;"
+                                                            onclick="add_agent()" >Add New POS</button>
 
-                                                   <div class="modal-footer">
+                                                   <script>
+                                                      function add_agent() {
+
+                                                         hostname = window.location.hostname
+                                                         port = window.location.port
+                                                         pathname = '/bima_policy/agent/add_agent/'
+
+                                                         href = window.location.origin + pathname 
+
+                                                         window.location.replace(href)
+                                                      }
+                                                   </script>
+
+                                                   <div class="modal-footer">                                                    
                                                       <button type="button" class="btn btn-secondary w-100p"
                                                          data-dismiss="modal">Close</button>
                                                       <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
