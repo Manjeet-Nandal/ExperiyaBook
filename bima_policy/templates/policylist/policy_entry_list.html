@@ -87,8 +87,8 @@
                                  <button data-toggle="modal" data-target="#mdlcolsetting" type="button" id="bulk_remove"
                                     class="btn btn-secondary" title="Delete"><i class="icofont icofont-trash"
                                        aria-hidden="true"></i> </button>
-                                 <!-- <a href="#" class="no-wrap pl-0 morefilter" title="More Filter"><small>More
-                                       Filter</small></a> -->
+                                 <a id="linkShowFilterDiv" href="#" class="no-wrap pl-0 morefilter" title="More Filter" onclick="showMoreFilters()"><small>More
+                                       Filter</small></a>                                      
 
                                  <div class="modal fade" id="mdlcolsetting"
                                     onmouseenter="document.getElementById('inp_search').focus()" style="height: 400px">
@@ -205,14 +205,14 @@
                            </div>
                            {% endif %}
                         </div>
-                        <div id="morefilter" class="row">
+                        <div id="morefilters" class="row" hidden>
 
                            <div class="col-md-5 mb-4">
                               <input type="text" id="search-select_vc" class="form-control"
                                  placeholder="Select any field">
                               <select id="filter_type" name="filter_type" data-parsley-required-message="" multiple
                                  data-parsley-required="true" class="custom-select " required
-                                 onchange="add_filter_type()">                              
+                                 onchange="add_filter_type()">
                                  <option value="insurer">Insurers</option>
                                  <option value="vehicle_catagory">Vehicle Catagory</option>
                                  <option value="vehicle_makeby" hidden>Vehicle Makeby</option>
@@ -225,7 +225,7 @@
                                  <option value="policy_type">Policy Type</option>
                                  <option value="addon">Addon</option>
                                  <option value="ncb">NCB</option>
-                                 <option value="cpa">CPA</option>                               
+                                 <option value="cpa">CPA</option>
 
                               </select>
                               <!-- <input type="text" id="search-select_vc" class="form-control"> -->
@@ -317,11 +317,11 @@
 
                            </div>
 
-                           <div id="divFilterContent" class="col-md-5 mb-4" hidden>
+                           <div id="divFilterContent" class="col-md-5 mb-4">
                               <!-- <label for="my-select">Vehicle Make:</label> -->
                               <input type="text" id="search-select" class="form-control" placeholder="Search..">
                               <select id="filter_content" name="filter_content" class="form-control" multiple>
-                                 <option id="op_select_all" value="" onclick="select_all_Items('filter_content')"> 
+                                 <option id="op_select_all" value="" onclick="select_all_Items('filter_content')">
                                  </option>
 
                               </select>
@@ -410,13 +410,19 @@
                               </script>
                            </div>
 
-                           <div class="col-md-1 mb-4">
+                           <div class="col-md-2 mb-4">
 
                               <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
-                              <button id="btnFilter" type="button" class="btn btn-primary mt-1" onclick="searchName2()">Filter</button>
-                              <button type="button" class="btn btn-primary " onclick="addName3()" hidden >Add</button>
-                              <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1" onclick="saveFilter()" disabled >Save</button>
-                              <button type="button" class="btn btn-primary mt-1" onclick="clearFilterList()">Clear</button>
+                              <button id="btnFilter" type="button" class="btn btn-primary mt-1"
+                                 onclick="searchName2()">Filter</button>
+                              <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
+                                 data-target="#mdlUpdatePayout">Update</button>
+                              <button type="button" class="btn btn-primary mt-1" onclick="addName3()">Add</button>
+                              <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1"
+                                 onclick="saveFilter()" hidden>Save</button>
+                              <button type="button" class="btn btn-primary mt-1"
+                                 onclick="clearFilterList()">Clear</button>
+
 
                               <script>
 
@@ -490,6 +496,9 @@
 
                               </script>
                            </div>
+
+                           <!-- modal box goes here -->
+
 
 
 
@@ -1347,6 +1356,98 @@
    <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="mdlUpdatePayout" style="height: 400px">
+
+   <div class="modal-dialog" role="document">
+
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 id="rtoModalLabel" class="modal-title"> Payout </h5>
+         </div>
+         <div class="modal-body ">
+            <div class="form-row">
+               <div class="col-md-6 mb-2">
+
+                  <div class=""><label>Agent OD Reward:
+                        <input type="text" value="10" id="a_od_reward" name="a_od_reward"
+                           class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
+                           data-parsley-required="true" min="0" max="100" maxlength="4">
+
+                        <script>
+                           function handle(e) {
+                              if (e.keyCode === 13) {
+                                 e.preventDefault(); // Ensure it is only this code that runs
+
+                                 $("#btnExit").click();
+                              }
+                           }
+                        </script>
+                     </label></div>
+               </div>
+               <div class="col-md-6 mb-2 ">
+                  <div class=""><label>Agent TP Reward:
+                        <input type="text" value="20" id="a_tp_reward" name="a_tp_reward"
+                           class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
+                           data-parsley-required="true" min="0" max="100" maxlength="4">
+                     </label>
+                  </div>
+               </div>
+
+               <!-- self payout -->
+               <div class="col-md-6 mb-2">
+                  <div class=""><label>Self OD Reward:
+                        <input type="text" value="30" name="s_od_reward" id="s_od_reward"
+                           class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
+                           data-parsley-required="true" min="0" max="100" maxlength="4">
+
+                        <script>
+                           function handle(e) {
+                              if (e.keyCode === 13) {
+                                 e.preventDefault(); // Ensure it is only this code that runs
+
+                                 $("#btnExit").click();
+                              }
+                           }
+                        </script>
+                     </label></div>
+               </div>
+
+               <div class="col-md-6 mb-2">
+                  <div class=""><label>Self TP Reward:
+                        <input type="text" value="40" id="s_tp_reward" name="s_tp_reward"
+                           class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
+                           data-parsley-required="true" min="0" max="100" maxlength="4">
+                     </label>
+                  </div>
+               </div>
+
+
+            </div>
+
+            <script>
+
+            </script>
+
+            <div class="modal-footer">
+               <div class="form-row" style="align-content: center;"></div>
+               <button class="btn btn-primary" onclick="searchName3()">Apply</button>
+
+               <button id="btnExit" type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
+               <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
+               class="btn btn-primary w-100p">Save</button> -->
+            </div>
+         </div>
+
+      </div>
+
+   </div>
+   <!-- <body onload="setFocus()">
+         
+      </body> -->
+
+</div>
+
+
 
 <body onload="load_values()">
 </body>
@@ -1776,6 +1877,8 @@
    var isNone = false
    var NoneList = []
    var rowList = []
+   var policyList = []
+   var payoutValues = []
 
    function clearFilterList() {
 
@@ -1783,9 +1886,10 @@
       filterListMultiple = []
       isMultiFilter = false
       rowList = []
+      policyList = []
       document.getElementById('filter_type').selectedIndex = -1
       document.getElementById('filter_content').innerHTML = ''
-      document.getElementById('btnFilter').disabled = true      
+      document.getElementById('btnFilter').disabled = true
    }
 
    function getCellNumber() {
@@ -1838,7 +1942,7 @@
       value = document.getElementById('filter_type').value
 
       cell_no = 0
-      
+
       if (isMultiFilter) {
 
          if (value == 'insurer') {
@@ -1879,7 +1983,7 @@
          }
 
       }
-     
+
       else {
 
          if (value == 'insurer') {
@@ -1956,7 +2060,7 @@
       // Declare variables
 
       isMultiFilter = true
-      
+
       value = document.getElementById('filter_type').value
 
       filter_content = document.getElementById('filter_content')
@@ -1981,7 +2085,7 @@
          // alert('This option already exists in filter list!')
       }
       console.log(filterListMultiple);
-      
+
       return filterListMultiple
    }
 
@@ -1989,20 +2093,18 @@
       // Declare variables
 
       isMultiFilter = true
-            
+
       // const obj = { index: getCellNumber(), items: tempfilterList }
       const obj = { index: src, items: 'none' }
       is_found = filterListMultiple.find(item => item.index == obj.index)
 
       if (is_found == null) {
          filterListMultiple.push(obj)
-      }      
+      }
       console.log(filterListMultiple);
-      
+
       return filterListMultiple
    }
-
-   
 
    function searchName2() {
       // Declare variables
@@ -2073,6 +2175,16 @@
 
       document.getElementById("tbdy").innerHTML = '';
       c = []
+
+      policyList = []
+
+      ytt.forEach(element => {
+         //   console.log(element['policyid']);
+         policyList.push(element['policyid'])
+
+      });
+      console.log(policyList);
+
       index = 0
       ytt.forEach(element => {
          // Creating table row
@@ -2115,9 +2227,10 @@
       c.push("<td>" + item.self_tp_reward + "</td>");
       c.push("<td>" + item.self_tp_amount + "</td>");
       c.push("</tr>");
-      $('#tbdy').html(c.join(""));
 
+      $('#tbdy').html(c.join(""));
       return
+
       c.push("<tr>");
       c.push("<td>" + i + "</td>");
       c.push("<td>" + "</td>");
@@ -2197,6 +2310,124 @@
          XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
          XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
    }
+
+   function searchName3() {
+      // Declare variables
+      // print(filterList)    
+      len = setOD()
+
+      if (len != 4) {
+         alert('Payout values error')
+         return
+      }
+      pVal_pList = []
+      pVal_pList.push(payoutValues)
+      pVal_pList.push(policyList)
+
+      console.log(pVal_pList);
+
+      jsonData = ''
+      // alert('here')
+      jsonData = JSON.stringify(pVal_pList);
+
+      filter_content = document.getElementById('filter_content')
+      if (filter_content.options.length == 1) {
+         alert('You have not selected any filter option! ')
+         return;
+      }
+
+      pathname = '/bima_policy/policy/entry_list_update'
+
+      href = window.location.origin + pathname
+
+      $.ajax({
+         url: href,
+         type: 'POST',
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: { 'data': jsonData },
+         dataType: 'json',
+         success: function (response) {
+            responseHandlerForPayout(response)
+         },
+         error: function (xhr, status, error) {
+            // Handle any errors that occurred during the request
+            console.log('error occurred ', error);
+         }
+      });
+     
+
+   }
+
+
+   function responseHandlerForPayout(response) {
+      console.log('responseHandler for payout');
+      // console.log(response.data);
+      // console.log(response.data[0]);
+      var ytt = JSON.parse(JSON.stringify(response.data))
+      console.log(ytt);
+
+      th_coll = document.getElementsByClassName("sorting");
+      for (const item of th_coll) {
+         item.hidden = true
+      }
+      th_coll = document.getElementsByClassName("thShow");
+      for (const item of th_coll) {
+         item.hidden = false
+      }
+
+      document.getElementById("tbdy").innerHTML = '';
+      c = []
+
+      console.log(policyList);
+
+      index = 0
+      ytt.forEach(element => {
+         // Creating table row
+         index++;
+         gt(index, element)
+
+      });
+
+   }
+
+   function setOD() {
+
+      val_aod = document.getElementById('a_od_reward').value.trim()
+      val_atp = document.getElementById('a_tp_reward').value.trim()
+      val_sod = document.getElementById('s_od_reward').value.trim()
+      val_stp = document.getElementById('s_tp_reward').value.trim()
+
+      payoutValues = []
+
+      if (val_aod != '') {
+         payoutValues.push(val_aod)
+      }
+      if (val_atp != '') {
+         payoutValues.push(val_atp)
+      }
+      if (val_sod != '') {
+         payoutValues.push(val_sod)
+      }
+      if (val_stp != '') {
+         payoutValues.push(val_stp)
+      }
+
+      return payoutValues.length
+      // console.log(payoutValues);
+   }
+
+   function showMoreFilters() {
+      if(document.getElementById('morefilters').hidden ){
+         document.getElementById('morefilters').hidden = false
+      }
+      else{
+         document.getElementById('morefilters').hidden = true
+      }
+     
+   }
+
 
 </script>
 <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>

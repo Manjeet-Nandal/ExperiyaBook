@@ -54,6 +54,7 @@ urlpatterns = [
     path('policy/entry/<str:value1>/<str:value2>/<str:period>/<str:select_length>/<str:payout>/',policy_entry_filter_nopayout, name="policy_entry_filter_nopayout"), 
     
     path('policy/entry_list',policy_entry_list, name="policy_entry_list"),
+    path('policy/entry_list_update',policy_entry_list_update, name="policy_entry_list_update"),
     
     path('policy/policy_entrydata/<str:id>',policy_entrydata, name="update"),
     path('policy/<str:id>/delete',policy_delete, name="policy_delete"),

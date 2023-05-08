@@ -2002,12 +2002,11 @@ def policy_entry(request):
             # data = Policy.objects.filter(issue_date__gte=now().date()).order_by('-policyid').values()
             # data = Policy.objects.order_by('-policyid') .values()
             # data = Policy.objects.order_by('-policyid').values()[:10]
-            data = Policy.objects.values()[:1]
+            data = Policy.objects.values()[:10]
             # print(data)
 
         else:
-            data = Policy.objects.filter(employee=get_id_from_session(
-                request)).order_by('-policyid').values()
+            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()
             # data = Policy.objects.filter(employee=get_id_from_session(
             #     request)).filter(issue_date__icontains=now().date()).order_by('-policyid').values()
 
@@ -2640,6 +2639,93 @@ def pol_get(data):
     print('qs list length', len(qs_list))    
     return qs_list
     
+
+def policy_entry_list_update(request):
+    print('policy_entry_list_update method')
+
+    if request.method == 'POST':
+        # data = json.loads(request.POST['data'])
+        data = json.loads(request.POST['data'])
+        # print(data)
+        # [['10', '20', '30', '40'], ['24EF892']]      
+       
+        data = apply_policy_payout(data)
+
+        data = list(chain(*data))
+        datag = Agents.objects.all()
+
+        return JsonResponse({'data': data})
+
+
+def apply_policy_payout(data):
+    try:
+        print('apply_policy_payout method')
+
+        print('data[0] ',  data[0])
+        print('data[1] ',  data[1])
+        # data[0]  ['10', '20', '30', '40']
+        # data[1]  ['E08DA7C', '62ED284', 'C7FBF01', '4F807DC', 'C7A931F', '24EF892']
+       
+        payout_values = {  
+            "aod" : data[0][0],
+            "atp" : data[0][1],
+            "sod" : data[0][2],
+            "stp" : data[0][3]
+         }
+        
+        print(payout_values)
+        print(payout_values['aod'])
+
+        updated_policy_list = []      
+      
+        for id in data[1]:
+            try:
+                print(id)
+                tmp_data = Policy.objects.get(policyid=id)
+                print('tmp_data: ', tmp_data)
+
+                # print('od' , tmp_data.OD_premium)
+                # print('tp' , tmp_data.TP_terrorism)
+              
+                # Agent payout
+                aod = float(payout_values['aod'])
+                agent_od_amount = round((float(tmp_data.OD_premium) * aod) / 100, 2)
+                atp = float(payout_values['atp'])
+                agent_tp_amount = round( (float(tmp_data.TP_terrorism) * atp) / 100, 2)
+
+                # # Self payout
+                sod = float(payout_values['sod'])
+                self_od_amount = round( (float(tmp_data.OD_premium) * sod) / 100, 2)
+                stp = float(payout_values['stp'])
+                self_tp_amount = round( (float(tmp_data.TP_terrorism) * stp) / 100, 2)
+
+                ddata = Policy.objects.filter(policyid=id)
+                
+
+                ddata.update(agent_od_reward=aod,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=atp,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=sod,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=stp,
+                            self_tp_amount=self_tp_amount)
+                print('Done')
+                # updated_policy_list.append(id)
+                updated_policy_list.append(ddata.values())
+
+            except Exception as exc:
+                print(exc)
+
+        return updated_policy_list   
+
+      
+        # return render(request, 'policylist/policy_entry_list.html', {'data': data})
+        # return redirect('bima_policy:create_policy')
+    except Exception as ex:
+        print(ex)
+        return HttpResponse(ex)
 
 
 def policy_entry_filter(request, value1, value2, period, select_length):
