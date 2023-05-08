@@ -2002,7 +2002,7 @@ def policy_entry(request):
             # data = Policy.objects.filter(issue_date__gte=now().date()).order_by('-policyid').values()
             # data = Policy.objects.order_by('-policyid') .values()
             # data = Policy.objects.order_by('-policyid').values()[:10]
-            data = Policy.objects.values()[:10]
+            data = Policy.objects.values()
             # print(data)
 
         else:
