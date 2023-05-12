@@ -2027,6 +2027,8 @@ from dateutil.parser import parse
 def policy_entry_filter(request):
     print('policy_entry_filter method') 
 
+    # return redirect('bima_policy:policy_entry')
+
     try:
         if request.method == 'POST':  
             data = json.loads(request.POST['data'])
@@ -2050,6 +2052,7 @@ def policy_entry_filter(request):
                 response_data = list(chain(*s_data))
                 return JsonResponse({'data': response_data})           
             
+        # return redirect('bima_policy:policy_entry')
         
     except Exception as ex:       
         return HttpResponse('Error occurred in policy_entry_filter: ' + ex)
