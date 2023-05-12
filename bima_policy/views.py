@@ -1997,18 +1997,21 @@ def apply_policy(request, id):
 
 def policy_entry(request):
     print('policy_entry method')
-    # print(get_id_from_session(request))
+    print(get_id_from_session(request))
     print(now().date())
     # dts = datetime.datetime.date(2023, 6, 4).date()
     print(datetime.now().date())
 
     try:
         if is_user(request):                  
-            data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
+            # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
+            data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()
+
             # print(data)
 
         else:
-            data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date=datetime.now().date()).order_by('-policyid').values()         
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date=datetime.now().date()).order_by('-policyid').values()         
+            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()         
 
         # print("total policy: ", data.values().count())
         datag = Agents.objects.all()
