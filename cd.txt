@@ -2137,7 +2137,7 @@ def pol_get3(data, f_data):
     # print('f_data is ', f_data) # [{'policyid': '39E3E1A', 'profile_id_id': '3CD4A59107554B8', 'proposal_no':
 
     qs_list = []
-    qs_list_temp = []   
+    qs_list_temp = []
 
     # filter for ins
     if str(data).__contains__('#ins'):
@@ -2164,12 +2164,10 @@ def pol_get3(data, f_data):
                     itm = m.strip()             
             
                     for ins in f_data:                       
-                        if itm == ins['insurance_company']:                          
-                            qs_list.append(Policy.objects.filter(policyid=ins['policyid']).values() )
-                         
+                        if itm == ins['insurance_company']:    
+                            qs_list.append(Policy.objects.filter(policyid=ins['policyid']).values())
+    
     print('first len: ', len(qs_list))
-    # print('first len: ', qs_list)
-    # print('first qs len: ', qs)
 
     if str(data).__contains__('#vc'):
         print('has #vc')
@@ -2198,14 +2196,10 @@ def pol_get3(data, f_data):
                     for m in items_coll:
                         itm = m.strip()             
                 
-                        for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
-                            for ty in obj:
-                                print('ty ', ty['vehicle_catagory'])                             
-                                if itm == ty['vehicle_catagory']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
+                        for obj in f_data:                           
+                            if itm == obj['vehicle_catagory']:    
+                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())        
+                    
                 else: 
                     for m in items_coll:
                         itm = m.strip()             
@@ -2214,6 +2208,8 @@ def pol_get3(data, f_data):
                             if itm == obj['vehicle_catagory']:    
                                 qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
    
+    print('sec len: ', len(qs_list))
+
     if str(data).__contains__('#ft'):
         print('has #ft')
         for k in data:
@@ -2231,7 +2227,7 @@ def pol_get3(data, f_data):
             items_coll = items_coll.replace("'", '')
             items_coll = items_coll.split(",")
             # print('col ',  items_coll)
-          
+            dm = Policy.objects.none()
             if key.__contains__('#ft'):               
                
                 if len(qs_list) > 0:
@@ -2241,14 +2237,10 @@ def pol_get3(data, f_data):
                     for m in items_coll:
                         itm = m.strip()             
                 
-                        for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
-                            for ty in obj:
-                                print('ty ', ty['vehicle_fuel_type'])                             
-                                if itm == ty['vehicle_fuel_type']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
+                        for obj in tmpData[0]:                           
+                            if itm == obj['vehicle_fuel_type']:    
+                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())        
+                    
                 else: 
                     for m in items_coll:
                         itm = m.strip()             
@@ -2256,7 +2248,9 @@ def pol_get3(data, f_data):
                         for obj in f_data:                           
                             if itm == obj['vehicle_fuel_type']:    
                                 qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-   
+        
+    print('thrd len: ', len(qs_list))
+    
     if str(data).__contains__('#cc'):
         print('has #cc')
         for k in data:
@@ -2274,8 +2268,8 @@ def pol_get3(data, f_data):
             items_coll = items_coll.replace("'", '')
             items_coll = items_coll.split(",")
             # print('col ',  items_coll)
-          
-            if key.__contains__('#cc'):               
+           
+            if key.__contains__('#ft'):               
                
                 if len(qs_list) > 0:
                     tmpData = qs_list
@@ -2284,14 +2278,10 @@ def pol_get3(data, f_data):
                     for m in items_coll:
                         itm = m.strip()             
                 
-                        for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
-                            for ty in obj:
-                                print('ty ', ty['cubic_capacity'])                             
-                                if itm == ty['cubic_capacity']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
+                        for obj in tmpData[0]:                           
+                            if itm == obj['cubic_capacity']:    
+                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())        
+                    
                 else: 
                     for m in items_coll:
                         itm = m.strip()             
@@ -2299,7 +2289,10 @@ def pol_get3(data, f_data):
                         for obj in f_data:                           
                             if itm == obj['cubic_capacity']:    
                                 qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-       
+        
+    print('fourth len: ', len(qs_list))
+    # print('fourth len: ', qs_list)
+    
     if str(data).__contains__('#sc'):
         print('has #sc')
         for k in data:
@@ -2317,24 +2310,23 @@ def pol_get3(data, f_data):
             items_coll = items_coll.replace("'", '')
             items_coll = items_coll.split(",")
             # print('col ',  items_coll)
-          
+           
             if key.__contains__('#sc'):               
+                print(key)
+                print('in sc len: ', len(qs_list))
                
                 if len(qs_list) > 0:
                     tmpData = qs_list
                     qs_list = []
-
+                    print('tmd ', len(tmpData))
                     for m in items_coll:
                         itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
-                            for ty in obj:
-                                print('ty ', ty['seating_capacity'])                             
-                                if itm == ty['seating_capacity']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
+                        print(itm)
+                        for obj in tmpData[0]:                           
+                            if itm == obj['seating_capacity']:    
+                                print(obj['seating_capacity'])
+                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())        
+                    
                 else: 
                     for m in items_coll:
                         itm = m.strip()             
@@ -2342,272 +2334,16 @@ def pol_get3(data, f_data):
                         for obj in f_data:                           
                             if itm == obj['seating_capacity']:    
                                 qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
+        
+    print('fifth len: ', len(qs_list))
     
-    if str(data).__contains__('#ct'):
-        print('has #ct')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#ct'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
-                            for ty in obj:
-                                print('ty ', ty['coverage_type'])                             
-                                if itm == ty['coverage_type']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['coverage_type']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-   
-    if str(data).__contains__('#gvw'):
-        print('has #gvw')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#gvw'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
-                            for ty in obj:
-                                print('ty ', ty['gvw'])                             
-                                if itm == ty['gvw']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['gvw']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-   
-    if str(data).__contains__('#pt'):
-        print('has #pt')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#pt'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
-                            for ty in obj:
-                                print('ty ', ty['policy_type'])                             
-                                if itm == ty['policy_type']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['policy_type']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-    
-    if str(data).__contains__('#addon'):
-        print('has #addon')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#addon'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
-                            for ty in obj:
-                                print('ty ', ty['addon'])                             
-                                if itm == ty['addon']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['addon']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-    
-    if str(data).__contains__('#ncb'):
-        print('has #ncb')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#ncb'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
-                            for ty in obj:
-                                print('ty ', ty['ncb'])                             
-                                if itm == ty['ncb']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['ncb']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-    
-    if str(data).__contains__('#cpa'):
-        print('has #cpa')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#cpa'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
-                            for ty in obj:
-                                print('ty ', ty['cpa'])                             
-                                if itm == ty['cpa']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['cpa']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-   
-       
     # print('qs list ', qs_list)
     print('qs list length', len(qs_list))    
     return qs_list
   
    
 qs_list = []
+
 
 
 def pol_ins(data):

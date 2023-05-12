@@ -73,9 +73,9 @@
                               </select>
                            </div>
 
-                           <div class="col-md-2 ">
+                           <div class="col-md-3 ">
                               <div class="form-group">
-                                 <button onclick="filterPolicy()" type="button" id="filterlist"
+                                 <button onclick="entry_filter()" type="button" id="filterlist"
                                     class="btn btn-secondary " title="Filter"><i class="fa fa-search"
                                        aria-hidden="true"></i> </button>
                                  <button type="button" id="btnreset" class="btn btn-secondary" title="Refresh"
@@ -87,8 +87,9 @@
                                  <button data-toggle="modal" data-target="#mdlcolsetting" type="button" id="bulk_remove"
                                     class="btn btn-secondary" title="Delete"><i class="icofont icofont-trash"
                                        aria-hidden="true"></i> </button>
-                                 <a id="linkShowFilterDiv" href="#" class="no-wrap pl-0 morefilter" title="More Filter" onclick="showMoreFilters()"><small>More
-                                       Filter</small></a>                                      
+                                 <a id="linkShowFilterDiv" href="#" class="no-wrap pl-0 morefilter" title="More Filter"
+                                    onclick="showMoreFilters()"><small>More
+                                       Filter</small></a>
 
                                  <div class="modal fade" id="mdlcolsetting"
                                     onmouseenter="document.getElementById('inp_search').focus()" style="height: 400px">
@@ -135,7 +136,7 @@
                            </div>
 
                            {% if is_user %}
-                           <div class="col-md-1" style="text-align: right;">
+                           <div class="col-md-1" style="text-align: right;" hidden>
                               <style>
                                  .switch {
                                     position: relative;
@@ -260,7 +261,7 @@
                               <script>
 
                                  function add_filter_type() {
-                                    document.getElementById('btnFilter').disabled = false
+                                    // document.getElementById('btnFilter').disabled = false
                                     document.getElementById('divFilterContent').hidden = false
 
                                     filter_type_value = document.getElementById('filter_type').value
@@ -410,97 +411,22 @@
                               </script>
                            </div>
 
-                           <div class="col-md-2 mb-4">
+                           <div class="col-md-1 mb-4">
 
                               <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
-                              <button id="btnFilter" type="button" class="btn btn-primary mt-1"
-                                 onclick="searchName2()">Filter</button>
-                              <button type="button" class="btn btn-primary mt-1" data-toggle="modal"
+                              <!-- <button id="btnFilter" type="button" class="btn btn-primary mt-1"
+                                 onclick="searchName2()">Filter</button> -->
+                              <button type="button" class="btn btn-primary mt-1 w-100" onclick="addName3()">Add</button>
+
+                              <button type="button" class="btn btn-primary mt-1 w-100" data-toggle="modal"
                                  data-target="#mdlUpdatePayout">Update</button>
-                              <button type="button" class="btn btn-primary mt-1" onclick="addName3()">Add</button>
+
                               <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1"
                                  onclick="saveFilter()" hidden>Save</button>
-                              <button type="button" class="btn btn-primary mt-1"
+                              <button type="button" class="btn btn-primary mt-1 w-100"
                                  onclick="clearFilterList()">Clear</button>
 
-
-                              <script>
-
-                                 function filterForPayout() {
-
-                                    // alert('hello')
-
-                                    // document.getElementsByClassName("showMoreNew")[0].click();
-
-                                    try {
-                                       payout_switch = document.getElementById('payout_switch').checked
-                                       if (payout_switch) {
-                                          filterPolicy_nopayout();
-                                          return;
-                                       }
-
-                                       start_date = document.getElementById('frmDate').value.toString()
-                                       end_date = document.getElementById('toDate').value.toString()
-                                       period_value = document.getElementById('select-period').value.toString().toUpperCase()
-                                       select_length = document.getElementById('select_length').value
-
-                                       if (period_value == "LAST_MONTH") {
-                                          period_value = "LAST MONTH"
-                                       }
-                                       else if (period_value == "THIS_MONTH") {
-                                          period_value = "THIS MONTH"
-                                       }
-                                       else if (period_value == "CURRENT_YEAR") {
-                                          period_value = "CURRENT YEAR"
-                                       }
-
-                                       if (start_date == "" || end_date == "") {
-                                          return
-                                       }
-                                       start_date = start_date.replace("/", "*")
-                                       start_date = start_date.replace("/", "*")
-
-                                       end_date = end_date.replace("/", "*")
-                                       end_date = end_date.replace("/", "*")
-
-                                       try {
-                                          index = window.location.href.indexOf("*")
-                                          if (index > 0) {
-                                             // window.location.reload()
-                                             hostname = window.location.hostname
-                                             port = window.location.port
-                                             pathname = '/bima_policy/policy/entry/'
-
-                                             href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length
-
-                                             window.location.replace(href)
-                                          }
-                                          else {
-                                             href = window.location.href + start_date
-                                             href += "/"
-                                             href += end_date
-                                             href += "/"
-                                             href += period_value
-                                             href += "/"
-                                             href += select_length
-
-                                             window.location.replace(href)
-                                          }
-                                       } catch (error) {
-
-                                       }
-
-                                    } catch (error) { }
-
-                                 }
-
-                              </script>
                            </div>
-
-                           <!-- modal box goes here -->
-
-
-
 
                         </div>
                      </form>
@@ -562,7 +488,7 @@
                                        <th class=" text-center sorting thShow" tabindex="0"
                                        aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 83.2344px;"
                                        aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
-                                       <th class="text-center sorting_disabled sorting" tabindex="0"
+                                       <th id="thCheck" class="text-center sorting_disabled sorting" tabindex="0"
                                           aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 30px;"
                                           aria-label="">
                                           <input type="checkbox" class="checkbox" id="chkblkrm"
@@ -809,9 +735,12 @@
                                     tabindex="0" class="page-link"> &laquo; Prev</a></li>
                               {% endif %}
 
-                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
+                              <!-- <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
                                     data-dt-idx="1" tabindex="0" class="page-link"> Page {{ data.number }} of
-                                    {{data.paginator.num_pages }}.</a></li>
+                                    {{data.paginator.num_pages }}.</a></li> -->
+                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
+                                    data-dt-idx="1" tabindex="0" class="page-link" onclick="gen_table()">Next Page
+                                 </a></li>
 
                               {% if data.has_next %}
 
@@ -1369,7 +1298,7 @@
                <div class="col-md-6 mb-2">
 
                   <div class=""><label>Agent OD Reward:
-                        <input type="text" value="10" id="a_od_reward" name="a_od_reward"
+                        <input type="text" value="" id="a_od_reward" name="a_od_reward"
                            class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
                            data-parsley-required="true" min="0" max="100" maxlength="4">
 
@@ -1386,7 +1315,7 @@
                </div>
                <div class="col-md-6 mb-2 ">
                   <div class=""><label>Agent TP Reward:
-                        <input type="text" value="20" id="a_tp_reward" name="a_tp_reward"
+                        <input type="text" value="" id="a_tp_reward" name="a_tp_reward"
                            class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
                            data-parsley-required="true" min="0" max="100" maxlength="4">
                      </label>
@@ -1396,7 +1325,7 @@
                <!-- self payout -->
                <div class="col-md-6 mb-2">
                   <div class=""><label>Self OD Reward:
-                        <input type="text" value="30" name="s_od_reward" id="s_od_reward"
+                        <input type="text" value="" name="s_od_reward" id="s_od_reward"
                            class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
                            data-parsley-required="true" min="0" max="100" maxlength="4">
 
@@ -1414,36 +1343,27 @@
 
                <div class="col-md-6 mb-2">
                   <div class=""><label>Self TP Reward:
-                        <input type="text" value="40" id="s_tp_reward" name="s_tp_reward"
-                           class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
+                        <input type="text" value="" id="s_tp_reward" name="s_tp_reward"
+                           class="form-control maskNumField col-lg-7 rewardpct " data-mask-as-number-decimals="2"
                            data-parsley-required="true" min="0" max="100" maxlength="4">
                      </label>
                   </div>
                </div>
 
-
             </div>
-
-            <script>
-
-            </script>
 
             <div class="modal-footer">
                <div class="form-row" style="align-content: center;"></div>
-               <button class="btn btn-primary" onclick="searchName3()">Apply</button>
-
+               <button class="btn btn-primary w-100p" onclick="searchName3()">Apply</button>
                <button id="btnExit" type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
-               <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
-               class="btn btn-primary w-100p">Save</button> -->
+
             </div>
          </div>
 
       </div>
 
    </div>
-   <!-- <body onload="setFocus()">
-         
-      </body> -->
+
 
 </div>
 
@@ -1590,131 +1510,21 @@
 </script>
 
 <script>
+   var c = [];
+   var filterList = []
+   var filterListMultiple = []
+   var isMultiFilter = false
+   var isNone = false
+   var NoneList = []
+   var rowList = []
+   var policyid_list = []
+   var payoutValues = []
+   var filter_date_list = []
+   var initialResponse = []
 
-   function filterPolicy() {
-      // document.getElementsByClassName("showMoreNew")[0].click();
+   var curIndex = 0
 
-      try {
-         payout_switch = document.getElementById('payout_switch').checked
-         if (payout_switch) {
-            filterPolicy_nopayout();
-            return;
-         }
-
-         start_date = document.getElementById('frmDate').value.toString()
-         end_date = document.getElementById('toDate').value.toString()
-         period_value = document.getElementById('select-period').value.toString().toUpperCase()
-         select_length = document.getElementById('select_length').value
-
-         if (period_value == "LAST_MONTH") {
-            period_value = "LAST MONTH"
-         }
-         else if (period_value == "THIS_MONTH") {
-            period_value = "THIS MONTH"
-         }
-         else if (period_value == "CURRENT_YEAR") {
-            period_value = "CURRENT YEAR"
-         }
-
-         if (start_date == "" || end_date == "") {
-            return
-         }
-         start_date = start_date.replace("/", "*")
-         start_date = start_date.replace("/", "*")
-
-         end_date = end_date.replace("/", "*")
-         end_date = end_date.replace("/", "*")
-
-         try {
-            index = window.location.href.indexOf("*")
-            if (index > 0) {
-               // window.location.reload()
-               hostname = window.location.hostname
-               port = window.location.port
-               pathname = '/bima_policy/policy/entry/'
-
-               href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length
-
-               window.location.replace(href)
-            }
-            else {
-               href = window.location.href + start_date
-               href += "/"
-               href += end_date
-               href += "/"
-               href += period_value
-               href += "/"
-               href += select_length
-
-               window.location.replace(href)
-            }
-         } catch (error) {
-
-         }
-
-      } catch (error) { }
-
-   }
-
-   function filterPolicy_nopayout() {
-      // document.getElementsByClassName("showMoreNew")[0].click();
-      try {
-         payout_switch = document.getElementById('payout_switch').checked
-         if (payout_switch) {
-
-            start_date = document.getElementById('frmDate').value.toString()
-            end_date = document.getElementById('toDate').value.toString()
-            period_value = document.getElementById('select-period').value.toString().toUpperCase()
-            select_length = document.getElementById('select_length').value
-
-            if (period_value == "LAST_MONTH") {
-               period_value = "LAST MONTH"
-            }
-            else if (period_value == "THIS_MONTH") {
-               period_value = "THIS MONTH"
-            }
-            else if (period_value == "CURRENT_YEAR") {
-               period_value = "CURRENT YEAR"
-            }
-
-            if (start_date == "" || end_date == "") {
-               return
-            }
-            start_date = start_date.replace("/", "*")
-            start_date = start_date.replace("/", "*")
-
-            end_date = end_date.replace("/", "*")
-            end_date = end_date.replace("/", "*")
-
-            try {
-               index = window.location.href.indexOf("*")
-               if (index > 0) {
-                  // window.location.reload()
-                  hostname = window.location.hostname
-                  port = window.location.port
-                  pathname = '/bima_policy/policy/entry/'
-                  href = window.location.origin + pathname + start_date + '/' + end_date + '/' + period_value + '/' + select_length + '/' + 'true'
-                  window.location.replace(href)
-               }
-               else {
-                  href = window.location.href + start_date
-                  href += "/"
-                  href += end_date
-                  href += "/"
-                  href += period_value
-                  href += "/"
-                  href += select_length
-                  href += "/"
-                  href += 'true'
-
-                  window.location.replace(href)
-               }
-            } catch (error) {
-
-            }
-         }
-      } catch (error) { }
-   }
+   var returned_index = 0
 
    function selectAllPolicy() {
 
@@ -1796,30 +1606,6 @@
       }
    }
 
-   function searchNameD() {
-      // Declare variables
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("tblInsurance");
-      tr = table.getElementsByTagName("tr");
-
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-         td = tr[i].getElementsByTagName("td")[3];
-         if (td) {
-            txtValue = td.textContent || td.innerText;
-            console.log(txtValue);
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-               tr[i].style.display = "";
-            } else {
-               tr[i].style.display = "none";
-            }
-         }
-      }
-   }
-
-
    function searchName() {
       // Declare variables
       var input, filter, table, tr, td, i, txtValue;
@@ -1870,72 +1656,18 @@
       }
    }
 
-   var c = [];
-   var filterList = []
-   var filterListMultiple = []
-   var isMultiFilter = false
-   var isNone = false
-   var NoneList = []
-   var rowList = []
-   var policyList = []
-   var payoutValues = []
-
    function clearFilterList() {
 
       filterList = []
       filterListMultiple = []
       isMultiFilter = false
       rowList = []
-      policyList = []
-      document.getElementById('filter_type').selectedIndex = -1
-      document.getElementById('filter_content').innerHTML = ''
-      document.getElementById('btnFilter').disabled = true
+      policyid_list = []
+      // document.getElementById('filter_type').selectedIndex = -1
+      // document.getElementById('filter_content').innerHTML = ''
+      // document.getElementById('btnFilter').disabled = true
    }
 
-   function getCellNumber() {
-
-      value = document.getElementById('filter_type').value
-
-      cell_no = 0
-
-      if (value == 'insurer') {
-         cell_no = '#6'  //6
-      }
-      else if (value == 'vehicle_catagory') {
-         cell_no = 15
-      }
-      else if (value == 'vehicle_makeby') {
-         cell_no = 13
-      }
-      else if (value == 'fuel_type') {
-         cell_no = 16
-      }
-      else if (value == 'cc') {
-         cell_no = 20
-      }
-      else if (value == 'sc') {
-         cell_no = 22
-      }
-      else if (value == 'ct') {
-         cell_no = 23
-      }
-      else if (value == 'gvw') {
-         cell_no = 21
-      }
-      else if (value == 'policy_type') {
-         cell_no = 24
-      }
-      else if (value == 'addon') {
-         cell_no = 18
-      }
-      else if (value == 'ncb') {
-         cell_no = 19
-      }
-      else if (value == 'cpa') {
-         cell_no = 25
-      }
-      return cell_no
-   }
 
    function getCellName() {
 
@@ -1943,117 +1675,44 @@
 
       cell_no = 0
 
-      if (isMultiFilter) {
-
-         if (value == 'insurer') {
-            cell_no = "##ins"
-         }
-         else if (value == 'vehicle_catagory') {
-            cell_no = "##vc"
-         }
-         else if (value == 'vehicle_makeby') {
-            cell_no = "##vm"
-         }
-         else if (value == 'fuel_type') {
-            cell_no = "##ft"
-         }
-         else if (value == 'cc') {
-            cell_no = "##cc"
-         }
-         else if (value == 'sc') {
-            cell_no = "##sc"
-         }
-         else if (value == 'ct') {
-            cell_no = "##ct"
-         }
-         else if (value == 'gvw') {
-            cell_no = "##gvw"
-         }
-         else if (value == 'policy_type') {
-            cell_no = "##pt"
-         }
-         else if (value == 'addon') {
-            cell_no = "##addon"
-         }
-         else if (value == 'ncb') {
-            cell_no = "##ncb"
-         }
-         else if (value == 'cpa') {
-            cell_no = "##cpa"
-         }
-
+      if (value == 'insurer') {
+         cell_no = '#ins'
       }
-
-      else {
-
-         if (value == 'insurer') {
-            cell_no = '#ins'
-         }
-         else if (value == 'vehicle_catagory') {
-            cell_no = "#vc"
-         }
-         else if (value == 'vehicle_makeby') {
-            cell_no = "#vm"
-         }
-         else if (value == 'fuel_type') {
-            cell_no = "#ft"
-         }
-         else if (value == 'cc') {
-            cell_no = "#cc"
-         }
-         else if (value == 'sc') {
-            cell_no = "#sc"
-         }
-         else if (value == 'ct') {
-            cell_no = "#ct"
-         }
-         else if (value == 'gvw') {
-            cell_no = "#gvw"
-         }
-         else if (value == 'policy_type') {
-            cell_no = "#pt"
-         }
-         else if (value == 'addon') {
-            cell_no = "#addon"
-         }
-         else if (value == 'ncb') {
-            cell_no = "#ncb"
-         }
-         else if (value == 'cpa') {
-            cell_no = "#cpa"
-         }
-
+      else if (value == 'vehicle_catagory') {
+         cell_no = "#vc"
+      }
+      else if (value == 'vehicle_makeby') {
+         cell_no = "#vm"
+      }
+      else if (value == 'fuel_type') {
+         cell_no = "#ft"
+      }
+      else if (value == 'cc') {
+         cell_no = "#cc"
+      }
+      else if (value == 'sc') {
+         cell_no = "#sc"
+      }
+      else if (value == 'ct') {
+         cell_no = "#ct"
+      }
+      else if (value == 'gvw') {
+         cell_no = "#gvw"
+      }
+      else if (value == 'policy_type') {
+         cell_no = "#pt"
+      }
+      else if (value == 'addon') {
+         cell_no = "#addon"
+      }
+      else if (value == 'ncb') {
+         cell_no = "#ncb"
+      }
+      else if (value == 'cpa') {
+         cell_no = "#cpa"
       }
 
       return cell_no
-   }
-
-   function addName2() {
-      // Declare variables
-      value = document.getElementById('filter_type').value
-
-      filter_content = document.getElementById('filter_content')
-
-      filterList = []
-      tempfilterList = []
-
-      for (i = 1; i <= filter_content.options.length - 1; i++) {
-
-         if (filter_content.options[i].selected == true) {
-            tempfilterList.push(filter_content.options[i].value)
-         }
-      }
-
-      // const obj = { index: getCellNumber(), items: tempfilterList }
-      const obj = { index: getCellName(), items: tempfilterList }
-      is_found = filterList.find(item => item.index == obj.index)
-
-      if (is_found == null) {
-         filterList.push(obj)
-      }
-      console.log(filterList);
-
-      return filterList
    }
 
    function addName3() {
@@ -2089,26 +1748,9 @@
       return filterListMultiple
    }
 
-   function addNameNone(src) {
-      // Declare variables
-
-      isMultiFilter = true
-
-      // const obj = { index: getCellNumber(), items: tempfilterList }
-      const obj = { index: src, items: 'none' }
-      is_found = filterListMultiple.find(item => item.index == obj.index)
-
-      if (is_found == null) {
-         filterListMultiple.push(obj)
-      }
-      console.log(filterListMultiple);
-
-      return filterListMultiple
-   }
-
    function searchName2() {
-      // Declare variables
-      // print(filterList)    
+
+
       jsonData = ''
 
       if (isMultiFilter) {
@@ -2117,7 +1759,10 @@
       }
       else {
          addName2()
-         jsonData = JSON.stringify(filterList);
+         withDateList = []
+         withDateList.push(filter_date_list)
+         withDateList.push(filterList)
+         jsonData = JSON.stringify(withDateList);
       }
 
       filter_content = document.getElementById('filter_content')
@@ -2126,15 +1771,11 @@
          return;
       }
 
-      // var jsonData = JSON.stringify(filterList);
-
-      // pathname = '/bima_policy/policy/entry/list/'
-      // pathname = '/bima_policy/policy/entry/list'
       pathname = '/bima_policy/policy/entry_list'
 
       href = window.location.origin + pathname
 
-      // window.location.replace(href) 
+      console.log('filterlist: ' + jsonData);
 
       $.ajax({
          url: href,
@@ -2156,153 +1797,6 @@
 
    }
 
-   function responseHandler(response) {
-      console.log('responseHandler');
-      // console.log(response.data);
-      // console.log(response.data[0]);
-      var ytt = JSON.parse(JSON.stringify(response.data))
-      console.log(ytt);
-
-
-      th_coll = document.getElementsByClassName("sorting");
-      for (const item of th_coll) {
-         item.hidden = true
-      }
-      th_coll = document.getElementsByClassName("thShow");
-      for (const item of th_coll) {
-         item.hidden = false
-      }
-
-      document.getElementById("tbdy").innerHTML = '';
-      c = []
-
-      policyList = []
-
-      ytt.forEach(element => {
-         //   console.log(element['policyid']);
-         policyList.push(element['policyid'])
-
-      });
-      console.log(policyList);
-
-      index = 0
-      ytt.forEach(element => {
-         // Creating table row
-         index++;
-         gt(index, element)
-
-      });
-
-   }
-
-   function gt(index, item) {
-      // Generate tables after ajax call done
-      // <input type="checkbox" value="2479" class="checkbox"
-      //                                        id="chkblkrm{{forloop.counter}}" />
-
-      // id="chkblkrm{{forloop.counter}}"
-
-      c.push("<tr>");
-      c.push("<td>" + index + "</td>");
-      c.push("<td hidden > " + item.policyid + "</td>");
-      c.push("<td>" + item.proposal_no + "</td>");
-      c.push("<td>" + item.customer_name + "</td>");
-      c.push("<td>" + item.insurance_company + "</td>");
-      c.push("<td>" + item.vehicle_catagory + "</td>");
-
-      c.push("<td>" + item.OD_premium + "</td>");
-      c.push("<td>" + item.TP_terrorism + "</td>");
-      c.push("<td>" + item.net + "</td>");
-      c.push("<td>" + item.gst_amount + "</td>");
-      c.push("<td>" + item.gst_gcv_amount + "</td>");
-      c.push("<td>" + item.total + "</td>");
-
-      c.push("<td>" + item.agent_od_reward + "</td>");
-      c.push("<td>" + item.agent_od_amount + "</td>");
-      c.push("<td>" + item.agent_tp_reward + "</td>");
-      c.push("<td>" + item.agent_tp_amount + "</td>");
-
-      c.push("<td>" + item.self_od_reward + "</td>");
-      c.push("<td>" + item.self_od_amount + "</td>");
-      c.push("<td>" + item.self_tp_reward + "</td>");
-      c.push("<td>" + item.self_tp_amount + "</td>");
-      c.push("</tr>");
-
-      $('#tbdy').html(c.join(""));
-      return
-
-      c.push("<tr>");
-      c.push("<td>" + i + "</td>");
-      c.push("<td>" + "</td>");
-      c.push("<td>" + item.policyid + "</td>");
-      c.push("<td>" + item.proposal_no + "</td>");
-      c.push("<td>" + item.policy_no + "</td>");
-      c.push("<td>" + item.customer_name + "</td>");
-      c.push("<td>" + item.insurance_company + "</td>");
-      c.push("<td>" + item.sp_name + "</td>");
-      c.push("<td>" + item.sp_brokercode + "</td>");
-      c.push("<td>" + item.product_name + "</td>");
-      c.push("<td>" + item.registration_no + "</td>");
-      c.push("<td>" + item.rto_state + "</td>");
-      c.push("<td>" + item.rto_city + "</td>");
-      c.push("<td>" + item.vehicle_makeby + "</td>");
-      c.push("<td>" + item.vehicle_model + "</td>");
-      c.push("<td>" + item.vehicle_catagory + "</td>");
-      c.push("<td>" + item.vehicle_fuel_type + "</td>");
-      c.push("<td>" + item.mfg_year + "</td>");
-      c.push("<td>" + item.addon + "</td>");
-      c.push("<td>" + item.ncb + "</td>");
-      c.push("<td>" + item.cubic_capacity + "</td>");
-      c.push("<td>" + item.gvw + "</td>");
-      c.push("<td>" + item.seating_capacity + "</td>");
-      c.push("<td>" + item.coverage_type + "</td>");
-      c.push("<td>" + item.policy_type + "</td>");
-      c.push("<td>" + item.cpa + "</td>");
-      c.push("<td>" + item.risk_start_date + "</td>");
-      c.push("<td>" + item.risk_end_date + "</td>");
-      c.push("<td>" + item.issue_date + "</td>");
-      c.push("<td>" + item.insured_age + "</td>");
-      c.push("<td>" + item.policy_term + "</td>");
-      c.push("<td>" + item.bqp + "</td>");
-      c.push("<td>" + item.pos + "</td>");
-      c.push("<td>" + item.employee + "</td>");
-      c.push("<td>" + item.remark + "</td>");
-      c.push("<td>" + item.OD_premium + "</td>");
-      c.push("<td>" + item.TP_terrorism + "</td>");
-      c.push("<td>" + item.gst_amount + "</td>");
-      c.push("<td>" + item.gst_gcv_amount + "</td>");
-      c.push("<td>" + item.total + "</td>");
-      c.push("<td>" + item.payment_mode + "</td>");
-      c.push("<td>" + item.agent_od_reward + "</td>");
-      c.push("<td>" + item.agent_od_amount + "</td>");
-      c.push("<td>" + item.agent_tp_reward + "</td>");
-      c.push("<td>" + item.agent_tp_amount + "</td>");
-
-      c.push("<td>" + item.self_od_reward + "</td>");
-      c.push("<td>" + item.self_od_amount + "</td>");
-      c.push("<td>" + item.self_tp_reward + "</td>");
-      c.push("<td>" + item.self_tp_amount + "</td>");
-      c.push("</tr>");
-      // tblInsurance
-
-      $('#tbdy').html(c.join(""));
-
-   }
-
-   function responseHandler_old(response) {
-      console.log('responseHandler');
-      console.log(response.data);
-
-      var c = [];
-      $.each(response.data, function (i, item) {
-         c.push("<td>" + item['policyid'] + "</td>");
-         c.push("<td>" + item.insurance_company + "</td>");
-         c.push("<td>" + item.customer_name + "</td>");
-      });
-
-      $('#tr1').html(c.join(""));
-   }
-
    function ExportToExcel(type, fn, dl) {
       var elt = document.getElementById('tblInsurance');
       var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
@@ -2310,56 +1804,6 @@
          XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
          XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
    }
-
-   function searchName3() {
-      // Declare variables
-      // print(filterList)    
-      len = setOD()
-
-      if (len != 4) {
-         alert('Payout values error')
-         return
-      }
-      pVal_pList = []
-      pVal_pList.push(payoutValues)
-      pVal_pList.push(policyList)
-
-      console.log(pVal_pList);
-
-      jsonData = ''
-      // alert('here')
-      jsonData = JSON.stringify(pVal_pList);
-
-      filter_content = document.getElementById('filter_content')
-      if (filter_content.options.length == 1) {
-         alert('You have not selected any filter option! ')
-         return;
-      }
-
-      pathname = '/bima_policy/policy/entry_list_update'
-
-      href = window.location.origin + pathname
-
-      $.ajax({
-         url: href,
-         type: 'POST',
-         beforeSend: function (xhr) {
-            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-         },
-         data: { 'data': jsonData },
-         dataType: 'json',
-         success: function (response) {
-            responseHandlerForPayout(response)
-         },
-         error: function (xhr, status, error) {
-            // Handle any errors that occurred during the request
-            console.log('error occurred ', error);
-         }
-      });
-     
-
-   }
-
 
    function responseHandlerForPayout(response) {
       console.log('responseHandler for payout');
@@ -2380,7 +1824,7 @@
       document.getElementById("tbdy").innerHTML = '';
       c = []
 
-      console.log(policyList);
+      console.log(policyid_list);
 
       index = 0
       ytt.forEach(element => {
@@ -2419,13 +1863,291 @@
    }
 
    function showMoreFilters() {
-      if(document.getElementById('morefilters').hidden ){
+      if (document.getElementById('morefilters').hidden) {
          document.getElementById('morefilters').hidden = false
       }
-      else{
+      else {
          document.getElementById('morefilters').hidden = true
       }
-     
+
+   }
+
+
+   function entry_filter() {
+
+      // Adding date for filter
+      val1 = document.getElementById('frmDate').value
+      val2 = document.getElementById('toDate').value
+      filter_date_list = []
+      filter_date_list.push(val1)
+      filter_date_list.push(val2)
+
+      // Adding other filter
+      withDateList = []
+
+      if (document.getElementById('morefilters').hidden) {
+         withDateList.push(filter_date_list)
+         jsonData = JSON.stringify(withDateList);
+      }
+      else {
+         // alert(filterList.length)
+         // addName3()
+         withDateList.push(filter_date_list)
+         withDateList.push(filterListMultiple)
+         jsonData = JSON.stringify(withDateList);
+      }
+
+
+      console.log('jsonData: ' + jsonData);
+
+      $.ajax({
+         url: window.location.origin + '/bima_policy/policy/entry_filter',
+         type: 'POST',
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: { 'data': jsonData },
+         dataType: 'json',
+         success: function (response) {
+            console.log(response);
+            entry_filter_response_handler(response)
+            // alert('call done')
+
+         },
+         error: function (xhr, status, error) {
+            // Handle any errors that occurred during the request
+            console.log('error occurred ', error);
+         }
+      });
+
+
+   }
+
+   function entry_filter_response_handler(response) {
+
+      console.log('entry_filter_response_handler method');
+      responsedata = JSON.parse(JSON.stringify(response.data))
+      console.log(responsedata);
+
+      document.getElementById("thCheck").hidden = true
+      document.getElementById("tbdy").innerHTML = '';
+      c = []
+      policyid_list = []   // to update all payout record
+      responsedata.forEach(element => {
+         policyid_list.push(element['policyid'])
+      });
+
+      console.log('resp length '+ responsedata.length);
+
+      initialResponse = [] // for storing for navigation and gen table row
+      index = 0
+      responsedata.forEach(element => {
+         index++;
+         initialResponse.push({ "index": index, "element": element })
+
+         // console.log({ "index": index, "element": element });
+
+         if (index <= 100) {
+            curIndex = generate_row(index, element)
+         }
+      });           
+
+      // console.log('policyid_list ' + policyid_list);
+      // console.log('policyid_list ind ' + initialResponse[0]['element']['customer_name']);
+      // console.log('policyid_list ind ' + initialResponse.length);
+   }
+
+   function generate_row(index, item) {
+
+      c.push("<tr>");
+      c.push("<td>" + index + "</td>");
+      // c.push("<td>" + "</td>");
+      c.push("<td>" + item.policyid + "</td>");
+      c.push("<td>" + item.proposal_no + "</td>");
+      c.push("<td>" + item.policy_no + "</td>");
+      c.push("<td>" + item.customer_name + "</td>");
+      c.push("<td>" + item.insurance_company + "</td>");
+      c.push("<td>" + item.sp_name + "</td>");
+      c.push("<td>" + item.sp_brokercode + "</td>");
+      c.push("<td>" + item.product_name + "</td>");
+      c.push("<td>" + item.registration_no + "</td>");
+      c.push("<td>" + item.rto_state + "</td>");
+      c.push("<td>" + item.rto_city + "</td>");
+      c.push("<td>" + item.vehicle_makeby + "</td>");
+      c.push("<td>" + item.vehicle_model + "</td>");
+      c.push("<td>" + item.vehicle_catagory + "</td>");
+      c.push("<td>" + item.vehicle_fuel_type + "</td>");
+      c.push("<td>" + item.mfg_year + "</td>");
+      c.push("<td>" + item.addon + "</td>");
+      c.push("<td>" + item.ncb + "</td>");
+      c.push("<td>" + item.cubic_capacity + "</td>");
+      c.push("<td>" + item.gvw + "</td>");
+      c.push("<td>" + item.seating_capacity + "</td>");
+      c.push("<td>" + item.coverage_type + "</td>");
+      c.push("<td>" + item.policy_type + "</td>");
+      c.push("<td>" + item.cpa + "</td>");
+      c.push("<td>" + item.risk_start_date + "</td>");
+      c.push("<td>" + item.risk_end_date + "</td>");
+      c.push("<td>" + item.issue_date + "</td>");
+      c.push("<td>" + item.insured_age + "</td>");
+      c.push("<td>" + item.policy_term + "</td>");
+      c.push("<td>" + item.bqp + "</td>");
+      c.push("<td>" + item.pos + "</td>");
+      c.push("<td>" + item.employee + "</td>");
+      c.push("<td>" + item.remark + "</td>");
+      c.push("<td>" + item.OD_premium + "</td>");
+      c.push("<td>" + item.TP_terrorism + "</td>");
+      c.push("<td>" + item.net + "</td>");
+      c.push("<td>" + item.gst_amount + "</td>");
+      c.push("<td>" + item.gst_gcv_amount + "</td>");
+      c.push("<td>" + item.total + "</td>");
+      c.push("<td>" + item.payment_mode + "</td>");
+      c.push("<td>" + item.agent_od_reward + "</td>");
+      c.push("<td>" + item.agent_od_amount + "</td>");
+      c.push("<td>" + item.agent_tp_reward + "</td>");
+      c.push("<td>" + item.agent_tp_amount + "</td>");
+
+      c.push("<td>" + item.self_od_reward + "</td>");
+      c.push("<td>" + item.self_od_amount + "</td>");
+      c.push("<td>" + item.self_tp_reward + "</td>");
+      c.push("<td>" + item.self_tp_amount + "</td>");
+
+      c.push("<td>" + item.proposal + "</td>");
+      c.push("<td>" + item.mandate + "</td>");
+      c.push("<td>" + item.policy + "</td>");
+      c.push("<td>" + item.previous_policy + "</td>");
+      c.push("<td>" + item.pan_card + "</td>");
+      c.push("<td>" + item.aadhar_card + "</td>");
+      c.push("<td>" + item.vehicle_rc + "</td>");
+      c.push("<td>" + item.inspection_report + "</td>");
+
+      c.push("</tr>");
+
+      // tblInsurance
+
+      $('#tbdy').html(c.join(""));
+
+      return index
+   }
+
+   function searchName3() {
+      // Declare variables
+      // print(filterList)    
+      len = setOD()
+
+      if (len != 4) {
+         alert('Payout values error')
+         return
+      }
+      pVal_pList = []
+
+      pVal_pList.push(payoutValues)
+      pVal_pList.push(policyid_list)
+
+      console.log(pVal_pList);
+
+      jsonData = ''
+      // alert('here')
+      jsonData = JSON.stringify(pVal_pList);
+
+      filter_content = document.getElementById('filter_content')
+      if (filter_content.options.length == 1) {
+         alert('You have not selected any filter option! ')
+         return;
+      }
+
+      pathname = '/bima_policy/policy/entry_list_update'
+
+      href = window.location.origin + pathname
+
+      $.ajax({
+         url: href,
+         type: 'POST',
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: { 'data': jsonData },
+         dataType: 'json',
+         success: function (response) {
+            responseHandlerForPayout(response)
+         },
+         error: function (xhr, status, error) {
+            // Handle any errors that occurred during the request
+            console.log('error occurred ', error);
+         }
+      });
+   }
+
+   function responseHandlerForPayout(response) {
+      console.log('responseHandler for payout');
+      // console.log(response.data);
+      // console.log(response.data[0]);
+      var ytt = JSON.parse(JSON.stringify(response.data))
+      console.log(ytt);
+
+      document.getElementById("thCheck").hidden = true
+      document.getElementById("tbdy").innerHTML = '';
+
+      c = []
+
+      console.log(policyid_list);
+
+      index = 0
+      ytt.forEach(element => {
+         // Creating table row
+         index++;
+         // gt(index, element)
+         generate_row(index, element)
+
+      });
+
+   }
+
+   function gen_table() {
+      console.log('gen_table method');
+
+      c_index = curIndex;
+      total_length = initialResponse.length;
+
+      // alert(c_index)
+      // alert(total_length)
+
+      if (total_length > c_index ) {
+
+         // alert(total_length -curIndex )
+      }   
+      else{
+         alert('No more pages available!' )        
+         return 
+      } 
+
+      document.getElementById("tbdy").innerHTML = '';
+      c = []
+
+      tmplist = []
+
+      // next_index = curIndex + 9
+      next_index = curIndex + 99
+      // next_index = c_index + (total_length-c_index)
+
+      for (index = curIndex; index <= next_index; index++) {
+
+         tmplist.push(initialResponse[index])        
+      }
+
+      console.log(tmplist);
+
+      tmplist.forEach(element => {
+
+         returned_index = generate_row(element['index'], element['element'])
+         console.log('element index ' + returned_index);
+
+      });
+
+      curIndex = next_index + 1
+
+      console.log('ele_index ' + returned_index);
+
    }
 
 

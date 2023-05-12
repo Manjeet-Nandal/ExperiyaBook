@@ -49,11 +49,8 @@ urlpatterns = [
     path('policy/create_policy_non_motor',create_policy_non_motor.as_view(), name="create_policy_non_motor"),
 
     path('policy/entry/',policy_entry, name="policy_entry"),
+    path('policy/entry_filter',policy_entry_filter, name="policy_entry_filter"),
 
-    path('policy/entry/<str:value1>/<str:value2>/<str:period>/<str:select_length>/',policy_entry_filter, name="policy_entry_filter"), 
-    path('policy/entry/<str:value1>/<str:value2>/<str:period>/<str:select_length>/<str:payout>/',policy_entry_filter_nopayout, name="policy_entry_filter_nopayout"), 
-    
-    path('policy/entry_list',policy_entry_list, name="policy_entry_list"),
     path('policy/entry_list_update',policy_entry_list_update, name="policy_entry_list_update"),
     
     path('policy/policy_entrydata/<str:id>',policy_entrydata, name="update"),
