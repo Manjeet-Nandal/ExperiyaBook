@@ -2026,9 +2026,7 @@ from dateutil.parser import parse
 
 def policy_entry_filter(request):
     print('policy_entry_filter method') 
-
-    # return redirect('bima_policy:policy_entry')
-
+    
     try:
         if request.method == 'POST':  
             data = json.loads(request.POST['data'])
@@ -2061,6 +2059,8 @@ def policy_entry_filter(request):
 def policy_entry_date_filter(request, data):
     try:
         print('policy_entry_date_filter method') 
+        # request data:  [['01/04/2023', '30/04/2023']]
+
         str_data = str(data)
         # ['07/05/2023', '07/05/2023'] = yesterday       
         str_data = str_data.replace('/', '-').split(',')
@@ -2068,6 +2068,7 @@ def policy_entry_date_filter(request, data):
         
         sd1 = str_data[0].replace("[", '').split('-')
         sd2 = str_data[1].replace("]", '').split('-')
+        print('sd1 ', sd1)
         # date1
         d = parse(sd1[0]).day
         m = parse(sd1[1]).month
@@ -2075,22 +2076,46 @@ def policy_entry_date_filter(request, data):
         # date2
         d2 = parse(sd2[0]).day
         m2 = parse(sd2[1]).month
-        y2 = parse(sd2[2]).year
-                
-        # datetime = datetime.strptime(date_string, '%Y-%m-%d')
-        date1 = datetime(y, m, d)
-        date2 = datetime(y2, m2, d2)
-        # print('date 1: ', date1)
-        # print('date 2: ', date2)
+        y2 = parse(sd2[2]).year                
+            
+        print('sd2 ', sd2)
+        sdv = str_data[0].strip().replace("[", '').split('-')      
+        print('sdv ', sdv)
+        # print(sdv  ["'01", '04', "2023'"])            
+        year = sdv[2]
+        month = sdv[1]
+        day = sdv[0]
+        date1 = year + "-" +  month + "-" + day
+        date1 = date1.replace("'", "")
+
+        sdv = str_data[1].strip().replace("[", '').split('-')     
+        print('sdv ', sdv)
+        # print(sdv  ["'01", '04', "2023'"])            
+        year = sdv[2]
+        month = sdv[1]
+        day = sdv[0]
+        date2 = year + "-" +  month + "-" + day
+        date2 = date2.replace("'", "").replace("]]", "")
+       
+
+        # date1 = datetime(y, m, d)
+        # date1 = datetime(y, d, m)
+        # date2 = datetime(y2, m2, d2)
+        print('date 1: ', date1)
+        print('date 2: ', date2)
 
         tmp_adv_list = []
         
         if is_user(request): 
+            # data = Policy.objects.filter(issue_date__gte='01/04/2023').filter(issue_date__lte='30/04/2023').values() 
+            # data = Policy.objects.filter(issue_date__gte='2023-04-01').filter(issue_date__lte='2023-04-30').values() 
             data = Policy.objects.filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
 
             tmp_adv_list.append(data)
         else:
-            data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
+            data = Policy.objects.filter(employee=get_id_from_session(request)).values() 
+
         
         data = list(chain(*tmp_adv_list))
         # datag = Agents.objects.all()
