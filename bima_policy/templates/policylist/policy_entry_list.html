@@ -451,11 +451,13 @@
                                           <option value="25">25</option>
                                           <option value="50">50</option>
                                           <option value="100">100</option>
-                                       </select>
-                                       entries
-                                    </label>
-                                 </div>
+                                          <option value="*">All</option>
 
+                                       </select>
+                                       entries 
+                                    </label>                                   
+                                 </div>
+                                 
 
                               </div>
 
@@ -1940,7 +1942,7 @@
          policyid_list.push(element['policyid'])
       });
 
-      console.log('resp length '+ responsedata.length);
+      console.log('resp length '+ responsedata.length);     
 
       initialResponse = [] // for storing for navigation and gen table row
       index = 0
@@ -2153,6 +2155,7 @@
 
    }
 
+   
 
 </script>
 <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
