@@ -209,7 +209,7 @@
                         <div id="morefilters" class="row" hidden>
 
                            <div class="col-md-5 mb-4">
-                              <input type="text" id="search-select_vc" class="form-control"
+                              <input type="text" id="search-select_vc" class="form-control" hidden
                                  placeholder="Select any field">
                               <select id="filter_type" name="filter_type" data-parsley-required-message="" multiple
                                  data-parsley-required="true" class="custom-select " required
@@ -263,6 +263,7 @@
                                  function add_filter_type() {
                                     // document.getElementById('btnFilter').disabled = false
                                     document.getElementById('divFilterContent').hidden = false
+                                    document.getElementById('divFilterContentBtns').hidden = false
 
                                     filter_type_value = document.getElementById('filter_type').value
                                     filter_content = document.getElementById('filter_content')
@@ -318,9 +319,9 @@
 
                            </div>
 
-                           <div id="divFilterContent" class="col-md-5 mb-4">
+                           <div id="divFilterContent" class="col-md-5 mb-4" hidden>
                               <!-- <label for="my-select">Vehicle Make:</label> -->
-                              <input type="text" id="search-select" class="form-control" placeholder="Search..">
+                              <input type="text" id="search-select" class="form-control" placeholder="Search.." hidden>
                               <select id="filter_content" name="filter_content" class="form-control" multiple>
                                  <option id="op_select_all" value="" onclick="select_all_Items('filter_content')">
                                  </option>
@@ -411,19 +412,21 @@
                               </script>
                            </div>
 
-                           <div class="col-md-1 mb-4">
+                           <div id="divFilterContentBtns"  class="col-md-2 mb-4" hidden>
 
                               <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
                               <!-- <button id="btnFilter" type="button" class="btn btn-primary mt-1"
                                  onclick="searchName2()">Filter</button> -->
-                              <button type="button" class="btn btn-primary mt-1 w-100" onclick="addName3()">Add</button>
+                              <button type="button" class="btn btn-primary mt-1 " onclick="addName3()">Add</button>
 
-                              <button type="button" class="btn btn-primary mt-1 w-100" data-toggle="modal"
+                              {% if is_user %}
+
+                              <button type="button" class="btn btn-primary mt-1 " data-toggle="modal"
                                  data-target="#mdlUpdatePayout">Update</button>
-
+                              {% endif %}
                               <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1"
-                                 onclick="saveFilter()" hidden>Save</button>
-                              <button type="button" class="btn btn-primary mt-1 w-100"
+                                 onclick="saveFilter()" >Save</button>
+                              <button type="button" class="btn btn-primary mt-1 "
                                  onclick="clearFilterList()">Clear</button>
 
                            </div>
