@@ -1997,15 +1997,16 @@ def apply_policy(request, id):
 
 def policy_entry(request):
     print('policy_entry method')
-    print(get_id_from_session(request))
-    print(now().date())
+    # print(get_id_from_session(request))
+    # print(now().date())
     # dts = datetime.datetime.date(2023, 6, 4).date()
-    print(datetime.now().date())
+    # print(datetime.now().date())
 
     try:
         if is_user(request):                  
             # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
-            data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()
+            data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()[:10]
+            # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()
 
             # print(data)
 
@@ -2032,7 +2033,7 @@ def policy_entry_filter(request):
             data = json.loads(request.POST['data'])
             print('request data: ', data)
             # request data:  [['10/05/2023', '10/05/2023'], [{'index': '#ins', 'items': ['HDFC ERGO']}]]
-            print('len is: ', len(data))
+            # print('len is: ', len(data))
             
             if len(data) == 1:
                 response_data = policy_entry_date_filter(request, data)   
@@ -2042,7 +2043,7 @@ def policy_entry_filter(request):
                 f_data = policy_entry_date_filter(request, data[0]) 
                 # data = policy_entry_single_filter(data[1], f_data)
 
-                s_data = pol_get3(data[1], f_data)
+                s_data = policy_entry_all_other_filter(data[1], f_data)
                 print('===========')
                 # print('fdatas is : ', len(s_data))
 
@@ -2068,7 +2069,7 @@ def policy_entry_date_filter(request, data):
         
         sd1 = str_data[0].replace("[", '').split('-')
         sd2 = str_data[1].replace("]", '').split('-')
-        print('sd1 ', sd1)
+        # print('sd1 ', sd1)
         # date1
         d = parse(sd1[0]).day
         m = parse(sd1[1]).month
@@ -2078,24 +2079,25 @@ def policy_entry_date_filter(request, data):
         m2 = parse(sd2[1]).month
         y2 = parse(sd2[2]).year                
             
-        print('sd2 ', sd2)
-        sdv = str_data[0].strip().replace("[", '').split('-')      
-        print('sdv ', sdv)
+        # print('sd2 ', sd2)
+        sdv = str_data[0].strip().split('-')      
+        # print('sdv ', sdv)
         # print(sdv  ["'01", '04', "2023'"])            
         year = sdv[2]
         month = sdv[1]
         day = sdv[0]
         date1 = year + "-" +  month + "-" + day
-        date1 = date1.replace("'", "")
+        date1 = date1.replace("'", "").replace("[", "").replace("]", "").replace("[[", "").replace("]]", "").replace("'", "")
 
-        sdv = str_data[1].strip().replace("[", '').split('-')     
-        print('sdv ', sdv)
+        # sdv = str_data[1].strip().replace("[", '').split('-')     
+        sdv = str_data[1].strip().split('-')     
+        # print('sdv ', sdv)
         # print(sdv  ["'01", '04', "2023'"])            
         year = sdv[2]
         month = sdv[1]
         day = sdv[0]
         date2 = year + "-" +  month + "-" + day
-        date2 = date2.replace("'", "").replace("]]", "")
+        date2 = date2.replace("'", "").replace("[", "").replace("]", "").replace("[[", "").replace("]]", "").replace("'", "")
        
 
         # date1 = datetime(y, m, d)
@@ -2162,8 +2164,8 @@ def policy_entry_single_filter(data, f_data):
         print('error in policy_entry_single_filter: ', ex)
 
 
-def pol_get3(data, f_data):
-    print('pol get 3 method calling:')
+def policy_entry_all_other_filter(data, f_data):
+    print('policy_entry_all_other_filter calling:')
     print('data: ', data) # [{'index': '#ins', 'items': ['HDFC ERGO']}, {'index': '#vc', 'items': ['TWO WHEELER COMMERCIAL']}]
     # print('f_data is ', f_data) # [{'policyid': '39E3E1A', 'profile_id_id': '3CD4A59107554B8', 'proposal_no':
 
@@ -2198,7 +2200,7 @@ def pol_get3(data, f_data):
                         if itm == ins['insurance_company']:                          
                             qs_list.append(Policy.objects.filter(policyid=ins['policyid']).values() )
                          
-    print('first len: ', len(qs_list))
+    # print('first len: ', len(qs_list))
     # print('first len: ', qs_list)
     # print('first qs len: ', qs)
 
@@ -2230,10 +2232,10 @@ def pol_get3(data, f_data):
                         itm = m.strip()             
                 
                         for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
+                            # print('obj is ', obj)                           
+                            # print('')                              
                             for ty in obj:
-                                print('ty ', ty['vehicle_catagory'])                             
+                                # print('ty ', ty['vehicle_catagory'])                             
                                 if itm == ty['vehicle_catagory']:    
                                     qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
                                                     
@@ -2273,10 +2275,10 @@ def pol_get3(data, f_data):
                         itm = m.strip()             
                 
                         for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
+                            # print('obj is ', obj)                           
+                            # print('')                              
                             for ty in obj:
-                                print('ty ', ty['vehicle_fuel_type'])                             
+                                # print('ty ', ty['vehicle_fuel_type'])                             
                                 if itm == ty['vehicle_fuel_type']:    
                                     qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
                                                     
@@ -2316,10 +2318,10 @@ def pol_get3(data, f_data):
                         itm = m.strip()             
                 
                         for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
+                            # print('obj is ', obj)                           
+                            # print('')                              
                             for ty in obj:
-                                print('ty ', ty['cubic_capacity'])                             
+                                # print('ty ', ty['cubic_capacity'])                             
                                 if itm == ty['cubic_capacity']:    
                                     qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
                                                     
@@ -2359,10 +2361,10 @@ def pol_get3(data, f_data):
                         itm = m.strip()             
                 
                         for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
+                            # print('obj is ', obj)                           
+                            # print('')                              
                             for ty in obj:
-                                print('ty ', ty['seating_capacity'])                             
+                                # print('ty ', ty['seating_capacity'])                             
                                 if itm == ty['seating_capacity']:    
                                     qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
                                                     
@@ -2402,10 +2404,10 @@ def pol_get3(data, f_data):
                         itm = m.strip()             
                 
                         for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
+                            # print('obj is ', obj)                           
+                            # print('')                              
                             for ty in obj:
-                                print('ty ', ty['coverage_type'])                             
+                                # print('ty ', ty['coverage_type'])                             
                                 if itm == ty['coverage_type']:    
                                     qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
                                                     
@@ -2445,10 +2447,10 @@ def pol_get3(data, f_data):
                         itm = m.strip()             
                 
                         for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
+                            # print('obj is ', obj)                           
+                            # print('')                              
                             for ty in obj:
-                                print('ty ', ty['gvw'])                             
+                                # print('ty ', ty['gvw'])                             
                                 if itm == ty['gvw']:    
                                     qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
                                                     
@@ -2488,10 +2490,10 @@ def pol_get3(data, f_data):
                         itm = m.strip()             
                 
                         for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
+                            # print('obj is ', obj)                           
+                            # print('')                              
                             for ty in obj:
-                                print('ty ', ty['policy_type'])                             
+                                # print('ty ', ty['policy_type'])                             
                                 if itm == ty['policy_type']:    
                                     qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
                                                     
@@ -2531,10 +2533,10 @@ def pol_get3(data, f_data):
                         itm = m.strip()             
                 
                         for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
+                            # print('obj is ', obj)                           
+                            # print('')                              
                             for ty in obj:
-                                print('ty ', ty['addon'])                             
+                                # print('ty ', ty['addon'])                             
                                 if itm == ty['addon']:    
                                     qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
                                                     
@@ -2574,10 +2576,10 @@ def pol_get3(data, f_data):
                         itm = m.strip()             
                 
                         for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
+                            # print('obj is ', obj)                           
+                            # print('')                              
                             for ty in obj:
-                                print('ty ', ty['ncb'])                             
+                                # print('ty ', ty['ncb'])                             
                                 if itm == ty['ncb']:    
                                     qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
                                                     
@@ -2617,10 +2619,10 @@ def pol_get3(data, f_data):
                         itm = m.strip()             
                 
                         for obj in tmpData:             
-                            print('obj is ', obj)                           
-                            print('')                              
+                            # print('obj is ', obj)                           
+                            # print('')                              
                             for ty in obj:
-                                print('ty ', ty['cpa'])                             
+                                # print('ty ', ty['cpa'])                             
                                 if itm == ty['cpa']:    
                                     qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
                                                     

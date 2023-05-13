@@ -262,8 +262,8 @@
 
                                  function add_filter_type() {
                                     // document.getElementById('btnFilter').disabled = false
-                                    document.getElementById('divFilterContent').hidden = false
-                                    document.getElementById('divFilterContentBtns').hidden = false
+                                    // document.getElementById('divFilterContent').hidden = false
+                                    // document.getElementById('divFilterContentBtns').hidden = false
 
                                     filter_type_value = document.getElementById('filter_type').value
                                     filter_content = document.getElementById('filter_content')
@@ -319,7 +319,7 @@
 
                            </div>
 
-                           <div id="divFilterContent" class="col-md-5 mb-4" hidden>
+                           <div id="divFilterContent" class="col-md-5 mb-4" >
                               <!-- <label for="my-select">Vehicle Make:</label> -->
                               <input type="text" id="search-select" class="form-control" placeholder="Search.." hidden>
                               <select id="filter_content" name="filter_content" class="form-control" multiple>
@@ -412,7 +412,7 @@
                               </script>
                            </div>
 
-                           <div id="divFilterContentBtns"  class="col-md-2 mb-4" hidden>
+                           <div id="divFilterContentBtns"  class="col-md-2 mb-4" >
 
                               <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
                               <!-- <button id="btnFilter" type="button" class="btn btn-primary mt-1"
@@ -421,8 +421,8 @@
 
                               {% if is_user %}
 
-                              <button type="button" class="btn btn-primary mt-1 " data-toggle="modal"
-                                 data-target="#mdlUpdatePayout">Update</button>
+                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1 " data-toggle="modal"
+                                 data-target="#mdlUpdatePayout" disabled>Update</button>
                               {% endif %}
                               <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1"
                                  onclick="saveFilter()" >Save</button>
@@ -451,8 +451,7 @@
                                           <option value="25">25</option>
                                           <option value="50">50</option>
                                           <option value="100">100</option>
-                                          <option value="*">All</option>
-
+                                          
                                        </select>
                                        entries 
                                     </label>                                   
@@ -1869,11 +1868,15 @@
 
    function showMoreFilters() {
       if (document.getElementById('morefilters').hidden) {
-         document.getElementById('morefilters').hidden = false
+         document.getElementById('morefilters').hidden = false     
+         document.getElementById('filter_type').selectedIndex = 0
+         add_filter_type()
+
       }
       else {
          document.getElementById('morefilters').hidden = true
       }
+
 
    }
 
@@ -1955,7 +1958,17 @@
          if (index <= 100) {
             curIndex = generate_row(index, element)
          }
-      });           
+      }); 
+      
+      if (policyid_list.length == 0) {
+
+         document.getElementById("btnUpdatePayout").disabled
+
+         
+      } else {
+         document.getElementById("btnUpdatePayout").disabled = false
+         
+      }
 
       // console.log('policyid_list ' + policyid_list);
       // console.log('policyid_list ind ' + initialResponse[0]['element']['customer_name']);
