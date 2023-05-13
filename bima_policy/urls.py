@@ -49,6 +49,7 @@ urlpatterns = [
     path('policy/create_policy_non_motor',create_policy_non_motor.as_view(), name="create_policy_non_motor"),
 
     path('policy/entry/',policy_entry, name="policy_entry"),
+    path('policy/entry_page',policy_entry_page, name="policy_entry_page"),
     path('policy/entry_filter',policy_entry_filter, name="policy_entry_filter"),
 
     path('policy/entry_list_update',policy_entry_list_update, name="policy_entry_list_update"),

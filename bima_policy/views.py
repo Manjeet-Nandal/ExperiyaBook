@@ -1995,18 +1995,25 @@ def apply_policy(request, id):
         return HttpResponse('apply_policy method originated folowing error: ' + ex)
 
 
-def policy_entry(request):
-    print('policy_entry method')
-    # print(get_id_from_session(request))
-    # print(now().date())
-    # dts = datetime.datetime.date(2023, 6, 4).date()
-    # print(datetime.now().date())
+def policy_entry_page(request):
+    print('policy_entry_page method')
+  
+    items = 25
 
     try:
+        queryset = Policy.objects.all()
+        paginator = Paginator(queryset, 10) # 10 items per page
+
+        page_number = request.GET.get('page', 1)
+        data = paginator.page(page_number)
+
+
+
         if is_user(request):                  
             # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
-            data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()[:10]
+            # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()[:items]
             # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()
+            pass
 
             # print(data)
 
@@ -2016,6 +2023,42 @@ def policy_entry(request):
 
         # print("total policy: ", data.values().count())
         datag = Agents.objects.all()
+       
+        # return JsonResponse({'data': cdata})
+        return render(request, 'policylist/policy_entry_list.html', {'page': page, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+    except Exception as ex:
+        # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+
+
+def policy_entry(request):
+    print('policy_entry method')
+    # print(get_id_from_session(request)) 
+  
+    try:        
+        if is_user(request):                  
+            # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
+            # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()[:25]
+            data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()          
+            # print(data)
+
+        else:
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date=datetime.now().date()).order_by('-policyid').values()         
+            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()         
+
+        # print("total policy: ", data.values().count())
+        datag = Agents.objects.all()
+
+        # queryset = Policy.objects.all()
+        paginator = Paginator(data, 25) # 10 items per page
+
+        page_number = request.GET.get('page', 1)
+        print('pgn' , page_number)
+      
+        # page = paginator.page(page_number)
+
+        data = paginator.page(page_number)
 
         return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:

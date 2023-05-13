@@ -3,7 +3,9 @@
 {% load static %}
 
 <main class="app-main">
-
+ <script>
+   var p_num = 25
+ </script>
    <!-- .app-main -->
    <div class="wrapper">
       <!-- .wrapper -->
@@ -319,7 +321,7 @@
 
                            </div>
 
-                           <div id="divFilterContent" class="col-md-5 mb-4" >
+                           <div id="divFilterContent" class="col-md-5 mb-4">
                               <!-- <label for="my-select">Vehicle Make:</label> -->
                               <input type="text" id="search-select" class="form-control" placeholder="Search.." hidden>
                               <select id="filter_content" name="filter_content" class="form-control" multiple>
@@ -412,7 +414,7 @@
                               </script>
                            </div>
 
-                           <div id="divFilterContentBtns"  class="col-md-2 mb-4" >
+                           <div id="divFilterContentBtns" class="col-md-2 mb-4">
 
                               <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
                               <!-- <button id="btnFilter" type="button" class="btn btn-primary mt-1"
@@ -421,11 +423,11 @@
 
                               {% if is_user %}
 
-                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1 " data-toggle="modal"
-                                 data-target="#mdlUpdatePayout" disabled>Update</button>
+                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1 "
+                                 data-toggle="modal" data-target="#mdlUpdatePayout" disabled>Update</button>
                               {% endif %}
                               <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1"
-                                 onclick="saveFilter()" >Save</button>
+                                 onclick="saveFilter()">Save</button>
                               <button type="button" class="btn btn-primary mt-1 "
                                  onclick="clearFilterList()">Clear</button>
 
@@ -451,12 +453,12 @@
                                           <option value="25">25</option>
                                           <option value="50">50</option>
                                           <option value="100">100</option>
-                                          
+
                                        </select>
-                                       entries 
-                                    </label>                                   
+                                       entries
+                                    </label>
                                  </div>
-                                 
+
 
                               </div>
 
@@ -563,8 +565,11 @@
                                  </thead>
 
                                  <tbody id="tbdy">
-                                    {% for value in data %}
-                                    <tr role="row" class="odd" onclick="highlight(this)" id="tr1">
+                                                                   
+                                    {% for value in data %}                                   
+                                 
+                                    <tr role="row" class="odd" onclick="highlight(this)" id="tr1" >
+                                    
                                        <td class="text-center">{{forloop.counter}}</td>
                                        <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
                                              id="chkblkrm{{forloop.counter}}" /></td>
@@ -717,10 +722,11 @@
                                                 <i class="far fa-trash-alt mt-2"></i>
                                                 <!-- href="{%url 'bima_policy:policy_delete' value.policyid %}" -->
                                              </a>
-
                                        </td>
-                                    </tr>
-                                    {% endfor %}
+                                       </tr>
+                              
+                                       {% endfor %}
+                                       
                                  </tbody>
                               </table>
                            </div>
@@ -730,11 +736,11 @@
                      <div class="col-sm-12 col-md-7 d-flex justify-content-end"
                         style="align-content: right; margin-left: auto; margin-right: 0;">
                         <div class="dataTables_paginate paging_simple_numbers" id="tblList_paginate">
-                           <ul class="pagination justify-content-center">
+                           <ul  class="pagination justify-content-center " >
                               {% if data.has_previous %}
-                              <li class="paginate_button page-item active"><a href="?page=1" aria-controls="tblList"
+                              <li id="link_one" class="paginate_button page-item active "><a href="?page=1" aria-controls="tblList"
                                     data-dt-idx="1" tabindex="0" class="page-link">First</a></li>
-                              <li class="paginate_button page-item active"><a
+                              <li id="link_two" class="paginate_button page-item active"><a
                                     href="?page={{ data.previous_page_number }}" aria-controls="tblList" data-dt-idx="1"
                                     tabindex="0" class="page-link"> &laquo; Prev</a></li>
                               {% endif %}
@@ -742,23 +748,29 @@
                               <!-- <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
                                     data-dt-idx="1" tabindex="0" class="page-link"> Page {{ data.number }} of
                                     {{data.paginator.num_pages }}.</a></li> -->
+                             
                               <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
-                                    data-dt-idx="1" tabindex="0" class="page-link" onclick="gen_table()">Next Page
-                                 </a></li>
+                                 data-dt-idx="1" tabindex="0" class="page-link" > 
+                              </a></li>
 
                               {% if data.has_next %}
 
-                              <li class="paginate_button page-item active"><a href="?page={{ data.next_page_number }}"
+                              <li class="paginate_button page-item active "><a href="?page={{ data.next_page_number }}"
                                     aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"> Next
                                     &raquo;</a></li>
 
-                              <li class="paginate_button page-item active"><a
+                              <li class="paginate_button page-item active "><a
                                     href="?page={{ data.paginator.num_pages }}" aria-controls="tblList" data-dt-idx="1"
                                     tabindex="0" class="page-link"> Last &raquo;</a></li>
 
                               {% endif %}
 
+                              <li hidden id="link_gen" class="paginate_button page-item active "><a href="#" aria-controls="tblList" 
+                                 data-dt-idx="1" tabindex="0" class="page-link" onclick="gen_table()">Next Page
+                              </a></li>
+
                            </ul>
+                         
                         </div>
                      </div>
 
@@ -1868,7 +1880,7 @@
 
    function showMoreFilters() {
       if (document.getElementById('morefilters').hidden) {
-         document.getElementById('morefilters').hidden = false     
+         document.getElementById('morefilters').hidden = false
          document.getElementById('filter_type').selectedIndex = 0
          add_filter_type()
 
@@ -1945,7 +1957,7 @@
          policyid_list.push(element['policyid'])
       });
 
-      console.log('resp length '+ responsedata.length);     
+      console.log('resp length ' + responsedata.length);
 
       initialResponse = [] // for storing for navigation and gen table row
       index = 0
@@ -1958,17 +1970,20 @@
          if (index <= 100) {
             curIndex = generate_row(index, element)
          }
-      }); 
-      
+      });
+
       if (policyid_list.length == 0) {
 
          document.getElementById("btnUpdatePayout").disabled
 
-         
+
       } else {
          document.getElementById("btnUpdatePayout").disabled = false
-         
+
       }
+      document.getElementById('link_gen').hidden = false
+      // document.getElementById('link_gen').hidden= false
+          
 
       // console.log('policyid_list ' + policyid_list);
       // console.log('policyid_list ind ' + initialResponse[0]['element']['customer_name']);
@@ -2131,14 +2146,14 @@
       // alert(c_index)
       // alert(total_length)
 
-      if (total_length > c_index ) {
+      if (total_length > c_index) {
 
          // alert(total_length -curIndex )
-      }   
-      else{
-         alert('No more pages available!' )        
-         return 
-      } 
+      }
+      else {
+         alert('No more pages available!')
+         return
+      }
 
       document.getElementById("tbdy").innerHTML = '';
       c = []
@@ -2151,7 +2166,7 @@
 
       for (index = curIndex; index <= next_index; index++) {
 
-         tmplist.push(initialResponse[index])        
+         tmplist.push(initialResponse[index])
       }
 
       console.log(tmplist);
@@ -2169,7 +2184,7 @@
 
    }
 
-   
+
 
 </script>
 <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
