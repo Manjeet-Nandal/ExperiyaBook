@@ -3,9 +3,9 @@
 {% load static %}
 
 <main class="app-main">
- <script>
-   var p_num = 25
- </script>
+   <script>
+      var p_num = 25
+   </script>
    <!-- .app-main -->
    <div class="wrapper">
       <!-- .wrapper -->
@@ -93,6 +93,7 @@
                                     onclick="showMoreFilters()"><small>More
                                        Filter</small></a>
 
+
                                  <div class="modal fade" id="mdlcolsetting"
                                     onmouseenter="document.getElementById('inp_search').focus()" style="height: 400px">
 
@@ -136,7 +137,12 @@
                                  </div>
                               </div>
                            </div>
+                           <div class="col-md-2 ">
 
+                              <!-- <input id="payout_switch" type="checkbox" value="No Payouts">
+                              <label for="">No Payouts</label> -->
+
+                           </div>
                            {% if is_user %}
                            <div class="col-md-1" style="text-align: right;" hidden>
                               <style>
@@ -209,9 +215,17 @@
                            {% endif %}
                         </div>
                         <div id="morefilters" class="row" hidden>
+                           <div class="form-row">
+                              <input id="ps1" name="ps1" type="checkbox" value="No Payouts" class="checkbox mr-2"
+                                 style="margin-bottom: auto; margin-top: 4px;">
+                              <label for="ps1">Payout-less Policies</label>
+                           </div>
+
+
 
                            <div class="col-md-5 mb-4">
-                              <input type="text" id="search-select_vc" class="form-control" hidden
+
+                              <input type="text" id="search-select_vc" class="form-control"
                                  placeholder="Select any field">
                               <select id="filter_type" name="filter_type" data-parsley-required-message="" multiple
                                  data-parsley-required="true" class="custom-select " required
@@ -323,7 +337,7 @@
 
                            <div id="divFilterContent" class="col-md-5 mb-4">
                               <!-- <label for="my-select">Vehicle Make:</label> -->
-                              <input type="text" id="search-select" class="form-control" placeholder="Search.." hidden>
+                              <input type="text" id="search-select" class="form-control" placeholder="Search..">
                               <select id="filter_content" name="filter_content" class="form-control" multiple>
                                  <option id="op_select_all" value="" onclick="select_all_Items('filter_content')">
                                  </option>
@@ -414,21 +428,21 @@
                               </script>
                            </div>
 
-                           <div id="divFilterContentBtns" class="col-md-2 mb-4">
+                           <div id="divFilterContentBtns" class="col-md-1 mb-4">
 
                               <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
                               <!-- <button id="btnFilter" type="button" class="btn btn-primary mt-1"
                                  onclick="searchName2()">Filter</button> -->
-                              <button type="button" class="btn btn-primary mt-1 " onclick="addName3()">Add</button>
+                              <button type="button" class="btn btn-primary mt-1 w-100" onclick="addName3()">Add</button>
 
                               {% if is_user %}
 
-                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1 "
+                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100"
                                  data-toggle="modal" data-target="#mdlUpdatePayout" disabled>Update</button>
                               {% endif %}
-                              <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1"
+                              <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1" hidden
                                  onclick="saveFilter()">Save</button>
-                              <button type="button" class="btn btn-primary mt-1 "
+                              <button type="button" class="btn btn-primary mt-1  w-100" onmouseenter="getLength()"
                                  onclick="clearFilterList()">Clear</button>
 
                            </div>
@@ -565,11 +579,11 @@
                                  </thead>
 
                                  <tbody id="tbdy">
-                                                                   
-                                    {% for value in data %}                                   
-                                 
-                                    <tr role="row" class="odd" onclick="highlight(this)" id="tr1" >
-                                    
+
+                                    {% for value in data %}
+
+                                    <tr role="row" class="odd" onclick="highlight(this)" id="tr1">
+
                                        <td class="text-center">{{forloop.counter}}</td>
                                        <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
                                              id="chkblkrm{{forloop.counter}}" /></td>
@@ -723,10 +737,10 @@
                                                 <!-- href="{%url 'bima_policy:policy_delete' value.policyid %}" -->
                                              </a>
                                        </td>
-                                       </tr>
-                              
-                                       {% endfor %}
-                                       
+                                    </tr>
+
+                                    {% endfor %}
+
                                  </tbody>
                               </table>
                            </div>
@@ -736,10 +750,11 @@
                      <div class="col-sm-12 col-md-7 d-flex justify-content-end"
                         style="align-content: right; margin-left: auto; margin-right: 0;">
                         <div class="dataTables_paginate paging_simple_numbers" id="tblList_paginate">
-                           <ul  class="pagination justify-content-center " >
+                           <ul class="pagination justify-content-center ">
                               {% if data.has_previous %}
-                              <li id="link_one" class="paginate_button page-item active "><a href="?page=1" aria-controls="tblList"
-                                    data-dt-idx="1" tabindex="0" class="page-link">First</a></li>
+                              <li id="link_one" class="paginate_button page-item active "><a href="?page=1"
+                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link">First</a>
+                              </li>
                               <li id="link_two" class="paginate_button page-item active"><a
                                     href="?page={{ data.previous_page_number }}" aria-controls="tblList" data-dt-idx="1"
                                     tabindex="0" class="page-link"> &laquo; Prev</a></li>
@@ -748,10 +763,10 @@
                               <!-- <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
                                     data-dt-idx="1" tabindex="0" class="page-link"> Page {{ data.number }} of
                                     {{data.paginator.num_pages }}.</a></li> -->
-                             
+
                               <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
-                                 data-dt-idx="1" tabindex="0" class="page-link" > 
-                              </a></li>
+                                    data-dt-idx="1" tabindex="0" class="page-link">
+                                 </a></li>
 
                               {% if data.has_next %}
 
@@ -765,12 +780,13 @@
 
                               {% endif %}
 
-                              <li hidden id="link_gen" class="paginate_button page-item active "><a href="#" aria-controls="tblList" 
-                                 data-dt-idx="1" tabindex="0" class="page-link" onclick="gen_table()">Next Page
-                              </a></li>
+                              <li hidden id="link_gen" class="paginate_button page-item active "><a href="#"
+                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"
+                                    onclick="gen_table()">Next Page
+                                 </a></li>
 
                            </ul>
-                         
+
                         </div>
                      </div>
 
@@ -1370,7 +1386,7 @@
 
             <div class="modal-footer">
                <div class="form-row" style="align-content: center;"></div>
-               <button class="btn btn-primary w-100p" onclick="searchName3()">Apply</button>
+               <button class="btn btn-primary w-100p" onclick="applyPayouts()">Apply</button>
                <button id="btnExit" type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
 
             </div>
@@ -1678,10 +1694,9 @@
       filterListMultiple = []
       isMultiFilter = false
       rowList = []
+    
       policyid_list = []
-      // document.getElementById('filter_type').selectedIndex = -1
-      // document.getElementById('filter_content').innerHTML = ''
-      // document.getElementById('btnFilter').disabled = true
+      payoutValues = []     
    }
 
 
@@ -1813,43 +1828,12 @@
 
    }
 
-   function ExportToExcel(type, fn, dl) {
+   function ExportToExcel_Original(type, fn, dl) {
       var elt = document.getElementById('tblInsurance');
       var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
       return dl ?
          XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
          XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
-   }
-
-   function responseHandlerForPayout(response) {
-      console.log('responseHandler for payout');
-      // console.log(response.data);
-      // console.log(response.data[0]);
-      var ytt = JSON.parse(JSON.stringify(response.data))
-      console.log(ytt);
-
-      th_coll = document.getElementsByClassName("sorting");
-      for (const item of th_coll) {
-         item.hidden = true
-      }
-      th_coll = document.getElementsByClassName("thShow");
-      for (const item of th_coll) {
-         item.hidden = false
-      }
-
-      document.getElementById("tbdy").innerHTML = '';
-      c = []
-
-      console.log(policyid_list);
-
-      index = 0
-      ytt.forEach(element => {
-         // Creating table row
-         index++;
-         gt(index, element)
-
-      });
-
    }
 
    function setOD() {
@@ -1914,7 +1898,14 @@
          // addName3()
          withDateList.push(filter_date_list)
          withDateList.push(filterListMultiple)
+         
          jsonData = JSON.stringify(withDateList);
+
+         isChecked = document.getElementById('ps1').checked
+         if (isChecked) {
+            withDateList.push('y')
+            jsonData = JSON.stringify(withDateList);
+         }
       }
 
 
@@ -1983,7 +1974,7 @@
       }
       document.getElementById('link_gen').hidden = false
       // document.getElementById('link_gen').hidden= false
-          
+
 
       // console.log('policyid_list ' + policyid_list);
       // console.log('policyid_list ind ' + initialResponse[0]['element']['customer_name']);
@@ -2064,7 +2055,8 @@
       return index
    }
 
-   function searchName3() {
+   function applyPayouts() {
+      console.log('applyPayouts method calling:');
       // Declare variables
       // print(filterList)    
       len = setOD()
@@ -2103,7 +2095,8 @@
          data: { 'data': jsonData },
          dataType: 'json',
          success: function (response) {
-            responseHandlerForPayout(response)
+            // responseHandlerForPayout(response)
+            entry_filter_response_handler(response)
          },
          error: function (xhr, status, error) {
             // Handle any errors that occurred during the request
@@ -2112,16 +2105,24 @@
       });
    }
 
-   function responseHandlerForPayout(response) {
-      console.log('responseHandler for payout');
+   
+   function responseHandlerForPayoutobs(response) {
+      console.log('responseHandlerForPayout method calling: ');
       // console.log(response.data);
       // console.log(response.data[0]);
       var ytt = JSON.parse(JSON.stringify(response.data))
       console.log(ytt);
 
-      document.getElementById("thCheck").hidden = true
-      document.getElementById("tbdy").innerHTML = '';
+      // th_coll = document.getElementsByClassName("sorting");
+      // for (const item of th_coll) {
+      //    item.hidden = true
+      // }
+      // th_coll = document.getElementsByClassName("thShow");
+      // for (const item of th_coll) {
+      //    item.hidden = false
+      // }
 
+      document.getElementById("tbdy").innerHTML = '';
       c = []
 
       console.log(policyid_list);
@@ -2130,7 +2131,6 @@
       ytt.forEach(element => {
          // Creating table row
          index++;
-         // gt(index, element)
          generate_row(index, element)
 
       });
@@ -2184,6 +2184,19 @@
 
    }
 
+   function getLength() {
+
+   }
+
+   function ExportToExcel(type, fn, dl) {
+
+      return;
+      var elt = document.getElementById('tblInsurance');
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+      return dl ?
+         XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+         XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+   }
 
 
 </script>

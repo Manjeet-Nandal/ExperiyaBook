@@ -2082,7 +2082,7 @@ def policy_entry_filter(request):
                 response_data = policy_entry_date_filter(request, data)   
                 return JsonResponse({'data': response_data})
            
-            elif len(data) == 2:
+            elif len(data) == 2:                
                 f_data = policy_entry_date_filter(request, data[0]) 
                 # data = policy_entry_single_filter(data[1], f_data)
 
@@ -2093,14 +2093,27 @@ def policy_entry_filter(request):
                 # print('dt8 ', data[0]) 
                 response_data = list(chain(*s_data))
                 return JsonResponse({'data': response_data})           
-            
+            elif len(data) == 3:     
+                print(data[2])           
+                f_data = policy_entry_date_filter(request, data[0], data[2]) 
+                # data = policy_entry_single_filter(data[1], f_data)
+
+                s_data = policy_entry_all_other_filter(data[1], f_data)
+                print('===========')
+                # print('fdatas is : ', len(s_data))
+
+                # print('dt8 ', data[0]) 
+                response_data = list(chain(*s_data))
+                return JsonResponse({'data': response_data})           
+                      
+
         # return redirect('bima_policy:policy_entry')
         
     except Exception as ex:       
         return HttpResponse('Error occurred in policy_entry_filter: ' + ex)
 
 
-def policy_entry_date_filter(request, data):
+def policy_entry_date_filterO(request, data):
     try:
         print('policy_entry_date_filter method') 
         # request data:  [['01/04/2023', '30/04/2023']]
@@ -2169,6 +2182,84 @@ def policy_entry_date_filter(request, data):
     except Exception as ex:
         print('error occurred in policy_entry_date_filter: ', ex)
         return ex        
+
+
+def policy_entry_date_filter(request, data, filter_payout='n'):
+    try:
+        print('policy_entry_date_filter method') 
+        # request data:  [['01/04/2023', '30/04/2023']]
+
+        str_data = str(data)
+        # ['07/05/2023', '07/05/2023'] = yesterday       
+        str_data = str_data.replace('/', '-').split(',')
+        # print('str_data ', str_data)
+        
+        sd1 = str_data[0].replace("[", '').split('-')
+        sd2 = str_data[1].replace("]", '').split('-')
+        # print('sd1 ', sd1)
+        # date1
+        d = parse(sd1[0]).day
+        m = parse(sd1[1]).month
+        y = parse(sd1[2]).year
+        # date2
+        d2 = parse(sd2[0]).day
+        m2 = parse(sd2[1]).month
+        y2 = parse(sd2[2]).year                
+            
+        # print('sd2 ', sd2)
+        sdv = str_data[0].strip().split('-')      
+        # print('sdv ', sdv)
+        # print(sdv  ["'01", '04', "2023'"])            
+        year = sdv[2]
+        month = sdv[1]
+        day = sdv[0]
+        date1 = year + "-" +  month + "-" + day
+        date1 = date1.replace("'", "").replace("[", "").replace("]", "").replace("[[", "").replace("]]", "").replace("'", "")
+
+        # sdv = str_data[1].strip().replace("[", '').split('-')     
+        sdv = str_data[1].strip().split('-')     
+        # print('sdv ', sdv)
+        # print(sdv  ["'01", '04', "2023'"])            
+        year = sdv[2]
+        month = sdv[1]
+        day = sdv[0]
+        date2 = year + "-" +  month + "-" + day
+        date2 = date2.replace("'", "").replace("[", "").replace("]", "").replace("[[", "").replace("]]", "").replace("'", "")
+       
+
+        # date1 = datetime(y, m, d)
+        # date1 = datetime(y, d, m)
+        # date2 = datetime(y2, m2, d2)
+        print('date 1: ', date1)
+        print('date 2: ', date2)
+
+        tmp_adv_list = []
+        
+        print('filter_payoutis :',filter_payout)
+
+        if is_user(request): 
+            # data = Policy.objects.filter(issue_date__gte='01/04/2023').filter(issue_date__lte='30/04/2023').values() 
+            # data = Policy.objects.filter(issue_date__gte='2023-04-01').filter(issue_date__lte='2023-04-30').values() 
+            if filter_payout == "y":
+                # data = Policy.objects.filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
+                data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward= "")).values() 
+            else:
+                data = Policy.objects.filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
+
+            tmp_adv_list.append(data)
+        else:
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
+            data = Policy.objects.filter(employee=get_id_from_session(request)).values() 
+
+        
+        data = list(chain(*tmp_adv_list))
+        # datag = Agents.objects.all()
+        return data
+    
+    except Exception as ex:
+        print('error occurred in policy_entry_date_filter: ', ex)
+        return ex        
+
 
 def policy_entry_single_filter(data, f_data):
     try:
@@ -3573,7 +3664,7 @@ def apply_policy_payout(data):
                             self_tp_reward=stp,
                             self_tp_amount=self_tp_amount)
                 print('Done')
-                # updated_policy_list.append(id)
+                # updated_policy_list.append(id) '229`'
                 updated_policy_list.append(ddata.values())
 
             except Exception as exc:
