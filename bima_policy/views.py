@@ -2040,7 +2040,7 @@ def policy_entry(request):
         if is_user(request):                  
             # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
             # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()[:25]
-            data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()          
+            data = Policy.objects.order_by('-policyid').values()          
             # print(data)
 
         else:
@@ -2054,7 +2054,7 @@ def policy_entry(request):
         paginator = Paginator(data, 25) # 10 items per page
 
         page_number = request.GET.get('page', 1)
-        print('pgn' , page_number)
+        print('page no: ' , page_number)
       
         # page = paginator.page(page_number)
 
