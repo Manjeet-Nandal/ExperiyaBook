@@ -1995,41 +1995,6 @@ def apply_policy(request, id):
         return HttpResponse('apply_policy method originated folowing error: ' + ex)
 
 
-def policy_entryOri(request):
-    print('policy_entry method')
-    # print(get_id_from_session(request)) 
-  
-    try:        
-        if is_user(request):                  
-            # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
-            # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()[:25]
-            data = Policy.objects.order_by('-policyid').values()          
-            # print(data)
-
-        else:
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date=datetime.now().date()).order_by('-policyid').values()         
-            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()         
-
-        # print("total policy: ", data.values().count())
-        datag = Agents.objects.all()
-
-        # queryset = Policy.objects.all()
-        paginator = Paginator(data, 25) # 10 items per page
-
-        page_number = request.GET.get('page', 1)
-        print('page no: ' , page_number)
-      
-        # page = paginator.page(page_number)
-
-        data = paginator.page(page_number)
-
-        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-    except Exception as ex:
-        # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
-        print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-
-
 def policy_entry(request):
     print('policy_entry method')
     # print(get_id_from_session(request)) 
@@ -2039,72 +2004,28 @@ def policy_entry(request):
         if is_user(request):                  
             # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
             # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()[:25]
-            data = Policy.objects.order_by('-policyid').values()          
-            # print(data)
+            data = Policy.objects.order_by('-policyid').values() [:25]              
+               
+        # print(data)
 
         else:
             # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date=datetime.now().date()).order_by('-policyid').values()         
-            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()         
-
+            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values() [:25]    
+      
         # print("total policy: ", data.values().count())
         datag = Agents.objects.all()
 
         # queryset = Policy.objects.all()
-        paginator = Paginator(data, 25) # 10 items per page
+        # paginator = Paginator(data, 25) # 10 items per page
 
-        page_number = request.GET.get('page', 1)
-        print('page no: ' , page_number)
+        # page_number = request.GET.get('page', 1)
+        # print('page no: ' , page_number)
       
         # page = paginator.page(page_number)
 
-        data = paginator.page(page_number)
+        # data = paginator.page(page_number)
 
-        return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-    except Exception as ex:
-        # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
-        print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-
-
-def policy_entry_last_month(request, period):
-    print('policy_entry_last_month method')
-    # print(get_id_from_session(request)) 
-
-    dates = json.loads(period)
-
-    print('initial ', dates)
-
-    d1_array = dates[0].split('-')
-    d2_array = dates[1].split('-')
-    
-    year = d1_array[2]
-    month = d1_array[1]
-    day = d1_array[0]
-    date1 = year + "-" +  month + "-" + day
-
-    year = d2_array[2]
-    month = d2_array[1]
-    day = d2_array[0]
-    date2 = year + "-" +  month + "-" + day
-
-    print('date 1: ', date1)
-    print('date 2: ', date2)
-    
-    data = None  
-    datag = None
-
-    try:    
-        if is_user(request):      
-            data = Policy.objects.order_by('-policyid').values()  [:10]                         
-            # data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()                           
-        else:
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date=datetime.now().date()).order_by('-policyid').values()         
-            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()        
-        
-        datag = Agents.objects.all()
-
-        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-           
+        return render(request, 'policylist/policy_entry_list.html', { "vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
@@ -2112,6 +2033,7 @@ def policy_entry_last_month(request, period):
 
 
 from dateutil.parser import parse
+
 
 def policy_entry_filter(request,  data):
     print('') 
@@ -2124,201 +2046,205 @@ def policy_entry_filter(request,  data):
      
         print('request data: ', tmp_data)      
 
-        if len(tmp_data) == 1:          
-            print('into 1st lane')        
-            tdata = tmp_data[0]         
-            print('tdata [0] ', tdata[0])
-            print('tdata [1] ', tdata[1])
+        if str(tmp_data).__contains__('-'):
 
-            d1_array = tdata[0].split('-')
-            d2_array = tdata[1].split('-')
+            if len(tmp_data) == 1:          
+                print('into 1st lane')        
+                tdata = tmp_data[0]         
+                print('tdata [0] ', tdata[0])
+                print('tdata [1] ', tdata[1])
+
+                d1_array = tdata[0].split('-')
+                d2_array = tdata[1].split('-')
+                
+                year = d1_array[2]
+                month = d1_array[1]
+                day = d1_array[0]
+                date1 = year + "-" +  month + "-" + day
+
+                year = d2_array[2]
+                month = d2_array[1]
+                day = d2_array[0]
+                date2 = year + "-" +  month + "-" + day
+
+                print('date 1: ', date1)
+                print('date 2: ', date2)
+
+                datag = Agents.objects.all()
+
+                data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values() 
+
+                policyid_list = []
+                for item in data:
+                    print('item is: ',  item['policyid'])
+                    policyid_list.append(item['policyid'])       
+
+                return render(request, 'policylist/policy_entry_list.html', { "policyid_list" : policyid_list, "vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+
+            if len(tmp_data) == 2:         
+                print('into 2nd lane')
+
+                # date section
+                tdata = tmp_data[0]       
             
-            year = d1_array[2]
-            month = d1_array[1]
-            day = d1_array[0]
-            date1 = year + "-" +  month + "-" + day
+                d1_array = tdata[0].split('-')
+                d2_array = tdata[1].split('-')
+                
+                year = d1_array[2]
+                month = d1_array[1]
+                day = d1_array[0]
+                date1 = year + "-" +  month + "-" + day
 
-            year = d2_array[2]
-            month = d2_array[1]
-            day = d2_array[0]
-            date2 = year + "-" +  month + "-" + day
+                year = d2_array[2]
+                month = d2_array[1]
+                day = d2_array[0]
+                date2 = year + "-" +  month + "-" + day
 
-            print('date 1: ', date1)
-            print('date 2: ', date2)
+                print('date 1: ', date1)
+                print('date 2: ', date2)
 
-            datag = Agents.objects.all()
+                # other filter section
+                # print('tmdata [1] : ', tmp_data[1])
 
-            data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()      
-            return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                datag = Agents.objects.all()
 
-        if len(tmp_data) == 2:         
-            print('into 2nd lane')
-
-            # date section
-            tdata = tmp_data[0]       
-           
-            d1_array = tdata[0].split('-')
-            d2_array = tdata[1].split('-')
-            
-            year = d1_array[2]
-            month = d1_array[1]
-            day = d1_array[0]
-            date1 = year + "-" +  month + "-" + day
-
-            year = d2_array[2]
-            month = d2_array[1]
-            day = d2_array[0]
-            date2 = year + "-" +  month + "-" + day
-
-            print('date 1: ', date1)
-            print('date 2: ', date2)
-
-            # other filter section
-            # print('tmdata [1] : ', tmp_data[1])
-
-            datag = Agents.objects.all()
-
-            data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()  
-
-            print(tmp_data[1][0])
-            # data = policy_entry_all_other_filter2(tmp_data[1][0], data)
-            data = policy_entry_all_other_filter2(tmp_data[1], data)
-           
-            data = list(chain(*data))
-
-
-            if len(data) > 0:
-                # data = data[0]
-               pass
-               
-            else:
-                data = None
-            
-            return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-        
-        if len(tmp_data) == 3:         
-            print('into 3rd lane')
-
-            # date section
-            tdata = tmp_data[0]       
-           
-            d1_array = tdata[0].split('-')
-            d2_array = tdata[1].split('-')
-            
-            year = d1_array[2]
-            month = d1_array[1]
-            day = d1_array[0]
-            date1 = year + "-" +  month + "-" + day
-
-            year = d2_array[2]
-            month = d2_array[1]
-            day = d2_array[0]
-            date2 = year + "-" +  month + "-" + day
-
-            print('date 1: ', date1)
-            print('date 2: ', date2)
-
-            payout_option = tmp_data[2]
-            print('payout: ', payout_option )
-
-
-            datag = Agents.objects.all()
-
-            if payout_option == 'y':
-                data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="")  ).values()  
-            else:
                 data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()  
 
-            print(tmp_data[1][0])
-            # data = policy_entry_all_other_filter2(tmp_data[1][0], data)
-            data = policy_entry_all_other_filter2(tmp_data[1], data)
-           
-            data = list(chain(*data))
-
-
-            if len(data) > 0:
-                # data = data[0]
-               pass
-               
-            else:
-                data = None
+                print(tmp_data[1][0])
+                data = policy_entry_all_other_filter2(tmp_data[1], data)
             
-            return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-         
+                data = list(chain(*data))
+
+
+                if len(data) > 0:
+                    # data = data[0]
+                    pass
+                
+                else:
+                    data = None
+                
+                return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+            
+            if len(tmp_data) == 3:         
+                print('into 3rd lane')
+
+                # date section
+                tdata = tmp_data[0]       
+            
+                d1_array = tdata[0].split('-')
+                d2_array = tdata[1].split('-')
+                
+                year = d1_array[2]
+                month = d1_array[1]
+                day = d1_array[0]
+                date1 = year + "-" +  month + "-" + day
+
+                year = d2_array[2]
+                month = d2_array[1]
+                day = d2_array[0]
+                date2 = year + "-" +  month + "-" + day
+
+                print('date 1: ', date1)
+                print('date 2: ', date2)
+
+                payout_option = tmp_data[2]
+                print('payout: ', payout_option )
+
+
+                datag = Agents.objects.all()
+
+                if payout_option == 'y':
+                    data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="")  ).values()  
+                else:
+                    data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()  
+
+                print(tmp_data[1][0])
+                data = policy_entry_all_other_filter2(tmp_data[1], data)
+            
+                data = list(chain(*data))
+
+                policyid_list = []
+                for item in data:
+                    print('item is: ',  item['policyid'])
+                    policyid_list.append(item['policyid'])
+
+                if len(data) > 0:
+                    # data = data[0]
+                    pass                
+                else:
+                    data = None
+                
+                return render(request, 'policylist/policy_entry_list.html', {"policyid_list" : policyid_list, "vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        
+        else:
+            print('tmp_data is', tmp_data)
+            
+            # tmp_data is [['15', '5', '15', '15'], "['66B9786', '16DCC32']"]
+
+            print('tmp_data[0] ',  tmp_data[0])
+            print('tmp_data[1] ',  tmp_data[1])
+
+            payout_values = {  
+
+            "aod" : tmp_data[0][0],
+            "atp" : tmp_data[0][1],
+            "sod" : tmp_data[0][2],
+            "stp" : tmp_data[0][3]
+            }
+
+            print('payout_values ', payout_values)
+
+            updated_policy_list = [] 
+
+            for id in str(tmp_data[1]).split(','):
+                try:
+                    tid = id.replace('[', '').replace(']', '').replace("'", '').replace("'", '').strip()  
+                    print(tid)
+                    tmp_dataa = Policy.objects.get(policyid=tid)
+                    print('tmp_data: ', tmp_dataa)
+                                
+                    # Agent payout
+                    aod = float(payout_values['aod'])
+                    agent_od_amount = round((float(tmp_dataa.OD_premium) * aod) / 100, 2)
+                    atp = float(payout_values['atp'])
+                    agent_tp_amount = round( (float(tmp_dataa.TP_terrorism) * atp) / 100, 2)
+
+                    # # Self payout
+                    sod = float(payout_values['sod'])
+                    self_od_amount = round( (float(tmp_dataa.OD_premium) * sod) / 100, 2)
+                    stp = float(payout_values['stp'])
+                    self_tp_amount = round( (float(tmp_dataa.TP_terrorism) * stp) / 100, 2)
+
+                    ddata = Policy.objects.filter(policyid=tid)    
+
+                    print('ddata: ', ddata)                
+
+                    ddata.update(agent_od_reward=aod,
+                                agent_od_amount=agent_od_amount,
+                                agent_tp_reward=atp,
+                                agent_tp_amount=agent_tp_amount,
+
+                                self_od_reward=sod,
+                                self_od_amount=self_od_amount,
+                                self_tp_reward=stp,
+                                self_tp_amount=self_tp_amount)
+                    print('Done')                 
+                    updated_policy_list.append(ddata.values())
+
+                except Exception as exc:
+                    print(exc)
+
+            print('updated list length: ', len(updated_policy_list))
+            
+            data = list(chain(*updated_policy_list))
+           
+            datag = Agents.objects.all()
+
+            # data = Policy.objects.order_by('-policyid').filter().values()[:10]   
+            return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
         
     except Exception as ex:       
         return HttpResponse('Error occurred in policy_entry_filter: ' + ex)
-
-
-def policy_entry_date_filterO(request, data):
-    try:
-        print('policy_entry_date_filter method') 
-        # request data:  [['01/04/2023', '30/04/2023']]
-
-        str_data = str(data)
-        # ['07/05/2023', '07/05/2023'] = yesterday       
-        str_data = str_data.replace('/', '-').split(',')
-        # print('str_data ', str_data)
-        
-        sd1 = str_data[0].replace("[", '').split('-')
-        sd2 = str_data[1].replace("]", '').split('-')
-        # print('sd1 ', sd1)
-        # date1
-        d = parse(sd1[0]).day
-        m = parse(sd1[1]).month
-        y = parse(sd1[2]).year
-        # date2
-        d2 = parse(sd2[0]).day
-        m2 = parse(sd2[1]).month
-        y2 = parse(sd2[2]).year                
-            
-        # print('sd2 ', sd2)
-        sdv = str_data[0].strip().split('-')      
-        # print('sdv ', sdv)
-        # print(sdv  ["'01", '04', "2023'"])            
-        year = sdv[2]
-        month = sdv[1]
-        day = sdv[0]
-        date1 = year + "-" +  month + "-" + day
-        date1 = date1.replace("'", "").replace("[", "").replace("]", "").replace("[[", "").replace("]]", "").replace("'", "")
-
-        # sdv = str_data[1].strip().replace("[", '').split('-')     
-        sdv = str_data[1].strip().split('-')     
-        # print('sdv ', sdv)
-        # print(sdv  ["'01", '04', "2023'"])            
-        year = sdv[2]
-        month = sdv[1]
-        day = sdv[0]
-        date2 = year + "-" +  month + "-" + day
-        date2 = date2.replace("'", "").replace("[", "").replace("]", "").replace("[[", "").replace("]]", "").replace("'", "")
-       
-
-        # date1 = datetime(y, m, d)
-        # date1 = datetime(y, d, m)
-        # date2 = datetime(y2, m2, d2)
-        print('date 1: ', date1)
-        print('date 2: ', date2)
-
-        tmp_adv_list = []
-        
-        if is_user(request): 
-            # data = Policy.objects.filter(issue_date__gte='01/04/2023').filter(issue_date__lte='30/04/2023').values() 
-            # data = Policy.objects.filter(issue_date__gte='2023-04-01').filter(issue_date__lte='2023-04-30').values() 
-            data = Policy.objects.filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
-
-            tmp_adv_list.append(data)
-        else:
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
-            data = Policy.objects.filter(employee=get_id_from_session(request)).values() 
-
-        
-        data = list(chain(*tmp_adv_list))
-        # datag = Agents.objects.all()
-        return data
-    
-    except Exception as ex:
-        print('error occurred in policy_entry_date_filter: ', ex)
-        return ex        
 
 
 def policy_entry_date_filter(request, data, filter_payout='n'):
@@ -2398,522 +2324,9 @@ def policy_entry_date_filter(request, data, filter_payout='n'):
         return ex        
 
 
-def policy_entry_single_filter(data, f_data):
-    try:
-        print('policy_entry_single_filter method') 
-        print('data is ', data)
-       
-        qs = None
-
-        if str(data).__contains__("#ins"):                       
-            # print('#ins')                   
-            qs = pol_ins2(data, f_data)            
-        elif str(data).__contains__("#vc"):                              
-            qs = pol_vc2(data, f_data)
-        elif str(data).__contains__("#ft"):                    
-            qs = pol_ft2(data, f_data)                    
-        elif str(data).__contains__("#cc"):                    
-            qs = pol_cc2(data, f_data) 
-        elif str(data).__contains__("#sc"):                    
-            qs = pol_sc2(data, f_data) 
-        elif str(data).__contains__("#ct"):                    
-            qs = pol_ct2(data, f_data) 
-        elif str(data).__contains__("#gvw"):
-            qs = pol_gvw2(data, f_data) 
-        elif str(data).__contains__("#pt"):
-            qs = pol_pt2(data, f_data)                     
-        elif str(data).__contains__("#addon"):              
-            qs = pol_addon2(data, f_data)   
-        elif str(data).__contains__("#ncb"):                    
-            qs = pol_ncb2(data, f_data) 
-        elif str(data).__contains__("#cpa"):                    
-            qs = pol_cpa2(data, f_data)         
-        
-        return qs
-
-    except Exception as ex:
-        print('error in policy_entry_single_filter: ', ex)
-
-
-def policy_entry_all_other_filter(data, f_data):
-    print('policy_entry_all_other_filter calling:')
-    print('data: ', data) # [{'index': '#ins', 'items': ['HDFC ERGO']}, {'index': '#vc', 'items': ['TWO WHEELER COMMERCIAL']}]
-    # print('f_data is ', f_data) # [{'policyid': '39E3E1A', 'profile_id_id': '3CD4A59107554B8', 'proposal_no':
-
-    qs_list = []
-    qs_list_temp = []   
-
-    # filter for ins
-    if str(data).__contains__('#ins'):
-        print('has #ins')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-
-            if key.__contains__('#ins'):
-
-                for m in items_coll:
-                    itm = m.strip()             
-            
-                    for ins in f_data:                       
-                        if itm == ins['insurance_company']:                          
-                            qs_list.append(Policy.objects.filter(policyid=ins['policyid']).values() )
-                         
-    # print('first len: ', len(qs_list))
-    # print('first len: ', qs_list)
-    # print('first qs len: ', qs)
-
-    if str(data).__contains__('#vc'):
-        print('has #vc')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#vc'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            # print('obj is ', obj)                           
-                            # print('')                              
-                            for ty in obj:
-                                # print('ty ', ty['vehicle_catagory'])                             
-                                if itm == ty['vehicle_catagory']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['vehicle_catagory']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-   
-    if str(data).__contains__('#ft'):
-        print('has #ft')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#ft'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            # print('obj is ', obj)                           
-                            # print('')                              
-                            for ty in obj:
-                                # print('ty ', ty['vehicle_fuel_type'])                             
-                                if itm == ty['vehicle_fuel_type']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['vehicle_fuel_type']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-   
-    if str(data).__contains__('#cc'):
-        print('has #cc')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#cc'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            # print('obj is ', obj)                           
-                            # print('')                              
-                            for ty in obj:
-                                # print('ty ', ty['cubic_capacity'])                             
-                                if itm == ty['cubic_capacity']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['cubic_capacity']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-       
-    if str(data).__contains__('#sc'):
-        print('has #sc')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#sc'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            # print('obj is ', obj)                           
-                            # print('')                              
-                            for ty in obj:
-                                # print('ty ', ty['seating_capacity'])                             
-                                if itm == ty['seating_capacity']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['seating_capacity']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-    
-    if str(data).__contains__('#ct'):
-        print('has #ct')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#ct'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            # print('obj is ', obj)                           
-                            # print('')                              
-                            for ty in obj:
-                                # print('ty ', ty['coverage_type'])                             
-                                if itm == ty['coverage_type']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['coverage_type']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-   
-    if str(data).__contains__('#gvw'):
-        print('has #gvw')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#gvw'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            # print('obj is ', obj)                           
-                            # print('')                              
-                            for ty in obj:
-                                # print('ty ', ty['gvw'])                             
-                                if itm == ty['gvw']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['gvw']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-   
-    if str(data).__contains__('#pt'):
-        print('has #pt')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#pt'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            # print('obj is ', obj)                           
-                            # print('')                              
-                            for ty in obj:
-                                # print('ty ', ty['policy_type'])                             
-                                if itm == ty['policy_type']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['policy_type']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-    
-    if str(data).__contains__('#addon'):
-        print('has #addon')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#addon'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            # print('obj is ', obj)                           
-                            # print('')                              
-                            for ty in obj:
-                                # print('ty ', ty['addon'])                             
-                                if itm == ty['addon']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['addon']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-    
-    if str(data).__contains__('#ncb'):
-        print('has #ncb')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#ncb'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            # print('obj is ', obj)                           
-                            # print('')                              
-                            for ty in obj:
-                                # print('ty ', ty['ncb'])                             
-                                if itm == ty['ncb']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['ncb']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-    
-    if str(data).__contains__('#cpa'):
-        print('has #cpa')
-        for k in data:
-            # Getting name
-            coll = (str(k).split(','))
-            stripString = str(coll[0]).strip()
-            index = stripString.index('#')   
-            key = stripString[index:]
-            # print(key)
-
-            # getting items
-            items = str(k).strip()
-            sIndex = items.index('[') + 1
-            items_coll = items[sIndex: items.__len__()-2]
-            items_coll = items_coll.replace("'", '')
-            items_coll = items_coll.split(",")
-            # print('col ',  items_coll)
-          
-            if key.__contains__('#cpa'):               
-               
-                if len(qs_list) > 0:
-                    tmpData = qs_list
-                    qs_list = []
-
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in tmpData:             
-                            # print('obj is ', obj)                           
-                            # print('')                              
-                            for ty in obj:
-                                # print('ty ', ty['cpa'])                             
-                                if itm == ty['cpa']:    
-                                    qs_list.append(Policy.objects.filter(policyid=ty['policyid']).values())        
-                                                    
-                else: 
-                    for m in items_coll:
-                        itm = m.strip()             
-                
-                        for obj in f_data:                           
-                            if itm == obj['cpa']:    
-                                qs_list.append(Policy.objects.filter(policyid=obj['policyid']).values())
-   
-       
-    # print('qs list ', qs_list)
-    print('qs list length', len(qs_list))    
-    return qs_list
-
-
 def policy_entry_all_other_filter2(data, f_data):
     print('')
-    print('policy_entry_all_other_filter 2 calling:')
+    print('policy_entry_all_other_filter2 calling:')
     print('data: ', data) 
     # print('data: ', f_data) 
 
@@ -3420,8 +2833,76 @@ def policy_entry_all_other_filter2(data, f_data):
     print('qs list length', len(qs_list))    
     return qs_list
 
+
+def apply_policy_payout(data):
+    try:
+        print('apply_policy_payout method calling: ')
+
+        print('data[0] ',  data[0])
+        print('data[1] ',  data[1])
+
+        print('aod: ', data[0][0])
+        return
+    
+        payout_values = {  
+            "aod" : data[0][0],
+            "atp" : data[0][1],
+            "sod" : data[0][2],
+            "stp" : data[0][3]
+         }
+        
+        print(payout_values)
+        # print(payout_values['aod'])
+
+        updated_policy_list = []      
+        return updated_policy_list
+    
+        for id in data[1]:
+            try:
+                print(id)
+                tmp_data = Policy.objects.get(policyid=id)
+                print('tmp_data: ', tmp_data)
+                             
+                # Agent payout
+                aod = float(payout_values['aod'])
+                agent_od_amount = round((float(tmp_data.OD_premium) * aod) / 100, 2)
+                atp = float(payout_values['atp'])
+                agent_tp_amount = round( (float(tmp_data.TP_terrorism) * atp) / 100, 2)
+
+                # # Self payout
+                sod = float(payout_values['sod'])
+                self_od_amount = round( (float(tmp_data.OD_premium) * sod) / 100, 2)
+                stp = float(payout_values['stp'])
+                self_tp_amount = round( (float(tmp_data.TP_terrorism) * stp) / 100, 2)
+
+                ddata = Policy.objects.filter(policyid=id)
+                
+
+                ddata.update(agent_od_reward=aod,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=atp,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=sod,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=stp,
+                            self_tp_amount=self_tp_amount)
+                print('Done')
+                # updated_policy_list.append(id) '229`'
+                updated_policy_list.append(ddata.values())
+
+            except Exception as exc:
+                print(exc)
+        print('app is safe')
+        return updated_policy_list   
+    
+    except Exception as ex:
+        print(ex)
+        return HttpResponse(ex)
+
+
    
-qs_list = []
+# qs_list = []
 
 
 def pol_ins(data):
@@ -4248,7 +3729,7 @@ def policy_entry_list_update(request):
         # print(data)
         # [['10', '20', '30', '40'], ['24EF892']]      
        
-        data = apply_policy_payout(data)
+        # data = apply_policy_payout(data)
 
         data = list(chain(*data))
         datag = Agents.objects.all()
@@ -4256,14 +3737,14 @@ def policy_entry_list_update(request):
         return JsonResponse({'data': data})
 
 
-def apply_policy_payout(data):
+def apply_policy_payout_old(data):
     try:
-        print('apply_policy_payout method')
+        print('apply_policy_payout method calling: ')
 
         print('data[0] ',  data[0])
         print('data[1] ',  data[1])
-        # data[0]  ['10', '20', '30', '40']
-        # data[1]  ['E08DA7C', '62ED284', 'C7FBF01', '4F807DC', 'C7A931F', '24EF892']
+        data[0]  ['10', '20', '30', '40']
+        data[1]  ['E08DA7C', '62ED284', 'C7FBF01', '4F807DC', 'C7A931F', '24EF892']
        
         payout_values = {  
             "aod" : data[0][0],
@@ -4282,10 +3763,75 @@ def apply_policy_payout(data):
                 print(id)
                 tmp_data = Policy.objects.get(policyid=id)
                 print('tmp_data: ', tmp_data)
+                             
+                # Agent payout
+                aod = float(payout_values['aod'])
+                agent_od_amount = round((float(tmp_data.OD_premium) * aod) / 100, 2)
+                atp = float(payout_values['atp'])
+                agent_tp_amount = round( (float(tmp_data.TP_terrorism) * atp) / 100, 2)
 
-                # print('od' , tmp_data.OD_premium)
-                # print('tp' , tmp_data.TP_terrorism)
-              
+                # # Self payout
+                sod = float(payout_values['sod'])
+                self_od_amount = round( (float(tmp_data.OD_premium) * sod) / 100, 2)
+                stp = float(payout_values['stp'])
+                self_tp_amount = round( (float(tmp_data.TP_terrorism) * stp) / 100, 2)
+
+                ddata = Policy.objects.filter(policyid=id)
+                
+
+                ddata.update(agent_od_reward=aod,
+                            agent_od_amount=agent_od_amount,
+                            agent_tp_reward=atp,
+                            agent_tp_amount=agent_tp_amount,
+
+                            self_od_reward=sod,
+                            self_od_amount=self_od_amount,
+                            self_tp_reward=stp,
+                            self_tp_amount=self_tp_amount)
+                print('Done')
+                # updated_policy_list.append(id) '229`'
+                updated_policy_list.append(ddata.values())
+
+            except Exception as exc:
+                print(exc)
+
+        return updated_policy_list   
+
+      
+        # return render(request, 'policylist/policy_entry_list.html', {'data': data})
+        # return redirect('bima_policy:create_policy')
+    except Exception as ex:
+        print(ex)
+        return HttpResponse(ex)
+
+
+def apply_policy_payout(data):
+    try:
+        print('apply_policy_payout method calling: ')
+
+        print('data[0] ',  data[0])
+        print('data[1] ',  data[1])
+        data[0]  ['10', '20', '30', '40']
+        data[1]  ['E08DA7C', '62ED284', 'C7FBF01', '4F807DC', 'C7A931F', '24EF892']
+       
+        payout_values = {  
+            "aod" : data[0][0],
+            "atp" : data[0][1],
+            "sod" : data[0][2],
+            "stp" : data[0][3]
+         }
+        
+        print(payout_values)
+        print(payout_values['aod'])
+
+        updated_policy_list = []      
+      
+        for id in data[1]:
+            try:
+                print(id)
+                tmp_data = Policy.objects.get(policyid=id)
+                print('tmp_data: ', tmp_data)
+                             
                 # Agent payout
                 aod = float(payout_values['aod'])
                 agent_od_amount = round((float(tmp_data.OD_premium) * aod) / 100, 2)

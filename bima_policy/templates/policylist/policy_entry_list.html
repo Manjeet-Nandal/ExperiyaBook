@@ -214,7 +214,7 @@
                            </div>
                            {% endif %}
                         </div>
-                        <div id="morefilters" class="row">
+                        <div id="morefilters" class="row" hidden>
                            <div class="form-row">
                               <input id="ps1" name="ps1" type="checkbox" value="No Payouts" class="checkbox mr-2"
                                  style="margin-bottom: auto; margin-top: 4px;">
@@ -233,7 +233,7 @@
                                  <option value="insurer">Insurers</option>
                                  <option value="vehicle_catagory">Vehicle Catagory</option>
                                  <option value="vehicle_makeby">Vehicle Makeby</option>
-                                 <option value="vehicle_model" >Vehicle Model</option>
+                                 <option value="vehicle_model">Vehicle Model</option>
                                  <option value="fuel_type">Fuel Type</option>
                                  <option value="cc">Cubic Capacity</option>
                                  <option value="sc">Seating Capacity</option>
@@ -446,7 +446,7 @@
                               {% if is_user %}
 
                               <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100"
-                                 data-toggle="modal" data-target="#mdlUpdatePayout" disabled>Update</button>
+                                 data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
                               {% endif %}
                               <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1" hidden
                                  onclick="saveFilter()">Save</button>
@@ -1908,15 +1908,15 @@
          main_list.push(date_list)
 
          main_list.push(filterListMultiple)
-         
+
          jsonData = JSON.stringify(main_list);
-         
-         isChecked = document.getElementById('ps1').checked         
+
+         isChecked = document.getElementById('ps1').checked
          if (isChecked) {
             main_list.push("y")
             jsonData = JSON.stringify(main_list);
          }
-         else{
+         else {
 
             main_list.push("n")
             jsonData = JSON.stringify(main_list);
@@ -1933,8 +1933,6 @@
       // alert(jsonData)
 
       url = window.location.origin + '/bima_policy/policy/entry/' + jsonData
-
-
 
       window.location.replace(url)
       return;
@@ -2096,7 +2094,13 @@
       pVal_pList = []
 
       pVal_pList.push(payoutValues)
-      pVal_pList.push(policyid_list)
+
+      plist = "{{ policyid_list | safe}}"
+
+      console.log(plist);
+
+      // return;
+      pVal_pList.push(plist)
 
       console.log(pVal_pList);
 
@@ -2104,11 +2108,11 @@
       // alert('here')
       jsonData = JSON.stringify(pVal_pList);
 
-      filter_content = document.getElementById('filter_content')
-      if (filter_content.options.length == 1) {
-         alert('You have not selected any filter option! ')
-         return;
-      }
+      url = window.location.origin + '/bima_policy/policy/entry/' + jsonData
+
+      window.location.replace(url)
+
+      return
 
       pathname = '/bima_policy/policy/entry_list_update'
 
@@ -2345,8 +2349,8 @@
             vmodel.options.add(newoption);
 
          })
-      
-         select_all_Items('filter_content')      
+
+      select_all_Items('filter_content')
    }
 
 
