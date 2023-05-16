@@ -2195,6 +2195,55 @@ def policy_entry_filter(request,  data):
                 data = None
             
             return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        
+        if len(tmp_data) == 3:         
+            print('into 3rd lane')
+
+            # date section
+            tdata = tmp_data[0]       
+           
+            d1_array = tdata[0].split('-')
+            d2_array = tdata[1].split('-')
+            
+            year = d1_array[2]
+            month = d1_array[1]
+            day = d1_array[0]
+            date1 = year + "-" +  month + "-" + day
+
+            year = d2_array[2]
+            month = d2_array[1]
+            day = d2_array[0]
+            date2 = year + "-" +  month + "-" + day
+
+            print('date 1: ', date1)
+            print('date 2: ', date2)
+
+            payout_option = tmp_data[2]
+            print('payout: ', payout_option )
+
+
+            datag = Agents.objects.all()
+
+            if payout_option == 'y':
+                data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="")  ).values()  
+            else:
+                data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()  
+
+            print(tmp_data[1][0])
+            # data = policy_entry_all_other_filter2(tmp_data[1][0], data)
+            data = policy_entry_all_other_filter2(tmp_data[1], data)
+           
+            data = list(chain(*data))
+
+
+            if len(data) > 0:
+                # data = data[0]
+               pass
+               
+            else:
+                data = None
+            
+            return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
          
         
     except Exception as ex:       

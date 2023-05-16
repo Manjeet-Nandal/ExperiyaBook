@@ -1908,8 +1908,19 @@
          main_list.push(date_list)
 
          main_list.push(filterListMultiple)
-
+         
          jsonData = JSON.stringify(main_list);
+         
+         isChecked = document.getElementById('ps1').checked         
+         if (isChecked) {
+            main_list.push("y")
+            jsonData = JSON.stringify(main_list);
+         }
+         else{
+
+            main_list.push("n")
+            jsonData = JSON.stringify(main_list);
+         }
       }
       else {
 
@@ -1919,6 +1930,7 @@
       }
 
       console.log('jsonData: ' + jsonData);
+      // alert(jsonData)
 
       url = window.location.origin + '/bima_policy/policy/entry/' + jsonData
 
