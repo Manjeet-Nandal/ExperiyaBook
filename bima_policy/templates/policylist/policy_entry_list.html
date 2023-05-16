@@ -214,7 +214,7 @@
                            </div>
                            {% endif %}
                         </div>
-                        <div id="morefilters" class="row" hidden>
+                        <div id="morefilters" class="row" >
                            <div class="form-row">
                               <input id="ps1" name="ps1" type="checkbox" value="No Payouts" class="checkbox mr-2"
                                  style="margin-bottom: auto; margin-top: 4px;">
@@ -1694,9 +1694,9 @@
       filterListMultiple = []
       isMultiFilter = false
       rowList = []
-    
+
       policyid_list = []
-      payoutValues = []     
+      payoutValues = []
    }
 
 
@@ -1707,40 +1707,40 @@
       cell_no = 0
 
       if (value == 'insurer') {
-         cell_no = '#ins'
+         cell_no = '-ins'
       }
       else if (value == 'vehicle_catagory') {
-         cell_no = "#vc"
+         cell_no = "-vc"
       }
       else if (value == 'vehicle_makeby') {
-         cell_no = "#vm"
+         cell_no = "-vm"
       }
       else if (value == 'fuel_type') {
-         cell_no = "#ft"
+         cell_no = "-ft"
       }
       else if (value == 'cc') {
-         cell_no = "#cc"
+         cell_no = "-cc"
       }
       else if (value == 'sc') {
-         cell_no = "#sc"
+         cell_no = "-sc"
       }
       else if (value == 'ct') {
-         cell_no = "#ct"
+         cell_no = "-ct"
       }
       else if (value == 'gvw') {
-         cell_no = "#gvw"
+         cell_no = "-gvw"
       }
       else if (value == 'policy_type') {
-         cell_no = "#pt"
+         cell_no = "-pt"
       }
       else if (value == 'addon') {
-         cell_no = "#addon"
+         cell_no = "-addon"
       }
       else if (value == 'ncb') {
-         cell_no = "#ncb"
+         cell_no = "-ncb"
       }
       else if (value == 'cpa') {
-         cell_no = "#cpa"
+         cell_no = "-cpa"
       }
 
       return cell_no
@@ -1876,40 +1876,45 @@
 
    }
 
-
+   
    function entry_filter() {
-
-      // Adding date for filter
+    
       val1 = document.getElementById('frmDate').value
       val2 = document.getElementById('toDate').value
-      filter_date_list = []
-      filter_date_list.push(val1)
-      filter_date_list.push(val2)
 
-      // Adding other filter
-      withDateList = []
+      d1 = String(val1).replace('/', '-').replace('/', '-').replace('/', '-')
+      d2 = String(val2).replace('/', '-').replace('/', '-').replace('/', '-')
 
-      if (document.getElementById('morefilters').hidden) {
-         withDateList.push(filter_date_list)
-         jsonData = JSON.stringify(withDateList);
-      }
-      else {
-         // alert(filterList.length)
-         // addName3()
-         withDateList.push(filter_date_list)
-         withDateList.push(filterListMultiple)
+
+      date_list = []
+      date_list.push(d1)
+      date_list.push(d2)
+
+      main_list = []
+    
+      if (filterListMultiple.length > 0) {
+
+         main_list.push(date_list)
          
-         jsonData = JSON.stringify(withDateList);
+         main_list.push(filterListMultiple)
 
-         isChecked = document.getElementById('ps1').checked
-         if (isChecked) {
-            withDateList.push('y')
-            jsonData = JSON.stringify(withDateList);
-         }
+         jsonData = JSON.stringify(main_list);
       }
+      else{
 
+         main_list.push(date_list)
 
+         jsonData = JSON.stringify(main_list);
+      }       
+      
       console.log('jsonData: ' + jsonData);
+
+      url = window.location.origin + '/bima_policy/policy/entry/' + jsonData
+
+
+
+      window.location.replace(url)
+      return;
 
       $.ajax({
          url: window.location.origin + '/bima_policy/policy/entry_filter',
@@ -2105,7 +2110,7 @@
       });
    }
 
-   
+
    function responseHandlerForPayoutobs(response) {
       console.log('responseHandlerForPayout method calling: ');
       // console.log(response.data);
@@ -2188,9 +2193,91 @@
 
    }
 
-   function ExportToExcel(type, fn, dl) {
+
+   function entry_filter_loader() {
+
+      // Adding date for filter
+      val1 = document.getElementById('frmDate').value
+      val2 = document.getElementById('toDate').value
+
+      d1 = String(val1).replace('/', '-').replace('/', '-').replace('/', '-')
+      d2 = String(val2).replace('/', '-').replace('/', '-').replace('/', '-')
+
+      filter_date_list = []
+      filter_date_list.push(d1)
+      filter_date_list.push(d2)
+
+      console.log('val1 ', d1);
+      console.log('val2 ', d2);
+
+      jsonData = JSON.stringify(filter_date_list);   
+     
+      console.log('json data: ', jsonData);
+
+
+      url =  window.location.origin + '/bima_policy/policy/entry/' + jsonData
+
+      window.location.replace(url)
 
       return;
+      // Adding date for filter
+      val1 = document.getElementById('frmDate').value
+      val2 = document.getElementById('toDate').value
+      filter_date_list = []
+      filter_date_list.push(val1)
+      filter_date_list.push(val2)
+
+      // Adding other filter
+      withDateList = []
+
+      if (document.getElementById('morefilters').hidden) {
+         withDateList.push(filter_date_list)
+         jsonData = JSON.stringify(withDateList);
+      }
+      else {
+         // alert(filterList.length)
+         // addName3()
+         withDateList.push(filter_date_list)
+         withDateList.push(filterListMultiple)
+
+         jsonData = JSON.stringify(withDateList);
+
+         isChecked = document.getElementById('ps1').checked
+         if (isChecked) {
+            withDateList.push('y')
+            jsonData = JSON.stringify(withDateList);
+         }
+      }
+
+
+      console.log('jsonData: ' + jsonData);
+
+      $.ajax({
+         url: window.location.origin + '/bima_policy/policy/entry/last_month',
+         type: 'GET',
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: { 'data': jsonData },
+         dataType: 'json',
+         success: function (response) {
+            console.log(response);
+            entry_filter_response_handler(response)
+            // alert('call done')
+
+         },
+         error: function (xhr, status, error) {
+            // Handle any errors that occurred during the request
+            console.log('error occurred ', error);
+         }
+      });
+
+
+   }
+
+
+   function ExportToExcel(type, fn, dl) {
+     
       var elt = document.getElementById('tblInsurance');
       var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
       return dl ?

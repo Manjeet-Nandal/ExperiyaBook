@@ -1995,44 +1995,7 @@ def apply_policy(request, id):
         return HttpResponse('apply_policy method originated folowing error: ' + ex)
 
 
-def policy_entry_page(request):
-    print('policy_entry_page method')
-  
-    items = 25
-
-    try:
-        queryset = Policy.objects.all()
-        paginator = Paginator(queryset, 10) # 10 items per page
-
-        page_number = request.GET.get('page', 1)
-        data = paginator.page(page_number)
-
-
-
-        if is_user(request):                  
-            # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
-            # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()[:items]
-            # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()
-            pass
-
-            # print(data)
-
-        else:
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date=datetime.now().date()).order_by('-policyid').values()         
-            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()         
-
-        # print("total policy: ", data.values().count())
-        datag = Agents.objects.all()
-       
-        # return JsonResponse({'data': cdata})
-        return render(request, 'policylist/policy_entry_list.html', {'page': page, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-    except Exception as ex:
-        # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
-        print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-
-
-def policy_entry(request):
+def policy_entryOri(request):
     print('policy_entry method')
     # print(get_id_from_session(request)) 
   
@@ -2066,48 +2029,171 @@ def policy_entry(request):
         print(ex)
         return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
+
+def policy_entry(request):
+    print('policy_entry method')
+    # print(get_id_from_session(request)) 
+
+
+    try:        
+        if is_user(request):                  
+            # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
+            # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()[:25]
+            data = Policy.objects.order_by('-policyid').values()          
+            # print(data)
+
+        else:
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date=datetime.now().date()).order_by('-policyid').values()         
+            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()         
+
+        # print("total policy: ", data.values().count())
+        datag = Agents.objects.all()
+
+        # queryset = Policy.objects.all()
+        paginator = Paginator(data, 25) # 10 items per page
+
+        page_number = request.GET.get('page', 1)
+        print('page no: ' , page_number)
+      
+        # page = paginator.page(page_number)
+
+        data = paginator.page(page_number)
+
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+    except Exception as ex:
+        # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+
+
+def policy_entry_last_month(request, period):
+    print('policy_entry_last_month method')
+    # print(get_id_from_session(request)) 
+
+    dates = json.loads(period)
+
+    print('initial ', dates)
+
+    d1_array = dates[0].split('-')
+    d2_array = dates[1].split('-')
+    
+    year = d1_array[2]
+    month = d1_array[1]
+    day = d1_array[0]
+    date1 = year + "-" +  month + "-" + day
+
+    year = d2_array[2]
+    month = d2_array[1]
+    day = d2_array[0]
+    date2 = year + "-" +  month + "-" + day
+
+    print('date 1: ', date1)
+    print('date 2: ', date2)
+    
+    data = None  
+    datag = None
+
+    try:    
+        if is_user(request):      
+            data = Policy.objects.order_by('-policyid').values()  [:10]                         
+            # data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()                           
+        else:
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date=datetime.now().date()).order_by('-policyid').values()         
+            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()        
+        
+        datag = Agents.objects.all()
+
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+           
+    except Exception as ex:
+        # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
+        print(ex)
+        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+
+
 from dateutil.parser import parse
 
-def policy_entry_filter(request):
+def policy_entry_filter(request,  data):
+    print('') 
     print('policy_entry_filter method') 
     
-    try:
-        if request.method == 'POST':  
-            data = json.loads(request.POST['data'])
-            print('request data: ', data)
-            # request data:  [['10/05/2023', '10/05/2023'], [{'index': '#ins', 'items': ['HDFC ERGO']}]]
-            # print('len is: ', len(data))
+    try:      
+        tmp_data = json.loads(data)
+     
+        print('request data: ', tmp_data)      
+
+        if len(tmp_data) == 1:          
+            print('into 1st lane')        
+            tdata = tmp_data[0]         
+            print('tdata [0] ', tdata[0])
+            print('tdata [1] ', tdata[1])
+
+            d1_array = tdata[0].split('-')
+            d2_array = tdata[1].split('-')
             
-            if len(data) == 1:
-                response_data = policy_entry_date_filter(request, data)   
-                return JsonResponse({'data': response_data})
+            year = d1_array[2]
+            month = d1_array[1]
+            day = d1_array[0]
+            date1 = year + "-" +  month + "-" + day
+
+            year = d2_array[2]
+            month = d2_array[1]
+            day = d2_array[0]
+            date2 = year + "-" +  month + "-" + day
+
+            print('date 1: ', date1)
+            print('date 2: ', date2)
+
+            datag = Agents.objects.all()
+
+            data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()      
+            return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+
+        if len(tmp_data) == 2:         
+            print('into 2nd lane')
+
+            # date section
+            tdata = tmp_data[0]       
            
-            elif len(data) == 2:                
-                f_data = policy_entry_date_filter(request, data[0]) 
-                # data = policy_entry_single_filter(data[1], f_data)
+            d1_array = tdata[0].split('-')
+            d2_array = tdata[1].split('-')
+            
+            year = d1_array[2]
+            month = d1_array[1]
+            day = d1_array[0]
+            date1 = year + "-" +  month + "-" + day
 
-                s_data = policy_entry_all_other_filter(data[1], f_data)
-                print('===========')
-                # print('fdatas is : ', len(s_data))
+            year = d2_array[2]
+            month = d2_array[1]
+            day = d2_array[0]
+            date2 = year + "-" +  month + "-" + day
 
-                # print('dt8 ', data[0]) 
-                response_data = list(chain(*s_data))
-                return JsonResponse({'data': response_data})           
-            elif len(data) == 3:     
-                print(data[2])           
-                f_data = policy_entry_date_filter(request, data[0], data[2]) 
-                # data = policy_entry_single_filter(data[1], f_data)
+            print('date 1: ', date1)
+            print('date 2: ', date2)
 
-                s_data = policy_entry_all_other_filter(data[1], f_data)
-                print('===========')
-                # print('fdatas is : ', len(s_data))
+            # other filter section
+            # print('tmdata [1] : ', tmp_data[1])
 
-                # print('dt8 ', data[0]) 
-                response_data = list(chain(*s_data))
-                return JsonResponse({'data': response_data})           
-                      
+            datag = Agents.objects.all()
 
-        # return redirect('bima_policy:policy_entry')
+            data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()  
+
+            print(tmp_data[1][0])
+            # data = policy_entry_all_other_filter2(tmp_data[1][0], data)
+            data = policy_entry_all_other_filter2(tmp_data[1], data)
+           
+            data = list(chain(*data))
+
+
+            if len(data) > 0:
+                # data = data[0]
+               pass
+               
+            else:
+                data = None
+            
+            return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+         
         
     except Exception as ex:       
         return HttpResponse('Error occurred in policy_entry_filter: ' + ex)
@@ -2772,7 +2858,439 @@ def policy_entry_all_other_filter(data, f_data):
     # print('qs list ', qs_list)
     print('qs list length', len(qs_list))    
     return qs_list
-  
+
+
+def policy_entry_all_other_filter2(data, f_data):
+    print('')
+    print('policy_entry_all_other_filter 2 calling:')
+    print('data: ', data) 
+    # print('data: ', f_data) 
+
+    qs_list_temp = []      
+    qs_list = []
+
+    str_dataa = str(data)
+
+    # filter for ins
+    if str_dataa.__contains__('-ins'):
+        print('has ins')        
+        str_data = str(data)
+        ins_index = str(data).index('-ins')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        for e in name:
+            ee = e.strip()  
+            # print(ee)
+            for ins in f_data:                       
+                if ee == ins['insurance_company']:     
+                    pid = ins['policyid']                          
+                    qs_list.append(Policy.objects.filter(policyid = pid).values() )      
+        
+        print('ins length: ', len(qs_list) )  
+
+    if str_dataa.__contains__('-vc'):
+        print('')
+        print('has vc')        
+        str_data = str(data)
+        ins_index = str(data).index('-vc')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['vehicle_catagory']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['vehicle_catagory']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('vc length: ', len(qs_list))
+
+    if str_dataa.__contains__('-ft'):
+        print('')
+        print('has ft')        
+        str_data = str(data)
+        ins_index = str(data).index('-ft')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['vehicle_fuel_type']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['vehicle_fuel_type']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('ft length: ', len(qs_list))
+
+    if str_dataa.__contains__('-cc'):
+        print('')
+        print('has cc')        
+        str_data = str(data)
+        ins_index = str(data).index('-cc')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['cubic_capacity']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['cubic_capacity']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('cc length: ', len(qs_list))
+
+    if str_dataa.__contains__('-sc'):
+        print('')
+        print('has sc')        
+        str_data = str(data)
+        ins_index = str(data).index('-sc')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['seating_capacity']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['seating_capacity']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('sc length: ', len(qs_list))
+
+    if str_dataa.__contains__('-ct'):
+        print('')
+        print('has ct')        
+        str_data = str(data)
+        ins_index = str(data).index('-ct')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['coverage_type']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['coverage_type']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('ct length: ', len(qs_list))
+
+    if str_dataa.__contains__('-gvw'):
+        print('')
+        print('has gvw')        
+        str_data = str(data)
+        ins_index = str(data).index('-gvw')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['gvw']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['gvw']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('gvw length: ', len(qs_list))
+
+    if str_dataa.__contains__('-pt'):
+        print('')
+        print('has pt')        
+        str_data = str(data)
+        ins_index = str(data).index('-pt')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['policy_type']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['policy_type']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('pt length: ', len(qs_list))
+
+    if str_dataa.__contains__('-addon'):
+        print('')
+        print('has addon')        
+        str_data = str(data)
+        ins_index = str(data).index('-addon')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['addon']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['addon']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('addon length: ', len(qs_list))
+
+    if str_dataa.__contains__('-ncb'):
+        print('')
+        print('has ncb')        
+        str_data = str(data)
+        ins_index = str(data).index('-ncb')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['ncb']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['ncb']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('ncb length: ', len(qs_list))
+
+    if str_dataa.__contains__('-cpa'):
+        print('')
+        print('has cpa')        
+        str_data = str(data)
+        ins_index = str(data).index('-cpa')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['cpa']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['cpa']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('cpa length: ', len(qs_list))
+
+     
+    # print('qs list ', qs_list)  
+ 
+    print('qs list length', len(qs_list))    
+    return qs_list
+
    
 qs_list = []
 
