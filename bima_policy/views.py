@@ -2033,8 +2033,8 @@ def policy_entryOri(request):
 def policy_entry(request):
     print('policy_entry method')
     # print(get_id_from_session(request)) 
-
-
+    vdata = fetch_vehicle_data()
+       
     try:        
         if is_user(request):                  
             # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
@@ -2059,7 +2059,7 @@ def policy_entry(request):
 
         data = paginator.page(page_number)
 
-        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
@@ -2116,6 +2116,8 @@ from dateutil.parser import parse
 def policy_entry_filter(request,  data):
     print('') 
     print('policy_entry_filter method') 
+
+    vdata = fetch_vehicle_data()
     
     try:      
         tmp_data = json.loads(data)
@@ -2147,7 +2149,7 @@ def policy_entry_filter(request,  data):
             datag = Agents.objects.all()
 
             data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()      
-            return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+            return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
         if len(tmp_data) == 2:         
             print('into 2nd lane')
@@ -2192,7 +2194,7 @@ def policy_entry_filter(request,  data):
             else:
                 data = None
             
-            return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+            return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
          
         
     except Exception as ex:       
@@ -2933,6 +2935,84 @@ def policy_entry_all_other_filter2(data, f_data):
                         qs_list.append(Policy.objects.filter(policyid = pid).values() )   
                         
         print('vc length: ', len(qs_list))
+
+    if str_dataa.__contains__('-vmb'):
+        print('')
+        print('has vmb')        
+        str_data = str(data)
+        ins_index = str(data).index('-vmb')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['vehicle_makeby']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['vehicle_makeby']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('vmb length: ', len(qs_list))
+
+    if str_dataa.__contains__('-vm'):
+        print('')
+        print('has vm')        
+        str_data = str(data)
+        ins_index = str(data).index('-vm')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index )      
+        c_index = str_data.index(']', ins_index )      
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)    
+
+        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        
+        if len(qs_list) > 0:            
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in qs_list_temp:                       
+                    if ee == ins['vehicle_model']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+        else:
+            for e in name:
+                ee = e.strip()  
+                print(ee)
+                
+                for ins in f_data:                       
+                    if ee == ins['vehicle_model']:     
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
+                        
+        print('vm length: ', len(qs_list))
 
     if str_dataa.__contains__('-ft'):
         print('')

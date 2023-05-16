@@ -214,7 +214,7 @@
                            </div>
                            {% endif %}
                         </div>
-                        <div id="morefilters" class="row" >
+                        <div id="morefilters" class="row">
                            <div class="form-row">
                               <input id="ps1" name="ps1" type="checkbox" value="No Payouts" class="checkbox mr-2"
                                  style="margin-bottom: auto; margin-top: 4px;">
@@ -232,8 +232,8 @@
                                  onchange="add_filter_type()">
                                  <option value="insurer">Insurers</option>
                                  <option value="vehicle_catagory">Vehicle Catagory</option>
-                                 <option value="vehicle_makeby" hidden>Vehicle Makeby</option>
-                                 <option value="vehicle_model" hidden>Vehicle Model</option>
+                                 <option value="vehicle_makeby">Vehicle Makeby</option>
+                                 <option value="vehicle_model" >Vehicle Model</option>
                                  <option value="fuel_type">Fuel Type</option>
                                  <option value="cc">Cubic Capacity</option>
                                  <option value="sc">Seating Capacity</option>
@@ -296,12 +296,19 @@
                                     ncb_col = ['YES', 'NO']
                                     cpa_col = ['YES', 'NO']
 
-
                                     if (filter_type_value == 'insurer') {
                                        add_items(comp_col, filter_content)
                                     }
                                     else if (filter_type_value == 'vehicle_catagory') {
                                        add_items(vcat_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'vehicle_makeby') {
+                                       // add_items(vmb_col, filter_content)
+                                       addVehicleMakes();
+                                    }
+                                    else if (filter_type_value == 'vehicle_model') {
+                                       // add_items(vmb_col, filter_content)
+                                       addVehicleModels();
                                     }
                                     else if (filter_type_value == 'fuel_type') {
                                        add_items(fuel_col, filter_content)
@@ -335,6 +342,7 @@
 
                            </div>
 
+
                            <div id="divFilterContent" class="col-md-5 mb-4">
                               <!-- <label for="my-select">Vehicle Make:</label> -->
                               <input type="text" id="search-select" class="form-control" placeholder="Search..">
@@ -349,7 +357,7 @@
                               <button id="deselect-all" hidden>Deselect All</button>
 
                               <script>
-                                 const select = document.getElementById("vehicle_makeby");
+                                 const select = document.getElementById("filter_content");
                                  const selectAllButton = document.getElementById("select-all");
                                  const deselectAllButton = document.getElementById("deselect-all");
                                  const searchInput = document.getElementById("search-select");
@@ -1713,6 +1721,9 @@
          cell_no = "-vc"
       }
       else if (value == 'vehicle_makeby') {
+         cell_no = "-vmb"
+      }
+      else if (value == 'vehicle_model') {
          cell_no = "-vm"
       }
       else if (value == 'fuel_type') {
@@ -1876,9 +1887,9 @@
 
    }
 
-   
+
    function entry_filter() {
-    
+
       val1 = document.getElementById('frmDate').value
       val2 = document.getElementById('toDate').value
 
@@ -1891,22 +1902,22 @@
       date_list.push(d2)
 
       main_list = []
-    
+
       if (filterListMultiple.length > 0) {
 
          main_list.push(date_list)
-         
+
          main_list.push(filterListMultiple)
 
          jsonData = JSON.stringify(main_list);
       }
-      else{
+      else {
 
          main_list.push(date_list)
 
          jsonData = JSON.stringify(main_list);
-      }       
-      
+      }
+
       console.log('jsonData: ' + jsonData);
 
       url = window.location.origin + '/bima_policy/policy/entry/' + jsonData
@@ -2210,12 +2221,12 @@
       console.log('val1 ', d1);
       console.log('val2 ', d2);
 
-      jsonData = JSON.stringify(filter_date_list);   
-     
+      jsonData = JSON.stringify(filter_date_list);
+
       console.log('json data: ', jsonData);
 
 
-      url =  window.location.origin + '/bima_policy/policy/entry/' + jsonData
+      url = window.location.origin + '/bima_policy/policy/entry/' + jsonData
 
       window.location.replace(url)
 
@@ -2277,12 +2288,53 @@
 
 
    function ExportToExcel(type, fn, dl) {
-     
+
       var elt = document.getElementById('tblInsurance');
       var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
       return dl ?
          XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
          XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+   }
+
+   function addVehicleMakes() {
+
+      document.getElementById('filter_content').innerHTML = ''
+      add_select_all_option()
+
+      vmake = document.getElementById('filter_content')
+
+      "{{ vdata.vmake |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            var newoption = document.createElement("option");
+            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "").trim()
+            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "").trim()
+            vmake.options.add(newoption);
+
+         })
+
+      select_all_Items('filter_content')
+   }
+
+   function addVehicleModels() {
+
+      document.getElementById('filter_content').innerHTML = ''
+
+      add_select_all_option()
+
+      vmodel = document.getElementById('filter_content')
+
+      "{{ vdata.vmodel |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            var newoption = document.createElement("option");
+            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "").trim()
+            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "").trim()
+            vmodel.options.add(newoption);
+
+         })
+      
+         select_all_Items('filter_content')      
    }
 
 
