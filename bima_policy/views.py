@@ -2305,9 +2305,9 @@ def policy_entry_date_filter(request, data, filter_payout='n'):
             # data = Policy.objects.filter(issue_date__gte='2023-04-01').filter(issue_date__lte='2023-04-30').values() 
             if filter_payout == "y":
                 # data = Policy.objects.filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
-                data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward= "")).values() 
+                data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward= "") ).values() 
             else:
-                data = Policy.objects.filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
+                data = Policy.objects.filter(Q(issue_date__gte=date1) & Q(issue_date__lte=date2)).values() 
 
             tmp_adv_list.append(data)
         else:
@@ -2437,11 +2437,11 @@ def policy_entry_all_other_filter2(data, f_data):
                         
         print('vmb length: ', len(qs_list))
 
-    if str_dataa.__contains__('-vm'):
+    if str_dataa.__contains__('-vmm'):
         print('')
-        print('has vm')        
+        print('has vmm')        
         str_data = str(data)
-        ins_index = str(data).index('-vm')
+        ins_index = str(data).index('-vmm')
         # print('num', ins_index)
 
         b_index = str_data.index('[', ins_index )      
