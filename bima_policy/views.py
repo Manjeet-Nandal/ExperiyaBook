@@ -1997,7 +1997,7 @@ def apply_policy(request, id):
 
 def policy_entry(request):
     print('policy_entry method')
-    # print(get_id_from_session(request)) 
+    print(get_id_from_session(request)) 
     vdata = fetch_vehicle_data()
        
     try:        
@@ -2069,10 +2069,13 @@ def policy_entry_filter(request,  data):
 
                 print('date 1: ', date1)
                 print('date 2: ', date2)
+                
+                if is_user(request):    
+                    data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
+                else:
+                    data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
 
                 datag = Agents.objects.all()
-
-                data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values() 
 
                 policyid_list = []
                 for item in data:
@@ -2106,15 +2109,19 @@ def policy_entry_filter(request,  data):
                 # other filter section
                 # print('tmdata [1] : ', tmp_data[1])
 
-                datag = Agents.objects.all()
+                
 
-                data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()  
+                if is_user(request):    
+                    data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
+                else:
+                    data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
+
+                datag = Agents.objects.all()
 
                 print(tmp_data[1][0])
                 data = policy_entry_all_other_filter2(tmp_data[1], data)
             
                 data = list(chain(*data))
-
 
                 if len(data) > 0:
                     # data = data[0]
@@ -2154,9 +2161,19 @@ def policy_entry_filter(request,  data):
                 datag = Agents.objects.all()
 
                 if payout_option == 'y':
-                    data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="")  ).values()  
+                    if is_user(request):    
+                        data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="") ).order_by('-policyid').values()        
+                    else:
+                        data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="") ).order_by('-policyid').values()        
+                        
+                    # data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="")  ).values()  
                 else:
-                    data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()  
+                    if is_user(request):    
+                        data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
+                    else:
+                        data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
+                        
+                    # data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()  
 
                 print(tmp_data[1][0])
                 data = policy_entry_all_other_filter2(tmp_data[1], data)
@@ -2339,7 +2356,7 @@ def policy_entry_all_other_filter2(data, f_data):
     if str_dataa.__contains__('-ins'):
         print('has ins')        
         str_data = str(data)
-        ins_index = str(data).index('-ins')
+        ins_index = str(data).index('-ins') 
         # print('num', ins_index)
 
         b_index = str_data.index('[', ins_index )      
