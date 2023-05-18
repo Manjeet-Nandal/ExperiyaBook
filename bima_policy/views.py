@@ -2001,15 +2001,12 @@ def policy_entry(request):
     vdata = fetch_vehicle_data()
        
     try:        
-        if is_user(request):                  
-            # data = Policy.objects.filter(issue_date=datetime.now().date()).order_by('-policyid').values()
-            # data = Policy.objects.filter(profile_id=get_id_from_session(request)).order_by('-policyid').values()[:25]
+        if is_user(request):     
             data = Policy.objects.order_by('-policyid').values() [:25]              
                
         # print(data)
 
         else:
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date=datetime.now().date()).order_by('-policyid').values()         
             data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values() [:25]    
       
         # print("total policy: ", data.values().count())
@@ -2079,7 +2076,7 @@ def policy_entry_filter(request,  data):
 
                 policyid_list = []
                 for item in data:
-                    print('item is: ',  item['policyid'])
+                    # print('item is: ',  item['policyid'])
                     policyid_list.append(item['policyid'])       
 
                 return render(request, 'policylist/policy_entry_list.html', { "policyid_list" : policyid_list, "vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
@@ -2438,16 +2435,24 @@ def policy_entry_all_other_filter2(data, f_data):
                 ee = e.strip()  
                 print(ee)
                 
-                for ins in qs_list_temp:                       
+                for ins in qs_list_temp:      
+                    if ee.__contains__("--"):
+                        ee=ee.replace("--", "/")
+
                     if ee == ins['vehicle_makeby']:     
                         pid = ins['policyid']
                         qs_list.append(Policy.objects.filter(policyid = pid).values() )  
         else:
             for e in name:
                 ee = e.strip()  
-                print(ee)
+                if ee.__contains__("--"):
+                    ee=ee.replace("--", "/")
+                # print(ee)
                 
-                for ins in f_data:                       
+                for ins in f_data:       
+                    # inns = ins['vehicle_makeby']    
+                    # print('insss:' , inns) 
+
                     if ee == ins['vehicle_makeby']:     
                         pid = ins['policyid']
                         qs_list.append(Policy.objects.filter(policyid = pid).values() )   
@@ -2475,6 +2480,9 @@ def policy_entry_all_other_filter2(data, f_data):
 
             for e in name:
                 ee = e.strip()  
+                if ee.__contains__("--"):
+                        ee=ee.replace("--", "/")
+
                 print(ee)
                 
                 for ins in qs_list_temp:                       
@@ -2484,6 +2492,8 @@ def policy_entry_all_other_filter2(data, f_data):
         else:
             for e in name:
                 ee = e.strip()  
+                if ee.__contains__("--"):
+                        ee=ee.replace("--", "/")
                 print(ee)
                 
                 for ins in f_data:                       
@@ -2916,7 +2926,6 @@ def apply_policy_payout(data):
     except Exception as ex:
         print(ex)
         return HttpResponse(ex)
-
 
    
 # qs_list = []

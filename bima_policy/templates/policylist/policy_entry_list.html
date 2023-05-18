@@ -1760,6 +1760,8 @@
    function addName3() {
       // Declare variables
 
+      console.log('addName3');
+
       isMultiFilter = true
 
       value = document.getElementById('filter_type').value
@@ -1771,7 +1773,17 @@
       for (i = 1; i <= filter_content.options.length - 1; i++) {
 
          if (filter_content.options[i].selected == true) {
-            tempfilterList.push(filter_content.options[i].value)
+
+            val = filter_content.options[i].value.toString()
+
+            if (val.includes("/")) {
+
+               val = val.replace("/", "--")
+
+            }
+
+            // tempfilterList.push(filter_content.options[i].value)
+            tempfilterList.push(val)
          }
       }
 
