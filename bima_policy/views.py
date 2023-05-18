@@ -2002,12 +2002,11 @@ def policy_entry(request):
        
     try:        
         if is_user(request):     
-            data = Policy.objects.order_by('-policyid').values() [:25]              
-               
-        # print(data)
+            data = Policy.objects.order_by('-policyid').values() [:25]  
 
         else:
             data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values() [:25]    
+          
       
         # print("total policy: ", data.values().count())
         datag = Agents.objects.all()
