@@ -1905,9 +1905,13 @@
       val1 = document.getElementById('frmDate').value
       val2 = document.getElementById('toDate').value
 
+      if (String(val1) == "") {
+         
+         val1 = val2
+      }
+
       d1 = String(val1).replace('/', '-').replace('/', '-').replace('/', '-')
       d2 = String(val2).replace('/', '-').replace('/', '-').replace('/', '-')
-
 
       date_list = []
       date_list.push(d1)
