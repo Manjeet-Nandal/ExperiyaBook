@@ -1360,6 +1360,7 @@ class create_policy(View):
             return HttpResponse("Error occurred! When Creating New Policy! Contact Your Admin", ex)
 
 
+
 class create_policy_non_motor(View):
     def get(self, request):
         print('create_policy Non get')

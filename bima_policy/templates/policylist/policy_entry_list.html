@@ -19,7 +19,7 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> Policy List
+                     <h1 class="page-title"> Policy List 
                         <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" hidden
                            data-target="#mdlcolsetting" title="Column Setting"><i class="fa fa-cog"
                               aria-hidden="true"></i> Column Setting</button>
@@ -445,9 +445,14 @@
 
                               {% if is_user %}
 
-                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100"
+                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100" enabled
                                  data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
+                             
+                              {% else %}
+                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100" disabled
+                              data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
                               {% endif %}
+
                               <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1" hidden
                                  onclick="saveFilter()">Save</button>
                               <button type="button" class="btn btn-primary mt-1  w-100" onmouseenter="getLength()"
@@ -2099,6 +2104,13 @@
 
    function applyPayouts() {
       console.log('applyPayouts method calling:');
+
+      plist = "{{ policyid_list | safe}}"
+
+      if (plist.length < 1){
+         alert('No policy ids found!')
+         return;
+      }
       // Declare variables
       // print(filterList)    
       len = setOD()
