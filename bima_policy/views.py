@@ -497,23 +497,6 @@ def vehicle_view(request):
         return redirect('bima_policy:vehi')
 
 
-def delete_vehicleo(request, id):
-    print('delete_vehicle method')
-    try:
-        client = pymongo.MongoClient('mongodb://localhost:27017/')
-        db = client.ExperiyaBook
-        collection = db.make
-        document = collection.delete_one({'make': id})
-        if document.deleted_count == 1:
-            print('deleted: ', id)
-        else:
-            print('deletion failed: ', id)
-        return redirect('bima_policy:vehi')
-    except Exception as ex:
-        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
-
-
-
 def delete_vehicle(request, id):
     print('delete_vehicle method')
 
@@ -652,69 +635,6 @@ def delete_vehicle_model_from_file( id):
     except Exception as ex:
         print(ex)
         return HttpResponse('Error Occurred in delete_vehicle_model_from_file method!')
-
-
-def update_vehicle_model(request, id, id2):
-    print('update_vehicle_model method')
-    try:
-        temp_list = []
-        with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
-            for line in file:
-                if line.strip() == id:
-                    temp_list.append(id2)
-                    continue
-                else:
-                    temp_list.append(line.strip())
-        with open('bima_policy//static//vehicle data//vmodel.txt', "w") as file:
-            for i in temp_list:
-                file.write(i + '\n')
-
-        print('vehicle model updated')
-        return redirect('bima_policy:vehi')
-    except Exception as ex:
-        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
-
-
-def update_vehicle_make(request, id, id2):
-    print('update_vehicle_make method')
-    try:
-        temp_list = []
-        with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
-            for line in file:
-                if line.strip() == id:
-                    temp_list.append(id2)
-                    continue
-                else:
-                    temp_list.append(line.strip())
-        with open('bima_policy//static//vehicle data//vmake.txt', "w") as file:
-            for i in temp_list:
-                file.write(i + '\n')
-
-        print('vehicle make updated')
-        return redirect('bima_policy:vehi')
-    except Exception as ex:
-        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
-
-
-def update_vehicle_cat(request, id, id2):
-    print('update_vehicle_cat method')
-    try:
-        temp_list = []
-        with open('bima_policy//static//vehicle data//vcat.txt', "r") as file:
-            for line in file:
-                if line.strip() == id:
-                    temp_list.append(id2)
-                    continue
-                else:
-                    temp_list.append(line.strip())
-        with open('bima_policy//static//vehicle data//vcat.txt', "w") as file:
-            for i in temp_list:
-                file.write(i + '\n')
-
-        print('vehicle cat updated')
-        return redirect('bima_policy:vehi')
-    except Exception as ex:
-        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
 
 
 def edit_vehicle(request, id, id2):

@@ -28,10 +28,7 @@ urlpatterns = [
     path('vehicle/<str:id>/make',delete_vehicle_make,name='delete_vehicle_make'),
   
     path('vehicle/<str:id>/edit',edit_vehicle,name='edit_vehicle'),
-    path('vehicle/<str:id>/<str:id2>/vcat',update_vehicle_cat,name='update_vehicle_cat'),
-    path('vehicle/<str:id>/<str:id2>/make',update_vehicle_make,name='update_vehicle_make'),
-    path('vehicle/<str:id>/<str:id2>/model',update_vehicle_model,name='update_vehicle_model'),
-    
+       
     path('insurance_comp/', ins_comp, name="ins_comp"),
     path('insurance_comp/<str:id>',ins_del, name='ins_del'),
     path('rto/',rto_list , name="rto"),
