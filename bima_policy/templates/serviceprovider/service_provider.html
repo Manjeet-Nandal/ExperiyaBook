@@ -57,7 +57,7 @@
                               <div id="tblList_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                  <div class="row">
                                     <div class="col-sm-12 col-md-6">
-                                       <div class="dataTables_length" id="tblList_length">
+                                       <div class="dataTables_length" id="tblList_length" hidden>
                                           <label>
                                              Show 
                                              <select name="tblList_length" aria-controls="tblList" class="custom-select">
@@ -70,7 +70,7 @@
                                           </label>
                                        </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6">
+                                    <div class="col-sm-12 col-md-6" hidden>
                                        <div id="tblList_filter" class="dataTables_filter"><label>Search:<input type="search" data-table="data_table"  id="myInput" onkeyup="myFunction()" class="form-control" placeholder="" aria-controls="tblList"></label></div>
                                     </div>
                                  </div>
@@ -83,7 +83,7 @@
                                              <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Mobile No.: activate to sort column ascending">Mobile No.</th>
                                              <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="City: activate to sort column ascending">City</th>
                                              <th class="text-center width-10p sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Status</th>
-                                             <th class="text-center nowrap sorting_disabled" rowspan="1" colspan="1" aria-label="#">#</th>
+                                             <th class="text-center nowrap sorting_disabled" rowspan="1" colspan="1" aria-label="#">Action</th>
                                           </tr>
                                        </thead>
                                        {% for value in data %}
@@ -165,7 +165,7 @@
                               <div id="tblList2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                  <div class="row">
                                     <div class="col-sm-12 col-md-6">
-                                       <div class="dataTables_length" id="tblList2_length">
+                                       <div class="dataTables_length" id="tblList2_length" hidden>
                                           <label>
                                              Show 
                                              <select name="tblList2_length" aria-controls="tblList2" class="custom-select">
@@ -178,7 +178,7 @@
                                           </label>
                                        </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6">
+                                    <div class="col-sm-12 col-md-6" hidden>
                                        <div id="tblList2_filter" class="dataTables_filter"><label>Search:<input type="search" data-table="data_table"  id="myInput2" onkeyup="bFunction()" class="form-control" placeholder="" aria-controls="tblList2"></label></div>
                                     </div>
                                  </div>
@@ -189,7 +189,7 @@
                                              <th class="text-center nowrap w-10pc sorting_asc" tabindex="0" aria-controls="tblList2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.</th>
                                              <th class="sorting" tabindex="0" aria-controls="tblList2" rowspan="1" colspan="1" aria-label="Code: activate to sort column ascending" style="width: 0px;">Code</th>
                                              <th class="text-center nowrap w-10pc sorting" tabindex="0" aria-controls="tblList2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th>
-                                             <th class="text-center w-10pc nowrap sorting_disabled" rowspan="1" colspan="1" aria-label="#" style="width: 0px;">#</th>
+                                             <th class="text-center w-10pc nowrap sorting_disabled" rowspan="1" colspan="1" aria-label="#" style="width: 0px;">Action</th>
                                           </tr>
                                        </thead>
                                      {%for value in brokerdata%}
