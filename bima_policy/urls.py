@@ -23,7 +23,9 @@ urlpatterns = [
     path('vehicle/',vehicle_view, name='vehi'),
     path('vehicle/<str:id>/',delete_vehicle,name='del_vehicle'),
 
-    path('vehicle/<str:id>/cat',delete_vehicle_vcat,name='delete_vehicle_vcat'),
+    path('vehicle/<str:id>/category',delete_vehicle_category,name='delete_vehicle_category'),
+    path('vehicle/<str:id>/model',delete_vehicle_model,name='delete_vehicle_model'),
+    path('vehicle/<str:id>/make',delete_vehicle_make,name='delete_vehicle_make'),
   
     path('vehicle/<str:id>/edit',edit_vehicle,name='edit_vehicle'),
     path('vehicle/<str:id>/<str:id2>/vcat',update_vehicle_cat,name='update_vehicle_cat'),

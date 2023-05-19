@@ -91,25 +91,25 @@
                                 colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">
                                 Status</th>
                               <th class="text-center w-10pc nowrap sorting_disabled" rowspan="1" colspan="1"
-                                aria-label="#" style="width: 0px;">#</th>
+                                aria-label="#" style="width: 0px;">Action</th>
                             </tr>
                           </thead>
-                          {% for value in vcat %}
+                          {% for value in data_cat %}
                           <tbody>
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc sorting_1">{{forloop.counter}}</td>
-                              <td>{{value}}</td>
+                              <td>{{value.category}}</td>
                               <td class=" text-center w-10pc"><span class="badge badge-success">Active</span>
                               </td>
                               <td class=" text-center w-10pc nowrap">
                                 <form method='POST' action="{{value.id}}/vcat">
                                   {% csrf_token %}
-                                  <a data-toggle="modal" data-target="#vcatedit"
-                                    onclick="document.getElementById('vcat1').value = '{{value}}'"
+                                  <!-- <a data-toggle="modal" data-target="#vcatedit"
+                                    onclick="document.getElementById('vcat1').value = '{{value.category}}'"
                                     class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
                                     <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
-                                  </a>
-                                  <a type='submit' href="./{{value}}" class="mr-1 btn btn-sm btn-icon btn-secondary"
+                                  </a> -->
+                                  <a type='submit' href="./{{value.category}}/category" class="mr-1 btn btn-sm btn-icon btn-secondary"
                                     name="delete">
                                     <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
                                   </a>
@@ -304,31 +304,33 @@
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="tblModelsList" rowspan="1" colspan="1"
                                 aria-label="Model: activate to sort column ascending" style="width: 0px;">Model</th>
-                              <th class="sorting" tabindex="0" aria-controls="tblModelsList" rowspan="1" colspan="1"
-                                aria-label="Company: activate to sort column ascending" style="width: 0px;">Company</th>
+                              <!-- <th class="sorting" tabindex="0" aria-controls="tblModelsList" rowspan="1" colspan="1"
+                                aria-label="Company: activate to sort column ascending" style="width: 0px;">Company</th> -->
                               <th class="text-center w-10pc sorting" tabindex="0" aria-controls="tblModelsList"
                                 rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending"
                                 style="width: 0px;">Status</th>
                               <th class="text-center nowrap sorting_disabled" rowspan="1" colspan="1" aria-label="#"
-                                style="width: 0px;">#</th>
+                                style="width: 0px;">Action</th>
                             </tr>
                           </thead>
-                          {% for value in model %}
+                          {%for value in context.model%}
+
+                          {% if forloop.counter <= 25 %}
                           <tbody>
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc sorting_1">{{forloop.counter}}</td>
                               <td>{{value}}</td>
                               <td class=" text-center w-10pc"><span class="badge badge-success">Active</span>
                               </td>
-                              <td class=" text-center nowrap">
+                              <td class="text-center w-10pc nowrap">
                                 <form method='POST' action="{{value}}/cat">
                                   {% csrf_token %}
-                                  <a data-toggle="modal" data-target="#mdledit"
+                                  <!-- <a data-toggle="modal" data-target="#mdledit"
                                     onclick="document.getElementById('model1').value = '{{value}}'"
                                     class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
                                     <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
-                                  </a>
-                                  <a type='submit' href="./{{value}}/cat" class="mr-1 btn btn-sm btn-icon btn-secondary"
+                                  </a> -->
+                                  <a type='submit' href="./{{value}}/model" class="mr-1 btn btn-sm btn-icon btn-secondary"
                                     name="delete">
                                     <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
                                   </a>
@@ -337,6 +339,7 @@
                             </tr>
 
                           </tbody>
+                          {%endif%}
                           {%endfor%}
 
                           <div class="modal fade" id="mdledit" data-backdrop="static" data-keyboard="false"
@@ -424,28 +427,10 @@
                     </div>
                     <form method="post" autocomplete="off" data-parsley-validate="true" name="frmvm" novalidate="">
                       <div class="modal-body">
-                        <div class="form-group">
-                          {% csrf_token %}
-                          <label>Vehicle Make By <abbr title="Required" class="text-danger">*</abbr></label>
-                          <select name="vehicle_makeby" data-parsley-required-message="" data-parsley-required="true"
-                            class="custom-select select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                            <span class="select2 select2-container select2-container--default" dir="ltr"
-                              style="width: 100%;"><span class="selection"><span
-                                  class="select2-selection select2-selection--single" role="combobox"
-                                  aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                  aria-labelledby="select2-vehicle_makeby-rf-container"><span
-                                    class="select2-selection__rendered" id="select2-vehicle_makeby-rf-container"
-                                    title="Choose...">Choose...</span><span class="select2-selection__arrow"
-                                    role="presentation"><b role="presentation"></b></span></span></span><span
-                                class="dropdown-wrapper" aria-hidden="true"></span></span>
-                            <option>Choose...</option>
-                            {%for item in data %}
-                            <option value="{{item.company}}">{{item.company}}</option>
-                            {%endfor%}
-
-                          </select>
-
-                        </div>
+                       
+                        {% csrf_token %}
+                        <label>Vehicle Model <abbr title="Required" class="text-danger">*</abbr></label>
+                      
                         <div class="form-group">
                           <label class="col-form-label">Model<em class="text-danger">*</em></label>
                           <input type="text" class="form-control" data-parsley-required="true" name="model">
@@ -543,7 +528,7 @@
                         <div class="col-sm-12 col-md-6">
                           <div class="dataTables_length" id="tblMakeby_length">
                             <label>
-                              Show
+                              Show 
 
                             </label>
                             <select name="tblMakeby_length" aria-controls="tblMakeby" class="custom-select">
@@ -577,7 +562,7 @@
                                 rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending"
                                 style="width: 0px;">Status</th>
                               <th class="text-center nowrap w-10pc sorting_disabled" rowspan="1" colspan="1"
-                                aria-label="#" style="width: 0px;">#</th>
+                                aria-label="#" style="width: 0px;">Action</th>
                             </tr>
                           </thead>
                           {%for value in context.make%}
@@ -587,16 +572,16 @@
                               <td>{{value}}</td>
                               <td class=" text-center w-10pc nowrap"><span class="badge badge-success">Active</span>
                               </td>
-                              <td class=" text-center nowrap w-10pc">
+                              <td class="text-center  nowrap w-10pc">
                                 <form method='' action="{{value.id}}">
 
                                   {% csrf_token %}
-                                  <a data-toggle="modal" data-target="#mkedit"
+                                  <!-- <a data-toggle="modal" data-target="#mkedit"
                                     onclick="document.getElementById('makeby1').value = '{{value}}'"
                                     class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
                                     <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
-                                  </a>
-                                  <a type='submit' href="./{{value}}" class="mr-1 btn btn-sm btn-icon btn-secondary"
+                                  </a> -->
+                                  <a type='submit' href="./{{value}}/make" class="mr-1 btn btn-sm btn-icon btn-secondary"
                                     name="delete">
                                     <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
                                   </a>
@@ -712,7 +697,7 @@
                             for="mbckreload">Stay on this page after Save.</label>
                         </div>
                         <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
-                        <button type="submit" name="mb_add" class="btn btn-primary w-100p">Save</button>
+                        <button type="submit" name="mb_add" class="btn btn-primary w-100p">Save </button>
                       </div>
 
                     </form>

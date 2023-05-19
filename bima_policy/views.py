@@ -401,15 +401,16 @@ def read_vehicle_data_file():
     with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
         for line in file:
             model_list.append(line.strip())
-    with open('bima_policy//static//vehicle data//vcat.txt', "r") as file:
-        for line in file:
-            cat_list.append(line.strip())
+    
+    # with open('bima_policy//static//vehicle data//vcat.txt', "r") as file:
+    #     for line in file:
+    #         cat_list.append(line.strip())
+   
     context = {
         "make": make_list,
-        "model": model_list,
-        "vcat": cat_list
+        "model": model_list      
     }
-    print('done')
+    
     return context
 
 
@@ -453,37 +454,36 @@ def read_all_vehical_data_file():
     return context
 
 
-# VehicleView
 def vehicle_view(request):
 
     print("vehicle_view method calling")
 
     if request.method == "GET":
         try:
+            data_cat = VehicleCategory.objects.all( ).values()
+
             context = read_vehicle_data_file()
-            # make = context["make"]
+            make = context["make"]
             model = context["model"]
-            vcat = context["vcat"]
-
-            paginator = Paginator(model, 25)
-
-            model_data = paginator.get_page(request.GET.get('page'))
-
-            print(len(model_data))
-
-            # print(context)
-            datavc = VehicleCategory.objects.filter(
-                profile_id_id=get_id_from_session(request))
+                     
+            datavm = VehicleModelName.objects.all( ).values()
+            datavmb = VehicleMakeBy.objects.all( ).values()
+            
+            for vm in datavm:            
+                model.append(vm["model"])
+            
+            for vmb in datavmb:              
+                make.append(vmb["company"])
+                
             # mylist = zip(datamn, data)
-            return render(request, 'vehicle/vehicle.html', {'context': context, 'model': model_data, 'vcat': vcat, 'datavc': datavc})
+            return render(request, 'vehicle/vehicle.html', {'context': context, "data_cat" : data_cat})
         except(VehicleMakeBy.DoesNotExist, VehicleModelName.DoesNotExist, VehicleCategory.DoesNotExist):
             return render(request, 'vehicle/vehicle.html')
     else:
         p = ProfileModel.objects.get(id=get_id_from_session(request))
         if 'mb_add' in request.POST:
             print('im here')
-            VehicleMakeBy.objects.create(
-                company=request.POST['makeby'], status=request.POST['mbstatus'], profile_id=p)
+            VehicleMakeBy.objects.create(company=request.POST['makeby'], status=request.POST['mbstatus'], profile_id=p)
             return redirect('bima_policy:vehi')
         elif 'vm_add' in request.POST:
             VehicleModelName.objects.create(
@@ -513,6 +513,7 @@ def delete_vehicleo(request, id):
         return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
 
 
+
 def delete_vehicle(request, id):
     print('delete_vehicle method')
 
@@ -539,33 +540,72 @@ def delete_vehicle(request, id):
         return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
 
 
-def delete_vehicle_vcat(request, id):
-    print('delete_vehicle_vcat method')
+def delete_vehicle_category(request, id):
+    print('delete_vehicle_category method')
 
     print(id)
 
-    try:
-        temp_list = []
-        with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
-            for line in file:
-                if line.strip() == id:
-                    record = line.strip()
-                    continue
-                else:
-                    temp_list.append(line.strip())
-
-        with open('bima_policy//static//vehicle data//vmodel.txt', "w") as file:
-            for i in temp_list:
-                file.write(i + '\n')
-
+    try:        
+        vc = VehicleCategory.objects.get(category=id).delete()
+        print(vc)
         return redirect('bima_policy:vehi')
     except Exception as ex:
         print(ex)
-        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
+        return HttpResponse('Error Occurred in delete_vehicle_category method!')
+
+
+def delete_vehicle_model(request, id):
+    print('delete_vehicle_moel method')
+
+    print(id)
+
+    vm = ''
+
+    try:        
+        vm = VehicleModelName.objects.get(model=id).delete()   
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        print(ex)
+        # return HttpResponse('Error Occurred in delete_vehicle_make method!')
+    
+    try:  
+        if vm == '':
+            print('yes nione')
+            delete_vehicle_model_from_file(id)
+        
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        print(ex)
+        return HttpResponse('Error Occurred in delete_vehicle_moel method!')
 
 
 def delete_vehicle_make(request, id):
-    print('delete_vehicle method')
+    print('delete_vehicle_make method')
+
+    print(id)
+
+    vmb = ''
+
+    try:        
+        vmb = VehicleMakeBy.objects.get(company=id).delete()   
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        print(ex)
+        # return HttpResponse('Error Occurred in delete_vehicle_make method!')
+    
+    try:  
+        if vmb == '':
+            print('yes nione')
+            delete_vehicle_make_from_file(id)
+        
+        return redirect('bima_policy:vehi')
+    except Exception as ex:
+        print(ex)
+        return HttpResponse('Error Occurred in delete_vehicle_make method!')
+
+
+def delete_vehicle_make_from_file( id):
+    print('delete_vehicle_make_from_file method')
 
     print(id)
 
@@ -583,11 +623,35 @@ def delete_vehicle_make(request, id):
             for i in temp_list:
                 print(i)
                 file.write(i + '\n')
-
-        return redirect('bima_policy:vehi')
+      
     except Exception as ex:
         print(ex)
-        return HttpResponse('Error Occurred in delete_vehicle method! Report this problem to your Admin')
+        return HttpResponse('Error Occurred in delete_vehicle_make_from_file method!')
+
+
+def delete_vehicle_model_from_file( id):
+    print('delete_vehicle_model_from_file method')
+
+    print(id)
+
+    try:
+        temp_list = []
+        with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
+            for line in file:
+                if line.strip() == id:
+                    record = line.strip()
+                    continue
+                else:
+                    temp_list.append(line.strip())
+
+        with open('bima_policy//static//vehicle data//vmodel.txt', "w") as file:
+            for i in temp_list:
+                print(i)
+                file.write(i + '\n')
+      
+    except Exception as ex:
+        print(ex)
+        return HttpResponse('Error Occurred in delete_vehicle_model_from_file method!')
 
 
 def update_vehicle_model(request, id, id2):
@@ -935,8 +999,7 @@ class create_policy(View):
     def get(self, request):
         print('create_policy get method')
 
-        data_ag = json.dumps(
-            list(Agents.objects.all().values()))
+        data_ag = json.dumps(list(Agents.objects.all().values()))
 
         data_sp = ServiceProvider.objects.all()
         data_bc = BrokerCode.objects.all()
@@ -950,8 +1013,22 @@ class create_policy(View):
             "user_name": get_user_name(request),
             "user_role": get_user_role(request)
         }
+                  
+        context = read_vehicle_data_file()
+        make = context["make"]
+        model = context["model"]
+            
+        datavm = VehicleModelName.objects.all( ).values()
+        datavmb = VehicleMakeBy.objects.all( ).values()
+        
+        for vm in datavm:            
+            model.append(vm["model"])
+        
+        for vmb in datavmb:              
+            make.append(vmb["company"])
+                
 
-        return render(request, 'policylist/policy_list.html', {"user_info": user_info, "vdata": fetch_vehicle_data(), 'is_motor_form': True, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc, 'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', {"user_info": user_info, "vdata": context, "data_vc": data_vc, 'is_motor_form': True, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_bqp': data_bqp})
 
     def post(self, request):
         try:
@@ -1999,8 +2076,26 @@ def apply_policy(request, id):
 def policy_entry(request):
     print('policy_entry method')
     print(get_id_from_session(request)) 
-    vdata = fetch_vehicle_data()
-       
+    # vdata = fetch_vehicle_data()
+
+    context = read_vehicle_data_file()
+    make = context["make"]
+    model = context["model"]
+    
+    datacat_list = []
+    data_cat = VehicleCategory.objects.all( ).values()
+    for vc in data_cat:            
+        datacat_list.append(vc["category"])
+
+    datavm = VehicleModelName.objects.all( ).values()
+    datavmb = VehicleMakeBy.objects.all( ).values()
+    
+    for vm in datavm:            
+        model.append(vm["model"])
+    
+    for vmb in datavmb:              
+        make.append(vmb["company"])
+    
     try:        
         if is_user(request):     
             data = Policy.objects.order_by('-policyid').values() [:25]  
@@ -2022,7 +2117,7 @@ def policy_entry(request):
 
         # data = paginator.page(page_number)
 
-        return render(request, 'policylist/policy_entry_list.html', { "vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', { "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
@@ -2036,7 +2131,21 @@ def policy_entry_filter(request,  data):
     print('') 
     print('policy_entry_filter method') 
 
-    vdata = fetch_vehicle_data()
+    # vdata = fetch_vehicle_data()
+
+    context = read_vehicle_data_file()
+    make = context["make"]
+    model = context["model"]
+    
+    datavm = VehicleModelName.objects.all( ).values()
+    datavmb = VehicleMakeBy.objects.all( ).values()
+    
+    for vm in datavm:            
+        model.append(vm["model"])
+    
+    for vmb in datavmb:              
+        make.append(vmb["company"])
+    
     
     try:      
         tmp_data = json.loads(data)
@@ -2079,7 +2188,7 @@ def policy_entry_filter(request,  data):
                     # print('item is: ',  item['policyid'])
                     policyid_list.append(item['policyid'])       
 
-                return render(request, 'policylist/policy_entry_list.html', { "policyid_list" : policyid_list, "vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                return render(request, 'policylist/policy_entry_list.html', { "policyid_list" : policyid_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
             if len(tmp_data) == 2:         
                 print('into 2nd lane')
@@ -2127,7 +2236,7 @@ def policy_entry_filter(request,  data):
                 else:
                     data = None
                 
-                return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                return render(request, 'policylist/policy_entry_list.html', {"vdata": context,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
             
             if len(tmp_data) == 3:         
                 print('into 3rd lane')
@@ -2188,7 +2297,7 @@ def policy_entry_filter(request,  data):
                 else:
                     data = None
                 
-                return render(request, 'policylist/policy_entry_list.html', {"policyid_list" : policyid_list, "vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                return render(request, 'policylist/policy_entry_list.html', {"policyid_list" : policyid_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
         
         else:
             print('tmp_data is', tmp_data)
@@ -2255,7 +2364,7 @@ def policy_entry_filter(request,  data):
             datag = Agents.objects.all()
 
             # data = Policy.objects.order_by('-policyid').filter().values()[:10]   
-            return render(request, 'policylist/policy_entry_list.html', {"vdata": vdata, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+            return render(request, 'policylist/policy_entry_list.html', {"vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
         
     except Exception as ex:       
         return HttpResponse('Error occurred in policy_entry_filter: ' + ex)
@@ -2859,76 +2968,6 @@ def policy_entry_all_other_filter2(data, f_data):
  
     print('qs list length', len(qs_list))    
     return qs_list
-
-
-def apply_policy_payout(data):
-    try:
-        print('apply_policy_payout method calling: ')
-
-        print('data[0] ',  data[0])
-        print('data[1] ',  data[1])
-
-        print('aod: ', data[0][0])
-        return
-    
-        payout_values = {  
-            "aod" : data[0][0],
-            "atp" : data[0][1],
-            "sod" : data[0][2],
-            "stp" : data[0][3]
-         }
-        
-        print(payout_values)
-        # print(payout_values['aod'])
-
-        updated_policy_list = []      
-        return updated_policy_list
-    
-        for id in data[1]:
-            try:
-                print(id)
-                tmp_data = Policy.objects.get(policyid=id)
-                print('tmp_data: ', tmp_data)
-                             
-                # Agent payout
-                aod = float(payout_values['aod'])
-                agent_od_amount = round((float(tmp_data.OD_premium) * aod) / 100, 2)
-                atp = float(payout_values['atp'])
-                agent_tp_amount = round( (float(tmp_data.TP_terrorism) * atp) / 100, 2)
-
-                # # Self payout
-                sod = float(payout_values['sod'])
-                self_od_amount = round( (float(tmp_data.OD_premium) * sod) / 100, 2)
-                stp = float(payout_values['stp'])
-                self_tp_amount = round( (float(tmp_data.TP_terrorism) * stp) / 100, 2)
-
-                ddata = Policy.objects.filter(policyid=id)
-                
-
-                ddata.update(agent_od_reward=aod,
-                            agent_od_amount=agent_od_amount,
-                            agent_tp_reward=atp,
-                            agent_tp_amount=agent_tp_amount,
-
-                            self_od_reward=sod,
-                            self_od_amount=self_od_amount,
-                            self_tp_reward=stp,
-                            self_tp_amount=self_tp_amount)
-                print('Done')
-                # updated_policy_list.append(id) '229`'
-                updated_policy_list.append(ddata.values())
-
-            except Exception as exc:
-                print(exc)
-        print('app is safe')
-        return updated_policy_list   
-    
-    except Exception as ex:
-        print(ex)
-        return HttpResponse(ex)
-
-   
-# qs_list = []
 
 
 def pol_ins(data):
@@ -3754,149 +3793,11 @@ def policy_entry_list_update(request):
         data = json.loads(request.POST['data'])
         # print(data)
         # [['10', '20', '30', '40'], ['24EF892']]      
-       
-        # data = apply_policy_payout(data)
-
+           
         data = list(chain(*data))
         datag = Agents.objects.all()
 
         return JsonResponse({'data': data})
-
-
-def apply_policy_payout_old(data):
-    try:
-        print('apply_policy_payout method calling: ')
-
-        print('data[0] ',  data[0])
-        print('data[1] ',  data[1])
-        data[0]  ['10', '20', '30', '40']
-        data[1]  ['E08DA7C', '62ED284', 'C7FBF01', '4F807DC', 'C7A931F', '24EF892']
-       
-        payout_values = {  
-            "aod" : data[0][0],
-            "atp" : data[0][1],
-            "sod" : data[0][2],
-            "stp" : data[0][3]
-         }
-        
-        print(payout_values)
-        print(payout_values['aod'])
-
-        updated_policy_list = []      
-      
-        for id in data[1]:
-            try:
-                print(id)
-                tmp_data = Policy.objects.get(policyid=id)
-                print('tmp_data: ', tmp_data)
-                             
-                # Agent payout
-                aod = float(payout_values['aod'])
-                agent_od_amount = round((float(tmp_data.OD_premium) * aod) / 100, 2)
-                atp = float(payout_values['atp'])
-                agent_tp_amount = round( (float(tmp_data.TP_terrorism) * atp) / 100, 2)
-
-                # # Self payout
-                sod = float(payout_values['sod'])
-                self_od_amount = round( (float(tmp_data.OD_premium) * sod) / 100, 2)
-                stp = float(payout_values['stp'])
-                self_tp_amount = round( (float(tmp_data.TP_terrorism) * stp) / 100, 2)
-
-                ddata = Policy.objects.filter(policyid=id)
-                
-
-                ddata.update(agent_od_reward=aod,
-                            agent_od_amount=agent_od_amount,
-                            agent_tp_reward=atp,
-                            agent_tp_amount=agent_tp_amount,
-
-                            self_od_reward=sod,
-                            self_od_amount=self_od_amount,
-                            self_tp_reward=stp,
-                            self_tp_amount=self_tp_amount)
-                print('Done')
-                # updated_policy_list.append(id) '229`'
-                updated_policy_list.append(ddata.values())
-
-            except Exception as exc:
-                print(exc)
-
-        return updated_policy_list   
-
-      
-        # return render(request, 'policylist/policy_entry_list.html', {'data': data})
-        # return redirect('bima_policy:create_policy')
-    except Exception as ex:
-        print(ex)
-        return HttpResponse(ex)
-
-
-def apply_policy_payout(data):
-    try:
-        print('apply_policy_payout method calling: ')
-
-        print('data[0] ',  data[0])
-        print('data[1] ',  data[1])
-        data[0]  ['10', '20', '30', '40']
-        data[1]  ['E08DA7C', '62ED284', 'C7FBF01', '4F807DC', 'C7A931F', '24EF892']
-       
-        payout_values = {  
-            "aod" : data[0][0],
-            "atp" : data[0][1],
-            "sod" : data[0][2],
-            "stp" : data[0][3]
-         }
-        
-        print(payout_values)
-        print(payout_values['aod'])
-
-        updated_policy_list = []      
-      
-        for id in data[1]:
-            try:
-                print(id)
-                tmp_data = Policy.objects.get(policyid=id)
-                print('tmp_data: ', tmp_data)
-                             
-                # Agent payout
-                aod = float(payout_values['aod'])
-                agent_od_amount = round((float(tmp_data.OD_premium) * aod) / 100, 2)
-                atp = float(payout_values['atp'])
-                agent_tp_amount = round( (float(tmp_data.TP_terrorism) * atp) / 100, 2)
-
-                # # Self payout
-                sod = float(payout_values['sod'])
-                self_od_amount = round( (float(tmp_data.OD_premium) * sod) / 100, 2)
-                stp = float(payout_values['stp'])
-                self_tp_amount = round( (float(tmp_data.TP_terrorism) * stp) / 100, 2)
-
-                ddata = Policy.objects.filter(policyid=id)
-                
-
-                ddata.update(agent_od_reward=aod,
-                            agent_od_amount=agent_od_amount,
-                            agent_tp_reward=atp,
-                            agent_tp_amount=agent_tp_amount,
-
-                            self_od_reward=sod,
-                            self_od_amount=self_od_amount,
-                            self_tp_reward=stp,
-                            self_tp_amount=self_tp_amount)
-                print('Done')
-                # updated_policy_list.append(id) '229`'
-                updated_policy_list.append(ddata.values())
-
-            except Exception as exc:
-                print(exc)
-
-        return updated_policy_list   
-
-      
-        # return render(request, 'policylist/policy_entry_list.html', {'data': data})
-        # return redirect('bima_policy:create_policy')
-    except Exception as ex:
-        print(ex)
-        return HttpResponse(ex)
 
 
 def policy_entrydata(request, id):
@@ -4090,6 +3991,20 @@ def policy_entrydata(request, id):
         data_bc = BrokerCode.objects.all()
         data_ins = InsuranceCompany.objects.all()
 
+        context = read_vehicle_data_file()
+        make = context["make"]
+        model = context["model"]
+        
+        datavm = VehicleModelName.objects.all( ).values()
+        datavmb = VehicleMakeBy.objects.all( ).values()
+        
+        for vm in datavm:            
+            model.append(vm["model"])
+        
+        for vmb in datavmb:              
+            make.append(vmb["company"])
+        
+
         data_vc = VehicleCategory.objects.all()
         data_bqp = BQP.objects.all()
 
@@ -4112,7 +4027,7 @@ def policy_entrydata(request, id):
             data.seating_capacity = ''
             data.coverage_type = ''
 
-        return render(request, 'policylist/edit_policy.html', {'data_ag': data_ag, "vdata": fetch_vehicle_data(), 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_vc': data_vc, 'data_bqp': data_bqp})
+        return render(request, 'policylist/edit_policy.html', {'data_ag': data_ag, "vdata": context, 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_vc': data_vc, 'data_bqp': data_bqp})
 
 
 def edit_policy(request, id):
@@ -4433,12 +4348,28 @@ def slab_payoutform(request):
         # data_vmb = VehicleMakeBy.objects.all()
         # data_vm = VehicleModelName.objects.all()
         data_vc = VehicleCategory.objects.all()
-        vdata = fetch_vehicle_data()
+      
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
+
+        context = read_vehicle_data_file()
+        make = context["make"]
+        model = context["model"]
+      
+        # datavcat = VehicleCategory.objects.all( ).values()
+        datavm = VehicleModelName.objects.all( ).values()
+        datavmb = VehicleMakeBy.objects.all( ).values()
+        
+        for vm in datavm:            
+            model.append(vm["model"])
+        
+        for vmb in datavmb:              
+            make.append(vmb["company"])
+            
+
 
         # print(state_rto.rto_id)
         # print(data_bc)
-        return render(request, 'payout/slab_payoutform.html', {'slab': slab, "vdata": vdata, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc})
+        return render(request, 'payout/slab_payoutform.html', {'slab': slab, "vdata": context, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc})
 
     if request.method == 'POST' and 'savepayout' in request.POST:
         print("data enter")

@@ -3803,7 +3803,7 @@
 
       vmake = document.getElementById('vehicle_makeby')
 
-      "{{ vdata.vmake |safe}}".replace('[', '').replace(']', '').split(',')
+      "{{ vdata.make |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
             var newoption = document.createElement("option");
@@ -3818,7 +3818,7 @@
 
       vmodel = document.getElementById('vehicle_model')
 
-      "{{ vdata.vmodel |safe}}".replace('[', '').replace(']', '').split(',')
+      "{{ vdata.model |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
             var newoption = document.createElement("option");
@@ -3828,8 +3828,6 @@
 
          })
    }
-
-
 
 </script>
 

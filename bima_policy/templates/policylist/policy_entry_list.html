@@ -19,7 +19,7 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> Policy List 
+                     <h1 class="page-title"> Policy List
                         <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" hidden
                            data-target="#mdlcolsetting" title="Column Setting"><i class="fa fa-cog"
                               aria-hidden="true"></i> Column Setting</button>
@@ -300,7 +300,8 @@
                                        add_items(comp_col, filter_content)
                                     }
                                     else if (filter_type_value == 'vehicle_catagory') {
-                                       add_items(vcat_col, filter_content)
+                                       // add_items(vcat_col, filter_content)
+                                       addVehicleCat()
                                     }
                                     else if (filter_type_value == 'vehicle_makeby') {
                                        // add_items(vmb_col, filter_content)
@@ -447,10 +448,10 @@
 
                               <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100" enabled
                                  data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
-                             
+
                               {% else %}
                               <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100" disabled
-                              data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
+                                 data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
                               {% endif %}
 
                               <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1" hidden
@@ -1911,7 +1912,7 @@
       val2 = document.getElementById('toDate').value
 
       if (String(val1) == "") {
-         
+
          val1 = val2
       }
 
@@ -2107,7 +2108,7 @@
 
       plist = "{{ policyid_list | safe}}"
 
-      if (plist.length < 1){
+      if (plist.length < 1) {
          alert('No policy ids found!')
          return;
       }
@@ -2340,6 +2341,29 @@
          XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
    }
 
+
+
+   function addVehicleCat() {
+
+      document.getElementById('filter_content').innerHTML = ''
+      add_select_all_option()
+
+      vmake = document.getElementById('filter_content')
+
+      "{{ data_cat |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            var newoption = document.createElement("option");
+            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "").trim()
+            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "").trim()
+            vmake.options.add(newoption);
+
+         })
+
+      select_all_Items('filter_content')
+   }
+
+
    function addVehicleMakes() {
 
       document.getElementById('filter_content').innerHTML = ''
@@ -2347,7 +2371,7 @@
 
       vmake = document.getElementById('filter_content')
 
-      "{{ vdata.vmake |safe}}".replace('[', '').replace(']', '').split(',')
+      "{{ vdata.make |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
             var newoption = document.createElement("option");
@@ -2368,7 +2392,7 @@
 
       vmodel = document.getElementById('filter_content')
 
-      "{{ vdata.vmodel |safe}}".replace('[', '').replace(']', '').split(',')
+      "{{ vdata.model |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
             var newoption = document.createElement("option");
