@@ -2056,6 +2056,11 @@ def policy_entry_filter(request,  data):
     context = read_vehicle_data_file()
     make = context["make"]
     model = context["model"]
+
+    datacat_list = []
+    data_cat = VehicleCategory.objects.all( ).values()
+    for vc in data_cat:            
+        datacat_list.append(vc["category"])
     
     datavm = VehicleModelName.objects.all( ).values()
     datavmb = VehicleMakeBy.objects.all( ).values()
@@ -2108,7 +2113,7 @@ def policy_entry_filter(request,  data):
                     # print('item is: ',  item['policyid'])
                     policyid_list.append(item['policyid'])       
 
-                return render(request, 'policylist/policy_entry_list.html', { "policyid_list" : policyid_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                return render(request, 'policylist/policy_entry_list.html', { "policyid_list" : policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
             if len(tmp_data) == 2:         
                 print('into 2nd lane')
@@ -2156,7 +2161,7 @@ def policy_entry_filter(request,  data):
                 else:
                     data = None
                 
-                return render(request, 'policylist/policy_entry_list.html', {"vdata": context,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                return render(request, 'policylist/policy_entry_list.html', { "data_cat": datacat_list,"vdata": context,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
             
             if len(tmp_data) == 3:         
                 print('into 3rd lane')
@@ -2217,7 +2222,7 @@ def policy_entry_filter(request,  data):
                 else:
                     data = None
                 
-                return render(request, 'policylist/policy_entry_list.html', {"policyid_list" : policyid_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                return render(request, 'policylist/policy_entry_list.html', {"policyid_list" : policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
         
         else:
             print('tmp_data is', tmp_data)
@@ -2284,7 +2289,7 @@ def policy_entry_filter(request,  data):
             datag = Agents.objects.all()
 
             # data = Policy.objects.order_by('-policyid').filter().values()[:10]   
-            return render(request, 'policylist/policy_entry_list.html', {"vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+            return render(request, 'policylist/policy_entry_list.html', {"vdata": context,  "data_cat": datacat_list,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
         
     except Exception as ex:       
         return HttpResponse('Error occurred in policy_entry_filter: ' + ex)
