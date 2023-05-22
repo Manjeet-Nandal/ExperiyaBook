@@ -69,4 +69,7 @@ urlpatterns = [
     path('report_insurance/', report_insurance_comp,
          name="report_insurance_comp"),
     path('subscription/', subscription, name="subscription"),
+
+    path('change_password/', change_password, name="change_password"),
+
 ]

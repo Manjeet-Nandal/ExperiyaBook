@@ -197,12 +197,58 @@ def delete_bank_details(request, id):
             return redirect('bima_policy:bank_det')
 
 
-def change_password(request):
+def change_password_old(request):
+    print("change_password method calling:")  
     if request.method == 'POST' and 'updpassword' in request.POST:
         profile = ProfileModel.objects.filter(id=get_id_from_session(request))
         password = request.POST['password']
         profile.update(password=password)
 
+def change_password(request):
+    print("change_password method calling:")   
+    print('id: ' , get_id_from_session(request))
+
+    data = json.loads(request.POST['data'])    
+    # print(data)
+    splited_array = str(data).split('|')
+    old_pass = splited_array[0]
+    new_pass = splited_array[1]
+
+    print('old pass: ', old_pass)
+    print('new pass: ', new_pass)
+
+    context = {        
+        "status": "error occurred!"   
+    }   
+       
+    if is_user(request):       
+        profile = ProfileModel.objects.filter(id=get_id_from_session(request))   
+        profile_pass = ProfileModel.objects.filter(id=get_id_from_session(request)).values()[0] ['password']                
+        
+        if profile_pass == old_pass:
+            print('old match found:')
+            profile.update(password=new_pass)    
+            context['status'] = 'Password updated!'             
+            print('new password set')
+        else:
+            context['status'] = 'Your Last Password is Incorrect!'             
+            print('incorrect password')
+
+
+    else:        
+        staff = StaffModel.objects.filter(login_id=get_id_from_session(request))   
+        staff_pass = StaffModel.objects.filter(login_id=get_id_from_session(request)).values()[0] ['password']                
+        
+        if staff_pass == old_pass:
+            print('old match found:')
+            staff.update(password=new_pass)    
+            context['status'] = 'Password updated!'             
+            print('new password set')
+        else:
+            context['status'] = 'Your Last Password is Incorrect!'                     
+            print('incorrect password')
+    
+    return JsonResponse(context)
 
 # RTOView
 def rto_list(request):
@@ -2018,7 +2064,11 @@ def apply_policy(request, id):
 def policy_entry(request):
     print('policy_entry method')
     print(get_id_from_session(request))
+
     # vdata = fetch_vehicle_data()
+    mdl_data = v_data.model_data
+
+    print(mdl_data)
 
     context = read_vehicle_data_file()
     make = context["make"]
@@ -2059,7 +2109,7 @@ def policy_entry(request):
 
         # data = paginator.page(page_number)
 
-        return render(request, 'policylist/policy_entry_list.html', {"vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {"mdl_data": mdl_data, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)

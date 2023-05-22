@@ -2341,8 +2341,6 @@
          XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
    }
 
-
-
    function addVehicleCat() {
 
       document.getElementById('filter_content').innerHTML = ''
@@ -2365,6 +2363,7 @@
 
 
    function addVehicleMakes() {
+
 
       document.getElementById('filter_content').innerHTML = ''
       add_select_all_option()
@@ -2409,7 +2408,7 @@
 
 </script>
 <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
-<!-- <script src="{% static 'js/policy_entry_list.js' %}"></script>      -->
+<script src="{% static 'js/policy_entry_list.js' %}"></script>     
 <script src="{% static 'js/jquery.min.js' %}"></script>
 
 {%endblock%}
