@@ -1,3 +1,5 @@
+from bima_policy.static.vehicle_data import v_data
+from dateutil.parser import parse
 from itertools import chain
 from bson.objectid import ObjectId
 from django.utils.timezone import now
@@ -271,14 +273,14 @@ def write_vehicle_data():
     make_col = db["make"]
     model_col = db["model"]
     # Open the text file and read the record
-    with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+    with open('bima_policy//static//vehicle_data//vmake.txt', "r") as file:
         for line in file:
             record = line.strip()
             record_json = {"make": record}
             make_col.insert_one(record_json)
     print('done')
 
-    with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
+    with open('bima_policy//static//vehicle_data//vmodel.txt', "r") as file:
         for line in file:
             record = line.strip()
             record_json = {"model": record}
@@ -295,19 +297,43 @@ def write_vehicle_data2():
     make_col = db["make"]
     model_col = db["model"]
     # Open the text file and read the record
-    with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+    with open('bima_policy//static//vehicle_data//vmake.txt', "r") as file:
         for line in file:
             record = line.strip()
             record_json = {"make": record}
             make_col.insert_one(record_json)
     print('done')
 
-    with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
+    with open('bima_policy//static//vehicle_data//vmodel.txt', "r") as file:
         for line in file:
             record = line.strip()
             record_json = {"model": record}
             model_col.insert_one(record_json)
 
+    print('done')
+
+
+def write_vehicle_data2_list_type():
+
+    return
+
+    # Open the text file and read the record
+    with open('bima_policy//static//vehicle_data//vmake.txt', "r") as file:
+        with open('bima_policy//static//vehicle_data//vmake2.txt', "w") as file2:
+            for line in file:
+                record = line.strip()
+                record = '"' + record + '"' + ','
+
+                file2.write(record)
+    print('done')
+
+    with open('bima_policy//static//vehicle_data//vmodel.txt', "r") as file:
+        with open('bima_policy//static//vehicle_data//vmodel2.txt', "w") as file2:
+            for line in file:
+                record = line.strip()
+                record = '"' + record + '"' + ','
+
+                file2.write(record)
     print('done')
 
 
@@ -319,7 +345,7 @@ def write_vehicle_d():
     # make_col = db["company"]
     make_col = db["rto"]
 
-    with open('bima_policy//static//vehicle data//no.txt', "r") as file:
+    with open('bima_policy//static//vehicle_data//no.txt', "r") as file:
         for line in file:
             record = line.strip()
             if record == '':
@@ -379,7 +405,7 @@ def read_vehical_model_data(request):
     collection = db.model
 
     # Retrieve data from MongoDB collection
-    data = list(collection.find())
+    vehicle_data = list(collection.find())
 
     # print(data)
     # Pass data to template for rendering
@@ -392,25 +418,25 @@ def read_vehicle_data_file():
     model_list = []
     cat_list = []
     # Open the text file and read the record
-    with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+    with open('bima_policy//static//vehicle_data//vmake.txt', "r") as file:
         for line in file:
             make_list.append(line.strip())
 
     print('done')
 
-    with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
+    with open('bima_policy//static//vehicle_data//vmodel.txt', "r") as file:
         for line in file:
             model_list.append(line.strip())
-    
-    # with open('bima_policy//static//vehicle data//vcat.txt', "r") as file:
+
+    # with open('bima_policy//static//vehicle_data//vcat.txt', "r") as file:
     #     for line in file:
     #         cat_list.append(line.strip())
-   
+
     context = {
         "make": make_list,
-        "model": model_list      
+        "model": model_list
     }
-    
+
     return context
 
 
@@ -460,30 +486,31 @@ def vehicle_view(request):
 
     if request.method == "GET":
         try:
-            data_cat = VehicleCategory.objects.all( ).values()
+            data_cat = VehicleCategory.objects.all().values()
 
             context = read_vehicle_data_file()
             make = context["make"]
             model = context["model"]
-                     
-            datavm = VehicleModelName.objects.all( ).values()
-            datavmb = VehicleMakeBy.objects.all( ).values()
-            
-            for vm in datavm:            
+
+            datavm = VehicleModelName.objects.all().values()
+            datavmb = VehicleMakeBy.objects.all().values()
+
+            for vm in datavm:
                 model.append(vm["model"])
-            
-            for vmb in datavmb:              
+
+            for vmb in datavmb:
                 make.append(vmb["company"])
-                
+
             # mylist = zip(datamn, data)
-            return render(request, 'vehicle/vehicle.html', {'context': context, "data_cat" : data_cat})
+            return render(request, 'vehicle/vehicle.html', {'context': context, "data_cat": data_cat})
         except(VehicleMakeBy.DoesNotExist, VehicleModelName.DoesNotExist, VehicleCategory.DoesNotExist):
             return render(request, 'vehicle/vehicle.html')
     else:
         p = ProfileModel.objects.get(id=get_id_from_session(request))
         if 'mb_add' in request.POST:
             print('im here')
-            VehicleMakeBy.objects.create(company=request.POST['makeby'], status=request.POST['mbstatus'], profile_id=p)
+            VehicleMakeBy.objects.create(
+                company=request.POST['makeby'], status=request.POST['mbstatus'], profile_id=p)
             return redirect('bima_policy:vehi')
         elif 'vm_add' in request.POST:
             VehicleModelName.objects.create(
@@ -505,7 +532,7 @@ def delete_vehicle(request, id):
     try:
         temp_list = []
         found = False
-        with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+        with open('bima_policy//static//vehicle_data//vmake.txt', "r") as file:
             for line in file:
                 if line.strip() == id:
                     record = line.strip()
@@ -513,7 +540,7 @@ def delete_vehicle(request, id):
                 else:
                     temp_list.append(line.strip())
 
-        with open('bima_policy//static//vehicle data//vmake.txt', "w") as file:
+        with open('bima_policy//static//vehicle_data//vmake.txt', "w") as file:
             for i in temp_list:
                 file.write(i + '\n')
 
@@ -528,7 +555,7 @@ def delete_vehicle_category(request, id):
 
     print(id)
 
-    try:        
+    try:
         vc = VehicleCategory.objects.get(category=id).delete()
         print(vc)
         return redirect('bima_policy:vehi')
@@ -544,18 +571,18 @@ def delete_vehicle_model(request, id):
 
     vm = ''
 
-    try:        
-        vm = VehicleModelName.objects.get(model=id).delete()   
+    try:
+        vm = VehicleModelName.objects.get(model=id).delete()
         return redirect('bima_policy:vehi')
     except Exception as ex:
         print(ex)
         # return HttpResponse('Error Occurred in delete_vehicle_make method!')
-    
-    try:  
+
+    try:
         if vm == '':
             print('yes nione')
             delete_vehicle_model_from_file(id)
-        
+
         return redirect('bima_policy:vehi')
     except Exception as ex:
         print(ex)
@@ -569,32 +596,32 @@ def delete_vehicle_make(request, id):
 
     vmb = ''
 
-    try:        
-        vmb = VehicleMakeBy.objects.get(company=id).delete()   
+    try:
+        vmb = VehicleMakeBy.objects.get(company=id).delete()
         return redirect('bima_policy:vehi')
     except Exception as ex:
         print(ex)
         # return HttpResponse('Error Occurred in delete_vehicle_make method!')
-    
-    try:  
+
+    try:
         if vmb == '':
             print('yes nione')
             delete_vehicle_make_from_file(id)
-        
+
         return redirect('bima_policy:vehi')
     except Exception as ex:
         print(ex)
         return HttpResponse('Error Occurred in delete_vehicle_make method!')
 
 
-def delete_vehicle_make_from_file( id):
+def delete_vehicle_make_from_file(id):
     print('delete_vehicle_make_from_file method')
 
     print(id)
 
     try:
         temp_list = []
-        with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+        with open('bima_policy//static//vehicle_data//vmake.txt', "r") as file:
             for line in file:
                 if line.strip() == id:
                     record = line.strip()
@@ -602,24 +629,24 @@ def delete_vehicle_make_from_file( id):
                 else:
                     temp_list.append(line.strip())
 
-        with open('bima_policy//static//vehicle data//vmake.txt', "w") as file:
+        with open('bima_policy//static//vehicle_data//vmake.txt', "w") as file:
             for i in temp_list:
                 print(i)
                 file.write(i + '\n')
-      
+
     except Exception as ex:
         print(ex)
         return HttpResponse('Error Occurred in delete_vehicle_make_from_file method!')
 
 
-def delete_vehicle_model_from_file( id):
+def delete_vehicle_model_from_file(id):
     print('delete_vehicle_model_from_file method')
 
     print(id)
 
     try:
         temp_list = []
-        with open('bima_policy//static//vehicle data//vmodel.txt', "r") as file:
+        with open('bima_policy//static//vehicle_data//vmodel.txt', "r") as file:
             for line in file:
                 if line.strip() == id:
                     record = line.strip()
@@ -627,11 +654,11 @@ def delete_vehicle_model_from_file( id):
                 else:
                     temp_list.append(line.strip())
 
-        with open('bima_policy//static//vehicle data//vmodel.txt', "w") as file:
+        with open('bima_policy//static//vehicle_data//vmodel.txt', "w") as file:
             for i in temp_list:
                 print(i)
                 file.write(i + '\n')
-      
+
     except Exception as ex:
         print(ex)
         return HttpResponse('Error Occurred in delete_vehicle_model_from_file method!')
@@ -643,7 +670,7 @@ def edit_vehicle(request, id, id2):
     # print(id2)
     try:
         temp_list = []
-        with open('bima_policy//static//vehicle data//vmake.txt', "r") as file:
+        with open('bima_policy//static//vehicle_data//vmake.txt', "r") as file:
             for line in file:
                 if line.strip() == id:
                     temp_list.append(id2)
@@ -652,7 +679,7 @@ def edit_vehicle(request, id, id2):
                     temp_list.append(line.strip())
         # print(temp_list.__len__())
         # print(temp_list)
-        with open('bima_policy//static//vehicle data//vmake.txt', "w") as file:
+        with open('bima_policy//static//vehicle_data//vmake.txt', "w") as file:
             for i in temp_list:
                 # print(i)
                 file.write(i + '\n')
@@ -813,11 +840,11 @@ def get_user_role(request):
 
 
 def fetch_vehicle_data():
-    # with open('bima_policy//static//vehicle data//vcat.txt', 'rb') as f:
+    # with open('bima_policy//static//vehicle_data//vcat.txt', 'rb') as f:
     #     vcat = f.readlines()
-    with open('bima_policy//static//vehicle data//vmake.txt', 'rb') as f:
+    with open('bima_policy//static//vehicle_data//vmake.txt', 'rb') as f:
         vmake = f.readlines()
-    with open('bima_policy//static//vehicle data//vmodel.txt', 'rb') as f:
+    with open('bima_policy//static//vehicle_data//vmodel.txt', 'rb') as f:
         vmodel = f.readlines()
     vdata = {
         # "vcat": vcat,
@@ -933,20 +960,19 @@ class create_policy(View):
             "user_name": get_user_name(request),
             "user_role": get_user_role(request)
         }
-                  
+
         context = read_vehicle_data_file()
         make = context["make"]
         model = context["model"]
-            
-        datavm = VehicleModelName.objects.all( ).values()
-        datavmb = VehicleMakeBy.objects.all( ).values()
-        
-        for vm in datavm:            
+
+        datavm = VehicleModelName.objects.all().values()
+        datavmb = VehicleMakeBy.objects.all().values()
+
+        for vm in datavm:
             model.append(vm["model"])
-        
-        for vmb in datavmb:              
+
+        for vmb in datavmb:
             make.append(vmb["company"])
-                
 
         return render(request, 'policylist/policy_list.html', {"user_info": user_info, "vdata": context, "data_vc": data_vc, 'is_motor_form': True, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_bqp': data_bqp})
 
@@ -1355,7 +1381,6 @@ class create_policy(View):
         except Exception as ex:
             print('ex ', ex)
             return HttpResponse("Error occurred! When Creating New Policy! Contact Your Admin", ex)
-
 
 
 class create_policy_non_motor(View):
@@ -1984,9 +2009,9 @@ def apply_policy(request, id):
                 print(ex)
 
         data = Policy.objects.filter(policyid=id).values()
-        
+
         return render(request, 'policylist/policy_entry_list.html', {'data': data})
-    
+
         return redirect('bima_policy:create_policy')
     except Exception as ex:
         print(ex)
@@ -1995,35 +2020,35 @@ def apply_policy(request, id):
 
 def policy_entry(request):
     print('policy_entry method')
-    print(get_id_from_session(request)) 
+    print(get_id_from_session(request))
     # vdata = fetch_vehicle_data()
 
     context = read_vehicle_data_file()
     make = context["make"]
     model = context["model"]
-    
+
     datacat_list = []
-    data_cat = VehicleCategory.objects.all( ).values()
-    for vc in data_cat:            
+    data_cat = VehicleCategory.objects.all().values()
+    for vc in data_cat:
         datacat_list.append(vc["category"])
 
-    datavm = VehicleModelName.objects.all( ).values()
-    datavmb = VehicleMakeBy.objects.all( ).values()
-    
-    for vm in datavm:            
+    datavm = VehicleModelName.objects.all().values()
+    datavmb = VehicleMakeBy.objects.all().values()
+
+    for vm in datavm:
         model.append(vm["model"])
-    
-    for vmb in datavmb:              
+
+    for vmb in datavmb:
         make.append(vmb["company"])
-    
-    try:        
-        if is_user(request):     
-            data = Policy.objects.order_by('-policyid').values() [:25]  
+
+    try:
+        if is_user(request):
+            data = Policy.objects.order_by('-policyid').values()[:25]
 
         else:
-            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values() [:25]    
-          
-      
+            data = Policy.objects.filter(employee=get_id_from_session(
+                request)).order_by('-policyid').values()[:25]
+
         # print("total policy: ", data.values().count())
         datag = Agents.objects.all()
 
@@ -2032,107 +2057,106 @@ def policy_entry(request):
 
         # page_number = request.GET.get('page', 1)
         # print('page no: ' , page_number)
-      
+
         # page = paginator.page(page_number)
 
         # data = paginator.page(page_number)
 
-        return render(request, 'policylist/policy_entry_list.html', { "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {"vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
         return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
 
-from dateutil.parser import parse
-
-
 def policy_entry_filter(request,  data):
-    print('') 
-    print('policy_entry_filter method') 
+    print('')
+    print('policy_entry_filter method')
 
-    # vdata = fetch_vehicle_data()
-
+    # mk_data = vehicle_data.make_data
+    # mdl_data = vehicle_data.model_data
+       
     context = read_vehicle_data_file()
     make = context["make"]
     model = context["model"]
 
     datacat_list = []
-    data_cat = VehicleCategory.objects.all( ).values()
-    for vc in data_cat:            
+    data_cat = VehicleCategory.objects.all().values()
+    for vc in data_cat:
         datacat_list.append(vc["category"])
-    
-    datavm = VehicleModelName.objects.all( ).values()
-    datavmb = VehicleMakeBy.objects.all( ).values()
-    
-    for vm in datavm:            
+
+    datavm = VehicleModelName.objects.all().values()
+    datavmb = VehicleMakeBy.objects.all().values()
+
+    for vm in datavm:
         model.append(vm["model"])
-    
-    for vmb in datavmb:              
+
+    for vmb in datavmb:
         make.append(vmb["company"])
-    
-    
-    try:      
+
+    try:
         tmp_data = json.loads(data)
-     
-        print('request data: ', tmp_data)      
+
+        print('request data: ', tmp_data)
 
         if str(tmp_data).__contains__('-'):
 
-            if len(tmp_data) == 1:          
-                print('into 1st lane')        
-                tdata = tmp_data[0]         
+            if len(tmp_data) == 1:
+                print('into 1st lane')
+                tdata = tmp_data[0]
                 print('tdata [0] ', tdata[0])
                 print('tdata [1] ', tdata[1])
 
                 d1_array = tdata[0].split('-')
                 d2_array = tdata[1].split('-')
-                
+
                 year = d1_array[2]
                 month = d1_array[1]
                 day = d1_array[0]
-                date1 = year + "-" +  month + "-" + day
+                date1 = year + "-" + month + "-" + day
 
                 year = d2_array[2]
                 month = d2_array[1]
                 day = d2_array[0]
-                date2 = year + "-" +  month + "-" + day
+                date2 = year + "-" + month + "-" + day
 
                 print('date 1: ', date1)
                 print('date 2: ', date2)
-                
-                if is_user(request):    
-                    data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
+
+                if is_user(request):
+                    data = Policy.objects.filter(Q(issue_date__gte=date1) & Q(
+                        issue_date__lte=date2)).order_by('-policyid').values()
                 else:
-                    data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
+                    data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(
+                        issue_date__gte=date1) & Q(issue_date__lte=date2)).order_by('-policyid').values()
 
                 datag = Agents.objects.all()
 
                 policyid_list = []
                 for item in data:
-                    # print('item is: ',  item['policyid'])
-                    policyid_list.append(item['policyid'])       
+                    # print('item is: ',  item['policyid']) 
+                    policyid_list.append(item['policyid'])
 
-                return render(request, 'policylist/policy_entry_list.html', { "policyid_list" : policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                return render(request, 'policylist/policy_entry_list.html', { "policyid_list": policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
-            if len(tmp_data) == 2:         
+            if len(tmp_data) == 2:
                 print('into 2nd lane')
 
                 # date section
-                tdata = tmp_data[0]       
-            
+                tdata = tmp_data[0]
+
                 d1_array = tdata[0].split('-')
                 d2_array = tdata[1].split('-')
-                
+
                 year = d1_array[2]
                 month = d1_array[1]
                 day = d1_array[0]
-                date1 = year + "-" +  month + "-" + day
+                date1 = year + "-" + month + "-" + day
 
                 year = d2_array[2]
                 month = d2_array[1]
                 day = d2_array[0]
-                date2 = year + "-" +  month + "-" + day
+                date2 = year + "-" + month + "-" + day
 
                 print('date 1: ', date1)
                 print('date 2: ', date2)
@@ -2140,75 +2164,78 @@ def policy_entry_filter(request,  data):
                 # other filter section
                 # print('tmdata [1] : ', tmp_data[1])
 
-                
-
-                if is_user(request):    
-                    data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
+                if is_user(request):
+                    data = Policy.objects.filter(Q(issue_date__gte=date1) & Q(
+                        issue_date__lte=date2)).order_by('-policyid').values()
                 else:
-                    data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
+                    data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(
+                        issue_date__gte=date1) & Q(issue_date__lte=date2)).order_by('-policyid').values()
 
                 datag = Agents.objects.all()
 
                 print(tmp_data[1][0])
                 data = policy_entry_all_other_filter2(tmp_data[1], data)
-            
+
                 data = list(chain(*data))
 
                 if len(data) > 0:
                     # data = data[0]
                     pass
-                
+
                 else:
                     data = None
-                
-                return render(request, 'policylist/policy_entry_list.html', { "data_cat": datacat_list,"vdata": context,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-            
-            if len(tmp_data) == 3:         
+
+                return render(request, 'policylist/policy_entry_list.html', {  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+
+            if len(tmp_data) == 3:
                 print('into 3rd lane')
 
                 # date section
-                tdata = tmp_data[0]       
-            
+                tdata = tmp_data[0]
+
                 d1_array = tdata[0].split('-')
                 d2_array = tdata[1].split('-')
-                
+
                 year = d1_array[2]
                 month = d1_array[1]
                 day = d1_array[0]
-                date1 = year + "-" +  month + "-" + day
+                date1 = year + "-" + month + "-" + day
 
                 year = d2_array[2]
                 month = d2_array[1]
                 day = d2_array[0]
-                date2 = year + "-" +  month + "-" + day
+                date2 = year + "-" + month + "-" + day
 
                 print('date 1: ', date1)
                 print('date 2: ', date2)
 
                 payout_option = tmp_data[2]
-                print('payout: ', payout_option )
-
+                print('payout: ', payout_option)
 
                 datag = Agents.objects.all()
 
                 if payout_option == 'y':
-                    if is_user(request):    
-                        data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="") ).order_by('-policyid').values()        
+                    if is_user(request):
+                        data = Policy.objects.filter(Q(issue_date__gte=date1) & Q(
+                            issue_date__lte=date2) & Q(agent_od_reward="")).order_by('-policyid').values()
                     else:
-                        data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="") ).order_by('-policyid').values()        
-                        
-                    # data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="")  ).values()  
+                        data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(issue_date__gte=date1) & Q(
+                            issue_date__lte=date2) & Q(agent_od_reward="")).order_by('-policyid').values()
+
+                    # data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward="")  ).values()
                 else:
-                    if is_user(request):    
-                        data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
+                    if is_user(request):
+                        data = Policy.objects.filter(Q(issue_date__gte=date1) & Q(
+                            issue_date__lte=date2)).order_by('-policyid').values()
                     else:
-                        data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).order_by('-policyid').values()        
-                        
-                    # data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()  
+                        data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(
+                            issue_date__gte=date1) & Q(issue_date__lte=date2)).order_by('-policyid').values()
+
+                    # data = Policy.objects.order_by('-policyid').filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) ).values()
 
                 print(tmp_data[1][0])
                 data = policy_entry_all_other_filter2(tmp_data[1], data)
-            
+
                 data = list(chain(*data))
 
                 policyid_list = []
@@ -2218,93 +2245,98 @@ def policy_entry_filter(request,  data):
 
                 if len(data) > 0:
                     # data = data[0]
-                    pass                
+                    pass
                 else:
                     data = None
-                
-                return render(request, 'policylist/policy_entry_list.html', {"policyid_list" : policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-        
+
+                return render(request, 'policylist/policy_entry_list.html', {"policyid_list": policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+
         else:
             print('tmp_data is', tmp_data)
-            
+
             # tmp_data is [['15', '5', '15', '15'], "['66B9786', '16DCC32']"]
 
             print('tmp_data[0] ',  tmp_data[0])
             print('tmp_data[1] ',  tmp_data[1])
 
-            payout_values = {  
+            payout_values = {
 
-            "aod" : tmp_data[0][0],
-            "atp" : tmp_data[0][1],
-            "sod" : tmp_data[0][2],
-            "stp" : tmp_data[0][3]
+                "aod": tmp_data[0][0],
+                "atp": tmp_data[0][1],
+                "sod": tmp_data[0][2],
+                "stp": tmp_data[0][3]
             }
 
             print('payout_values ', payout_values)
 
-            updated_policy_list = [] 
+            updated_policy_list = []
 
             for id in str(tmp_data[1]).split(','):
                 try:
-                    tid = id.replace('[', '').replace(']', '').replace("'", '').replace("'", '').strip()  
+                    tid = id.replace('[', '').replace(']', '').replace(
+                        "'", '').replace("'", '').strip()
                     print(tid)
                     tmp_dataa = Policy.objects.get(policyid=tid)
                     print('tmp_data: ', tmp_dataa)
-                                
+
                     # Agent payout
                     aod = float(payout_values['aod'])
-                    agent_od_amount = round((float(tmp_dataa.OD_premium) * aod) / 100, 2)
+                    agent_od_amount = round(
+                        (float(tmp_dataa.OD_premium) * aod) / 100, 2)
                     atp = float(payout_values['atp'])
-                    agent_tp_amount = round( (float(tmp_dataa.TP_terrorism) * atp) / 100, 2)
+                    agent_tp_amount = round(
+                        (float(tmp_dataa.TP_terrorism) * atp) / 100, 2)
 
                     # # Self payout
                     sod = float(payout_values['sod'])
-                    self_od_amount = round( (float(tmp_dataa.OD_premium) * sod) / 100, 2)
+                    self_od_amount = round(
+                        (float(tmp_dataa.OD_premium) * sod) / 100, 2)
                     stp = float(payout_values['stp'])
-                    self_tp_amount = round( (float(tmp_dataa.TP_terrorism) * stp) / 100, 2)
+                    self_tp_amount = round(
+                        (float(tmp_dataa.TP_terrorism) * stp) / 100, 2)
 
-                    ddata = Policy.objects.filter(policyid=tid)    
+                    ddata = Policy.objects.filter(policyid=tid)
 
-                    print('ddata: ', ddata)                
+                    print('ddata: ', ddata)
 
                     ddata.update(agent_od_reward=aod,
-                                agent_od_amount=agent_od_amount,
-                                agent_tp_reward=atp,
-                                agent_tp_amount=agent_tp_amount,
+                                 agent_od_amount=agent_od_amount,
+                                 agent_tp_reward=atp,
+                                 agent_tp_amount=agent_tp_amount,
 
-                                self_od_reward=sod,
-                                self_od_amount=self_od_amount,
-                                self_tp_reward=stp,
-                                self_tp_amount=self_tp_amount)
-                    print('Done')                 
+                                 self_od_reward=sod,
+                                 self_od_amount=self_od_amount,
+                                 self_tp_reward=stp,
+                                 self_tp_amount=self_tp_amount)
+                    print('Done')
                     updated_policy_list.append(ddata.values())
 
                 except Exception as exc:
                     print(exc)
 
             print('updated list length: ', len(updated_policy_list))
-            
+
             data = list(chain(*updated_policy_list))
-           
+
             datag = Agents.objects.all()
 
-            # data = Policy.objects.order_by('-policyid').filter().values()[:10]   
-            return render(request, 'policylist/policy_entry_list.html', {"vdata": context,  "data_cat": datacat_list,'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-        
-    except Exception as ex:       
+            # data = Policy.objects.order_by('-policyid').filter().values()[:10]
+            return render(request, 'policylist/policy_entry_list.html', {"vdata": context,  "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+
+    except Exception as ex:
         return HttpResponse('Error occurred in policy_entry_filter: ' + ex)
 
 
 def policy_entry_date_filter(request, data, filter_payout='n'):
     try:
-        print('policy_entry_date_filter method') 
+        print('policy_entry_date_filter method')
         # request data:  [['01/04/2023', '30/04/2023']]
 
         str_data = str(data)
-        # ['07/05/2023', '07/05/2023'] = yesterday       
+        # ['07/05/2023', '07/05/2023'] = yesterday
         str_data = str_data.replace('/', '-').split(',')
         # print('str_data ', str_data)
-        
+
         sd1 = str_data[0].replace("[", '').split('-')
         sd2 = str_data[1].replace("]", '').split('-')
         # print('sd1 ', sd1)
@@ -2315,28 +2347,29 @@ def policy_entry_date_filter(request, data, filter_payout='n'):
         # date2
         d2 = parse(sd2[0]).day
         m2 = parse(sd2[1]).month
-        y2 = parse(sd2[2]).year                
-            
-        # print('sd2 ', sd2)
-        sdv = str_data[0].strip().split('-')      
-        # print('sdv ', sdv)
-        # print(sdv  ["'01", '04', "2023'"])            
-        year = sdv[2]
-        month = sdv[1]
-        day = sdv[0]
-        date1 = year + "-" +  month + "-" + day
-        date1 = date1.replace("'", "").replace("[", "").replace("]", "").replace("[[", "").replace("]]", "").replace("'", "")
+        y2 = parse(sd2[2]).year
 
-        # sdv = str_data[1].strip().replace("[", '').split('-')     
-        sdv = str_data[1].strip().split('-')     
+        # print('sd2 ', sd2)
+        sdv = str_data[0].strip().split('-')
         # print('sdv ', sdv)
-        # print(sdv  ["'01", '04', "2023'"])            
+        # print(sdv  ["'01", '04', "2023'"])
         year = sdv[2]
         month = sdv[1]
         day = sdv[0]
-        date2 = year + "-" +  month + "-" + day
-        date2 = date2.replace("'", "").replace("[", "").replace("]", "").replace("[[", "").replace("]]", "").replace("'", "")
-       
+        date1 = year + "-" + month + "-" + day
+        date1 = date1.replace("'", "").replace("[", "").replace("]", "").replace(
+            "[[", "").replace("]]", "").replace("'", "")
+
+        # sdv = str_data[1].strip().replace("[", '').split('-')
+        sdv = str_data[1].strip().split('-')
+        # print('sdv ', sdv)
+        # print(sdv  ["'01", '04', "2023'"])
+        year = sdv[2]
+        month = sdv[1]
+        day = sdv[0]
+        date2 = year + "-" + month + "-" + day
+        date2 = date2.replace("'", "").replace("[", "").replace("]", "").replace(
+            "[[", "").replace("]]", "").replace("'", "")
 
         # date1 = datetime(y, m, d)
         # date1 = datetime(y, d, m)
@@ -2345,553 +2378,592 @@ def policy_entry_date_filter(request, data, filter_payout='n'):
         print('date 2: ', date2)
 
         tmp_adv_list = []
-        
-        print('filter_payoutis :',filter_payout)
 
-        if is_user(request): 
-            # data = Policy.objects.filter(issue_date__gte='01/04/2023').filter(issue_date__lte='30/04/2023').values() 
-            # data = Policy.objects.filter(issue_date__gte='2023-04-01').filter(issue_date__lte='2023-04-30').values() 
+        print('filter_payoutis :', filter_payout)
+
+        if is_user(request):
+            # data = Policy.objects.filter(issue_date__gte='01/04/2023').filter(issue_date__lte='30/04/2023').values()
+            # data = Policy.objects.filter(issue_date__gte='2023-04-01').filter(issue_date__lte='2023-04-30').values()
             if filter_payout == "y":
-                # data = Policy.objects.filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
-                data = Policy.objects.filter(Q(issue_date__gte=date1 ) & Q(issue_date__lte=date2) & Q(agent_od_reward= "") ).values() 
+                # data = Policy.objects.filter(issue_date__gte=date1).filter(issue_date__lte=date2).values()
+                data = Policy.objects.filter(Q(issue_date__gte=date1) & Q(
+                    issue_date__lte=date2) & Q(agent_od_reward="")).values()
             else:
-                data = Policy.objects.filter(Q(issue_date__gte=date1) & Q(issue_date__lte=date2)).values() 
+                data = Policy.objects.filter(
+                    Q(issue_date__gte=date1) & Q(issue_date__lte=date2)).values()
 
             tmp_adv_list.append(data)
         else:
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date__gte=date1).filter(issue_date__lte=date2).values() 
-            data = Policy.objects.filter(employee=get_id_from_session(request)).values() 
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).filter(issue_date__gte=date1).filter(issue_date__lte=date2).values()
+            data = Policy.objects.filter(
+                employee=get_id_from_session(request)).values()
 
-        
         data = list(chain(*tmp_adv_list))
         # datag = Agents.objects.all()
         return data
-    
+
     except Exception as ex:
         print('error occurred in policy_entry_date_filter: ', ex)
-        return ex        
+        return ex
 
 
 def policy_entry_all_other_filter2(data, f_data):
     print('')
     print('policy_entry_all_other_filter2 calling:')
-    print('data: ', data) 
-    # print('data: ', f_data) 
+    print('data: ', data)
+    # print('data: ', f_data)
 
-    qs_list_temp = []      
+    qs_list_temp = []
     qs_list = []
 
     str_dataa = str(data)
 
     # filter for ins
     if str_dataa.__contains__('-ins'):
-        print('has ins')        
+        print('has ins')
         str_data = str(data)
-        ins_index = str(data).index('-ins') 
+        ins_index = str(data).index('-ins')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
         for e in name:
-            ee = e.strip()  
+            ee = e.strip()
             # print(ee)
-            for ins in f_data:                       
-                if ee == ins['insurance_company']:     
-                    pid = ins['policyid']                          
-                    qs_list.append(Policy.objects.filter(policyid = pid).values() )      
-        
-        print('ins length: ', len(qs_list) )  
+            for ins in f_data:
+                if ee == ins['insurance_company']:
+                    pid = ins['policyid']
+                    qs_list.append(Policy.objects.filter(
+                        policyid=pid).values())
+
+        print('ins length: ', len(qs_list))
 
     if str_dataa.__contains__('-vc'):
         print('')
-        print('has vc')        
+        print('has vc')
         str_data = str(data)
         ins_index = str(data).index('-vc')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['vehicle_catagory']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['vehicle_catagory']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['vehicle_catagory']:     
+
+                for ins in f_data:
+                    if ee == ins['vehicle_catagory']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('vc length: ', len(qs_list))
 
     if str_dataa.__contains__('-vmb'):
         print('')
-        print('has vmb')        
+        print('has vmb')
         str_data = str(data)
         ins_index = str(data).index('-vmb')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:      
-                    if ee.__contains__("--"):
-                        ee=ee.replace("--", "/")
 
-                    if ee == ins['vehicle_makeby']:     
+                for ins in qs_list_temp:
+                    if ee.__contains__("--"):
+                        ee = ee.replace("--", "/")
+
+                    if ee == ins['vehicle_makeby']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 if ee.__contains__("--"):
-                    ee=ee.replace("--", "/")
+                    ee = ee.replace("--", "/")
                 # print(ee)
-                
-                for ins in f_data:       
-                    # inns = ins['vehicle_makeby']    
-                    # print('insss:' , inns) 
 
-                    if ee == ins['vehicle_makeby']:     
+                for ins in f_data:
+                    # inns = ins['vehicle_makeby']
+                    # print('insss:' , inns)
+
+                    if ee == ins['vehicle_makeby']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('vmb length: ', len(qs_list))
 
     if str_dataa.__contains__('-vmm'):
         print('')
-        print('has vmm')        
+        print('has vmm')
         str_data = str(data)
         ins_index = str(data).index('-vmm')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 if ee.__contains__("--"):
-                        ee=ee.replace("--", "/")
+                    ee = ee.replace("--", "/")
 
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['vehicle_model']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['vehicle_model']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 if ee.__contains__("--"):
-                        ee=ee.replace("--", "/")
+                    ee = ee.replace("--", "/")
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['vehicle_model']:     
+
+                for ins in f_data:
+                    if ee == ins['vehicle_model']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('vm length: ', len(qs_list))
 
     if str_dataa.__contains__('-ft'):
         print('')
-        print('has ft')        
+        print('has ft')
         str_data = str(data)
         ins_index = str(data).index('-ft')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['vehicle_fuel_type']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['vehicle_fuel_type']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['vehicle_fuel_type']:     
+
+                for ins in f_data:
+                    if ee == ins['vehicle_fuel_type']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('ft length: ', len(qs_list))
 
     if str_dataa.__contains__('-cc'):
         print('')
-        print('has cc')        
+        print('has cc')
         str_data = str(data)
         ins_index = str(data).index('-cc')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['cubic_capacity']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['cubic_capacity']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['cubic_capacity']:     
+
+                for ins in f_data:
+                    if ee == ins['cubic_capacity']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('cc length: ', len(qs_list))
 
     if str_dataa.__contains__('-sc'):
         print('')
-        print('has sc')        
+        print('has sc')
         str_data = str(data)
         ins_index = str(data).index('-sc')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['seating_capacity']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['seating_capacity']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['seating_capacity']:     
+
+                for ins in f_data:
+                    if ee == ins['seating_capacity']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('sc length: ', len(qs_list))
 
     if str_dataa.__contains__('-ct'):
         print('')
-        print('has ct')        
+        print('has ct')
         str_data = str(data)
         ins_index = str(data).index('-ct')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['coverage_type']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['coverage_type']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['coverage_type']:     
+
+                for ins in f_data:
+                    if ee == ins['coverage_type']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('ct length: ', len(qs_list))
 
     if str_dataa.__contains__('-gvw'):
         print('')
-        print('has gvw')        
+        print('has gvw')
         str_data = str(data)
         ins_index = str(data).index('-gvw')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['gvw']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['gvw']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['gvw']:     
+
+                for ins in f_data:
+                    if ee == ins['gvw']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('gvw length: ', len(qs_list))
 
     if str_dataa.__contains__('-pt'):
         print('')
-        print('has pt')        
+        print('has pt')
         str_data = str(data)
         ins_index = str(data).index('-pt')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['policy_type']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['policy_type']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['policy_type']:     
+
+                for ins in f_data:
+                    if ee == ins['policy_type']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('pt length: ', len(qs_list))
 
     if str_dataa.__contains__('-addon'):
         print('')
-        print('has addon')        
+        print('has addon')
         str_data = str(data)
         ins_index = str(data).index('-addon')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['addon']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['addon']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['addon']:     
+
+                for ins in f_data:
+                    if ee == ins['addon']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('addon length: ', len(qs_list))
 
     if str_dataa.__contains__('-ncb'):
         print('')
-        print('has ncb')        
+        print('has ncb')
         str_data = str(data)
         ins_index = str(data).index('-ncb')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['ncb']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['ncb']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['ncb']:     
+
+                for ins in f_data:
+                    if ee == ins['ncb']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('ncb length: ', len(qs_list))
 
     if str_dataa.__contains__('-cpa'):
         print('')
-        print('has cpa')        
+        print('has cpa')
         str_data = str(data)
         ins_index = str(data).index('-cpa')
         # print('num', ins_index)
 
-        b_index = str_data.index('[', ins_index )      
-        c_index = str_data.index(']', ins_index )      
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
 
         subStr = str_data[b_index:c_index]
-        # print(subStr)    
+        # print(subStr)
 
-        name = subStr.strip().replace('[', '').replace(']', '').replace("'", '').split(",") 
-        
-        if len(qs_list) > 0:            
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
             qs_list_temp = list(chain(*qs_list))
             qs_list = []
 
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in qs_list_temp:                       
-                    if ee == ins['cpa']:     
+
+                for ins in qs_list_temp:
+                    if ee == ins['cpa']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )  
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
         else:
             for e in name:
-                ee = e.strip()  
+                ee = e.strip()
                 print(ee)
-                
-                for ins in f_data:                       
-                    if ee == ins['cpa']:     
+
+                for ins in f_data:
+                    if ee == ins['cpa']:
                         pid = ins['policyid']
-                        qs_list.append(Policy.objects.filter(policyid = pid).values() )   
-                        
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('cpa length: ', len(qs_list))
 
-     
-    # print('qs list ', qs_list)  
- 
-    print('qs list length', len(qs_list))    
+    # print('qs list ', qs_list)
+
+    print('qs list length', len(qs_list))
     return qs_list
 
 
@@ -2915,9 +2987,10 @@ def pol_ins(data):
     # print('qs list ', qs_list)
     return qs_list
 
+
 def pol_ins2(data, f_data):
     print('pol_ins2 method')
-    # print(data) 
+    # print(data)
     qs_list = []
 
     for k in data:
@@ -2931,16 +3004,18 @@ def pol_ins2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            # print(itm)            
+            # print(itm)
             for fd in f_data:
                 # print(fd['insurance_company'])
                 if fd['insurance_company'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('qs list ', qs_list)
     return qs_list
 
-def pol_vc2(data, f_data): 
+
+def pol_vc2(data, f_data):
     print('pol_vc2 method')
 
     qs_list = []
@@ -2956,14 +3031,16 @@ def pol_vc2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            # print(itm)           
+            # print(itm)
             for fd in f_data:
                 # print(fd['vehicle_catagory'])
                 if fd['vehicle_catagory'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('vh qs list ', qs_list)
     return qs_list
+
 
 def pol_ft2(data, f_data):
     qs_list = []
@@ -2979,14 +3056,16 @@ def pol_ft2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            print(itm)           
+            print(itm)
             for fd in f_data:
                 # print(fd['vehicle_fuel_type'])
                 if fd['vehicle_fuel_type'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('qs list ', qs_list)
     return qs_list
+
 
 def pol_cc2(data, f_data):
     qs_list = []
@@ -3002,14 +3081,16 @@ def pol_cc2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            print(itm)           
+            print(itm)
             for fd in f_data:
                 # print(fd['cubic_capacity'])
                 if fd['cubic_capacity'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('qs list ', qs_list)
     return qs_list
+
 
 def pol_sc2(data, f_data):
     qs_list = []
@@ -3025,14 +3106,16 @@ def pol_sc2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            print(itm)           
+            print(itm)
             for fd in f_data:
                 # print(fd['seating_capacity'])
                 if fd['seating_capacity'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('qs list ', qs_list)
     return qs_list
+
 
 def pol_ct2(data, f_data):
     qs_list = []
@@ -3048,14 +3131,16 @@ def pol_ct2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            print(itm)           
+            print(itm)
             for fd in f_data:
                 # print(fd['coverage_type'])
                 if fd['coverage_type'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('qs list ', qs_list)
     return qs_list
+
 
 def pol_gvw2(data, f_data):
     qs_list = []
@@ -3071,14 +3156,16 @@ def pol_gvw2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            print(itm)           
+            print(itm)
             for fd in f_data:
                 # print(fd['gvw'])
                 if fd['gvw'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('qs list ', qs_list)
     return qs_list
+
 
 def pol_pt2(data, f_data):
     qs_list = []
@@ -3094,14 +3181,16 @@ def pol_pt2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            print(itm)           
+            print(itm)
             for fd in f_data:
                 # print(fd['policy_type'])
                 if fd['policy_type'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('qs list ', qs_list)
     return qs_list
+
 
 def pol_addon2(data, f_data):
     qs_list = []
@@ -3117,14 +3206,16 @@ def pol_addon2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            print(itm)           
+            print(itm)
             for fd in f_data:
                 # print(fd['addon'])
                 if fd['addon'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('qs list ', qs_list)
     return qs_list
+
 
 def pol_ncb2(data, f_data):
     qs_list = []
@@ -3140,14 +3231,16 @@ def pol_ncb2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            print(itm)           
+            print(itm)
             for fd in f_data:
                 # print(fd['ncb'])
                 if fd['ncb'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('qs list ', qs_list)
     return qs_list
+
 
 def pol_cpa2(data, f_data):
     qs_list = []
@@ -3163,14 +3256,16 @@ def pol_cpa2(data, f_data):
 
         for m in items_coll:
             itm = m.strip()
-            print(itm)           
+            print(itm)
             for fd in f_data:
                 # print(fd['cpa'])
                 if fd['cpa'] == itm:
-                    qs_list.append(Policy.objects.filter( policyid=fd['policyid']).values())
-         
+                    qs_list.append(Policy.objects.filter(
+                        policyid=fd['policyid']).values())
+
     print('qs list ', qs_list)
     return qs_list
+
 
 def pol_ft(data):
     qs_list = []
@@ -3191,6 +3286,7 @@ def pol_ft(data):
                 vehicle_fuel_type=itm).values())
     # print('qs list ', qs_list)
     return qs_list
+
 
 def pol_vc(data):
     qs_list = []
@@ -3233,6 +3329,7 @@ def pol_cc(data):
     # print('qs list ', qs_list)
     return qs_list
 
+
 def pol_sc(data):
     qs_list = []
 
@@ -3252,6 +3349,7 @@ def pol_sc(data):
                 seating_capacity=itm).values())
     # print('qs list ', qs_list)
     return qs_list
+
 
 def pol_ct(data):
     qs_list = []
@@ -3273,6 +3371,7 @@ def pol_ct(data):
     # print('qs list ', qs_list)
     return qs_list
 
+
 def pol_gvw(data):
     qs_list = []
 
@@ -3291,6 +3390,7 @@ def pol_gvw(data):
             qs_list.append(Policy.objects.filter(gvw=itm).values())
     # print('qs list ', qs_list)
     return qs_list
+
 
 def pol_pt(data):
     qs_list = []
@@ -3311,6 +3411,7 @@ def pol_pt(data):
     # print('qs list ', qs_list)
     return qs_list
 
+
 def pol_addon(data):
     qs_list = []
 
@@ -3329,6 +3430,7 @@ def pol_addon(data):
             qs_list.append(Policy.objects.filter(addon=itm).values())
     # print('qs list ', qs_list)
     return qs_list
+
 
 def pol_ncb(data):
     qs_list = []
@@ -3349,6 +3451,7 @@ def pol_ncb(data):
     # print('qs list ', qs_list)
     return qs_list
 
+
 def pol_cpa(data):
     qs_list = []
 
@@ -3368,13 +3471,14 @@ def pol_cpa(data):
     # print('qs list ', qs_list)
     return qs_list
 
+
 def policy_entry_list_pattern(data):
-    print('policy_entry_list_pattern method') 
-    
+    print('policy_entry_list_pattern method')
+
     qs = []
     temp_list = ''
 
-    try: 
+    try:
         qs = pol_get(data)
         # print('pol_get output: ', tmpData)
 
@@ -3388,6 +3492,7 @@ def policy_entry_list_pattern(data):
 
     return qs
 
+
 def pol_get(data):
     print('pol get method')
     # print('pol_get input data: ', data)
@@ -3399,7 +3504,7 @@ def pol_get(data):
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3413,15 +3518,16 @@ def pol_get(data):
 
         if key.__contains__('##ins'):
             for m in items_coll:
-                itm = m.strip()              
-                qs_list.append(Policy.objects.filter(insurance_company=itm).values())
-    
+                itm = m.strip()
+                qs_list.append(Policy.objects.filter(
+                    insurance_company=itm).values())
+
     # filter for vc
     for k in data:
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3438,19 +3544,21 @@ def pol_get(data):
                 tmpData = qs_list[0]
                 qs_list = []
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(tmpData.filter(vehicle_catagory=itm).values())                                 
+                    itm = m.strip()
+                    qs_list.append(tmpData.filter(
+                        vehicle_catagory=itm).values())
             else:
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(Policy.objects.filter(vehicle_catagory=itm).values())
-                                 
+                    itm = m.strip()
+                    qs_list.append(Policy.objects.filter(
+                        vehicle_catagory=itm).values())
+
     # filter for fuel
     for k in data:
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3467,19 +3575,21 @@ def pol_get(data):
                 tmpData = qs_list[0]
                 qs_list = []
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(tmpData.filter(vehicle_fuel_type=itm).values())                                 
+                    itm = m.strip()
+                    qs_list.append(tmpData.filter(
+                        vehicle_fuel_type=itm).values())
             else:
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(Policy.objects.filter(vehicle_fuel_type=itm).values())
+                    itm = m.strip()
+                    qs_list.append(Policy.objects.filter(
+                        vehicle_fuel_type=itm).values())
 
     # filter for cc
     for k in data:
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3496,19 +3606,20 @@ def pol_get(data):
                 tmpData = qs_list[0]
                 qs_list = []
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(tmpData.filter(cubic_capacity=itm).values())                                 
+                    itm = m.strip()
+                    qs_list.append(tmpData.filter(cubic_capacity=itm).values())
             else:
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(Policy.objects.filter(cubic_capacity=itm).values())
+                    itm = m.strip()
+                    qs_list.append(Policy.objects.filter(
+                        cubic_capacity=itm).values())
 
     # filter for sc
     for k in data:
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3525,19 +3636,21 @@ def pol_get(data):
                 tmpData = qs_list[0]
                 qs_list = []
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(tmpData.filter(seating_capacity=itm).values())                                 
+                    itm = m.strip()
+                    qs_list.append(tmpData.filter(
+                        seating_capacity=itm).values())
             else:
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(Policy.objects.filter(seating_capacity=itm).values())
+                    itm = m.strip()
+                    qs_list.append(Policy.objects.filter(
+                        seating_capacity=itm).values())
 
     # filter for ct
     for k in data:
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3554,19 +3667,20 @@ def pol_get(data):
                 tmpData = qs_list[0]
                 qs_list = []
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(tmpData.filter(coverage_type=itm).values())                                 
+                    itm = m.strip()
+                    qs_list.append(tmpData.filter(coverage_type=itm).values())
             else:
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(Policy.objects.filter(coverage_type=itm).values())
+                    itm = m.strip()
+                    qs_list.append(Policy.objects.filter(
+                        coverage_type=itm).values())
 
     # filter for gvw
     for k in data:
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3583,11 +3697,11 @@ def pol_get(data):
                 tmpData = qs_list[0]
                 qs_list = []
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(tmpData.filter(gvw=itm).values())                                 
+                    itm = m.strip()
+                    qs_list.append(tmpData.filter(gvw=itm).values())
             else:
                 for m in items_coll:
-                    itm = m.strip()  
+                    itm = m.strip()
                     qs_list.append(Policy.objects.filter(gvw=itm).values())
 
     # filter for policy type
@@ -3595,7 +3709,7 @@ def pol_get(data):
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3612,19 +3726,20 @@ def pol_get(data):
                 tmpData = qs_list[0]
                 qs_list = []
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(tmpData.filter(policy_type=itm).values())                                 
+                    itm = m.strip()
+                    qs_list.append(tmpData.filter(policy_type=itm).values())
             else:
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(Policy.objects.filter(policy_type=itm).values())
+                    itm = m.strip()
+                    qs_list.append(Policy.objects.filter(
+                        policy_type=itm).values())
 
     # filter for addon
     for k in data:
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3641,11 +3756,11 @@ def pol_get(data):
                 tmpData = qs_list[0]
                 qs_list = []
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(tmpData.filter(addon=itm).values())                                 
+                    itm = m.strip()
+                    qs_list.append(tmpData.filter(addon=itm).values())
             else:
                 for m in items_coll:
-                    itm = m.strip()  
+                    itm = m.strip()
                     qs_list.append(Policy.objects.filter(addon=itm).values())
 
     # filter for ncb
@@ -3653,7 +3768,7 @@ def pol_get(data):
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3670,11 +3785,11 @@ def pol_get(data):
                 tmpData = qs_list[0]
                 qs_list = []
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(tmpData.filter(ncb=itm).values())                                 
+                    itm = m.strip()
+                    qs_list.append(tmpData.filter(ncb=itm).values())
             else:
                 for m in items_coll:
-                    itm = m.strip()  
+                    itm = m.strip()
                     qs_list.append(Policy.objects.filter(ncb=itm).values())
 
     # filter for cpa
@@ -3682,7 +3797,7 @@ def pol_get(data):
         # Getting name
         coll = (str(k).split(','))
         stripString = str(coll[0]).strip()
-        index = stripString.index('##')   
+        index = stripString.index('##')
         key = stripString[index:]
         # print(key)
 
@@ -3699,17 +3814,18 @@ def pol_get(data):
                 tmpData = qs_list[0]
                 qs_list = []
                 for m in items_coll:
-                    itm = m.strip()  
-                    qs_list.append(tmpData.filter(cpa=itm).values())                                 
+                    itm = m.strip()
+                    qs_list.append(tmpData.filter(cpa=itm).values())
             else:
                 for m in items_coll:
-                    itm = m.strip()  
+                    itm = m.strip()
                     qs_list.append(Policy.objects.filter(cpa=itm).values())
-                              
+
     print('qs list ', qs_list)
-    print('qs list length', len(qs_list))    
+    print('qs list length', len(qs_list))
     return qs_list
-    
+
+
 def policy_entry_list_update(request):
     print('policy_entry_list_update method')
 
@@ -3717,8 +3833,8 @@ def policy_entry_list_update(request):
         # data = json.loads(request.POST['data'])
         data = json.loads(request.POST['data'])
         # print(data)
-        # [['10', '20', '30', '40'], ['24EF892']]      
-           
+        # [['10', '20', '30', '40'], ['24EF892']]
+
         data = list(chain(*data))
         datag = Agents.objects.all()
 
@@ -3919,16 +4035,15 @@ def policy_entrydata(request, id):
         context = read_vehicle_data_file()
         make = context["make"]
         model = context["model"]
-        
-        datavm = VehicleModelName.objects.all( ).values()
-        datavmb = VehicleMakeBy.objects.all( ).values()
-        
-        for vm in datavm:            
+
+        datavm = VehicleModelName.objects.all().values()
+        datavmb = VehicleMakeBy.objects.all().values()
+
+        for vm in datavm:
             model.append(vm["model"])
-        
-        for vmb in datavmb:              
+
+        for vmb in datavmb:
             make.append(vmb["company"])
-        
 
         data_vc = VehicleCategory.objects.all()
         data_bqp = BQP.objects.all()
@@ -4273,24 +4388,22 @@ def slab_payoutform(request):
         # data_vmb = VehicleMakeBy.objects.all()
         # data_vm = VehicleModelName.objects.all()
         data_vc = VehicleCategory.objects.all()
-      
+
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
 
         context = read_vehicle_data_file()
         make = context["make"]
         model = context["model"]
-      
-        # datavcat = VehicleCategory.objects.all( ).values()
-        datavm = VehicleModelName.objects.all( ).values()
-        datavmb = VehicleMakeBy.objects.all( ).values()
-        
-        for vm in datavm:            
-            model.append(vm["model"])
-        
-        for vmb in datavmb:              
-            make.append(vmb["company"])
-            
 
+        # datavcat = VehicleCategory.objects.all( ).values()
+        datavm = VehicleModelName.objects.all().values()
+        datavmb = VehicleMakeBy.objects.all().values()
+
+        for vm in datavm:
+            model.append(vm["model"])
+
+        for vmb in datavmb:
+            make.append(vmb["company"])
 
         # print(state_rto.rto_id)
         # print(data_bc)
