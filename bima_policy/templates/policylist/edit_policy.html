@@ -50,12 +50,13 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Catagory <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_catagory" id="vehicle_catagory" class="custom-select "
-                                             required onchange="setCategoryOnChange()">
+                                             required onclick="setCategoryOnChange()">
                                              <option value="{{data.vehicle_catagory}}"> {{data.vehicle_catagory}}
-                                             </option>  
-                                             {%for value in data_vc%}
+                                             </option>
+                                             {% for value in data_vc %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
+
                                           </select>
                                        </div>
 
@@ -81,7 +82,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="insurance_company" class="custom-select" id="insurance_company"
-                                             required>
+                                             required onclick="sortItems(this.id)">
                                              <option value="{{data.insurance_company}}"> {{data.insurance_company}}
                                              </option>
                                              {%for value in data_ins%}
@@ -91,7 +92,8 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="sp_name" class="custom-select" id="sp_name" required>
+                                          <select name="sp_name" class="custom-select" id="sp_name" required
+                                             onclick="sortItems(this.id)">
                                              <option value="{{data.sp_name}}"> {{data.sp_name}} </option>
                                              {%for value in data_sp%}
                                              <option value="{{value}}">{{value}}</option>
@@ -107,7 +109,7 @@
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
-                                         
+
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="registration_no">Registration No. <abbr title=""
@@ -174,28 +176,30 @@
                                              value="{{data.rto_city}}" class="form-control" name="rto_city"
                                              style="text-transform: uppercase;" required>
                                        </div>
+
                                        <div class="col-md-3 mb-4" ">
                                           <label>Vehicle Make By <abbr title="" class=" text-danger">*</abbr></label>
                                           <select name="vehicle_makeby"
                                              class="custom-select select2 select2-hidden-accessible" id="vehicle_makeby"
                                              aria-hidden="true" required>
-                                             <option value="{{data.vehicle_makeby}}" > {{data.vehicle_makeby}} </option>
+                                             <option value="{{data.vehicle_makeby}}"> {{data.vehicle_makeby}} </option>
                                           </select>
 
                                        </div>
-                                      
+
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Model <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="vehicle_model"
                                              class="custom-select select2 select2-hidden-accessible" id="vehicle_model"
                                              aria-hidden="true" required>
-                                             <option value="{{data.vehicle_model}}" > {{data.vehicle_model}}</option>
+                                             <option value="{{data.vehicle_model}}"> {{data.vehicle_model}} </option>
                                           </select>
                                        </div>
-                                      
+
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="vehicle_fuel_type" class="custom-select" required>
+                                          <select name="vehicle_fuel_type" class="custom-select" required
+                                             onclick="sortItems(this.id)">
                                              <option value="{{data.vehicle_fuel_type}}"> {{data.vehicle_fuel_type}}
                                              </option>
                                              <option value="PETROL">PETROL</option>
@@ -260,7 +264,7 @@
                                           </select>
                                        </div>
 
-                                       <div class="col-md-3 mb-4" id="gvwDiv" >
+                                       <div class="col-md-3 mb-4" id="gvwDiv">
                                           <label>GVW<abbr class="text-danger">*</abbr></label>
                                           <select name="gvw" class="custom-select" id="gvw" required>
                                              <option value="{{data.gvw}}"> {{data.gvw}} </option>
@@ -289,6 +293,7 @@
                                           </select>
                                        </div>
 
+
                                        <div class="col-md-3 mb-4" id="seating_capacityDiv1" hidden>
                                           <label for="seating_capacity1">Seating Capacity <abbr
                                                 class="text-danger">*</abbr></label><input type="text"
@@ -303,10 +308,7 @@
                                           <select name="coverage_type" id="coverage_type" class="custom-select"
                                              required>
                                              <option value="{{data.coverage_type}}"> {{data.coverage_type}} </option>
-                                             <option value="NA"> NA </option>
-                                             <!-- {% for value in data_ct%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {% endfor%} -->
+
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -328,6 +330,45 @@
                                           </select>
                                        </div>
 
+
+
+                                       <div class="col-md-3 mb-4" hidden>
+                                          <label for="flatpickr-wrap">Risk Start Date <abbr title=""
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="risk_flatpickr" data-wrap="true" data-alt-input="true"
+                                             data-alt-format="F j, Y" data-alt-input-class="form-control"
+                                             data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="" name="risk_start_date" required
+                                                data-input="">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4" hidden>
+                                          <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="risk_flatpickr" data-wrap="true" data-alt-input="true"
+                                             data-alt-format="F j, Y" data-alt-input-class="form-control"
+                                             data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="" name="risk_end_date" required
+                                                data-input="">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4" hidden>
+                                          <label for="flatpickr-wrap">Issued Date <abbr title=""
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
+                                             ata-alt-format="F j, Y" data-alt-input-class="form-control"
+                                             data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="" name="issue_date" required
+                                                data-input="">
+                                          </div>
+                                       </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label for="insured_age">Insured Age <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="number"
@@ -345,6 +386,7 @@
                                              <option value="5">5</option>
                                           </select>
                                        </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
@@ -356,60 +398,91 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos" type="text" value="{{data.pos}}" data-toggle="modal"
+                                             id="pos" type="text" value="" data-toggle="modal"
                                              data-target="#mdlcolsetting" class="form-control" name="pos"
                                              style="text-transform: uppercase;" required readonly>
-                                       </div>
 
 
-                                       <div class="modal fade" id="mdlcolsetting" data-backdrop="static"
-                                          data-keyboard="false" style="height: 400px" tabindex="-1" role="dialog"
-                                          aria-labelledby="rtoModalLabel" aria-hidden="true">
-                                          <div class="modal-dialog" role="document">
-                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                   <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
-                                                </div>
-                                                <div class="modal-body ">
-                                                   <div class="form-row">
-                                                      <div class="col-md-6 mb-4">
-                                                         <div class=""><label>Search:<input id="inp_search" type="text"
-                                                                  value="" class="form-control" name="agent"
-                                                                  style="text-transform: uppercase;"
-                                                                  title="Search POS using Name, mobile no, email, pan/aadhar number"
-                                                                  oninput="searchPOS()">
-                                                            </label></div>
-                                                      </div>
-                                                      <div class="col-md-6 mb-4">
-                                                         <div class=""><label>POS:<input id="inp_pos" type="text"
-                                                                  value="" class="form-control" name="agent"
-                                                                  style="text-transform: uppercase;"
-                                                                  title="POS should be automatically fetched">
-                                                            </label>
+                                          <div class="modal fade" id="mdlcolsetting"
+                                             onmouseenter="document.getElementById('inp_search').focus()"
+                                             style="height: 400px">
+
+                                             <div class="modal-dialog" role="document">
+
+                                                <div class="modal-content">
+                                                   <div class="modal-header">
+                                                      <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
+                                                   </div>
+                                                   <div class="modal-body ">
+                                                      <div class="form-row">
+                                                         <div class="col-md-6 mb-4">
+                                                            <div class=""><label>Search:<input id="inp_search"
+                                                                     type="text" value="" class="form-control"
+                                                                     name="agent" style="text-transform: uppercase;"
+                                                                     title="Search POS using Name, mobile no, email, pan/aadhar number"
+                                                                     oninput="searchPOS()" onkeypress="handle(event)">
+
+                                                                  <script>
+                                                                     function handle(e) {
+                                                                        if (e.keyCode === 13) {
+                                                                           e.preventDefault(); // Ensure it is only this code that runs
+
+                                                                           $("#btnExit").click();
+                                                                        }
+                                                                     }
+                                                                  </script>
+                                                               </label></div>
+                                                         </div>
+                                                         <div class="col-md-6 mb-4">
+                                                            <div class=""><label>POS:<input id="inp_pos" type="text"
+                                                                     value="" class="form-control" name="agent"
+                                                                     style="text-transform: uppercase;"
+                                                                     title="POS should be automatically fetched">
+                                                               </label>
+                                                            </div>
                                                          </div>
                                                       </div>
+
+                                                      <button class="btn btn-primary" style="margin-bottom: -60px;"
+                                                         onclick="add_agent()">Add New POS</button>
+
+                                                      <script>
+                                                         function add_agent() {
+
+                                                            hostname = window.location.hostname
+                                                            port = window.location.port
+                                                            pathname = '/bima_policy/agent/add_agent/'
+
+                                                            href = window.location.origin + pathname
+
+                                                            window.location.replace(href)
+                                                         }
+                                                      </script>
+
+
+                                                      <div class="modal-footer">
+                                                         <button id="btnExit" type="button"
+                                                            class="btn btn-secondary w-100p"
+                                                            data-dismiss="modal">Close</button>
+                                                         <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
+                                                            class="btn btn-primary w-100p">Save</button> -->
+                                                      </div>
                                                    </div>
 
-                                                   <div class="modal-footer">
-                                                      <button type="button" class="btn btn-secondary w-100p"
-                                                         data-dismiss="modal">Close</button>
-                                                      <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
-                                                            class="btn btn-primary w-100p">Save</button> -->
-                                                   </div>
                                                 </div>
 
                                              </div>
 
-
                                           </div>
-
                                        </div>
+
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" readonly
+                                                class="text-danger">*</abbr></label><input type="text"
                                              value="{{data.employee}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase; background-color: lightgray;" required>
+                                             style="text-transform: uppercase;  background-color: lightgray;" readonly
+                                             required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -417,20 +490,18 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="proposal" accept=".pdf,image/" id="proposal"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="proposal">Choose File</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="proposal">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.proposal}}">{{data.proposal}}</a>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Mandate <small>(Only<strong> PDF &amp; Image
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="mandate" accept=".pdf,image/" id="mandate"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="mandate">Choose File</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="mandate">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.mandate}}">{{data.mandate}}</a>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -438,10 +509,10 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="policy" accept=".pdf,image/" id="policy"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="policy">Choose File</label>
+                                                class="custom-file-input" required>
+                                             <label class="custom-file-label" for="policy">Choose file</label>
+                                             <a href="{{data.policy}}">{{data.policy}}</a>
                                           </div>
-                                          <a href="/media/{{data.policy}}">{{data.policy}}</a>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -449,12 +520,9 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="previous_policy" accept=".pdf,image/"
-                                                 id="previous_policy"
-                                                class="custom-file-input">
-                                             <label class="custom-file-label"
-                                                for="previous_policy">Choose File</label>
+                                                id="previous_policy" class="custom-file-input">
+                                             <label class="custom-file-label" for="previous_policy">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.previous_policy}}">{{data.previous_policy}}</a> 
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -462,51 +530,43 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="pan_card">Choose File</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="pan_card">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.pan_card}}">{{data.pan_card}}</a> 
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Aadhar Card <small>(Only<strong> PDF &amp; Image
+                                          <label>Aadhar Card / GST<small>(Only<strong> PDF &amp; Image
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label"
-                                                for="aadhar_card">Choose File</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="aadhar_card">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.aadhar_card}}">{{data.aadhar_card}}</a> 
                                        </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label> Vehicle RC <small>(Only<strong> PDF &amp; Image
+                                       <div class="col-md-4 mb-4">
+                                          <label> Vehicle RC / Invoice<small>(Only<strong> PDF &amp; Image
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="vehicle_rc" accept=".pdf,image/" id="vehicle_rc"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label"
-                                                for="vehicle_rc">Chooase File</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.vehicle_rc}}">{{data.vehicle_rc}}</a> 
                                        </div>
-                                       <div class="col-md-3 mb-4">
+                                       <div class="col-md-4 mb-4">
                                           <label>Inspection Report <small>(Only<strong> PDF &amp; Image
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="inspection_report" accept=".pdf,image/"
-                                                 id="inspection_report"
-                                                class="custom-file-input">
-                                             <label class="custom-file-label"
-                                                for="vehicle_rc">Choose File</label>
+                                                id="inspection_report" class="custom-file-input">
+                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.inspection_report}}">{{data.inspection_report}}</a> 
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <div class="col-md-4 mb-4">
                                           <label for="remark">Remarks <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value="{{data.remark}}" maxlength="255"
-                                             class="form-control" name="remark" 
-                                             style="text-transform: uppercase;" >
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             maxlength="255" class="form-control" name="remark"
+                                             style="text-transform: uppercase;">
                                        </div>
 
                                     </div>
@@ -530,45 +590,45 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="{{data.OD_premium}}" class="form-control col-lg-6 " name="od"
-                                       id="od" maxlength="10" required>
+                                       oninput="calculateValue()" value="{{data.OD_premium}}"
+                                       class="form-control col-lg-6 " name="od" id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue()" value="{{data.TP_terrorism}}" class="form-control col-lg-6 " name="tpt"
-                                       id="tpt" maxlength="10" required>
+                                       oninput="calculateValue()" value="{{data.TP_terrorism}}"
+                                       class="form-control col-lg-6 " name="tpt" id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net" value="{{data.net}}"
-                                       class="form-control col-lg-6  bg-light" id="net" maxlength="10" readonly=""
-                                       required tabindex="-1">
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
+                                       value="{{data.net}}" class="form-control col-lg-6  bg-light" id="net"
+                                       maxlength="10" readonly="" required tabindex="-1">
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text" value="{{data.gst_amount}}"
-                                       class="form-control col-lg-6 bg-light" name="gst" id="gst" maxlength="10"
-                                       required readonly tabindex="-1">
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       value="{{data.gst_amount}}" class="form-control col-lg-6 bg-light" name="gst"
+                                       id="gst" maxlength="10" required readonly tabindex="-1">
                                  </div>
 
                                  <div class="row mb-2" id="gsttDiv" hidden>
                                     <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 bg-light" name="gstt" id="gstt" maxlength="10"
-                                       readonly tabindex="-1">
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       value="{{data.gst_gcv_amount}}" class="form-control col-lg-6 bg-light"
+                                       name="gstt" id="gstt" maxlength="10" readonly tabindex="-1">
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       value="{{data.total}}" class="form-control  col-lg-6 bg-light" id="totalnet" readonly=""
-                                       maxlength="10" required tabindex="-1">
+                                       value="{{data.total}}" class="form-control  col-lg-6 bg-light" id="totalnet"
+                                       readonly="" maxlength="10" required tabindex="-1">
                                  </div>
 
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value="" hidden> -- Select Payment Mode -- </option>
+                                       <option value="{{data.payment_mode}}"> {{data.payment_mode}} </option>
                                        <option value="ONLINE" selected>ONLINE</option>
                                        <option value="CHEQUE"> CHEQUE</option>
                                        <option value="CASH">CASH</option>
@@ -623,6 +683,7 @@
 
                      {% else %}
 
+
                      <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-12">
                            <div class="card">
@@ -635,9 +696,9 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Product Name <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="product_name" id="product_name" class="custom-select " required>
-                                             <option value="{{data.product_name}}"> {{data.product_name}} </option>
+                                             <option value="" hidden> -- Select Product -- </option>
                                              <option value="FIRE">FIRE</option>
-                                             <option value="LIABILITY">LIABILITY</option>    
+                                             <option value="LIABILITY">LIABILITY</option>
                                              <option value="MARINE CARGO">MARINE CARGO</option>
                                              <option value="MARINE HULL">MARINE HULL</option>
                                              <option value="ENGINEERING">ENGINEERING</option>
@@ -651,7 +712,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="policy_type" id="policy_type" class="custom-select" required>
-                                             <option value="{{data.policy_type}}"> {{data.policy_type}} </option>
+                                             <option value="" hidden>-- Select Case Type --</option>
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
@@ -662,29 +723,28 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label for="proposal_no">Proposal No. <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.proposal_no}}" class="form-control" name="proposal_no"
-                                             id="proposal_no" style="text-transform: uppercase;" required>
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             class="form-control" name="proposal_no" id="proposal_no"
+                                             style="text-transform: uppercase;" required>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="policy_no">Policy No. <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.policy_no}}" class="form-control" name="policy_no"
-                                             id="policy_no" style="text-transform: uppercase;" required>
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             class="form-control" name="policy_no" id="policy_no"
+                                             style="text-transform: uppercase;" required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
                                           <label for="customer_name">Insured Name <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.customer_name}}" class="form-control" name="customer_name"
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             class="form-control" name="customer_name"
                                              style="text-transform: uppercase;" required>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="insurance_company" class="custom-select" id="insurance_company"
                                              required>
-                                             <option value="{{data.insurance_company}}"> {{data.insurance_company}}
-                                             </option>
+                                             <option value="" hidden> -- Select Insurer -- </option>
                                              {%for value in data_ins%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -693,7 +753,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_name" class="custom-select" id="sp_name" required>
-                                             <option value="{{data.sp_name}}"> {{data.sp_name}} </option>
+                                             <option value="" hidden> -- Select Provider -- </option>
                                              {%for value in data_sp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -703,17 +763,55 @@
                                           <label>Office Code <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
-                                             <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}} </option>                                             
+                                             <option value="" hidden> -- Select Office Code -- </option>
                                              {%for value in data_bc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
-                                          </select>                                    
+                                          </select>
+
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label for="flatpickr-wrap">Risk Start Date <abbr title=""
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="risk_flatpickr" data-wrap="true" data-alt-input="true"
+                                             data-alt-format="F j, Y" data-alt-input-class="form-control"
+                                             data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="" name="risk_start_date" required
+                                                data-input="">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="risk_flatpickr" data-wrap="true" data-alt-input="true"
+                                             data-alt-format="F j, Y" data-alt-input-class="form-control"
+                                             data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="" name="risk_end_date" required
+                                                data-input="">
+                                          </div>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="flatpickr-wrap">Issued Date <abbr title=""
+                                                class="text-danger">*</abbr></label>
+                                          <div class="input-group input-group-alt flatpickr"
+                                             data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
+                                             ata-alt-format="F j, Y" data-alt-input-class="form-control"
+                                             data-date-format="Y-m-d">
+                                             <input type="date" class="form-control flatpickr-input"
+                                                placeholder="Choose date..." value="" name="issue_date" required
+                                                data-input="">
+                                          </div>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="policy_term" class="custom-select" required>
-                                             <option value="{{data.policy_term}}"> {{data.policy_term}} </option>
+                                             <option value="" hidden>-- Select Term --</option>
                                              <option value="1">1</option>
                                              <option value="5">5</option>
                                              <option value="10">10</option>
@@ -723,7 +821,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
-                                             <option value="{{data.bqp}}"> {{data.bqp}} </option>
+                                             <option value="" hidden>-- Select BQP --</option>
                                              {%for value in data_bqp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -731,7 +829,7 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos" type="text" value="{{data.pos}}" data-toggle="modal"
+                                             id="pos" type="text" value="" data-toggle="modal"
                                              data-target="#mdlcolsetting" class="form-control" name="pos"
                                              style="text-transform: uppercase;" required readonly>
                                        </div>
@@ -764,6 +862,21 @@
                                                          </div>
                                                       </div>
                                                    </div>
+                                                   <button class="btn btn-primary" style="margin-bottom: -60px;"
+                                                      onclick="add_agent()">Add New POS</button>
+
+                                                   <script>
+                                                      function add_agent() {
+
+                                                         hostname = window.location.hostname
+                                                         port = window.location.port
+                                                         pathname = '/bima_policy/agent/add_agent/'
+
+                                                         href = window.location.origin + pathname
+
+                                                         window.location.replace(href)
+                                                      }
+                                                   </script>
 
                                                    <div class="modal-footer">
                                                       <button type="button" class="btn btn-secondary w-100p"
@@ -782,9 +895,10 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" readonly
-                                             value="{{data.employee}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase; background-color: lightgray;" required>
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{user_id}}" class="form-control" name="employee"
+                                             style="text-transform: uppercase; background-color: lightgray;" required
+                                             readonly>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -792,20 +906,18 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="proposal" accept=".pdf,image/" id="proposal"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="proposal">Choose File</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="proposal">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.proposal}}">{{data.proposal}}</a>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Mandate <small>(Only<strong> PDF &amp; Image
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="mandate" accept=".pdf,image/" id="mandate"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="mandate">Choose File</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="mandate">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.mandate}}">{{data.mandate}}</a>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -813,10 +925,9 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="policy" accept=".pdf,image/" id="policy"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="policy">Choose File</label>
+                                                class="custom-file-input" required>
+                                             <label class="custom-file-label" for="policy">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.policy}}">{{data.policy}}</a>                                             
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -824,12 +935,9 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="previous_policy" accept=".pdf,image/"
-                                                 id="previous_policy"
-                                                class="custom-file-input">
-                                             <label class="custom-file-label"
-                                                for="previous_policy">Choose File</label>
+                                                id="previous_policy" class="custom-file-input">
+                                             <label class="custom-file-label" for="previous_policy">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.previous_policy}}">{{data.previous_policy}}</a> 
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -837,41 +945,35 @@
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="pan_card">Choose File</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="pan_card">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.pan_card}}">{{data.pan_card}}</a> 
                                        </div>
                                        <div class="col-md-3 mb-4">
-                                          <label>Aadhar Card <small>(Only<strong> PDF &amp; Image
+                                          <label>Aadhar Card / GST<small>(Only<strong> PDF &amp; Image
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
-                                                 class="custom-file-input">
-                                             <label class="custom-file-label"
-                                                for="aadhar_card">Choose File</label>
+                                                class="custom-file-input">
+                                             <label class="custom-file-label" for="aadhar_card">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.aadhar_card}}">{{data.aadhar_card}}</a> 
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <div class="col-md-4 mb-4">
                                           <label>Inspection Report <small>(Only<strong> PDF &amp; Image
                                                 </strong>)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="inspection_report" accept=".pdf,image/"
-                                                 id="inspection_report"
-                                                class="custom-file-input">
-                                             <label class="custom-file-label"
-                                                for="vehicle_rc">Choose File</label>
+                                                id="inspection_report" class="custom-file-input">
+                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
-                                          <a href="/media/{{data.inspection_report}}">{{data.inspection_report}}</a> 
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <div class="col-md-4 mb-4">
                                           <label for="remark">Remarks <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value="{{data.remark}}" maxlength="255"
-                                             class="form-control" name="remark" 
-                                             style="text-transform: uppercase;" >
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             maxlength="255" class="form-control" name="remark"
+                                             style="text-transform: uppercase;">
                                        </div>
 
                                     </div>
@@ -884,6 +986,7 @@
                            <!-- /.card -->
                         </div>
 
+
                         <div class="col-lg-3 col-md-3 col-sm-12">
 
                            <div class="card">
@@ -895,37 +998,31 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue2()" value="{{data.OD_premium}}" class="form-control col-lg-6 " name="od"
+                                       oninput="calculateValue2()" value="" class="form-control col-lg-6 " name="od"
                                        id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue2()" value="{{data.TP_terrorism}}" class="form-control col-lg-6 " name="tpt"
+                                       oninput="calculateValue2()" value="" class="form-control col-lg-6 " name="tpt"
                                        id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net" value="{{data.net}}"
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net" value=""
                                        class="form-control col-lg-6  bg-light" id="net" maxlength="10" readonly=""
                                        required tabindex="-1">
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text" value="{{data.gst_amount}}"
+                                          class="text-danger">*</abbr></label><input type="text" value=""
                                        class="form-control col-lg-6 bg-light" name="gst" id="gst" maxlength="10"
                                        required readonly tabindex="-1">
                                  </div>
 
-                                 <!-- <div class="row mb-2" id="gsttDiv" hidden>
-                                    <label class="col-lg-5" for="gstt">GST 12%<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 bg-light" name="gstt" id="gstt" maxlength="10"
-                                       readonly tabindex="-1">
-                                 </div> -->
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       value="{{data.total}}" class="form-control  col-lg-6 bg-light" id="totalnet" readonly=""
+                                       value="" class="form-control  col-lg-6 bg-light" id="totalnet" readonly=""
                                        maxlength="10" required tabindex="-1">
                                  </div>
 
@@ -983,11 +1080,11 @@
 
                         </div>
 
-
                      </div>
 
 
                      {% endif %}
+
                </div>
                <hr>
 
@@ -1384,7 +1481,7 @@
 </script>
 <script>
 
-function calculateValue() {
+   function calculateValue() {
 
       try {
          // add_non_motor()
@@ -1393,94 +1490,93 @@ function calculateValue() {
          addGST()
          addSubTotal()
       } catch (error) {
+      }
    }
-}
 
-function calculateValue2() {
+   function calculateValue2() {
 
-try {        
-   calc2()
-   addGST2()
-   addSubTotal2()        
+      try {
+         calc2()
+         addGST2()
+         addSubTotal2()
 
-} catch (error) { }
+      } catch (error) { }
 
-}
+   }
 
 
-function calc() {
+   function calc() {
       // Removes space      
-      
-      document.getElementById("od").value= document.getElementById("od").value.toString().trim()
-      document.getElementById("tpt").value= document.getElementById("tpt").value.toString().trim()      
-     
+
+      document.getElementById("od").value = document.getElementById("od").value.toString().trim()
+      document.getElementById("tpt").value = document.getElementById("tpt").value.toString().trim()
+
       od = parseFloat(document.getElementById("od").value);
       tpt = parseFloat(document.getElementById("tpt").value);
 
-      document.getElementById("net") .value = Number(od + tpt).toFixed((2))     
-      
+      document.getElementById("net").value = Number(od + tpt).toFixed((2))
+
    }
 
-function addGST() {  
+   function addGST() {
       net = parseFloat(document.getElementById("net").value);
       gst = parseFloat(document.getElementById("gst").value);
       gstt = parseFloat(document.getElementById("gstt").value);
-      
+
       try {
          vc = document.getElementById('vehicle_catagory').value
          if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
-               document.getElementById("gst") .value = Number(od * 18 / 100) .toFixed((2))
-               document.getElementById("gstt") .value = Number(tpt * 12 / 100) .toFixed((2))
+            document.getElementById("gst").value = Number(od * 18 / 100).toFixed((2))
+            document.getElementById("gstt").value = Number(tpt * 12 / 100).toFixed((2))
          }
-         else
-         {            
-            document.getElementById("gst") .value = Number(net * 18 / 100) .toFixed((2))            
+         else {
+            document.getElementById("gst").value = Number(net * 18 / 100).toFixed((2))
          };
       }
       catch { }
    }
 
-function addSubTotal() {
+   function addSubTotal() {
       net = parseFloat(document.getElementById("net").value);
       gst = parseFloat(document.getElementById("gst").value);
       gstt = parseFloat(document.getElementById("gstt").value);
-      
-      document.getElementById("totalnet") .value = Number(net + gst + gstt).toFixed((2))
+
+      document.getElementById("totalnet").value = Number(net + gst + gstt).toFixed((2))
    }
 
 
    function calc2() {
       // Removes space      
-      
-      document.getElementById("od").value= document.getElementById("od").value.toString().trim()
-      document.getElementById("tpt").value= document.getElementById("tpt").value.toString().trim()      
-     
+
+      document.getElementById("od").value = document.getElementById("od").value.toString().trim()
+      document.getElementById("tpt").value = document.getElementById("tpt").value.toString().trim()
+
       od = parseFloat(document.getElementById("od").value);
       tpt = parseFloat(document.getElementById("tpt").value);
 
-      document.getElementById("net") .value = Number(od + tpt).toFixed((2)) 
-           
+      document.getElementById("net").value = Number(od + tpt).toFixed((2))
+
    }
 
-   function addGST2() {  
+   function addGST2() {
       try {
          od = parseFloat(document.getElementById("od").value);
-         net = parseFloat(document.getElementById("net").value);    
-         document.getElementById("gst") .value = Number(od * 18 / 100) .toFixed((2))
+         net = parseFloat(document.getElementById("net").value);
+         document.getElementById("gst").value = Number(od * 18 / 100).toFixed((2))
       }
       catch { }
    }
 
    function addSubTotal2() {
       net = parseFloat(document.getElementById("net").value);
-      gst = parseFloat(document.getElementById("gst").value);      
-      
-      document.getElementById("totalnet") .value = Number(net + gst ).toFixed((2))
+      gst = parseFloat(document.getElementById("gst").value);
+
+      document.getElementById("totalnet").value = Number(net + gst).toFixed((2))
    }
 
 
 
-function add() {
+   function add() {
       od = parseInt(document.getElementById("od").value);
       tpt = parseInt(document.getElementById("tpt").value);
 
@@ -1502,7 +1598,7 @@ function add() {
 
    }
 
-function addgst() {
+   function addgst() {
       var numOne, numTwo, sum;
       net = parseInt(document.getElementById("net").value);
       gst = parseInt(document.getElementById("gst").value);
@@ -1517,8 +1613,8 @@ function addgst() {
       }
    }
 
-   
-function add_non_motor() {
+
+   function add_non_motor() {
       // Removes space
       odel = document.getElementById("od");
       odel.value = odel.value.toString().trim()
@@ -1534,7 +1630,7 @@ function add_non_motor() {
       gst.value = Number((od + tpt) * 18 / 100).toFixed(2);
    }
 
-function addgst_non_motor() {
+   function addgst_non_motor() {
 
       var numOne, numTwo, sum;
       tpt = parseFloat(document.getElementById("tpt").value);
@@ -1559,7 +1655,7 @@ function addgst_non_motor() {
    }
 
 
-function setCategoryOnChangeOld() {
+   function setCategoryOnChangeOld() {
       value = document.getElementById('vehicle_catagory').value
 
       coverage_typeDiv = document.getElementById('coverage_typeDiv')
@@ -1568,7 +1664,7 @@ function setCategoryOnChangeOld() {
       gvwDiv = document.getElementById('gvwDiv')
       gsttDiv = document.getElementById('gsttDiv')
 
-      if (value == 'TWO WHEELER'  || value == 'TWO WHEELER COMMERCIAL'  || value == 'TWO WHEELER SCOOTER') {
+      if (value == 'TWO WHEELER' || value == 'TWO WHEELER COMMERCIAL' || value == 'TWO WHEELER SCOOTER') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = false
@@ -1580,7 +1676,7 @@ function setCategoryOnChangeOld() {
          document.getElementById('gvw').required = false
 
          document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false         
+         document.getElementById('gstt').required = false
          document.getElementById('gstt').value = 0
 
          cubic_capacity.innerHTML = ''
@@ -1746,7 +1842,7 @@ function setCategoryOnChangeOld() {
          newoption.value = 'TP ONLY'
          newoption.innerHTML = 'TP ONLY'
          coverage_type.options.add(newoption);
-       
+
       }
 
       else if (value == '3 WHEELER PCV') {
@@ -2013,7 +2109,7 @@ function setCategoryOnChangeOld() {
          newoption.innerHTML = 'OD ONLY'
          coverage_type.options.add(newoption);
       }
-     
+
       else if (value == 'SCHOOL BUS-INDIVIDUAL NAME') {
          document.getElementById('cubic_capacityDiv').hidden = true
          document.getElementById('cubic_capacity').required = false
@@ -2069,12 +2165,12 @@ function setCategoryOnChangeOld() {
 
    }
 
-   
+
    function setCategoryOnChange() {
 
       // sortItems("vehicle_catagory")
 
-      value = document.getElementById('vehicle_catagory').value
+      value = document.getElementById('vehicle_catagory').value    
 
       coverage_typeDiv = document.getElementById('coverage_typeDiv')
       cubic_capacityDiv = document.getElementById('cubic_capacityDiv')
@@ -2100,9 +2196,14 @@ function setCategoryOnChangeOld() {
          coverage_type.innerHTML = ''
 
          // Cubic_ capacity options
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         // cubic_capacity.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         newoption.value = "{{ data.cubic_capacity  }}"
+         newoption.innerHTML = "{{ data.cubic_capacity  }}"
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2121,9 +2222,14 @@ function setCategoryOnChangeOld() {
          cubic_capacity.options.add(newoption);
 
          // Coverage type
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         // coverage_type.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = "{{ data.coverage_type  }}"
+         newoption.innerHTML = "{{ data.coverage_type  }}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2172,9 +2278,14 @@ function setCategoryOnChangeOld() {
          coverage_type.innerHTML = ''
 
          // Cubic_ capacity options
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         // cubic_capacity.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         newoption.value = "{{ data.cubic_capacity  }}"
+         newoption.innerHTML = "{{ data.cubic_capacity  }}"
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2193,9 +2304,14 @@ function setCategoryOnChangeOld() {
          cubic_capacity.options.add(newoption);
 
          // Coverage type
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         // coverage_type.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = "{{ data.coverage_type  }}"
+         newoption.innerHTML = "{{ data.coverage_type  }}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2244,9 +2360,14 @@ function setCategoryOnChangeOld() {
          coverage_type.innerHTML = ''
 
          // Cubic_ capacity options
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         // cubic_capacity.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         newoption.value = "{{ data.cubic_capacity  }}"
+         newoption.innerHTML = "{{ data.cubic_capacity  }}"
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2268,9 +2389,14 @@ function setCategoryOnChangeOld() {
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
 
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         // coverage_type.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = "{{ data.coverage_type  }}"
+         newoption.innerHTML = "{{ data.coverage_type  }}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2317,9 +2443,14 @@ function setCategoryOnChangeOld() {
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         // coverage_type.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = "{{ data.coverage_type  }}"
+         newoption.innerHTML = "{{ data.coverage_type  }}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2351,9 +2482,14 @@ function setCategoryOnChangeOld() {
          coverage_type.innerHTML = ''
 
          // Coverage type        
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         // coverage_type.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = "{{ data.coverage_type  }}"
+         newoption.innerHTML = "{{ data.coverage_type  }}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2385,9 +2521,14 @@ function setCategoryOnChangeOld() {
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         // coverage_type.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = "{{ data.coverage_type  }}"
+         newoption.innerHTML = "{{ data.coverage_type  }}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2420,9 +2561,14 @@ function setCategoryOnChangeOld() {
          coverage_type.innerHTML = ''
 
          // Cubic_ capacity options
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         // cubic_capacity.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
+         newoption.value = "{{ data.cubic_capacity  }}"
+         newoption.innerHTML = "{{ data.cubic_capacity  }}"
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2444,9 +2590,14 @@ function setCategoryOnChangeOld() {
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
 
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         // coverage_type.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = "{{ data.coverage_type  }}"
+         newoption.innerHTML = "{{ data.coverage_type  }}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2516,9 +2667,14 @@ function setCategoryOnChangeOld() {
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
 
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         // coverage_type.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = "{{ data.coverage_type  }}"
+         newoption.innerHTML = "{{ data.coverage_type  }}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2569,9 +2725,14 @@ function setCategoryOnChangeOld() {
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
 
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         // coverage_type.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = "{{ data.coverage_type  }}"
+         newoption.innerHTML = "{{ data.coverage_type  }}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2623,9 +2784,14 @@ function setCategoryOnChangeOld() {
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
 
+         // var newoption = document.createElement("option");
+         // newoption.value = ''
+         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         // coverage_type.options.add(newoption);
+
          var newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         newoption.value = "{{ data.coverage_type  }}"
+         newoption.innerHTML = "{{ data.coverage_type  }}"
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2658,7 +2824,7 @@ function setCategoryOnChangeOld() {
          calculateValue()
       } catch (error) {
       }
-      
+
    }
 
    function addSeatingCapacity() {
@@ -2727,54 +2893,48 @@ function setCategoryOnChangeOld() {
 </script>
 
 
-<body onload="initialConfig()"  >
+<body onload="initialConfig()">
 
-</body> 
+</body>
 
 <script>
    function initialConfig() {
-     
+
       addVehicleMakes()
       addVehicleModels()
-
-      value = document.getElementById('vehicle_catagory').value
-      if (value == 'TWO WHEELER' || value == 'TWO WHEELER SCOOTER') {
-         
-
-        
-      }
+      setCategoryOnChange()
    }
 
-   
-function addVehicleMakes() {
 
-vmake = document.getElementById('vehicle_makeby')
+   function addVehicleMakes() {
 
-"{{ vdata.vmake |safe}}".replace('[', '').replace(']', '').split(',')
-   .forEach(item => {
+      vmake = document.getElementById('vehicle_makeby')
 
-      var newoption = document.createElement("option");
-      newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
-      newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
-      vmake.options.add(newoption);
+      "{{ vdata.vmake |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
 
-   })
-}
+            var newoption = document.createElement("option");
+            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
+            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
+            vmake.options.add(newoption);
 
-function addVehicleModels() {
+         })
+   }
 
-vmodel = document.getElementById('vehicle_model')
+   function addVehicleModels() {
 
-"{{ vdata.vmodel |safe}}".replace('[', '').replace(']', '').split(',')
-   .forEach(item => {
+      vmodel = document.getElementById('vehicle_model')
 
-      var newoption = document.createElement("option");
-      newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
-      newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
-      vmodel.options.add(newoption);
+      "{{ vdata.vmodel |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
 
-   })
-}
+            var newoption = document.createElement("option");
+            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
+            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
+            vmodel.options.add(newoption);
+
+         })
+   }
 
 
 </script>

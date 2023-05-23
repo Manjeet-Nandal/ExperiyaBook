@@ -3037,7 +3037,7 @@ def filter_other_details(data, f_data):
     return qs_list
 
 
-def policy_entrydata(request, id):
+def policy_entrydata_old(request, id):
     print('policy_entrydata')
     if request.method == "POST":
         print('policy_entrydata post')
@@ -3264,6 +3264,243 @@ def policy_entrydata(request, id):
             data.coverage_type = ''
 
         return render(request, 'policylist/edit_policy.html', {'data_ag': data_ag, "vdata": context, 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_vc': data_vc, 'data_bqp': data_bqp})
+
+def policy_entrydata(request, id):
+    print('policy_entrydata')
+   
+    if request.method == "POST":
+        print('policy_entrydata post')
+
+        proposal_no = request.POST['proposal_no']
+        policy_no = request.POST['policy_no']
+        customer_name = request.POST['customer_name']
+        insurance_company = request.POST['insurance_company']
+        sp_name = request.POST['sp_name']
+        sp_brokercode = request.POST['sp_brokercode']
+
+        try:
+            product_name = request.POST['product_name']
+        except:
+            product_name = ''
+        try:
+            registration_no = request.POST['registration_no']
+        except:
+            registration_no = ''
+        try:
+            rto_city = request.POST['rto_city']
+        except:
+            rto_city = ''
+        try:
+            rto_state = request.POST['rto_state']
+        except:
+            rto_state = ''
+        try:
+            vehicle_makeby = request.POST['vehicle_makeby']
+        except:
+            vehicle_makeby = ''
+        try:
+            vehicle_model = request.POST['vehicle_model']
+        except:
+            vehicle_model = ''
+        try:
+            vehicle_catagory = request.POST['vehicle_catagory']
+        except:
+            vehicle_catagory = ''
+        try:
+            vehicle_fuel_type = request.POST['vehicle_fuel_type']
+        except:
+            vehicle_fuel_type = ''
+        try:
+            mfg_year = request.POST['mfg_year']
+        except:
+            mfg_year = None
+        try:
+            addon = request.POST['addon']
+        except:
+            addon = ''
+        try:
+            ncb = request.POST['ncb']
+        except:
+            ncb = ''
+        try:
+            cubic_capacity = request.POST['cubic_capacity']
+        except:
+            cubic_capacity = ''
+        try:
+            gvw = request.POST['gvw']
+        except:
+            gvw = ''
+        try:
+            seating_capacity = request.POST['seating_capacity']
+        except:
+            seating_capacity = ''
+        try:
+            coverage_type = request.POST['coverage_type']
+        except:
+            coverage_type = ''
+
+        policy_type = request.POST['policy_type']
+
+        try:
+            cpa = request.POST['cpa']
+        except:
+            cpa = ''
+        # risk_start_date = request.POST['risk_start_date']
+        # risk_end_date = request.POST['risk_end_date']
+        # issue_date = request.POST['issue_date']
+        try:
+            insured_age = request.POST['insured_age']
+        except:
+            insured_age = 0
+
+        policy_term = request.POST['policy_term']
+        bqp = request.POST['bqp']
+        pos = request.POST['pos']
+        employee = request.POST['employee']
+
+        try:
+            remark = request.POST['remark']
+        except:
+            remark = ''
+
+        OD_premium = request.POST['od']
+        TP_terrorism = request.POST['tpt']
+        net = request.POST['net']
+        gst_amount = request.POST['gst']
+        try:
+            gst_gcv_amount = request.POST['gstt']
+        except:
+            gst_gcv_amount = 0
+
+        total = request.POST['total']
+        payment_mode = request.POST['payment_mode']
+
+        proposal = request.FILES.get('proposal')
+        mandate = request.FILES.get('mandate')
+        policy = request.FILES.get('policy')
+        previous_policy = request.FILES.get('previous_policy')
+        pan_card = request.FILES.get('pan_card')
+        aadhar_card = request.FILES.get('aadhar_card')
+        vehicle_rc = request.FILES.get('vehicle_rc')
+        inspection_report = request.FILES.get('inspection_report')
+
+        data = Policy.objects.filter(policyid=id)
+
+        print('sp_brokercode', sp_brokercode)
+        print('cpa', cpa)
+        data.update(proposal_no=proposal_no, policy_no=policy_no, product_name=product_name, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,
+                    sp_brokercode=sp_brokercode,  registration_no=registration_no,
+                    rto_state=rto_state, rto_city=rto_city,  vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
+                    mfg_year=mfg_year,
+                    addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, policy_type=policy_type, cpa=cpa,
+
+                    insured_age=insured_age,
+
+                    policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+                    employee=employee,
+                    OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount,
+                    gst_gcv_amount=gst_gcv_amount,  total=total, remark=remark)
+
+        fspr = FileSystemStorage()
+        fsm = FileSystemStorage()
+        fsp = FileSystemStorage()
+        fspp = FileSystemStorage()
+        fspc = FileSystemStorage()
+        fsac = FileSystemStorage()
+        fsvc = FileSystemStorage()
+        fsis = FileSystemStorage()
+        if proposal is not None:
+            fspr.save(proposal.name, proposal)
+        if mandate is not None:
+            fsm.save(mandate.name, mandate)
+        if policy is not None:
+            fsp.save(policy.name, policy)
+        if previous_policy is not None:
+            fspp.save(previous_policy.name, previous_policy)
+        if pan_card is not None:
+            fspc.save(pan_card.name, pan_card)
+        if aadhar_card is not None:
+            fsac.save(aadhar_card.name, aadhar_card)
+        if vehicle_rc is not None:
+            fsvc.save(vehicle_rc.name, vehicle_rc)
+        if inspection_report is not None:
+            fsis.save(inspection_report.name, inspection_report)
+
+        if proposal:
+            data.update(proposal=proposal)
+        if mandate:
+            data.update(mandate=mandate)
+
+        if policy:
+            data.update(policy=policy)
+        if previous_policy:
+            data.update(previous_policy=previous_policy)
+        if pan_card:
+            data.update(pan_card=pan_card)
+        if aadhar_card:
+            data.update(aadhar_card=aadhar_card)
+        if vehicle_rc:
+            data.update(vehicle_rc=vehicle_rc)
+        if inspection_report:
+            data.update(inspection_report=inspection_report)
+
+        return redirect('bima_policy:policy_entry')
+    
+    else:   
+        data = Policy.objects.get(policyid=id)
+        print(data)
+        data_ag = json.dumps(
+            list(Agents.objects.all().values()))
+
+        data_sp = ServiceProvider.objects.all()
+        data_bc = BrokerCode.objects.all()
+        data_ins = InsuranceCompany.objects.all()
+
+        context = read_vehicle_data_file()
+        make = context["make"]
+        model = context["model"]
+
+        datavm = VehicleModelName.objects.all().values()
+        datavmb = VehicleMakeBy.objects.all().values()
+
+        for vm in datavm:
+            model.append(vm["model"])
+
+        for vmb in datavmb:
+            make.append(vmb["company"])
+
+        data_vc = VehicleCategory.objects.all()
+        data_bqp = BQP.objects.all()
+
+        user_info = {
+            "user_id": get_id_from_session(request),
+            "user_name": get_user_name(request),
+            "user_role": get_user_role(request)
+        }
+
+        is_motor_form = True
+
+        if data.registration_no is '':
+            is_motor_form = False
+            data.registration_no = ''
+            data.rto_city = ''
+            data.rto_state = ''
+            data.vehicle_makeby = ''
+            data.vehicle_model = ''
+            data.vehicle_catagory = ''
+            data.vehicle_fuel_type = ''
+            data.mfg_year = ''
+            data.addon = ''
+            data.ncb = ''
+            data.cubic_capacity = ''
+            data.gvw = ''
+            data.seating_capacity = ''
+            data.coverage_type = ''
+
+        return render(request, 'policylist/edit_policy.html', {"user_info": user_info, "vdata": context, 'data': data, "data_vc": data_vc, 'is_motor_form': is_motor_form, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_bqp': data_bqp})
+
+        # return render(request, 'policylist/edit_policy.html', {'data_ag': data_ag, "vdata": context, 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_vc': data_vc, 'data_bqp': data_bqp})
+
 
 
 def edit_policy(request, id):
