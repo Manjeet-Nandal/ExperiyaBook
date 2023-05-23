@@ -3269,7 +3269,6 @@ def policy_entrydata(request, id):
     print('policy_entrydata')
    
     if request.method == "POST":
-        print('policy_entrydata post')
 
         proposal_no = request.POST['proposal_no']
         policy_no = request.POST['policy_no']
@@ -3444,7 +3443,12 @@ def policy_entrydata(request, id):
         if inspection_report:
             data.update(inspection_report=inspection_report)
 
-        return redirect('bima_policy:policy_entry')
+        # data = Policy.objects.filter(profile_id=profile_id).order_by('-policyid').values()
+        print('all data', data)
+        return render(request, 'policylist/policy_entry_list.html', {'data': data})
+
+        # return redirect('bima_policy:policy_entry')
+
     
     else:   
         data = Policy.objects.get(policyid=id)

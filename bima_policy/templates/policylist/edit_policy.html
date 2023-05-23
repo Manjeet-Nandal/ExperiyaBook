@@ -34,7 +34,8 @@
                <div class="section-block">
                   <form id="frminsurance" method="post" enctype="multipart/form-data" class="" autocomplete="off"
                      data-parsley-validate="true" novalidate="">
-                     {%csrf_token%}
+
+                     {%csrf_token%} 
 
                      {% if is_motor_form %}
 
@@ -332,7 +333,7 @@
 
 
 
-                                       <div class="col-md-3 mb-4" hidden>
+                                       <!-- <div class="col-md-3 mb-4" hidden>
                                           <label for="flatpickr-wrap">Risk Start Date <abbr title=""
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
@@ -343,8 +344,8 @@
                                                 placeholder="Choose date..." value="" name="risk_start_date" required
                                                 data-input="">
                                           </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4" hidden>
+                                       </div> -->
+                                       <!-- <div class="col-md-3 mb-4" hidden>
                                           <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
@@ -355,8 +356,8 @@
                                                 placeholder="Choose date..." value="" name="risk_end_date" required
                                                 data-input="">
                                           </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4" hidden>
+                                       </div> -->
+                                       <!-- <div class="col-md-3 mb-4" hidden>
                                           <label for="flatpickr-wrap">Issued Date <abbr title=""
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
@@ -367,7 +368,7 @@
                                                 placeholder="Choose date..." value="" name="issue_date" required
                                                 data-input="">
                                           </div>
-                                       </div>
+                                       </div> -->
 
                                        <div class="col-md-3 mb-4">
                                           <label for="insured_age">Insured Age <abbr title=""
@@ -493,6 +494,7 @@
                                                 class="custom-file-input">
                                              <label class="custom-file-label" for="proposal">Choose file</label>
                                           </div>
+                                          <a href="{{data.proposal}}">{{data.proposal}}</a>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Mandate <small>(Only<strong> PDF &amp; Image
@@ -502,6 +504,7 @@
                                                 class="custom-file-input">
                                              <label class="custom-file-label" for="mandate">Choose file</label>
                                           </div>
+                                          <a href="{{data.mandate}}">{{data.mandate}}</a>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -509,7 +512,7 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="policy" accept=".pdf,image/" id="policy"
-                                                class="custom-file-input" required>
+                                                class="custom-file-input" >
                                              <label class="custom-file-label" for="policy">Choose file</label>
                                              <a href="{{data.policy}}">{{data.policy}}</a>
                                           </div>
@@ -523,6 +526,7 @@
                                                 id="previous_policy" class="custom-file-input">
                                              <label class="custom-file-label" for="previous_policy">Choose file</label>
                                           </div>
+                                          <a href="{{data.previous_policy}}">{{data.previous_policy}}</a>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -533,6 +537,7 @@
                                                 class="custom-file-input">
                                              <label class="custom-file-label" for="pan_card">Choose file</label>
                                           </div>
+                                          <a href="{{data.pan_card}}">{{data.pan_card}}</a>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Aadhar Card / GST<small>(Only<strong> PDF &amp; Image
@@ -542,6 +547,7 @@
                                                 class="custom-file-input">
                                              <label class="custom-file-label" for="aadhar_card">Choose file</label>
                                           </div>
+                                          <a href="{{data.aadhar_card}}">{{data.aadhar_card}}</a>
                                        </div>
                                        <div class="col-md-4 mb-4">
                                           <label> Vehicle RC / Invoice<small>(Only<strong> PDF &amp; Image
@@ -551,6 +557,7 @@
                                                 class="custom-file-input">
                                              <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
+                                          <a href="{{data.vehicle_rc}}">{{data.vehicle_rc}}</a>
                                        </div>
                                        <div class="col-md-4 mb-4">
                                           <label>Inspection Report <small>(Only<strong> PDF &amp; Image
@@ -560,6 +567,7 @@
                                                 id="inspection_report" class="custom-file-input">
                                              <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
+                                          <a href="{{data.inspection_report}}">{{data.proposal}}</a>
                                        </div>
 
                                        <div class="col-md-4 mb-4">
@@ -925,7 +933,7 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="policy" accept=".pdf,image/" id="policy"
-                                                class="custom-file-input" required>
+                                                class="custom-file-input" >
                                              <label class="custom-file-label" for="policy">Choose file</label>
                                           </div>
                                        </div>
