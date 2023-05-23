@@ -156,11 +156,86 @@
                            <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
                            <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
                            <h6 class="dropdown-header d-none d-md-block d-lg-none"> Demo </h6>
+
+                           <div class="dropdown-divider"></div>   
+                           
+                           <div class="row ml-0" >
+
+                              <style>
+                                 button {
+                                       background-color: #4CAF50; /* Green */
+                                       border: none;
+                                       color: white;
+                                       padding: 15px 32px;
+                                       text-align: center;
+                                       text-decoration: none;
+                                       display: inline-block;
+                                       font-size: 16px;
+                                       }
+                              </style>
+   
+                              <button onclick="importData()">Profile Photo</button>
+                              <script>
+                                 function importData() {
+                                    let input = document.createElement('input');
+                                    input.type = 'file';
+                                    input.onchange = _ => {
+                                       // you can use this method to get file and perform respective operations
+                                                let files =   Array.from(input.files);
+                                                console.log(files);
+   
+                                                pp = files[0]['name']
+                                               
+                                                return;
+                                                if (pp == '' ){
+                                                   alert('Nothing selected')
+                                                   return
+                                                }
+   
+                                                url = window.location.origin + '/bima_policy/profile_photo/'
+                                                jsonData = JSON.stringify(pp)
+   
+                                                $.ajax({
+                                                
+                                                   url: url,
+                                                   type: 'POST',
+                                                   beforeSend: function (xhr) {
+                                                      xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                                                   },
+                                                   data: { 'data': jsonData },
+                                                   dataType: 'json',
+                                                   success: function (response) {
+                                                      res = JSON.parse(JSON.stringify(response))                        
+                                                      console.log(res);                               
+                                                      alert(res);                          
+                                                   },
+                                                   error: function (xhr, status, error) {
+                                                      // Handle any errors that occurred during the request
+                                                      console.log('error occurred ', error);
+                                                   
+                                                   }
+                                                });
+   
+                                             // window.location.replace(url)
+   
+                                                
+                                          };
+                                    input.click();
+                                    
+                                    }
+   
+                                                                    
+                              </script>
+
+                           </div>
+                          
+                          
                            
                            <a class="dropdown-item"  data-toggle="modal" data-target="#mdlUpdatePassword">
                            {% comment %} <span class="dropdown-icon icofont icofont-ui-password"></span> {% endcomment %}
                            <i class="fa fa-key" aria-hidden="true" id='icon'></i> Change Password
                            </a>
+
                            
                            <div class="dropdown-divider"></div>
                            <a class="dropdown-item"

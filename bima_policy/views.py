@@ -250,6 +250,29 @@ def change_password(request):
     
     return JsonResponse(context)
 
+
+def profile_photo(request):
+    print("profile_photo method calling:")   
+    print('id: ' , get_id_from_session(request))
+
+    data = json.loads(request.POST['data'])    
+    
+    print('profile photo: ', data)
+
+    context = {        
+        "status": "error occurred!"   
+    }   
+       
+    if is_user(request):       
+        profile = ProfileModel.objects.filter(id=get_id_from_session(request))                 
+        
+        profile.update(profile_image=data)    
+        context['status'] = 'Password updated!'             
+        print('profile picture changed')
+    
+    return JsonResponse(context)
+
+
 # RTOView
 def rto_list(request):
     if request.method == "GET":

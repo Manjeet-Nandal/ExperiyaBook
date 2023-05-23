@@ -72,4 +72,6 @@ urlpatterns = [
 
     path('change_password/', change_password, name="change_password"),
 
+    path('profile_photo/', change_password, name="change_password"),
+
 ]

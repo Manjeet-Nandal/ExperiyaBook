@@ -6,6 +6,7 @@ from djongo import models
 # Create your models here.
 
 
+
 class ProfileModel(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:15].upper(), editable=False, max_length=30)
@@ -19,6 +20,8 @@ class ProfileModel(models.Model):
     package_GB = models.CharField(max_length=10)
     package_MB = models.CharField(max_length=10)
     package_duration = models.CharField(max_length=10)
+
+    # profile_image = models.ImageField(upload_to='media/profile_images/', null=True, blank=True)
 
     def __str__(self):
         return self.id
