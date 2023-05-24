@@ -607,7 +607,8 @@
                                        <td>
                                           <a href="" class="tile tile-img" target="_blank"><i
                                                 class="far fa-file-pdf text-danger"></i></a>
-                                          <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" class="">{{value.policy_no}}</a>
+                                          <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
+                                             class="">{{value.policy_no}}</a>
                                           <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
                                        </td>
                                        <td>{{value.customer_name}}</td>
@@ -725,30 +726,39 @@
                                        {% endif %}
 
                                        {% endif %}
+                                
+                                       <td> <a href="#" onclick="downloadFile('{{value.proposal}}')">{{value.proposal}}</a> </td>
 
-                                       <td> <a href="/media/{{value.proposal}}">{{value.proposal}}</a> </td>
-                                       <td> <a href="/media/{{value.mandate}}">{{value.mandate}}</a> </td>
-                                       <td> <a href="/media/{{value.policy}}">{{value.policy}}</a> </td>
+                                       <td> <a href="#" onclick="downloadFile('{{value.mandate}}')">{{value.mandate}}</a> </td>
+                                       <td> <a href="#" onclick="downloadFile('{{value.policy}}')">{{value.policy}}</a> </td>
+                                       <td> <a href="#" onclick="downloadFile('{{value.previous_policy}}')">{{value.previous_policy}}</a> </td>
+                                       <td> <a href="#" onclick="downloadFile('{{value.pan_card}}')">{{value.pan_card}}</a> </td>
+                                       <td> <a href="#" onclick="downloadFile('{{value.aadhar_card}}')">{{value.aadhar_card}}</a> </td>
+                                       <td> <a href="#" onclick="downloadFile('{{value.vehicle_rc}}')">{{value.vehicle_rc}}</a> </td>
+                                       <td> <a href="#" onclick="downloadFile('{{value.inspection_report}}')">{{value.inspection_report}}</a> </td>
+
+                                       <!-- <td> <a href="/media/{{value.proposal}}">{{value.proposal}}</a> </td> -->
+                                       <!-- <td> <a href="/media/{{value.mandate}}">{{value.mandate}}</a> </td> -->
+                                       <!-- <td> <a href="/media/{{value.policy}}">{{value.policy}}</a> </td>
                                        <td> <a href="/media/{{value.previous_policy}}">{{value.previous_policy}}</a>
                                        </td>
                                        <td> <a href="/media/{{value.pan_card}}">{{value.pan_card}}</a> </td>
                                        <td> <a href="/media/{{value.aadhar_card}}">{{value.aadhar_card}}</a> </td>
                                        <td> <a href="/media/{{value.vehicle_rc}}">{{value.vehicle_rc}}</a> </td>
-                                       <td> <a href="/media/{{value.inspection_report}}">{{value.inspection_report}}</a>
-                                       </td>
+                                       <td> <a href="/media/{{value.inspection_report}}">{{value.inspection_report}}</a>  </td> -->
 
                                        <td class="text-center">
                                           <form method="POST">
                                              {% csrf_token %}
-                                             <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary"
-                                                name="Edit">
+                                             <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
+                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
                                                 <i class="fa fa-pencil-alt mt-2"></i>
                                                 <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
                                              </a>
                                              <a href="#" name="Remove"
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                                                 <i class="far fa-trash-alt mt-2"></i>
-                                                <!-- href="{%url 'bima_policy:policy_delete' value.policyid %}" -->
+                                               
                                              </a>
                                        </td>
                                     </tr>
@@ -2405,10 +2415,20 @@
       // select_all_Items('filter_content')
    }
 
+   function downloadFile(params) {
+      // alert(params)
+      if (params.includes("/")) {
+         index = params.lastIndexOf("/") + 1
+         params = params.substring(index, params.length);
+      }     
+      pathname = '/bima_policy/docs/download/' + params
+      href = window.location.origin + pathname     
+      window.open(href)
+   }
 
 </script>
 <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
-<script src="{% static 'js/policy_entry_list.js' %}"></script>     
+<script src="{% static 'js/policy_entry_list.js' %}"></script>
 <script src="{% static 'js/jquery.min.js' %}"></script>
 
 {%endblock%}

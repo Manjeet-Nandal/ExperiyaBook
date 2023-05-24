@@ -23,7 +23,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.views import View
 
-from Bima.settings import MEDIA_ROOT, STATIC_ROOT, STATIC_URL, STATICFILES_DIRS
+from Bima.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, MEDIA_ROOT, MEDIA_URL, STATIC_ROOT, STATIC_URL, STATICFILES_DIRS
 from .models import *
 from .forms import *
 from django.db.models import Q
@@ -2091,7 +2091,7 @@ def policy_entry(request):
     # vdata = fetch_vehicle_data()
     mdl_data = v_data.model_data
 
-    print(mdl_data)
+    # print(mdl_data)
 
     context = read_vehicle_data_file()
     make = context["make"]
@@ -4450,3 +4450,40 @@ def subscription(request):
 
 def agent_profile(request):
     return render(request, 'agents/agent_particular.html')
+
+
+from django.http import FileResponse
+
+
+def docs_download(request, id):
+    print('docs_download method calling: ')
+    
+    file_key = 'media/documents/' + id    
+    save_in = os.path.join(MEDIA_ROOT, 'temp_file', id)    
+
+    print(file_key)   
+       
+    print('FILE_KEY : ', file_key)
+    print('save in : ', save_in)    
+
+    try:
+        s3_client = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        s3_client.download_file(AWS_STORAGE_BUCKET_NAME, file_key,  save_in) 
+        print('File downloaded successfully.')        
+        launch_pdf(save_in)  
+        return HttpResponse('')
+    except Exception as e:
+        print('Error downloading file:', str(e))
+        return HttpResponse('Error downloading file: '+ str(e))
+        
+   
+import subprocess
+
+def launch_pdf(file_path):
+    try:
+        # subprocess.Popen(['open', file_path])  # For macOS
+        # subprocess.Popen(['xdg-open', file_path])  # For Linux
+        subprocess.Popen(['start', '', file_path], shell=True)  # For Windows
+        print("PDF file launched successfully.")
+    except Exception as e:
+        print("Error launching PDF file:", str(e))
