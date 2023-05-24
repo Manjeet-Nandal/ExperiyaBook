@@ -35,7 +35,7 @@
                   <form id="frminsurance" method="post" enctype="multipart/form-data" class="" autocomplete="off"
                      data-parsley-validate="true" novalidate="">
 
-                     {%csrf_token%} 
+                     {%csrf_token%}
 
                      {% if is_motor_form %}
 
@@ -512,7 +512,7 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="policy" accept=".pdf,image/" id="policy"
-                                                class="custom-file-input" >
+                                                class="custom-file-input">
                                              <label class="custom-file-label" for="policy">Choose file</label>
                                              <a href="{{data.policy}}">{{data.policy}}</a>
                                           </div>
@@ -704,7 +704,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Product Name <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="product_name" id="product_name" class="custom-select " required>
-                                             <option value="" hidden> -- Select Product -- </option>
+                                             <option value="{{data.product_name}}"> {{data.product_name}} </option>
                                              <option value="FIRE">FIRE</option>
                                              <option value="LIABILITY">LIABILITY</option>
                                              <option value="MARINE CARGO">MARINE CARGO</option>
@@ -720,7 +720,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="policy_type" id="policy_type" class="custom-select" required>
-                                             <option value="" hidden>-- Select Case Type --</option>
+                                             <option value="{{data.policy_type}}"> {{data.policy_type}} </option>
                                              <option value="FRESH">FRESH</option>
                                              <option value="RENEWAL">RENEWAL</option>
                                              <option value="ROLLOVER">ROLLOVER</option>
@@ -731,28 +731,29 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label for="proposal_no">Proposal No. <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             class="form-control" name="proposal_no" id="proposal_no"
-                                             style="text-transform: uppercase;" required>
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.proposal_no}}" class="form-control" name="proposal_no"
+                                             id="proposal_no" style="text-transform: uppercase;" required>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="policy_no">Policy No. <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             class="form-control" name="policy_no" id="policy_no"
-                                             style="text-transform: uppercase;" required>
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.policy_no}}" class="form-control" name="policy_no"
+                                             id="policy_no" style="text-transform: uppercase;" required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
                                           <label for="customer_name">Insured Name <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             class="form-control" name="customer_name"
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.customer_name}}" class="form-control" name="customer_name"
                                              style="text-transform: uppercase;" required>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="insurance_company" class="custom-select" id="insurance_company"
                                              required>
-                                             <option value="" hidden> -- Select Insurer -- </option>
+                                             <option value="{{data.insurance_company}}"> {{data.insurance_company}}
+                                             </option>
                                              {%for value in data_ins%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -761,7 +762,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_name" class="custom-select" id="sp_name" required>
-                                             <option value="" hidden> -- Select Provider -- </option>
+                                             <option value="{{data.sp_name}}"> {{data.sp_name}} </option>
                                              {%for value in data_sp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -771,7 +772,7 @@
                                           <label>Office Code <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
-                                             <option value="" hidden> -- Select Office Code -- </option>
+                                             <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}} </option>
                                              {%for value in data_bc%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -779,7 +780,7 @@
 
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk Start Date <abbr title=""
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
@@ -790,8 +791,8 @@
                                                 placeholder="Choose date..." value="" name="risk_start_date" required
                                                 data-input="">
                                           </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
+                                       </div> -->
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
@@ -802,8 +803,8 @@
                                                 placeholder="Choose date..." value="" name="risk_end_date" required
                                                 data-input="">
                                           </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
+                                       </div> -->
+                                       <!-- <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Issued Date <abbr title=""
                                                 class="text-danger">*</abbr></label>
                                           <div class="input-group input-group-alt flatpickr"
@@ -814,12 +815,12 @@
                                                 placeholder="Choose date..." value="" name="issue_date" required
                                                 data-input="">
                                           </div>
-                                       </div>
+                                       </div> -->
 
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="policy_term" class="custom-select" required>
-                                             <option value="" hidden>-- Select Term --</option>
+                                             <option value="{{data.policy_term}}"> {{data.policy_term}} </option>
                                              <option value="1">1</option>
                                              <option value="5">5</option>
                                              <option value="10">10</option>
@@ -829,7 +830,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
-                                             <option value="" hidden>-- Select BQP --</option>
+                                             <option value="{{data.bqp}}"> {{data.bqp}} </option>
                                              {%for value in data_bqp%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
@@ -837,7 +838,7 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos" type="text" value="" data-toggle="modal"
+                                             id="pos" type="text" value="{{data.pos}}" data-toggle="modal"
                                              data-target="#mdlcolsetting" class="form-control" name="pos"
                                              style="text-transform: uppercase;" required readonly>
                                        </div>
@@ -904,7 +905,7 @@
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
-                                             value="{{user_id}}" class="form-control" name="employee"
+                                             value="{{data.employee}}" class="form-control" name="employee"
                                              style="text-transform: uppercase; background-color: lightgray;" required
                                              readonly>
                                        </div>
@@ -917,6 +918,7 @@
                                                 class="custom-file-input">
                                              <label class="custom-file-label" for="proposal">Choose file</label>
                                           </div>
+                                          <a href="{{data.proposal}}">{{data.proposal}}</a>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Mandate <small>(Only<strong> PDF &amp; Image
@@ -926,6 +928,7 @@
                                                 class="custom-file-input">
                                              <label class="custom-file-label" for="mandate">Choose file</label>
                                           </div>
+                                          <a href="{{data.mandate}}">{{data.mandate}}</a>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -933,9 +936,10 @@
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="policy" accept=".pdf,image/" id="policy"
-                                                class="custom-file-input" >
+                                                class="custom-file-input">
                                              <label class="custom-file-label" for="policy">Choose file</label>
                                           </div>
+                                          <a href="{{data.policy}}">{{data.policy}}</a>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -946,6 +950,7 @@
                                                 id="previous_policy" class="custom-file-input">
                                              <label class="custom-file-label" for="previous_policy">Choose file</label>
                                           </div>
+                                          <a href="{{data.previous_policy}}">{{data.previous_policy}}</a>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -956,6 +961,8 @@
                                                 class="custom-file-input">
                                              <label class="custom-file-label" for="pan_card">Choose file</label>
                                           </div>
+                                          <a href="{{data.pan_card}}">{{data.pan_card}}</a>
+
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Aadhar Card / GST<small>(Only<strong> PDF &amp; Image
@@ -965,6 +972,7 @@
                                                 class="custom-file-input">
                                              <label class="custom-file-label" for="aadhar_card">Choose file</label>
                                           </div>
+                                          <a href="{{data.aadhar_card}}">{{data.aadhar_card}}</a>
                                        </div>
 
                                        <div class="col-md-4 mb-4">
@@ -975,12 +983,13 @@
                                                 id="inspection_report" class="custom-file-input">
                                              <label class="custom-file-label" for="vehicle_rc">Choose file</label>
                                           </div>
+                                          <a href="{{data.inspection_report}}">{{data.inspection_report}}</a>
                                        </div>
 
                                        <div class="col-md-4 mb-4">
                                           <label for="remark">Remarks <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             maxlength="255" class="form-control" name="remark"
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{data.remark}}" maxlength="255" class="form-control" name="remark"
                                              style="text-transform: uppercase;">
                                        </div>
 
@@ -1006,31 +1015,31 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue2()" value="" class="form-control col-lg-6 " name="od"
+                                       oninput="calculateValue2()" value="{{data.OD_premium}}" class="form-control col-lg-6 " name="od"
                                        id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue2()" value="" class="form-control col-lg-6 " name="tpt"
+                                       oninput="calculateValue2()" value="{{data.TP_terrorism}}" class="form-control col-lg-6 " name="tpt"
                                        id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net" value=""
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net" value="{{data.net}}"
                                        class="form-control col-lg-6  bg-light" id="net" maxlength="10" readonly=""
                                        required tabindex="-1">
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text" value=""
+                                          class="text-danger">*</abbr></label><input type="text" value="{{data.gst_amount}}"
                                        class="form-control col-lg-6 bg-light" name="gst" id="gst" maxlength="10"
                                        required readonly tabindex="-1">
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       value="" class="form-control  col-lg-6 bg-light" id="totalnet" readonly=""
+                                       value="{{data.total}}" class="form-control  col-lg-6 bg-light" id="totalnet" readonly=""
                                        maxlength="10" required tabindex="-1">
                                  </div>
 
@@ -1038,7 +1047,7 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value="" hidden> -- Select Payment Mode -- </option>
+                                       <option value="{{data.payment_mode}}" > {{data.payment_mode}} </option>
                                        <option value="ONLINE" selected>ONLINE</option>
                                        <option value="CHEQUE"> CHEQUE</option>
                                        <option value="CASH">CASH</option>
@@ -2178,7 +2187,7 @@
 
       // sortItems("vehicle_catagory")
 
-      value = document.getElementById('vehicle_catagory').value    
+      value = document.getElementById('vehicle_catagory').value
 
       coverage_typeDiv = document.getElementById('coverage_typeDiv')
       cubic_capacityDiv = document.getElementById('cubic_capacityDiv')
