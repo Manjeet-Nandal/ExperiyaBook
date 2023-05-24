@@ -4482,8 +4482,8 @@ import subprocess
 def launch_pdf(file_path):
     try:
         # subprocess.Popen(['open', file_path])  # For macOS
-        # subprocess.Popen(['xdg-open', file_path])  # For Linux
-        subprocess.Popen(['start', '', file_path], shell=True)  # For Windows
+        subprocess.Popen(['xdg-open', file_path])  # For Linux
+        # subprocess.Popen(['start', '', file_path], shell=True)  # For Windows
         print("PDF file launched successfully.")
     except Exception as e:
         print("Error launching PDF file:", str(e))
