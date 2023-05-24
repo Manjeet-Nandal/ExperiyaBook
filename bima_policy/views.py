@@ -4470,7 +4470,7 @@ def docs_download(request, id):
         s3_client = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
         s3_client.download_file(AWS_STORAGE_BUCKET_NAME, file_key,  save_in) 
         print('File downloaded successfully.')        
-        launch_pdf(save_in)  
+        # launch_pdf(save_in)  
         return HttpResponse('')
     except Exception as e:
         print('Error downloading file:', str(e))
@@ -4482,8 +4482,40 @@ import subprocess
 def launch_pdf(file_path):
     try:
         # subprocess.Popen(['open', file_path])  # For macOS
-        subprocess.Popen(['xdg-open', file_path])  # For Linux
-        # subprocess.Popen(['start', '', file_path], shell=True)  # For Windows
+        # subprocess.Popen(['xdg-open', file_path])  # For Linux
+        subprocess.Popen(['start', '', file_path], shell=True)  # For Windows
         print("PDF file launched successfully.")
     except Exception as e:
         print("Error launching PDF file:", str(e))
+
+
+import boto3
+from django.http import HttpResponseRedirect
+
+import boto3
+from django.http import HttpResponse
+
+from django.http import HttpResponse
+from storages.backends.s3boto3 import S3Boto3Storage
+
+def download_pdf(request, id):
+    print('download_pdf method calling: ')
+    # Get the S3 storage instance
+    s3_storage = S3Boto3Storage()
+
+    # Specify the S3 file path of the PDF file
+    # pdf_file_path = 'media/documents/000000002162902_PYP.pdf'  # Update with the actual path to your PDF file in the S3 bucket
+    pdf_file_path = 'media/documents/' + id  # Update with the actual path to your PDF file in the S3 bucket
+
+    # Set the desired filename for the downloaded file
+    filename = id
+
+    # Generate the response with appropriate headers for file download
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    # Open the S3 file and read its contents
+    with s3_storage.open(pdf_file_path) as pdf_file:
+        response.write(pdf_file.read())
+
+    return response

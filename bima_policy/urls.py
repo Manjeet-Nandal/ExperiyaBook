@@ -71,7 +71,6 @@ urlpatterns = [
     path('subscription/', subscription, name="subscription"),
     path('change_password/', change_password, name="change_password"),
     path('profile_photo/', change_password, name="change_password"),   
-    path('docs/download/<str:id>/', docs_download, name="docs_download"),
-    
+    path('docs/download/<str:id>/', download_pdf, name="download_pdf"),   
 
 ]

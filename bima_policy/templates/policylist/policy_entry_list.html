@@ -736,6 +736,7 @@
                                        <td> <a href="#" onclick="downloadFile('{{value.aadhar_card}}')">{{value.aadhar_card}}</a> </td>
                                        <td> <a href="#" onclick="downloadFile('{{value.vehicle_rc}}')">{{value.vehicle_rc}}</a> </td>
                                        <td> <a href="#" onclick="downloadFile('{{value.inspection_report}}')">{{value.inspection_report}}</a> </td>
+                                      
 
                                        <!-- <td> <a href="/media/{{value.proposal}}">{{value.proposal}}</a> </td> -->
                                        <!-- <td> <a href="/media/{{value.mandate}}">{{value.mandate}}</a> </td> -->
@@ -2421,9 +2422,10 @@
          index = params.lastIndexOf("/") + 1
          params = params.substring(index, params.length);
       }     
-      pathname = '/bima_policy/docs/download/' + params
+      pathname = '/bima_policy/docs/download/' + params    
       href = window.location.origin + pathname     
       window.open(href)
+      
    }
 
 </script>
