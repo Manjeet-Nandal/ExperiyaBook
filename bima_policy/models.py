@@ -464,3 +464,73 @@ class CoverageType(models.Model):
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:6].upper()
         super(CoverageType, self).save(*args, **kwargs)
+
+
+
+class DeletedPolicy(models.Model):   
+    policyid = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:7].upper(), editable=False, max_length=7)
+    proposal_no = models.CharField(max_length=50 ,blank=True, null=True)   
+    policy_no = models.CharField(max_length=50 ,blank=True, null=True)     
+    customer_name = models.CharField(max_length=100 ,blank=True, null=True)     
+    insurance_company = models.CharField(max_length=100 ,blank=True, null=True)     
+    sp_name = models.CharField(max_length=100 ,blank=True, null=True)     
+    sp_brokercode = models.CharField(max_length=100 ,blank=True, null=True)     
+    product_name = models.CharField(max_length=100, default='' ,blank=True, null=True)     
+    registration_no = models.CharField(max_length=50 ,blank=True, null=True)     
+    rto_state = models.CharField(max_length=100 ,blank=True, null=True)     
+    rto_city = models.CharField(max_length=100 ,blank=True, null=True)     
+    vehicle_makeby = models.CharField(max_length=100 ,blank=True, null=True)     
+    vehicle_model = models.CharField(max_length=100 ,blank=True, null=True)     
+    vehicle_catagory = models.CharField(max_length=50 ,blank=True, null=True)     
+    vehicle_fuel_type = models.CharField(max_length=50 ,blank=True, null=True)     
+    mfg_year = models.IntegerField( blank=True, null=True)     
+    addon = models.CharField(max_length=50 ,blank=True, null=True)     
+    ncb = models.CharField(max_length=50 ,blank=True, null=True)     
+    cubic_capacity = models.CharField(max_length=50 ,blank=True, null=True)     
+    gvw = models.CharField(max_length=50 ,blank=True, null=True)     
+    seating_capacity = models.CharField(max_length=50 ,blank=True, null=True)     
+    coverage_type = models.CharField(max_length=100 ,blank=True, null=True)     
+    policy_type = models.CharField(max_length=50 ,blank=True, null=True)     
+    cpa = models.CharField(max_length=50 ,blank=True, null=True)     
+    risk_start_date = models.DateField( blank=True, null=True)     
+    risk_end_date = models.DateField( blank=True, null=True)     
+    issue_date = models.DateField( blank=True, null=True)     
+    insured_age = models.CharField(max_length=2 ,blank=True, null=True)     
+    policy_term = models.IntegerField( blank=True, null=True)     
+    bqp = models.CharField(max_length=50 ,blank=True, null=True)     
+    pos = models.CharField(max_length=50 ,blank=True, null=True)     
+    employee = models.CharField(max_length=50 ,blank=True, null=True)     
+    OD_premium = models.CharField(max_length=10 ,blank=True, null=True)     
+    TP_terrorism = models.CharField(max_length=10 ,blank=True, null=True)     
+    net = models.CharField(max_length=10 ,blank=True, null=True)     
+    gst_amount = models.CharField(max_length=10 ,blank=True, null=True)     
+    gst_gcv_amount = models.CharField(max_length=10 ,blank=True, null=True)     
+    total = models.CharField(max_length=10 ,blank=True, null=True)     
+    payment_mode = models.CharField(max_length=50 ,blank=True, null=True)     
+    agent_od_reward = models.CharField(max_length=10 ,blank=True, null=True)     
+    agent_od_amount = models.CharField(max_length=10 ,blank=True, null=True)     
+    agent_tp_reward = models.CharField(max_length=10 ,blank=True, null=True)     
+    agent_tp_amount = models.CharField(max_length=10 ,blank=True, null=True)     
+    self_od_reward = models.CharField(max_length=10 ,blank=True, null=True)     
+    self_od_amount = models.CharField(max_length=10 ,blank=True, null=True)     
+    self_tp_reward = models.CharField(max_length=10 ,blank=True, null=True)     
+    self_tp_amount = models.CharField(max_length=10 ,blank=True, null=True)     
+
+    proposal = models.CharField(max_length=50 ,blank=True, null=True)     
+    mandate = models.CharField(max_length=50 ,blank=True, null=True)     
+    policy = models.CharField(max_length=50 ,blank=True, null=True)     
+    previous_policy = models.CharField(max_length=50 ,blank=True, null=True)     
+    pan_card = models.CharField(max_length=50 ,blank=True, null=True)     
+    aadhar_card = models.CharField(max_length=50 ,blank=True, null=True)     
+    vehicle_rc = models.CharField(max_length=50 ,blank=True, null=True)     
+    inspection_report = models.CharField(max_length=50 ,blank=True, null=True)     
+
+    remark = models.CharField(max_length=255 ,blank=True, null=True)  
+
+    def __str__(self):
+        return self.customer_name
+    def save(self, *args, **kwargs):
+        self.policyid = uuid.uuid4().hex[:7].upper()
+        super(DeletedPolicy, self).save(*args, **kwargs)
+    

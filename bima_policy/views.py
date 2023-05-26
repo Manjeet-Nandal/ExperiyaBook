@@ -3629,10 +3629,89 @@ def policy_delete(request, id):
             if id.__contains__("|"):
                 ids = id.split("|")
                 for id in ids:
-                    pp = Policy.objects.filter(policyid=id).delete()
-            else:
-                Policy.objects.get(policyid=id).delete()
-                print('Single Deleted: ', id)
+                    # pp = Policy.objects.filter(policyid=id).delete()
+                    pass
+            else:               
+                print('deleting single policy:')
+                # values_list = Policy.objects.filter(policyid=id).values()            
+                
+                # proposal_no = values_list[0]['proposal_no']
+                # policy_no = values_list[0]['policy_no']
+                # customer_name = values_list[0]['customer_name']
+                # insurance_company = values_list[0]['insurance_company']
+                # sp_name = values_list[0]['sp_name']
+                # sp_brokercode = values_list[0]['sp_brokercode']
+                # registration_no = values_list[0]['registration_no']
+                # rto_state = values_list[0]['rto_state']
+                # rto_city = values_list[0]['rto_city']
+                # vehicle_makeby = values_list[0]['vehicle_makeby']
+                # vehicle_model = values_list[0]['vehicle_model']
+                # vehicle_catagory = values_list[0]['vehicle_catagory']
+                # vehicle_fuel_type = values_list[0]['vehicle_fuel_type']
+                # mfg_year = values_list[0]['mfg_year']
+                # addon = values_list[0]['addon']
+                # ncb = values_list[0]['ncb']
+                # try:
+                #     cubic_capacity = values_list[0]['cubic_capacity']
+                # except Exception as ex:
+                #     cubic_capacity = ''
+                # gvw = values_list[0]['gvw']
+                # seating_capacity = values_list[0]['seating_capacity']
+                # coverage_type = values_list[0]['coverage_type']
+                # policy_type = values_list[0]['policy_type']
+                # cpa = values_list[0]['cpa']
+                # risk_start_date = values_list[0]['risk_start_date']
+                # risk_end_date = values_list[0]['risk_end_date']
+                # issue_date = values_list[0]['issue_date']
+                # insured_age = values_list[0]['insured_age']
+                # policy_term = values_list[0]['policy_term']
+                # bqp = values_list[0]['bqp']
+                # pos = values_list[0]['pos']
+
+                # employee = values_list[0]['employee']
+
+                # try:
+                #     remark = values_list[0]['remark']
+                # except Exception as ex:
+                #     remark = ''
+
+                # OD_premium = values_list[0]['od']
+                # TP_terrorism = values_list[0]['tpt']
+                # net = values_list[0]['net']
+                # gst_amount = values_list[0]['gst']
+                # try:
+                #     gst_gcv_amount = values_list[0]['gstt']
+                # except Exception as ex:
+                #     gst_gcv_amount = 0
+
+                # total = values_list[0]['total']
+                # payment_mode = values_list[0]['payment_mode']
+
+                # proposal = ""
+                # mandate = ''
+                # policy = ''
+                # previous_policy = ''
+                # pan_card = ''
+                # aadhar_card = ''
+                # vehicle_rc = ''
+                # inspection_report = ''
+
+                          
+                # pol = DeletedPolicy.objects.create(proposal_no=proposal_no, policy_no=policy_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,
+                #                         sp_brokercode=sp_brokercode,  registration_no=registration_no,
+                #                         rto_state=rto_state, rto_city=rto_city,  vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
+                #                         mfg_year=mfg_year,
+                #                         addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, policy_type=policy_type, cpa=cpa,
+                #                         risk_start_date=risk_start_date,
+                #                         risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
+                #                         employee=employee, proposal=proposal, mandate=mandate,
+                #                         OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount,
+                #                         gst_gcv_amount=gst_gcv_amount,  total=total,
+                #                         policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report,
+                #                         remark=remark)
+
+                # print(pol)
+                # Policy.objects.get(policyid=id).delete()           
 
         except Exception as ex:
             print(ex)

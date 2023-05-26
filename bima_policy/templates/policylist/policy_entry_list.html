@@ -86,7 +86,7 @@
                                  <button type="button" onclick="ExportToExcel('xlsx')" id="download_inslist"
                                     class="btn btn-secondary " title="Download"><i class="fa fa-download"
                                        aria-hidden="true"></i> </button>
-                                 <button data-toggle="modal" data-target="#mdlcolsetting" type="button" id="bulk_remove"
+                                 <button data-toggle="modal" data-target="" type="button" id="bulk_remove"
                                     class="btn btn-secondary" title="Delete"><i class="icofont icofont-trash"
                                        aria-hidden="true"></i> </button>
                                  <a id="linkShowFilterDiv" href="#" class="no-wrap pl-0 morefilter" title="More Filter"
@@ -771,7 +771,8 @@
                                                 <i class="fa fa-pencil-alt mt-2"></i>
                                                 <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
                                              </a>
-                                             <a href="#" name="Remove"
+                                             <a href="/bima_policy/policy/{{value.policyid}}/delete"
+                                                name="Remove"
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                                                 <i class="far fa-trash-alt mt-2"></i>
 
@@ -1569,10 +1570,10 @@
          console.log(element.replace("'", "").replace("'", "").trim())
          policyid_list.push(element.replace("'", "").replace("'", "").trim())
       });
-     
-      
+
+
       return
-      
+
       payout = "{{payout|safe}}"
       period = "{{period|safe}}"
       select_length = "{{select_length|safe}}"
@@ -1635,6 +1636,7 @@
    }
 
    function bulk_policy_remove() {
+      alert('control here')
       return;
       var tblInsurance = document.getElementById('tblInsurance')
       var rowLength = tblInsurance.rows.length;
@@ -2387,14 +2389,14 @@
       document.getElementById('filter_content').innerHTML = ''
       add_select_all_option()
 
-      vmake = document.getElementById('filter_content')     
+      vmake = document.getElementById('filter_content')
 
       "{{ agent_list |safe}}".replace('[', '').replace(']', '').split(',')
-         .forEach(item=> {                 
+         .forEach(item => {
             var newoption = document.createElement("option");
             newoption.value = item.replace("b'", '').replace("'", "").replace("'", "").trim()
             newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "").trim()
-            vmake.options.add(newoption);  
+            vmake.options.add(newoption);
          })
 
       // select_all_Items('filter_content')
