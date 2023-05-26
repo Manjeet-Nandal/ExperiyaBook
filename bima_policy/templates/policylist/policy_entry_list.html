@@ -64,7 +64,7 @@
                               </div>
                            </div>
 
-                           <div class="col-md-3 col-sm-12">
+                           <div class="col-md-3 col-sm-12" hidden>
                               <select name="agents" data-parsley-required-message=""
                                  class="custom-select select2 select2-hidden-accessible" id="agents"
                                  data-parsley-required="true" tabindex="-1" aria-hidden="true">
@@ -75,7 +75,7 @@
                               </select>
                            </div>
 
-                           <div class="col-md-3 ">
+                           <div class="col-md-6 ">
                               <div class="form-group">
                                  <button onclick="entry_filter()" type="button" id="filterlist"
                                     class="btn btn-secondary " title="Filter"><i class="fa fa-search"
@@ -230,6 +230,7 @@
                               <select id="filter_type" name="filter_type" data-parsley-required-message="" multiple
                                  data-parsley-required="true" class="custom-select " required
                                  onchange="add_filter_type()">
+                                 <option value="agent">Agents</option>
                                  <option value="insurer">Insurers</option>
                                  <option value="vehicle_catagory">Vehicle Catagory</option>
                                  <option value="vehicle_makeby">Vehicle Makeby</option>
@@ -296,7 +297,10 @@
                                     ncb_col = ['YES', 'NO']
                                     cpa_col = ['YES', 'NO']
 
-                                    if (filter_type_value == 'insurer') {
+                                    if (filter_type_value == 'agent') {
+                                       addAgents();
+                                    }
+                                    else if (filter_type_value == 'insurer') {
                                        add_items(comp_col, filter_content)
                                     }
                                     else if (filter_type_value == 'vehicle_catagory') {
@@ -726,17 +730,28 @@
                                        {% endif %}
 
                                        {% endif %}
-                                
-                                       <td> <a href="#" onclick="downloadFile('{{value.proposal}}')">{{value.proposal}}</a> </td>
 
-                                       <td> <a href="#" onclick="downloadFile('{{value.mandate}}')">{{value.mandate}}</a> </td>
-                                       <td> <a href="#" onclick="downloadFile('{{value.policy}}')">{{value.policy}}</a> </td>
-                                       <td> <a href="#" onclick="downloadFile('{{value.previous_policy}}')">{{value.previous_policy}}</a> </td>
-                                       <td> <a href="#" onclick="downloadFile('{{value.pan_card}}')">{{value.pan_card}}</a> </td>
-                                       <td> <a href="#" onclick="downloadFile('{{value.aadhar_card}}')">{{value.aadhar_card}}</a> </td>
-                                       <td> <a href="#" onclick="downloadFile('{{value.vehicle_rc}}')">{{value.vehicle_rc}}</a> </td>
-                                       <td> <a href="#" onclick="downloadFile('{{value.inspection_report}}')">{{value.inspection_report}}</a> </td>
-                                      
+                                       <td> <a href="#"
+                                             onclick="downloadFile('{{value.proposal}}')">{{value.proposal}}</a> </td>
+                                       <td> <a href="#"
+                                             onclick="downloadFile('{{value.mandate}}')">{{value.mandate}}</a> </td>
+                                       <td> <a href="#" onclick="downloadFile('{{value.policy}}')">{{value.policy}}</a>
+                                       </td>
+                                       <td> <a href="#"
+                                             onclick="downloadFile('{{value.previous_policy}}')">{{value.previous_policy}}</a>
+                                       </td>
+                                       <td> <a href="#"
+                                             onclick="downloadFile('{{value.pan_card}}')">{{value.pan_card}}</a> </td>
+                                       <td> <a href="#"
+                                             onclick="downloadFile('{{value.aadhar_card}}')">{{value.aadhar_card}}</a>
+                                       </td>
+                                       <td> <a href="#"
+                                             onclick="downloadFile('{{value.vehicle_rc}}')">{{value.vehicle_rc}}</a>
+                                       </td>
+                                       <td> <a href="#"
+                                             onclick="downloadFile('{{value.inspection_report}}')">{{value.inspection_report}}</a>
+                                       </td>
+
 
                                        <!-- <td> <a href="/media/{{value.proposal}}">{{value.proposal}}</a> </td> -->
                                        <!-- <td> <a href="/media/{{value.mandate}}">{{value.mandate}}</a> </td> -->
@@ -759,7 +774,7 @@
                                              <a href="#" name="Remove"
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                                                 <i class="far fa-trash-alt mt-2"></i>
-                                               
+
                                              </a>
                                        </td>
                                     </tr>
@@ -1547,6 +1562,17 @@
 <script>
 
    function load_values() {
+      pids = "{{policyid_list|safe}}".replace('[', '').replace(']', '').split(',')
+      console.log('res ' + pids);
+
+      pids.forEach(element => {
+         console.log(element.replace("'", "").replace("'", "").trim())
+         policyid_list.push(element.replace("'", "").replace("'", "").trim())
+      });
+     
+      
+      return
+      
       payout = "{{payout|safe}}"
       period = "{{period|safe}}"
       select_length = "{{select_length|safe}}"
@@ -1609,7 +1635,7 @@
    }
 
    function bulk_policy_remove() {
-      // return;
+      return;
       var tblInsurance = document.getElementById('tblInsurance')
       var rowLength = tblInsurance.rows.length;
       ids = ''
@@ -1731,7 +1757,10 @@
 
       cell_no = 0
 
-      if (value == 'insurer') {
+      if (value == 'agent') {
+         cell_no = '-ag'
+      }
+      else if (value == 'insurer') {
          cell_no = '-ins'
       }
       else if (value == 'vehicle_catagory') {
@@ -2120,7 +2149,7 @@
       plist = "{{ policyid_list | safe}}"
 
       if (plist.length < 1) {
-         alert('No policy ids found!')
+         alert('Please filter again and apply payout')
          return;
       }
       // Declare variables
@@ -2352,6 +2381,25 @@
          XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
    }
 
+
+   function addAgents() {
+
+      document.getElementById('filter_content').innerHTML = ''
+      add_select_all_option()
+
+      vmake = document.getElementById('filter_content')     
+
+      "{{ agent_list |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item=> {                 
+            var newoption = document.createElement("option");
+            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "").trim()
+            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "").trim()
+            vmake.options.add(newoption);  
+         })
+
+      // select_all_Items('filter_content')
+   }
+
    function addVehicleCat() {
 
       document.getElementById('filter_content').innerHTML = ''
@@ -2421,11 +2469,11 @@
       if (params.includes("/")) {
          index = params.lastIndexOf("/") + 1
          params = params.substring(index, params.length);
-      }     
-      pathname = '/bima_policy/docs/download/' + params    
-      href = window.location.origin + pathname     
+      }
+      pathname = '/bima_policy/docs/download/' + params
+      href = window.location.origin + pathname
       window.open(href)
-      
+
    }
 
 </script>

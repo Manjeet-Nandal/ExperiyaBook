@@ -2088,10 +2088,10 @@ def policy_entry(request):
     print('policy_entry method')
     print(get_id_from_session(request))
 
-    # vdata = fetch_vehicle_data()
-    mdl_data = v_data.model_data
-
-    # print(mdl_data)
+    agent_list = []
+    datag = Agents.objects.values('full_name')
+    for ag in datag:
+        agent_list.append(ag['full_name'])
 
     context = read_vehicle_data_file()
     make = context["make"]
@@ -2119,20 +2119,12 @@ def policy_entry(request):
             data = Policy.objects.filter(employee=get_id_from_session(
                 request)).order_by('-policyid').values()[:25]
 
-        # print("total policy: ", data.values().count())
-        datag = Agents.objects.all()
+        policyid_list = []
+        for item in data:
+            # print('item is: ',  item['policyid'])
+            policyid_list.append(item['policyid'])
 
-        # queryset = Policy.objects.all()
-        # paginator = Paginator(data, 25) # 10 items per page
-
-        # page_number = request.GET.get('page', 1)
-        # print('page no: ' , page_number)
-
-        # page = paginator.page(page_number)
-
-        # data = paginator.page(page_number)
-
-        return render(request, 'policylist/policy_entry_list.html', {"mdl_data": mdl_data, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', { "policyid_list": policyid_list, "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
@@ -2146,15 +2138,20 @@ def policy_entry_filter(request,  data):
     # mk_data = vehicle_data.make_data
     # mdl_data = vehicle_data.model_data
 
-    context = read_vehicle_data_file()
-    make = context["make"]
-    model = context["model"]
+    agent_list = []
+    datag = Agents.objects.values('full_name')
+    for ag in datag:
+        agent_list.append(ag['full_name'])
 
     datacat_list = []
     data_cat = VehicleCategory.objects.all().values()
     for vc in data_cat:
         datacat_list.append(vc["category"])
 
+    context = read_vehicle_data_file()
+    make = context["make"]
+    model = context["model"]
+    
     datavm = VehicleModelName.objects.all().values()
     datavmb = VehicleMakeBy.objects.all().values()
 
@@ -2199,17 +2196,17 @@ def policy_entry_filter(request,  data):
                 else:
                     data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(
                         issue_date__gte=date1) & Q(issue_date__lte=date2)).order_by('-policyid').values()
-
-                datag = Agents.objects.all()
+                
 
                 policyid_list = []
                 for item in data:
                     # print('item is: ',  item['policyid'])
                     policyid_list.append(item['policyid'])
 
-                return render(request, 'policylist/policy_entry_list.html', {"policyid_list": policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                return render(request, 'policylist/policy_entry_list.html', {"agent_list": agent_list,  "policyid_list": policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
             if len(tmp_data) == 2:
+                print('into 2nd lane')
                 print('into 2nd lane')
 
                 # date section
@@ -2240,13 +2237,18 @@ def policy_entry_filter(request,  data):
                 else:
                     data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(
                         issue_date__gte=date1) & Q(issue_date__lte=date2)).order_by('-policyid').values()
-
-                datag = Agents.objects.all()
+               
 
                 print(tmp_data[1][0])
                 data = filter_other_details(tmp_data[1], data)
 
                 data = list(chain(*data))
+
+                policyid_list = []
+                for item in data:
+                    # print('item is: ',  item['policyid'])
+                    policyid_list.append(item['policyid'])
+
 
                 if len(data) > 0:
                     # data = data[0]
@@ -2255,7 +2257,7 @@ def policy_entry_filter(request,  data):
                 else:
                     data = None
 
-                return render(request, 'policylist/policy_entry_list.html', {"data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                return render(request, 'policylist/policy_entry_list.html', {"policyid_list": policyid_list, "agent_list": agent_list, "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data,  'is_user': is_user(request)})
 
             if len(tmp_data) == 3:
                 print('into 3rd lane')
@@ -2281,8 +2283,6 @@ def policy_entry_filter(request,  data):
 
                 payout_option = tmp_data[2]
                 print('payout: ', payout_option)
-
-                datag = Agents.objects.all()
 
                 if payout_option == 'y':
                     if is_user(request):
@@ -2319,7 +2319,7 @@ def policy_entry_filter(request,  data):
                 else:
                     data = None
 
-                return render(request, 'policylist/policy_entry_list.html', {"policyid_list": policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                return render(request, 'policylist/policy_entry_list.html', {"agent_list": agent_list, "policyid_list": policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
         else:
             print('tmp_data is', tmp_data)
@@ -2387,12 +2387,11 @@ def policy_entry_filter(request,  data):
             print('updated list length: ', len(updated_policy_list))
 
             data = list(chain(*updated_policy_list))
-
-            datag = Agents.objects.all()
+            
 
             # data = Policy.objects.order_by('-policyid').filter().values()[:10]
-            return render(request, 'policylist/policy_entry_list.html', {"vdata": context,  "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-
+            return render(request, 'policylist/policy_entry_list.html', {"agent_list": agent_list, "vdata": context,  "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                      
     except Exception as ex:
         return HttpResponse('Error occurred in policy_entry_filter: ' + ex)
 
@@ -2489,10 +2488,10 @@ def filter_other_details(data, f_data):
     str_dataa = str(data)
 
     # filter for ins
-    if str_dataa.__contains__('-ins'):
-        print('has ins')
+    if str_dataa.__contains__('-ag'):
+        print('has agent')
         str_data = str(data)
-        ins_index = str(data).index('-ins')
+        ins_index = str(data).index('-ag')
         # print('num', ins_index)
 
         b_index = str_data.index('[', ins_index)
@@ -2507,12 +2506,58 @@ def filter_other_details(data, f_data):
             ee = e.strip()
             # print(ee)
             for ins in f_data:
-                if ee == ins['insurance_company']:
+                if ee == ins['pos']:
                     pid = ins['policyid']
                     qs_list.append(Policy.objects.filter(
                         policyid=pid).values())
 
+        print('agent length: ', len(qs_list))
+
+    if str_dataa.__contains__('-ins'):
+        print('')
+        print('has ins')
+        str_data = str(data)
+        ins_index = str(data).index('-ins')
+        # print('num', ins_index)
+
+        b_index = str_data.index('[', ins_index)
+        c_index = str_data.index(']', ins_index)
+
+        subStr = str_data[b_index:c_index]
+        # print(subStr)
+
+        name = subStr.strip().replace(
+            '[', '').replace(']', '').replace("'", '').split(",")
+
+        if len(qs_list) > 0:
+            qs_list_temp = list(chain(*qs_list))
+            qs_list = []
+
+            for e in name:
+                ee = e.strip()
+                print(ee)
+
+                for ins in qs_list_temp:
+                    if ee == ins['insurance_company']:
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+        else:
+            for e in name:
+                ee = e.strip()
+                print(ee)
+
+                for ins in f_data:
+                    if ee == ins['insurance_company']:
+                        pid = ins['policyid']
+                        qs_list.append(Policy.objects.filter(
+                            policyid=pid).values())
+
         print('ins length: ', len(qs_list))
+    
+
+
+
 
     if str_dataa.__contains__('-vc'):
         print('')
