@@ -1,3 +1,7 @@
+from storages.backends.s3boto3 import S3Boto3Storage
+from django.http import HttpResponse
+import subprocess
+from django.http import FileResponse
 from bima_policy.static.vehicle_data import v_data
 from dateutil.parser import parse
 from itertools import chain
@@ -198,17 +202,18 @@ def delete_bank_details(request, id):
 
 
 def change_password_old(request):
-    print("change_password method calling:")  
+    print("change_password method calling:")
     if request.method == 'POST' and 'updpassword' in request.POST:
         profile = ProfileModel.objects.filter(id=get_id_from_session(request))
         password = request.POST['password']
         profile.update(password=password)
 
-def change_password(request):
-    print("change_password method calling:")   
-    print('id: ' , get_id_from_session(request))
 
-    data = json.loads(request.POST['data'])    
+def change_password(request):
+    print("change_password method calling:")
+    print('id: ', get_id_from_session(request))
+
+    data = json.loads(request.POST['data'])
     # print(data)
     splited_array = str(data).split('|')
     old_pass = splited_array[0]
@@ -217,59 +222,61 @@ def change_password(request):
     print('old pass: ', old_pass)
     print('new pass: ', new_pass)
 
-    context = {        
-        "status": "error occurred!"   
-    }   
-       
-    if is_user(request):       
-        profile = ProfileModel.objects.filter(id=get_id_from_session(request))   
-        profile_pass = ProfileModel.objects.filter(id=get_id_from_session(request)).values()[0] ['password']                
-        
+    context = {
+        "status": "error occurred!"
+    }
+
+    if is_user(request):
+        profile = ProfileModel.objects.filter(id=get_id_from_session(request))
+        profile_pass = ProfileModel.objects.filter(
+            id=get_id_from_session(request)).values()[0]['password']
+
         if profile_pass == old_pass:
             print('old match found:')
-            profile.update(password=new_pass)    
-            context['status'] = 'Password updated!'             
+            profile.update(password=new_pass)
+            context['status'] = 'Password updated!'
             print('new password set')
         else:
-            context['status'] = 'Your Last Password is Incorrect!'             
+            context['status'] = 'Your Last Password is Incorrect!'
             print('incorrect password')
 
+    else:
+        staff = StaffModel.objects.filter(
+            login_id=get_id_from_session(request))
+        staff_pass = StaffModel.objects.filter(
+            login_id=get_id_from_session(request)).values()[0]['password']
 
-    else:        
-        staff = StaffModel.objects.filter(login_id=get_id_from_session(request))   
-        staff_pass = StaffModel.objects.filter(login_id=get_id_from_session(request)).values()[0] ['password']                
-        
         if staff_pass == old_pass:
             print('old match found:')
-            staff.update(password=new_pass)    
-            context['status'] = 'Password updated!'             
+            staff.update(password=new_pass)
+            context['status'] = 'Password updated!'
             print('new password set')
         else:
-            context['status'] = 'Your Last Password is Incorrect!'                     
+            context['status'] = 'Your Last Password is Incorrect!'
             print('incorrect password')
-    
+
     return JsonResponse(context)
 
 
 def profile_photo(request):
-    print("profile_photo method calling:")   
-    print('id: ' , get_id_from_session(request))
+    print("profile_photo method calling:")
+    print('id: ', get_id_from_session(request))
 
-    data = json.loads(request.POST['data'])    
-    
+    data = json.loads(request.POST['data'])
+
     print('profile photo: ', data)
 
-    context = {        
-        "status": "error occurred!"   
-    }   
-       
-    if is_user(request):       
-        profile = ProfileModel.objects.filter(id=get_id_from_session(request))                 
-        
-        profile.update(profile_image=data)    
-        context['status'] = 'Password updated!'             
+    context = {
+        "status": "error occurred!"
+    }
+
+    if is_user(request):
+        profile = ProfileModel.objects.filter(id=get_id_from_session(request))
+
+        profile.update(profile_image=data)
+        context['status'] = 'Password updated!'
         print('profile picture changed')
-    
+
     return JsonResponse(context)
 
 
@@ -2124,7 +2131,7 @@ def policy_entry(request):
             # print('item is: ',  item['policyid'])
             policyid_list.append(item['policyid'])
 
-        return render(request, 'policylist/policy_entry_list.html', { "policyid_list": policyid_list, "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {"policyid_list": policyid_list, "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
@@ -2135,8 +2142,8 @@ def policy_entry_filter(request,  data):
     print('')
     print('policy_entry_filter method')
 
-    # mk_data = vehicle_data.make_data
-    # mdl_data = vehicle_data.model_data
+    # mk_data = v_data.make_data
+    # mdl_data = v_data.model_data
 
     agent_list = []
     datag = Agents.objects.values('full_name')
@@ -2151,7 +2158,7 @@ def policy_entry_filter(request,  data):
     context = read_vehicle_data_file()
     make = context["make"]
     model = context["model"]
-    
+
     datavm = VehicleModelName.objects.all().values()
     datavmb = VehicleMakeBy.objects.all().values()
 
@@ -2196,7 +2203,6 @@ def policy_entry_filter(request,  data):
                 else:
                     data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(
                         issue_date__gte=date1) & Q(issue_date__lte=date2)).order_by('-policyid').values()
-                
 
                 policyid_list = []
                 for item in data:
@@ -2237,7 +2243,6 @@ def policy_entry_filter(request,  data):
                 else:
                     data = Policy.objects.filter(Q(employee=get_id_from_session(request)) & Q(
                         issue_date__gte=date1) & Q(issue_date__lte=date2)).order_by('-policyid').values()
-               
 
                 print(tmp_data[1][0])
                 data = filter_other_details(tmp_data[1], data)
@@ -2248,7 +2253,6 @@ def policy_entry_filter(request,  data):
                 for item in data:
                     # print('item is: ',  item['policyid'])
                     policyid_list.append(item['policyid'])
-
 
                 if len(data) > 0:
                     # data = data[0]
@@ -2387,11 +2391,10 @@ def policy_entry_filter(request,  data):
             print('updated list length: ', len(updated_policy_list))
 
             data = list(chain(*updated_policy_list))
-            
 
             # data = Policy.objects.order_by('-policyid').filter().values()[:10]
             return render(request, 'policylist/policy_entry_list.html', {"agent_list": agent_list, "vdata": context,  "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-                      
+
     except Exception as ex:
         return HttpResponse('Error occurred in policy_entry_filter: ' + ex)
 
@@ -2554,10 +2557,6 @@ def filter_other_details(data, f_data):
                             policyid=pid).values())
 
         print('ins length: ', len(qs_list))
-    
-
-
-
 
     if str_dataa.__contains__('-vc'):
         print('')
@@ -3310,9 +3309,10 @@ def policy_entrydata_old(request, id):
 
         return render(request, 'policylist/edit_policy.html', {'data_ag': data_ag, "vdata": context, 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_vc': data_vc, 'data_bqp': data_bqp})
 
+
 def policy_entrydata(request, id):
     print('policy_entrydata')
-   
+
     if request.method == "POST":
 
         proposal_no = request.POST['proposal_no']
@@ -3494,8 +3494,7 @@ def policy_entrydata(request, id):
 
         # return redirect('bima_policy:policy_entry')
 
-    
-    else:   
+    else:
         data = Policy.objects.get(policyid=id)
         print(data)
         data_ag = json.dumps(
@@ -3549,7 +3548,6 @@ def policy_entrydata(request, id):
         return render(request, 'policylist/edit_policy.html', {"user_info": user_info, "vdata": context, 'data': data, "data_vc": data_vc, 'is_motor_form': is_motor_form, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_bqp': data_bqp})
 
         # return render(request, 'policylist/edit_policy.html', {'data_ag': data_ag, "vdata": context, 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_vc': data_vc, 'data_bqp': data_bqp})
-
 
 
 def edit_policy(request, id):
@@ -3631,61 +3629,64 @@ def policy_delete(request, id):
                 for id in ids:
                     # pp = Policy.objects.filter(policyid=id).delete()
                     pass
-            else:               
+            else:
                 print('deleting single policy:')
-                # values_list = Policy.objects.filter(policyid=id).values()            
-                
-                # proposal_no = values_list[0]['proposal_no']
-                # policy_no = values_list[0]['policy_no']
-                # customer_name = values_list[0]['customer_name']
-                # insurance_company = values_list[0]['insurance_company']
-                # sp_name = values_list[0]['sp_name']
-                # sp_brokercode = values_list[0]['sp_brokercode']
-                # registration_no = values_list[0]['registration_no']
-                # rto_state = values_list[0]['rto_state']
-                # rto_city = values_list[0]['rto_city']
-                # vehicle_makeby = values_list[0]['vehicle_makeby']
-                # vehicle_model = values_list[0]['vehicle_model']
-                # vehicle_catagory = values_list[0]['vehicle_catagory']
-                # vehicle_fuel_type = values_list[0]['vehicle_fuel_type']
-                # mfg_year = values_list[0]['mfg_year']
-                # addon = values_list[0]['addon']
-                # ncb = values_list[0]['ncb']
-                # try:
-                #     cubic_capacity = values_list[0]['cubic_capacity']
-                # except Exception as ex:
-                #     cubic_capacity = ''
-                # gvw = values_list[0]['gvw']
-                # seating_capacity = values_list[0]['seating_capacity']
-                # coverage_type = values_list[0]['coverage_type']
-                # policy_type = values_list[0]['policy_type']
-                # cpa = values_list[0]['cpa']
-                # risk_start_date = values_list[0]['risk_start_date']
-                # risk_end_date = values_list[0]['risk_end_date']
-                # issue_date = values_list[0]['issue_date']
-                # insured_age = values_list[0]['insured_age']
-                # policy_term = values_list[0]['policy_term']
-                # bqp = values_list[0]['bqp']
-                # pos = values_list[0]['pos']
+                values_list = Policy.objects.filter(policyid=id).values()
 
-                # employee = values_list[0]['employee']
+                for i in values_list:
+                    print(i)
 
-                # try:
-                #     remark = values_list[0]['remark']
-                # except Exception as ex:
-                #     remark = ''
+                proposal_no = values_list[0]['proposal_no']
+                policy_no = values_list[0]['policy_no']
+                customer_name = values_list[0]['customer_name']
+                insurance_company = values_list[0]['insurance_company']
+                sp_name = values_list[0]['sp_name']
+                sp_brokercode = values_list[0]['sp_brokercode']
+                registration_no = values_list[0]['registration_no']
+                rto_state = values_list[0]['rto_state']
+                rto_city = values_list[0]['rto_city']
+                vehicle_makeby = values_list[0]['vehicle_makeby']
+                vehicle_model = values_list[0]['vehicle_model']
+                vehicle_catagory = values_list[0]['vehicle_catagory']
+                vehicle_fuel_type = values_list[0]['vehicle_fuel_type']
+                mfg_year = values_list[0]['mfg_year']
+                addon = values_list[0]['addon']
+                ncb = values_list[0]['ncb']
+                try:
+                    cubic_capacity = values_list[0]['cubic_capacity']
+                except Exception as ex:
+                    cubic_capacity = ''
+                gvw = values_list[0]['gvw']
+                seating_capacity = values_list[0]['seating_capacity']
+                coverage_type = values_list[0]['coverage_type']
+                policy_type = values_list[0]['policy_type']
+                cpa = values_list[0]['cpa']
+                risk_start_date = values_list[0]['risk_start_date']
+                risk_end_date = values_list[0]['risk_end_date']
+                issue_date = values_list[0]['issue_date']
+                insured_age = values_list[0]['insured_age']
+                policy_term = values_list[0]['policy_term']
+                bqp = values_list[0]['bqp']
+                pos = values_list[0]['pos']
 
-                # OD_premium = values_list[0]['od']
-                # TP_terrorism = values_list[0]['tpt']
-                # net = values_list[0]['net']
-                # gst_amount = values_list[0]['gst']
-                # try:
-                #     gst_gcv_amount = values_list[0]['gstt']
-                # except Exception as ex:
-                #     gst_gcv_amount = 0
+                employee = values_list[0]['employee']
 
-                # total = values_list[0]['total']
-                # payment_mode = values_list[0]['payment_mode']
+                try:
+                    remark = values_list[0]['remark']
+                except Exception as ex:
+                    remark = ''
+
+                OD_premium = values_list[0]['od']
+                TP_terrorism = values_list[0]['tpt']
+                net = values_list[0]['net']
+                gst_amount = values_list[0]['gst']
+                try:
+                    gst_gcv_amount = values_list[0]['gstt']
+                except Exception as ex:
+                    gst_gcv_amount = 0
+
+                total = values_list[0]['total']
+                payment_mode = values_list[0]['payment_mode']
 
                 # proposal = ""
                 # mandate = ''
@@ -3696,22 +3697,15 @@ def policy_delete(request, id):
                 # vehicle_rc = ''
                 # inspection_report = ''
 
-                          
-                # pol = DeletedPolicy.objects.create(proposal_no=proposal_no, policy_no=policy_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,
-                #                         sp_brokercode=sp_brokercode,  registration_no=registration_no,
-                #                         rto_state=rto_state, rto_city=rto_city,  vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
-                #                         mfg_year=mfg_year,
-                #                         addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, policy_type=policy_type, cpa=cpa,
-                #                         risk_start_date=risk_start_date,
-                #                         risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                #                         employee=employee, proposal=proposal, mandate=mandate,
-                #                         OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount,
-                #                         gst_gcv_amount=gst_gcv_amount,  total=total,
-                #                         policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, vehicle_rc=vehicle_rc, inspection_report=inspection_report,
-                #                         remark=remark)
+                try:
 
-                # print(pol)
-                # Policy.objects.get(policyid=id).delete()           
+                    pol = DeletedPolicy.objects.create(remark="Manjeet Nandal")
+                    print('pol is: ', pol)
+
+                except Exception as esd:
+                    print(str(esd))
+
+                # Policy.objects.get(policyid=id).delete()
 
         except Exception as ex:
             print(ex)
@@ -4576,32 +4570,28 @@ def agent_profile(request):
     return render(request, 'agents/agent_particular.html')
 
 
-from django.http import FileResponse
-
-
 def docs_download(request, id):
     print('docs_download method calling: ')
-    
-    file_key = 'media/documents/' + id    
-    save_in = os.path.join(MEDIA_ROOT, 'temp_file', id)    
 
-    print(file_key)   
-       
+    file_key = 'media/documents/' + id
+    save_in = os.path.join(MEDIA_ROOT, 'temp_file', id)
+
+    print(file_key)
+
     print('FILE_KEY : ', file_key)
-    print('save in : ', save_in)    
+    print('save in : ', save_in)
 
     try:
-        s3_client = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-        s3_client.download_file(AWS_STORAGE_BUCKET_NAME, file_key,  save_in) 
-        print('File downloaded successfully.')        
-        # launch_pdf(save_in)  
+        s3_client = boto3.client(
+            's3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        s3_client.download_file(AWS_STORAGE_BUCKET_NAME, file_key,  save_in)
+        print('File downloaded successfully.')
+        # launch_pdf(save_in)
         return HttpResponse('')
     except Exception as e:
         print('Error downloading file:', str(e))
-        return HttpResponse('Error downloading file: '+ str(e))
-        
-   
-import subprocess
+        return HttpResponse('Error downloading file: ' + str(e))
+
 
 def launch_pdf(file_path):
     try:
@@ -4613,15 +4603,6 @@ def launch_pdf(file_path):
         print("Error launching PDF file:", str(e))
 
 
-import boto3
-from django.http import HttpResponseRedirect
-
-import boto3
-from django.http import HttpResponse
-
-from django.http import HttpResponse
-from storages.backends.s3boto3 import S3Boto3Storage
-
 def download_pdf(request, id):
     print('download_pdf method calling: ')
     # Get the S3 storage instance
@@ -4629,7 +4610,8 @@ def download_pdf(request, id):
 
     # Specify the S3 file path of the PDF file
     # pdf_file_path = 'media/documents/000000002162902_PYP.pdf'  # Update with the actual path to your PDF file in the S3 bucket
-    pdf_file_path = 'media/documents/' + id  # Update with the actual path to your PDF file in the S3 bucket
+    # Update with the actual path to your PDF file in the S3 bucket
+    pdf_file_path = 'media/documents/' + id
 
     # Set the desired filename for the downloaded file
     filename = id
@@ -4643,3 +4625,123 @@ def download_pdf(request, id):
         response.write(pdf_file.read())
 
     return response
+
+
+def store_deleted_policy(request, id):
+    print('store_deleted_policy method calling:')
+
+    try:
+        values_list = Policy.objects.filter(policyid=id).values()
+        # print(values_list)
+
+        proposal_no = values_list[0]['proposal_no']
+        policy_no = values_list[0]['policy_no']
+        customer_name = values_list[0]['customer_name']
+        insurance_company = values_list[0]['insurance_company']
+        sp_name = values_list[0]['sp_name']
+        sp_brokercode = values_list[0]['sp_brokercode']
+        registration_no = values_list[0]['registration_no']
+        rto_state = values_list[0]['rto_state']
+        rto_city = values_list[0]['rto_city']
+        vehicle_makeby = values_list[0]['vehicle_makeby']
+        vehicle_model = values_list[0]['vehicle_model']
+        vehicle_catagory = values_list[0]['vehicle_catagory']
+        vehicle_fuel_type = values_list[0]['vehicle_fuel_type']
+        mfg_year = values_list[0]['mfg_year']
+        addon = values_list[0]['addon']
+        ncb = values_list[0]['ncb']
+        cubic_capacity = values_list[0]['cubic_capacity']       
+        gvw = values_list[0]['gvw']
+        seating_capacity = values_list[0]['seating_capacity']
+        coverage_type = values_list[0]['coverage_type']
+        policy_type = values_list[0]['policy_type']
+        cpa = values_list[0]['cpa']
+        risk_start_date = values_list[0]['risk_start_date']
+        risk_end_date = values_list[0]['risk_end_date']
+        issue_date = values_list[0]['issue_date']
+        insured_age = values_list[0]['insured_age']
+        policy_term = values_list[0]['policy_term']
+        bqp = values_list[0]['bqp']
+        pos = values_list[0]['pos']
+        employee = values_list[0]['employee']
+        remark = values_list[0]['remark']
+
+        OD_premium = values_list[0]['OD_premium']
+        TP_terrorism = values_list[0]['TP_terrorism']
+        net = values_list[0]['net']
+        gst_amount = values_list[0]['gst_amount']
+        gst_gcv_amount = values_list[0]['gst_gcv_amount']
+        total = values_list[0]['total']
+        payment_mode = values_list[0]['payment_mode']
+
+        proposal = values_list[0]['proposal']
+        mandate = values_list[0]['mandate']
+        policy = values_list[0]['policy']
+        previous_policy = values_list[0]['previous_policy']
+        pan_card = values_list[0]['pan_card']
+        aadhar_card = values_list[0]['aadhar_card']
+        vehicle_rc = values_list[0]['vehicle_rc']
+        inspection_report = values_list[0]['inspection_report']
+
+        pol = DeletedPolicy.objects.create(proposal_no=proposal_no, policy_no=policy_no,  customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,
+                                           sp_brokercode=sp_brokercode,  registration_no=registration_no,
+                                           rto_state=rto_state, rto_city=rto_city,  vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
+                                           mfg_year=mfg_year,
+                                           addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, policy_type=policy_type, cpa=cpa,
+                                           risk_start_date=risk_start_date,
+                                           risk_end_date=risk_end_date, issue_date=issue_date, insured_age=insured_age, policy_term=policy_term,  bqp=bqp, pos=pos,
+                                           employee=employee,
+                                           OD_premium=OD_premium, TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, gst_gcv_amount=gst_gcv_amount,
+                                           total=total, payment_mode=payment_mode,
+                                           proposal=proposal, mandate=mandate,
+                                           policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card,
+                                           vehicle_rc=vehicle_rc, inspection_report=inspection_report,
+                                           remark=remark)
+
+        print('policy saved: ', pol)
+        Policy.objects.get(policyid=id).delete()
+        print('policy deleted: ', pol)
+
+        return redirect('bima_policy:policy_entry')
+
+    except Exception as e:
+        print("Error occurred in store_deleted_policy:", str(e))
+        return HttpResponse("Error occurred in store_deleted_policy: " + str(e))
+
+
+def policy_deleted_entry(request):
+    try:
+        print('policy_deleted_entry method')
+        print(get_id_from_session(request))
+
+        agent_list = []
+        datag = Agents.objects.values('full_name')
+        for ag in datag:
+            agent_list.append(ag['full_name'])
+
+        context = read_vehicle_data_file()
+        make = context["make"]
+        model = context["model"]
+
+        datacat_list = []
+        data_cat = VehicleCategory.objects.all().values()
+        for vc in data_cat:
+            datacat_list.append(vc["category"])
+
+        datavm = VehicleModelName.objects.all().values()
+        datavmb = VehicleMakeBy.objects.all().values()
+
+        for vm in datavm:
+            model.append(vm["model"])
+
+        for vmb in datavmb:
+            make.append(vmb["company"])
+        
+        data = DeletedPolicy.objects.order_by('-policyid').values()
+
+        return render(request, 'policylist/policy_entry_list deleted.html', { "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        # return render(request, 'policylist/policy_entry_list.html', { "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+    except Exception as e:
+        print("Error occurred in policy_deleted_entry:", str(e))
+        return HttpResponse("Error occurred in policy_deleted_entry: " + str(e))
+

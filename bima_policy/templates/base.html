@@ -485,6 +485,13 @@
                                  <span
                                  class="menu-text" style="color:#346cb0">Users</span></a> <!-- child menu -->
                            </li>
+                           <li class="menu-item ">
+                              <a href="{%url 'bima_policy:policy_deleted_entry' %}"  class="menu-link">
+                                 {% comment %} <span class="menu-icon icofont icofont-user-alt-5"></span>  {% endcomment %}
+                                 <i class="fa-solid fa-user" id='icon'></i>
+                                 <span
+                                 class="menu-text" style="color:#346cb0">Recycle Bin</span></a> <!-- child menu -->
+                           </li>
                            <!-- /.menu-item -->
                            <li class="menu-header">Settings </li>
                            <!-- /.menu-header -->
@@ -495,15 +502,14 @@
                                  <span class="menu-text" style="color:#346cb0">Profile</span></a> <!-- child menu -->
                            </li>
                            <!-- /.menu-item -->
-                           <li class="menu-header">Subscription</li>
+                           <!-- <li class="menu-header">Subscription</li> -->
                            <!-- /.menu-header -->
-                           <li class="menu-item ">
+                           <!-- <li class="menu-item ">
                               <a href=" {% url 'bima_policy:subscription' %}" class="menu-link">
                                  {% comment %} <span class="menu-icon icofont-pay"></span> {% endcomment %}
                                  <i class="fas fa-money-bill" id='icon'></i>
-                                 <span class="menu-text" style="color:#346cb0">Billing</span></a>
-                              <!-- child menu -->
-                           </li>
+                                 <span class="menu-text" style="color:#346cb0">Billing</span></a>                             
+                           </li> -->
                         </div>
                      </ul>
                   </nav>

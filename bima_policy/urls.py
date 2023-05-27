@@ -72,5 +72,8 @@ urlpatterns = [
     path('change_password/', change_password, name="change_password"),
     path('profile_photo/', change_password, name="change_password"),
     path('docs/download/<str:id>/', download_pdf, name="download_pdf"),
+    path('deleted_policy/<str:id>/', store_deleted_policy,
+         name="store_deleted_policy"),
+    path('policy/deleted_entry/', policy_deleted_entry, name="policy_deleted_entry"),
 
 ]
