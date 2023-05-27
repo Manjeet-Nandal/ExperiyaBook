@@ -35,7 +35,7 @@
                <div class="card card-fluid">
                   <!-- .card-header -->
                   <div class="card-header">
-                     <form id="frminslist">
+                     <form id="frminslist" autocomplete="off">
                         <div class="row">
                            <div class="col-md-2 col-sm-12">
                               <select class="custom-select" name="period" id="select-period">
@@ -439,7 +439,7 @@
                               </script>
                            </div>
 
-                           <div id="divFilterContentBtns" class="col-md-1 mb-4">                             
+                           <div id="divFilterContentBtns" class="col-md-1 mb-4">
 
                               <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
                               <!-- <button id="btnFilter" type="button" class="btn btn-primary mt-1"
@@ -493,10 +493,11 @@
                               </div>
 
                               <div class="col-md-6">
-                                 <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input value="0"
-                                          type="search" id="myInput" onkeyup="searchName()" class="form-control"
+                                 <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input value=""
+                                          type="search" id="myInput" oninput="searchName()" class="form-control" 
                                           placeholder="" aria-controls="tblInsurance"></label></div>
                               </div>
+                           
                            </div>
                         </div>
                      </div>
@@ -768,8 +769,7 @@
                                                 <i class="fa fa-pencil-alt mt-2"></i>
                                                 <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
                                              </a>
-                                             <a href="/bima_policy/deleted_policy/{{value.policyid}}"
-                                                name="Remove"
+                                             <a href="/bima_policy/deleted_policy/{{value.policyid}}" name="Remove"
                                                 class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                                                 <i class="far fa-trash-alt mt-2"></i>
 
@@ -1570,24 +1570,7 @@
          policyid_list.push(element.replace("'", "").replace("'", "").trim())
       });
 
-
-      return
-
-      payout = "{{payout|safe}}"
-      period = "{{period|safe}}"
-      select_length = "{{select_length|safe}}"
-
-      document.getElementById('payout_switch').checked = payout == 'true' ? true : false;
-
-      document.getElementById('select-period').selectedIndex =
-         period == 'TODAY' ? 0 :
-            period == 'YESTERDAY' ? 1 :
-               period == 'THIS MONTH' ? 2 :
-                  period == 'LAST MONTH' ? 3 :
-                     period == 'CURRENT YEAR' ? 4 :
-                        period == 'CUSTOM' ? 5 : 0
-
-      document.getElementById('select_length').value = select_length
+      // document.getElementById('myInput').innerHTML = ""
    }
 
 </script>
@@ -1942,18 +1925,25 @@
       else {
          document.getElementById('morefilters').hidden = true
       }
-
-
    }
 
 
    function entry_filter() {
+      search_value = document.getElementById('myInput').value.trim()
+      if (search_value != "") {
+         if (search_value.includes("/")) {
+            search_value = search_value.replaceAll("/", "--")
+         }
+         url = window.location.origin + '/bima_policy/policy/search_entry/' + search_value
+
+         window.location.replace(url)
+         return
+      }
 
       val1 = document.getElementById('frmDate').value
       val2 = document.getElementById('toDate').value
 
       if (String(val1) == "") {
-
          val1 = val2
       }
 
@@ -2440,7 +2430,7 @@
 
       // select_all_Items('filter_content')
    }
-   
+
 
    function addVehicleModels() {
 

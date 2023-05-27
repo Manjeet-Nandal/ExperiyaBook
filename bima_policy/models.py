@@ -6,7 +6,6 @@ from djongo import models
 # Create your models here.
 
 
-
 class ProfileModel(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:15].upper(), editable=False, max_length=30)
@@ -86,6 +85,7 @@ class InsuranceCompany(models.Model):
         self.id = uuid.uuid4().hex[:6].upper()
         super(InsuranceCompany, self).save(*args, **kwargs)
 
+
 class Agents(models.Model):
     login_id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:10].upper(), editable=False, max_length=30)
@@ -124,6 +124,7 @@ class Agents(models.Model):
     def save(self, *args, **kwargs):
         self.login_id = 'A' + uuid.uuid4().hex[:10].upper()
         super(Agents, self).save(*args, **kwargs)
+
 
 class ServiceProvider(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
@@ -170,7 +171,7 @@ class Slab(models.Model):
     def __str__(self):
         return self.slab_name
 
- 
+
 class Payout(models.Model):
     profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
     payoutid = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(

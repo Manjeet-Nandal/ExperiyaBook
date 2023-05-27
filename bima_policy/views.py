@@ -2138,6 +2138,49 @@ def policy_entry(request):
         return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
 
+def policy_saerch_entry(request, id):
+    try:
+        print('policy_saerch_entry method')
+        parsed_id = str(id)
+        print('id: ', parsed_id)
+        if parsed_id.__contains__("--"):
+            parsed_id = parsed_id.replace("--", "/")
+
+        agent_list = []
+        datag = Agents.objects.values('full_name')
+        for ag in datag:
+            agent_list.append(ag['full_name'])
+
+        context = read_vehicle_data_file()
+        make = context["make"]
+        model = context["model"]
+
+        datacat_list = []
+        data_cat = VehicleCategory.objects.all().values()
+        for vc in data_cat:
+            datacat_list.append(vc["category"])
+
+        datavm = VehicleModelName.objects.all().values()
+        datavmb = VehicleMakeBy.objects.all().values()
+
+        for vm in datavm:
+            model.append(vm["model"])
+
+        for vmb in datavmb:
+            make.append(vmb["company"])
+
+        data = Policy.objects.filter(policy_no=parsed_id).values()
+
+        policyid_list = []
+        for item in data:
+            policyid_list.append(item['policyid'])
+
+        return render(request, 'policylist/policy_entry_list.html', {"policyid_list": policyid_list, "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+    except Exception as ex:
+        print(ex)
+        return HttpResponse('Error occurred in policy_saerch_entry:')
+
+
 def policy_entry_filter(request,  data):
     print('')
     print('policy_entry_filter method')
@@ -4650,7 +4693,7 @@ def store_deleted_policy(request, id):
         mfg_year = values_list[0]['mfg_year']
         addon = values_list[0]['addon']
         ncb = values_list[0]['ncb']
-        cubic_capacity = values_list[0]['cubic_capacity']       
+        cubic_capacity = values_list[0]['cubic_capacity']
         gvw = values_list[0]['gvw']
         seating_capacity = values_list[0]['seating_capacity']
         coverage_type = values_list[0]['coverage_type']
@@ -4736,12 +4779,11 @@ def policy_deleted_entry(request):
 
         for vmb in datavmb:
             make.append(vmb["company"])
-        
+
         data = DeletedPolicy.objects.order_by('-policyid').values()
 
-        return render(request, 'policylist/policy_entry_list deleted.html', { "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list deleted.html', {"agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
         # return render(request, 'policylist/policy_entry_list.html', { "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as e:
         print("Error occurred in policy_deleted_entry:", str(e))
         return HttpResponse("Error occurred in policy_deleted_entry: " + str(e))
-
