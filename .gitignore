@@ -1,13 +1,12 @@
+__pycache__/
 bima_policy/static/~$vhdata.xlsx
 *.png
 *.pyc
-# *.pdf
+*.pdf
 
 
 **/__pycache__/
-bima_policy/__pycache__/views.cpython-310.pyc
-bima_policy/__pycache__/models.cpython-310.pyc
-Bima/__pycache__/settings.cpython-310.pyc
-Bima/__pycache__/settings.cpython-310.pyc
-bima_policy/__pycache__/urls.cpython-310.pyc
-bima_policy/__pycache__/views.cpython-310.pyc
+bima_policy/__pycache__/
+
+Bima/__pycache__/
+bima_policy/migrations/__pycache__
