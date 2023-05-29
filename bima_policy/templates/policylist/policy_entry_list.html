@@ -2419,7 +2419,7 @@
 
       vmake = document.getElementById('filter_content')
 
-      "{{ vdata.make |safe}}".replace('[', '').replace(']', '').split(',')
+      "{{ test_context.makes |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
             var newoption = document.createElement("option");

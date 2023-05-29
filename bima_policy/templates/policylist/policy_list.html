@@ -1773,7 +1773,7 @@
 
       }
 
-      else if (value == 'PRIVATE CAR') {
+      else if (value == 'PRIVATE CAR' | value == 'TRADE RISK' ) {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = true
@@ -1786,7 +1786,6 @@
          document.getElementById('gsttDiv').hidden = true
          document.getElementById('gstt').required = false
          document.getElementById('gstt').value = 0
-
 
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''

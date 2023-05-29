@@ -1,24 +1,13 @@
 from storages.backends.s3boto3 import S3Boto3Storage
 from django.http import HttpResponse
 import subprocess
-from django.http import FileResponse
-from bima_policy.static.vehicle_data import v_data
 from dateutil.parser import parse
 from itertools import chain
-from bson.objectid import ObjectId
-from django.utils.timezone import now
-from django_mongoengine import QuerySet
 import pymongo
 import boto3
 from django.shortcuts import render
 import json
 import os
-from dateutil import parser
-from django.utils import timezone
-from datetime import datetime, timedelta
-from dataclasses import dataclass
-from datetime import datetime
-import django
 from django.http import HttpResponse, JsonResponse
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
@@ -27,12 +16,11 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.views import View
 
-from Bima.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, MEDIA_ROOT, MEDIA_URL, STATIC_ROOT, STATIC_URL, STATICFILES_DIRS
+from Bima.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, MEDIA_ROOT
 from .models import *
 from .forms import *
 from django.db.models import Q
-from django.core.paginator import Paginator
-
+from bima_policy.static import vehicles
 
 def get_id_from_session(request):
     id = request.session['id']
@@ -1202,7 +1190,7 @@ class create_policy(View):
                 except Exception as ex:
                     print(ex)
 
-            elif vehicle_catagory == 'PRIVATE CAR':
+            elif vehicle_catagory == 'PRIVATE CAR'  or vehicle_catagory == 'TRADE RISK':
                 try:
                     reg = registration_no[0:4]
 
@@ -1668,7 +1656,7 @@ def apply_policy(request, id):
             except Exception as ex:
                 print(ex)
 
-        elif data.vehicle_catagory == 'PRIVATE CAR':
+        elif data.vehicle_catagory == 'PRIVATE CAR'  or data.vehicle_catagory == 'TRADE RISK':
             try:
                 reg = data.registration_no[0:4]
                 data1 = Payout.objects.filter(Q(insurance_company__icontains=data.insurance_company) &
@@ -2095,13 +2083,18 @@ def policy_entry(request):
     print('policy_entry method')
     print(get_id_from_session(request))
 
+    makes = vehicles.makes
+
+    test_context = {
+        "makes": makes
+    }
+
     agent_list = []
     datag = Agents.objects.values('full_name')
     for ag in datag:
         agent_list.append(ag['full_name'])
 
-    context = read_vehicle_data_file()
-    make = context["make"]
+    context = read_vehicle_data_file()   
     model = context["model"]
 
     datacat_list = []
@@ -2116,7 +2109,7 @@ def policy_entry(request):
         model.append(vm["model"])
 
     for vmb in datavmb:
-        make.append(vmb["company"])
+        makes.append(vmb["company"])
 
     try:
         if is_user(request):
@@ -2131,7 +2124,7 @@ def policy_entry(request):
             # print('item is: ',  item['policyid'])
             policyid_list.append(item['policyid'])
 
-        return render(request, 'policylist/policy_entry_list.html', {"policyid_list": policyid_list, "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return render(request, 'policylist/policy_entry_list.html', {'test_context':test_context, "policyid_list": policyid_list, "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
     except Exception as ex:
         # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
