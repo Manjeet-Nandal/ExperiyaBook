@@ -69,9 +69,9 @@
                                  class="custom-select select2 select2-hidden-accessible" id="agents"
                                  data-parsley-required="true" tabindex="-1" aria-hidden="true">
                                  <option value=""> All Agents</option>
-                                 {%for value in datag%}
+                                 <!-- {%for value in datag%}
                                  <option value={{value.full_name}}>{{value.full_name}}</option>
-                                 {%endfor%}
+                                 {%endfor%} -->
                               </select>
                            </div>
 
@@ -283,8 +283,8 @@
                                     filter_type_value = document.getElementById('filter_type').value
                                     filter_content = document.getElementById('filter_content')
 
-                                    comp_col = ['HDFC ERGO', 'TATA AIG', 'ICICI LOMBARD', 'IFFCO TOKIO', 'UNITED INDIA INSURANCE', 'NEW INDIA ASSURANCE', 'BAJAJ ALLIANZ GIC', 'SBI GENERAL INSURANCE', 'GO DIGIT GIC', 'RELIANCE GIC', 'FUTURE GENERALI', 'KOTAK MAHINDRA', 'LIBERTY GIC', 'ROYAL SUNDRAM', 'SHRIRAM GIC', 'MAGMA HDI', 'UNIVERSAL SOMPO']
-                                    vcat_col = ['TWO WHEELER', 'TWO WHEELER SCOOTER', 'TWO WHEELER COMMERCIAL', 'PRIVATE CAR', 'GCV-PUBLIC CARRIER OTHER THAN 3 W', '3 WHEELER PCV', '3 WHEELER GCV-PUBLIC CARRIER', 'TAXI 4 WHEELER', 'BUS AND OTHERS', 'MISC-D SPECIAL VEHICLE', 'SCHOOL BUS-SCHOOL NAME', 'SCHOOL BUS-INDIVIDUAL NAME']
+                                    // comp_col = ['HDFC ERGO', 'TATA AIG', 'ICICI LOMBARD', 'IFFCO TOKIO', 'UNITED INDIA INSURANCE', 'NEW INDIA ASSURANCE', 'BAJAJ ALLIANZ GIC', 'SBI GENERAL INSURANCE', 'GO DIGIT GIC', 'RELIANCE GIC', 'FUTURE GENERALI', 'KOTAK MAHINDRA', 'LIBERTY GIC', 'ROYAL SUNDRAM', 'SHRIRAM GIC', 'MAGMA HDI', 'UNIVERSAL SOMPO']
+                                    // vcat_col = ['TWO WHEELER', 'TWO WHEELER SCOOTER', 'TWO WHEELER COMMERCIAL', 'PRIVATE CAR', 'GCV-PUBLIC CARRIER OTHER THAN 3 W', '3 WHEELER PCV', '3 WHEELER GCV-PUBLIC CARRIER', 'TAXI 4 WHEELER', 'BUS AND OTHERS', 'MISC-D SPECIAL VEHICLE', 'SCHOOL BUS-SCHOOL NAME', 'SCHOOL BUS-INDIVIDUAL NAME']
                                     fuel_col = ['PETROL', 'DIESEL', 'CNG', 'ELECTRIC']
                                     cc_col = ['75CC-150CC', '150CC-350CC', 'ABOVE 350CC', 'BELOW 1000CC', '1000CC-1500CC', 'ABOVE 1500CC']
                                     ct_col = ['1 YEAR PACKAGE', '1+2 YEAR PACKAGE', '1+4 YEAR PACKAGE', '3 YEAR TP', '5 YEAR TP', 'TP ONLY', 'OD ONLY']
@@ -296,10 +296,10 @@
                                     cpa_col = ['YES', 'NO']
 
                                     if (filter_type_value == 'agent') {
-                                       addAgents();
+                                       addAgentNames();
                                     }
                                     else if (filter_type_value == 'insurer') {
-                                       add_items(comp_col, filter_content)
+                                       addInsurerNames();
                                     }
                                     else if (filter_type_value == 'vehicle_catagory') {
                                        // add_items(vcat_col, filter_content)                                     
@@ -495,10 +495,10 @@
 
                               <div class="col-md-6">
                                  <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input value=""
-                                          type="search" id="myInput" oninput="searchName()" class="form-control" 
+                                          type="search" id="myInput" oninput="searchName()" class="form-control"
                                           placeholder="" aria-controls="tblInsurance"></label></div>
                               </div>
-                           
+
                            </div>
                         </div>
                      </div>
@@ -2374,41 +2374,65 @@
    }
 
 
-   function addAgents() {
+   function addAgentNames() {
 
       document.getElementById('filter_content').innerHTML = ''
       add_select_all_option()
 
-      vmake = document.getElementById('filter_content')
+      element = document.getElementById('filter_content')
 
-      "{{ agent_list |safe}}".replace('[', '').replace(']', '').split(',')
+      "{{ agents |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
+
+            value = item.replaceAll("'", "")          
             var newoption = document.createElement("option");
-            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "").trim()
-            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "").trim()
-            vmake.options.add(newoption);
+            newoption.value = value
+            newoption.innerHTML = value
+            element.options.add(newoption);
+
          })
 
       // select_all_Items('filter_content')
    }
+
+
+   function addInsurerNames() {
+
+      document.getElementById('filter_content').innerHTML = ''
+      add_select_all_option()
+
+      element = document.getElementById('filter_content')
+
+      "{{ insurers |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            value = item.replaceAll("'", "")          
+            var newoption = document.createElement("option");
+            newoption.value = value
+            newoption.innerHTML = value
+            element.options.add(newoption);
+
+         })
+
+      // select_all_Items('filter_content')
+   }
+
 
    function addVehicleCat() {
 
       document.getElementById('filter_content').innerHTML = ''
       add_select_all_option()
 
-      vmake = document.getElementById('filter_content')
-
-      console.log();
-      console.log("{{ vehicle_categories |safe}}".replaceAll("'category': ", ""));
+      element = document.getElementById('filter_content')
 
       "{{ vehicle_categories |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
+            value = item.replaceAll("'", "")          
             var newoption = document.createElement("option");
-            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "").trim()
-            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "").trim()
-            vmake.options.add(newoption);
+            newoption.value = value
+            newoption.innerHTML = value
+            element.options.add(newoption);
 
          })
 
@@ -2421,17 +2445,18 @@
       document.getElementById('filter_content').innerHTML = ''
       add_select_all_option()
 
-      vmake = document.getElementById('filter_content')
+      element = document.getElementById('filter_content')
 
-      "{{ test_context.makes |safe}}".replace('[', '').replace(']', '').split(',')
+      "{{ makes |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
+            value = item.replaceAll("'", "")          
             var newoption = document.createElement("option");
-            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "").trim()
-            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "").trim()
-            vmake.options.add(newoption);
-         })
+            newoption.value = value
+            newoption.innerHTML = value
+            element.options.add(newoption);
 
+         })
       // select_all_Items('filter_content')
    }
 
@@ -2442,15 +2467,16 @@
 
       add_select_all_option()
 
-      vmodel = document.getElementById('filter_content')
+      element = document.getElementById('filter_content')
 
-      "{{ vdata.model |safe}}".replace('[', '').replace(']', '').split(',')
+      "{{ models |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
+            value = item.replaceAll("'", "")          
             var newoption = document.createElement("option");
-            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "").trim()
-            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "").trim()
-            vmodel.options.add(newoption);
+            newoption.value = value
+            newoption.innerHTML = value
+            element.options.add(newoption);
 
          })
 

@@ -483,9 +483,9 @@ def read_vehicle_data_file():
     model_list = []
     cat_list = []
     # Open the text file and read the record
-    with open('bima_policy//static//vehicle_data//vmake.txt', "r") as file:
-        for line in file:
-            make_list.append(line.strip())
+    # with open('bima_policy//static//vehicle_data//vmake.txt', "r") as file:
+    #     for line in file:
+    #         make_list.append(line.strip())
 
     print('done')
 
@@ -2083,33 +2083,32 @@ def apply_policy(request, id):
 def policy_entry(request):
     try:
         print('policy_entry method')
-        print(get_id_from_session(request))
+
+        # getting agents full name and sorts them.
+        agents = []
+        for ag in Agents.objects.values('full_name'):
+            agents.append(ag['full_name'])
+        agents.sort()
+
+        # getting insurers name and sorts them.
+        insurers = []
+        for ins in InsuranceCompany.objects.values('comp_name'):
+            insurers.append(ins['comp_name'])
+        insurers.sort()
+
+        # getting vehicle categories name and sort them.
+        vehicle_categories = []
+        for category in VehicleCategory.objects.values("category"):
+            vehicle_categories.append(category['category'])
+        vehicle_categories.sort()
 
         makes = vehicles.makes
-
-        agent_list = []
-        datag = Agents.objects.values('full_name')
-        for ag in datag:
-            agent_list.append(ag['full_name'])
-
-        context = read_vehicle_data_file()
-        model = context["model"]   
-        
-        # vehicle_categories = VehicleCategory.objects.all().values("category")
-        vehicle_categories = list(VehicleCategory.objects.all().values("category"))
-        print(vehicle_categories)
-        
-        for cat in vehicle_categories:
-            print(cat["category"])
-
-        datavm = VehicleModelName.objects.all().values()
-        datavmb = VehicleMakeBy.objects.all().values()
-
-        for vm in datavm:
-            model.append(vm["model"])
-
-        for vmb in datavmb:
+        for vmb in VehicleMakeBy.objects.values("company"):
             makes.append(vmb["company"])
+
+        models = read_vehicle_data_file()["model"]
+        for vm in VehicleModelName.objects.all().values('model'):
+            models.append(vm["model"])
 
         if is_user(request):
             data = Policy.objects.order_by('-policyid').values()[:25]
@@ -2120,15 +2119,15 @@ def policy_entry(request):
 
         policyid_list = []
         for item in data:
-            # print('item is: ',  item['policyid'])
             policyid_list.append(item['policyid'])
 
         context = {
-            "agent_list": agent_list,        
+            "agents": agents,
+            "insurers": insurers,
             "vehicle_categories": vehicle_categories,
             "makes": makes,
+            "models": models,
             "data": data,
-            "datag": datag,
             "policyid_list": policyid_list,
             "is_user": is_user(request)
         }
@@ -2136,9 +2135,8 @@ def policy_entry(request):
         return render(request, 'policylist/policy_entry_list.html', context)
 
     except Exception as ex:
-        # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
-        return render(request, 'policylist/policy_entry_list.html', {'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        return HttpResponse('Error in policy_entry ' + str(ex))
 
 
 def policy_saerch_entry(request, id):
@@ -2185,36 +2183,35 @@ def policy_saerch_entry(request, id):
 
 
 def policy_entry_filter(request,  data):
-    print('')
-    print('policy_entry_filter method')
+    try:  
+        print('policy_entry_filter method')  
 
-    # mk_data = v_data.make_data
-    # mdl_data = v_data.model_data
+        # getting agents full name and sorts them.
+        agents = []
+        for ag in Agents.objects.values('full_name'):
+            agents.append(ag['full_name'])
+        agents.sort()
 
-    agent_list = []
-    datag = Agents.objects.values('full_name')
-    for ag in datag:
-        agent_list.append(ag['full_name'])
+        # getting insurers name and sorts them.
+        insurers = []
+        for ins in InsuranceCompany.objects.values('comp_name'):
+            insurers.append(ins['comp_name'])
+        insurers.sort()
 
-    datacat_list = []
-    data_cat = VehicleCategory.objects.all().values()
-    for vc in data_cat:
-        datacat_list.append(vc["category"])
+        # getting vehicle categories name and sort them.
+        vehicle_categories = []
+        for category in VehicleCategory.objects.values("category"):
+            vehicle_categories.append(category['category'])
+        vehicle_categories.sort()
 
-    context = read_vehicle_data_file()
-    make = context["make"]
-    model = context["model"]
+        makes = vehicles.makes
+        for vmb in VehicleMakeBy.objects.values("company"):
+            makes.append(vmb["company"])
 
-    datavm = VehicleModelName.objects.all().values()
-    datavmb = VehicleMakeBy.objects.all().values()
-
-    for vm in datavm:
-        model.append(vm["model"])
-
-    for vmb in datavmb:
-        make.append(vmb["company"])
-
-    try:
+        models = read_vehicle_data_file()["model"]
+        for vm in VehicleModelName.objects.all().values('model'):
+            models.append(vm["model"])
+  
         tmp_data = json.loads(data)
 
         print('request data: ', tmp_data)
@@ -2255,7 +2252,7 @@ def policy_entry_filter(request,  data):
                     # print('item is: ',  item['policyid'])
                     policyid_list.append(item['policyid'])
 
-                return render(request, 'policylist/policy_entry_list.html', {"agent_list": agent_list,  "policyid_list": policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+                # return render(request, 'policylist/policy_entry_list.html', {"agent_list": agent_list,  "policyid_list": policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
 
             if len(tmp_data) == 2:
                 print('into 2nd lane')
@@ -2307,7 +2304,7 @@ def policy_entry_filter(request,  data):
                 else:
                     data = None
 
-                return render(request, 'policylist/policy_entry_list.html', {"policyid_list": policyid_list, "agent_list": agent_list, "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data,  'is_user': is_user(request)})
+                # return render(request, 'policylist/policy_entry_list.html', {"policyid_list": policyid_list, "agent_list": agent_list, "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data,  'is_user': is_user(request)})
 
             if len(tmp_data) == 3:
                 print('into 3rd lane')
@@ -2369,8 +2366,7 @@ def policy_entry_filter(request,  data):
                 else:
                     data = None
 
-                return render(request, 'policylist/policy_entry_list.html', {"agent_list": agent_list, "policyid_list": policyid_list,  "data_cat": datacat_list, "vdata": context, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
-
+            
         else:
             print('tmp_data is', tmp_data)
 
@@ -2438,11 +2434,21 @@ def policy_entry_filter(request,  data):
 
             data = list(chain(*updated_policy_list))
 
-            # data = Policy.objects.order_by('-policyid').filter().values()[:10]
-            return render(request, 'policylist/policy_entry_list.html', {"agent_list": agent_list, "vdata": context,  "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        context = {
+                "agents": agents,
+                "insurers": insurers,
+                "vehicle_categories": vehicle_categories,
+                "makes": makes,
+                "models": models,
+                "data": data,
+                "policyid_list": policyid_list,
+                "is_user": is_user(request)
+            }
 
+        return render(request, 'policylist/policy_entry_list.html', context)
+            
     except Exception as ex:
-        return HttpResponse('Error occurred in policy_entry_filter: ' + ex)
+        return HttpResponse('Error occurred in policy_entry_filter: ' + str(ex))
 
 
 def policy_entry_date_filter(request, data, filter_payout='n'):
