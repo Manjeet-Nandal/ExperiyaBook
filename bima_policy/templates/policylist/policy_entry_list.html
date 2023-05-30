@@ -302,7 +302,8 @@
                                        add_items(comp_col, filter_content)
                                     }
                                     else if (filter_type_value == 'vehicle_catagory') {
-                                       // add_items(vcat_col, filter_content)
+                                       // add_items(vcat_col, filter_content)                                     
+
                                        addVehicleCat()
                                     }
                                     else if (filter_type_value == 'vehicle_makeby') {
@@ -2398,7 +2399,10 @@
 
       vmake = document.getElementById('filter_content')
 
-      "{{ data_cat |safe}}".replace('[', '').replace(']', '').split(',')
+      console.log();
+      console.log("{{ vehicle_categories |safe}}".replaceAll("'category': ", ""));
+
+      "{{ vehicle_categories |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
             var newoption = document.createElement("option");

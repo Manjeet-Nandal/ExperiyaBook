@@ -22,6 +22,7 @@ from .forms import *
 from django.db.models import Q
 from bima_policy.static import vehicles
 
+
 def get_id_from_session(request):
     id = request.session['id']
     return id
@@ -1190,7 +1191,7 @@ class create_policy(View):
                 except Exception as ex:
                     print(ex)
 
-            elif vehicle_catagory == 'PRIVATE CAR'  or vehicle_catagory == 'TRADE RISK':
+            elif vehicle_catagory == 'PRIVATE CAR' or vehicle_catagory == 'TRADE RISK':
                 try:
                     reg = registration_no[0:4]
 
@@ -1656,7 +1657,7 @@ def apply_policy(request, id):
             except Exception as ex:
                 print(ex)
 
-        elif data.vehicle_catagory == 'PRIVATE CAR'  or data.vehicle_catagory == 'TRADE RISK':
+        elif data.vehicle_catagory == 'PRIVATE CAR' or data.vehicle_catagory == 'TRADE RISK':
             try:
                 reg = data.registration_no[0:4]
                 data1 = Payout.objects.filter(Q(insurance_company__icontains=data.insurance_company) &
@@ -2080,38 +2081,36 @@ def apply_policy(request, id):
 
 
 def policy_entry(request):
-    print('policy_entry method')
-    print(get_id_from_session(request))
-
-    makes = vehicles.makes
-
-    test_context = {
-        "makes": makes
-    }
-
-    agent_list = []
-    datag = Agents.objects.values('full_name')
-    for ag in datag:
-        agent_list.append(ag['full_name'])
-
-    context = read_vehicle_data_file()   
-    model = context["model"]
-
-    datacat_list = []
-    data_cat = VehicleCategory.objects.all().values()
-    for vc in data_cat:
-        datacat_list.append(vc["category"])
-
-    datavm = VehicleModelName.objects.all().values()
-    datavmb = VehicleMakeBy.objects.all().values()
-
-    for vm in datavm:
-        model.append(vm["model"])
-
-    for vmb in datavmb:
-        makes.append(vmb["company"])
-
     try:
+        print('policy_entry method')
+        print(get_id_from_session(request))
+
+        makes = vehicles.makes
+
+        agent_list = []
+        datag = Agents.objects.values('full_name')
+        for ag in datag:
+            agent_list.append(ag['full_name'])
+
+        context = read_vehicle_data_file()
+        model = context["model"]   
+        
+        # vehicle_categories = VehicleCategory.objects.all().values("category")
+        vehicle_categories = list(VehicleCategory.objects.all().values("category"))
+        print(vehicle_categories)
+        
+        for cat in vehicle_categories:
+            print(cat["category"])
+
+        datavm = VehicleModelName.objects.all().values()
+        datavmb = VehicleMakeBy.objects.all().values()
+
+        for vm in datavm:
+            model.append(vm["model"])
+
+        for vmb in datavmb:
+            makes.append(vmb["company"])
+
         if is_user(request):
             data = Policy.objects.order_by('-policyid').values()[:25]
 
@@ -2124,7 +2123,18 @@ def policy_entry(request):
             # print('item is: ',  item['policyid'])
             policyid_list.append(item['policyid'])
 
-        return render(request, 'policylist/policy_entry_list.html', {'test_context':test_context, "policyid_list": policyid_list, "agent_list": agent_list, "vdata": context, "data_cat": datacat_list, 'select_length': '25', 'period': 'TODAY', 'data': data, 'datag': datag, 'is_user': is_user(request)})
+        context = {
+            "agent_list": agent_list,        
+            "vehicle_categories": vehicle_categories,
+            "makes": makes,
+            "data": data,
+            "datag": datag,
+            "policyid_list": policyid_list,
+            "is_user": is_user(request)
+        }
+
+        return render(request, 'policylist/policy_entry_list.html', context)
+
     except Exception as ex:
         # page_obj = paginator.get_page(request.GET.get(paginator.num_pages))
         print(ex)
