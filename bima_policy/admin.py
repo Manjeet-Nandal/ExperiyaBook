@@ -25,6 +25,7 @@ admin.site.register(rtotables)
 admin.site.register(BQP) 
 admin.site.register(CoverageType) 
 admin.site.register(DeletedPolicy) 
+admin.site.register(Product) 
 
 
 
