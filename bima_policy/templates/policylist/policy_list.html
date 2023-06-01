@@ -52,7 +52,7 @@
                                           <select name="vehicle_catagory" id="vehicle_catagory" class="custom-select "
                                              required onclick="setCategoryOnChange()">
                                              <option value="" hidden> -- Select Catagory -- </option>
-                                             {% for value in data_vc %}
+                                             {% for value in vehicle_categories %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
 
@@ -81,19 +81,18 @@
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="insurance_company" class="custom-select" id="insurance_company"
-                                             required onclick="sortItems(this.id)">
+                                             required>
                                              <option value="" hidden> -- Select Insurer -- </option>
-                                             {%for value in data_ins%}
+                                             {%for value in insurers %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="sp_name" class="custom-select" id="sp_name" required
-                                             onclick="sortItems(this.id)">
+                                          <select name="sp_name" class="custom-select" id="sp_name" required>
                                              <option value="" hidden> -- Select Provider -- </option>
-                                             {%for value in data_sp%}
+                                             {%for value in service_providers%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -103,7 +102,7 @@
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
                                              <option value="" hidden> -- Select Office Code -- </option>
-                                             {%for value in data_bc%}
+                                             {%for value in broker_codes%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -181,6 +180,9 @@
                                              class="custom-select select2 select2-hidden-accessible" id="vehicle_makeby"
                                              aria-hidden="true" required>
                                              <option value="" hidden>-- Select Make By --</option>
+                                             {% for value in makes %}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
 
                                        </div>
@@ -191,13 +193,15 @@
                                              class="custom-select select2 select2-hidden-accessible" id="vehicle_model"
                                              aria-hidden="true" required>
                                              <option value="" hidden>-- Select Model --</option>
+                                             {% for value in models %}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Fuel Type <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="vehicle_fuel_type" class="custom-select" required
-                                             onclick="sortItems(this.id)">
+                                          <select name="vehicle_fuel_type" class="custom-select" required>
                                              <option value="" hidden>-- Select Fuel Type --</option>
                                              <option value="PETROL">PETROL</option>
                                              <option value="DIESEL">DIESEL</option>
@@ -325,8 +329,6 @@
                                           </select>
                                        </div>
 
-
-
                                        <div class="col-md-3 mb-4">
                                           <label for="flatpickr-wrap">Risk Start Date <abbr title=""
                                                 class="text-danger">*</abbr></label>
@@ -385,98 +387,24 @@
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
                                              <option value="">-- Select BQP --</option>
-                                             {%for value in data_bqp%}
+                                             {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos" type="text" value="" data-toggle="modal"
-                                             data-target="#mdlcolsetting" class="form-control" name="pos"
-                                             style="text-transform: uppercase;" required readonly>
-
-
-                                          <div class="modal fade" id="mdlcolsetting"
-                                             onmouseenter="document.getElementById('inp_search').focus()"
-                                             style="height: 400px">
-
-                                             <div class="modal-dialog" role="document">
-
-                                                <div class="modal-content">
-                                                   <div class="modal-header">
-                                                      <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
-                                                   </div>
-                                                   <div class="modal-body ">
-                                                      <div class="form-row">
-                                                         <div class="col-md-6 mb-4">
-                                                            <div class=""><label>Search:<input id="inp_search"
-                                                                     type="text" value="" class="form-control"
-                                                                     name="agent" style="text-transform: uppercase;"
-                                                                     title="Search POS using Name, mobile no, email, pan/aadhar number"
-                                                                     oninput="searchPOS()" onkeypress="handle(event)">
-
-                                                                  <script>
-                                                                     function handle(e) {
-                                                                        if (e.keyCode === 13) {
-                                                                           e.preventDefault(); // Ensure it is only this code that runs
-
-                                                                           $("#btnExit").click();
-                                                                        }
-                                                                     }
-                                                                  </script>
-                                                               </label></div>
-                                                         </div>
-                                                         <div class="col-md-6 mb-4">
-                                                            <div class=""><label>POS:<input id="inp_pos" type="text"
-                                                                     value="" class="form-control" name="agent"
-                                                                     style="text-transform: uppercase;"
-                                                                     title="POS should be automatically fetched">
-                                                               </label>
-                                                            </div>
-                                                         </div>
-                                                      </div>
-
-                                                      <button  class="btn btn-primary" style="margin-bottom: -60px;"
-                                                      onclick="add_agent()" >Add New POS</button>
-
-                                                      <script>
-                                                         function add_agent() {
-
-                                                            hostname = window.location.hostname
-                                                            port = window.location.port
-                                                            pathname = '/bima_policy/agent/add_agent/'
-
-                                                            href = window.location.origin + pathname 
-
-                                                            window.location.replace(href)
-                                                         }
-                                                      </script>
-
-
-                                                      <div class="modal-footer">
-                                                         <button id="btnExit" type="button"
-                                                            class="btn btn-secondary w-100p"
-                                                            data-dismiss="modal">Close</button>
-                                                         <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
-                                                            class="btn btn-primary w-100p">Save</button> -->
-                                                      </div>
-                                                   </div>
-
-                                                </div>
-
-                                             </div>                                           
-
-                                          </div>
+                                             id="pos" type="text" value="" data-toggle="modal" data-target="#mdlPOS"
+                                             class="form-control" name="pos" style="text-transform: uppercase;" required
+                                             readonly>
                                        </div>
-
-
+                                       
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{user_info.user_id}}" class="form-control" name="employee"
+                                                class="text-danger">*</abbr></label><input type="text" 
+                                             value="{{user_name}}"  class="form-control" name="employee"
                                              style="text-transform: uppercase;  background-color: lightgray;" readonly
-                                             required>
+                                             required>                                         
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -557,11 +485,11 @@
 
                                        <div class="col-md-4 mb-4">
                                           <label for="remark">Remarks <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value="" maxlength="255"
-                                             class="form-control" name="remark" 
-                                             style="text-transform: uppercase;" >
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             maxlength="255" class="form-control" name="remark"
+                                             style="text-transform: uppercase;">
                                        </div>
-                                    
+
                                     </div>
 
                                  </fieldset>
@@ -692,7 +620,7 @@
                                              <option value="" hidden> -- Select Product -- </option>
                                              <option value="FIRE">FIRE</option>
                                              <option value="HEALTH">HEALTH</option>
-                                             <option value="LIABILITY">LIABILITY</option>                                              
+                                             <option value="LIABILITY">LIABILITY</option>
                                              <option value="MARINE CARGO">MARINE CARGO</option>
                                              <option value="MARINE HULL">MARINE HULL</option>
                                              <option value="ENGINEERING">ENGINEERING</option>
@@ -734,21 +662,23 @@
                                              class="form-control" name="customer_name"
                                              style="text-transform: uppercase;" required>
                                        </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
                                           <select name="insurance_company" class="custom-select" id="insurance_company"
                                              required>
                                              <option value="" hidden> -- Select Insurer -- </option>
-                                             {%for value in data_ins%}
+                                             {%for value in insurers %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_name" class="custom-select" id="sp_name" required>
                                              <option value="" hidden> -- Select Provider -- </option>
-                                             {%for value in data_sp%}
+                                             {%for value in service_providers%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -758,7 +688,7 @@
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
                                              <option value="" hidden> -- Select Office Code -- </option>
-                                             {%for value in data_bc%}
+                                             {%for value in broker_codes%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -816,83 +746,25 @@
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
                                              <option value="" hidden>-- Select BQP --</option>
-                                             {%for value in data_bqp%}
+                                             {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos" type="text" value="" data-toggle="modal"
-                                             data-target="#mdlcolsetting" class="form-control" name="pos"
-                                             style="text-transform: uppercase;" required readonly>
-                                       </div>
-
-
-                                       <div class="modal fade" id="mdlcolsetting" data-backdrop="static"
-                                          data-keyboard="false" style="height: 400px" tabindex="-1" role="dialog"
-                                          aria-labelledby="rtoModalLabel" aria-hidden="true">
-                                          <div class="modal-dialog" role="document">
-                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                   <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
-                                                </div>
-                                                <div class="modal-body ">
-                                                   <div class="form-row">
-                                                      <div class="col-md-6 mb-4">
-                                                         <div class=""><label>Search:<input id="inp_search" type="text"
-                                                                  value="" class="form-control" name="agent"
-                                                                  style="text-transform: uppercase;"
-                                                                  title="Search POS using Name, mobile no, email, pan/aadhar number"
-                                                                  oninput="searchPOS()">
-                                                            </label></div>
-                                                      </div>
-                                                      <div class="col-md-6 mb-4">
-                                                         <div class=""><label>POS:<input id="inp_pos" type="text"
-                                                                  value="" class="form-control" name="agent"
-                                                                  style="text-transform: uppercase;"
-                                                                  title="POS should be automatically fetched">
-                                                            </label>
-                                                         </div>
-                                                      </div>
-                                                   </div>                                                
-                                                   <button  class="btn btn-primary" style="margin-bottom: -60px;"
-                                                            onclick="add_agent()" >Add New POS</button>
-
-                                                   <script>
-                                                      function add_agent() {
-
-                                                         hostname = window.location.hostname
-                                                         port = window.location.port
-                                                         pathname = '/bima_policy/agent/add_agent/'
-
-                                                         href = window.location.origin + pathname 
-
-                                                         window.location.replace(href)
-                                                      }
-                                                   </script>
-
-                                                   <div class="modal-footer">                                                    
-                                                      <button type="button" class="btn btn-secondary w-100p"
-                                                         data-dismiss="modal">Close</button>
-                                                      <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
-                                                            class="btn btn-primary w-100p">Save</button> -->
-                                                   </div>
-                                                </div>
-
-                                             </div>
-
-
-                                          </div>
-
+                                             id="pos" type="text" value="" data-toggle="modal" data-target="#mdlPOS"
+                                             class="form-control" name="pos" style="text-transform: uppercase;" required
+                                             readonly>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{user_id}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase; background-color: lightgray;" required
-                                             readonly>
+                                                class="text-danger">*</abbr></label><input type="text" 
+                                             value="{{user_name}}"  class="form-control" name="employee"
+                                             style="text-transform: uppercase;  background-color: lightgray;" readonly
+                                             required>                                         
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -965,10 +837,11 @@
 
                                        <div class="col-md-4 mb-4">
                                           <label for="remark">Remarks <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value="" maxlength="255"
-                                             class="form-control" name="remark" 
-                                             style="text-transform: uppercase;" >
+                                                class="text-danger">*</abbr></label><input type="text" value=""
+                                             maxlength="255" class="form-control" name="remark"
+                                             style="text-transform: uppercase;">
                                        </div>
+
 
                                     </div>
 
@@ -1013,7 +886,7 @@
                                        class="form-control col-lg-6 bg-light" name="gst" id="gst" maxlength="10"
                                        required readonly tabindex="-1">
                                  </div>
-                                 
+
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
                                        value="" class="form-control  col-lg-6 bg-light" id="totalnet" readonly=""
@@ -1078,6 +951,7 @@
 
 
                      {% endif %}
+
                </div>
                <hr>
 
@@ -1106,6 +980,44 @@
          </div>
       </div>
    </div>
+   </div>
+
+   <div class="modal fade" id="mdlPOS">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title"> POS </h5>
+            </div>
+            <div class="modal-body ">
+               <div class="form-row">
+                  <div class="col-md-6 col-sm-12">
+                     <select id="agents" class="custom-select select2 select2-hidden-accessible"
+                        data-parsley-required="true" tabindex="-1" aria-hidden="true" on onchange="setPOS()">
+                        <option value=""> All POS</option>
+                        {%for value in agents %}
+                        <option value={{value}}>{{value}}</option>
+                        {%endfor%}
+                     </select>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                     <input id="inp_agent" type="text" value="" class="form-control" name="inp_agent" disabled
+                        style="text-transform: uppercase;" title="POS should be automatically fetched">
+                  </div>
+               </div>
+
+               <button class="mt-4 btn btn-primary" style="margin-bottom: -60px;" onclick="add_new_agent()">Add New
+                  POS</button>
+
+               <div class="modal-footer">
+                  <button id="btnExit" type="button" class="btn btn-secondary w-100p"
+                     data-dismiss="modal">Close</button>
+               </div>
+            </div>
+
+         </div>
+
+      </div>
+
    </div>
 
 </main>
@@ -1474,11 +1386,11 @@
 
    function calculateValue() {
 
-      try {        
+      try {
          calc()
          addGST()
          addSubTotal()
-         
+
 
       } catch (error) { }
 
@@ -1486,31 +1398,30 @@
 
    function calc() {
       // Removes space      
-      
-      document.getElementById("od").value= document.getElementById("od").value.toString().trim()
-      document.getElementById("tpt").value= document.getElementById("tpt").value.toString().trim()      
-     
+
+      document.getElementById("od").value = document.getElementById("od").value.toString().trim()
+      document.getElementById("tpt").value = document.getElementById("tpt").value.toString().trim()
+
       od = parseFloat(document.getElementById("od").value);
       tpt = parseFloat(document.getElementById("tpt").value);
 
-      document.getElementById("net") .value = Number(od + tpt).toFixed((2))     
-      
+      document.getElementById("net").value = Number(od + tpt).toFixed((2))
+
    }
 
-   function addGST() {  
+   function addGST() {
       net = parseFloat(document.getElementById("net").value);
       gst = parseFloat(document.getElementById("gst").value);
       gstt = parseFloat(document.getElementById("gstt").value);
-      
+
       try {
          vc = document.getElementById('vehicle_catagory').value
          if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
-               document.getElementById("gst") .value = Number(od * 18 / 100) .toFixed((2))
-               document.getElementById("gstt") .value = Number(tpt * 12 / 100) .toFixed((2))
+            document.getElementById("gst").value = Number(od * 18 / 100).toFixed((2))
+            document.getElementById("gstt").value = Number(tpt * 12 / 100).toFixed((2))
          }
-         else
-         {            
-            document.getElementById("gst") .value = Number(net * 18 / 100) .toFixed((2))            
+         else {
+            document.getElementById("gst").value = Number(net * 18 / 100).toFixed((2))
          };
       }
       catch { }
@@ -1520,59 +1431,59 @@
       net = parseFloat(document.getElementById("net").value);
       gst = parseFloat(document.getElementById("gst").value);
       gstt = parseFloat(document.getElementById("gstt").value);
-      
-      document.getElementById("totalnet") .value = Number(net + gst + gstt).toFixed((2))
+
+      document.getElementById("totalnet").value = Number(net + gst + gstt).toFixed((2))
    }
 
-   
+
    function calculateValue2() {
 
-      try {        
+      try {
          calc2()
          addGST2()
-         addSubTotal2()        
+         addSubTotal2()
 
       } catch (error) { }
 
-      }
+   }
 
-   
+
    function calc2() {
       // Removes space      
-      
-      document.getElementById("od").value= document.getElementById("od").value.toString().trim()
-      document.getElementById("tpt").value= document.getElementById("tpt").value.toString().trim()      
-     
+
+      document.getElementById("od").value = document.getElementById("od").value.toString().trim()
+      document.getElementById("tpt").value = document.getElementById("tpt").value.toString().trim()
+
       od = parseFloat(document.getElementById("od").value);
       tpt = parseFloat(document.getElementById("tpt").value);
 
-      document.getElementById("net") .value = Number(od + tpt).toFixed((2)) 
-           
+      document.getElementById("net").value = Number(od + tpt).toFixed((2))
+
    }
 
-   function addGST2() {  
+   function addGST2() {
       try {
          od = parseFloat(document.getElementById("od").value);
-         net = parseFloat(document.getElementById("net").value);    
-         document.getElementById("gst") .value = Number(od * 18 / 100) .toFixed((2))
+         net = parseFloat(document.getElementById("net").value);
+         document.getElementById("gst").value = Number(od * 18 / 100).toFixed((2))
       }
       catch { }
    }
 
    function addSubTotal2() {
       net = parseFloat(document.getElementById("net").value);
-      gst = parseFloat(document.getElementById("gst").value);      
-      
-      document.getElementById("totalnet") .value = Number(net + gst ).toFixed((2))
+      gst = parseFloat(document.getElementById("gst").value);
+
+      document.getElementById("totalnet").value = Number(net + gst).toFixed((2))
    }
 
 
    function add_non_motor() {
       // Removes space
-      
+
       odel = document.getElementById("od");
       odel.value = odel.value.toString().trim()
-      
+
       tptel = document.getElementById("tpt");
       tptel.value = tptel.value.toString().trim()
 
@@ -1580,16 +1491,15 @@
       tpt = parseFloat(document.getElementById("tpt").value);
       net = document.getElementById("net")
       gst = document.getElementById("gst")
-      
+
       net.value = Number(od + tpt).toFixed((2))
       if (od > 0 && tpt > 0) {
-         gst.value = Number((od + tpt) * 18 / 100).toFixed(2);        
+         gst.value = Number((od + tpt) * 18 / 100).toFixed(2);
       }
-      else
-      {
-         gst.value = 0  
+      else {
+         gst.value = 0
       }
-    
+
    }
 
    function addgst_non_motor() {
@@ -1605,14 +1515,14 @@
          if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
 
             gstt = document.getElementById("gstt");
-            if (tpt > 0  ) {
+            if (tpt > 0) {
                gstt.value = Number(tpt * 12 / 100).toFixed(2);
             }
-            else{
+            else {
                gstt.value = 0;
             }
-            document.getElementById("totalnet").value = Number(net + gst + parseFloat(gstt.value)).toFixed(2);         
-            
+            document.getElementById("totalnet").value = Number(net + gst + parseFloat(gstt.value)).toFixed(2);
+
          };
       }
       catch { }
@@ -1774,7 +1684,7 @@
 
       }
 
-      else if (value == 'PRIVATE CAR' | value == 'TRADE RISK' ) {
+      else if (value == 'PRIVATE CAR' | value == 'TRADE RISK') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = true
@@ -2251,56 +2161,11 @@
 </body>
 <script>
 
-   function searchPOS() {
-      try {
-         // alert('test')
-         var data_ag = JSON.parse("{{data_ag|escapejs}}");
-         console.log(data_ag);
-
-         value = document.getElementById('inp_search').value.toUpperCase();
-         inp_pos = document.getElementById('inp_pos');
-         pos = document.getElementById('pos');
-
-         // data_ag.sort();
-
-         data_ag.forEach(element => {
-
-            console.log(element.full_name);
-
-            if (value == element.full_name.toUpperCase()) {
-               inp_pos.value = element.full_name
-               pos.value = element.full_name
-            }
-            // else if (value == element.mob_no.toUpperCase()) {
-            //    inp_pos.value = element.full_name
-            //    pos.value = element.full_name
-            // }
-            // else if (value == element.PAN.toUpperCase()) {
-            //    inp_pos.value = element.full_name
-            //    pos.value = element.full_name
-            // }
-            // else if (value == element.aadhar_no.toUpperCase()) {
-            //    inp_pos.value = element.full_name
-            //    pos.value = element.full_name
-            // }
-            // else if (value == element.email_id.toUpperCase()) {
-            //    inp_pos.value = element.full_name
-            //    pos.value = element.full_name
-            // }
-         });
-
-      } catch (error) {
-
-      }
-
-   }
-
-   function initialConfig() {    
+   function initialConfig() {
       addVehicleMakes()
       addVehicleModels()
    }
 
-   
    function addVehicleMakes() {
 
       vmake = document.getElementById('vehicle_makeby')
@@ -2335,6 +2200,21 @@
       $("#" + id).html($("#" + id + " option").sort(function (a, b) {
          return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
       }))
+   }
+
+   function setPOS() {
+      document.getElementById("pos").value = document.getElementById("inp_agent").value = document.getElementById("agents").options[document.getElementById("agents").selectedIndex].text;
+   }
+
+   function add_new_agent() {
+
+      hostname = window.location.hostname
+      port = window.location.port
+      pathname = '/bima_policy/agent/add_agent/'
+
+      href = window.location.origin + pathname
+
+      window.location.replace(href)
    }
 
 </script>

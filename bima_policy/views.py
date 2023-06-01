@@ -1011,35 +1011,67 @@ class create_policy(View):
     def get(self, request):
         print('create_policy get method')
 
-        data_ag = json.dumps(list(Agents.objects.all().values()))
+        # getting agents full name and sorts them.
+        agents = []
+        for ag in Agents.objects.values('full_name'):
+            agents.append(ag['full_name'])
+        agents.sort()
+            
+        # getting insurers name and sorts them.
+        insurers = []
+        for ins in InsuranceCompany.objects.values('comp_name'):
+            insurers.append(ins['comp_name'])
+        insurers.sort()
 
-        data_sp = ServiceProvider.objects.all()
-        data_bc = BrokerCode.objects.all()
-        data_ins = InsuranceCompany.objects.all()
+        # getting service_providers name
+        service_providers = []
+        for provider in ServiceProvider.objects.values('full_name'):
+            service_providers.append(provider['full_name'])      
+        service_providers.sort()
 
-        data_vc = VehicleCategory.objects.all()
-        data_bqp = BQP.objects.all()
+        # getting office_codes 
+        broker_codes = []
+        for code in BrokerCode.objects.values('code'):
+            broker_codes.append(code['code'])      
+        broker_codes.sort()
 
-        user_info = {
+        # getting vehicle categories name and sort them.
+        vehicle_categories = []
+        for category in VehicleCategory.objects.values("category"):
+            vehicle_categories.append(category['category'])
+        vehicle_categories.sort()
+
+        makes = vehicles.makes
+        for vmb in VehicleMakeBy.objects.values("company"):
+            makes.append(vmb["company"])
+
+        models = read_vehicle_data_file()["model"]
+        for vm in VehicleModelName.objects.all().values('model'):
+            models.append(vm["model"])   
+        
+        # getting bqps 
+        bqps = []
+        for bqp in BQP.objects.values('name'):
+            bqps.append(bqp['name'])      
+        bqps.sort()    
+        
+        context = {
+            "agents": agents,
+            "insurers": insurers,
+            "service_providers": service_providers,              
+            "broker_codes": broker_codes,              
+            "vehicle_categories": vehicle_categories,
+            "makes": makes,
+            "models": models,  
+            "bqps": bqps, 
+            "is_user": is_user(request),
             "user_id": get_id_from_session(request),
             "user_name": get_user_name(request),
-            "user_role": get_user_role(request)
+            "is_motor_form": True
         }
 
-        context = read_vehicle_data_file()
-        make = context["make"]
-        model = context["model"]
-
-        datavm = VehicleModelName.objects.all().values()
-        datavmb = VehicleMakeBy.objects.all().values()
-
-        for vm in datavm:
-            model.append(vm["model"])
-
-        for vmb in datavmb:
-            make.append(vmb["company"])
-
-        return render(request, 'policylist/policy_list.html', {"user_info": user_info, "vdata": context, "data_vc": data_vc, 'is_motor_form': True, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_bqp': data_bqp})
+        return render(request, 'policylist/policy_list.html', context)
+        # return render(request, 'policylist/policy_list.html', {"user_info": user_info, "vdata": context, "data_vc": data_vc, 'is_motor_form': True, 'data_ag': ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_bqp': data_bqp})
 
     def post(self, request):
         try:
@@ -1080,7 +1112,7 @@ class create_policy(View):
             bqp = request.POST['bqp']
             pos = request.POST['pos']
 
-            employee = request.POST['employee']
+            employee = get_id_from_session(request) 
 
             try:
                 remark = request.POST['remark']
@@ -1153,13 +1185,11 @@ class create_policy(View):
                                                  Q(policy_term__icontains=policy_term) &
                                                  Q(cpa__contains=cpa)).values()
 
-                    data = fix_special_chars_from_vehicle_model(
-                        vehicle_model, data)
-                    data = fix_special_chars_from_coverage_type(
-                        coverage_type, data)
+                    data = fix_special_chars_from_vehicle_model( vehicle_model, data)
+                    data = fix_special_chars_from_coverage_type(coverage_type, data)
 
                     print('data is ', data)
-                except Exception as ex:
+                except Exception as ex:           
                     print(ex)
 
             if vehicle_catagory == 'TWO WHEELER COMMERCIAL':
@@ -1442,6 +1472,7 @@ class create_policy(View):
                                         remark=remark)
 
             # return redirect('bima_policy:create_policy')
+            print('policy ', pol)
             return render(request, 'policylist/list_apply_payout.html', {'data': data, 'policyid': pol.policyid})
         except Exception as ex:
             print('ex ', ex)
@@ -1452,18 +1483,49 @@ class create_policy_non_motor(View):
     def get(self, request):
         print('create_policy Non get')
 
-        data_ag = json.dumps(
-            list(Agents.objects.all().values()))
+        # getting agents full name and sorts them.
+        agents = []
+        for ag in Agents.objects.values('full_name'):
+            agents.append(ag['full_name'])
+        agents.sort()
+            
+        # getting insurers name and sorts them.
+        insurers = []
+        for ins in InsuranceCompany.objects.values('comp_name'):
+            insurers.append(ins['comp_name'])
+        insurers.sort()
 
-        data_sp = ServiceProvider.objects.all()
-        data_bc = BrokerCode.objects.all()
-        data_ins = InsuranceCompany.objects.all()
+        # getting service_providers name
+        service_providers = []
+        for provider in ServiceProvider.objects.values('full_name'):
+            service_providers.append(provider['full_name'])      
+        service_providers.sort()
 
-        # data_vc = VehicleCategory.objects.all()
-        data_bqp = BQP.objects.all()
+        # getting office_codes 
+        broker_codes = []
+        for code in BrokerCode.objects.values('code'):
+            broker_codes.append(code['code'])      
+        broker_codes.sort()
 
-        return render(request, 'policylist/policy_list.html', {'is_motor_form': False, 'user_id': get_id_from_session(request), 'data_ag': data_ag, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_bqp': data_bqp})
+        # getting bqps 
+        bqps = []
+        for bqp in BQP.objects.values('name'):
+            bqps.append(bqp['name'])      
+        bqps.sort()
 
+        context = {
+            "agents": agents,
+            "insurers": insurers,              
+            "service_providers": service_providers,              
+            "broker_codes": broker_codes,              
+            "bqps": bqps,              
+            "is_user": is_user(request),
+            "user_id": get_id_from_session(request),
+            "user_name": get_user_name(request),
+            "is_motor_form": False
+        }
+
+        return render(request, 'policylist/policy_list.html', context)
     def post(self, request):
         print('create_policy non post')
         profile_id = ProfileModel.objects.get(
@@ -1484,7 +1546,7 @@ class create_policy_non_motor(View):
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
         pos = request.POST['pos']
-        employee = request.POST['employee']
+        employee = get_id_from_session(request) 
         try:
             remark = request.POST['remark']
         except Exception as ex:
@@ -1539,13 +1601,12 @@ class create_policy_non_motor(View):
                                      policy=policy, previous_policy=previous_policy, pan_card=pan_card, aadhar_card=aadhar_card, inspection_report=inspection_report,
                                      OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount, total=total,
                                      payment_mode=payment_mode, remark=remark)
-        print('pol data ', data)
-        data = Policy.objects.filter(
-            profile_id=profile_id).order_by('-policyid').values()
-        print('all data', data)
+        print('pol data ', data)   
+
+        data = Policy.objects.filter(policyid=data.policyid).values()
+
         return render(request, 'policylist/policy_entry_list.html', {'data': data})
-
-
+  
 def apply_policy(request, id):
     try:
         print('apply_policy')
@@ -2129,7 +2190,8 @@ def policy_entry(request):
             "models": models,
             "data": data,
             "policyid_list": policyid_list,
-            "is_user": is_user(request)
+            "is_user": is_user(request),
+            "user_name": get_user_name(request),
         }
 
         return render(request, 'policylist/policy_entry_list.html', context)
@@ -3452,7 +3514,7 @@ def policy_entrydata(request, id):
         policy_term = request.POST['policy_term']
         bqp = request.POST['bqp']
         pos = request.POST['pos']
-        employee = request.POST['employee']
+        employee = get_id_from_session(request) # request.POST['employee']
 
         try:
             remark = request.POST['remark']
@@ -3546,37 +3608,50 @@ def policy_entrydata(request, id):
 
         # return redirect('bima_policy:policy_entry')
 
-    else:
+    else:  
         data = Policy.objects.get(policyid=id)
-        print(data)
-        data_ag = json.dumps(
-            list(Agents.objects.all().values()))
 
-        data_sp = ServiceProvider.objects.all()
-        data_bc = BrokerCode.objects.all()
-        data_ins = InsuranceCompany.objects.all()
+        print('data: ', data)
+        
+        # getting agents full name and sorts them.
+        agents = []
+        for ag in Agents.objects.values('full_name'):
+            agents.append(ag['full_name'])
+        agents.sort()
 
-        context = read_vehicle_data_file()
-        make = context["make"]
-        model = context["model"]
+        # getting insurers name and sorts them.
+        insurers = []
+        for ins in InsuranceCompany.objects.values('comp_name'):
+            insurers.append(ins['comp_name'])
+        insurers.sort()
 
-        datavm = VehicleModelName.objects.all().values()
-        datavmb = VehicleMakeBy.objects.all().values()
+        # getting service_providers name
+        service_providers = []
+        for provider in ServiceProvider.objects.values('full_name'):
+            service_providers.append(provider['full_name'])      
+        service_providers.sort()
 
-        for vm in datavm:
-            model.append(vm["model"])
+        # getting office_codes 
+        broker_codes = []
+        for code in BrokerCode.objects.values('code'):
+            broker_codes.append(code['code'])      
+        broker_codes.sort()
 
-        for vmb in datavmb:
-            make.append(vmb["company"])
-
-        data_vc = VehicleCategory.objects.all()
-        data_bqp = BQP.objects.all()
-
+        # getting bqps 
+        bqps = []
+        for bqp in BQP.objects.values('name'):
+            bqps.append(bqp['name'])      
+        bqps.sort()    
+               
         user_info = {
             "user_id": get_id_from_session(request),
             "user_name": get_user_name(request),
             "user_role": get_user_role(request)
         }
+
+        vehicle_categories= ''
+        makes = ''
+        models = '' 
 
         is_motor_form = True
 
@@ -3596,10 +3671,39 @@ def policy_entrydata(request, id):
             data.gvw = ''
             data.seating_capacity = ''
             data.coverage_type = ''
+        
+        if is_motor_form:
+            # getting vehicle categories name and sort them.
+            vehicle_categories = []
+            for category in VehicleCategory.objects.values("category"):
+                vehicle_categories.append(category['category'])
+            vehicle_categories.sort()
 
-        return render(request, 'policylist/edit_policy.html', {"user_info": user_info, "vdata": context, 'data': data, "data_vc": data_vc, 'is_motor_form': is_motor_form, 'data_ag': data_ag,  'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_bqp': data_bqp})
+            makes = vehicles.makes
+            for vmb in VehicleMakeBy.objects.values("company"):
+                makes.append(vmb["company"])
 
-        # return render(request, 'policylist/edit_policy.html', {'data_ag': data_ag, "vdata": context, 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_vc': data_vc, 'data_bqp': data_bqp})
+            models = read_vehicle_data_file()["model"]
+            for vm in VehicleModelName.objects.all().values('model'):
+                models.append(vm["model"])   
+
+
+        context = {
+            "data": data,
+            "agents": agents,
+            "insurers": insurers,
+            "service_providers": service_providers,              
+            "broker_codes": broker_codes,              
+            "vehicle_categories": vehicle_categories,
+            "makes": makes,
+            "models": models,  
+            "bqps": bqps, 
+            "is_user": is_user(request),
+            "user_id": get_id_from_session(request),
+            "user_name": get_user_name(request),
+            "is_motor_form": is_motor_form
+        }
+        return render(request, 'policylist/edit_policy.html', context)
 
 
 def edit_policy(request, id):
@@ -3989,32 +4093,59 @@ def slab_payoutform(request):
 
     if request.method == "GET":
         print('slab_payoutform get')
-        data_sp = ServiceProvider.objects.all()
-        data_bc = BrokerCode.objects.all()
-        data_ins = InsuranceCompany.objects.all()
-        # data_vmb = VehicleMakeBy.objects.all()
-        # data_vm = VehicleModelName.objects.all()
-        data_vc = VehicleCategory.objects.all()
 
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
 
-        context = read_vehicle_data_file()
-        make = context["make"]
-        model = context["model"]
+        # getting agents full name and sorts them.
+        agents = []
+        for ag in Agents.objects.values('full_name'):
+            agents.append(ag['full_name'])
+        agents.sort()
 
-        # datavcat = VehicleCategory.objects.all( ).values()
-        datavm = VehicleModelName.objects.all().values()
-        datavmb = VehicleMakeBy.objects.all().values()
+        # getting insurers name and sorts them.
+        insurers = []
+        for ins in InsuranceCompany.objects.values('comp_name'):
+            insurers.append(ins['comp_name'])
+        insurers.sort()
 
-        for vm in datavm:
-            model.append(vm["model"])
+        # getting service_providers name
+        service_providers = []
+        for provider in ServiceProvider.objects.values('full_name'):
+            service_providers.append(provider['full_name'])      
+        service_providers.sort()
 
-        for vmb in datavmb:
-            make.append(vmb["company"])
+        # getting office_codes 
+        broker_codes = []
+        for code in BrokerCode.objects.values('code'):
+            broker_codes.append(code['code'])      
+        broker_codes.sort()
 
-        # print(state_rto.rto_id)
-        # print(data_bc)
-        return render(request, 'payout/slab_payoutform.html', {'slab': slab, "vdata": context, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc})
+        # getting vehicle categories name and sort them.
+        vehicle_categories = []
+        for category in VehicleCategory.objects.values("category"):
+            vehicle_categories.append(category['category'])
+        vehicle_categories.sort()
+
+        makes = vehicles.makes
+        for vmb in VehicleMakeBy.objects.values("company"):
+            makes.append(vmb["company"])
+
+        models = read_vehicle_data_file()["model"]
+        for vm in VehicleModelName.objects.all().values('model'):
+            models.append(vm["model"])  
+        
+        context = {
+            "slab": slab,         
+            "agents": agents,
+            "insurers": insurers,
+            "service_providers": service_providers,              
+            "broker_codes": broker_codes,              
+            "vehicle_categories": vehicle_categories,
+            "makes": makes,
+            "models": models
+        }
+
+        return render(request, 'payout/slab_payoutform.html', context)
 
     if request.method == 'POST' and 'savepayout' in request.POST:
         print("data enter")
@@ -4178,17 +4309,62 @@ def slab_payoutformshow(request, id):
             return render(request, 'payout/slab_payoutlist.html')
 
     else:
-        data = Payout.objects.get(payoutid=id)
-        data_sp = ServiceProvider.objects.all()
-        data_bc = BrokerCode.objects.all()
-        data_ins = InsuranceCompany.objects.all()
-        # data_vmb = VehicleMakeBy.objects.all()
-        # data_vm = VehicleModelName.objects.all()
-        data_vc = VehicleCategory.objects.all()
-        vdata = fetch_vehicle_data()
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
+
+        data = Payout.objects.get(payoutid=id)
+      
+        # getting agents full name and sorts them.
+        agents = []
+        for ag in Agents.objects.values('full_name'):
+            agents.append(ag['full_name'])
+        agents.sort()
+
+        # getting insurers name and sorts them.
+        insurers = []
+        for ins in InsuranceCompany.objects.values('comp_name'):
+            insurers.append(ins['comp_name'])
+        insurers.sort()
+
+        # getting service_providers name
+        service_providers = []
+        for provider in ServiceProvider.objects.values('full_name'):
+            service_providers.append(provider['full_name'])      
+        service_providers.sort()
+
+        # getting office_codes 
+        broker_codes = []
+        for code in BrokerCode.objects.values('code'):
+            broker_codes.append(code['code'])      
+        broker_codes.sort()
+
+        # getting vehicle categories name and sort them.
+        vehicle_categories = []
+        for category in VehicleCategory.objects.values("category"):
+            vehicle_categories.append(category['category'])
+        vehicle_categories.sort()
+
+        makes = vehicles.makes
+        for vmb in VehicleMakeBy.objects.values("company"):
+            makes.append(vmb["company"])
+
+        models = read_vehicle_data_file()["model"]
+        for vm in VehicleModelName.objects.all().values('model'):
+            models.append(vm["model"])  
+        
+        context = {
+            "slab": slab,         
+            "data": data,         
+            "agents": agents,
+            "insurers": insurers,
+            "service_providers": service_providers,              
+            "broker_codes": broker_codes,              
+            "vehicle_categories": vehicle_categories,
+            "makes": makes,
+            "models": models
+        }
+
         # print(data.vehicle_makeby)
-        return render(request, 'payout/edit_payoutform.html', {"vdata": vdata, 'data': data, 'slab': slab, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins, 'data_vc': data_vc})
+        return render(request, 'payout/edit_payoutform.html', context)
 
 
 def payout_delete(request, id):

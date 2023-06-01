@@ -44,7 +44,7 @@
                            <div class="card">
                               <div class="card-body">
                                  <fieldset>
-                                    <legend>Policy Details</legend>
+                                    <legend>Policy Details </legend>
 
                                     <div class="form-row">
 
@@ -54,7 +54,7 @@
                                              required onclick="setCategoryOnChange()">
                                              <option value="{{data.vehicle_catagory}}"> {{data.vehicle_catagory}}
                                              </option>
-                                             {% for value in data_vc %}
+                                             {% for value in vehicle_categories %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
 
@@ -86,17 +86,16 @@
                                              required onclick="sortItems(this.id)">
                                              <option value="{{data.insurance_company}}"> {{data.insurance_company}}
                                              </option>
-                                             {%for value in data_ins%}
+                                             {%for value in insurers %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="sp_name" class="custom-select" id="sp_name" required
-                                             onclick="sortItems(this.id)">
+                                          <select name="sp_name" class="custom-select" id="sp_name" required>
                                              <option value="{{data.sp_name}}"> {{data.sp_name}} </option>
-                                             {%for value in data_sp%}
+                                             {%for value in service_providers%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -106,7 +105,7 @@
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
                                              <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}} </option>
-                                             {%for value in data_bc%}
+                                             {%for value in broker_codes %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -184,6 +183,9 @@
                                              class="custom-select select2 select2-hidden-accessible" id="vehicle_makeby"
                                              aria-hidden="true" required>
                                              <option value="{{data.vehicle_makeby}}"> {{data.vehicle_makeby}} </option>
+                                             {% for value in makes %}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
 
                                        </div>
@@ -194,6 +196,9 @@
                                              class="custom-select select2 select2-hidden-accessible" id="vehicle_model"
                                              aria-hidden="true" required>
                                              <option value="{{data.vehicle_model}}"> {{data.vehicle_model}} </option>
+                                             {% for value in models %}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
                                        </div>
 
@@ -258,7 +263,7 @@
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4" id="cubic_capacityDiv">
-                                          <label>Cubic Capacity<abbr class="text-danger">*</abbr></label>
+                                          <label>Cubic Capacityy<abbr class="text-danger">*</abbr></label>
                                           <select name="cubic_capacity" class="custom-select" id="cubic_capacity"
                                              required>
                                              <option value="{{data.cubic_capacity}}"> {{data.cubic_capacity}} </option>
@@ -392,96 +397,23 @@
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
                                              <option value="{{data.bqp}}"> {{data.bqp}} </option>
-                                             {%for value in data_bqp%}
+                                             {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos" type="text" value="" data-toggle="modal"
-                                             data-target="#mdlcolsetting" class="form-control" name="pos"
+                                             id="pos" type="text" value="{{data.pos}}" data-toggle="modal"
+                                             data-target="#mdlPOS" class="form-control" name="pos"
                                              style="text-transform: uppercase;" required readonly>
-
-
-                                          <div class="modal fade" id="mdlcolsetting"
-                                             onmouseenter="document.getElementById('inp_search').focus()"
-                                             style="height: 400px">
-
-                                             <div class="modal-dialog" role="document">
-
-                                                <div class="modal-content">
-                                                   <div class="modal-header">
-                                                      <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
-                                                   </div>
-                                                   <div class="modal-body ">
-                                                      <div class="form-row">
-                                                         <div class="col-md-6 mb-4">
-                                                            <div class=""><label>Search:<input id="inp_search"
-                                                                     type="text" value="" class="form-control"
-                                                                     name="agent" style="text-transform: uppercase;"
-                                                                     title="Search POS using Name, mobile no, email, pan/aadhar number"
-                                                                     oninput="searchPOS()" onkeypress="handle(event)">
-
-                                                                  <script>
-                                                                     function handle(e) {
-                                                                        if (e.keyCode === 13) {
-                                                                           e.preventDefault(); // Ensure it is only this code that runs
-
-                                                                           $("#btnExit").click();
-                                                                        }
-                                                                     }
-                                                                  </script>
-                                                               </label></div>
-                                                         </div>
-                                                         <div class="col-md-6 mb-4">
-                                                            <div class=""><label>POS:<input id="inp_pos" type="text"
-                                                                     value="" class="form-control" name="agent"
-                                                                     style="text-transform: uppercase;"
-                                                                     title="POS should be automatically fetched">
-                                                               </label>
-                                                            </div>
-                                                         </div>
-                                                      </div>
-
-                                                      <button class="btn btn-primary" style="margin-bottom: -60px;"
-                                                         onclick="add_agent()">Add New POS</button>
-
-                                                      <script>
-                                                         function add_agent() {
-
-                                                            hostname = window.location.hostname
-                                                            port = window.location.port
-                                                            pathname = '/bima_policy/agent/add_agent/'
-
-                                                            href = window.location.origin + pathname
-
-                                                            window.location.replace(href)
-                                                         }
-                                                      </script>
-
-
-                                                      <div class="modal-footer">
-                                                         <button id="btnExit" type="button"
-                                                            class="btn btn-secondary w-100p"
-                                                            data-dismiss="modal">Close</button>
-                                                         <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
-                                                            class="btn btn-primary w-100p">Save</button> -->
-                                                      </div>
-                                                   </div>
-
-                                                </div>
-
-                                             </div>
-
-                                          </div>
                                        </div>
 
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.employee}}" class="form-control" name="employee"
+                                             value="{{user_name}}" class="form-control" name="employee"
                                              style="text-transform: uppercase;  background-color: lightgray;" readonly
                                              required>
                                        </div>
@@ -691,7 +623,6 @@
 
                      {% else %}
 
-
                      <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-12">
                            <div class="card">
@@ -706,15 +637,12 @@
                                           <select name="product_name" id="product_name" class="custom-select " required>
                                              <option value="{{data.product_name}}"> {{data.product_name}} </option>
                                              <option value="FIRE">FIRE</option>
+                                             <option value="HEALTH">HEALTH</option>
                                              <option value="LIABILITY">LIABILITY</option>
                                              <option value="MARINE CARGO">MARINE CARGO</option>
                                              <option value="MARINE HULL">MARINE HULL</option>
                                              <option value="ENGINEERING">ENGINEERING</option>
                                              <option value="MISCELLANEOUS">MISCELLANEOUS</option>
-
-                                             <!-- {%for value in data_vc%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%} -->
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -754,7 +682,7 @@
                                              required>
                                              <option value="{{data.insurance_company}}"> {{data.insurance_company}}
                                              </option>
-                                             {%for value in data_ins%}
+                                             {%for value in insurers %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -763,7 +691,7 @@
                                           <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="sp_name" class="custom-select" id="sp_name" required>
                                              <option value="{{data.sp_name}}"> {{data.sp_name}} </option>
-                                             {%for value in data_sp%}
+                                             {%for value in service_providers %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -773,7 +701,7 @@
                                           <select name="sp_brokercode" class="custom-select" id="sp_brokercode"
                                              required>
                                              <option value="{{data.sp_brokercode}}"> {{data.sp_brokercode}} </option>
-                                             {%for value in data_bc%}
+                                             {%for value in broker_codes %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -831,7 +759,7 @@
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
                                              <option value="{{data.bqp}}"> {{data.bqp}} </option>
-                                             {%for value in data_bqp%}
+                                             {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -839,75 +767,16 @@
                                        <div class="col-md-3 mb-4">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
                                              id="pos" type="text" value="{{data.pos}}" data-toggle="modal"
-                                             data-target="#mdlcolsetting" class="form-control" name="pos"
+                                             data-target="#mdlPOS" class="form-control" name="pos"
                                              style="text-transform: uppercase;" required readonly>
-                                       </div>
-
-
-                                       <div class="modal fade" id="mdlcolsetting" data-backdrop="static"
-                                          data-keyboard="false" style="height: 400px" tabindex="-1" role="dialog"
-                                          aria-labelledby="rtoModalLabel" aria-hidden="true">
-                                          <div class="modal-dialog" role="document">
-                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                   <h5 id="rtoModalLabel" class="modal-title"> Search POS </h5>
-                                                </div>
-                                                <div class="modal-body ">
-                                                   <div class="form-row">
-                                                      <div class="col-md-6 mb-4">
-                                                         <div class=""><label>Search:<input id="inp_search" type="text"
-                                                                  value="" class="form-control" name="agent"
-                                                                  style="text-transform: uppercase;"
-                                                                  title="Search POS using Name, mobile no, email, pan/aadhar number"
-                                                                  oninput="searchPOS()">
-                                                            </label></div>
-                                                      </div>
-                                                      <div class="col-md-6 mb-4">
-                                                         <div class=""><label>POS:<input id="inp_pos" type="text"
-                                                                  value="" class="form-control" name="agent"
-                                                                  style="text-transform: uppercase;"
-                                                                  title="POS should be automatically fetched">
-                                                            </label>
-                                                         </div>
-                                                      </div>
-                                                   </div>
-                                                   <button class="btn btn-primary" style="margin-bottom: -60px;"
-                                                      onclick="add_agent()">Add New POS</button>
-
-                                                   <script>
-                                                      function add_agent() {
-
-                                                         hostname = window.location.hostname
-                                                         port = window.location.port
-                                                         pathname = '/bima_policy/agent/add_agent/'
-
-                                                         href = window.location.origin + pathname
-
-                                                         window.location.replace(href)
-                                                      }
-                                                   </script>
-
-                                                   <div class="modal-footer">
-                                                      <button type="button" class="btn btn-secondary w-100p"
-                                                         data-dismiss="modal">Close</button>
-                                                      <!-- <button type="button" id="posUpdate" onclick="searchPOS()"
-                                                            class="btn btn-primary w-100p">Save</button> -->
-                                                   </div>
-                                                </div>
-
-                                             </div>
-
-
-                                          </div>
-
                                        </div>
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
-                                             value="{{data.employee}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase; background-color: lightgray;" required
-                                             readonly>
+                                             value="{{user_name}}" class="form-control" name="employee"
+                                             style="text-transform: uppercase;  background-color: lightgray;" readonly
+                                             required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -1015,39 +884,39 @@
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="od">OD Premium <abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue2()" value="{{data.OD_premium}}" class="form-control col-lg-6 " name="od"
-                                       id="od" maxlength="10" required>
+                                       oninput="calculateValue2()" value="{{data.OD_premium}}"
+                                       class="form-control col-lg-6 " name="od" id="od" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
                                           class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue2()" value="{{data.TP_terrorism}}" class="form-control col-lg-6 " name="tpt"
-                                       id="tpt" maxlength="10" required>
+                                       oninput="calculateValue2()" value="{{data.TP_terrorism}}"
+                                       class="form-control col-lg-6 " name="tpt" id="tpt" maxlength="10" required>
                                  </div>
                                  <div class="row mb-2">
-                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net" value="{{data.net}}"
-                                       class="form-control col-lg-6  bg-light" id="net" maxlength="10" readonly=""
-                                       required tabindex="-1">
+                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net"
+                                       value="{{data.net}}" class="form-control col-lg-6  bg-light" id="net"
+                                       maxlength="10" readonly="" required tabindex="-1">
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5" for="gst">GST 18%<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text" value="{{data.gst_amount}}"
-                                       class="form-control col-lg-6 bg-light" name="gst" id="gst" maxlength="10"
-                                       required readonly tabindex="-1">
+                                          class="text-danger">*</abbr></label><input type="text"
+                                       value="{{data.gst_amount}}" class="form-control col-lg-6 bg-light" name="gst"
+                                       id="gst" maxlength="10" required readonly tabindex="-1">
                                  </div>
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total"
-                                       value="{{data.total}}" class="form-control  col-lg-6 bg-light" id="totalnet" readonly=""
-                                       maxlength="10" required tabindex="-1">
+                                       value="{{data.total}}" class="form-control  col-lg-6 bg-light" id="totalnet"
+                                       readonly="" maxlength="10" required tabindex="-1">
                                  </div>
 
 
                                  <div class="row mb-2">
                                     <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
                                     <select class="custom-select col-lg-6" name="payment_mode" required>
-                                       <option value="{{data.payment_mode}}" > {{data.payment_mode}} </option>
+                                       <option value="{{data.payment_mode}}"> {{data.payment_mode}} </option>
                                        <option value="ONLINE" selected>ONLINE</option>
                                        <option value="CHEQUE"> CHEQUE</option>
                                        <option value="CASH">CASH</option>
@@ -1130,6 +999,44 @@
          </div>
       </div>
    </div>
+   </div>
+
+   <div class="modal fade" id="mdlPOS">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title"> POS </h5>
+            </div>
+            <div class="modal-body ">
+               <div class="form-row">
+                  <div class="col-md-6 col-sm-12">
+                     <select id="agents" class="custom-select select2 select2-hidden-accessible"
+                        data-parsley-required="true" tabindex="-1" aria-hidden="true" on onchange="setPOS()">
+                        <option value=""> All POS</option>
+                        {%for value in agents %}
+                        <option value={{value}}>{{value}}</option>
+                        {%endfor%}
+                     </select>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                     <input id="inp_agent" type="text" value="" class="form-control" name="inp_agent" disabled
+                        style="text-transform: uppercase;" title="POS should be automatically fetched">
+                  </div>
+               </div>
+
+               <button class="mt-4 btn btn-primary" style="margin-bottom: -60px;" onclick="add_new_agent()">Add New
+                  POS</button>
+
+               <div class="modal-footer">
+                  <button id="btnExit" type="button" class="btn btn-secondary w-100p"
+                     data-dismiss="modal">Close</button>
+               </div>
+            </div>
+
+         </div>
+
+      </div>
+
    </div>
 
 </main>
@@ -1671,521 +1578,7 @@
 
    }
 
-
-   function setCategoryOnChangeOld() {
-      value = document.getElementById('vehicle_catagory').value
-
-      coverage_typeDiv = document.getElementById('coverage_typeDiv')
-      cubic_capacityDiv = document.getElementById('cubic_capacityDiv')
-      seating_capacityDiv = document.getElementById('seating_capacityDiv')
-      gvwDiv = document.getElementById('gvwDiv')
-      gsttDiv = document.getElementById('gsttDiv')
-
-      if (value == 'TWO WHEELER' || value == 'TWO WHEELER COMMERCIAL' || value == 'TWO WHEELER SCOOTER') {
-         document.getElementById('coverage_typeDiv').hidden = false
-         document.getElementById('cubic_capacityDiv').hidden = false
-         document.getElementById('seating_capacityDiv').hidden = false
-         document.getElementById('seating_capacityDiv1').hidden = true
-         document.getElementById('seating_capacity1').required = false
-
-
-         document.getElementById('gvwDiv').hidden = true
-         document.getElementById('gvw').required = false
-
-         document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
-         document.getElementById('gstt').value = 0
-
-         cubic_capacity.innerHTML = ''
-         coverage_type.innerHTML = ''
-
-         // Cubic_ capacity options
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.cubic_capacity | safe}}"
-         newoption.innerHTML = "{{data.cubic_capacity | safe}}"
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '75CC-150CC'
-         newoption.innerHTML = '75CC-150CC'
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '150CC-350CC'
-         newoption.innerHTML = '150CC-350CC'
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'ABOVE 350CC'
-         newoption.innerHTML = 'ABOVE 350CC'
-         cubic_capacity.options.add(newoption);
-
-         // Coverage type
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.coverage_type | safe}}"
-         newoption.innerHTML = "{{data.coverage_type | safe}}"
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1 YEAR PACKAGE'
-         newoption.innerHTML = '1 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1+4 YEAR PACKAGE'
-         newoption.innerHTML = '1+4 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '5 YEAR TP'
-         newoption.innerHTML = '5 YEAR TP'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'TP ONLY'
-         newoption.innerHTML = 'TP ONLY'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'OD ONLY'
-         newoption.innerHTML = 'OD ONLY'
-         coverage_type.options.add(newoption);
-
-      }
-
-      else if (value == 'PRIVATE CAR') {
-         document.getElementById('coverage_typeDiv').hidden = false
-         document.getElementById('cubic_capacityDiv').hidden = false
-         document.getElementById('seating_capacityDiv').hidden = false
-         document.getElementById('seating_capacityDiv1').hidden = true
-         document.getElementById('seating_capacity1').required = false
-
-         document.getElementById('gvwDiv').hidden = true
-         document.getElementById('gvw').required = false
-         document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
-         document.getElementById('gstt').value = 0
-
-
-         cubic_capacity.innerHTML = ''
-         coverage_type.innerHTML = ''
-
-         // Cubic_ capacity options
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.cubic_capacity | safe}}"
-         newoption.innerHTML = "{{data.cubic_capacity | safe}}"
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'BELOW 1000CC'
-         newoption.innerHTML = 'BELOW 1000CC'
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1000CC-1500CC'
-         newoption.innerHTML = '1000CC-1500CC'
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'ABOVE 1500CC'
-         newoption.innerHTML = 'ABOVE 1500CC'
-         cubic_capacity.options.add(newoption);
-
-         // Coverage Type
-         coverage_type = document.getElementById('coverage_type')
-         coverage_type.innerHTML = ''
-
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.coverage_type | safe}}"
-         newoption.innerHTML = "{{data.coverage_type | safe}}"
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1 YEAR PACKAGE'
-         newoption.innerHTML = '1 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1+2 YEAR PACKAGE'
-         newoption.innerHTML = '1+2 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '3 YEAR TP'
-         newoption.innerHTML = '3 YEAR TP'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'TP ONLY'
-         newoption.innerHTML = 'TP ONLY'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'OD ONLY'
-         newoption.innerHTML = 'OD ONLY'
-         coverage_type.options.add(newoption);
-      }
-
-      else if (value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
-
-         document.getElementById('coverage_typeDiv').hidden = false
-         document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('cubic_capacity').required = false
-         document.getElementById('seating_capacityDiv').hidden = false
-         document.getElementById('seating_capacityDiv1').hidden = true
-         document.getElementById('seating_capacity1').required = false
-
-         document.getElementById('gvwDiv').hidden = false
-         document.getElementById('gvw').required = true
-         document.getElementById('gsttDiv').hidden = false
-         document.getElementById('gstt').required = true
-
-
-
-         cubic_capacity.innerHTML = ''
-         coverage_type.innerHTML = ''
-
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.coverage_type | safe}}"
-         newoption.innerHTML = "{{data.coverage_type | safe}}"
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1 YEAR PACKAGE'
-         newoption.innerHTML = '1 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'TP ONLY'
-         newoption.innerHTML = 'TP ONLY'
-         coverage_type.options.add(newoption);
-
-      }
-
-      else if (value == '3 WHEELER PCV') {
-         document.getElementById('coverage_typeDiv').hidden = false
-         document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('cubic_capacity').required = false
-         document.getElementById('seating_capacityDiv').hidden = false
-         document.getElementById('seating_capacityDiv1').hidden = true
-         document.getElementById('seating_capacity1').required = false
-
-         document.getElementById('gvwDiv').hidden = true
-         document.getElementById('gvw').required = false
-         document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
-         document.getElementById('gstt').value = 0
-
-
-         coverage_type.innerHTML = ''
-
-         // Coverage type        
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.coverage_type | safe}}"
-         newoption.innerHTML = "{{data.coverage_type | safe}}"
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1 YEAR PACKAGE'
-         newoption.innerHTML = '1 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'TP ONLY'
-         newoption.innerHTML = 'TP ONLY'
-         coverage_type.options.add(newoption);
-      }
-
-      else if (value == '3 WHEELER GCV-PUBLIC CARRIER') {
-         document.getElementById('coverage_typeDiv').hidden = false
-         document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('cubic_capacity').required = false
-         document.getElementById('seating_capacityDiv').hidden = false
-         document.getElementById('seating_capacityDiv1').hidden = true
-         document.getElementById('seating_capacity1').required = false
-
-
-         document.getElementById('gvwDiv').hidden = false
-         document.getElementById('gvw').required = true
-         document.getElementById('gsttDiv').hidden = false
-         document.getElementById('gstt').required = true
-
-         cubic_capacity.innerHTML = ''
-         coverage_type.innerHTML = ''
-
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.coverage_type | safe}}"
-         newoption.innerHTML = "{{data.coverage_type | safe}}"
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1 YEAR PACKAGE'
-         newoption.innerHTML = '1 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'TP Only'
-         newoption.innerHTML = 'TP Only'
-         coverage_type.options.add(newoption);
-      }
-
-      else if (value == 'TAXI 4 WHEELER') {
-         document.getElementById('coverage_typeDiv').hidden = false
-         document.getElementById('cubic_capacityDiv').hidden = false
-         document.getElementById('seating_capacityDiv').hidden = false
-         document.getElementById('seating_capacityDiv1').hidden = true
-         document.getElementById('seating_capacity1').required = false
-
-         document.getElementById('gvwDiv').hidden = true
-         document.getElementById('gvw').required = false
-         document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
-         document.getElementById('gstt').value = 0
-
-
-         cubic_capacity.innerHTML = ''
-         coverage_type.innerHTML = ''
-
-         // Cubic_ capacity options
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.cubic_capacity | safe}}"
-         newoption.innerHTML = "{{data.cubic_capacity | safe}}"
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'BELOW 1000CC'
-         newoption.innerHTML = 'BELOW 1000CC'
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1000CC-1500CC'
-         newoption.innerHTML = '1000CC-1500CC'
-         cubic_capacity.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'ABOVE 1500CC'
-         newoption.innerHTML = 'ABOVE 1500CC'
-         cubic_capacity.options.add(newoption);
-
-         // Coverage Type
-         coverage_type = document.getElementById('coverage_type')
-         coverage_type.innerHTML = ''
-
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.coverage_type | safe}}"
-         newoption.innerHTML = "{{data.coverage_type | safe}}"
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1 YEAR PACKAGE'
-         newoption.innerHTML = '1 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1+2 YEAR PACKAGE'
-         newoption.innerHTML = '1+2 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '3 YEAR TP'
-         newoption.innerHTML = '3 YEAR TP'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'TP ONLY'
-         newoption.innerHTML = 'TP ONLY'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'OD ONLY'
-         newoption.innerHTML = 'OD ONLY'
-         coverage_type.options.add(newoption);
-      }
-
-      else if (value == 'BUS AND OTHERS') {
-         document.getElementById('coverage_typeDiv').hidden = true
-         document.getElementById('coverage_type').required = false
-
-         document.getElementById('seating_capacityDiv').hidden = true
-         document.getElementById('seating_capacity').required = false
-
-         document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('cubic_capacity').required = false
-
-         document.getElementById('gvwDiv').hidden = true
-         document.getElementById('gvw').required = false
-         document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
-         document.getElementById('gstt').value = 0
-
-         document.getElementById('seating_capacityDiv1').hidden = false
-
-      }
-
-      else if (value == 'MISC-D SPECIAL VEHICLE') {
-         document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('cubic_capacity').required = false
-         document.getElementById('seating_capacityDiv').hidden = true
-         document.getElementById('seating_capacity').required = false
-         document.getElementById('seating_capacityDiv1').hidden = true
-         document.getElementById('seating_capacity1').required = false
-         document.getElementById('gvwDiv').hidden = true
-         document.getElementById('gvw').required = false
-         document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
-         document.getElementById('gstt').value = 0
-
-
-         document.getElementById('coverage_typeDiv').hidden = false
-         document.getElementById('coverage_type').required = true
-
-         // Coverage Type
-         coverage_type = document.getElementById('coverage_type')
-         coverage_type.innerHTML = ''
-
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.coverage_type | safe}}"
-         newoption.innerHTML = "{{data.coverage_type | safe}}"
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1 YEAR PACKAGE'
-         newoption.innerHTML = '1 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1+2 YEAR PACKAGE'
-         newoption.innerHTML = '1+2 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '3 YEAR TP'
-         newoption.innerHTML = '3 YEAR TP'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'TP ONLY'
-         newoption.innerHTML = 'TP ONLY'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'OD ONLY'
-         newoption.innerHTML = 'OD ONLY'
-         coverage_type.options.add(newoption);
-
-      }
-
-      else if (value == 'SCHOOL BUS-SCHOOL NAME') {
-         document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('cubic_capacity').required = false
-
-         document.getElementById('seating_capacityDiv').hidden = true
-         document.getElementById('seating_capacity').required = false
-         document.getElementById('seating_capacityDiv1').hidden = true
-         document.getElementById('seating_capacity1').required = false
-         document.getElementById('gvwDiv').hidden = true
-         document.getElementById('gvw').required = false
-         document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
-         document.getElementById('gstt').value = 0
-
-
-         document.getElementById('coverage_typeDiv').hidden = false
-         document.getElementById('coverage_type').required = true
-         // Coverage Type
-         coverage_type = document.getElementById('coverage_type')
-         coverage_type.innerHTML = ''
-
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.coverage_type | safe}}"
-         newoption.innerHTML = "{{data.coverage_type | safe}}"
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1 YEAR PACKAGE'
-         newoption.innerHTML = '1 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1+2 YEAR PACKAGE'
-         newoption.innerHTML = '1+2 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '3 YEAR TP'
-         newoption.innerHTML = '3 YEAR TP'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'TP ONLY'
-         newoption.innerHTML = 'TP ONLY'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'OD ONLY'
-         newoption.innerHTML = 'OD ONLY'
-         coverage_type.options.add(newoption);
-      }
-
-      else if (value == 'SCHOOL BUS-INDIVIDUAL NAME') {
-         document.getElementById('cubic_capacityDiv').hidden = true
-         document.getElementById('cubic_capacity').required = false
-         document.getElementById('coverage_typeDiv').hidden = true
-         document.getElementById('coverage_type').required = false
-         document.getElementById('seating_capacityDiv').hidden = true
-         document.getElementById('seating_capacity').required = false
-         document.getElementById('seating_capacityDiv1').hidden = true
-         document.getElementById('seating_capacity1').required = false
-         document.getElementById('gvwDiv').hidden = true
-         document.getElementById('gvw').required = false
-         document.getElementById('gsttDiv').hidden = true
-         document.getElementById('gstt').required = false
-         document.getElementById('gstt').value = 0
-
-
-         document.getElementById('coverage_typeDiv').hidden = false
-         document.getElementById('coverage_type').required = true
-         // Coverage Type
-         coverage_type = document.getElementById('coverage_type')
-         coverage_type.innerHTML = ''
-
-         var newoption = document.createElement("option");
-         newoption.value = "{{data.coverage_type | safe}}"
-         newoption.innerHTML = "{{data.coverage_type | safe}}"
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1 YEAR PACKAGE'
-         newoption.innerHTML = '1 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '1+2 YEAR PACKAGE'
-         newoption.innerHTML = '1+2 YEAR PACKAGE'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = '3 YEAR TP'
-         newoption.innerHTML = '3 YEAR TP'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'TP ONLY'
-         newoption.innerHTML = 'TP ONLY'
-         coverage_type.options.add(newoption);
-
-         var newoption = document.createElement("option");
-         newoption.value = 'OD ONLY'
-         newoption.innerHTML = 'OD ONLY'
-         coverage_type.options.add(newoption);
-      }
-
-   }
-
-
    function setCategoryOnChange() {
-
-      // sortItems("vehicle_catagory")
 
       value = document.getElementById('vehicle_catagory').value
 
@@ -2213,14 +1606,9 @@
          coverage_type.innerHTML = ''
 
          // Cubic_ capacity options
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
-         // cubic_capacity.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.cubic_capacity  }}"
-         newoption.innerHTML = "{{ data.cubic_capacity  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2239,14 +1627,9 @@
          cubic_capacity.options.add(newoption);
 
          // Coverage type
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
-         // coverage_type.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.coverage_type  }}"
-         newoption.innerHTML = "{{ data.coverage_type  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2295,14 +1678,9 @@
          coverage_type.innerHTML = ''
 
          // Cubic_ capacity options
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
-         // cubic_capacity.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.cubic_capacity  }}"
-         newoption.innerHTML = "{{ data.cubic_capacity  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2321,14 +1699,9 @@
          cubic_capacity.options.add(newoption);
 
          // Coverage type
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
-         // coverage_type.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.coverage_type  }}"
-         newoption.innerHTML = "{{ data.coverage_type  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2358,7 +1731,7 @@
 
       }
 
-      else if (value == 'PRIVATE CAR') {
+      else if (value == 'PRIVATE CAR' | value == 'TRADE RISK') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = true
@@ -2372,19 +1745,13 @@
          document.getElementById('gstt').required = false
          document.getElementById('gstt').value = 0
 
-
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
          // Cubic_ capacity options
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
-         // cubic_capacity.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.cubic_capacity  }}"
-         newoption.innerHTML = "{{ data.cubic_capacity  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2406,14 +1773,9 @@
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
 
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
-         // coverage_type.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.coverage_type  }}"
-         newoption.innerHTML = "{{ data.coverage_type  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2460,14 +1822,9 @@
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
-         // coverage_type.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.coverage_type  }}"
-         newoption.innerHTML = "{{ data.coverage_type  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2499,14 +1856,9 @@
          coverage_type.innerHTML = ''
 
          // Coverage type        
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
-         // coverage_type.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.coverage_type  }}"
-         newoption.innerHTML = "{{ data.coverage_type  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2538,14 +1890,9 @@
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
-         // coverage_type.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.coverage_type  }}"
-         newoption.innerHTML = "{{ data.coverage_type  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2578,14 +1925,9 @@
          coverage_type.innerHTML = ''
 
          // Cubic_ capacity options
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
-         // cubic_capacity.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.cubic_capacity  }}"
-         newoption.innerHTML = "{{ data.cubic_capacity  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT CUBIC CAPACITY --'
          cubic_capacity.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2607,14 +1949,9 @@
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
 
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
-         // coverage_type.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.coverage_type  }}"
-         newoption.innerHTML = "{{ data.coverage_type  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2644,8 +1981,8 @@
       }
 
       else if (value == 'BUS AND OTHERS') {
-         document.getElementById('coverage_typeDiv').hidden = true
-         document.getElementById('coverage_type').required = false
+         document.getElementById('coverage_typeDiv').hidden = false
+         document.getElementById('coverage_type').required = true
 
          document.getElementById('seating_capacityDiv').hidden = true
          document.getElementById('seating_capacity').required = false
@@ -2660,6 +1997,24 @@
          document.getElementById('gstt').value = 0
 
          document.getElementById('seating_capacityDiv1').hidden = false
+
+         coverage_type = document.getElementById('coverage_type')
+         coverage_type.innerHTML = ''
+
+         var newoption = document.createElement("option");
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = '1 YEAR PACKAGE'
+         newoption.innerHTML = '1 YEAR PACKAGE'
+         coverage_type.options.add(newoption);
+
+         var newoption = document.createElement("option");
+         newoption.value = 'TP ONLY'
+         newoption.innerHTML = 'TP ONLY'
+         coverage_type.options.add(newoption);
 
       }
 
@@ -2684,14 +2039,9 @@
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
 
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
-         // coverage_type.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.coverage_type  }}"
-         newoption.innerHTML = "{{ data.coverage_type  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2742,14 +2092,9 @@
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
 
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
-         // coverage_type.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.coverage_type  }}"
-         newoption.innerHTML = "{{ data.coverage_type  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2801,14 +2146,9 @@
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
 
-         // var newoption = document.createElement("option");
-         // newoption.value = ''
-         // newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
-         // coverage_type.options.add(newoption);
-
          var newoption = document.createElement("option");
-         newoption.value = "{{ data.coverage_type  }}"
-         newoption.innerHTML = "{{ data.coverage_type  }}"
+         newoption.value = ''
+         newoption.innerHTML = '-- SELECT COVERAGE TYPE --'
          coverage_type.options.add(newoption);
 
          var newoption = document.createElement("option");
@@ -2841,8 +2181,8 @@
          calculateValue()
       } catch (error) {
       }
-
    }
+
 
    function addSeatingCapacity() {
       try {
@@ -2953,6 +2293,9 @@
          })
    }
 
+   function setPOS() {
+      document.getElementById("pos").value = document.getElementById("inp_agent").value = document.getElementById("agents").options[document.getElementById("agents").selectedIndex].text;
+   }
 
 </script>
 

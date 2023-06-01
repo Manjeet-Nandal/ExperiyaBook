@@ -72,7 +72,7 @@
                                              class="custom-select" multiple id="insurer" data-parsley-required="true"
                                              required >
                                              <option value="" onclick="selectAllItems('insurer')" >-- select all --  </option>
-                                             {%for value in data_ins%}
+                                             {%for value in insurers%}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
 
@@ -88,7 +88,7 @@
                                              class="custom-select" multiple id="sp_name" data-parsley-required="true"
                                              required  >
                                              <option value="" onclick="selectAllItems('sp_name')" >-- select all --  </option>
-                                             {%for value in data_sp%}
+                                             {%for value in service_providers %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -101,7 +101,7 @@
                                              data-parsley-required-message="" class="custom-select" multiple
                                              id="sp_brokercode" data-parsley-required="true" required   >
                                              <option value="" onclick="selectAllItems('sp_brokercode')" >-- select all --  </option>
-                                             {%for value in data_bc%}
+                                             {%for value in broker_codes %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -113,9 +113,9 @@
                                           <select id="vehicle_catagory" name="vehicle_catagory"
                                              data-parsley-required-message="" multiple
                                              data-parsley-required="true"
-                                             class="custom-select " required>
-                                             <!-- <option value="" >-- select all -- </option> -->
-                                             {%for value in data_vc%}
+                                             class="custom-select " required>                                    
+                                             <option value="" onclick="selectAllItems('vehicle_catagory')" >-- select all --  </option>
+                                             {%for value in vehicle_categories %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
@@ -128,11 +128,11 @@
                                              data-parsley-required-message="" multiple
                                              data-parsley-required="true"
                                              class="custom-select" required>
-                                             <!-- {%for value in data_vmb%}
-                                             <option value="{{value}}">{{value}}</option>
-                                             {%endfor%} -->
+                                             
                                              <option value="" onclick="selectAllItems('vehicle_makeby')" >-- select all -- </option>
-
+                                             {%for value in makes %}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -143,9 +143,9 @@
                                              data-parsley-required="true"
                                              class="custom-select" required>
                                              <option value="" onclick="selectAllItems('vehicle_model')" >-- select all --  </option>
-                                             <!-- {%for value in data_vm%}
+                                             {%for value in models %}
                                              <option value="{{value}}">{{value}}</option>
-                                             {%endfor%} -->
+                                             {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">
