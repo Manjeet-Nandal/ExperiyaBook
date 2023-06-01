@@ -19,6 +19,10 @@ urlpatterns = [
     path('service_provider/<str:id>/delete', delete_sp, name='del_sp'),
     path('service_provider/<str:id>/edit', edit_sp, name='edit_sp'),
     path('service_provider/broker/<str:id>/del',  del_broker_code, name='del_broker_code'),     
+    path('product/', product_view, name='product_view'),
+    path('product/<str:name>/add', add_product, name='add_product'),
+    path('product/<str:name>/delete', delete_product, name='delete_product'),
+
     path('vehicle/', vehicle_view, name='vehi'),
     path('vehicle/<str:id>/', delete_vehicle, name='del_vehicle'),
     path('vehicle/<str:id>/category', delete_vehicle_category, name='delete_vehicle_category'),

@@ -1,0 +1,295 @@
+{%extends "base.html"%}
+{%block content%}
+{% load static %}
+<main class="app-main">
+  <!-- .app-main -->
+  <div class="wrapper">
+    <!-- .wrapper -->
+    <div class="page ">
+      <!-- .page -->
+      <div class="page-inner">
+        <!-- .page-inner -->
+        <header class="page-title-bar">
+          <!-- .page-title-bar -->
+          <!-- grid row -->
+          <div class="row text-center text-sm-left">
+            <!-- grid column -->
+            <div class="col">
+              <h1 class="page-title"> Product Listing</h1>
+            </div>
+            <!-- /grid column -->
+          </div>
+          <!-- /grid row -->
+        </header>
+        <!-- .page-section -->
+        <div class="page-section">
+          <!-- .nav-scroller -->
+          <div class="nav-scroller border-bottom" hidden>
+            <!-- .nav-tabs -->
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link show active" data-toggle="tab" href="#Category">Product</a>
+              </li>            
+            </ul>
+            <!-- /.nav-tabs -->
+          </div>
+          <!-- /.nav-scroller -->
+          <div class="tab-content pt-2">
+            <!-- .tab-pane -->
+            <div class="tab-pane fade show active" id="Category" role="tabpanel" aria-labelledby="Category-Tab">
+              <!-- .card -->
+              <div class="card card-fluid">
+                <div class="card-header">
+                  All Products
+                  <button data-toggle="modal" data-target="#mdlvehiclecategory"
+                    class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
+                </div>
+                <!-- .card-body -->
+                <div class="card-body">
+                  <!-- .table -->
+                  <div class="table-responsive">
+                    <div id="tblList_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6" hidden>
+                          <div class="dataTables_length" id="tblList_length">
+                            <label>
+                              Show
+                              <select name="tblList_length" aria-controls="tblList" class="custom-select">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                              </select>
+                              entries
+                            </label>
+                          </div>
+                        </div>
+                        <!-- <div class="col-sm-12 col-md-6">
+                          <div id="tblList_filter" class="dataTables_filter"><label>Search:<input type="search"
+                                class="form-control" placeholder="" aria-controls="tblList"></label></div>
+                        </div> -->
+                      </div>
+                      <div class="table-responsive">
+                        <table id="tblList" class="table table-bordered1 dataTable no-footer" role="grid"
+                          aria-describedby="tblList_info">
+                          <thead>
+                            <tr role="row">
+                              <th class="text-center w-10pc sorting_asc" tabindex="0" aria-controls="tblList"
+                                rowspan="1" colspan="1" aria-sort="ascending"
+                                aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1"
+                                 style="width: 0px;">
+                                Product Name </th>
+                              <th class="text-center w-10pc sorting" tabindex="0" aria-controls="tblList" rowspan="1"
+                                colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">
+                                Status</th>
+                              <th class="text-center w-10pc nowrap sorting_disabled" rowspan="1" colspan="1"
+                                aria-label="#" style="width: 0px;">Action</th>
+                            </tr>
+                          </thead>
+                          {% for value in products %}
+                          <tbody>
+                            <tr role="row" class="odd">
+                              <td class="text-center w-10pc sorting_1">{{forloop.counter}}</td>
+                              <td>{{value.name}}</td>
+                              <td class=" text-center w-10pc"><span class="badge badge-success">Active</span>
+                              </td>
+                              <td class=" text-center w-10pc nowrap">
+                                <form method='POST' action="{{value.id}}/vcat">
+                                  {% csrf_token %}                                
+                                  <a type='submit' href="./{{value.name}}/delete" class="mr-1 btn btn-sm btn-icon btn-secondary"
+                                    name="delete">
+                                    <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
+                                  </a>
+                                </form>
+                              </td>
+                            </tr>
+                          </tbody>
+                          {% endfor %}
+                       
+                        </table>
+                      </div>
+                      <div class="row align-items-center">
+                        <div class="col-sm-12 col-md-5">
+                          <div class="dataTables_info" id="tblList_info" role="status" aria-live="polite">Showing 1 to
+                            10 of 26 entries</div>
+                        </div>
+                        <div class="col-sm-12 col-md-7 d-flex justify-content-end">
+                          <div class="dataTables_paginate paging_simple_numbers" id="tblList_paginate">
+                            <ul class="pagination justify-content-center">
+                              <li class="paginate_button page-item previous disabled" id="tblList_previous"><a href="#"
+                                  aria-controls="tblList" data-dt-idx="0" tabindex="0" class="page-link"><i
+                                    class="fa fa-lg fa-angle-left"></i></a></li>
+                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
+                                  data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                              <li class="paginate_button page-item "><a href="#" aria-controls="tblList" data-dt-idx="2"
+                                  tabindex="0" class="page-link">2</a></li>
+                              <li class="paginate_button page-item "><a href="#" aria-controls="tblList" data-dt-idx="3"
+                                  tabindex="0" class="page-link">3</a></li>
+                              <li class="paginate_button page-item next" id="tblList_next"><a href="#"
+                                  aria-controls="tblList" data-dt-idx="4" tabindex="0" class="page-link"><i
+                                    class="fa fa-lg fa-angle-right"></i></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              <div class="modal fade" id="mdlvehiclecategory" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                role="dialog" aria-labelledby="ModalvcLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h6 id="ModalvcLabel" class="modal-title"> Add New Product </h6>
+                    </div>
+                    <form method="post" autocomplete="off" data-parsley-validate="true" name="frmvc">
+                      <div class="modal-body">
+                        <div class="form-group">
+                          {% csrf_token %}
+                          <label class="col-form-label">Product Name<em class="text-danger">*</em></label>
+                          <input type="text" class="form-control" data-parsley-required="true" name="product_name">
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label">Status</label>
+                          <select name="vcstatus" class="custom-select">
+                            <option value="Active">Active</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <div class="custom-control custom-control-inline custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="vncckreload"
+                            data-parsley-multiple="vncckreload"> <label class="custom-control-label"
+                            for="vncckreload">Stay on this page after Save.</label>
+                        </div>
+                        <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
+                        <button type="submit" name="product_add" class="btn btn-primary w-100p">Save</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="mdlvehiclecategoryedit" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h6 id="ModalLabel" class="modal-title">Update Product</h6>
+                    </div>
+                    <form method="post" autocomplete="off" data-parsley-validate="true" name="frmvcedit" novalidate="">
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label class="col-form-label">Name<em class="text-danger">*</em></label>
+                          <input type="text" class="form-control" data-parsley-required="true" id="category"
+                            disabled="">
+                          <input type="hidden" id="vcaid" name="vcid" data-parsley-required="true" readonly="">
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label">Status</label>
+                          <select name="status_update" id="status_update" class="custom-select">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
+                        <button type="submit" name="vc_update" class="btn btn-primary w-100p">Update</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="mdlvehiclecategorydel" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h6 id="ModalLabel" class="modal-title">Confirmation</h6>
+                    </div>
+                    <div class="modal-body">
+                      <p>Do you want to Remove selected Product</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">No</button>
+                      <input type="submit" id="vc_remove" class="btn btn-primary w-100p" value="Yes">
+                      <input type="hidden" id="vcrid" readonly="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>           
+           
+          </div>
+        </div>
+        <!-- /.page-section -->
+      </div>
+      <!-- /.page-inner -->
+    </div>
+    <!-- /.page -->
+  </div>
+  <!-- /.wrapper -->
+</main>
+<!-- /.app-main -->
+<div class="aside-backdrop"></div>
+</div><!-- /.app -->
+<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
+        </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error remains
+          the same, you need to contact your Administrator immediately.</p>
+      </div>
+      <!-- /.modal-body -->
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">OK</button>
+      </div>
+      <!-- /.modal-footer -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<script src="{%static 'js/jquery.min.js' %}"></script>
+<script src="{%static 'js/popper.min.js' %}"></script>
+<script src="{%static 'js/bootstrap.min.js' %}"></script> <!-- END BASE JS -->
+<!-- BEGIN PLUGINS JS -->
+<script src="{% static 'js/pace.min.js' %}"></script>
+<script src="{% static 'js/stacked-menu.min.js' %}"></script>
+<script src="{% static 'js/perfect-scrollbar.min.js'%}"></script> <!-- END PLUGINS JS -->
+<!-- Parsley -->
+<script src="{%static 'js/parsley.js' %}"></script>
+<!-- BEGIN THEME JS -->
+<script src="{%static 'js/theme.js' %}"></script>
+<script src="{%static 'js/toastr.min.js' %}"></script>
+<script src="{%static 'js/flatpickr.min.js' %}"></script>
+<script src="{%static 'js/select2.full.min.js' %}"></script>
+<script src="{%static 'js/moment.js' %}"></script>
+<script src="{%static 'js/mask-as-number.min.js' %}"></script>
+<script src="{%static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
+<script src="{%static 'js/jquery.form.js' %}"></script>
+<script src="{%static 'js/custom.min.js' %}"></script>
+<script src="{%static 'js/vechicles.js' %}"></script>
+</body>
+
+</html>
+{%endblock%}
