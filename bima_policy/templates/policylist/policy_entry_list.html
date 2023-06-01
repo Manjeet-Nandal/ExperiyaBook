@@ -283,8 +283,6 @@
                                     filter_type_value = document.getElementById('filter_type').value
                                     filter_content = document.getElementById('filter_content')
 
-                                    // comp_col = ['HDFC ERGO', 'TATA AIG', 'ICICI LOMBARD', 'IFFCO TOKIO', 'UNITED INDIA INSURANCE', 'NEW INDIA ASSURANCE', 'BAJAJ ALLIANZ GIC', 'SBI GENERAL INSURANCE', 'GO DIGIT GIC', 'RELIANCE GIC', 'FUTURE GENERALI', 'KOTAK MAHINDRA', 'LIBERTY GIC', 'ROYAL SUNDRAM', 'SHRIRAM GIC', 'MAGMA HDI', 'UNIVERSAL SOMPO']
-                                    // vcat_col = ['TWO WHEELER', 'TWO WHEELER SCOOTER', 'TWO WHEELER COMMERCIAL', 'PRIVATE CAR', 'GCV-PUBLIC CARRIER OTHER THAN 3 W', '3 WHEELER PCV', '3 WHEELER GCV-PUBLIC CARRIER', 'TAXI 4 WHEELER', 'BUS AND OTHERS', 'MISC-D SPECIAL VEHICLE', 'SCHOOL BUS-SCHOOL NAME', 'SCHOOL BUS-INDIVIDUAL NAME']
                                     fuel_col = ['PETROL', 'DIESEL', 'CNG', 'ELECTRIC']
                                     cc_col = ['75CC-150CC', '150CC-350CC', 'ABOVE 350CC', 'BELOW 1000CC', '1000CC-1500CC', 'ABOVE 1500CC']
                                     ct_col = ['1 YEAR PACKAGE', '1+2 YEAR PACKAGE', '1+4 YEAR PACKAGE', '3 YEAR TP', '5 YEAR TP', 'TP ONLY', 'OD ONLY']
@@ -496,7 +494,7 @@
                               <div class="col-md-6">
                                  <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input value=""
                                           type="search" id="myInput" oninput="searchName()" class="form-control"
-                                          placeholder="" aria-controls="tblInsurance"></label></div>
+                                          placeholder="policy number.." aria-controls="tblInsurance"></label></div>
                               </div>
 
                            </div>
@@ -1440,141 +1438,8 @@
 
 </div>
 
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 
-
-<body onload="load_values()">
-</body>
-
-<!-- /.modal -->
-<!-- BEGIN BASE JS -->
-<!-- BEGIN BASE JS -->
-<script src="{% static 'js/perfect-scrollbar.min.js'%}"></script>
-{% comment %}
-<script src="{%static 'js/jquery.min.js' %}"></script> {% endcomment %}
-<script src="{%static 'js/popper.min.js' %}"></script>
-<script src="{%static 'js/bootstrap.min.js' %}"></script> <!-- END BASE JS -->
-<!-- BEGIN PLUGINS JS -->
-<script src="{% static 'js/pace.min.js' %}"></script>
-<script src="{% static 'js/stacked-menu.min.js' %}"></script>
-<!-- END PLUGINS JS -->
-<!-- Parsley -->
-<script src="{%static 'js/parsley.js' %}"></script>
-<!-- BEGIN THEME JS -->
-<script src="{%static 'js/theme.js' %}"></script>
-<script src="{%static 'js/toastr.min.js' %}"></script>
-<script src="{%static 'js/flatpickr.min.js' %}"></script>
-<script src="{%static 'js/select2.full.min.js' %}"></script>
-<script src="{%static 'js/moment.js' %}"></script>
-<script src="{%static 'js/mask-as-number.min.js' %}"></script>
-<script src="{%static 'js/jquery.dataTables.min.js' %}"></script>
-<script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
-<script src="{%static 'js/jquery.form.js' %}"></script>
-<script src="{%static 'js/custom.min.js' %}"></script>
-
-<script src="{%static 'js/insurance.min.js' %}"></script>
-<script src="{%static 'js/sortable.min.js' %}"></script>
-<script>
-   $(document).ready(function () {
-      $(".morefilter").click(function () {
-         $("#morefilter").toggle();
-      });
-      setDate('this_month', "#frmDate", "#toDate");
-      generateTable();
-      $('input[data-sort="checkbox"]').click(function () { 1 == $(this).prop("checked") ? $(this).val("1") : 0 == $(this).prop("checked") && $(this).val("0") });
-      $("#md-ilc-colUpdate").click(function () { var e = $(this); btnBusy(e); var c = new Array; $("ul.sortable-lists li").each(function (e) { var t = $(this).find(".colval").val(), s = $(this).find(":checkbox").val(); c.push({ colName: t, order: e, isShow: s }) }), $.post("Submit", { request: "md-ilc-colUpdate", cols: c }, function (c) { try { obj = $.parseJSON(c), toastr[obj.status](obj.response), "success" == obj.status && setInterval(function () { window.location.reload() }, 2e3) } catch (e) { systemError() } btnFree(e) }) }), $(document).on("click", "#remove", function () { var e = $("a[data-trash='remove'].selected"); $.ajax({ type: "POST", url: "Submit", data: { request: "DeletePolicy", data: e.data("url") }, success: function (c) { try { obj = $.parseJSON(c), toastr[obj.status](obj.response), "success" == obj.status && ($(e).closest("tr").remove(), $("#mdlrpolicy").modal("hide")) } catch (e) { systemError() } } }) }), $(document).on("click", "#cancel", function () { var e = $("a[data-cancel='cancel'].selected"), c = $(this); $.ajax({ beforeSend: function () { if (!$("#frmcancelp").parsley().isValid()) return !1; btnBusy(c) }, type: "POST", url: "Submit", data: { request: "CancelPolicy", remarks: $("#txtcancel_remakrs").val(), data: e.data("url") }, success: function (e) { try { obj = $.parseJSON(e), toastr[obj.status](obj.response), "success" == obj.status && (generateTable(), $("#mdlcpolicy").modal("hide")) } catch (e) { systemError() } } }), btnFree(c) }), $("#tblInsurance tbody").on("click", "tr", function () { $(this).hasClass("selected") ? ($(this).find("input[type=checkbox]").eq(0).prop("checked", !1), $(this).removeClass("selected")) : ($(this).addClass("selected"), $(this).find("input[type=checkbox]").eq(0).prop("checked", !0)) }), $("#chkblkrm").click(function () { var e = this.checked; $("table#tblInsurance").find("tbody > tr").each(function () { e ? $(this).addClass("selected").find("input[type=checkbox]").eq(0).prop("checked", !0) : $(this).removeClass("selected").find("input[type=checkbox]").eq(0).prop("checked", !1) }) }), $("#chkpolicy_form").click(function () { var e = this.checked; $("input[data-remove-group='block-r']").each(function () { e ? $(this).eq(0).prop("checked", !0).prop("disabled", !0) : $(this).eq(0).prop("checked", !1).prop("disabled", !1) }) }), $("#bulk_remove").click(function () { var e = []; $("#tblInsurance td input[type=checkbox]:checked").each(function () { void 0 !== $(this).val() && e.push($(this).val()) }), e.length > 0 && $("#confirm-modal-remove").modal("show") }), $(document).on("click", "#mdlbtnblkremove", function () { var e = $(this), c = [], t = 0, s = 0, o = 0; $("#tblInsurance td input[type=checkbox]:checked").each(function () { void 0 !== $(this).val() && c.push($(this).val()) }), $("#chkpolicy_form").is(":checked") && (t = 1), $("#chkprevious_documents").is(":checked") && (s = 1), $("#chkvehicle_rc").is(":checked") && (o = 1), $.ajax({ beforeSend: function () { if (!$("input[data-remove-group='block-r']:checked").length > 0) return $("#resbulkremove").removeClass("d-none"), !1; $("#resbulkremove").addClass("d-none"), btnBusy(e) }, type: "POST", url: "Submit", data: { request: "PolicyBulkRemove", policies: c, policy_form: t, previous_documents: s, vehicle_rc: o }, success: function (e) { try { obj = $.parseJSON(e), toastr[obj.status](obj.response), "success" == obj.status && (generateTable(), $("#confirm-modal-remove").modal("hide"), $("#chkblkrm").prop("checked", !1), $("#chkpolicy_form").trigger("click")) } catch (e) { systemError() } } }), btnFree(e) });
-
-   });
-   function generateTable() {
-      var frmDate = ($("#frmDate").val()) ? $("#frmDate").val() : '';
-      var toDate = ($("#toDate").val()) ? $("#toDate").val() : '';
-      var table = $('#tblInsurance');
-      var configcol = [0, 7, 8, 9, 10, 11, 13, 14, 15];
-      var r = 1;
-      var sf = 18; if (r == 1) { sf = 21; configcol.push(16, 17, 18); }
-      table.DataTable().clear().destroy();
-      table.DataTable({
-         "dom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>\n  <'table-responsive'tr>\n        <'row align-items-center'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 d-flex justify-content-end'p>>",
-         "language": {
-            paginate: {
-               previous: '<i class="fa fa-lg fa-angle-left"></i>',
-               next: '<i class="fa fa-lg fa-angle-right"></i>'
-            },
-            infoFiltered: ""
-         },
-         "order": [[0, "desc"]],
-         "bLengthChange": true,
-         "processing": false,
-         "bServerSide": true,
-         "bStateSave": false,
-         "scrollX": true,
-         "sAjaxSource": "getInsurance.php",
-         /*"fixedColumns":   {
-            leftColumns: 0,
-            rightColumns: 1
-         },*/
-         "autoWidth": false,
-         "scrollY": false,
-         "scrollCollapse": true,
-         "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
-            aoData.push({ "name": "frmDate", "value": frmDate });
-            aoData.push({ "name": "toDate", "value": toDate });
-            aoData.push({ "name": "agent", "value": $("#agent").val() });
-            aoData.push({ "name": "sp", "value": $("#service_provider").val() });
-            aoData.push({ "name": "vc", "value": $("#vehicle_category").val() });
-            oSettings.jqXHR = $.ajax({
-               "dataType": 'json',
-               "url": sSource,
-               "data": aoData,
-               "success": function (data) { fnCallback(data) },
-               "error": function (e) {
-                  console.log(e.responseText);
-               },
-            });
-         },
-         "initComplete": function () {
-            $(document).on('click', "a[data-trash='remove']", function () {
-               $("#mdlrpolicy").modal('show');
-               $("a[data-trash='remove']").removeClass('selected');
-               $(this).addClass('selected');
-            });
-            $(document).on('click', "a[data-cancel='cancel']", function () {
-               $("#mdlcpolicy").modal('show');
-               $("a[data-cancel='cancel']").removeClass('selected');
-               $(this).addClass('selected');
-            });
-         },
-         "createdRow": function (row, data, dataIndex) {
-            $(row).find('td:last').addClass('text-center');
-            $(row).find('td:last').prev('td').addClass('text-center');
-            if ($(data[(data.length) - 2]).html() == 'Cancelled') {
-               $(row).addClass('text-red');
-            }
-         },
-         "columnDefs": [
-            { targets: [0], className: "text-center" },
-            { targets: [1], className: "text-center", orderable: false },
-         ],
-      });
-   }
-
-</script>
-
-
-<script>
-
-   function load_values() {
-      pids = "{{policyid_list|safe}}".replace('[', '').replace(']', '').split(',')
-      console.log('res ' + pids);
-
-      pids.forEach(element => {
-         console.log(element.replace("'", "").replace("'", "").trim())
-         policyid_list.push(element.replace("'", "").replace("'", "").trim())
-      });
-
-      // document.getElementById('myInput').innerHTML = ""
-   }
-
-</script>
 
 <script>
    var c = [];
@@ -1592,6 +1457,18 @@
    var curIndex = 0
 
    var returned_index = 0
+
+   function load_values() {
+      pids = "{{policyid_list|safe}}".replace('[', '').replace(']', '').split(',')
+      console.log('res ' + pids);
+
+      pids.forEach(element => {
+         console.log(element.replace("'", "").replace("'", "").trim())
+         policyid_list.push(element.replace("'", "").replace("'", "").trim())
+      });
+
+
+   }
 
    function selectAllPolicy() {
 
@@ -2384,7 +2261,7 @@
       "{{ agents |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
-            value = item.replaceAll("'", "")          
+            value = item.replaceAll("'", "")
             var newoption = document.createElement("option");
             newoption.value = value
             newoption.innerHTML = value
@@ -2406,7 +2283,7 @@
       "{{ insurers |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
-            value = item.replaceAll("'", "")          
+            value = item.replaceAll("'", "")
             var newoption = document.createElement("option");
             newoption.value = value
             newoption.innerHTML = value
@@ -2428,7 +2305,7 @@
       "{{ vehicle_categories |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
-            value = item.replaceAll("'", "")          
+            value = item.replaceAll("'", "")
             var newoption = document.createElement("option");
             newoption.value = value
             newoption.innerHTML = value
@@ -2450,7 +2327,7 @@
       "{{ makes |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
-            value = item.replaceAll("'", "")          
+            value = item.replaceAll("'", "")
             var newoption = document.createElement("option");
             newoption.value = value
             newoption.innerHTML = value
@@ -2472,7 +2349,7 @@
       "{{ models |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
 
-            value = item.replaceAll("'", "")          
+            value = item.replaceAll("'", "")
             var newoption = document.createElement("option");
             newoption.value = value
             newoption.innerHTML = value
@@ -2496,8 +2373,11 @@
    }
 
 </script>
-<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
-<script src="{% static 'js/policy_entry_list.js' %}"></script>
-<script src="{% static 'js/jquery.min.js' %}"></script>
+
+
+<body onload="load_values()">
+</body>
+
+
 
 {%endblock%}

@@ -545,6 +545,47 @@ def read_all_vehical_data_file():
     return context
 
 
+def product_view(request):
+
+    print("product_view method calling")
+    # mylist = zip(datamn, data)
+
+    if request.method == "GET":
+        try:
+            products = Product.objects.all().values()  
+            return render(request, 'product/product.html', { "products": products})
+        except(Product.DoesNotExist):
+            return render(request, 'product/product.html')
+    else:        
+        if 'product_add' in request.POST:          
+            Product.objects.create(name=request.POST['product_name'], status='Active')
+                    
+            return redirect('bima_policy:product_view')
+
+
+def add_product(request, name):
+    try: 
+        print('add_product method')
+        print(name)
+        product = Product.objects.create(name = name) 
+        print('product created: ', product)  
+        return redirect('bima_policy:product_view')
+    except Exception as ex:
+        print(ex)
+        return HttpResponse('Error Occurred in delete_product method! Report this problem to your Admin: ' + str(ex))
+
+def delete_product(request, name):
+    try: 
+        print('delete_product method')
+        print(name)
+        Product.objects.filter(name = name).delete() 
+        print('product deleted: ')  
+        return redirect('bima_policy:product_view')
+    except Exception as ex:
+        print(ex)
+        return HttpResponse('Error Occurred in delete_product method! Report this problem to your Admin: ' + str(ex))
+
+
 def vehicle_view(request):
 
     print("vehicle_view method calling")
