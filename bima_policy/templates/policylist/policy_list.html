@@ -618,17 +618,17 @@
                                           <label>Product Name <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="product_name" id="product_name" class="custom-select " required>
                                              <option value="" hidden> -- Select Product -- </option>
-                                             <option value="FIRE">FIRE</option>
+                                             <!-- <option value="FIRE">FIRE</option>
                                              <option value="HEALTH">HEALTH</option>
                                              <option value="LIABILITY">LIABILITY</option>
                                              <option value="MARINE CARGO">MARINE CARGO</option>
                                              <option value="MARINE HULL">MARINE HULL</option>
                                              <option value="ENGINEERING">ENGINEERING</option>
-                                             <option value="MISCELLANEOUS">MISCELLANEOUS</option>
+                                             <option value="MISCELLANEOUS">MISCELLANEOUS</option> -->
 
-                                             <!-- {%for value in data_vc%}
+                                             {%for value in products %}
                                              <option value="{{value}}">{{value}}</option>
-                                             {%endfor%} -->
+                                             {%endfor%}
                                           </select>
                                        </div>
                                        <div class="col-md-3 mb-4">

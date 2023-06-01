@@ -55,14 +55,18 @@
                                              class="custom-select" id="product_name" data-parsley-required="true"
                                              multiple required  >
                                              <option value="" onclick="selectAllItems('product_name')" >-- select all --  </option>
-                                             <option value="MOTOR">MOTOR</option>
+                                             <!-- <option value="MOTOR">MOTOR</option>
                                              <option value="FIRE">FIRE</option>
                                              <option value="MARINE">MARINE</option>
                                              <option value="BURGULARY">BURGULARY</option>
                                              <option value="SHOPKEEPER">SHOPKEEPER</option>
                                              <option value="ENGINEERING">ENGINEERING</option>
                                              <option value="WC">WC</option>
-                                             <option value="OTHERS">OTHERS</option>
+                                             <option value="OTHERS">OTHERS</option> -->
+
+                                             {%for value in products %}
+                                             <option value="{{value}}">{{value}}</option>
+                                             {%endfor%}
 
                                           </select>
                                        </div>

@@ -1483,6 +1483,12 @@ class create_policy_non_motor(View):
     def get(self, request):
         print('create_policy Non get')
 
+        # getting products name and sorts them.
+        products = []
+        for p in Product.objects.values('name'):
+            products.append(p['name'])
+        products.sort()
+
         # getting agents full name and sorts them.
         agents = []
         for ag in Agents.objects.values('full_name'):
@@ -1514,6 +1520,7 @@ class create_policy_non_motor(View):
         bqps.sort()
 
         context = {
+            "products": products,
             "agents": agents,
             "insurers": insurers,              
             "service_providers": service_providers,              
@@ -1606,6 +1613,7 @@ class create_policy_non_motor(View):
         data = Policy.objects.filter(policyid=data.policyid).values()
 
         return render(request, 'policylist/policy_entry_list.html', {'data': data})
+  
   
 def apply_policy(request, id):
     try:
@@ -3612,6 +3620,12 @@ def policy_entrydata(request, id):
         data = Policy.objects.get(policyid=id)
 
         print('data: ', data)
+
+        # getting products name and sorts them.
+        products = []
+        for p in Product.objects.values('name'):
+            products.append(p['name'])
+        products.sort()
         
         # getting agents full name and sorts them.
         agents = []
@@ -3690,6 +3704,7 @@ def policy_entrydata(request, id):
 
         context = {
             "data": data,
+            "products": products,
             "agents": agents,
             "insurers": insurers,
             "service_providers": service_providers,              
@@ -3765,12 +3780,6 @@ def edit_policy(request, id):
         policy_type = request.POST.get('policy_type')
         Policy.objects.filter(policyid=id).update(policy_no=policy_no, registration_no=registration, casetype=case_type, insurance_comp=ins_company, sp_name=service_provider, sp_brokercode=code, issueDate=issue_date, riskDate=risk_date, CPA=cpa, insurance=document, previous_policy=previous_policy, vehicle_rc=vehicle_rc, vehicle_makeby=vehicle_makeby,
                                                   vehicle_model=vehicle_model, vehicle_category=vehicle_category, other_info=vehicle_other_info, vehicle_fuel_type=fuel_type, manufature_year=manu_year, engine_no=engine_no, chasis_no=chasis_no, agent_name=agent, customer_name=cust_name, remark=remarks, OD_premium=od, TP_premium=tp, GST=gst, net=net, payment_mode=payment_mode, total=total, policy_type=policy_type)
-        return redirect('bima_policy:policy_entry')
-
-
-def policy_deleteO(request, id):
-    if request.method == 'GET':
-        Policy.objects.get(policyid=id).delete()
         return redirect('bima_policy:policy_entry')
 
 
@@ -4096,6 +4105,12 @@ def slab_payoutform(request):
 
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
 
+        # getting products name and sorts them.
+        products = []
+        for p in Product.objects.values('name'):
+            products.append(p['name'])
+        products.sort()
+
         # getting agents full name and sorts them.
         agents = []
         for ag in Agents.objects.values('full_name'):
@@ -4135,7 +4150,8 @@ def slab_payoutform(request):
             models.append(vm["model"])  
         
         context = {
-            "slab": slab,         
+            "slab": slab,      
+            "products": products,
             "agents": agents,
             "insurers": insurers,
             "service_providers": service_providers,              
@@ -4312,6 +4328,12 @@ def slab_payoutformshow(request, id):
         slab = Slab.objects.filter(profile_id=get_id_from_session(request))
 
         data = Payout.objects.get(payoutid=id)
+
+        # getting products name and sorts them.
+        products = []
+        for p in Product.objects.values('name'):
+            products.append(p['name'])
+        products.sort()
       
         # getting agents full name and sorts them.
         agents = []
@@ -4352,7 +4374,8 @@ def slab_payoutformshow(request, id):
             models.append(vm["model"])  
         
         context = {
-            "slab": slab,         
+            "slab": slab,       
+            "products": products,
             "data": data,         
             "agents": agents,
             "insurers": insurers,
