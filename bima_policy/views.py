@@ -83,7 +83,9 @@ def loginView(request):
                 
                 request.session["role"] = "admin"
                 try:
-                    request.session['profile_image'] = user.profile_image.url
+                    request.session['profile_image'] = user.profile_image.name
+                    print('profile_image: ',  user.profile_image.name)
+
                 except Exception as ex_u1:
                     pass
 
@@ -95,7 +97,7 @@ def loginView(request):
                 # role = user_ob.role
                 request.session["role"] = "agent"
                 try:
-                    request.session['profile_image'] = user1.profile_image.url
+                    request.session['profile_image'] = user1.profile_image.name
                 except Exception as ex_u1:
                     pass
                 return redirect('bima_policy:dashboard')
@@ -104,7 +106,7 @@ def loginView(request):
                 request.session['staffname'] = user2.staffname
                 request.session["role"] = "staff"
                 try:
-                    request.session['profile_image'] = user2.profile_image.url
+                    request.session['profile_image'] = user2.profile_image.name
                 except Exception as ex_u1:
                     pass
 
