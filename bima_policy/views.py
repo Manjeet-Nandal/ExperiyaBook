@@ -74,16 +74,19 @@ def loginView(request):
                 id = p.id
                 request.session['id'] = user.id
                 request.session['full_name'] = user.full_name
+
+                # userr_ob = UserRole.objects.filter(profile_id=id)
+                # if userr_ob:
+                #     pass
+                # else:
+                #     UserRole.objects.create(profile_id_id=id, role='admin')
+                
+                request.session["role"] = "admin"
                 try:
                     request.session['profile_image'] = user.profile_image.url
                 except Exception as ex_u1:
                     pass
 
-                userr_ob = UserRole.objects.filter(profile_id=id)
-                if userr_ob:
-                    pass
-                else:
-                    UserRole.objects.create(profile_id_id=id, role='admin')
                 return redirect('bima_policy:dashboard')
             if user1:
                 id = request.session['id'] = user1.login_id
@@ -91,11 +94,20 @@ def loginView(request):
                 # user_ob = UserRole.objects.filter(agent_id=id).first()
                 # role = user_ob.role
                 request.session["role"] = "agent"
+                try:
+                    request.session['profile_image'] = user1.profile_image.url
+                except Exception as ex_u1:
+                    pass
                 return redirect('bima_policy:dashboard')
             if user2:
                 request.session['id'] = user2.login_id
                 request.session['staffname'] = user2.staffname
                 request.session["role"] = "staff"
+                try:
+                    request.session['profile_image'] = user2.profile_image.url
+                except Exception as ex_u1:
+                    pass
+
                 return redirect('bima_policy:dashboard')
             return render(request, 'login.html', {'error_message': 'Invalid ID or Password!'})
     except (ProfileModel.DoesNotExist, Agents.DoesNotExist, StaffModel.DoesNotExist):
@@ -120,6 +132,19 @@ def Profile(request):
             return render(request, 'login.html', {'success_message': 'Password update successfully!'})
         except ProfileModel.DoesNotExist:
             return HttpResponse('Profile does not exist.')
+    
+    elif request.method == 'POST' and 'update_profile_image' in request.POST:
+        try:
+            profile_image  = request.FILES.get('profile_image')
+            if profile_image is not None:
+                fspr = FileSystemStorage()        
+                fspr.save(profile_image.name, profile_image)        
+                profile = ProfileModel.objects.filter(id=get_id_from_session(request))
+                profile.update(profile_image=profile_image.name)
+                print('Image updated')
+                return render(request, 'login.html', {'success_message': 'Image update successfully!'})
+        except ProfileModel.DoesNotExist:
+            return HttpResponse('Profile does not exist.')
 
 
 # UserView
@@ -142,6 +167,7 @@ def staffmanage(request):
 
 
 def staff_edit(request, id):
+    print('staff edit calling: ')
     if request.method == 'GET':
         try:
             data = StaffModel.objects.filter(login_id=id)
@@ -150,10 +176,26 @@ def staff_edit(request, id):
             return render(request, 'user/user_edit.html')
     else:
         if 'profile' in request.POST:
-            StaffModel.objects.filter(login_id=id).update(
-                staffname=request.POST['full_name'], status=request.POST['status'])
-        return redirect('bima_policy:staff')
+            StaffModel.objects.filter(login_id=id).update(staffname=request.POST['full_name'])
+            print('staffname updated')
+            return render(request, 'login.html', {'success_message': 'Name updated successfully!'})
 
+        if 'security' in request.POST:
+            StaffModel.objects.filter(login_id=id).update(password=request.POST['password'])
+            print('password updated')
+            return render(request, 'login.html', {'success_message': 'Password updated successfully!'})
+                        
+        if 'update_profile_image' in request.POST:
+            profile_image  = request.FILES.get('profile_image')
+            if profile_image is not None:
+                fspr = FileSystemStorage()        
+                fspr.save(profile_image.name, profile_image)        
+                profile = StaffModel.objects.filter(login_id=get_id_from_session(request))
+                profile.update(profile_image=profile_image.name)
+                StaffModel.objects.filter(login_id=id).update( profile_image=profile_image.name)
+                print('profile_image updated')
+                return render(request, 'login.html', {'success_message': 'Image updated successfully!'})
+        return redirect('bima_policy:staff')
 
 # ProfileView
 def bank_details(request):

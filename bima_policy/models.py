@@ -19,8 +19,8 @@ class ProfileModel(models.Model):
     package_GB = models.CharField(max_length=10)
     package_MB = models.CharField(max_length=10)
     package_duration = models.CharField(max_length=10)
-
-    profile_image = models.ImageField(upload_to='media/profile_images/', null=True, blank=True)
+    profile_image = models.ImageField(
+        upload_to='media/profile_images/', null=True, blank=True)
 
     def __str__(self):
         return self.id
@@ -37,8 +37,8 @@ class StaffModel(models.Model):
     staffname = models.CharField(max_length=100)
     password = models.CharField(max_length=20)
     status = models.CharField(default='Active', max_length=20)
-
-    profile_image = models.ImageField(upload_to='media/profile_images/', null=True, blank=True)
+    profile_image = models.ImageField(
+        upload_to='media/profile_images/', null=True, blank=True)
 
     # reload UUID after inserting data
 

@@ -22,7 +22,6 @@ urlpatterns = [
     path('product/', product_view, name='product_view'),
     path('product/<str:name>/add', add_product, name='add_product'),
     path('product/<str:name>/delete', delete_product, name='delete_product'),
-
     path('vehicle/', vehicle_view, name='vehi'),
     path('vehicle/<str:id>/', delete_vehicle, name='del_vehicle'),
     path('vehicle/<str:id>/category', delete_vehicle_category, name='delete_vehicle_category'),

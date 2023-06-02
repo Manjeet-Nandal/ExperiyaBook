@@ -149,7 +149,8 @@
                         <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                         <span class="user-avatar user-avatar-md">
-                        <img src="{% static 'images/user.png' %}" alt="Demo">
+                        <img src="{{ request.session.profile_image }}" alt="Demo">
+                        <!-- <img src="{% static 'images/user.png' %}" alt="Demo"> -->
                         </span>
                         </button> <!-- .dropdown-menu -->
                         <div class="dropdown-menu">
@@ -164,12 +165,19 @@
                               </a>
                            {%  endif %}
                            
-                           <div class="dropdown-divider"></div>                              
+                           {%  if request.session.role == 'staff' %}
+                           <a class="dropdown-item" href="/bima_policy/user/edit/{{request.session.id}}" >
+                              {% comment %} <span class="dropdown-icon icofont icofont-ui-password"></span> {% endcomment %}
+                              <i class="fa fa-key" aria-hidden="true" id='icon'></i> Profile
+                              </a>
+                           {%  endif %}
+
+                           <!-- <div class="dropdown-divider"></div>                               -->
                                        
-                           <a class="dropdown-item"  data-toggle="modal" data-target="#mdlUpdatePassword">
+                           <!-- <a class="dropdown-item"  data-toggle="modal" data-target="#mdlUpdatePassword">
                            {% comment %} <span class="dropdown-icon icofont icofont-ui-password"></span> {% endcomment %}
                            <i class="fa fa-key" aria-hidden="true" id='icon'></i> Change Password
-                           </a>
+                           </a> -->
 
                            
                            <div class="dropdown-divider"></div>
