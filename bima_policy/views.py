@@ -70,11 +70,15 @@ def loginView(request):
             user2 = StaffModel.objects.filter(
                 login_id=full_name, password=password).first()
             if user:
-                p = ProfileModel.objects.filter(
-                    full_name=full_name, password=password).first()
+                p = ProfileModel.objects.filter( full_name=full_name, password=password).first()
                 id = p.id
                 request.session['id'] = user.id
                 request.session['full_name'] = user.full_name
+                try:
+                    request.session['profile_image'] = user.profile_image.url
+                except Exception as ex_u1:
+                    pass
+
                 userr_ob = UserRole.objects.filter(profile_id=id)
                 if userr_ob:
                     pass
