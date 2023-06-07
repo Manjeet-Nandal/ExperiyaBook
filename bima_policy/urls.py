@@ -68,4 +68,6 @@ urlpatterns = [
     path('docs/download/<str:id>/', download_pdf, name="download_pdf"),
     path('deleted_policy/<str:id>/', store_deleted_policy, name="store_deleted_policy"),
     path('policy/deleted_entry/', policy_deleted_entry, name="policy_deleted_entry"),
+    path('policy/local_entry/', policy_local_entry, name="policy_local_entry"),
+    path('policy/new_entry/', new_entry, name="new_entry")    
 ]

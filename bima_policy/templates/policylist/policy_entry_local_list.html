@@ -1,0 +1,2425 @@
+{%extends "base.html"%}
+{%block content%}
+{% load static %}
+
+<main class="app-main">
+   <script>
+      var p_num = 25
+   </script>
+   <!-- .app-main -->
+   <div class="wrapper">
+      <!-- .wrapper -->
+      <div class="page ">
+         <!-- .page -->
+         <div class="page-inner">
+            <!-- .page-inner -->
+            <header class="page-title-bar">
+               <!-- .page-title-bar -->
+               <!-- grid row -->
+               <div class="row text-center text-sm-left">
+                  <!-- grid column -->
+                  <div class="col">
+                     <h1 class="page-title"> Policy List Local
+                        <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" hidden
+                           data-target="#mdlcolsetting" title="Column Setting"><i class="fa fa-cog"
+                              aria-hidden="true"></i> Column Setting</button>
+                     </h1>
+                  </div>
+                  <!-- /grid column -->
+               </div>
+               <!-- /grid row -->
+            </header>
+            <!-- .page-section -->
+            <div class="page-section">
+               <!-- .card -->
+               <div class="card card-fluid">
+                  <!-- .card-header -->
+                  <div class="card-header">
+                     <form id="frminslist" autocomplete="off">
+                        <div class="row">
+                           <div class="col-md-2 col-sm-12">
+                              <select class="custom-select" name="period" id="select-period">
+                                 <!-- <option value="{{period}}">{{period}}</option> -->
+                                 <option value="today">Today</option>
+                                 <option value="yesterday">Yesterday</option>
+                                 <option value="this_month">This Month</option>
+                                 <option value="last_month">Last Month</option>
+                                 <option value="current_year">Current Year</option>
+                                 <option value="custom">Custom</option>
+                              </select>
+                           </div>
+
+                           <div class="col-md-2 col-sm-12">
+                              <div class="form-group">
+                                 <input type="text" id="frmDate" data-alt-format="Y-m-d" data-date-format="d/m/Y"
+                                    data-toggle="flatpickr" placeholder="DD-MM-YYYY"
+                                    class="form-control flatpickr-input" disabled="" readonly="readonly">
+                              </div>
+                           </div>
+                           <div class="col-md-2 col-sm-12">
+                              <div class="form-group">
+                                 <input type="text" id="toDate" data-alt-format="Y-m-d" data-date-format="d/m/Y"
+                                    data-toggle="flatpickr" placeholder="DD-MM-YYYY"
+                                    class="form-control datepicker flatpickr-input" disabled="" readonly="readonly">
+                              </div>
+                           </div>
+
+                           <div class="col-md-3 col-sm-12" hidden>
+                              <select name="agents" data-parsley-required-message=""
+                                 class="custom-select select2 select2-hidden-accessible" id="agents"
+                                 data-parsley-required="true" tabindex="-1" aria-hidden="true">
+                                 <option value=""> All Agents</option>
+                                 <!-- {%for value in datag%}
+                                 <option value={{value.full_name}}>{{value.full_name}}</option>
+                                 {%endfor%} -->
+                              </select>
+                           </div>
+
+                           <div class="col-md-6 ">
+                              <div class="form-group">
+                                 <button onclick="entry_filter()" type="button" id="filterlist"
+                                    class="btn btn-secondary " title="Filter"><i class="fa fa-search"
+                                       aria-hidden="true"></i> </button>
+                                 <button type="button" id="btnreset" class="btn btn-secondary" title="Refresh"
+                                    onclick="resertDocument()"><i class="icofont icofont-refresh"
+                                       aria-hidden="true"></i> </button>
+                                 <button type="button" onclick="ExportToExcel('xlsx')" id="download_inslist"
+                                    class="btn btn-secondary " title="Download"><i class="fa fa-download"
+                                       aria-hidden="true"></i> </button>
+                                 <button data-toggle="modal" data-target="" type="button" id="bulk_remove"
+                                    class="btn btn-secondary" title="Delete"><i class="icofont icofont-trash"
+                                       aria-hidden="true"></i> </button>
+                                 <a id="linkShowFilterDiv" href="#" class="no-wrap pl-0 morefilter" title="More Filter"
+                                    onclick="showMoreFilters()"><small>More
+                                       Filter</small></a>
+
+
+                                 <div class="modal fade" id="mdlcolsetting"
+                                    onmouseenter="document.getElementById('inp_search').focus()" style="height: 400px">
+
+                                    <div class="modal-dialog" role="document">
+
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <h5 id="rtoModalLabel" class="modal-title"> Delete Policy</h5>
+                                          </div>
+                                          <div class="modal-body ">
+                                             <div class="form-row">
+                                                <div class="col-md-12 mb-4">
+                                                   <div class=""><label>Are You Sure? You want to delete the
+                                                         Record(s)..<input hidden id="inp_search" type="text" value=""
+                                                            class="form-control" name="agent"
+                                                            style="text-transform: uppercase;"
+                                                            title="Search POS using Name, mobile no, email, pan/aadhar number">
+                                                      </label></div>
+                                                </div>
+
+                                             </div>
+
+                                             <div class="modal-footer">
+                                                <button id="btnExit" type="button" class="btn btn-secondary w-100p"
+                                                   data-dismiss="modal">Cancel</button>
+
+                                                <button type="button" id="posUpdate" onclick="bulk_policy_remove()"
+                                                   class="btn btn-primary w-100p "
+                                                   style="background: red;">Delete</button>
+
+                                             </div>
+                                          </div>
+
+                                       </div>
+
+                                    </div>
+                                    <!-- <body onload="setFocus()">
+                                                
+                                             </body> -->
+
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-2 ">
+
+                              <!-- <input id="payout_switch" type="checkbox" value="No Payouts">
+                              <label for="">No Payouts</label> -->
+
+                           </div>
+                           {% if is_user %}
+                           <div class="col-md-1" style="text-align: right;" hidden>
+                              <style>
+                                 .switch {
+                                    position: relative;
+                                    display: inline-block;
+                                    width: 60px;
+                                    height: 34px;
+                                 }
+
+                                 .switch input {
+                                    opacity: 0;
+                                    width: 0;
+                                    height: 0;
+                                 }
+
+                                 .slider {
+                                    position: absolute;
+                                    cursor: pointer;
+                                    top: 0;
+                                    left: 0;
+                                    right: 0;
+                                    bottom: 0;
+                                    background-color: #ccc;
+                                    -webkit-transition: .4s;
+                                    transition: .4s;
+                                 }
+
+                                 .slider:before {
+                                    position: absolute;
+                                    content: "";
+                                    height: 26px;
+                                    width: 26px;
+                                    left: 4px;
+                                    bottom: 4px;
+                                    background-color: white;
+                                    -webkit-transition: .4s;
+                                    transition: .4s;
+                                 }
+
+                                 input:checked+.slider {
+                                    background-color: #2196F3;
+                                 }
+
+                                 input:focus+.slider {
+                                    box-shadow: 0 0 1px #2196F3;
+                                 }
+
+                                 input:checked+.slider:before {
+                                    -webkit-transform: translateX(26px);
+                                    -ms-transform: translateX(26px);
+                                    transform: translateX(26px);
+                                 }
+
+                                 /* Rounded sliders */
+                                 .slider.round {
+                                    border-radius: 34px;
+                                 }
+
+                                 .slider.round:before {
+                                    border-radius: 50%;
+                                 }
+                              </style>
+
+                              <label class="switch">
+                                 <input id="payout_switch" type="checkbox">
+                                 <span class="slider round"></span>
+                              </label>
+                           </div>
+                           {% endif %}
+                        </div>
+                        <div id="morefilters" class="row" hidden>
+                           <div class="form-row">
+                              <input id="ps1" name="ps1" type="checkbox" value="No Payouts" class="checkbox mr-2"
+                                 style="margin-bottom: auto; margin-top: 4px;">
+                              <label for="ps1">Payout-less Policies</label>
+                           </div>
+
+                           <div class="col-md-5 mb-4">
+
+                              <input type="text" id="search-select_vc" class="form-control"
+                                 placeholder="Select any field">
+                              <select id="filter_type" name="filter_type" data-parsley-required-message="" multiple
+                                 data-parsley-required="true" class="custom-select " required
+                                 onchange="add_filter_type()">
+                                 <option value="agent">Agents</option>
+                                 <option value="insurer">Insurers</option>
+                                 <option value="vehicle_catagory">Vehicle Catagory</option>
+                                 <option value="vehicle_makeby">Vehicle Makeby</option>
+                                 <option value="vehicle_model">Vehicle Model</option>
+                                 <option value="fuel_type">Fuel Type</option>
+                                 <option value="cc">Cubic Capacity</option>
+                                 <option value="sc">Seating Capacity</option>
+                                 <option value="ct">Coverage Type</option>
+                                 <option value="gvw">GVW</option>
+                                 <option value="policy_type">Policy Type</option>
+                                 <option value="addon">Addon</option>
+                                 <option value="ncb">NCB</option>
+                                 <option value="cpa">CPA</option>
+
+                              </select>
+                              <!-- <input type="text" id="search-select_vc" class="form-control"> -->
+
+                              <button id="select-all_vc" hidden>Select All</button>
+                              <button id="deselect-all_vc" hidden>Deselect All</button>
+
+                              <script>
+                                 const select_vc = document.getElementById("vehicle_catagory");
+                                 const selectAllButton_vc = document.getElementById("select-all_vc");
+                                 const deselectAllButton_vc = document.getElementById("deselect-all_vc");
+                                 const searchInput_vc = document.getElementById("search-select_vc");
+
+                                 selectAllButton_vc.addEventListener("click", () => {
+                                    Array.from(select.options).forEach(option => option.selected = true);
+                                 });
+
+                                 deselectAllButton_vc.addEventListener("click", () => {
+                                    Array.from(select.options).forEach(option => option.selected = false);
+                                 });
+
+                                 searchInput_vc.addEventListener("input", () => {
+                                    const searchValue = searchInput_vc.value.toLowerCase();
+                                    Array.from(select_vc.options).forEach(option => {
+                                       const optionText = option.textContent.toLowerCase();
+                                       option.style.display = optionText.includes(searchValue) ? "" : "none";
+                                    });
+                                 });
+
+                              </script>
+
+                              <script>
+
+                                 function add_filter_type() {
+                                    // document.getElementById('btnFilter').disabled = false
+                                    // document.getElementById('divFilterContent').hidden = false
+                                    // document.getElementById('divFilterContentBtns').hidden = false
+
+                                    filter_type_value = document.getElementById('filter_type').value
+                                    filter_content = document.getElementById('filter_content')
+
+                                    fuel_col = ['PETROL', 'DIESEL', 'CNG', 'ELECTRIC']
+                                    cc_col = ['75CC-150CC', '150CC-350CC', 'ABOVE 350CC', 'BELOW 1000CC', '1000CC-1500CC', 'ABOVE 1500CC']
+                                    ct_col = ['1 YEAR PACKAGE', '1+2 YEAR PACKAGE', '1+4 YEAR PACKAGE', '3 YEAR TP', '5 YEAR TP', 'TP ONLY', 'OD ONLY']
+                                    sc_col = ['BELOW 5', '5-7', '7-12', '12-18', 'ABOVE 18']
+                                    gvw_col = ['BELOW 2000', '2000-2500', '2500-3500', '3500-7000', '7000-7500', '7500-12000', '12000-25000', '25000-40000', 'ABOVE 40000']
+                                    policy_type_col = ['FRESH', 'RENEWAL', 'ROLLOVER', 'ENDORSEMENT']
+                                    addon_col = ['YES', 'NO']
+                                    ncb_col = ['YES', 'NO']
+                                    cpa_col = ['YES', 'NO']
+
+                                    if (filter_type_value == 'agent') {
+                                       addAgentNames();
+                                    }
+                                    else if (filter_type_value == 'insurer') {
+                                       addInsurerNames();
+                                    }
+                                    else if (filter_type_value == 'vehicle_catagory') {
+                                       // add_items(vcat_col, filter_content)                                     
+
+                                       addVehicleCat()
+                                    }
+                                    else if (filter_type_value == 'vehicle_makeby') {
+                                       // add_items(vmb_col, filter_content)
+                                       addVehicleMakes();
+                                    }
+                                    else if (filter_type_value == 'vehicle_model') {
+                                       // add_items(vmb_col, filter_content)
+                                       addVehicleModels();
+                                    }
+                                    else if (filter_type_value == 'fuel_type') {
+                                       add_items(fuel_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'cc') {
+                                       add_items(cc_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'ct') {
+                                       add_items(ct_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'sc') {
+                                       add_items(sc_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'gvw') {
+                                       add_items(gvw_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'policy_type') {
+                                       add_items(policy_type_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'addon') {
+                                       add_items(addon_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'ncb') {
+                                       add_items(ncb_col, filter_content)
+                                    }
+                                    else if (filter_type_value == 'cpa') {
+                                       add_items(cpa_col, filter_content)
+                                    }
+                                 }
+                              </script>
+
+                           </div>
+
+
+                           <div id="divFilterContent" class="col-md-5 mb-4">
+                              <!-- <label for="my-select">Vehicle Make:</label> -->
+                              <input type="text" id="search-select" class="form-control" placeholder="Search..">
+                              <select id="filter_content" name="filter_content" class="form-control" multiple>
+                                 <option id="op_select_all" value="" onclick="select_all_Items('filter_content')">
+                                 </option>
+
+                              </select>
+                              <!-- <input type="text" id="search-select" class="form-control"> -->
+
+                              <button id="select-all" hidden>Select All</button>
+                              <button id="deselect-all" hidden>Deselect All</button>
+
+                              <script>
+                                 const select = document.getElementById("filter_content");
+                                 const selectAllButton = document.getElementById("select-all");
+                                 const deselectAllButton = document.getElementById("deselect-all");
+                                 const searchInput = document.getElementById("search-select");
+
+                                 selectAllButton.addEventListener("click", () => {
+                                    Array.from(select.options).forEach(option => option.selected = true);
+                                 });
+
+                                 deselectAllButton.addEventListener("click", () => {
+                                    Array.from(select.options).forEach(option => option.selected = false);
+                                 });
+
+                                 searchInput.addEventListener("input", () => {
+                                    const searchValue = searchInput.value.toLowerCase();
+                                    Array.from(select.options).forEach(option => {
+                                       const optionText = option.textContent.toLowerCase();
+                                       option.style.display = optionText.includes(searchValue) ? "" : "none";
+                                    });
+                                 });
+
+                              </script>
+                              <script>
+
+                                 function add_select_all_option() {
+
+                                    filter_content = document.getElementById('filter_content')
+                                    filter_content.innerHTML = ''
+
+                                    var newoption = document.createElement("option");
+                                    newoption.value = ''
+                                    newoption.innerHTML = '--select all--'
+
+                                    // newoption.onclick = function() { alert('Hello'); };
+                                    newoption.onclick = function () {
+                                       for (i = 1; i <= filter_content.options.length - 1; i++) {
+                                          filter_content.options[i].selected = true
+                                       }
+                                       filter_content.options[filter_content.options.length - filter_content.options.length].selected = false
+
+                                    };
+
+                                    filter_content.options.add(newoption);
+                                 }
+
+                                 function add_items(data, element) {
+
+                                    add_select_all_option()
+
+                                    data.forEach(item => {
+                                       var newoption = document.createElement("option");
+                                       newoption.value = item
+                                       newoption.innerHTML = item
+                                       element.options.add(newoption);
+                                    });
+
+                                    // select_all_Items(element.id)
+                                 }
+
+                                 function select_all_Items(name) {
+
+                                    var item = document.getElementById(name)
+
+                                    try {
+                                       if (item.value == '') {
+                                          for (i = 1; i <= item.length - 1; i++) {
+                                             item.options[i].selected = true
+                                          }
+                                       }
+                                    } catch (error) {
+
+                                    }
+
+                                    item.options[item.options.length - item.options.length].selected = false
+                                 }
+
+                              </script>
+                           </div>
+
+                           <div id="divFilterContentBtns" class="col-md-1 mb-4">
+
+                              <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
+                              <!-- <button id="btnFilter" type="button" class="btn btn-primary mt-1"
+                                 onclick="searchName2()">Filter</button> -->
+                              <button type="button" class="btn btn-primary mt-1 w-100" onclick="addName3()">Add</button>
+
+                              {% if is_user %}
+
+                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100" enabled
+                                 data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
+
+                              {% else %}
+                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100" disabled
+                                 data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
+                              {% endif %}
+
+                              <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1" hidden
+                                 onclick="saveFilter()">Save</button>
+                              <button type="button" class="btn btn-primary mt-1  w-100" onmouseenter="getLength()"
+                                 onclick="clearFilterList()">Clear</button>
+
+                           </div>
+
+                        </div>
+                     </form>
+                  </div>
+                  <!-- /.card-header -->
+                  <!-- .card-body -->
+                  <div class="card-body">
+
+                     <div class="">
+                        <div id="tblInsurance_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer no-scroll">
+                           <div class="form-row  mb-3">
+                              <div class="col-md-6">
+                                 <div class="dataTables_length" id="tblInsurance_length">
+                                    <label>
+                                       Show
+                                       <select id="select_length" name="tblInsurance_length"
+                                          aria-controls="tblInsurance" class="custom-select">
+                                          <option value="10">10</option>
+                                          <option value="25">25</option>
+                                          <option value="50">50</option>
+                                          <option value="100">100</option>
+
+                                       </select>
+                                       entries
+                                    </label>
+                                 </div>
+
+                                 <form id="frminsurance" method="post" enctype="multipart/form-data"
+                                    action="{%url 'bima_policy:create_policy'%}">
+                                    {%csrf_token%}
+
+                                 </form>
+
+                                 <button name="sendPolicy" class="btn btn-primary" onclick="sendPolicy()">Send</button>
+                                 <button name="sendFiles" class="btn btn-primary" onclick="sendFiles()">Send files</button>
+
+
+                              </div>
+
+                              <div class="col-md-6">
+                                 <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input value=""
+                                          type="search" id="myInput" oninput="searchName()" class="form-control"
+                                          placeholder="policy number.." aria-controls="tblInsurance"></label></div>
+                              </div>
+
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="table-responsive">
+                        <div class="dataTables_scroll">
+                           <div class="dataTables_scrollHead" style="position: relative; border: 0px; width: 100%;">
+                              <div class="dataTables_scrollHeadInner"
+                                 style="box-sizing: content-box; width: auto; padding-right: 0px;">
+                                 <table
+                                    class="table table-striped1 table-hover no-wrap table-bordered no-footer dataTable"
+                                    aria-describedby="tblInsurance_info" role="grid"
+                                    style="margin-left: 0px; width: 5774.97px;">
+
+                                 </table>
+                              </div>
+                           </div>
+                           <div class="dataTables_scrollBody" style="position: relative;  width: 100%;">
+                              <table id="tblInsurance"
+                                 class="table table-striped1 table-hover no-wrap table-bordered no-footer dataTable"
+                                 aria-describedby="tblInsurance_info" role="grid">
+
+                                 <thead style="border-bottom: inset;">
+                                    <tr role="row" ">
+                                       <th class=" text-center sorting thShow" tabindex="0"
+                                       aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 83.2344px;"
+                                       aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
+
+                                       <th class="sorting thShow">Proposal No.</th>
+                                       <th class="sorting">Policy No. </th>
+                                       <th class="sorting thShow">Customer Name</th>
+                                       <th class="sorting  thShow">Insurer Name</th>
+                                       <th class="sorting">Service Provider</th>
+                                       <th class="sorting">Broker Code</th>
+                                       <th class="sorting">Registration No.</th>
+                                       <th class="sorting">RTO State</th>
+                                       <th class="sorting">RTO City</th>
+                                       <th class="sorting">Vehicle Makeby </th>
+                                       <th class="sorting">Vehicle Model </th>
+                                       <th class="sorting thShow">Vehicle Catagory </th>
+                                       <th class="sorting">Vehicle Fuel Type</th>
+                                       <th class="sorting">Manufacture Year </th>
+                                       <th class="sorting">Addon</th>
+                                       <th class="sorting">NCB</th>
+                                       <th class="sorting">Cubic Capacity</th>
+                                       <th class="sorting">GVW</th>
+                                       <th class="sorting">Seating Capacity</th>
+                                       <th class="sorting">Coverage Type</th>
+                                       <th class="sorting">Policy Type</th>
+                                       <th class="sorting">CPA</th>
+                                       <th class="sorting">Risk Start Date</th>
+                                       <th class="sorting">Risk End Date</th>
+                                       <th class="sorting">Issue Date</th>
+                                       <th class="sorting">Insured Age</th>
+                                       <th class="sorting">Policy Term</th>
+                                       <th class="sorting">BQP</th>
+                                       <th class="sorting">POS</th>
+                                       <th class="sorting">Employee</th>
+                                       <th class="sorting">Remark</th>
+                                       <th class="sorting thShow">OD Premium</th>
+                                       <th class="sorting thShow">TP / Terrorism</th>
+                                       <th class="sorting thShow">NET Premium</th>
+                                       <th class="sorting thShow">GST 18%</th>
+                                       <th class="sorting thShow">GST 12%</th>
+                                       <th class="sorting thShow">Total</th>
+                                       <th class="sorting">Payment Mode</th>
+
+                                       <th class="sorting">Proposal</th>
+                                       <th class="sorting">Mandate</th>
+                                       <th class="sorting">Policy</th>
+                                       <th class="sorting">Previous Policy</th>
+                                       <th class="sorting">Pan Card</th>
+                                       <th class="sorting">Aadhar Card</th>
+                                       <th class="sorting">Vehicle RC</th>
+                                       <th class="sorting">Inspection Report</th>
+                                       <!-- <th class="sorting">Action</th> -->
+                                    </tr>
+                                 </thead>
+
+                                 <tbody id="tbdy">
+
+                                    {% for value in data %}
+
+                                    <tr role="row" class="odd" onclick="highlight(this)" id="tr1">
+
+                                       <td class="text-center">{{forloop.counter}}</td>
+
+                                       <td>{{value.proposal_no}}</td>
+                                       <td>
+                                          <a href="" class="tile tile-img" target="_blank"><i
+                                                class="far fa-file-pdf text-danger"></i></a>
+                                          <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
+                                             class="">{{value.policy_no}}</a>
+                                          <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
+                                       </td>
+                                       <td>{{value.customer_name}}</td>
+                                       <td>{{value.insurance_company}}</td>
+                                       <td>{{value.sp_name}}</td>
+                                       <td>{{value.sp_brokercode}}</td>
+                                       <td>{{value.registration_no}}</td>
+                                       <td>{{value.rto_state}}</td>
+                                       <td>{{value.rto_city}}</td>
+                                       <td>{{value.vehicle_makeby}}</td>
+                                       <td>{{value.vehicle_model}}</td>
+                                       <td>{{value.vehicle_catagory}}</td>
+                                       <td>{{value.vehicle_fuel_type}}</td>
+
+                                       {% if value.mfg_year%}
+                                       <td>{{value.mfg_year}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       <td>{{value.addon}}</td>
+                                       <td>{{value.ncb}}</td>
+                                       <td>{{value.cubic_capacity}}</td>
+                                       <td>{{value.gvw}}</td>
+
+                                       <!-- Note: Space added because Excel converts 5-7 or 7-12 as date formate -->
+                                       <td>&nbsp;{{value.seating_capacity}}</td>
+
+                                       <td>{{value.coverage_type}}</td>
+                                       <td>{{value.policy_type}}</td>
+                                       <td>{{value.cpa}}</td>
+                                       <td>{{value.risk_start_date}}</td>
+                                       <td>{{value.risk_end_date}}</td>
+                                       <td>{{value.issue_date}}</td>
+
+                                       {% if value.insured_age%}
+                                       <td>{{value.insured_age}}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       <td>{{value.policy_term}}</td>
+                                       <td>{{value.bqp}}</td>
+                                       <td>{{value.pos}}</td>
+                                       <td>{{value.employee}}</td>
+                                       <td>{{value.remark}}</td>
+                                       <!-- OD  -->
+
+                                       <td>{{value.OD_premium}}</td>
+
+                                       <td>{{value.TP_terrorism}}</td>
+                                       <td>{{value.net}}</td>
+
+                                       <td>{{value.gst_amount}}</td>
+
+                                       {% if value.gst_gcv_amount %}
+                                       <td>{{ value.gst_gcv_amount }}</td>
+                                       {% else %}
+                                       <td></td>
+                                       {% endif %}
+
+                                       <td>{{value.total}}</td>
+
+                                       <td>{{value.payment_mode}}</td>
+
+
+
+                                    </tr>
+
+                                    {% endfor %}
+
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-sm-12 col-md-7 d-flex justify-content-end"
+                        style="align-content: right; margin-left: auto; margin-right: 0;">
+                        <div class="dataTables_paginate paging_simple_numbers" id="tblList_paginate">
+                           <ul class="pagination justify-content-center ">
+                              {% if data.has_previous %}
+                              <li id="link_one" class="paginate_button page-item active "><a href="?page=1"
+                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link">First</a>
+                              </li>
+                              <li id="link_two" class="paginate_button page-item active"><a
+                                    href="?page={{ data.previous_page_number }}" aria-controls="tblList" data-dt-idx="1"
+                                    tabindex="0" class="page-link"> &laquo; Prev</a></li>
+                              {% endif %}
+
+                              <!-- <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
+                                    data-dt-idx="1" tabindex="0" class="page-link"> Page {{ data.number }} of
+                                    {{data.paginator.num_pages }}.</a></li> -->
+
+                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
+                                    data-dt-idx="1" tabindex="0" class="page-link">
+                                 </a></li>
+
+                              {% if data.has_next %}
+
+                              <li class="paginate_button page-item active "><a href="?page={{ data.next_page_number }}"
+                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"> Next
+                                    &raquo;</a></li>
+
+                              <li class="paginate_button page-item active "><a
+                                    href="?page={{ data.paginator.num_pages }}" aria-controls="tblList" data-dt-idx="1"
+                                    tabindex="0" class="page-link"> Last &raquo;</a></li>
+
+                              {% endif %}
+
+                              <li hidden id="link_gen" class="paginate_button page-item active "><a href="#"
+                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"
+                                    onclick="gen_table()">Next Page
+                                 </a></li>
+
+                           </ul>
+
+                        </div>
+                     </div>
+
+                     <!-- /.page-section -->
+                     <div class="modal fade" id="mdlrpolicy" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                        role="dialog" aria-labelledby="mdTitle1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 id="mdTitle1" class="modal-title">Confirmation</h5>
+                              </div>
+                              <div class="modal-body">
+                                 <p><i class="fa fa-question-circle text-red mr-1"></i> Do you want to permanently
+                                    delete selected Insurance?</p>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">No</button>
+                                 <button type="submit" id="remove" class="btn btn-primary w-100p">Yes</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="modal fade" id="mdlcpolicy" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                        role="dialog" aria-labelledby="mdTitle2" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 id="mdTitle2" class="modal-title">Cancel Policy</h5>
+                              </div>
+                              <form id="frmcancelp" data-parsley-validate="true" novalidate="">
+                                 <div class="modal-body">
+                                    <label>Cancel Remarks<abbr title="Required" class="text-danger">*</abbr></label>
+                                    <textarea class="form-control" data-parsley-required="true"
+                                       id="txtcancel_remakrs"></textarea>
+                                 </div>
+                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary w-100p"
+                                       data-dismiss="modal">No</button>
+                                    <button type="submit" id="cancel" class="btn btn-danger w-100p">Cancel</button>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="modal fade" id="mdlcolsetting" data-backdrop="static" data-keyboard="false"
+                        tabindex="-1" role="dialog" aria-labelledby="rtoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 id="rtoModalLabel" class="modal-title"> Column Setting </h5>
+                              </div>
+                              <div class="modal-body modal-scroll">
+                                 <ul class="disabled pl-0 mb-0">
+                                    <li class="list-group-item disabled  bg-light">
+                                       <i class="fa fa-ban drag-indicator-block"></i>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" checked="">
+                                          <label class="custom-control-label"><small class="text">1)</small> Policy
+                                             No.</label>
+                                       </div>
+                                    </li>
+                                 </ul>
+                                 <ul class="sortable-lists list-group list-group-flush list-group-bordered"
+                                    data-toggle="sortable" data-group="pages">
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="2" value="1" checked="">
+                                          <label class="custom-control-label" for="2"><small class="text">2)</small>
+                                             REGISTRATION</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="REGISTRATION">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="3" value="1" checked="">
+                                          <label class="custom-control-label" for="3"><small class="text">3)</small>
+                                             ISSUE_DATE</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="ISSUE_DATE">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="4" value="1" checked="">
+                                          <label class="custom-control-label" for="4"><small class="text">4)</small>
+                                             RISK_DATE</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="RISK_DATE">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="5" value="1" checked="">
+                                          <label class="custom-control-label" for="5"><small class="text">5)</small>
+                                             POLICY_M</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="POLICY_MADE_BY">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="6" value="1" checked="">
+                                          <label class="custom-control-label" for="6"><small class="text">6)</small>
+                                             CANCEL_REMARKS</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="CANCEL_REMARKS">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="7" value="1" checked="">
+                                          <label class="custom-control-label" for="7"><small class="text">7)</small>
+                                             CUSTOMER</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="CUSTOMER">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="8" value="1" checked="">
+                                          <label class="custom-control-label" for="8"><small class="text">8)</small>
+                                             VEHICLE_CATEGORY</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="VEHICLE_CATEGORY">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="9" value="1" checked="">
+                                          <label class="custom-control-label" for="9"><small class="text">9)</small>
+                                             POLICY_PROVIDER</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="POLICY_PROVIDER">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="10" value="1" checked="">
+                                          <label class="custom-control-label" for="10"><small class="text">10)</small>
+                                             POLICY_PROVIDER_CODE</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="POLICY_PROVIDER_CODE">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="11" value="1" checked="">
+                                          <label class="custom-control-label" for="11"><small class="text">11)</small>
+                                             INSURANCE_COMPANY</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="INSURANCE_COMPANY">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="12" value="0">
+                                          <label class="custom-control-label" for="12"><small class="text">12)</small>
+                                             RTO</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="RTO">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="13" value="1" checked="">
+                                          <label class="custom-control-label" for="13"><small class="text">13)</small>
+                                             POLICY_TYPE</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="POLICY_TYPE">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="14" value="1" checked="">
+                                          <label class="custom-control-label" for="14"><small class="text">14)</small>
+                                             MANUFACTURE_YEAR</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="MANUFACTURE_YEAR">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="15" value="1" checked="">
+                                          <label class="custom-control-label" for="15"><small class="text">15)</small>
+                                             FUEL_TYPE</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="FUEL_TYPE">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="16" value="1" checked="">
+                                          <label class="custom-control-label" for="16"><small class="text">16)</small>
+                                             VEHICLE_OTHER_INFO</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="VEHICLE_OTHER_INFO">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="17" value="1" checked="">
+                                          <label class="custom-control-label" for="17"><small class="text">17)</small>
+                                             OD</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="OD">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="18" value="1" checked="">
+                                          <label class="custom-control-label" for="18"><small class="text">18)</small>
+                                             TP</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="TP">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="19" value="1" checked="">
+                                          <label class="custom-control-label" for="19"><small class="text">19)</small>
+                                             NET</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="NET">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="20" value="1" checked="">
+                                          <label class="custom-control-label" for="20"><small class="text">20)</small>
+                                             GST</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="GST">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="21" value="1" checked="">
+                                          <label class="custom-control-label" for="21"><small class="text">21)</small>
+                                             TOTAL_NET</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="TOTAL_NET">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="22" value="1" checked="">
+                                          <label class="custom-control-label" for="22"><small class="text">22)</small>
+                                             COMM</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="COMM">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="23" value="1" checked="">
+                                          <label class="custom-control-label" for="23"><small class="text">23)</small>
+                                             AGENT</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="AGENT">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="24" value="1" checked="">
+                                          <label class="custom-control-label" for="24"><small class="text">24)</small>
+                                             REMARKS</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="REMARKS">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="25" value="1" checked="">
+                                          <label class="custom-control-label" for="25"><small class="text">25)</small>
+                                             SELF_COMM.</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="SELF_COMM.">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="26" value="1" checked="">
+                                          <label class="custom-control-label" for="26"><small class="text">26)</small>
+                                             CREATED_ON</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="CREATED_ON">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="27" value="1" checked="">
+                                          <label class="custom-control-label" for="27"><small class="text">27)</small>
+                                             CANCEL_ON</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="CANCEL_ON">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="28" value="1" checked="">
+                                          <label class="custom-control-label" for="28"><small class="text">28)</small>
+                                             PREVIOUS_POLICY</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="PREVIOUS_POLICY">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="29" value="1" checked="">
+                                          <label class="custom-control-label" for="29"><small class="text">29)</small>
+                                             VEHICLE_RC</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="VEHICLE_RC">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="30" value="1" checked="">
+                                          <label class="custom-control-label" for="30"><small class="text">30)</small>
+                                             CASE_TYPE</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="CASE_TYPE">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="31" value="1" checked="">
+                                          <label class="custom-control-label" for="31"><small class="text">31)</small>
+                                             CHASIS_NO</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="CHASIS_NO">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="32" value="1" checked="">
+                                          <label class="custom-control-label" for="32"><small class="text">32)</small>
+                                             ENGINE_NO</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="ENGINE_NO">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="33" value="1" checked="">
+                                          <label class="custom-control-label" for="33"><small class="text">33)</small>
+                                             VEHICLE_MAKEBY</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="VEHICLE_MAKEBY">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="34" value="1" checked="">
+                                          <label class="custom-control-label" for="34"><small class="text">34)</small>
+                                             VEHICLE_MODEL</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="VEHICLE_MODEL">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="35" value="1" checked="">
+                                          <label class="custom-control-label" for="35"><small class="text">35)</small>
+                                             CPA</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="CPA">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="36" value="1" checked="">
+                                          <label class="custom-control-label" for="36"><small class="text">36)</small>
+                                             AGENT CALC.</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="AGENT CALC.">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="37" value="1" checked="">
+                                          <label class="custom-control-label" for="37"><small class="text">37)</small>
+                                             SELF_CALC.</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="SELF_CALC.">
+                                    </li>
+                                    <li class="list-group-item align-items-center drag-handle">
+                                       <span class="drag-indicator"></span>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
+                                             id="38" value="1" checked="">
+                                          <label class="custom-control-label" for="38"><small class="text">38)</small>
+                                             PAYMENT_MODE</label>
+                                       </div>
+                                       <input type="hidden" class="colval" value="PAYMENT_MODE">
+                                    </li>
+                                 </ul>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary w-100p"
+                                    data-dismiss="modal">Close</button>
+                                 <button type="button" id="md-ilc-colUpdate"
+                                    class="btn btn-primary w-100p">Save</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="modal fade" id="confirm-modal-remove" data-backdrop="static" data-keyboard="false"
+                        tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 id="rtoModalLabel" class="modal-title"> Confirmation </h5>
+                              </div>
+                              <div class="modal-body">
+                                 <div id="resbulkremove" class="d-none alert alert-danger">
+                                    select atleast one action for remove
+                                 </div>
+                                 <p>You can also delete some part of the policy form, for that you have to select the
+                                    part from the table given below.</p>
+                                 <table class="table table-bordered">
+                                    <tbody>
+                                       <tr class="bg-light">
+                                          <th colspan="2">Select</th>
+                                       </tr>
+                                       <tr>
+                                          <td>Complete Policy Form</td>
+                                          <td class="text-center"><input class="checkbox" type="checkbox"
+                                                id="chkpolicy_form"></td>
+                                       </tr>
+                                       <tr>
+                                          <td>Previous Policy PDF</td>
+                                          <td class="text-center"><input class="checkbox" type="checkbox"
+                                                data-remove-group="block-r" id="chkprevious_documents"></td>
+                                       </tr>
+                                       <tr>
+                                          <td>Vehicle RC</td>
+                                          <td class="text-center"><input class="checkbox" type="checkbox"
+                                                data-remove-group="block-r" id="chkvehicle_rc"></td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary w-100p"
+                                    data-dismiss="modal">Close</button>
+                                 <button type="button" id="mdlbtnblkremove"
+                                    class="btn bg-red text-white w-100p">Remove</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- /.page-inner -->
+               </div>
+               <!-- /.page -->
+            </div>
+            <!-- /.wrapper -->
+</main>
+<!-- /.app-main -->
+<div class="aside-backdrop"></div>
+</div><!-- /.app -->
+<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog"
+   aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
+   <!-- .modal-dialog -->
+   <div class="modal-dialog" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+         <!-- .modal-header -->
+         <div class="modal-header">
+            <h5 class="modal-title">
+               <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
+            </h5>
+         </div>
+         <!-- /.modal-header -->
+         <!-- .modal-body -->
+         <div class="modal-body">
+            <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error
+               remains the same, you need to contact your Administrator immediately.</p>
+         </div>
+         <!-- /.modal-body -->
+         <!-- .modal-footer -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-dismiss="modal">OK</button>
+         </div>
+         <!-- /.modal-footer -->
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="mdlUpdatePayout" style="height: 400px">
+
+   <div class="modal-dialog" role="document">
+
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 id="rtoModalLabel" class="modal-title"> Payout </h5>
+         </div>
+         <div class="modal-body ">
+            <div class="form-row">
+               <div class="col-md-6 mb-2">
+
+                  <div class=""><label>Agent OD Reward:
+                        <input type="text" value="" id="a_od_reward" name="a_od_reward"
+                           class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
+                           data-parsley-required="true" min="0" max="100" maxlength="4">
+
+                        <script>
+                           function handle(e) {
+                              if (e.keyCode === 13) {
+                                 e.preventDefault(); // Ensure it is only this code that runs
+
+                                 $("#btnExit").click();
+                              }
+                           }
+                        </script>
+                     </label></div>
+               </div>
+               <div class="col-md-6 mb-2 ">
+                  <div class=""><label>Agent TP Reward:
+                        <input type="text" value="" id="a_tp_reward" name="a_tp_reward"
+                           class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
+                           data-parsley-required="true" min="0" max="100" maxlength="4">
+                     </label>
+                  </div>
+               </div>
+
+               <!-- self payout -->
+               <div class="col-md-6 mb-2">
+                  <div class=""><label>Self OD Reward:
+                        <input type="text" value="" name="s_od_reward" id="s_od_reward"
+                           class="form-control maskNumField col-lg-7 rewardpct" data-mask-as-number-decimals="2"
+                           data-parsley-required="true" min="0" max="100" maxlength="4">
+
+                        <script>
+                           function handle(e) {
+                              if (e.keyCode === 13) {
+                                 e.preventDefault(); // Ensure it is only this code that runs
+
+                                 $("#btnExit").click();
+                              }
+                           }
+                        </script>
+                     </label></div>
+               </div>
+
+               <div class="col-md-6 mb-2">
+                  <div class=""><label>Self TP Reward:
+                        <input type="text" value="" id="s_tp_reward" name="s_tp_reward"
+                           class="form-control maskNumField col-lg-7 rewardpct " data-mask-as-number-decimals="2"
+                           data-parsley-required="true" min="0" max="100" maxlength="4">
+                     </label>
+                  </div>
+               </div>
+
+            </div>
+
+            <div class="modal-footer">
+               <div class="form-row" style="align-content: center;"></div>
+               <button class="btn btn-primary w-100p" onclick="applyPayouts()">Apply</button>
+               <button id="btnExit" type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
+
+            </div>
+         </div>
+
+      </div>
+
+   </div>
+
+
+</div>
+
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+<script>
+   var c = [];
+   var filterList = []
+   var filterListMultiple = []
+   var isMultiFilter = false
+   var isNone = false
+   var NoneList = []
+   var rowList = []
+   var policyid_list = []
+   var payoutValues = []
+   var filter_date_list = []
+   var initialResponse = []
+
+   var curIndex = 0
+
+   var returned_index = 0
+
+   function load_values() {
+
+      var storedListString = localStorage.getItem("Manjeet Nandal");
+
+      var storedList = JSON.parse(storedListString);
+
+      // Access the objects in the array
+      console.log(storedList);
+
+      index = 1
+      storedList.forEach(element => {
+
+         generate_row_from_local_storage(index, element)
+         console.log(element);
+         index++;
+      });
+
+
+   }
+
+
+   function generate_row_from_local_storage(index, item) {
+
+      console.log('gen row');
+      c.push("<tr>");
+      c.push("<td>" + index + "</td>");
+      // c.push("<td>" + "</td>");
+      // c.push("<td>" + item.policyid + "</td>");
+      c.push("<td>" + item.proposal_no + "</td>");
+      c.push("<td>" + item.policy_no + "</td>");
+      c.push("<td>" + item.customer_name + "</td>");
+      c.push("<td>" + item.insurance_company + "</td>");
+      c.push("<td>" + item.sp_name + "</td>");
+      c.push("<td>" + item.sp_brokercode + "</td>");
+      c.push("<td>" + item.registration_no + "</td>");
+      c.push("<td>" + item.rto_state + "</td>");
+      c.push("<td>" + item.rto_city + "</td>");
+      c.push("<td>" + item.vehicle_makeby + "</td>");
+      c.push("<td>" + item.vehicle_model + "</td>");
+      c.push("<td>" + item.vehicle_catagory + "</td>");
+      c.push("<td>" + item.vehicle_fuel_type + "</td>");
+      c.push("<td>" + item.mfg_year + "</td>");
+      c.push("<td>" + item.addon + "</td>");
+      c.push("<td>" + item.ncb + "</td>");
+      c.push("<td>" + item.cubic_capacity + "</td>");
+      c.push("<td>" + item.gvw + "</td>");
+      c.push("<td>" + item.seating_capacity + "</td>");
+      c.push("<td>" + item.coverage_type + "</td>");
+      c.push("<td>" + item.policy_type + "</td>");
+      c.push("<td>" + item.cpa + "</td>");
+      c.push("<td>" + item.risk_start_date + "</td>");
+      c.push("<td>" + item.risk_end_date + "</td>");
+      c.push("<td>" + item.issue_date + "</td>");
+      c.push("<td>" + item.insured_age + "</td>");
+      c.push("<td>" + item.policy_term + "</td>");
+      c.push("<td>" + item.bqp + "</td>");
+      c.push("<td>" + item.pos + "</td>");
+      c.push("<td>" + item.employee + "</td>");
+      c.push("<td>" + item.remark + "</td>");
+      c.push("<td>" + item.OD_premium + "</td>");
+      c.push("<td>" + item.TP_terrorism + "</td>");
+      c.push("<td>" + item.net + "</td>");
+      c.push("<td>" + item.gst_amount + "</td>");
+      c.push("<td>" + item.gst_gcv_amount + "</td>");
+      c.push("<td>" + item.total + "</td>");
+      c.push("<td>" + item.payment_mode + "</td>");
+      // c.push("<td>" + item.agent_od_reward + "</td>");
+      // c.push("<td>" + item.agent_od_amount + "</td>");
+      // c.push("<td>" + item.agent_tp_reward + "</td>");
+      // c.push("<td>" + item.agent_tp_amount + "</td>");
+
+      // c.push("<td>" + item.self_od_reward + "</td>");
+      // c.push("<td>" + item.self_od_amount + "</td>");
+      // c.push("<td>" + item.self_tp_reward + "</td>");
+      // c.push("<td>" + item.self_tp_amount + "</td>");
+
+      c.push("<td>" + item.proposal + "</td>");
+      c.push("<td>" + item.mandate + "</td>");
+      c.push("<td>" + item.policy + "</td>");
+      c.push("<td>" + item.previous_policy + "</td>");
+      c.push("<td>" + item.pan_card + "</td>");
+      c.push("<td>" + item.aadhar_card + "</td>");
+      c.push("<td>" + item.vehicle_rc + "</td>");
+      c.push("<td>" + item.inspection_report + "</td>");
+
+      c.push("</tr>");
+
+      $('#tbdy').html(c.join(""));
+
+      return index
+   }
+
+   function sendPolicy() {
+
+      // Show a sending notification
+      var notification = document.getElementById('notification');
+      notification.innerHTML = 'Sending...';
+      notification.style.display = 'block';
+
+      storedListString = localStorage.getItem('Manjeet Nandal');
+
+      var stringify_policy = JSON.stringify(storedListString);
+
+      pathname = '/bima_policy/policy/new_entry/'
+
+      href = window.location.origin + pathname
+
+      $.ajax({
+         url: href,
+         type: 'POST',
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: { 'data': stringify_policy },
+         dataType: 'json',
+         success: function (response) {
+            console.log('done');
+         },
+         error: function (xhr, status, error) {
+            // Handle any errors that occurred during the request
+            console.log('error occurred ', error);
+         }
+      });
+
+   }
+
+   function sendFiles(name) {
+
+      console.log('sending files: ');
+
+      var fileInput = document.getElementById(name);
+      var file = fileInput.files[0];
+
+      // Create a FormData object
+      var formData = new FormData();
+      formData.append('file', file);
+
+      pathname = '/bima_policy/policy/send_entry_files/'
+
+      href = window.location.origin + pathname
+
+      fetch(href, {
+         method: 'POST',
+         headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+         },
+         body: formData
+      })
+         .then(response => {
+            if (response.ok) {
+               console.log('File uploaded successfully');
+               // Handle the response from the server
+            } else {
+               console.log('Error uploading file');
+               // Handle the error
+            }
+         })
+         .catch(error => {
+            console.log('Request failed:', error);
+         });
+
+
+
+   }
+
+   function selectAllPolicy() {
+
+      var tblInsurance = document.getElementById('tblInsurance')
+      var rowLength = tblInsurance.rows.length;
+      chkblkrm_isChecked = document.getElementById('chkblkrm').checked
+      tr = tblInsurance.getElementsByTagName("tr");
+
+      ids = ''
+
+      if (chkblkrm_isChecked) {
+         for (i = 1; i < rowLength; i++) {
+            id = `chkblkrm${i}`
+            document.getElementById(id).checked = true
+            highlight(tr[i])
+         }
+      }
+      else {
+         for (i = 1; i < rowLength; i++) {
+            id = `chkblkrm${i}`
+            document.getElementById(id).checked = false
+            highlight(tr[i])
+         }
+      }
+   }
+
+   function bulk_policy_remove() {
+      alert('control here')
+      return;
+      var tblInsurance = document.getElementById('tblInsurance')
+      var rowLength = tblInsurance.rows.length;
+      ids = ''
+
+      for (i = 1; i < rowLength; i++) {
+
+         id = `chkblkrm${i}`
+
+         isChecked = document.getElementById(id).checked
+
+         if (isChecked) {
+
+            ids += '|' + tblInsurance.rows.item(i).cells[2].innerText.trim()
+            // document.getElementById(anchor_id).click();
+         }
+         else {
+            alert('You have not selected any record to delete!')
+            return;
+         }
+      }
+      pathname = `/bima_policy/policy/${ids}/delete`
+
+      window.location.replace(window.location.origin + pathname)
+   }
+
+   function resertDocument() {
+      document.location.reload()
+   }
+
+   function highlight(row) {
+      SelectedRow = row.cells[0].textContent;
+      deHighlight();
+      row.style.backgroundColor = 'silver';
+      row.classList.toggle("selectedRow");
+   }
+
+   function deHighlight() {
+      let table = document.getElementById("tblInsurance");
+      let rows = table.rows;
+      for (let i = 0; i < rows.length; i++) {
+         // to avoid checked 
+         try {
+            is_checked = document.getElementById(`chkblkrm${i}`).checked
+            if (is_checked) {
+               continue;
+            }
+         } catch { }
+
+         // default this line is
+         rows[i].style.backgroundColor = "transparent";
+      }
+   }
+
+   function searchName() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tblInsurance");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+         td = tr[i].getElementsByTagName("td")[3];
+         if (td) {
+            txtValue = td.textContent || td.innerText;
+            console.log(txtValue);
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+               tr[i].style.display = "";
+            } else {
+               // tr[i].style.display = "none";
+
+               td4 = tr[i].getElementsByTagName("td")[4];
+
+               if (td4) {
+                  txtValue = td4.textContent || td4.innerText;
+                  console.log(txtValue);
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                     tr[i].style.display = "";
+                  } else {
+                     // tr[i].style.display = "none";
+
+                     td5 = tr[i].getElementsByTagName("td")[5];
+
+                     if (td5) {
+                        txtValue = td5.textContent || td5.innerText;
+                        console.log(txtValue);
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                           tr[i].style.display = "";
+                        } else {
+                           tr[i].style.display = "none";
+
+                        }
+                     }
+
+                  }
+               }
+
+            }
+         }
+      }
+   }
+
+   function clearFilterList() {
+
+      filterList = []
+      filterListMultiple = []
+      isMultiFilter = false
+      rowList = []
+
+      policyid_list = []
+      payoutValues = []
+   }
+
+
+   function getCellName() {
+
+      value = document.getElementById('filter_type').value
+
+      cell_no = 0
+
+      if (value == 'agent') {
+         cell_no = '-ag'
+      }
+      else if (value == 'insurer') {
+         cell_no = '-ins'
+      }
+      else if (value == 'vehicle_catagory') {
+         cell_no = "-vc"
+      }
+      else if (value == 'vehicle_makeby') {
+         cell_no = "-vmb"
+      }
+      else if (value == 'vehicle_model') {
+         cell_no = "-vmm"
+      }
+      else if (value == 'fuel_type') {
+         cell_no = "-ft"
+      }
+      else if (value == 'cc') {
+         cell_no = "-cc"
+      }
+      else if (value == 'sc') {
+         cell_no = "-sc"
+      }
+      else if (value == 'ct') {
+         cell_no = "-ct"
+      }
+      else if (value == 'gvw') {
+         cell_no = "-gvw"
+      }
+      else if (value == 'policy_type') {
+         cell_no = "-pt"
+      }
+      else if (value == 'addon') {
+         cell_no = "-addon"
+      }
+      else if (value == 'ncb') {
+         cell_no = "-ncb"
+      }
+      else if (value == 'cpa') {
+         cell_no = "-cpa"
+      }
+
+      return cell_no
+   }
+
+   function addName3() {
+      // Declare variables
+
+      console.log('addName3');
+
+      isMultiFilter = true
+
+      value = document.getElementById('filter_type').value
+
+      filter_content = document.getElementById('filter_content')
+
+      tempfilterList = []
+
+      for (i = 1; i <= filter_content.options.length - 1; i++) {
+
+         if (filter_content.options[i].selected == true) {
+
+            val = filter_content.options[i].value.toString()
+
+            if (val.includes("/")) {
+
+               val = val.replace("/", "--")
+
+            }
+
+            // tempfilterList.push(filter_content.options[i].value)
+            tempfilterList.push(val)
+         }
+      }
+
+      // const obj = { index: getCellNumber(), items: tempfilterList }
+      const obj = { index: getCellName(), items: tempfilterList }
+      is_found = filterListMultiple.find(item => item.index == obj.index)
+
+      if (is_found == null) {
+         filterListMultiple.push(obj)
+      }
+      else {
+         // alert('This option already exists in filter list!')
+      }
+      console.log(filterListMultiple);
+
+      return filterListMultiple
+   }
+
+   function searchName2() {
+
+
+      jsonData = ''
+
+      if (isMultiFilter) {
+         addName3()
+         jsonData = JSON.stringify(filterListMultiple);
+      }
+      else {
+         addName2()
+         withDateList = []
+         withDateList.push(filter_date_list)
+         withDateList.push(filterList)
+         jsonData = JSON.stringify(withDateList);
+      }
+
+      filter_content = document.getElementById('filter_content')
+      if (filter_content.options.length == 1) {
+         alert('You have not selected any filter option! ')
+         return;
+      }
+
+      pathname = '/bima_policy/policy/entry_list'
+
+      href = window.location.origin + pathname
+
+      console.log('filterlist: ' + jsonData);
+
+      $.ajax({
+         url: href,
+         type: 'POST',
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: { 'data': jsonData },
+         dataType: 'json',
+         success: function (response) {
+            responseHandler(response)
+         },
+         error: function (xhr, status, error) {
+            // Handle any errors that occurred during the request
+            console.log('error occurred ', error);
+         }
+      });
+
+
+   }
+
+   function ExportToExcel_Original(type, fn, dl) {
+      var elt = document.getElementById('tblInsurance');
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+      return dl ?
+         XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+         XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+   }
+
+   function setOD() {
+
+      val_aod = document.getElementById('a_od_reward').value.trim()
+      val_atp = document.getElementById('a_tp_reward').value.trim()
+      val_sod = document.getElementById('s_od_reward').value.trim()
+      val_stp = document.getElementById('s_tp_reward').value.trim()
+
+      payoutValues = []
+
+      if (val_aod != '') {
+         payoutValues.push(val_aod)
+      }
+      if (val_atp != '') {
+         payoutValues.push(val_atp)
+      }
+      if (val_sod != '') {
+         payoutValues.push(val_sod)
+      }
+      if (val_stp != '') {
+         payoutValues.push(val_stp)
+      }
+
+      return payoutValues.length
+      // console.log(payoutValues);
+   }
+
+   function showMoreFilters() {
+      if (document.getElementById('morefilters').hidden) {
+         document.getElementById('morefilters').hidden = false
+         document.getElementById('filter_type').selectedIndex = 0
+         add_filter_type()
+
+      }
+      else {
+         document.getElementById('morefilters').hidden = true
+      }
+   }
+
+
+   function entry_filter() {
+      search_value = document.getElementById('myInput').value.trim()
+      if (search_value != "") {
+         if (search_value.includes("/")) {
+            search_value = search_value.replaceAll("/", "--")
+         }
+         url = window.location.origin + '/bima_policy/policy/search_entry/' + search_value
+
+         window.location.replace(url)
+         return
+      }
+
+      val1 = document.getElementById('frmDate').value
+      val2 = document.getElementById('toDate').value
+
+      if (String(val1) == "") {
+         val1 = val2
+      }
+
+      d1 = String(val1).replace('/', '-').replace('/', '-').replace('/', '-')
+      d2 = String(val2).replace('/', '-').replace('/', '-').replace('/', '-')
+
+      date_list = []
+      date_list.push(d1)
+      date_list.push(d2)
+
+      main_list = []
+
+      if (filterListMultiple.length > 0) {
+
+         main_list.push(date_list)
+
+         main_list.push(filterListMultiple)
+
+         jsonData = JSON.stringify(main_list);
+
+         isChecked = document.getElementById('ps1').checked
+         if (isChecked) {
+            main_list.push("y")
+            jsonData = JSON.stringify(main_list);
+         }
+         else {
+
+            main_list.push("n")
+            jsonData = JSON.stringify(main_list);
+         }
+      }
+      else {
+
+         main_list.push(date_list)
+
+         jsonData = JSON.stringify(main_list);
+      }
+
+      console.log('jsonData: ' + jsonData);
+      // alert(jsonData)
+
+      url = window.location.origin + '/bima_policy/policy/entry/' + jsonData
+
+      window.location.replace(url)
+      return;
+
+      $.ajax({
+         url: window.location.origin + '/bima_policy/policy/entry_filter',
+         type: 'POST',
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: { 'data': jsonData },
+         dataType: 'json',
+         success: function (response) {
+            console.log(response);
+            entry_filter_response_handler(response)
+            // alert('call done')
+
+         },
+         error: function (xhr, status, error) {
+            // Handle any errors that occurred during the request
+            console.log('error occurred ', error);
+         }
+      });
+
+
+   }
+
+   function entry_filter_response_handler(response) {
+
+      console.log('entry_filter_response_handler method');
+      responsedata = JSON.parse(JSON.stringify(response.data))
+      console.log(responsedata);
+
+      document.getElementById("thCheck").hidden = true
+      document.getElementById("tbdy").innerHTML = '';
+      c = []
+      policyid_list = []   // to update all payout record
+      responsedata.forEach(element => {
+         policyid_list.push(element['policyid'])
+      });
+
+      console.log('resp length ' + responsedata.length);
+
+      initialResponse = [] // for storing for navigation and gen table row
+      index = 0
+      responsedata.forEach(element => {
+         index++;
+         initialResponse.push({ "index": index, "element": element })
+
+         // console.log({ "index": index, "element": element });
+
+         if (index <= 100) {
+            curIndex = generate_row(index, element)
+         }
+      });
+
+      if (policyid_list.length == 0) {
+
+         document.getElementById("btnUpdatePayout").disabled
+
+
+      } else {
+         document.getElementById("btnUpdatePayout").disabled = false
+
+      }
+      document.getElementById('link_gen').hidden = false
+      // document.getElementById('link_gen').hidden= false
+
+
+      // console.log('policyid_list ' + policyid_list);
+      // console.log('policyid_list ind ' + initialResponse[0]['element']['customer_name']);
+      // console.log('policyid_list ind ' + initialResponse.length);
+   }
+
+   function generate_row(index, item) {
+
+      console.log('gen row');
+      c.push("<tr>");
+      c.push("<td>" + index + "</td>");
+      // c.push("<td>" + "</td>");
+      c.push("<td>" + item.policyid + "</td>");
+      c.push("<td>" + item.proposal_no + "</td>");
+      c.push("<td>" + item.policy_no + "</td>");
+      c.push("<td>" + item.customer_name + "</td>");
+      c.push("<td>" + item.insurance_company + "</td>");
+      c.push("<td>" + item.sp_name + "</td>");
+      c.push("<td>" + item.sp_brokercode + "</td>");
+      c.push("<td>" + item.product_name + "</td>");
+      c.push("<td>" + item.registration_no + "</td>");
+      c.push("<td>" + item.rto_state + "</td>");
+      c.push("<td>" + item.rto_city + "</td>");
+      c.push("<td>" + item.vehicle_makeby + "</td>");
+      c.push("<td>" + item.vehicle_model + "</td>");
+      c.push("<td>" + item.vehicle_catagory + "</td>");
+      c.push("<td>" + item.vehicle_fuel_type + "</td>");
+      c.push("<td>" + item.mfg_year + "</td>");
+      c.push("<td>" + item.addon + "</td>");
+      c.push("<td>" + item.ncb + "</td>");
+      c.push("<td>" + item.cubic_capacity + "</td>");
+      c.push("<td>" + item.gvw + "</td>");
+      c.push("<td>" + item.seating_capacity + "</td>");
+      c.push("<td>" + item.coverage_type + "</td>");
+      c.push("<td>" + item.policy_type + "</td>");
+      c.push("<td>" + item.cpa + "</td>");
+      c.push("<td>" + item.risk_start_date + "</td>");
+      c.push("<td>" + item.risk_end_date + "</td>");
+      c.push("<td>" + item.issue_date + "</td>");
+      c.push("<td>" + item.insured_age + "</td>");
+      c.push("<td>" + item.policy_term + "</td>");
+      c.push("<td>" + item.bqp + "</td>");
+      c.push("<td>" + item.pos + "</td>");
+      c.push("<td>" + item.employee + "</td>");
+      c.push("<td>" + item.remark + "</td>");
+      c.push("<td>" + item.OD_premium + "</td>");
+      c.push("<td>" + item.TP_terrorism + "</td>");
+      c.push("<td>" + item.net + "</td>");
+      c.push("<td>" + item.gst_amount + "</td>");
+      c.push("<td>" + item.gst_gcv_amount + "</td>");
+      c.push("<td>" + item.total + "</td>");
+      c.push("<td>" + item.payment_mode + "</td>");
+      c.push("<td>" + item.agent_od_reward + "</td>");
+      c.push("<td>" + item.agent_od_amount + "</td>");
+      c.push("<td>" + item.agent_tp_reward + "</td>");
+      c.push("<td>" + item.agent_tp_amount + "</td>");
+
+      c.push("<td>" + item.self_od_reward + "</td>");
+      c.push("<td>" + item.self_od_amount + "</td>");
+      c.push("<td>" + item.self_tp_reward + "</td>");
+      c.push("<td>" + item.self_tp_amount + "</td>");
+
+      c.push("<td>" + item.proposal + "</td>");
+      c.push("<td>" + item.mandate + "</td>");
+      c.push("<td>" + item.policy + "</td>");
+      c.push("<td>" + item.previous_policy + "</td>");
+      c.push("<td>" + item.pan_card + "</td>");
+      c.push("<td>" + item.aadhar_card + "</td>");
+      c.push("<td>" + item.vehicle_rc + "</td>");
+      c.push("<td>" + item.inspection_report + "</td>");
+
+      c.push("</tr>");
+
+      // tblInsurance
+
+      $('#tbdy').html(c.join(""));
+
+      return index
+   }
+
+   function applyPayouts() {
+      console.log('applyPayouts method calling:');
+
+      plist = "{{ policyid_list | safe}}"
+
+      if (plist.length < 1) {
+         alert('Please filter again and apply payout')
+         return;
+      }
+      // Declare variables
+      // print(filterList)    
+      len = setOD()
+
+      if (len != 4) {
+         alert('Payout values error')
+         return
+      }
+      pVal_pList = []
+
+      pVal_pList.push(payoutValues)
+
+      plist = "{{ policyid_list | safe}}"
+
+      console.log(plist);
+
+      // return;
+      pVal_pList.push(plist)
+
+      console.log(pVal_pList);
+
+      jsonData = ''
+      // alert('here')
+      jsonData = JSON.stringify(pVal_pList);
+
+      url = window.location.origin + '/bima_policy/policy/entry/' + jsonData
+
+      window.location.replace(url)
+
+      return
+
+      pathname = '/bima_policy/policy/entry_list_update'
+
+      href = window.location.origin + pathname
+
+      $.ajax({
+         url: href,
+         type: 'POST',
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: { 'data': jsonData },
+         dataType: 'json',
+         success: function (response) {
+            // responseHandlerForPayout(response)
+            entry_filter_response_handler(response)
+         },
+         error: function (xhr, status, error) {
+            // Handle any errors that occurred during the request
+            console.log('error occurred ', error);
+         }
+      });
+   }
+
+
+   function responseHandlerForPayoutobs(response) {
+      console.log('responseHandlerForPayout method calling: ');
+      // console.log(response.data);
+      // console.log(response.data[0]);
+      var ytt = JSON.parse(JSON.stringify(response.data))
+      console.log(ytt);
+
+      // th_coll = document.getElementsByClassName("sorting");
+      // for (const item of th_coll) {
+      //    item.hidden = true
+      // }
+      // th_coll = document.getElementsByClassName("thShow");
+      // for (const item of th_coll) {
+      //    item.hidden = false
+      // }
+
+      document.getElementById("tbdy").innerHTML = '';
+      c = []
+
+      console.log(policyid_list);
+
+      index = 0
+      ytt.forEach(element => {
+         // Creating table row
+         index++;
+         generate_row(index, element)
+
+      });
+
+   }
+
+   function gen_table() {
+      console.log('gen_table method');
+
+      c_index = curIndex;
+      total_length = initialResponse.length;
+
+      // alert(c_index)
+      // alert(total_length)
+
+      if (total_length > c_index) {
+
+         // alert(total_length -curIndex )
+      }
+      else {
+         alert('No more pages available!')
+         return
+      }
+
+      document.getElementById("tbdy").innerHTML = '';
+      c = []
+
+      tmplist = []
+
+      // next_index = curIndex + 9
+      next_index = curIndex + 99
+      // next_index = c_index + (total_length-c_index)
+
+      for (index = curIndex; index <= next_index; index++) {
+
+         tmplist.push(initialResponse[index])
+      }
+
+      console.log(tmplist);
+
+      tmplist.forEach(element => {
+
+         returned_index = generate_row(element['index'], element['element'])
+         console.log('element index ' + returned_index);
+
+      });
+
+      curIndex = next_index + 1
+
+      console.log('ele_index ' + returned_index);
+
+   }
+
+   function getLength() {
+
+   }
+
+
+   function entry_filter_loader() {
+
+      // Adding date for filter
+      val1 = document.getElementById('frmDate').value
+      val2 = document.getElementById('toDate').value
+
+      d1 = String(val1).replace('/', '-').replace('/', '-').replace('/', '-')
+      d2 = String(val2).replace('/', '-').replace('/', '-').replace('/', '-')
+
+      filter_date_list = []
+      filter_date_list.push(d1)
+      filter_date_list.push(d2)
+
+      console.log('val1 ', d1);
+      console.log('val2 ', d2);
+
+      jsonData = JSON.stringify(filter_date_list);
+
+      console.log('json data: ', jsonData);
+
+
+      url = window.location.origin + '/bima_policy/policy/entry/' + jsonData
+
+      window.location.replace(url)
+
+      return;
+      // Adding date for filter
+      val1 = document.getElementById('frmDate').value
+      val2 = document.getElementById('toDate').value
+      filter_date_list = []
+      filter_date_list.push(val1)
+      filter_date_list.push(val2)
+
+      // Adding other filter
+      withDateList = []
+
+      if (document.getElementById('morefilters').hidden) {
+         withDateList.push(filter_date_list)
+         jsonData = JSON.stringify(withDateList);
+      }
+      else {
+         // alert(filterList.length)
+         // addName3()
+         withDateList.push(filter_date_list)
+         withDateList.push(filterListMultiple)
+
+         jsonData = JSON.stringify(withDateList);
+
+         isChecked = document.getElementById('ps1').checked
+         if (isChecked) {
+            withDateList.push('y')
+            jsonData = JSON.stringify(withDateList);
+         }
+      }
+
+
+      console.log('jsonData: ' + jsonData);
+
+      $.ajax({
+         url: window.location.origin + '/bima_policy/policy/entry/last_month',
+         type: 'GET',
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: { 'data': jsonData },
+         dataType: 'json',
+         success: function (response) {
+            console.log(response);
+            entry_filter_response_handler(response)
+            // alert('call done')
+
+         },
+         error: function (xhr, status, error) {
+            // Handle any errors that occurred during the request
+            console.log('error occurred ', error);
+         }
+      });
+
+
+   }
+
+
+   function ExportToExcel(type, fn, dl) {
+
+      var elt = document.getElementById('tblInsurance');
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+      return dl ?
+         XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+         XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+   }
+
+
+   function addAgentNames() {
+
+      document.getElementById('filter_content').innerHTML = ''
+      add_select_all_option()
+
+      element = document.getElementById('filter_content')
+
+      "{{ agents |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            value = item.replaceAll("'", "")
+            var newoption = document.createElement("option");
+            newoption.value = value
+            newoption.innerHTML = value
+            element.options.add(newoption);
+
+         })
+
+      // select_all_Items('filter_content')
+   }
+
+
+   function addInsurerNames() {
+
+      document.getElementById('filter_content').innerHTML = ''
+      add_select_all_option()
+
+      element = document.getElementById('filter_content')
+
+      "{{ insurers |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            value = item.replaceAll("'", "")
+            var newoption = document.createElement("option");
+            newoption.value = value
+            newoption.innerHTML = value
+            element.options.add(newoption);
+
+         })
+
+      // select_all_Items('filter_content')
+   }
+
+
+   function addVehicleCat() {
+
+      document.getElementById('filter_content').innerHTML = ''
+      add_select_all_option()
+
+      element = document.getElementById('filter_content')
+
+      "{{ vehicle_categories |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            value = item.replaceAll("'", "")
+            var newoption = document.createElement("option");
+            newoption.value = value
+            newoption.innerHTML = value
+            element.options.add(newoption);
+
+         })
+
+      // select_all_Items('filter_content')
+   }
+
+
+   function addVehicleMakes() {
+
+      document.getElementById('filter_content').innerHTML = ''
+      add_select_all_option()
+
+      element = document.getElementById('filter_content')
+
+      "{{ makes |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            value = item.replaceAll("'", "")
+            var newoption = document.createElement("option");
+            newoption.value = value
+            newoption.innerHTML = value
+            element.options.add(newoption);
+
+         })
+      // select_all_Items('filter_content')
+   }
+
+
+   function addVehicleModels() {
+
+      document.getElementById('filter_content').innerHTML = ''
+
+      add_select_all_option()
+
+      element = document.getElementById('filter_content')
+
+      "{{ models |safe}}".replace('[', '').replace(']', '').split(',')
+         .forEach(item => {
+
+            value = item.replaceAll("'", "")
+            var newoption = document.createElement("option");
+            newoption.value = value
+            newoption.innerHTML = value
+            element.options.add(newoption);
+
+         })
+
+      // select_all_Items('filter_content')
+   }
+
+   function downloadFile(params) {
+      // alert(params)
+      if (params.includes("/")) {
+         index = params.lastIndexOf("/") + 1
+         params = params.substring(index, params.length);
+      }
+      pathname = '/bima_policy/docs/download/' + params
+      href = window.location.origin + pathname
+      window.open(href)
+
+   }
+
+</script>
+
+
+<body onload="load_values()">
+</body>
+
+
+
+{%endblock%}

@@ -141,6 +141,16 @@
                      <h4 style="color: white; margin-top: 8px;">Experiya Book </h4>
 
                   </div>
+                 <div id="notification_div" style=" width: 100%; display: none; justify-content: space-between; padding: 0px 20px; font-size: 16px; font-weight: 600;">
+                    <div>
+                       <h6 id="notification"  > </h6>
+                    </div>
+                    <div style="display: flex; width: 120px; justify-content: space-around; padding: 0px 5px;">
+                       <a id="retryPolicy" href="#" style="color: white;" onclick="reSendFormData()" >Retry</a>
+                       <a id="delPolicy" href="#" style="color: white;" onclick="deleteFormData()" >Clear</a>
+                    </div>
+                 </div>
+
                   <!-- /.top-bar-item -->
                   <!-- .top-bar-item -->
                   <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
@@ -257,14 +267,14 @@
                      white-space: nowrap;"></i> 
                      <span class="menu-text" style="color:#346cb0"> Policy List</span></a> 
 							<!-- child menu -->
-                           <ul class="menu">
+                           <ul class="menu" >
                               <li class="menu-subhead">Policy List</li>
                           
                               <li class="menu-item has-child has-open" style="">
                                  <a href="javascript:void(0);" class="menu-link">                          
                            
                            
-                                 <i class="" style="color:#346cb0;
+                                 <i class="" style="color:#346cb0; 
                                     overflow: hidden;
                                     text-overflow: ellipsis;
                                     white-space: nowrap;"></i> 
@@ -273,7 +283,7 @@
                                     <!-- child menu -->
                                        <ul class="menu"><li class="menu-subhead"> Create New</li>
                                        
-                                          <li class="menu-item ">
+                                          <li class="menu-item  " >
                                              <a href="{%url 'bima_policy:create_policy' %}"  style="margin-left: 1rem;" class="menu-link">Motor</a>
                                           </li>
                                           <li class="menu-item ">
@@ -291,6 +301,8 @@
                                  <a href="{%url 'bima_policy:policy_entry' %}"  style="margin-left: 1rem;" class="menu-link" tabindex="-1">Entry
                                  List</a>
                               </li>
+
+                            
                             
                               <li class="menu-item ">
                                  <a href="{%url 'bima_policy:policy_import' %}"  style="margin-left: 1rem;"  class="menu-link"
@@ -432,6 +444,7 @@
                                  <span
                                  class="menu-text" style="color:#346cb0">Recycle Bin</span></a> <!-- child menu -->
                            </li>
+                        
                            <!-- /.menu-item -->
                            <li class="menu-header">Settings </li>
                            <!-- /.menu-header -->
@@ -440,16 +453,7 @@
                      
                                  <i class='fa fa-user-circle' id='icon'></i>
                                  <span class="menu-text" style="color:#346cb0">Profile</span></a> <!-- child menu -->
-                           </li>
-                           <!-- /.menu-item -->
-                           <!-- <li class="menu-header">Subscription</li> -->
-                           <!-- /.menu-header -->
-                           <!-- <li class="menu-item ">
-                              <a href=" {% url 'bima_policy:subscription' %}" class="menu-link">
-                                 {% comment %} <span class="menu-icon icofont-pay"></span> {% endcomment %}
-                                 <i class="fas fa-money-bill" id='icon'></i>
-                                 <span class="menu-text" style="color:#346cb0">Billing</span></a>                             
-                           </li> -->
+                           </li>                          
                         </div>
                      </ul>
                   </nav>

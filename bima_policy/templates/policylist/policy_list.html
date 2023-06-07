@@ -3,6 +3,7 @@
 {%block content%}
 {% load static %}
 
+
 <main class="app-main">
    <div class="wrapper">
       <div class="page ">
@@ -10,7 +11,11 @@
             <div class="ajax-progressBar">
                <div class="postProgress"></div>
             </div>
+
+
             <header class="page-title-bar">
+               <!-- <h3 id="notification">files </h3> -->
+
                <div class="d-flex justify-content-between align-items-center">
                   <nav aria-label="breadcrumb">
                      <ol class="breadcrumb">
@@ -392,19 +397,19 @@
                                              {%endfor%}
                                           </select>
                                        </div>
-                                       <div class="col-md-3 mb-4">
+                                       <div class="col-md-3 mb-4" onkeypress="document.getElementById('pos').click();">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
                                              id="pos" type="text" value="" data-toggle="modal" data-target="#mdlPOS"
                                              class="form-control" name="pos" style="text-transform: uppercase;" required
                                              readonly>
                                        </div>
-                                       
+
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" 
-                                             value="{{user_name}}"  class="form-control" name="employee"
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{user_name}}" class="form-control" name="employee"
                                              style="text-transform: uppercase;  background-color: lightgray;" readonly
-                                             required>                                         
+                                             required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -599,7 +604,6 @@
 
                         </div>
 
-
                      </div>
 
                      {% else %}
@@ -761,10 +765,10 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" 
-                                             value="{{user_name}}"  class="form-control" name="employee"
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{user_name}}" class="form-control" name="employee"
                                              style="text-transform: uppercase;  background-color: lightgray;" readonly
-                                             required>                                         
+                                             required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -968,7 +972,18 @@
                            <p><span class="icofont icofont-hand-right ml-1"></span> You can add manual Payout
                               after the Policy saved</p>
                            <div class="text-center">
+
+                              {% if is_motor_form %}
+                              <button hidden type="submit" name="submit" class="btn btn-success w-100p">Save</button>
+
+                              <a href="#">
+                                 <button type="button" class="btn btn-success w-100p" onclick="sendPolicyData()">Save
+                                 </button>
+                              </a>
+                              {% else %}
                               <button type="submit" name="submit" class="btn btn-success w-100p">Save</button>
+                              {% endif %}
+
                            </div>
                         </div>
                      </div>
@@ -992,8 +1007,9 @@
                <div class="form-row">
                   <div class="col-md-6 col-sm-12">
                      <select id="agents" class="custom-select select2 select2-hidden-accessible"
-                        data-parsley-required="true" tabindex="-1" aria-hidden="true" on onchange="setPOS()">
-                        <option value=""> All POS</option>
+                        data-parsley-required="true" tabindex="-1" aria-hidden="true" on
+                        onchange="get_POS_from_Modal()">
+                        <option value=""> -- Select POS --</option>
                         {%for value in agents %}
                         <option value={{value}}>{{value}}</option>
                         {%endfor%}
@@ -1019,7 +1035,6 @@
       </div>
 
    </div>
-
 </main>
 
 
@@ -1382,6 +1397,7 @@
 
    }
 </script>
+
 <script>
 
    function calculateValue() {
@@ -1477,62 +1493,7 @@
       document.getElementById("totalnet").value = Number(net + gst).toFixed((2))
    }
 
-
-   function add_non_motor() {
-      // Removes space
-
-      odel = document.getElementById("od");
-      odel.value = odel.value.toString().trim()
-
-      tptel = document.getElementById("tpt");
-      tptel.value = tptel.value.toString().trim()
-
-      od = parseFloat(document.getElementById("od").value);
-      tpt = parseFloat(document.getElementById("tpt").value);
-      net = document.getElementById("net")
-      gst = document.getElementById("gst")
-
-      net.value = Number(od + tpt).toFixed((2))
-      if (od > 0 && tpt > 0) {
-         gst.value = Number((od + tpt) * 18 / 100).toFixed(2);
-      }
-      else {
-         gst.value = 0
-      }
-
-   }
-
-   function addgst_non_motor() {
-
-      var numOne, numTwo, sum;
-      tpt = parseFloat(document.getElementById("tpt").value);
-
-      net = parseFloat(document.getElementById("net").value);
-      gst = parseFloat(document.getElementById("gst").value);
-
-      try {
-         vc = document.getElementById('vehicle_catagory').value
-         if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
-
-            gstt = document.getElementById("gstt");
-            if (tpt > 0) {
-               gstt.value = Number(tpt * 12 / 100).toFixed(2);
-            }
-            else {
-               gstt.value = 0;
-            }
-            document.getElementById("totalnet").value = Number(net + gst + parseFloat(gstt.value)).toFixed(2);
-
-         };
-      }
-      catch { }
-
-      document.getElementById("totalnet").value = Number(net + gst).toFixed(2);
-
-   }
-
    function setCategoryOnChange() {
-      sortItems("vehicle_catagory")
       value = document.getElementById('vehicle_catagory').value
 
       coverage_typeDiv = document.getElementById('coverage_typeDiv')
@@ -1541,7 +1502,7 @@
       gvwDiv = document.getElementById('gvwDiv')
       gsttDiv = document.getElementById('gsttDiv')
 
-      if (value == 'TWO WHEELER' || value == 'TWO WHEELER SCOOTER' || value == 'TWO WHEELER BIKE')  {
+      if (value == 'TWO WHEELER' || value == 'TWO WHEELER SCOOTER' || value == 'TWO WHEELER BIKE') {
          document.getElementById('coverage_typeDiv').hidden = false
          document.getElementById('cubic_capacityDiv').hidden = false
          document.getElementById('seating_capacityDiv').hidden = true
@@ -2154,56 +2115,18 @@
       }
    }
 
-</script>
-
-<body onload="initialConfig()">
-
-</body>
-<script>
-
-   function initialConfig() {
-      addVehicleMakes()
-      addVehicleModels()
-   }
-
-   function addVehicleMakes() {
-
-      vmake = document.getElementById('vehicle_makeby')
-
-      "{{ vdata.make |safe}}".replace('[', '').replace(']', '').split(',')
-         .forEach(item => {
-
-            var newoption = document.createElement("option");
-            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
-            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
-            vmake.options.add(newoption);
-
-         })
-   }
-
-   function addVehicleModels() {
-
-      vmodel = document.getElementById('vehicle_model')
-
-      "{{ vdata.model |safe}}".replace('[', '').replace(']', '').split(',')
-         .forEach(item => {
-
-            var newoption = document.createElement("option");
-            newoption.value = item.replace("b'", '').replace("'", "").replace("'", "")
-            newoption.innerHTML = item.replace("b'", '').replace("'", "").replace("'", "")
-            vmodel.options.add(newoption);
-
-         })
-   }
-
    function sortItems(id) {
       $("#" + id).html($("#" + id + " option").sort(function (a, b) {
          return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
       }))
    }
 
-   function setPOS() {
-      document.getElementById("pos").value = document.getElementById("inp_agent").value = document.getElementById("agents").options[document.getElementById("agents").selectedIndex].text;
+   function get_POS_from_Modal() {
+      value = document.getElementById("inp_agent").value = document.getElementById("agents").options[document.getElementById("agents").selectedIndex].text;
+      if (value.includes('-- Select POS --')) {
+         value = ''
+      }
+      document.getElementById("pos").value = value
    }
 
    function add_new_agent() {
@@ -2216,6 +2139,277 @@
 
       window.location.replace(href)
    }
+
+   function validateBeforeSend(element_name) {
+      var elements = document.getElementsByName(element_name);
+      if (elements.length > 0) {
+         var proposalNo = elements[0].value;
+
+         if (proposalNo != '') {
+            return proposalNo
+         }
+         else {
+            res = element_name + ' is missing'
+            return res
+         }
+      }
+
+
+   }
+
+   function get_policy_data() {
+
+      // validate if values is blank 
+      if (validateBeforeSend('proposal_no').includes(' is missing')) return validateBeforeSend('proposal_no')
+      if (validateBeforeSend('policy_no').includes(' is missing')) return validateBeforeSend('policy_no')
+      if (validateBeforeSend('customer_name').includes(' is missing')) return validateBeforeSend('customer_name')
+      if (validateBeforeSend('insurance_company').includes(' is missing')) return validateBeforeSend('insurance_company')
+      if (validateBeforeSend('sp_name').includes(' is missing')) return validateBeforeSend('sp_name')
+      if (validateBeforeSend('sp_brokercode').includes(' is missing')) return validateBeforeSend('sp_brokercode')
+      if (validateBeforeSend('registration_no').includes(' is missing')) return validateBeforeSend('registration_no')
+      if (validateBeforeSend('rto_state').includes(' is missing')) return validateBeforeSend('rto_state')
+      if (validateBeforeSend('rto_city').includes(' is missing')) return validateBeforeSend('rto_city')
+      if (validateBeforeSend('vehicle_makeby').includes(' is missing')) return validateBeforeSend('vehicle_makeby')
+      if (validateBeforeSend('vehicle_model').includes(' is missing')) return validateBeforeSend('vehicle_model')
+      if (validateBeforeSend('vehicle_catagory').includes(' is missing')) return validateBeforeSend('vehicle_catagory')
+      if (validateBeforeSend('vehicle_fuel_type').includes(' is missing')) return validateBeforeSend('vehicle_fuel_type')
+      if (validateBeforeSend('mfg_year').includes(' is missing')) return validateBeforeSend('mfg_year')
+      if (validateBeforeSend('addon').includes(' is missing')) return validateBeforeSend('addon')
+      if (validateBeforeSend('ncb').includes(' is missing')) return validateBeforeSend('ncb')
+      // if (validateBeforeSend('cubic_capacity').includes(' is missing')) return validateBeforeSend('cubic_capacity')
+      // if (validateBeforeSend('gvw').includes(' is missing')) return validateBeforeSend('gvw')
+      // if (validateBeforeSend('seating_capacity').includes(' is missing')) return validateBeforeSend('seating_capacity')
+      // if (validateBeforeSend('coverage_type').includes(' is missing')) return validateBeforeSend('coverage_type')
+      if (validateBeforeSend('policy_type').includes(' is missing')) return validateBeforeSend('policy_type')
+      if (validateBeforeSend('cpa').includes(' is missing')) return validateBeforeSend('cpa')
+      if (validateBeforeSend('risk_start_date').includes(' is missing')) return validateBeforeSend('risk_start_date')
+      if (validateBeforeSend('risk_end_date').includes(' is missing')) return validateBeforeSend('risk_end_date')
+      if (validateBeforeSend('issue_date').includes(' is missing')) return validateBeforeSend('issue_date')
+      if (validateBeforeSend('insured_age').includes(' is missing')) return validateBeforeSend('insured_age')
+      if (validateBeforeSend('policy_term').includes(' is missing')) return validateBeforeSend('policy_term')
+      if (validateBeforeSend('bqp').includes(' is missing')) return validateBeforeSend('bqp')
+      if (validateBeforeSend('pos').includes(' is missing')) return validateBeforeSend('pos')
+      if (validateBeforeSend('employee').includes(' is missing')) return validateBeforeSend('employee')
+
+      if (validateBeforeSend('od').includes(' is missing')) return validateBeforeSend('od')
+      if (validateBeforeSend('tpt').includes(' is missing')) return validateBeforeSend('tpt')
+      if (validateBeforeSend('net').includes(' is missing')) return validateBeforeSend('net')
+      if (validateBeforeSend('total').includes(' is missing')) return validateBeforeSend('total')
+      if (validateBeforeSend('gst').includes(' is missing')) return validateBeforeSend('gst')
+      if (validateBeforeSend('payment_mode').includes(' is missing')) return validateBeforeSend('payment_mode')
+
+      var policy =
+      {
+         proposal_no: document.getElementsByName('proposal_no')[0].value,
+         policy_no: document.getElementsByName('policy_no')[0].value,
+         customer_name: document.getElementsByName('customer_name')[0].value,
+         insurance_company: document.getElementsByName('insurance_company')[0].value,
+         sp_name: document.getElementsByName('sp_name')[0].value,
+         sp_brokercode: document.getElementsByName('sp_brokercode')[0].value,
+         registration_no: document.getElementsByName('registration_no')[0].value,
+         rto_state: document.getElementsByName('rto_state')[0].value,
+         rto_city: document.getElementsByName('rto_city')[0].value,
+         vehicle_makeby: document.getElementsByName('vehicle_makeby')[0].value,
+         vehicle_model: document.getElementsByName('vehicle_model')[0].value,
+         vehicle_catagory: document.getElementsByName('vehicle_catagory')[0].value,
+         vehicle_fuel_type: document.getElementsByName('vehicle_fuel_type')[0].value,
+         mfg_year: document.getElementsByName('mfg_year')[0].value,
+         addon: document.getElementsByName('addon')[0].value,
+         ncb: document.getElementsByName('ncb')[0].value,
+         cubic_capacity: document.getElementsByName('cubic_capacity')[0].value,
+         gvw: document.getElementsByName('gvw')[0].value,
+         seating_capacity: document.getElementsByName('seating_capacity')[0].value,
+         coverage_type: document.getElementsByName('coverage_type')[0].value,
+         policy_type: document.getElementsByName('policy_type')[0].value,
+         cpa: document.getElementsByName('cpa')[0].value,
+         risk_start_date: document.getElementsByName('risk_start_date')[0].value,
+         risk_end_date: document.getElementsByName('risk_end_date')[0].value,
+         issue_date: document.getElementsByName('issue_date')[0].value,
+         insured_age: document.getElementsByName('insured_age')[0].value,
+         policy_term: document.getElementsByName('policy_term')[0].value,
+         bqp: document.getElementsByName('bqp')[0].value,
+         pos: document.getElementsByName('pos')[0].value,
+         employee: document.getElementsByName('employee')[0].value,
+         remark: document.getElementsByName('remark')[0].value,
+
+         OD_premium: document.getElementsByName('od')[0].value,
+         TP_terrorism: document.getElementsByName('tpt')[0].value,
+         net: document.getElementsByName('net')[0].value,
+         total: document.getElementsByName('total')[0].value,
+         gst_amount: document.getElementsByName('gst')[0].value,
+         gst_gcv_amount: document.getElementsByName('gstt')[0].value,
+         payment_mode: document.getElementsByName('payment_mode')[0].value
+      };
+
+      return policy
+
+   }
+
+   function clearAllField() {
+      document.getElementById('proposal_no').value = ''
+   }
+
+   var formDataDict = {}
+
+   function sendPolicyData() {
+
+      val = get_policy_data().toString()
+
+      if (val.includes(' is missing')) {
+
+         notification_div = document.getElementById('notification_div');
+         notification_div.style.display = "flex";
+         document.getElementById("retryPolicy").style.display = "block";
+
+         notification = document.getElementById('notification');
+         notification.innerHTML = val + " 😢"
+         notification.style.display = 'block';
+
+         return;
+      }
+
+      // Show a sending notification
+      notification_div = document.getElementById('notification_div');
+      notification_div.style.display = "flex";
+      notification = document.getElementById('notification');
+      notification.innerHTML = 'Saving policy...';
+      notification.style.display = 'block';
+
+      formData = new FormData();
+
+      formData.append('data_dict', JSON.stringify(get_policy_data()));
+
+      // Append PDF file(s) to the form data
+
+      var fileInput = document.getElementById('proposal');
+      for (var i = 0; i < fileInput.files.length; i++) {
+         // formData.append('pdf_files', fileInput.files[i]);
+         formData.append('proposal', fileInput.files[i]);
+      }
+      var fileInput = document.getElementById('mandate');
+      for (var i = 0; i < fileInput.files.length; i++) {
+         formData.append('mandate', fileInput.files[i]);
+      }
+      var fileInput = document.getElementById('policy');
+      for (var i = 0; i < fileInput.files.length; i++) {
+         formData.append('policy', fileInput.files[i]);
+      }
+      var fileInput = document.getElementById('previous_policy');
+      for (var i = 0; i < fileInput.files.length; i++) {
+         formData.append('previous_policy', fileInput.files[i]);
+      }
+      var fileInput = document.getElementById('pan_card');
+      for (var i = 0; i < fileInput.files.length; i++) {
+         formData.append('pan_card', fileInput.files[i]);
+      }
+      var fileInput = document.getElementById('aadhar_card');
+      for (var i = 0; i < fileInput.files.length; i++) {
+         formData.append('aadhar_card', fileInput.files[i]);
+      }
+      var fileInput = document.getElementById('vehicle_rc');
+      for (var i = 0; i < fileInput.files.length; i++) {
+         formData.append('vehicle_rc', fileInput.files[i]);
+      }
+      var fileInput = document.getElementById('inspection_report');
+      for (var i = 0; i < fileInput.files.length; i++) {
+         formData.append('inspection_report', fileInput.files[i]);
+      }
+
+      formDataKey = document.getElementById('policy_no').value
+
+      console.log('formData ' + formData);
+      console.log('formData type ' + typeof (formData));
+
+      addToFormDataDict(formDataKey, formData)
+   }
+
+   function addToFormDataDict(formDataKey, formData) {
+
+      if (formDataKey in formDataDict) {
+         // The dictionary has the specified key
+         console.log('The key is present in the dictionary');
+
+      }
+      else {
+         // The dictionary does not have the specified key
+         console.log('The key is not present in the dictionary');
+         // Add the new item to the dictionary
+         formDataDict[formDataKey] = formData;
+         // Send the new item
+         sendFormData(formDataKey, formData);
+      }
+
+      console.log(formDataDict);
+
+   }
+
+   function sendFormData(formDataKey, formData) {
+
+      href = window.location.origin + '/bima_policy/policy/new_entry/'
+
+      $.ajax({
+         url: href,
+         type: "POST",
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         data: formData,
+         processData: false,
+         contentType: false,
+         success: function (response) {
+            res = JSON.parse(JSON.stringify(response))
+            console.log(res);
+
+            notification.innerHTML = res;
+            notification.style.display = 'block';
+
+            if (String(res).includes('Failed:')) {
+
+               notification_div = document.getElementById('notification_div');
+               notification_div.style.display = "flex";
+               document.getElementById("retryPolicy").style.display = "block";
+            } else {
+               notification_div = document.getElementById('notification_div');
+               notification_div.style.display = "flex";
+               document.getElementById("retryPolicy").style.display = "none";
+
+               delete formDataDict[formDataKey];
+            }
+         },
+         error: function (xhr, status, error) {
+
+            notification.innerHTML = error;
+            notification.style.display = 'block';
+
+            notification_div = document.getElementById('notification_div');
+            notification_div.style.display = "flex";
+            document.getElementById("retryPolicy").style.display = "block";
+         }
+      });
+   }
+
+   function reSendFormData() {
+
+      const dictLength = Object.keys(formDataDict).length;
+      console.log(dictLength);
+
+      if (dictLength > 0) {
+         for (let formDataKey in formDataDict) {
+            console.log(formDataKey + ": " + formDataDict[formDataKey]);
+            sendFormData(formDataKey, formDataDict[formDataKey])
+         }
+      }
+      else {
+         console.log('no items in dicts');
+      }
+   }
+
+   function deleteFormData() {
+      formDataDict = {}
+      notification_div = document.getElementById('notification_div');
+      notification_div.style.display = "none";      
+   }
+
 
 </script>
 

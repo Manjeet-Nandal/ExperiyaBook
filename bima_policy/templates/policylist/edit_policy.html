@@ -1014,8 +1014,8 @@
                <div class="form-row">
                   <div class="col-md-6 col-sm-12">
                      <select id="agents" class="custom-select select2 select2-hidden-accessible"
-                        data-parsley-required="true" tabindex="-1" aria-hidden="true" on onchange="setPOS()">
-                        <option value=""> All POS</option>
+                        data-parsley-required="true" tabindex="-1" aria-hidden="true" on onchange="get_POS_from_Modal()">
+                        <option value=""  > -- Select POS --</option>
                         {%for value in agents %}
                         <option value={{value}}>{{value}}</option>
                         {%endfor%}
@@ -2296,7 +2296,7 @@
          })
    }
 
-   function setPOS() {
+   function get_POS_from_Modal() {
       document.getElementById("pos").value = document.getElementById("inp_agent").value = document.getElementById("agents").options[document.getElementById("agents").selectedIndex].text;
    }
 
