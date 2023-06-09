@@ -1035,8 +1035,34 @@
       </div>
 
    </div>
-</main>
 
+   <div class="modal fade" id="mdlFormData">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title"> Select Policy </h5>
+            </div>
+            <div class="modal-body ">
+               <div class="form-row mb-6">
+                  <div class="col-md-8 col-sm-12">
+                     <select id="formDataSelect" class="custom-select " data-parsley-required="true" tabindex="-1"
+                        aria-hidden="true">
+                        <option value=""> -- Select Policy --</option>
+                     </select>
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                     <button class="mb-2 btn btn-primary" onclick="viewFormData()">View</button>
+                     <button class="mb-2 btn btn-primary" onclick="clearFormData()">Clear</button>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+
+      </div>
+   </div>
+
+</main>
 
 
 {% comment %}
@@ -1570,6 +1596,7 @@
          newoption.value = 'OD ONLY'
          newoption.innerHTML = 'OD ONLY'
          coverage_type.options.add(newoption);
+
 
       }
 
@@ -2140,6 +2167,16 @@
       window.location.replace(href)
    }
 
+   function capitalizeWords(str) {
+   return str.toLowerCase().replace(/(?:^|\s)\w/g, function(match) {
+      return match.toUpperCase();
+   });
+   }
+
+
+
+
+
    function validateBeforeSend(element_name) {
       var elements = document.getElementsByName(element_name);
       if (elements.length > 0) {
@@ -2148,16 +2185,14 @@
          if (proposalNo != '') {
             return proposalNo
          }
-         else {
-            res = element_name + ' is missing'
+         else {           
+            res =  element_name + ' is missing'
             return res
          }
       }
-
-
    }
 
-   function get_policy_data() {
+   function validateFormData() {
 
       // validate if values is blank 
       if (validateBeforeSend('proposal_no').includes(' is missing')) return validateBeforeSend('proposal_no')
@@ -2176,20 +2211,17 @@
       if (validateBeforeSend('mfg_year').includes(' is missing')) return validateBeforeSend('mfg_year')
       if (validateBeforeSend('addon').includes(' is missing')) return validateBeforeSend('addon')
       if (validateBeforeSend('ncb').includes(' is missing')) return validateBeforeSend('ncb')
-      // if (validateBeforeSend('cubic_capacity').includes(' is missing')) return validateBeforeSend('cubic_capacity')
-      // if (validateBeforeSend('gvw').includes(' is missing')) return validateBeforeSend('gvw')
-      // if (validateBeforeSend('seating_capacity').includes(' is missing')) return validateBeforeSend('seating_capacity')
-      // if (validateBeforeSend('coverage_type').includes(' is missing')) return validateBeforeSend('coverage_type')
+
+      if (validateBeforeSend('coverage_type').includes(' is missing')) return validateBeforeSend('coverage_type')
       if (validateBeforeSend('policy_type').includes(' is missing')) return validateBeforeSend('policy_type')
       if (validateBeforeSend('cpa').includes(' is missing')) return validateBeforeSend('cpa')
-      if (validateBeforeSend('risk_start_date').includes(' is missing')) return validateBeforeSend('risk_start_date')
-      if (validateBeforeSend('risk_end_date').includes(' is missing')) return validateBeforeSend('risk_end_date')
-      if (validateBeforeSend('issue_date').includes(' is missing')) return validateBeforeSend('issue_date')
+      // if (validateBeforeSend('risk_start_date').includes(' is missing')) return validateBeforeSend('risk_start_date')
+      // if (validateBeforeSend('risk_end_date').includes(' is missing')) return validateBeforeSend('risk_end_date')
+      // if (validateBeforeSend('issue_date').includes(' is missing')) return validateBeforeSend('issue_date')
       if (validateBeforeSend('insured_age').includes(' is missing')) return validateBeforeSend('insured_age')
       if (validateBeforeSend('policy_term').includes(' is missing')) return validateBeforeSend('policy_term')
       if (validateBeforeSend('bqp').includes(' is missing')) return validateBeforeSend('bqp')
       if (validateBeforeSend('pos').includes(' is missing')) return validateBeforeSend('pos')
-      if (validateBeforeSend('employee').includes(' is missing')) return validateBeforeSend('employee')
 
       if (validateBeforeSend('od').includes(' is missing')) return validateBeforeSend('od')
       if (validateBeforeSend('tpt').includes(' is missing')) return validateBeforeSend('tpt')
@@ -2198,68 +2230,242 @@
       if (validateBeforeSend('gst').includes(' is missing')) return validateBeforeSend('gst')
       if (validateBeforeSend('payment_mode').includes(' is missing')) return validateBeforeSend('payment_mode')
 
-      var policy =
-      {
-         proposal_no: document.getElementsByName('proposal_no')[0].value,
-         policy_no: document.getElementsByName('policy_no')[0].value,
-         customer_name: document.getElementsByName('customer_name')[0].value,
-         insurance_company: document.getElementsByName('insurance_company')[0].value,
-         sp_name: document.getElementsByName('sp_name')[0].value,
-         sp_brokercode: document.getElementsByName('sp_brokercode')[0].value,
-         registration_no: document.getElementsByName('registration_no')[0].value,
-         rto_state: document.getElementsByName('rto_state')[0].value,
-         rto_city: document.getElementsByName('rto_city')[0].value,
-         vehicle_makeby: document.getElementsByName('vehicle_makeby')[0].value,
-         vehicle_model: document.getElementsByName('vehicle_model')[0].value,
-         vehicle_catagory: document.getElementsByName('vehicle_catagory')[0].value,
-         vehicle_fuel_type: document.getElementsByName('vehicle_fuel_type')[0].value,
-         mfg_year: document.getElementsByName('mfg_year')[0].value,
-         addon: document.getElementsByName('addon')[0].value,
-         ncb: document.getElementsByName('ncb')[0].value,
-         cubic_capacity: document.getElementsByName('cubic_capacity')[0].value,
-         gvw: document.getElementsByName('gvw')[0].value,
-         seating_capacity: document.getElementsByName('seating_capacity')[0].value,
-         coverage_type: document.getElementsByName('coverage_type')[0].value,
-         policy_type: document.getElementsByName('policy_type')[0].value,
-         cpa: document.getElementsByName('cpa')[0].value,
-         risk_start_date: document.getElementsByName('risk_start_date')[0].value,
-         risk_end_date: document.getElementsByName('risk_end_date')[0].value,
-         issue_date: document.getElementsByName('issue_date')[0].value,
-         insured_age: document.getElementsByName('insured_age')[0].value,
-         policy_term: document.getElementsByName('policy_term')[0].value,
-         bqp: document.getElementsByName('bqp')[0].value,
-         pos: document.getElementsByName('pos')[0].value,
-         employee: document.getElementsByName('employee')[0].value,
-         remark: document.getElementsByName('remark')[0].value,
-
-         OD_premium: document.getElementsByName('od')[0].value,
-         TP_terrorism: document.getElementsByName('tpt')[0].value,
-         net: document.getElementsByName('net')[0].value,
-         total: document.getElementsByName('total')[0].value,
-         gst_amount: document.getElementsByName('gst')[0].value,
-         gst_gcv_amount: document.getElementsByName('gstt')[0].value,
-         payment_mode: document.getElementsByName('payment_mode')[0].value
-      };
-
-      return policy
+      return ''
 
    }
 
    function clearAllField() {
-      document.getElementById('proposal_no').value = ''
+
+      document.getElementsByName('proposal_no')[0].value = ''
+      document.getElementsByName('policy_no')[0].value = ''
+      document.getElementsByName('customer_name')[0].value = ''
+      document.getElementsByName('insurance_company')[0].value = ''
+      document.getElementsByName('sp_name')[0].value = ''
+      document.getElementsByName('sp_brokercode')[0].value = ''
+      document.getElementsByName('registration_no')[0].value = ''
+      document.getElementsByName('rto_state')[0].value = ''
+      document.getElementsByName('rto_city')[0].value = ''
+      document.getElementsByName('vehicle_makeby')[0].value = ''
+      document.getElementsByName('vehicle_model')[0].value = ''
+      document.getElementsByName('vehicle_catagory')[0].value = ''
+      document.getElementsByName('vehicle_fuel_type')[0].value = ''
+      document.getElementsByName('mfg_year')[0].value = ''
+      document.getElementsByName('addon')[0].value = ''
+      document.getElementsByName('ncb')[0].value = ''
+      document.getElementsByName('cubic_capacity')[0].value = ''
+      document.getElementsByName('gvw')[0].value = ''
+      document.getElementsByName('seating_capacity')[0].value = ''
+      document.getElementsByName('coverage_type')[0].value = ''
+      document.getElementsByName('policy_type')[0].value = ''
+      document.getElementsByName('cpa')[0].value = ''
+      document.getElementsByName('risk_start_date')[0].value = ''
+      document.getElementsByName('risk_end_date')[0].value = ''
+      document.getElementsByName('issue_date')[0].value = ''
+      document.getElementsByName('insured_age')[0].value = ''
+      document.getElementsByName('policy_term')[0].value = ''
+      document.getElementsByName('bqp')[0].value = ''
+      document.getElementsByName('pos')[0].value = ''
+      // document.getElementsByName('employee')[0].value = ''
+
+      document.getElementsByName('od')[0].value = ''
+      document.getElementsByName('tpt')[0].value = ''
+      document.getElementsByName('net')[0].value = ''
+      document.getElementsByName('gst')[0].value = ''
+      document.getElementsByName('gstt')[0].value = ''
+      document.getElementsByName('total')[0].value = ''
+      document.getElementsByName('payment_mode')[0].value = ''
+
+      document.getElementsByName('proposal')[0].value = ''
+      document.getElementsByName('mandate')[0].value = ''
+      document.getElementsByName('policy')[0].value = ''
+      document.getElementsByName('previous_policy')[0].value = ''
+      document.getElementsByName('pan_card')[0].value = ''
+      document.getElementsByName('aadhar_card')[0].value = ''
+      document.getElementsByName('vehicle_rc')[0].value = ''
+      document.getElementsByName('inspection_report')[0].value = ''
+
+      document.getElementsByName("vehicle_catagory")[0].focus()
+
+      // console.log('cleared!');
+
+   }
+
+   function mockAllField() {
+
+      selectOptionByValue('vehicle_catagory', 'TWO WHEELER');
+      selectOptionByValue('insurance_company', 'BAJAJ ALLIANZ GIC');
+      selectOptionByValue('sp_name', 'ROHTAK');
+      selectOptionByValue('sp_brokercode', '124001');
+      selectOptionByValue('rto_state', 'UTTAR PRADESH');
+      selectOptionByValue('vehicle_makeby', 'HERO MOTOCORP');
+      selectOptionByValue('vehicle_model', 'TRUCKSLPT 2518 GVW 35200');
+      selectOptionByValue('vehicle_fuel_type', 'PETROL');
+      selectOptionByValue('mfg_year', '2023');
+      selectOptionByValue('addon', 'YES');
+      selectOptionByValue('ncb', 'YES');
+      selectOptionByValue('cubic_capacity', 'ABOVE 350CC');
+      selectOptionByValue('coverage_type', 'TP ONLY');
+      selectOptionByValue('policy_type', 'FRESH');
+      selectOptionByValue('cpa', 'YES');
+      selectOptionByValue('policy_term', '5');
+      selectOptionByValue('bqp', 'SATVEER SINGH');
+      selectOptionByValue('payment_mode', 'ONLINE');
+
+
+      document.getElementsByName('proposal_no')[0].value = 'mock-1'
+      document.getElementsByName('policy_no')[0].value = 'mock-1'
+      document.getElementsByName('customer_name')[0].value = 'mock-1'
+      document.getElementsByName('registration_no')[0].value = 'UP24001'
+      document.getElementsByName('rto_city')[0].value = 'BADAUN'
+      document.getElementsByName('insured_age')[0].value = '20'
+      document.getElementsByName('pos')[0].value = 'NARESH GOYAL'
+
+      document.getElementsByName('od')[0].value = '796'
+      document.getElementsByName('tpt')[0].value = '3932'
    }
 
    var formDataDict = {}
+   var formDataList = []
+
+   isLoadedFormData = false
+
+   function viewFormData() {
+
+      foundFormData = formDataList.find(formData => {
+         return formData.get('policy_no') === document.getElementById("formDataSelect").value;
+      });
+
+      if (foundFormData) {
+         document.getElementsByName('proposal_no')[0].value = foundFormData.get('proposal_no')
+         document.getElementsByName('policy_no')[0].value = foundFormData.get('policy_no')
+         document.getElementsByName('customer_name')[0].value = foundFormData.get('customer_name')
+         document.getElementsByName('registration_no')[0].value = foundFormData.get('registration_no')
+         document.getElementsByName('rto_city')[0].value = foundFormData.get('rto_city')
+         document.getElementsByName('insured_age')[0].value = foundFormData.get('insured_age')
+         document.getElementsByName('pos')[0].value = foundFormData.get('pos')
+         document.getElementsByName('employee')[0].value = foundFormData.get('employee')
+         document.getElementsByName('remark')[0].value = foundFormData.get('remark')
+
+         document.getElementsByName('od')[0].value = foundFormData.get('od')
+         document.getElementsByName('tpt')[0].value = foundFormData.get('tpt')
+         document.getElementsByName('net')[0].value = foundFormData.get('net')
+         document.getElementsByName('gst')[0].value = foundFormData.get('gst')
+         document.getElementsByName('gstt')[0].value = foundFormData.get('gstt')
+         document.getElementsByName('total')[0].value = foundFormData.get('total')
+
+         document.getElementsByName('risk_start_date')[0].value = foundFormData.get('risk_start_date')
+         document.getElementsByName('risk_end_date')[0].value = foundFormData.get('risk_end_date')
+         document.getElementsByName('issue_date')[0].value = foundFormData.get('issue_date')
+
+         // select-elements
+         selectOptionByValue('insurance_company', foundFormData.get('insurance_company'));
+         selectOptionByValue('sp_name', foundFormData.get('sp_name'));
+         selectOptionByValue('sp_brokercode', foundFormData.get('sp_brokercode'));
+         selectOptionByValue('rto_state', foundFormData.get('rto_state'));
+         selectOptionByValue('vehicle_makeby', foundFormData.get('vehicle_makeby'));
+         selectOptionByValue('vehicle_model', foundFormData.get('vehicle_model'));
+         selectOptionByValue('vehicle_catagory', foundFormData.get('vehicle_catagory'));
+         selectOptionByValue('vehicle_fuel_type', foundFormData.get('vehicle_fuel_type'));
+         selectOptionByValue('mfg_year', foundFormData.get('mfg_year'));
+         selectOptionByValue('addon', foundFormData.get('addon'));
+         selectOptionByValue('ncb', foundFormData.get('ncb'));
+         selectOptionByValue('cubic_capacity', foundFormData.get('cubic_capacity'));
+         selectOptionByValue('gvw', foundFormData.get('gvw'));
+         selectOptionByValue('seating_capacity', foundFormData.get('seating_capacity'));
+         selectOptionByValue('coverage_type', foundFormData.get('coverage_type'));
+         selectOptionByValue('policy_type', foundFormData.get('policy_type'));
+         selectOptionByValue('cpa', foundFormData.get('cpa'));
+         selectOptionByValue('policy_term', foundFormData.get('policy_term'));
+         selectOptionByValue('bqp', foundFormData.get('bqp'));
+         selectOptionByValue('payment_mode', foundFormData.get('payment_mode'));
+
+         // selectFile('proposal', foundFormData.get('proposal'))
+         // selectFile('mandate', foundFormData.get('mandate'))
+         // selectFile('policy', foundFormData.get('policy'))
+         // selectFile('previous_policy', foundFormData.get('propoprevious_policysal'))
+         // selectFile('pan_card', foundFormData.get('pan_card'))
+         // selectFile('aadhar_card', foundFormData.get('aadhar_card'))
+         // selectFile('vehicle_rc', foundFormData.get('vehicle_rc'))
+         // selectFile('inspection_report', foundFormData.get('inspection_report'))
+
+      }
+
+   }
+
+   function addFormData(policy_no, fData) {
+
+      const foundFormData = formDataList.find(formData => {
+         return formData.get('policy_no') === policy_no;
+      });
+
+      if (foundFormData) {
+
+      }
+      else {
+         formDataList.push(fData)
+
+         selectElement = document.getElementById("formDataSelect");
+         optionElement = document.createElement("option");
+         optionElement.value = policy_no;
+         optionElement.text = policy_no;
+
+         selectElement.options.add(optionElement)
+
+         sendFormData(policy_no, fData);
+         clearAllField()
+      }
+
+   }
+
+   function removeFormData(policy_no) {
+
+      const foundFormData = formDataList.find(formData => {
+         return formData.get('policy_no') === policy_no;
+      });
+
+      if (foundFormData) {
+
+         formDataList.pop(foundFormData)
+         console.log('removed from list');
+
+         selectElement = document.getElementById("formDataSelect");
+         options = selectElement.options;
+         for (let i = 0; i < options.length; i++) {
+            if (options[i].value === policy_no) {
+               selectElement.remove(i);
+               console.log('removed from options');
+               break;
+            }
+         }
+
+      }
+      else {
+
+      }
+
+   }
+
+   function clearFormData() {
+
+      formDataList = []
+
+      selectElement = document.getElementById("formDataSelect");
+      options = selectElement.options;
+      for (let i = 1; i < options.length; i++) {
+         selectElement.remove(i);
+      }
+      document.getElementById("countFormData").innerHTML = ''
+
+   }
 
    function sendPolicyData() {
 
-      val = get_policy_data().toString()
+      val = validateFormData()
 
       if (val.includes(' is missing')) {
 
          notification_div = document.getElementById('notification_div');
-         notification_div.style.display = "flex";
-         document.getElementById("retryPolicy").style.display = "block";
+         notification_div.style.display = "flex";       
 
          notification = document.getElementById('notification');
          notification.innerHTML = val + " 😢"
@@ -2268,82 +2474,67 @@
          return;
       }
 
-      // Show a sending notification
-      notification_div = document.getElementById('notification_div');
-      notification_div.style.display = "flex";
-      notification = document.getElementById('notification');
-      notification.innerHTML = 'Saving policy...';
-      notification.style.display = 'block';
-
       formData = new FormData();
+      formData.append('proposal_no', document.getElementsByName('proposal_no')[0].value);
+      formData.append('policy_no', document.getElementsByName('policy_no')[0].value);
+      formData.append('customer_name', document.getElementsByName('customer_name')[0].value);
+      formData.append('insurance_company', document.getElementsByName('insurance_company')[0].value);
+      formData.append('sp_name', document.getElementsByName('sp_name')[0].value);
+      formData.append('sp_brokercode', document.getElementsByName('sp_brokercode')[0].value);
+      formData.append('registration_no', document.getElementsByName('registration_no')[0].value);
+      formData.append('rto_state', document.getElementsByName('rto_state')[0].value);
+      formData.append('rto_city', document.getElementsByName('rto_city')[0].value);
+      formData.append('vehicle_makeby', document.getElementsByName('vehicle_makeby')[0].value);
+      formData.append('vehicle_model', document.getElementsByName('vehicle_model')[0].value);
+      formData.append('vehicle_catagory', document.getElementsByName('vehicle_catagory')[0].value);
+      formData.append('vehicle_fuel_type', document.getElementsByName('vehicle_fuel_type')[0].value);
+      formData.append('mfg_year', document.getElementsByName('mfg_year')[0].value);
+      formData.append('addon', document.getElementsByName('addon')[0].value);
+      formData.append('ncb', document.getElementsByName('ncb')[0].value);
+      formData.append('cubic_capacity', document.getElementsByName('cubic_capacity')[0].value);
+      formData.append('gvw', document.getElementsByName('gvw')[0].value);
+      formData.append('seating_capacity', document.getElementsByName('seating_capacity')[0].value);
+      formData.append('coverage_type', document.getElementsByName('coverage_type')[0].value);
+      formData.append('policy_type', document.getElementsByName('policy_type')[0].value);
+      formData.append('cpa', document.getElementsByName('cpa')[0].value);
+      formData.append('risk_start_date', document.getElementsByName('risk_start_date')[0].value);
+      formData.append('risk_end_date', document.getElementsByName('risk_end_date')[0].value);
+      formData.append('issue_date', document.getElementsByName('issue_date')[0].value);
+      formData.append('insured_age', document.getElementsByName('insured_age')[0].value);
+      formData.append('policy_term', document.getElementsByName('policy_term')[0].value);
+      formData.append('bqp', document.getElementsByName('bqp')[0].value);
+      formData.append('pos', document.getElementsByName('pos')[0].value);
+      formData.append('employee', document.getElementsByName('employee')[0].value);
+      formData.append('remark', document.getElementsByName('remark')[0].value);
+      formData.append('od', document.getElementsByName('od')[0].value);
+      formData.append('tpt', document.getElementsByName('tpt')[0].value);
+      formData.append('net', document.getElementsByName('net')[0].value);
+      formData.append('gst', document.getElementsByName('gst')[0].value);
+      formData.append('gstt', document.getElementsByName('gstt')[0].value);
+      formData.append('total', document.getElementsByName('total')[0].value);
+      formData.append('payment_mode', document.getElementsByName('payment_mode')[0].value);
+      formData.append('proposal', document.getElementById('proposal').files[0]);
+      formData.append('mandate', document.getElementById('mandate').files[0]);
+      formData.append('policy', document.getElementById('policy').files[0]);
+      formData.append('previous_policy', document.getElementById('previous_policy').files[0]);
+      formData.append('pan_card', document.getElementById('pan_card').files[0]);
+      formData.append('aadhar_card', document.getElementById('aadhar_card').files[0]);
+      formData.append('vehicle_rc', document.getElementById('vehicle_rc').files[0]);
+      formData.append('inspection_report', document.getElementById('inspection_report').files[0]);
 
-      formData.append('data_dict', JSON.stringify(get_policy_data()));
+      // formDataKey = document.getElementById('policy_no').value
 
-      // Append PDF file(s) to the form data
+      addFormData(formData.get('policy_no'), formData)
 
-      var fileInput = document.getElementById('proposal');
-      for (var i = 0; i < fileInput.files.length; i++) {
-         // formData.append('pdf_files', fileInput.files[i]);
-         formData.append('proposal', fileInput.files[i]);
-      }
-      var fileInput = document.getElementById('mandate');
-      for (var i = 0; i < fileInput.files.length; i++) {
-         formData.append('mandate', fileInput.files[i]);
-      }
-      var fileInput = document.getElementById('policy');
-      for (var i = 0; i < fileInput.files.length; i++) {
-         formData.append('policy', fileInput.files[i]);
-      }
-      var fileInput = document.getElementById('previous_policy');
-      for (var i = 0; i < fileInput.files.length; i++) {
-         formData.append('previous_policy', fileInput.files[i]);
-      }
-      var fileInput = document.getElementById('pan_card');
-      for (var i = 0; i < fileInput.files.length; i++) {
-         formData.append('pan_card', fileInput.files[i]);
-      }
-      var fileInput = document.getElementById('aadhar_card');
-      for (var i = 0; i < fileInput.files.length; i++) {
-         formData.append('aadhar_card', fileInput.files[i]);
-      }
-      var fileInput = document.getElementById('vehicle_rc');
-      for (var i = 0; i < fileInput.files.length; i++) {
-         formData.append('vehicle_rc', fileInput.files[i]);
-      }
-      var fileInput = document.getElementById('inspection_report');
-      for (var i = 0; i < fileInput.files.length; i++) {
-         formData.append('inspection_report', fileInput.files[i]);
-      }
-
-      formDataKey = document.getElementById('policy_no').value
-
-      console.log('formData ' + formData);
-      console.log('formData type ' + typeof (formData));
-
-      addToFormDataDict(formDataKey, formData)
-   }
-
-   function addToFormDataDict(formDataKey, formData) {
-
-      if (formDataKey in formDataDict) {
-         // The dictionary has the specified key
-         console.log('The key is present in the dictionary');
-
-      }
-      else {
-         // The dictionary does not have the specified key
-         console.log('The key is not present in the dictionary');
-         // Add the new item to the dictionary
-         formDataDict[formDataKey] = formData;
-         // Send the new item
-         sendFormData(formDataKey, formData);
-      }
-
-      console.log(formDataDict);
+      console.log(formDataList);
 
    }
 
    function sendFormData(formDataKey, formData) {
+
+      document.getElementById('notification_div').style.display = "flex";
+      document.getElementById('notification').style.display = 'block';
+      document.getElementById('notification').innerHTML = 'Saving policy...';
 
       href = window.location.origin + '/bima_policy/policy/new_entry/'
 
@@ -2357,61 +2548,56 @@
          processData: false,
          contentType: false,
          success: function (response) {
-            res = JSON.parse(JSON.stringify(response))
-            console.log(res);
 
-            notification.innerHTML = res;
-            notification.style.display = 'block';
+            result = JSON.parse(JSON.stringify(response)).toString()
+            console.log(result);
+            document.getElementById('notification').innerHTML = result;
 
-            if (String(res).includes('Failed:')) {
+            if (result.includes('Succeed:'))
+               removeFormData(formDataKey)
 
-               notification_div = document.getElementById('notification_div');
-               notification_div.style.display = "flex";
-               document.getElementById("retryPolicy").style.display = "block";
-            } else {
-               notification_div = document.getElementById('notification_div');
-               notification_div.style.display = "flex";
-               document.getElementById("retryPolicy").style.display = "none";
-
-               delete formDataDict[formDataKey];
-            }
+            // document.getElementById("countFormData").innerHTML = formDataList.length + " pols"
+            document.getElementById("countFormData").innerHTML = 'Policies: ' + formDataList.length 
          },
          error: function (xhr, status, error) {
-
-            notification.innerHTML = error;
-            notification.style.display = 'block';
-
-            notification_div = document.getElementById('notification_div');
-            notification_div.style.display = "flex";
-            document.getElementById("retryPolicy").style.display = "block";
+            console.log(error);
+            document.getElementById('notification').innerHTML = error;
+            document.getElementById("countFormData").innerHTML = 'Policies: ' + formDataList.length 
          }
       });
    }
 
-   function reSendFormData() {
+   function selectOptionByValue(selectId, value) {
 
-      const dictLength = Object.keys(formDataDict).length;
-      console.log(dictLength);
+      var selectElement = document.getElementsByName(selectId)[0]
 
-      if (dictLength > 0) {
-         for (let formDataKey in formDataDict) {
-            console.log(formDataKey + ": " + formDataDict[formDataKey]);
-            sendFormData(formDataKey, formDataDict[formDataKey])
+      for (var i = 0; i < selectElement.options.length; i++) {
+         var option = selectElement.options[i];
+
+         if (option.value === value) {
+            option.selected = true;
+            break;
          }
-      }
-      else {
-         console.log('no items in dicts');
       }
    }
 
-   function deleteFormData() {
-      formDataDict = {}
-      notification_div = document.getElementById('notification_div');
-      notification_div.style.display = "none";      
+   function selectFile(element_name, foundFormData) {
+      // This method is not used
+      const fileInput = document.getElementById(element_name);
+      const file = foundFormData.get(element_name);
+      const newFileList = new DataTransfer();
+      newFileList.items.add(file);
+      fileInput.files = newFileList.files;
+      console.log('file added to ' + element_name);
+
    }
 
 
 </script>
+
+<body onload="mockAllField()">
+
+</body>
 
 </html>
 {%endblock%}

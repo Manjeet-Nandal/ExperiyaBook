@@ -493,9 +493,22 @@
 
                               <div class="col-md-6">
                                  <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input value=""
-                                          type="search" id="myInput" oninput="searchName()" class="form-control"
-                                          placeholder="policy number.." aria-controls="tblInsurance"></label></div>
+                                          type="search" id="myInput" onkeydown="searchPolicy_no(event)"
+                                          oninput="searchName()" class="form-control" placeholder="policy number.."
+                                          aria-controls="tblInsurance"></label></div>
                               </div>
+
+                              <script>
+                                 function searchPolicy_no(event) {
+                                    if (event.keyCode === 13) {
+                                       event.preventDefault(); // Prevent the default Enter key behavior
+
+                                       // Perform your action here
+                                       console.log("Enter key pressed!");
+                                       document.getElementById("filterlist").click();
+                                    }
+                                 }
+                              </script>
 
                            </div>
                         </div>
@@ -1564,7 +1577,7 @@
          td = tr[i].getElementsByTagName("td")[3];
          if (td) {
             txtValue = td.textContent || td.innerText;
-            console.log(txtValue);
+            // console.log(txtValue);
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
                tr[i].style.display = "";
             } else {
@@ -1574,7 +1587,7 @@
 
                if (td4) {
                   txtValue = td4.textContent || td4.innerText;
-                  console.log(txtValue);
+                  // console.log(txtValue);
                   if (txtValue.toUpperCase().indexOf(filter) > -1) {
                      tr[i].style.display = "";
                   } else {
@@ -1584,7 +1597,7 @@
 
                      if (td5) {
                         txtValue = td5.textContent || td5.innerText;
-                        console.log(txtValue);
+                        // console.log(txtValue);
                         if (txtValue.toUpperCase().indexOf(filter) > -1) {
                            tr[i].style.display = "";
                         } else {

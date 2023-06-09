@@ -322,6 +322,8 @@ class Policy(models.Model):
 
     remark = models.CharField(max_length=255)
 
+    
+
     def __str__(self):
         return self.customer_name
 
