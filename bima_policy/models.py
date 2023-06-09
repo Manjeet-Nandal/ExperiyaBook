@@ -1,3 +1,4 @@
+from datetime import timezone
 from enum import unique
 import uuid
 from django.forms import DateTimeField
@@ -322,6 +323,7 @@ class Policy(models.Model):
 
     remark = models.CharField(max_length=255)
 
+    created_at = models.DateTimeField(auto_now=True)
     
 
     def __str__(self):

@@ -2698,23 +2698,24 @@ def policy_entry(request):
             models.append(vm["model"])
 
         if is_user(request):
-            data = Policy.objects.order_by('-policyid').values()[:25]
-            # data = Policy.objects.order_by('-created_at')[:1].all()
+            # data = Policy.objects.order_by('-policyid').values()[:25]
+            data = Policy.objects.order_by('-created_at')[:25].all()
+           
           
         else:
-            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()[:25]
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at')[:25].all()
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()[:25]
+            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at')[:25].all()          
         
         print(data)
 
-        policyid_list = []
-        for item in data:
-            policyid_list.append(item['policyid'])
-
         # policyid_list = []
-        # for pol in data:
-        #     print(pol.policyid)
-        #     policyid_list.append(pol.policyid)
+        # for item in data:
+        #     policyid_list.append(item['policyid'])
+
+        policyid_list = []
+        for pol in data:
+            print(pol.policyid)
+            policyid_list.append(pol.policyid)
         
         context = {
             "agents": agents,
