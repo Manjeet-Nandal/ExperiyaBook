@@ -373,12 +373,12 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label for="insured_age">Insured Age <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="number" value=""
+                                                class="text-danger">*</abbr></label><input type="text" value="0"
                                              class="form-control" name="insured_age" required>
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="policy_term" class="custom-select" required>
+                                          <select id="policy_term" name="policy_term" class="custom-select" required>
                                              <option value="" hidden>-- Select Term --</option>
                                              <option value="1">1</option>
                                              <option value="2">2</option>
@@ -390,20 +390,22 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="bqp" class="custom-select" required>
+                                          <select name="bqp" class="custom-select" required disabled>
                                              <!-- <option value="">-- Select BQP --</option> -->
                                              {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
+
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
+                                                class="text-danger">*</abbr></label><input type="text" disabled
                                              value="{{user_name}}" class="form-control" name="employee"
                                              style="text-transform: uppercase;  background-color: lightgray;" readonly
                                              required>
                                        </div>
+
                                        <div class="col-md-3 mb-4" onkeypress="document.getElementById('pos').click();">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
                                              id="pos" type="text" value="" data-toggle="modal" data-target="#mdlPOS"
@@ -411,15 +413,14 @@
                                              readonly>
                                        </div>
 
-                                       
-
                                        <div class="col-md-3 mb-4">
                                           <label>Proposal <small>(Only<strong> PDF &amp; Image
                                                 </strong>File)</small> </label>
                                           <div class="custom-file">
                                              <input type="file" name="proposal" accept=".pdf,image/" id="proposal"
                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="proposal">Choose file</label>
+                                             <label name="lbl_proposal" class="custom-file-label" for="proposal">Choose
+                                                file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -428,7 +429,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="mandate" accept=".pdf,image/" id="mandate"
                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="mandate">Choose file</label>
+                                             <label name="lbl_mandate" class="custom-file-label" for="mandate">Choose
+                                                file</label>
                                           </div>
                                        </div>
 
@@ -438,7 +440,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="policy" accept=".pdf,image/" id="policy"
                                                 class="custom-file-input" required>
-                                             <label class="custom-file-label" for="policy">Choose file</label>
+                                             <label name="lbl_policy" class="custom-file-label" for="policy">Choose
+                                                file</label>
                                           </div>
                                        </div>
 
@@ -448,7 +451,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="previous_policy" accept=".pdf,image/"
                                                 id="previous_policy" class="custom-file-input">
-                                             <label class="custom-file-label" for="previous_policy">Choose file</label>
+                                             <label name="lbl_previous_policy" class="custom-file-label"
+                                                for="previous_policy">Choose file</label>
                                           </div>
                                        </div>
 
@@ -458,7 +462,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="pan_card">Choose file</label>
+                                             <label name="lbl_pan_card" class="custom-file-label" for="pan_card">Choose
+                                                file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -467,7 +472,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="aadhar_card">Choose file</label>
+                                             <label name="lbl_aadhar_card" class="custom-file-label"
+                                                for="aadhar_card">Choose file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-4 mb-4">
@@ -476,7 +482,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="vehicle_rc" accept=".pdf,image/" id="vehicle_rc"
                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
+                                             <label name="lbl_vehicle_rc" class="custom-file-label"
+                                                for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-4 mb-4">
@@ -485,7 +492,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="inspection_report" accept=".pdf,image/"
                                                 id="inspection_report" class="custom-file-input">
-                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
+                                             <label name="lbl_inspection_report" class="custom-file-label"
+                                                for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
 
@@ -739,7 +747,7 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="policy_term" class="custom-select" required>
+                                          <select id="policy_term" name="policy_term" class="custom-select" required>
                                              <option value="" hidden>-- Select Term --</option>
                                              <option value="1">1</option>
                                              <option value="5">5</option>
@@ -749,7 +757,7 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="bqp" class="custom-select" required>
+                                          <select name="bqp" class="custom-select" required disabled>
                                              <!-- <option value="" hidden>-- Select BQP --</option> -->
                                              {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
@@ -760,7 +768,7 @@
                                           <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
                                              value="{{user_name}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase;  background-color: lightgray;" readonly
+                                             style="text-transform: uppercase;  background-color: lightgray;" disabled
                                              required>
                                        </div>
 
@@ -771,7 +779,7 @@
                                              readonly>
                                        </div>
 
-                                      
+
 
                                        <div class="col-md-3 mb-4">
                                           <label>Proposal <small>(Only<strong> PDF &amp; Image
@@ -779,7 +787,9 @@
                                           <div class="custom-file">
                                              <input type="file" name="proposal" accept=".pdf,image/" id="proposal"
                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="proposal">Choose file</label>
+                                             <label name="lbl_proposal" class="custom-file-label" for="proposal">Choose
+                                                file</label>
+
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -788,7 +798,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="mandate" accept=".pdf,image/" id="mandate"
                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="mandate">Choose file</label>
+                                             <label name="lbl_mandate" class="custom-file-label" for="mandate">Choose
+                                                file</label>
                                           </div>
                                        </div>
 
@@ -798,7 +809,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="policy" accept=".pdf,image/" id="policy"
                                                 class="custom-file-input" required>
-                                             <label class="custom-file-label" for="policy">Choose file</label>
+                                             <label name="lbl_policy" class="custom-file-label" for="policy">Choose
+                                                file</label>
                                           </div>
                                        </div>
 
@@ -808,7 +820,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="previous_policy" accept=".pdf,image/"
                                                 id="previous_policy" class="custom-file-input">
-                                             <label class="custom-file-label" for="previous_policy">Choose file</label>
+                                             <label name="lbl_previous_policy" class="custom-file-label"
+                                                for="previous_policy">Choose file</label>
                                           </div>
                                        </div>
 
@@ -818,7 +831,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="pan_card">Choose file</label>
+                                             <label name="lbl_pan_card" class="custom-file-label" for="pan_card">Choose
+                                                file</label>
                                           </div>
                                        </div>
                                        <div class="col-md-3 mb-4">
@@ -827,7 +841,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
                                                 class="custom-file-input">
-                                             <label class="custom-file-label" for="aadhar_card">Choose file</label>
+                                             <label name="lbl_aadhar_card" class="custom-file-label"
+                                                for="aadhar_card">Choose file</label>
                                           </div>
                                        </div>
 
@@ -837,7 +852,8 @@
                                           <div class="custom-file">
                                              <input type="file" name="inspection_report" accept=".pdf,image/"
                                                 id="inspection_report" class="custom-file-input">
-                                             <label class="custom-file-label" for="vehicle_rc">Choose file</label>
+                                             <label name="lbl_inspection_report" class="custom-file-label"
+                                                for="vehicle_rc">Choose file</label>
                                           </div>
                                        </div>
 
@@ -2169,16 +2185,6 @@
       window.location.replace(href)
    }
 
-   function capitalizeWords(str) {
-   return str.toLowerCase().replace(/(?:^|\s)\w/g, function(match) {
-      return match.toUpperCase();
-   });
-   }
-
-
-
-
-
    function validateBeforeSend(element_name) {
       var elements = document.getElementsByName(element_name);
       if (elements.length > 0) {
@@ -2187,8 +2193,8 @@
          if (proposalNo != '') {
             return proposalNo
          }
-         else {           
-            res =  element_name + ' is missing'
+         else {
+            res = element_name + ' is missing'
             return res
          }
       }
@@ -2242,6 +2248,7 @@
       document.getElementsByName('policy_no')[0].value = ''
       document.getElementsByName('customer_name')[0].value = ''
       document.getElementsByName('insurance_company')[0].value = ''
+
       document.getElementsByName('sp_name')[0].value = ''
       document.getElementsByName('sp_brokercode')[0].value = ''
       document.getElementsByName('registration_no')[0].value = ''
@@ -2268,6 +2275,7 @@
       // document.getElementsByName('bqp')[0].value = ''
       // document.getElementsByName('employee')[0].value = ''
       document.getElementsByName('pos')[0].value = ''
+      document.getElementsByName('remark')[0].value = ''
 
       document.getElementsByName('od')[0].value = ''
       document.getElementsByName('tpt')[0].value = ''
@@ -2275,21 +2283,26 @@
       document.getElementsByName('gst')[0].value = ''
       document.getElementsByName('gstt')[0].value = ''
       document.getElementsByName('total')[0].value = ''
-      document.getElementsByName('payment_mode')[0].value = ''
+      document.getElementsByName('payment_mode')[0].value = 'ONLINE'
 
       document.getElementsByName('proposal')[0].value = ''
+      document.getElementsByName('lbl_proposal')[0].innerHTML = 'Choose file'
       document.getElementsByName('mandate')[0].value = ''
+      document.getElementsByName('lbl_mandate')[0].innerHTML = 'Choose file'
       document.getElementsByName('policy')[0].value = ''
+      document.getElementsByName('lbl_policy')[0].innerHTML = 'Choose file'
       document.getElementsByName('previous_policy')[0].value = ''
+      document.getElementsByName('lbl_previous_policy')[0].innerHTML = 'Choose file'
       document.getElementsByName('pan_card')[0].value = ''
+      document.getElementsByName('lbl_pan_card')[0].innerHTML = 'Choose file'
       document.getElementsByName('aadhar_card')[0].value = ''
+      document.getElementsByName('lbl_aadhar_card')[0].innerHTML = 'Choose file'
       document.getElementsByName('vehicle_rc')[0].value = ''
+      document.getElementsByName('lbl_vehicle_rc')[0].innerHTML = 'Choose file'
       document.getElementsByName('inspection_report')[0].value = ''
+      document.getElementsByName('lbl_inspection_report')[0].innerHTML = 'Choose file'
 
       document.getElementsByName("vehicle_catagory")[0].focus()
-
-      // console.log('cleared!');
-
    }
 
    function mockAllField() {
@@ -2414,6 +2427,7 @@
          selectElement.options.add(optionElement)
 
          sendFormData(policy_no, fData);
+
          clearAllField()
       }
 
@@ -2467,7 +2481,7 @@
       if (val.includes(' is missing')) {
 
          notification_div = document.getElementById('notification_div');
-         notification_div.style.display = "flex";       
+         notification_div.style.display = "flex";
 
          notification = document.getElementById('notification');
          notification.innerHTML = val + " 😢"
@@ -2559,12 +2573,12 @@
                removeFormData(formDataKey)
 
             // document.getElementById("countFormData").innerHTML = formDataList.length + " pols"
-            document.getElementById("countFormData").innerHTML = 'Policies: ' + formDataList.length 
+            document.getElementById("countFormData").innerHTML = 'Policies: ' + formDataList.length
          },
          error: function (xhr, status, error) {
             console.log(error);
             document.getElementById('notification').innerHTML = error;
-            document.getElementById("countFormData").innerHTML = 'Policies: ' + formDataList.length 
+            document.getElementById("countFormData").innerHTML = 'Policies: ' + formDataList.length
          }
       });
    }
@@ -2583,6 +2597,16 @@
       }
    }
 
+   function deSelectOptionByValue(selectId, value) {
+
+      selectElement = document.getElementsByName(selectId)[0]
+
+      for (var i = 0; i < selectElement.options.length; i++) {
+         var option = selectElement.options[i];
+         option.selected = false;
+      }
+   }
+
    function selectFile(element_name, foundFormData) {
       // This method is not used
       const fileInput = document.getElementById(element_name);
@@ -2594,12 +2618,26 @@
 
    }
 
+   // Get a reference to the input element
+   const policy_term = document.getElementById("policy_term");
+   // Function to handle the keydown event
+   function handleKeyDown(event) {
+      if (event.key === "Tab") {
+         document.getElementById('pos').click();
+         document.getElementById('agents').click();
+      }
+   }
+   // Attach the event listener to the input element
+   policy_term.addEventListener("keydown", handleKeyDown);
+
 
 </script>
 
-<!-- <body onload="mockAllField()">
+<!-- 
+<body onload="mockAllField()">
 
 </body> -->
 
 </html>
+
 {%endblock%}

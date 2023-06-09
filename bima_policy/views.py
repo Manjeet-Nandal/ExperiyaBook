@@ -2698,25 +2698,18 @@ def policy_entry(request):
             models.append(vm["model"])
 
         if is_user(request):
-            # data = Policy.objects.order_by('-policyid').values()[:25]
-            data = Policy.objects.order_by('-created_at')[:25].all()
-           
-          
-        else:
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()[:25]
-            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at')[:25].all()          
-        
-        print(data)
+            data = Policy.objects.order_by('-policyid').values()[:25].all()
+            # data = Policy.objects.order_by('-created_at')[:25].all()
 
-        # policyid_list = []
-        # for item in data:
-        #     policyid_list.append(item['policyid'])
+        else:
+            data = Policy.objects.filter(employee=get_id_from_session(
+                request)).order_by('-policyid').values()[:25].all()
+            # data = Policy.objects.order_by('-created_at').all()
 
         policyid_list = []
-        for pol in data:
-            print(pol.policyid)
-            policyid_list.append(pol.policyid)
-        
+        for item in data:
+            policyid_list.append(item['policyid'])
+
         context = {
             "agents": agents,
             "insurers": insurers,
@@ -2734,6 +2727,7 @@ def policy_entry(request):
     except Exception as ex:
         print(ex)
         return HttpResponse('Error in policy_entry ' + str(ex))
+
 
 def policy_saerch_entry(request, id):
     try:
@@ -5543,9 +5537,9 @@ def new_entry(request):
         profile_id = ProfileModel.objects.get(id=id)
 
         print(request.POST['policy_no'])
-                
+
         fspr = FileSystemStorage()
-        proposal = mandate =  policy =  previous_policy = pan_card =  aadhar_card =  vehicle_rc = inspection_report = None;
+        proposal = mandate = policy = previous_policy = pan_card = aadhar_card = vehicle_rc = inspection_report = None
 
         if len(request.FILES.getlist('proposal')) > 0:
             proposal = request.FILES.getlist('proposal')[0]
@@ -5644,13 +5638,13 @@ def new_entry(request):
                                          vehicle_rc=vehicle_rc,
                                          inspection_report=inspection_report
                                          )
-     
+
         set_payout(my_model, my_model.policyid)
-      
-        return JsonResponse('✅ Succeed: ' + request.POST['policy_no']  , safe=False)
+
+        return JsonResponse('✅ Succeed: ' + request.POST['policy_no'], safe=False)
     except Exception as e:
-        print("Error occurred in new_entry method:", str(e))      
-        return JsonResponse('❌ Failed: ' + request.POST['policy_no'] , safe=False)
+        print("Error occurred in new_entry method:", str(e))
+        return JsonResponse('❌ Failed: ' + request.POST['policy_no'], safe=False)
 
 
 def set_payout(data, id):
@@ -5742,4 +5736,3 @@ def set_payout(data, id):
     except Exception as ex:
         print('apply_policy : ', str(ex))
         return ('apply_policy : ' + str(ex))
-
