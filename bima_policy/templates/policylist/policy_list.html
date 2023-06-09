@@ -391,11 +391,18 @@
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
-                                             <option value="">-- Select BQP --</option>
+                                             <!-- <option value="">-- Select BQP --</option> -->
                                              {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="employee">Employee <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{user_name}}" class="form-control" name="employee"
+                                             style="text-transform: uppercase;  background-color: lightgray;" readonly
+                                             required>
                                        </div>
                                        <div class="col-md-3 mb-4" onkeypress="document.getElementById('pos').click();">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
@@ -404,13 +411,7 @@
                                              readonly>
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
-                                          <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{user_name}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase;  background-color: lightgray;" readonly
-                                             required>
-                                       </div>
+                                       
 
                                        <div class="col-md-3 mb-4">
                                           <label>Proposal <small>(Only<strong> PDF &amp; Image
@@ -749,11 +750,18 @@
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
                                           <select name="bqp" class="custom-select" required>
-                                             <option value="" hidden>-- Select BQP --</option>
+                                             <!-- <option value="" hidden>-- Select BQP --</option> -->
                                              {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label for="employee">Employee <abbr title=""
+                                                class="text-danger">*</abbr></label><input type="text"
+                                             value="{{user_name}}" class="form-control" name="employee"
+                                             style="text-transform: uppercase;  background-color: lightgray;" readonly
+                                             required>
                                        </div>
 
                                        <div class="col-md-3 mb-4">
@@ -763,13 +771,7 @@
                                              readonly>
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
-                                          <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text"
-                                             value="{{user_name}}" class="form-control" name="employee"
-                                             style="text-transform: uppercase;  background-color: lightgray;" readonly
-                                             required>
-                                       </div>
+                                      
 
                                        <div class="col-md-3 mb-4">
                                           <label>Proposal <small>(Only<strong> PDF &amp; Image
@@ -2263,9 +2265,9 @@
       document.getElementsByName('issue_date')[0].value = ''
       document.getElementsByName('insured_age')[0].value = ''
       document.getElementsByName('policy_term')[0].value = ''
-      document.getElementsByName('bqp')[0].value = ''
-      document.getElementsByName('pos')[0].value = ''
+      // document.getElementsByName('bqp')[0].value = ''
       // document.getElementsByName('employee')[0].value = ''
+      document.getElementsByName('pos')[0].value = ''
 
       document.getElementsByName('od')[0].value = ''
       document.getElementsByName('tpt')[0].value = ''
@@ -2595,9 +2597,9 @@
 
 </script>
 
-<body onload="mockAllField()">
+<!-- <body onload="mockAllField()">
 
-</body>
+</body> -->
 
 </html>
 {%endblock%}
