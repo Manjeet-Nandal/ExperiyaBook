@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'django_cleanup.apps.CleanupConfig',
     'storages',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
 ]
 
 MIDDLEWARE = [
@@ -160,4 +162,9 @@ AWS_ACCESS_KEY_ID = "AKIAQHVWIUX56OGJLSBN"
 AWS_SECRET_ACCESS_KEY = "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"
 AWS_STORAGE_BUCKET_NAME = "experiya-book-bucket"
 
+
+TWILIO_ACCOUNT_SID = 'AC87cb05fa440182b1e98a324f50dae252'
+TWILIO_AUTH_TOKEN = '266f128ba7d499c0e0a4885de0bc8413'
+TWILIO_PHONE_NUMBER = '+13613154583'
+TWILIO_PHONE_TO = '+919215501095'
 

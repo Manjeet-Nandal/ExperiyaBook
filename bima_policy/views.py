@@ -1,3 +1,6 @@
+import random
+from twilio.rest import Client
+from django.conf import settings
 import ast
 import datetime
 from storages.backends.s3boto3 import S3Boto3Storage
@@ -42,15 +45,17 @@ def Index(request):
 
 def dashboard(request):
     # print(get_profile_id(get_id_from_session(request)))
-    agentcount = Agents.objects.count()
+    agentcount = Agents.objects.filter(status = "Active").count()
     staffcount = StaffModel.objects.count()
     spcount = ServiceProvider.objects.count()
     if is_user(request):
         policycount = Policy.objects.count()
     else:
+        print('sh', get_id_from_session(request))
         policycount = Policy.objects.filter(
             employee=get_id_from_session(request)).count()
-    print('total agents are:', agentcount)
+    # print('total agents are:', agentcount)
+    print('total policycount :', policycount)
 
     return render(request, 'dashboard.html', {'agentcount': agentcount, 'staffcount': staffcount, 'spcount': spcount, 'totalpolicy': policycount})
 
@@ -67,8 +72,7 @@ def loginView(request):
             password = request.POST['password']
             user = ProfileModel.objects.filter(
                 full_name=full_name, password=password).first()
-            user1 = Agents.objects.filter(
-                login_id=full_name, password=password).first()
+            user1 = Agents.objects.filter(login_id=full_name, password=password, status = "Active").first()
             user2 = StaffModel.objects.filter(
                 login_id=full_name, password=password).first()
             if user:
@@ -946,7 +950,7 @@ def get_profile_id(id):
     except Exception as ex:
         pass
     try:
-        login_id = Agents.objects.get(login_id=id).profile_id
+        login_id = Agents.objects.get(login_id=id, status = "Active").profile_id
         return login_id
     except Exception as ex:
         pass
@@ -973,8 +977,7 @@ def get_user_name(request):
     except Exception as ex:
         pass
     try:
-        name = Agents.objects.filter(login_id=get_id_from_session(
-            request)).values().first()['full_name']
+        name = Agents.objects.filter(login_id=get_id_from_session(request), status = "Active").values().first()['full_name']
         return name
     except Exception as ex:
         pass
@@ -996,8 +999,7 @@ def get_user_role(request):
     except Exception as ex:
         pass
     try:
-        name = Agents.objects.filter(login_id=get_id_from_session(
-            request)).values().first()['full_name']
+        name = Agents.objects.filter(login_id=get_id_from_session(request), status = "Active").values().first()['full_name']
         return 'agent'
     except Exception as ex:
         pass
@@ -1114,9 +1116,10 @@ class create_policy(View):
 
         # getting agents full name and sorts them.
         agents = []
-        for ag in Agents.objects.values('full_name'):
+        for ag in Agents.objects.filter(status = "Active").values('full_name'):
             agents.append(ag['full_name'])
-        agents.sort()
+            # agents.append(ag['posp_code'])
+        agents.sort()     
 
         # getting insurers name and sorts them.
         insurers = []
@@ -2008,7 +2011,7 @@ class create_policy_non_motor(View):
 
         # getting agents full name and sorts them.
         agents = []
-        for ag in Agents.objects.values('full_name'):
+        for ag in Agents.objects.filter(status = "Active").values('full_name'):
             agents.append(ag['full_name'])
         agents.sort()
 
@@ -2673,7 +2676,7 @@ def policy_entry(request):
 
         # getting agents full name and sorts them.
         agents = []
-        for ag in Agents.objects.values('full_name'):
+        for ag in  Agents.objects.filter(status = "Active").values('full_name'):
             agents.append(ag['full_name'])
         agents.sort()
 
@@ -2698,17 +2701,20 @@ def policy_entry(request):
             models.append(vm["model"])
 
         if is_user(request):
-            data = Policy.objects.order_by('-policyid').values()[:25].all()
+            # data = Policy.objects.order_by('-policyid').values()[:25].all()
             # data = Policy.objects.order_by('-created_at')[:25].all()
+            pass
 
         else:
-            data = Policy.objects.filter(employee=get_id_from_session(
-                request)).order_by('-policyid').values()[:25].all()
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()[:25].all()
             # data = Policy.objects.order_by('-created_at').all()
+            pass
 
-        policyid_list = []
-        for item in data:
-            policyid_list.append(item['policyid'])
+        data = Policy.objects.order_by('-created_at')[:10].all()
+
+        # policyid_list = []
+        # for item in data:
+        #     policyid_list.append(item['policyid'])
 
         context = {
             "agents": agents,
@@ -2717,7 +2723,7 @@ def policy_entry(request):
             "makes": makes,
             "models": models,
             "data": data,
-            "policyid_list": policyid_list,
+            # "policyid_list": policyid_list,
             "is_user": is_user(request),
             "user_name": get_user_name(request),
         }
@@ -2738,7 +2744,7 @@ def policy_saerch_entry(request, id):
             parsed_id = parsed_id.replace("--", "/")
 
         agent_list = []
-        datag = Agents.objects.values('full_name')
+        datag =  Agents.objects.filter(status = "Active").values('full_name')
         for ag in datag:
             agent_list.append(ag['full_name'])
 
@@ -2778,7 +2784,7 @@ def policy_entry_filter(request,  data):
 
         # getting agents full name and sorts them.
         agents = []
-        for ag in Agents.objects.values('full_name'):
+        for ag in  Agents.objects.filter(status = "Active").values('full_name'):
             agents.append(ag['full_name'])
         agents.sort()
 
@@ -3112,7 +3118,7 @@ def policy_entry_date_filter(request, data, filter_payout='n'):
                 employee=get_id_from_session(request)).values()
 
         data = list(chain(*tmp_adv_list))
-        # datag = Agents.objects.all()
+       
         return data
 
     except Exception as ex:
@@ -3722,235 +3728,6 @@ def filter_other_details(data, f_data):
     return qs_list
 
 
-def policy_entrydata_old(request, id):
-    print('policy_entrydata')
-    if request.method == "POST":
-        print('policy_entrydata post')
-
-        proposal_no = request.POST['proposal_no']
-        policy_no = request.POST['policy_no']
-        customer_name = request.POST['customer_name']
-        insurance_company = request.POST['insurance_company']
-        sp_name = request.POST['sp_name']
-        sp_brokercode = request.POST['sp_brokercode']
-
-        try:
-            product_name = request.POST['product_name']
-        except:
-            product_name = ''
-        try:
-            registration_no = request.POST['registration_no']
-        except:
-            registration_no = ''
-        try:
-            rto_city = request.POST['rto_city']
-        except:
-            rto_city = ''
-        try:
-            rto_state = request.POST['rto_state']
-        except:
-            rto_state = ''
-        try:
-            vehicle_makeby = request.POST['vehicle_makeby']
-        except:
-            vehicle_makeby = ''
-        try:
-            vehicle_model = request.POST['vehicle_model']
-        except:
-            vehicle_model = ''
-        try:
-            vehicle_catagory = request.POST['vehicle_catagory']
-        except:
-            vehicle_catagory = ''
-        try:
-            vehicle_fuel_type = request.POST['vehicle_fuel_type']
-        except:
-            vehicle_fuel_type = ''
-        try:
-            mfg_year = request.POST['mfg_year']
-        except:
-            mfg_year = None
-        try:
-            addon = request.POST['addon']
-        except:
-            addon = ''
-        try:
-            ncb = request.POST['ncb']
-        except:
-            ncb = ''
-        try:
-            cubic_capacity = request.POST['cubic_capacity']
-        except:
-            cubic_capacity = ''
-        try:
-            gvw = request.POST['gvw']
-        except:
-            gvw = ''
-        try:
-            seating_capacity = request.POST['seating_capacity']
-        except:
-            seating_capacity = ''
-        try:
-            coverage_type = request.POST['coverage_type']
-        except:
-            coverage_type = ''
-
-        policy_type = request.POST['policy_type']
-
-        try:
-            cpa = request.POST['cpa']
-        except:
-            cpa = ''
-        # risk_start_date = request.POST['risk_start_date']
-        # risk_end_date = request.POST['risk_end_date']
-        # issue_date = request.POST['issue_date']
-        try:
-            insured_age = request.POST['insured_age']
-        except:
-            insured_age = 0
-
-        policy_term = request.POST['policy_term']
-        bqp = request.POST['bqp']
-        pos = request.POST['pos']
-        employee = request.POST['employee']
-
-        try:
-            remark = request.POST['remark']
-        except:
-            remark = ''
-
-        OD_premium = request.POST['od']
-        TP_terrorism = request.POST['tpt']
-        net = request.POST['net']
-        gst_amount = request.POST['gst']
-        try:
-            gst_gcv_amount = request.POST['gstt']
-        except:
-            gst_gcv_amount = 0
-
-        total = request.POST['total']
-        payment_mode = request.POST['payment_mode']
-
-        proposal = request.FILES.get('proposal')
-        mandate = request.FILES.get('mandate')
-        policy = request.FILES.get('policy')
-        previous_policy = request.FILES.get('previous_policy')
-        pan_card = request.FILES.get('pan_card')
-        aadhar_card = request.FILES.get('aadhar_card')
-        vehicle_rc = request.FILES.get('vehicle_rc')
-        inspection_report = request.FILES.get('inspection_report')
-
-        data = Policy.objects.filter(policyid=id)
-
-        print('sp_brokercode', sp_brokercode)
-        print('cpa', cpa)
-        data.update(proposal_no=proposal_no, policy_no=policy_no, product_name=product_name, customer_name=customer_name, insurance_company=insurance_company, sp_name=sp_name,
-                    sp_brokercode=sp_brokercode,  registration_no=registration_no,
-                    rto_state=rto_state, rto_city=rto_city,  vehicle_makeby=vehicle_makeby, vehicle_model=vehicle_model, vehicle_catagory=vehicle_catagory, vehicle_fuel_type=vehicle_fuel_type,
-                    mfg_year=mfg_year,
-                    addon=addon, ncb=ncb, cubic_capacity=cubic_capacity, gvw=gvw, seating_capacity=seating_capacity, coverage_type=coverage_type, policy_type=policy_type, cpa=cpa,
-
-                    insured_age=insured_age,
-
-                    policy_term=policy_term, payment_mode=payment_mode, bqp=bqp, pos=pos,
-                    employee=employee,
-                    OD_premium=OD_premium,  TP_terrorism=TP_terrorism, net=net, gst_amount=gst_amount,
-                    gst_gcv_amount=gst_gcv_amount,  total=total, remark=remark)
-
-        fspr = FileSystemStorage()
-        fsm = FileSystemStorage()
-        fsp = FileSystemStorage()
-        fspp = FileSystemStorage()
-        fspc = FileSystemStorage()
-        fsac = FileSystemStorage()
-        fsvc = FileSystemStorage()
-        fsis = FileSystemStorage()
-        if proposal is not None:
-            fspr.save(proposal.name, proposal)
-        if mandate is not None:
-            fsm.save(mandate.name, mandate)
-        if policy is not None:
-            fsp.save(policy.name, policy)
-        if previous_policy is not None:
-            fspp.save(previous_policy.name, previous_policy)
-        if pan_card is not None:
-            fspc.save(pan_card.name, pan_card)
-        if aadhar_card is not None:
-            fsac.save(aadhar_card.name, aadhar_card)
-        if vehicle_rc is not None:
-            fsvc.save(vehicle_rc.name, vehicle_rc)
-        if inspection_report is not None:
-            fsis.save(inspection_report.name, inspection_report)
-
-        if proposal:
-            data.update(proposal=proposal)
-        if mandate:
-            data.update(mandate=mandate)
-
-        if policy:
-            data.update(policy=policy)
-        if previous_policy:
-            data.update(previous_policy=previous_policy)
-        if pan_card:
-            data.update(pan_card=pan_card)
-        if aadhar_card:
-            data.update(aadhar_card=aadhar_card)
-        if vehicle_rc:
-            data.update(vehicle_rc=vehicle_rc)
-        if inspection_report:
-            data.update(inspection_report=inspection_report)
-
-        return redirect('bima_policy:policy_entry')
-    else:
-        print('get entrydata', id)
-        print(id)
-        data = Policy.objects.get(policyid=id)
-        print(data)
-        data_ag = json.dumps(
-            list(Agents.objects.all().values()))
-
-        data_sp = ServiceProvider.objects.all()
-        data_bc = BrokerCode.objects.all()
-        data_ins = InsuranceCompany.objects.all()
-
-        context = read_vehicle_data_file()
-        make = context["make"]
-        model = context["model"]
-
-        datavm = VehicleModelName.objects.all().values()
-        datavmb = VehicleMakeBy.objects.all().values()
-
-        for vm in datavm:
-            model.append(vm["model"])
-
-        for vmb in datavmb:
-            make.append(vmb["company"])
-
-        data_vc = VehicleCategory.objects.all()
-        data_bqp = BQP.objects.all()
-
-        is_motor_form = True
-
-        if data.registration_no is '':
-            is_motor_form = False
-            data.registration_no = ''
-            data.rto_city = ''
-            data.rto_state = ''
-            data.vehicle_makeby = ''
-            data.vehicle_model = ''
-            data.vehicle_catagory = ''
-            data.vehicle_fuel_type = ''
-            data.mfg_year = ''
-            data.addon = ''
-            data.ncb = ''
-            data.cubic_capacity = ''
-            data.gvw = ''
-            data.seating_capacity = ''
-            data.coverage_type = ''
-
-        return render(request, 'policylist/edit_policy.html', {'data_ag': data_ag, "vdata": context, 'is_user': is_user(request), 'is_motor_form': is_motor_form, 'data': data, 'data_sp': data_sp, 'data_bc': data_bc, 'data_ins': data_ins,  'data_vc': data_vc, 'data_bqp': data_bqp})
-
-
 def policy_entrydata(request, id):
     print('policy_entrydata')
 
@@ -4148,7 +3925,7 @@ def policy_entrydata(request, id):
 
         # getting agents full name and sorts them.
         agents = []
-        for ag in Agents.objects.values('full_name'):
+        for ag in  Agents.objects.filter(status = "Active").values('full_name'):
             agents.append(ag['full_name'])
         agents.sort()
 
@@ -4255,7 +4032,7 @@ def edit_policy(request, id):
             profile_id=get_id_from_session(request))
         datavc = VehicleCategory.objects.filter(
             profile_id=get_id_from_session(request))
-        datag = Agents.objects.filter(profile_id=get_id_from_session(request))
+        datag = Agents.objects.filter(profile_id=get_id_from_session(request), status = "Active")
         return render(request, 'policylist/edit_policy.html', {'data': data, 'datasp': datasp, 'databc': databc, 'datamb': datamb, 'datavm': datavm, 'datavc': datavc, 'datag': datag, 'datai': datai})
     else:
         policy_no = request.POST['policy_no']
@@ -4403,88 +4180,134 @@ def logout(request):
 def agent(request):
     print('agent method')
     # data = Agents.objects.filter(profile_id=get_id_from_session(request))
-    data = Agents.objects.all()
+    data = Agents.objects.filter(status = "Active")
 
-    # print(data)
+    print(data)
     return render(request, 'agents/agent.html', {'data': data})
 
 
 def add_agent(request):
     try:
-        if request.method == "GET":
-            # Adata = Slab.objects.filter(
-            #     profile_id=get_id_from_session(request))
-            # data = Agents.objects.filter(
-            #     profile_id=get_id_from_session(request))
-            Adata = Slab.objects.all()
-            data = Agents.objects.all()
-
-            return render(request, 'agents/add_agent.html', {'data': data, 'Adata': Adata})
+        if request.method == "GET":           
+            Adata = Slab.objects.all()    
+            return render(request, 'agents/add_agent.html', {'Adata': Adata})
     except Agents.DoesNotExist:
         return render(request, 'agents/add_agent.html')
     else:
         if 'subagent' in request.POST:
-
-            # if is_user(request):
-            #     print('get_id_from_session(request) : ', get_id_from_session(request))
-            #     data = ProfileModel.objects.get(id=get_id_from_session(request))
-            # else:
-            #     print(get_profile_id(get_id_from_session(request)))
-            #     data = ProfileModel.objects.get(id=get_profile_id(get_id_from_session(request)))
-
-            # print('data : ', data)
-
             data = ProfileModel.objects.get(id=get_id_from_session(request))
+            posp_code = request.POST['posp_code']
+            registration_code = request.POST['registration_code']
             full_name = request.POST['full_name']
+            gender = request.POST['gender']
+            mob_no = request.POST['mob_no']
             email_id = request.POST['email_id']
-            phone = request.POST['phone']
             address = request.POST['address']
             state = request.POST['state']
             city = request.POST['city']
-            agent_slab = request.POST['agent_slab']
-            gstin = request.POST['gstin']
-            pan = request.POST['pan']
-            aadhar_no = request.POST['aadhar_no']
-            rural_urban = request.POST['rural_urban']
-
-            docs = request.FILES.get('docs')
-            fsp = FileSystemStorage()
-            if docs is not None:
-                fsp.save(docs.name, docs)
-
-            password = request.POST['password']
-
             pincode = request.POST['pincode']
-            gender = request.POST['gender']
-            basic_qualification = request.POST['basic_qualification']
-            training_language = request.POST['training_language']
-            exam_language = request.POST['exam_language']
+            rural_urban = request.POST['rural_urban']
+            slab = request.POST['slab']
+            GSTIN = request.POST['GSTIN']
             account_no = request.POST['account_no']
             ifsc_code = request.POST['ifsc_code']
             bank_name = request.POST['bank_name']
-            branch_name = request.POST['branch_name']
 
+            basic_qualification = request.FILES.get('basic_qualification')
+            aadhar_card = request.FILES.get('aadhar_card')
+            pan_card = request.FILES.get('pan_card')
+            training_certificate = request.FILES.get('training_certificate')
+            appointment_certificate = request.FILES.get(
+                'appointment_certificate')
+            agreement_certificate = request.FILES.get('agreement_certificate')
+            bank_details = request.FILES.get('bank_details')
+
+            fsp = FileSystemStorage()
+            if basic_qualification is not None:
+                fsp.save(basic_qualification.name, basic_qualification)
+            if aadhar_card is not None:
+                fsp.save(aadhar_card.name, aadhar_card)
+            if pan_card is not None:
+                fsp.save(pan_card.name, pan_card)
+            if training_certificate is not None:
+                fsp.save(training_certificate.name, training_certificate)
+            if appointment_certificate is not None:
+                fsp.save(appointment_certificate.name, appointment_certificate)
+            if agreement_certificate is not None:
+                fsp.save(agreement_certificate.name, agreement_certificate)
+            if bank_details is not None:
+                fsp.save(bank_details.name, bank_details)
+
+            password = request.POST['password']
+            otp = random.randint(1000, 9999)
+            print('under otp: ', otp)
             created_by = get_id_from_session(request)
 
-            Agents.objects.create(full_name=full_name, email_id=email_id, mob_no=phone, address=address, state=state,
-                                  city=city, slab=agent_slab, GSTIN=gstin, PAN=pan,  aadhar_no=aadhar_no,  rural_urban=rural_urban,
-                                  password=password,
+            data = Agents.objects.create(posp_code=posp_code,
+                                         registration_code=registration_code,
+                                         full_name=full_name, gender=gender,
+                                         mob_no=mob_no,
+                                         email_id=email_id,
+                                         address=address,
+                                         state=state,
+                                         city=city,
+                                         pincode=pincode,
+                                         rural_urban=rural_urban,
+                                         slab=slab,
+                                         GSTIN=GSTIN,
+                                         account_no=account_no,
+                                         ifsc_code=ifsc_code,
+                                         bank_name=bank_name,
+                                         basic_qualification=basic_qualification,
+                                         aadhar_card=aadhar_card,
+                                         pan_card=pan_card,
+                                         training_certificate=training_certificate,
+                                         appointment_certificate=appointment_certificate,
+                                         agreement_certificate=agreement_certificate,
+                                         bank_details=bank_details,
+                                         password=password,
+                                         otp=otp,
+                                         created_by=created_by,
+                                         profile_id=data)
 
-                                  pincode=pincode, gender=gender,
-                                  basic_qualification=basic_qualification,
-                                  training_language=training_language,
-                                  exam_language=exam_language,
-                                  account_no=account_no,
-                                  ifsc_code=ifsc_code,
-                                  bank_name=bank_name,
-                                  branch_name=branch_name,
-                                  docs=docs,
-                                  created_by=created_by, profile_id=data)
+            print('data is ', data.login_id)
+            print('data status ', data.status)
 
-            return redirect('bima_policy:agent')
+            if send_otp(otp) == "":
+                print('sent')
+                return redirect('bima_policy:verify_agent', data.login_id)
+            else:
+                print('failed')
+                return HttpResponse('Error occurred')
 
+            # return redirect('bima_policy:agent')
+
+
+def verify_agent(request, id):
+    print('verify_agent calling: ', id)
+    try:
+        if request.method == "GET":           
+            return render(request, 'agents/otp_verification.html')
+
+        elif request.method == "POST":
+            data = Agents.objects.filter(login_id=id, status ="")
+            otp = request.POST['otp']           
+            if otp == data[0].otp:                
+                index = data.update(status="Active")
+                if index == 1:
+                    return redirect('bima_policy:agent')                    
+                else:
+                    return HttpResponse( 'No Status of: ', + data[0].full_name)
+            else:
+                print('OTP didnt Matched')
+                return HttpResponse('OTP didnt Matched of: ' + data[0].full_name )
+
+    except Agents.DoesNotExist:
+        return render(request, 'agents/add_agent.html')
 
 # PayoutView
+
+
 def slab(request):
     if request.method == "GET":
         try:
@@ -4631,7 +4454,7 @@ def slab_payoutform(request):
 
         # getting agents full name and sorts them.
         agents = []
-        for ag in Agents.objects.values('full_name'):
+        for ag in Agents.objects.filter(status = "Active").values('full_name'):
             agents.append(ag['full_name'])
         agents.sort()
 
@@ -4855,7 +4678,7 @@ def slab_payoutformshow(request, id):
 
         # getting agents full name and sorts them.
         agents = []
-        for ag in Agents.objects.values('full_name'):
+        for ag in Agents.objects.filter(status = "Active").values('full_name'):
             agents.append(ag['full_name'])
         agents.sort()
 
@@ -5063,7 +4886,7 @@ def upcoming_renewal(request):
 
 
 def agentpayable(request):
-    agent_obj = Agents.objects.filter(profile_id=get_id_from_session(request))
+    agent_obj = Agents.objects.filter(status = "Active")
     policy_data = []
     grand_total_policy = []
     for agent in agent_obj:
@@ -5128,7 +4951,7 @@ def sp_statement(request):
 
 
 def report_agent(request):
-    agent_obj = Agents.objects.filter(profile_id=get_id_from_session(request))
+    agent_obj = Agents.objects.filter(status = "Active")
     policy_data = []
     total_count_policy = []
     total_od = []
@@ -5484,7 +5307,7 @@ def policy_deleted_entry(request):
         print(get_id_from_session(request))
 
         agent_list = []
-        datag = Agents.objects.values('full_name')
+        datag = Agents.objects.filter(status = "Active").values('full_name')
         for ag in datag:
             agent_list.append(ag['full_name'])
 
@@ -5736,3 +5559,24 @@ def set_payout(data, id):
     except Exception as ex:
         print('apply_policy : ', str(ex))
         return ('apply_policy : ' + str(ex))
+
+
+def send_otp(otp):
+    print('send_otp calling')
+    try:
+        to = settings.TWILIO_PHONE_TO
+        send_otp_via_twilio(to, otp)
+        return ''
+    except Exception as ex:
+        return str(ex)
+
+
+def send_otp_via_twilio(to, otp):
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    message = client.messages.create(
+        body=f"Your OTP: {otp}",
+        from_=settings.TWILIO_PHONE_NUMBER,
+        to=to
+    )
+    return message.sid
+
