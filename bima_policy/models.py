@@ -121,8 +121,8 @@ class Agents(models.Model):
     
     password = models.CharField(max_length=20)    
     created_by = models.CharField(max_length=100)
-    # status = models.CharField(default='Active', max_length=20)
-    status = models.CharField( max_length=20)
+    status = models.CharField(default='Active', max_length=20)
+    # status = models.CharField( max_length=20)
     otp = models.CharField( max_length=4)    
 
     def __str__(self):

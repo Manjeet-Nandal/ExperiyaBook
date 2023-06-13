@@ -390,7 +390,7 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="bqp" class="custom-select" required disabled>
+                                          <select name="bqp" class="custom-select" required >
                                              <!-- <option value="">-- Select BQP --</option> -->
                                              {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
@@ -757,13 +757,14 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="bqp" class="custom-select" required disabled>
+                                          <select name="bqp" class="custom-select" required >
                                              <!-- <option value="" hidden>-- Select BQP --</option> -->
                                              {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
+                                      
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
@@ -778,7 +779,6 @@
                                              class="form-control" name="pos" style="text-transform: uppercase;" required
                                              readonly>
                                        </div>
-
 
 
                                        <div class="col-md-3 mb-4">

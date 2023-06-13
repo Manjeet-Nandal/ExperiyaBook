@@ -4239,8 +4239,8 @@ def add_agent(request):
                 fsp.save(bank_details.name, bank_details)
 
             password = request.POST['password']
-            otp = random.randint(1000, 9999)
-            print('under otp: ', otp)
+            # otp = random.randint(1000, 9999)
+            # print('under otp: ', otp)
             created_by = get_id_from_session(request)
 
             data = Agents.objects.create(posp_code=posp_code,
@@ -4266,12 +4266,14 @@ def add_agent(request):
                                          agreement_certificate=agreement_certificate,
                                          bank_details=bank_details,
                                          password=password,
-                                         otp=otp,
+                                        #  otp=otp,
                                          created_by=created_by,
                                          profile_id=data)
 
             print('data is ', data.login_id)
             print('data status ', data.status)
+
+            return redirect('bima_policy:agent')
 
             if send_otp(otp) == "":
                 print('sent')
