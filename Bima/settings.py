@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'widget_tweaks',
     'django_cleanup.apps.CleanupConfig',
-    'storages',
-    'django_otp',
-    'django_otp.plugins.otp_totp',
+    'storages'
+    # 'django_otp',
+    # 'django_otp.plugins.otp_totp',
 ]
 
 MIDDLEWARE = [
