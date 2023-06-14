@@ -15,9 +15,11 @@
           <div class="row text-center text-sm-left">
             <!-- grid column -->
             <div class="col">
-              <h1 class="page-title"> Agents List 
-                <button type="button" id="download_agent" class="btn btn-success btn-sm float-right" title="Download"><i class="fa fa-download" aria-hidden="true"></i> Download</button>
-                <a href="add_agent/" class="btn btn-secondary btn-sm float-right mr-2"><i class="fa fa-plus"></i> Add New</a>
+              <h1 class="page-title"> Agents List
+                <button type="button" id="download_agent" class="btn btn-success btn-sm float-right" title="Download"><i
+                    class="fa fa-download" aria-hidden="true"></i> Download</button>
+                <a href="add_agent/" class="btn btn-secondary btn-sm float-right mr-2"><i class="fa fa-plus"></i> Add
+                  New</a>
               </h1>
             </div>
             <!-- /grid column -->
@@ -32,13 +34,13 @@
             <div class="card-body">
               <!-- .table -->
               <div class="table-responsive">
-                {% comment %} 
+                {% comment %}
                 <div id="tblList_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                   <div class="row">
                     <div class="col-sm-12 col-md-6">
                       <div class="dataTables_length" id="tblList_length">
                         <label>
-                          Show 
+                          Show
                           <select name="tblList_length" aria-controls="tblList" class="custom-select">
                             <option value="10">10</option>
                             <option value="25">25</option>
@@ -50,52 +52,167 @@
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
-                      <div id="tblList_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="tblList"></label></div>
+                      <div id="tblList_filter" class="dataTables_filter"><label>Search:<input type="search"
+                            class="form-control" placeholder="" aria-controls="tblList"></label></div>
                     </div>
                   </div>
                   {% endcomment %}
+
                   <div class="table-responsive">
-                    <table id="tblList" class="table table-bordered1 dataTable no-footer" role="grid" aria-describedby="tblList_info">
-                      <thead>
-                        <tr role="row">
-                          <th class="text-center width-10p sorting_desc" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-sort="descending" aria-label="Sr. No.: activate to sort column ascending">Sr. No.</th>
-                          <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Agent Name: activate to sort column ascending">Agent Name</th>
-                          <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Email</th>
-                          <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Mobile No.: activate to sort column ascending">Mobile No.</th>
-                          <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="City: activate to sort column ascending">City</th>
-                          <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Slab: activate to sort column ascending">Slab</th>
-                          <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Login ID: activate to sort column ascending">Login ID</th>
-                          <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Status</th>
-                          <th class="text-center nowrap sorting_disabled" rowspan="1" colspan="1" aria-label="#">#</th>
-                        </tr>
-                      </thead>
-                      {% for value in data %}
-                      <div>
-                        <tbody>
-                          <tr role="row" class="odd">
-                            <td class="text-center width-10p sorting_1">{{forloop.counter}}</td>
-                            <td><a href="{% url 'bima_policy:agent_profile' %}" title="View">{{value.full_name}}</a></td>
-                            <td>{{value.email_id}}</td>
-                            <td>{{value.mob_no}}</td>
-                            <td>{{value.city}}</td>
-                            <td>{{value.slab}}</td>
-                            <td>{{value.login_id}}</td>
-                            <td><span class="badge badge-success">{{value.status}}</span></td>
-                            <td class=" text-center nowrap"><a href="" title="View">Details</a></td>
-                          </tr>
-                        </tbody>
+                    <div class="dataTables_scroll">
+                      <div class="dataTables_scrollHead" style="position: relative; border: 0px; width: 100%;">
+                        <div class="dataTables_scrollHeadInner"
+                          style="box-sizing: content-box; width: auto; padding-right: 0px;">
+                          <table class="table table-striped1 table-hover no-wrap table-bordered no-footer dataTable"
+                            aria-describedby="tblInsurance_info" role="grid"
+                            style="margin-left: 0px; width: 5774.97px;">
+
+                          </table>
+                        </div>
                       </div>
-                      {%endfor%}
-                    </table>
+                      <div class="dataTables_scrollBody" style="position: relative;  width: 100%;">
+                        <table id="tblInsurance"
+                          class="table table-striped1 table-hover no-wrap table-bordered no-footer dataTable"
+                          aria-describedby="tblInsurance_info" role="grid">
+
+                          <thead style="border-bottom: inset;">
+                            <tr role="row" ">
+                                   <th class=" text-center sorting thShow" tabindex="0" aria-controls="tblInsurance"
+                              rowspan="1" colspan="1" style="width: 83.2344px;"
+                              aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
+
+                              <th class="sorting">POSP Code</th>
+                              <th class="sorting thShow">Reg. Code</th>
+                              <th class="sorting">POSP Name </th>
+                              <th class="sorting thShow">Gender</th>
+                              <th class="sorting  thShow">Email</th>
+                              <th class="sorting">Mobile No.</th>
+                              <th class="sorting">Addrees</th>
+                              <th class="sorting">State</th>
+                              <th class="sorting">City</th>
+                              <th class="sorting">Pincode</th>
+                              <th class="sorting">Rural Urban</th>
+                              <th class="sorting">Slab </th>
+                              <th class="sorting">GSTIN </th>
+                              <th class="sorting thShow">Bank Account No </th>
+                              <th class="sorting">IFSC Code</th>
+                              <th class="sorting">Bank Name</th>
+                              <th class="sorting">Basic Qqualification</th>
+                              <th class="sorting">Aadhar Card</th>
+                              <th class="sorting">Pan Card</th>
+                              <th class="sorting">Training Certificate</th>
+                              <th class="sorting">Appointment Certificate</th>
+                              <th class="sorting">Agreement</th>
+                              <th class="sorting">Bank Details</th>
+                              <th class="sorting">Login ID</th>
+                              <th class="sorting">Created By</th>
+                              <th class="sorting">Status</th>
+                              <th class="sorting">Action</th>
+
+                            </tr>
+                          </thead>
+
+                          <tbody id="tbdy">
+
+                            {% for value in data %}
+
+                            <tr role="row" class="odd" onclick="highlight(this)" id="tr1">
+
+                              <td class="text-center">{{forloop.counter}}</td>
+
+                              <!-- <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
+                                  id="chkblkrm{{forloop.counter}}" /></td> -->
+
+                              <td>
+                                <a  class="tile tile-img" target="_blank"><i
+                                    class="far fa-file-pdf text-danger"></i></a>
+                                <a href="/bima_policy/agent/edit_agent/{{value.login_id}}" class="">{{value.posp_code}}</a>
+                              </td>
+
+                              <td>{{value.registration_code}}</td>
+
+                              <td>{{value.full_name}}</td>
+                              <!-- <td>
+                                <a href="" class="tile tile-img" target="_blank"><i
+                                    class="far fa-file-pdf text-danger"></i></a>
+                                <a href="/bima_policy/policy/policy_entrydata/{{value.full_name}}"
+                                  class="">{{value.full_name}}</a>
+                              </td> -->
+                              <td>{{value.gender}}</td>
+                              <td>{{value.email_id}}</td>
+                              <td>{{value.mob_no}}</td>
+                              <td>{{value.address}}</td>
+                              <td>{{value.state}}</td>
+                              <td>{{value.city}}</td>
+                              <td>{{value.pincode}}</td>
+                              <td>{{value.rural_urban}}</td>
+                              <td>{{value.slab}}</td>
+                              <td>{{value.GSTIN}}</td>
+                              <td>{{value.account_no}}</td>
+                              <td>{{value.ifsc_code}}</td>
+                              <td>{{value.bank_name}}</td>
+
+                              <td> <a href="#"
+                                  onclick="downloadFile('{{value.basic_qualification}}')">{{value.basic_qualification}}</a>
+                              </td>
+                              <td> <a href="#" onclick="downloadFile('{{value.aadhar_card}}')">{{value.aadhar_card}}</a>
+                              </td>
+                              <td> <a href="#" onclick="downloadFile('{{value.pan_card}}')">{{value.pan_card}}</a>
+                              </td>
+                              <td> <a href="#"
+                                  onclick="downloadFile('{{value.training_certificate}}')">{{value.training_certificate}}</a>
+                              </td>
+                              <td> <a href="#"
+                                  onclick="downloadFile('{{value.appointment_certificate}}')">{{value.appointment_certificate}}</a>
+                              </td>
+                              <td> <a href="#"
+                                  onclick="downloadFile('{{value.agreement_certificate}}')">{{value.agreement_certificate}}</a>
+                              </td>
+                              <td> <a href="#"
+                                  onclick="downloadFile('{{value.bank_details}}')">{{value.bank_details}}</a>
+                              </td>
+
+                              <td>{{value.login_id}}</td>
+                              <td>{{value.created_by}}</td>
+                              <td class=" text-center w-10pc nowrap"><span
+                                  class="badge badge-success">{{value.status}}</span>
+                              </td>
+
+                              <td class="text-center">
+                                <form method="POST">
+                                  {% csrf_token %}
+                                  <a href="/bima_policy/agent/edit_agent/{{value.login_id}}" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+                                    <i class="fa fa-pencil-alt mt-2"></i>
+                                    <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
+                                  </a>
+                                  <a href="#" name="Remove"
+                                    class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+                                    <i class="far fa-trash-alt mt-2"></i>
+
+                                    <!-- href="/bima_policy/policy/{{value.policyid}}/delete" -->
+
+                                  </a>
+                              </td>
+                            </tr>
+
+                            {% endfor %}
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
-                  <div class="row align-items-center">
+
+                  <!-- <div class="row align-items-center">
                     <div class="col-sm-12 col-md-5">
-                      <div class="dataTables_info" id="tblList_info" role="status" aria-live="polite">Showing entries</div>
+                      <div class="dataTables_info" id="tblList_info" role="status" aria-live="polite">Showing entries
+                      </div>
                     </div>
                     <div class="col-sm-12 col-md-7 d-flex justify-content-end">
-                      
+
                     </div>
-                  </div>
+                  </div> -->
+
                 </div>
               </div>
             </div>
@@ -114,7 +231,8 @@
 <!-- /.app-main -->
 <div class="aside-backdrop"></div>
 </div><!-- /.app -->
-<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
+<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
   <!-- .modal-dialog -->
   <div class="modal-dialog" role="document">
     <!-- .modal-content -->
@@ -122,13 +240,14 @@
       <!-- .modal-header -->
       <div class="modal-header">
         <h5 class="modal-title">
-          <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error 
+          <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
         </h5>
       </div>
       <!-- /.modal-header -->
       <!-- .modal-body -->
       <div class="modal-body">
-        <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error remains the same, you need to contact your Administrator immediately.</p>
+        <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error remains
+          the same, you need to contact your Administrator immediately.</p>
       </div>
       <!-- /.modal-body -->
       <!-- .modal-footer -->
@@ -145,7 +264,7 @@
 <!-- BEGIN BASE JS -->
 <script src="{%static 'js/jquery.min.js'%}"></script>
 <script src="{%static 'js/popper.min.js'%}"></script>
-<script src="{%static 'js/bootstrap.min.js'%}"></script>  <!-- END BASE JS -->
+<script src="{%static 'js/bootstrap.min.js'%}"></script> <!-- END BASE JS -->
 <!-- BEGIN PLUGINS JS -->
 <script src="{% static 'js/pace.min.js' %}"></script>
 <script src="{% static 'js/stacked-menu.min.js' %}"></script>
@@ -153,7 +272,7 @@
 <!-- Parsley -->
 <script src="{%static 'js/parsley.js' %}"></script>
 <!-- BEGIN THEME JS -->
-<script src="{%static 'js/theme.js' %}"></script> 
+<script src="{%static 'js/theme.js' %}"></script>
 <script src="{%static 'js/toastr.min.js' %}"></script>
 <script src="{%static 'js/flatpickr.min.js' %}"></script>
 <script src="{%static 'js/select2.full.min.js' %}"></script>
@@ -164,5 +283,21 @@
 <script src="{%static 'js/jquery.form.js' %}"></script>
 <script src="{%static 'js/custom.min.js' %}"></script>
 
-</body></html>
+<script>
+  function downloadFile(params) {
+    // alert(params)
+    if (params.includes("/")) {
+      index = params.lastIndexOf("/") + 1
+      params = params.substring(index, params.length);
+    }
+    pathname = '/bima_policy/docs/download/' + params
+    href = window.location.origin + pathname
+    window.open(href)
+
+  }
+</script>
+
+</body>
+
+</html>
 {%endblock%}

@@ -4285,6 +4285,108 @@ def add_agent(request):
             # return redirect('bima_policy:agent')
 
 
+def edit_agent(request, id):
+    print('edit agent calling:')
+    try:
+        if request.method == "GET":   
+            data = Agents.objects.filter(login_id=id).first()        
+            return render(request, 'agents/edit_agent.html', {'data': data})
+    except Agents.DoesNotExist:
+        return render(request, 'agents/add_agent.html')
+    else:
+        if 'subagent' in request.POST:
+            data = ProfileModel.objects.get(id=get_id_from_session(request))
+            posp_code = request.POST['posp_code']
+            registration_code = request.POST['registration_code']
+            full_name = request.POST['full_name']
+            gender = request.POST['gender']
+            mob_no = request.POST['mob_no']
+            email_id = request.POST['email_id']
+            address = request.POST['address']
+            state = request.POST['state']
+            city = request.POST['city']
+            pincode = request.POST['pincode']
+            rural_urban = request.POST['rural_urban']
+            slab = request.POST['slab']
+            GSTIN = request.POST['GSTIN']
+            account_no = request.POST['account_no']
+            ifsc_code = request.POST['ifsc_code']
+            bank_name = request.POST['bank_name']
+
+            basic_qualification = request.FILES.get('basic_qualification')
+            aadhar_card = request.FILES.get('aadhar_card')
+            pan_card = request.FILES.get('pan_card')
+            training_certificate = request.FILES.get('training_certificate')
+            appointment_certificate = request.FILES.get(
+                'appointment_certificate')
+            agreement_certificate = request.FILES.get('agreement_certificate')
+            bank_details = request.FILES.get('bank_details')
+
+            fsp = FileSystemStorage()
+            if basic_qualification is not None:
+                fsp.save(basic_qualification.name, basic_qualification)
+            if aadhar_card is not None:
+                fsp.save(aadhar_card.name, aadhar_card)
+            if pan_card is not None:
+                fsp.save(pan_card.name, pan_card)
+            if training_certificate is not None:
+                fsp.save(training_certificate.name, training_certificate)
+            if appointment_certificate is not None:
+                fsp.save(appointment_certificate.name, appointment_certificate)
+            if agreement_certificate is not None:
+                fsp.save(agreement_certificate.name, agreement_certificate)
+            if bank_details is not None:
+                fsp.save(bank_details.name, bank_details)
+
+            password = request.POST['password']
+            # otp = random.randint(1000, 9999)
+            # print('under otp: ', otp)
+            created_by = get_id_from_session(request)
+
+            data = Agents.objects.filter(login_id=id)
+
+            # data = Agents.objects.create(posp_code=posp_code,
+            #                              registration_code=registration_code,
+            #                              full_name=full_name, gender=gender,
+            #                              mob_no=mob_no,
+            #                              email_id=email_id,
+            #                              address=address,
+            #                              state=state,
+            #                              city=city,
+            #                              pincode=pincode,
+            #                              rural_urban=rural_urban,
+            #                              slab=slab,
+            #                              GSTIN=GSTIN,
+            #                              account_no=account_no,
+            #                              ifsc_code=ifsc_code,
+            #                              bank_name=bank_name,
+            #                              basic_qualification=basic_qualification,
+            #                              aadhar_card=aadhar_card,
+            #                              pan_card=pan_card,
+            #                              training_certificate=training_certificate,
+            #                              appointment_certificate=appointment_certificate,
+            #                              agreement_certificate=agreement_certificate,
+            #                              bank_details=bank_details,
+            #                              password=password,
+            #                             #  otp=otp,
+            #                              created_by=created_by,
+            #                              profile_id=data)
+
+            print('data is ', data.login_id)
+            print('data status ', data.status)
+
+            return redirect('bima_policy:agent')
+
+            if send_otp(otp) == "":
+                print('sent')
+                return redirect('bima_policy:verify_agent', data.login_id)
+            else:
+                print('failed')
+                return HttpResponse('Error occurred')
+
+            # return redirect('bima_policy:agent')
+
+
 def verify_agent(request, id):
     print('verify_agent calling: ', id)
     try:

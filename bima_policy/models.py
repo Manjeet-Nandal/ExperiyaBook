@@ -110,7 +110,7 @@ class Agents(models.Model):
     account_no = models.CharField(max_length=100)
     ifsc_code = models.CharField(max_length=100)
     bank_name = models.CharField(max_length=100)
-      
+    
     basic_qualification = models.FileField(upload_to='media/documents/')
     aadhar_card = models.FileField(upload_to='media/documents/')
     pan_card = models.FileField(upload_to='media/documents/')

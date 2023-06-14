@@ -13,6 +13,7 @@ urlpatterns = [
     path('user/edit/<str:id>', staff_edit, name='staff_edit'),
     path('agent/', agent, name='agent'),
     path('agent/add_agent/', add_agent, name='add_agent'),
+    path('agent/edit_agent/<str:id>', edit_agent, name='edit_agent'),
     # path('agent/verify_agent/<str:id>/', verify_agent, name='verify_agent'),
     path('agent/profile', agent_profile, name='agent_profile'),
     path('service_provider/', service_provider, name='service_p'),
