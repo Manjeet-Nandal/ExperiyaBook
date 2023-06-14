@@ -223,7 +223,7 @@
 
                           <div class="col-md-2 mb-2">
                             <label>Agent Slab<abbr title=" " class="text-danger">*</abbr></label>
-                            <select name="slab" class="custom-select select2 select2-hidden-accessible"  required 
+                            <select name="slab" class="custom-select "  required 
                               aria-hidden="true">
                               <option value="">Choose...</option>
                               {% for value in Adata %}
@@ -292,7 +292,7 @@
                             <label>Appointment Certificate <small>(Only<strong> PDF &amp; Image
                                 </strong>File)</small> </label>
                             <div class="custom-file">
-                              <input  required type="file" name="appointment_certificate" accept=".pdf,image/" id="appointment_certificate" class="custom-file-input"
+                              <input   type="file" name="appointment_certificate" accept=".pdf,image/" id="appointment_certificate" class="custom-file-input"
                                >
                               <label class="custom-file-label" for="appointment_certificate">Choose file</label>
                             </div>
@@ -301,7 +301,7 @@
                             <label>Agreement <small>(Only<strong> PDF &amp; Image
                                 </strong>File)</small> </label>
                             <div class="custom-file">
-                              <input    type="file" name="agreement_certificate" accept=".pdf,image/" id="agreement_certificate" class="custom-file-input"
+                              <input required   type="file" name="agreement_certificate" accept=".pdf,image/" id="agreement_certificate" class="custom-file-input"
                                >
                               <label class="custom-file-label" for="agreement_certificate">Choose file</label>
                             </div>
