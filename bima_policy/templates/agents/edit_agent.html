@@ -220,75 +220,93 @@
                             <label>Basic Qualification <small>(Only<strong> PDF &amp; Image
                                 </strong>File)</small> </label>
                             <div class="custom-file">
-                              <input type="file" name="basic_qualification" 
-                                accept=".pdf,image/" id="basic_qualification" class="custom-file-input">
+                              <input type="file" name="basic_qualification" accept=".pdf,image/"
+                                id="basic_qualification" class="custom-file-input">
                               <label class="custom-file-label" for="basic_qualification"> {{data.basic_qualification}}
                               </label>
                             </div>
-                            <a href="{{data.basic_qualification}}">{{data.basic_qualification}}</a>
+                            <a href="#" onclick="downloadFile('{{data.basic_qualification}}')" >{{data.basic_qualification}}</a>
                           </div>
+
                           <div class="col-md-3 mb-4">
                             <label>Aadhar Card <small>(Only<strong> PDF &amp; Image
                                 </strong>File)</small> </label>
                             <div class="custom-file">
-                              <input type="file" name="aadhar_card"  accept=".pdf,image/"
-                                id="aadhar_card" class="custom-file-input">
+                              <input type="file" name="aadhar_card" accept=".pdf,image/" id="aadhar_card"
+                                class="custom-file-input">
                               <label class="custom-file-label" for="aadhar_card"> Choose file </label>
                             </div>
-                            <a href="{{data.aadhar_card}}">{{data.aadhar_card}}</a>
+                            <a href="#" onclick="downloadFile('{{data.aadhar_card}}')" >{{data.aadhar_card}}</a>
                           </div>
+
                           <div class="col-md-3 mb-4">
                             <label>Pan Card <small>(Only<strong> PDF &amp; Image
                                 </strong>File)</small> </label>
                             <div class="custom-file">
-                              <input type="file" name="pan_card"  accept=".pdf,image/"
-                                id="pan_card" class="custom-file-input">
+                              <input type="file" name="pan_card" accept=".pdf,image/" id="pan_card"
+                                class="custom-file-input">
                               <label class="custom-file-label" for="pan_card">Choose file</label>
                             </div>
-                            <a href="{{data.pan_card}}">{{data.pan_card}}</a>
+                            <a href="#" onclick="downloadFile('{{data.pan_card}}')">{{data.pan_card}}</a>
                           </div>
                           <div class="col-md-3 mb-4">
                             <label>Training Certificate <small>(Only<strong> PDF &amp; Image
                                 </strong>File)</small> </label>
                             <div class="custom-file">
-                              <input type="file" name="training_certificate" 
-                                accept=".pdf,image/" id="training_certificate" class="custom-file-input">
+                              <input type="file" name="training_certificate" accept=".pdf,image/"
+                                id="training_certificate" class="custom-file-input">
                               <label class="custom-file-label" for="training_certificate">Choose file</label>
                             </div>
-                            <a href="{{data.training_certificate}}">{{data.training_certificate}}</a>
+                            <a href="#" onclick="downloadFile('{{data.training_certificate}}')">{{data.training_certificate}}</a>
                           </div>
                           <div class="col-md-3 mb-4">
                             <label>Appointment Certificate <small>(Only<strong> PDF &amp; Image
                                 </strong>File)</small> </label>
                             <div class="custom-file">
-                              <input type="file" name="appointment_certificate" 
-                                accept=".pdf,image/" id="appointment_certificate" class="custom-file-input">
+                              <input type="file" name="appointment_certificate" accept=".pdf,image/"
+                                id="appointment_certificate" class="custom-file-input">
                               <label class="custom-file-label" for="appointment_certificate">Choose file</label>
                             </div>
-                            <a href="{{data.appointment_certificate}}">{{data.appointment_certificate}}</a>
+                            <a href="#" onclick="downloadFile('{{data.appointment_certificate}}')">{{data.appointment_certificate}}</a>
                           </div>
                           <div class="col-md-3 mb-4">
                             <label>Agreement <small>(Only<strong> PDF &amp; Image
                                 </strong>File)</small> </label>
                             <div class="custom-file">
-                              <input type="file" name="agreement_certificate" 
-                                accept=".pdf,image/" id="agreement_certificate" class="custom-file-input">
+                              <input type="file" name="agreement_certificate" accept=".pdf,image/"
+                                id="agreement_certificate" class="custom-file-input">
                               <label class="custom-file-label" for="agreement_certificate">Choose file</label>
                             </div>
-                            <a href="{{data.agreement_certificate}}">{{data.agreement_certificate}}</a>
+                            <a href="#" onclick="downloadFile('{{data.agreement_certificate}}')">{{data.agreement_certificate}}</a>
                           </div>
                           <div class="col-md-3 mb-4">
                             <label>Bank Details <small>(Only<strong> PDF &amp; Image
                                 </strong>File)</small> </label>
                             <div class="custom-file">
-                              <input type="file" name="bank_details"  accept=".pdf,image/"
-                                id="bank_details" class="custom-file-input">
+                              <input type="file" name="bank_details" accept=".pdf,image/" id="bank_details"
+                                class="custom-file-input">
                               <label class="custom-file-label" for="bank_details">Choose file</label>
                             </div>
-                            <a href="{{data.bank_details}}">{{data.bank_details}}</a>
+                            <a href="#" onclick="downloadFile('{{data.bank_details}}')">{{data.bank_details}}</a>
                           </div>
 
                         </div>
+
+                        <script>
+
+                          function downloadFile(params) {
+                            // alert(params)
+                            if (params.includes("/")) {
+                              index = params.lastIndexOf("/") + 1
+                              params = params.substring(index, params.length);
+                            }
+                            pathname = '/bima_policy/docs/download/' + params
+                            href = window.location.origin + pathname
+                            window.open(href)
+                        
+                          }
+                        
+                        </script>
 
                     </div>
 
@@ -381,13 +399,7 @@
 <script src="{%static 'js/kendo.all.min.js' %}"></script>
 <script src="{%static 'js/agent.min.js' %}"></script>
 
-<!-- <script>
 
-  $(document).ready(function () {
-    var t, progress = $(".ajax-progressBar"), bar = $(".ajax-progressBar .postProgress"); $("#documents").kendoUpload({ multiple: !0, validation: { allowedExtensions: [".jpg", ".jpeg", ".png", ".pdf"] }, maxFileSize: 10240, select: function (e) { if ($(".docerror").html(""), e.files.length > 10) return $(".docerror").html("Please select max 10 files.."), e.preventDefault(), !1 } }), $('form[name="frmagent"]').ajaxForm({ beforeSend: function () { var e = $('form[name="frmagent"]'); if (!e.parsley().isValid()) return !1; t = e.find("button[type='submit']"), btnBusy(t), progress.fadeIn(); $(bar).width("0%").html("0%") }, uploadProgress: function (e, r, t, s) { var a = s - 1 + "%"; $(bar).width(a).html(a) }, url: "Submit", data: { request: "AgentNew" }, success: function (e, r, t, s) { window.scrollTo(0, 0); try { percentVal = "100%"; var a = $.parseJSON(e); toastr[a.status](a.response), "success" == a.status && (s[0].reset(), $(bar).width(percentVal).addClass("bg-success").html(percentVal), window.location.reload()) } catch (e) { systemError() } }, complete: function (e) { progress.fadeOut(), btnFree(t) } });
-  });
-
-</script> -->
 
 </body>
 

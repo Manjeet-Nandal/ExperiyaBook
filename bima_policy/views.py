@@ -162,8 +162,8 @@ def Profile(request):
 def staffmanage(request):
     if request.method == 'GET':
         try:
-            data = StaffModel.objects.filter(
-                profile_id=get_id_from_session(request))
+            # data = StaffModel.objects.filter( profile_id=get_id_from_session(request))
+            data = StaffModel.objects.all()
             return render(request, 'user/user.html', {'data': data})
         except StaffModel.DoesNotExist:
             return render(request, 'user/user.html')
@@ -366,8 +366,8 @@ def ins_comp(request):
     print('ins_comp')
     if request.method == "GET":
         try:
-            data = InsuranceCompany.objects.filter(
-                profile_id=get_id_from_session(request))
+            # data = InsuranceCompany.objects.filter(profile_id=get_id_from_session(request))
+            data = InsuranceCompany.objects.all()
             return render(request, 'insurancecompany/insurance_comp.html', {'data': data})
         except ProfileModel.DoesNotExist:
             return render(request, 'insurancecompany/insurance_comp.html')
@@ -871,10 +871,9 @@ def edit_vehicle(request, id, id2):
 def service_provider(request):
     if request.method == "GET":
         try:
-            brokerdata = BrokerCode.objects.filter(
-                profile_id=get_id_from_session(request))
-            data = ServiceProvider.objects.filter(
-                profile_id=get_id_from_session(request))
+            # brokerdata = BrokerCode.objects.filter( profile_id=get_id_from_session(request))
+            brokerdata = BrokerCode.objects.all()
+            data = ServiceProvider.objects.all()
             return render(request, 'serviceprovider/service_provider.html', {'data': data, 'brokerdata': brokerdata})
         except (ServiceProvider.DoesNotExist, BrokerCode.DoesNotExist):
             return render(request, 'serviceprovider/service_provider.html')
@@ -4384,6 +4383,18 @@ def edit_agent(request, id):
         return HttpResponse(str(e))
 
 
+def delete_agent(request, id):
+    print('\ndelete agent calling:')
+    # print(id)   
+    try:
+        Agents.objects.filter(login_id=id).delete()           
+        print('agent deleted\n')
+        return redirect('bima_policy:agent')
+    except Exception as e:
+        print(str(e))
+        return HttpResponse(str(e))
+
+
 def verify_agent(request, id):
     print('verify_agent calling: ', id)
     try:
@@ -4412,15 +4423,15 @@ def verify_agent(request, id):
 def slab(request):
     if request.method == "GET":
         try:
-            data = Slab.objects.filter(profile_id=get_id_from_session(request))
+            # data = Slab.objects.filter(profile_id=get_id_from_session(request))
+            data = Slab.objects.all()
             return render(request, 'payout/slab.html', {'data': data})
         except Slab.DoesNotExist:
             return render(request, 'payout/slab.html')
     else:
         try:
             if 'slab_add' in request.POST:
-                profile = ProfileModel.objects.get(
-                    id=get_id_from_session(request))
+                profile = ProfileModel.objects.get(id=get_id_from_session(request))
                 slab_name = request.POST['slab']
                 Slab.objects.create(slab_name=slab_name, profile_id=profile)
                 return redirect('bima_policy:slab')
@@ -4531,8 +4542,8 @@ def slab_payout(request, id):
     print('slab_payout')
     if request.method == 'GET':
         try:
-            data = Payout.objects.filter(
-                profile_id=get_id_from_session(request))
+            data = Payout.objects.filter( profile_id=get_id_from_session(request))
+            # data = Payout.objects.all()
             data1 = data.filter(slab_name=id)
             return render(request, 'payout/slab_payoutlist.html', {'data1': data1})
         except Payout.DoesNotExist:
