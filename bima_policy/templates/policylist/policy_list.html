@@ -977,9 +977,17 @@
                </div>
                <hr>
 
-               <div class="form-row">
+               <style>
+                  .text-blue116{
+                     color: rgb(116, 48, 249);
+                     /* font-weight: bold; */
+                     font-weight: 550;
+                  }
+               </style>
+
+               <div class="form-row" >
                   <div class="col-md-12 col-sm-12">
-                     <div id="payoutSection" class="card card-inverse bg-info">
+                     <div id="payoutSection" class="card card-inverse " style=" background-color: rgb(110, 17, 244);" >
                         <!-- .card -->
                         <div class="card-header p-2">
                            <h4 class="card-title mb-1">Payouts</h4>
@@ -992,14 +1000,14 @@
                            <div class="text-center">
 
                               {% if is_motor_form %}
-                              <button hidden type="submit" name="submit" class="btn btn-success w-100p">Save</button>
+                              <!-- <button hidden type="submit" name="submit" class="btn btn-success w-100p">Save</button> -->
 
                               <a href="#">
-                                 <button type="button" class="btn btn-success w-100p" onclick="sendPolicyData()">Save
+                                 <button type="button" class="btn w-100p text-blue116" style=" background-color: white; "  onclick="sendPolicyData()">Save
                                  </button>
                               </a>
                               {% else %}
-                              <button type="submit" name="submit" class="btn btn-success w-100p">Save</button>
+                              <button type="submit" name="submit" class="btn w-100p text-blue116" style=" background-color: white; ">Save</button>
                               {% endif %}
 
                            </div>
