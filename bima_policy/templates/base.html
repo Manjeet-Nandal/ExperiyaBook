@@ -29,7 +29,7 @@
       <link rel="stylesheet" href="{%static 'css/parsley.css' %}">
       <link rel="stylesheet" href="{%static 'css/select2.min.css' %}">
       <link rel="stylesheet" href="{%static 'css/theme.min.css' %}" data-skin="default">
-      <link rel="stylesheet" href="{%static 'css/theme-dark.min.css' %}" data-skin="dark" disabled="true">
+      <!-- <link rel="stylesheet" href="{%static 'css/theme-dark.min.css' %}" data-skin="dark" disabled="true"> -->
       <link rel="stylesheet" href="{%static 'css/custom.min.css'%}"> 
       <link rel="stylesheet" href="{%static 'css/bootstrap-select.min.css'%}"> 
       <link rel="stylesheet" href="{%static 'css/bootstrap-tagsinput.css'%}"> 
@@ -44,63 +44,7 @@
          // add loading class to html immediately
          document.querySelector('html').classList.add('loading');
       </script> -->
-      
-	
-      <style type="text/css">
-         /* Chart.js */
-         @keyframes chartjs-render-animation {
-         from {
-         opacity: .99
-         }
-         to {
-         opacity: 1
-         }
-         }
-         .chartjs-render-monitor {
-         animation: chartjs-render-animation 1ms
-         }
-         .chartjs-size-monitor,
-         .chartjs-size-monitor-expand,
-         .chartjs-size-monitor-shrink {
-         position: absolute;
-         direction: ltr;
-         left: 0;
-         top: 0;
-         right: 0;
-         bottom: 0;
-         overflow: hidden;
-         pointer-events: none;
-         visibility: hidden;
-         z-index: -1
-         }
-         .chartjs-size-monitor-expand>div {
-         position: absolute;
-         width: 1000000px;
-         height: 1000000px;
-         left: 0;
-         top: 0
-         }
-         .chartjs-size-monitor-shrink>div {
-         position: absolute;
-         width: 200%;
-         height: 200%;
-         left: 0;
-         top: 0
-         }
-         {% comment %} for icon style {% endcomment %}
-         #icon
-         {
-            color:#346cb0;
-            padding-right: 1.5rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-         }
-         div.agent,div.staff{
-            display: none;
-            }
-
-      </style>
+      	   
    </head>
 
    <body class=" default-skin pace-done">
@@ -159,8 +103,8 @@
                   <!-- .top-bar-item -->
                   <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
                      <!-- .btn-account -->
-                     <div class="dropdown d-none d-md-flex">
-                        <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true"
+                     <div class="dropdown d-none d-md-flex"   >
+                        <button id="hello"  class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                         <span class="user-avatar user-avatar-md">                         
                            {%  if request.session.profile_image == None %}
@@ -171,43 +115,35 @@
                         </span>
 
                         </button> <!-- .dropdown-menu -->
-                        <div class="dropdown-menu">
+                        <div  class="dropdown-menu"  style="color: #FFFFFF; background: #6E11F4; ">
                            <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
                            <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
                            <h6 class="dropdown-header d-none d-md-block d-lg-none"> Demo </h6>
                            
                            {%  if request.session.role == 'admin' %}
-                           <a class="dropdown-item" href="/bima_policy/profile/" >
-                              {% comment %} <span class="dropdown-icon icofont icofont-ui-password"></span> {% endcomment %}
-                              <i class="fa fa-key" aria-hidden="true" id='icon'></i> Profile
+                           <a class="dropdown-item" href="/bima_policy/profile/" style="color: #FFFFFF; background: #6E11F4;" >
+                             
+                              <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'  ></i> Profile
                               </a>
                            {%  endif %}
                            
                            {%  if request.session.role == 'staff' %}
-                           <a class="dropdown-item" href="/bima_policy/user/edit/{{request.session.id}}" >
-                              {% comment %} <span class="dropdown-icon icofont icofont-ui-password"></span> {% endcomment %}
-                              <i class="fa fa-key" aria-hidden="true" id='icon'></i> Profile
+                           <a class="dropdown-item" href="/bima_policy/user/edit/{{request.session.id}}" style="color: #FFFFFF; background: #6E11F4;" >                          
+                              <i class="fa fa-key"  style="color: #FFFFFF;"  aria-hidden="true" id='icon'></i> Profile
                               </a>
-                           {%  endif %}
-
-                           <!-- <div class="dropdown-divider"></div>                               -->
-                                       
-                           <!-- <a class="dropdown-item"  data-toggle="modal" data-target="#mdlUpdatePassword">
-                           {% comment %} <span class="dropdown-icon icofont icofont-ui-password"></span> {% endcomment %}
-                           <i class="fa fa-key" aria-hidden="true" id='icon'></i> Change Password
-                           </a> -->
-
+                           {%  endif %}                        
                            
                            <div class="dropdown-divider"></div>
-                           <a class="dropdown-item"
+                           <a class="dropdown-item" style="color: #FFFFFF; background: #6E11F4;"
                               href="{%url 'bima_policy:logout'%}">
-                           <i class="fa fa-sign-out" aria-hidden="true" id='icon'></i>Logout
+                           <i class="fa fa-sign-out"  style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>Logout
                            </a>
                         </div>
-                        <!-- /.dropdown-menu -->
+                      
                      </div>
-                     <!-- /.btn-account -->
+                 
                   </div>
+                
                   <!-- /.top-bar-item -->
                </div>
                <!-- /.top-bar-list -->
@@ -216,7 +152,7 @@
          </header>
          <!-- /.app-header -->
          <!-- .app-aside -->
-         <aside class="app-aside app-aside-expand-md app-aside-light" >
+         <aside class="app-aside app-aside-expand-md app-aside-light" style="background: #FFFFFF;" >
             <!-- .aside-content -->
             <div class="aside-content">
                <!-- .aside-header -->
@@ -257,6 +193,10 @@
                               /* font-weight: bold; */
                               font-weight: 550;
                            }
+                           .text-white-ff{
+                              color: #FFFFFF                           
+                             
+                           }
                         </style>
                         
                         <li class="text-center text-primary"><span class="" id="liteDate"></span> 
@@ -267,14 +207,14 @@
                         <li class="menu-item has-active">
                            <a href="{%url 'bima_policy:dashboard'%}" class="menu-link">                         
                            <i class="fa fa-home" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-						         <span class="menu-text text-blue116" >Dashboard</span>
+						         <span class="menu-text text-blue116"  style="margin-left: 10px;" >Dashboard</span>
 						         </a>
                         </li>
 
                         <li class="menu-item has-child  ">  
                            <a href="#" class="menu-link">                         
                            <i class="fa fa-solid fa-book" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                           <span class="menu-text text-blue116 " style="margin-left: 4px;" >Policy List</span></a> 
+                           <span class="menu-text text-blue116 "  style="margin-left: 10px;"  >Policy List</span></a> 
                            
                            <ul class="menu" >                             
                               <li class="menu-item has-child  text-blue116 " >
@@ -305,9 +245,18 @@
                            <li class="menu-item has-active">
                               <a href="{%url 'bima_policy:policy_entry'%}" class="menu-link">                         
                               <i class="fa fa-bars" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" >Entry List</span>
+                              <span class="menu-text text-blue116"  style="margin-left: 10px;" >Entry List</span>
                               </a>
                            </li>
+                           {% if request.session.role == "staff" %}
+                           <li class="menu-item ">
+                              <a href="{%url 'bima_policy:policy_deleted_entry'%}" class="menu-link">                         
+                              <i class="fa fa-trash" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
+                              <span class="menu-text text-blue116"  style="margin-left: 10px;" >Trash</span>
+                              </a>
+                           </li>    
+                           {% endif %}
+
                         </li>    
                           
                         <li class="menu-item " hidden>
@@ -391,56 +340,56 @@
                            <li class="menu-item ">
                               <a href="{%url 'bima_policy:agent'%}" class="menu-link">                         
                               <i class="fa fa-user-friends" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" >POSP</span>
+                              <span class="menu-text text-blue116"  style="margin-left: 10px;" >POSP</span>
                               </a>
                            </li>
 
                            <li class="menu-item ">
                               <a href="{%url 'bima_policy:slab'%}" class="menu-link">                         
                               <i class="fa fa-solid fa-book" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" >Payouts</span>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;" >Payouts</span>
                               </a>
                            </li>
 
                            <li class="menu-item ">
                               <a href="{%url 'bima_policy:ins_comp'%}" class="menu-link">                         
                               <i class="fa fa-solid fa-building" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" >Insurers</span>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;"  >Insurers</span>
                               </a>
                            </li>
 
                            <li class="menu-item ">
                               <a href="{%url 'bima_policy:service_p'%}" class="menu-link">                         
                               <i class="fa fa-solid fa-user-tie" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" >Service Providers</span>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;"  >Service Providers</span>
                               </a>
                            </li>               
                            
                            <li class="menu-item ">
                               <a href="{%url 'bima_policy:product_view'%}" class="menu-link">                         
                               <i class="fa fa-product-hunt" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" >Products</span>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;"  >Products</span>
                               </a>
                            </li>       
                            
                            <li class="menu-item ">
                               <a href="{%url 'bima_policy:vehi'%}" class="menu-link">                         
                               <i class="fa fa-car" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" >Vehicles</span>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;"  >Vehicles</span>
                               </a>
                            </li>              
                            
                            <li class="menu-item ">
                               <a href="{%url 'bima_policy:staff'%}" class="menu-link">                         
                               <i class="fa fa-user" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" >Users</span>
+                              <span class="menu-text text-blue116"  style="margin-left: 10px;" >Users</span>
                               </a>
                            </li>              
 
                            <li class="menu-item ">
                               <a href="{%url 'bima_policy:policy_deleted_entry'%}" class="menu-link">                         
                               <i class="fa fa-trash" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" >Trash</span>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;"  >Trash</span>
                               </a>
                            </li>    
                         
@@ -450,7 +399,7 @@
                            <li class="menu-item ">
                               <a href="{%url 'bima_policy:profile'%}" class="menu-link">                         
                               <i class="fa fa-user-circle" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" >Profile</span>
+                              <span class="menu-text text-blue116"  style="margin-left: 10px;" >Profile</span>
                               </a>
                            </li>   
                         </div>

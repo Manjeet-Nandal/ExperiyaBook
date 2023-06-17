@@ -3,9 +3,7 @@
 {% load static %}
 
 <main class="app-main">
-   <script>
-      var p_num = 25
-   </script>
+  
    <!-- .app-main -->
    <div class="wrapper">
       <!-- .wrapper -->
@@ -35,7 +33,7 @@
                <div class="card card-fluid">
                   <!-- .card-header -->
                   <div class="card-header">
-                     <form id="frminslist" autocomplete="off">                      
+                     <form id="frminslist" autocomplete="off">
                         <div class="row">
                            <div class="col-md-2 col-sm-12">
                               <select class="custom-select" name="period" id="select-period">
@@ -533,7 +531,7 @@
                                  aria-describedby="tblInsurance_info" role="grid">
 
                                  <thead style="border-bottom: inset;">
-                                    <tr role="row" ">
+                                    <tr role="row" >
                                        <th class=" text-center sorting thShow" tabindex="0"
                                        aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 83.2344px;"
                                        aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
@@ -607,7 +605,7 @@
                                     </tr>
                                  </thead>
 
-                                 <tbody id="tbdy">
+                                 <tbody id="tbdy">                                 
 
                                     {% for value in data %}
 
@@ -621,10 +619,9 @@
                                        <td>{{value.proposal_no}}</td>
                                        <td>
                                           <a href="" class="tile tile-img" target="_blank"><i
-                                                class="far fa-file-pdf text-danger"></i></a>
+                                                class="far fa-file-pdf text-danger mt-1"></i></a>
                                           <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
                                              class="">{{value.policy_no}}</a>
-                                          <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
                                        </td>
                                        <td>{{value.customer_name}}</td>
                                        <td>{{value.insurance_company}}</td>
@@ -742,7 +739,7 @@
 
                                        {% endif %}
 
-                                       <td> <a href="#"
+                                       <td> <a href="#" class="text-black"
                                              onclick="downloadFile('{{value.proposal}}')">{{value.proposal}}</a> </td>
                                        <td> <a href="#"
                                              onclick="downloadFile('{{value.mandate}}')">{{value.mandate}}</a> </td>
@@ -1480,7 +1477,6 @@
          policyid_list.push(element.replace("'", "").replace("'", "").trim())
       });
 
-
    }
 
    function selectAllPolicy() {
@@ -1543,8 +1539,20 @@
    function highlight(row) {
       SelectedRow = row.cells[0].textContent;
       deHighlight();
-      row.style.backgroundColor = 'silver';
+      // row.style.backgroundColor = 'silver';
+      row.style.background = '#6E11F4'
+      // row.style.background = "gray"
+      row.style.color = '#FFFFFF'
       row.classList.toggle("selectedRow");
+
+      var anchorTag = row.getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
+    
+      if (anchorTag) {
+         for (const iterator of anchorTag) {
+            
+            iterator.style.color = "white"          
+         }        
+      }
    }
 
    function deHighlight() {
@@ -1559,8 +1567,16 @@
             }
          } catch { }
 
-         // default this line is
-         rows[i].style.backgroundColor = "transparent";
+         rows[i].style.background = "#FFFFFF";
+         rows[i].style.color = "black";
+
+         var anchorTag = rows[i].getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
+    
+         if (anchorTag) {
+            for (const iterator of anchorTag) {               
+               iterator.style.color = "black"          
+            }        
+         }
       }
    }
 

@@ -118,26 +118,15 @@
 
                             <tr role="row" class="odd" onclick="highlight(this)" id="tr1">
 
-                              <td class="text-center">{{forloop.counter}}</td>
-
-                              <!-- <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
-                                  id="chkblkrm{{forloop.counter}}" /></td> -->
-
-                              <td>
-                                <a class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger"></i></a>
-                                <a href="/bima_policy/agent/edit_agent/{{value.login_id}}"
-                                  class="">{{value.posp_code}}</a>
-                              </td>
-
+                              <td class="text-center">{{forloop.counter}}</td>                            
+                              <td>{{value.posp_code}}</td>
                               <td>{{value.registration_code}}</td>
-
-                              <td>{{value.full_name}}</td>
-                              <!-- <td>
+                              <td>
                                 <a href="" class="tile tile-img" target="_blank"><i
-                                    class="far fa-file-pdf text-danger"></i></a>
-                                <a href="/bima_policy/policy/policy_entrydata/{{value.full_name}}"
-                                  class="">{{value.full_name}}</a>
-                              </td> -->
+                                      class="far fa-file-pdf text-danger mt-1"></i></a>
+                                <a href="/bima_policy/agent/edit_agent/{{value.login_id}}"
+                                   class="">{{value.full_name}}</a>
+                             </td>
                               <td>{{value.gender}}</td>
                               <td>{{value.email_id}}</td>
                               <td>{{value.mob_no}}</td>
@@ -179,7 +168,7 @@
                                   class="badge badge-success">{{value.status}}</span>
                               </td> -->
 
-                              <td class=" text-center w-10pc nowrap" >
+                              <td class=" text-center w-10pc nowrap">
 
                                 <a href="#" class="badge badge-success" name="Edit"> {{value.status}}
                                 </a>
@@ -284,10 +273,10 @@
           </div>
 
         </div>
-       
+
         <button class="mt-4 btn btn-primary" style="margin-bottom: -60px;" onclick="setAgentStatus()">Yes, I`m
           sure</button>
-       
+
 
         <div class="modal-footer">
           <button id="btnExit" type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
@@ -338,7 +327,52 @@
 
   }
 
-  
+
+  function highlight(row) {
+    SelectedRow = row.cells[0].textContent;
+    deHighlight();
+    // row.style.backgroundColor = 'silver';
+    row.style.background = '#6E11F4'
+    // row.style.background = "gray"
+    row.style.color = '#FFFFFF'
+    row.classList.toggle("selectedRow");
+
+    var anchorTag = row.getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
+
+    if (anchorTag) {
+      for (const iterator of anchorTag) {
+
+        iterator.style.color = "white"
+      }
+    }
+  }
+
+  function deHighlight() {
+    let table = document.getElementById("tblInsurance");
+    let rows = table.rows;
+    for (let i = 0; i < rows.length; i++) {
+      // to avoid checked 
+      try {
+        is_checked = document.getElementById(`chkblkrm${i}`).checked
+        if (is_checked) {
+          continue;
+        }
+      } catch { }
+
+      rows[i].style.background = "#FFFFFF";
+      rows[i].style.color = "black";
+
+      var anchorTag = rows[i].getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
+
+      if (anchorTag) {
+        for (const iterator of anchorTag) {
+          iterator.style.color = "black"
+        }
+      }
+    }
+  }
+
+
 </script>
 
 </body>

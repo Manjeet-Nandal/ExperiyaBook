@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'bima_policy',
     'fontawesomefree',
     'widget_tweaks',
-    'django_cleanup.apps.CleanupConfig',
-    'storages'
+    'storages',
+    'django_cleanup.apps.CleanupConfig'
     # 'django_otp',
     # 'django_otp.plugins.otp_totp',
 ]
