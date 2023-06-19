@@ -51,9 +51,10 @@ def dashboard(request):
     if is_user(request):
         policycount = Policy.objects.count()
     else:
+        print('')
         print('sh', get_id_from_session(request))
-        policycount = Policy.objects.filter(
-            employee=get_id_from_session(request)).count()
+    
+        policycount = Policy.objects.filter(employee=get_id_from_session(request)).count()
     # print('total agents are:', agentcount)
     print('total policycount :', policycount)
 

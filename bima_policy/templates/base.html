@@ -332,6 +332,8 @@
                            </li>
                         </div>
                       
+                        {% if request.session.role == "admin" %}
+
                         <div class={{request.session.role}} >
                            <li class="menu-header "  style=" color: rgb(110, 17, 244);" >Manage </li>
                            <!-- /.menu-header -->
@@ -403,6 +405,7 @@
                               </a>
                            </li>   
                         </div>
+                        {% endif %}
                      </ul>
                   </nav>               
                </div>
