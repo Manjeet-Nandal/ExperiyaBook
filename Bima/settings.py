@@ -99,6 +99,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -156,7 +158,6 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 AWS_ACCESS_KEY_ID = "AKIAQHVWIUX56OGJLSBN"
 AWS_SECRET_ACCESS_KEY = "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"
