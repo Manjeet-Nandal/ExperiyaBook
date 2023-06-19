@@ -62,19 +62,6 @@ class BankDetail(models.Model):
         super(BankDetail, self).save(*args, **kwargs)
 
 
-class RtoConversionModel(models.Model):
-    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
-    ).hex[:6].upper(), editable=False, max_length=30)
-    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
-    rto_series = models.CharField(max_length=10)
-    rto_return = models.CharField(max_length=10)
-    status = models.CharField(default='Active', max_length=20)
-
-    def save(self, *args, **kwargs):
-        self.id = uuid.uuid4().hex[:6].upper()
-        super(RtoConversionModel, self).save(*args, **kwargs)
-
-
 class InsuranceCompany(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
@@ -432,21 +419,6 @@ class StateRtos(models.Model):
         super(StateRtos, self).save(*args, **kwargs)
 
 
-class rtotables(models.Model):
-    sid_id = models.ForeignKey(StateRtos, on_delete=models.CASCADE)
-    rto_id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
-    ).hex[:5].upper(), editable=False, max_length=5)
-    RegNo = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.RegNo
-
-    def save(self, *args, **kwargs):
-        # self.payoutid = uuid.uuid4().hex[:5].upper()
-        self.id = uuid.uuid4().hex[:6].upper()
-        super(rtotables, self).save(*args, **kwargs)
-
-
 class BQP(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
@@ -561,3 +533,20 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:6].upper()
         super(Product, self).save(*args, **kwargs)
+
+
+class RtoTable(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:4].upper(), editable=False, max_length=10)
+    rto_state = models.CharField(max_length=100, unique=True)
+    rto_city= models.CharField(max_length=100, unique=True)
+    rto_code= models.CharField(max_length=100, unique=True)
+    status = models.CharField(default='Active', max_length=20)
+
+    def __str__(self):
+        return self.rto_code
+
+    def save(self, *args, **kwargs):
+        self.id = uuid.uuid4().hex[:4].upper()
+        super(RtoTable, self).save(*args, **kwargs)
+

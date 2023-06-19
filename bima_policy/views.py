@@ -334,7 +334,7 @@ def profile_photo(request):
 
 
 # RTOView
-def rto_list(request):
+def rto_list_old(request):
     if request.method == "GET":
         data = RtoConversionModel.objects.filter(
             profile_id_id=get_id_from_session(request))
@@ -348,17 +348,36 @@ def rto_list(request):
         return redirect('bima_policy:rto')
 
 
-def update_rto(request, id):
-    data = {}
+def rto_list(request):
+    print('rto_list calling: ')
+
     if request.method == "GET":
-        data = RtoConversionModel.objects.filter(
-            profile_id_id=get_id_from_session(request))
-        udata = RtoConversionModel.objects.filter(id=id)
-        return render(request, 'RTO.html', {'data': data, 'udata': udata})
+        # data = RtoTable.objects.create(rto_state = 'test', rto_city = 'test', rto_code = 'test')
+        data = RtoTable.objects.all().values()
+
+        print(data.__len__())
+        return render(request, 'rto/RTO.html', {'data': data})
+    if request.method == "POST" and 'rto_add' in request.POST:
+        data = ProfileModel.objects.get(id=get_id_from_session(request))
+        rtoseries = request.POST['rtoseries']
+        rtoreturn = request.POST['rtoreturn']
+        RtoConversionModel.objects.create(
+            rto_series=rtoseries, rto_return=rtoreturn, profile_id=data)
+        return redirect('bima_policy:rto')
+
+
+def update_rto(request, id):
+    print('update_rto calling: ')
+    return HttpResponse('No RTOs deleted/updated!')
+    data = {}
+    if request.method == "GET":     
+        data = RtoTable.objects.filter(id=id)
+        return render(request, 'RTO.html', {'data': data})
     if request.method == 'POST':
         if "delete" in request.POST:
-            item = get_object_or_404(RtoConversionModel, id=id)
+            item = get_object_or_404(RtoTable, id=id)
             item.delete()
+            print('RTO deleted: ',item)
             return redirect('bima_policy:rto')
 
 
@@ -4557,7 +4576,7 @@ def slab_payoutform(request):
     if request.method == "GET":
         print('slab_payoutform get')
 
-        slab = Slab.objects.filter(profile_id=get_id_from_session(request))
+        slab = Slab.objects.values()
 
         # getting products name and sorts them.
         products = []

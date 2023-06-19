@@ -15,7 +15,7 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> RTO Conversion
+                     <h1 class="page-title"> RTO Table
                         <button data-toggle="modal" data-target="#mdlrto" class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
                      </h1>
                   </div>
@@ -45,30 +45,32 @@
                                  <thead>
                                     <tr role="row">
                                        <th class="w-10pc sorting_asc" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sr. No.: activate to sort column descending" style="width: 0px;">Sr. No.</th>
-                                       <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="RTO Series: activate to sort column ascending" style="width: 0px;">RTO Series</th>
-                                       <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="RTO Return: activate to sort column ascending" style="width: 0px;">RTO Return</th>
+                                       <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="RTO Series: activate to sort column ascending" style="width: 0px;">RTO Code</th>
+                                       <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="RTO Return: activate to sort column ascending" style="width: 0px;">RTO City</th>
+                                       <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="RTO Return: activate to sort column ascending" style="width: 0px;">RTO State</th>
                                        <th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th>
-                                       <th class="w-10pc sorting_disabled" rowspan="1" colspan="1" aria-label="#" style="width: 0px;">#</th>
+                                       <th class="w-10pc sorting_disabled" rowspan="1" colspan="1" aria-label="#" style="width: 0px;">Action</th>
                                     </tr>
                                  </thead>
                                  {%for value in data%}
                                  <tbody>
                                     <tr role="row" class="odd">
                                        <td class="w-10pc sorting_1">{{forloop.counter}}</td>
-                                       <td>{{value.rto_series}}</td>
-                                       <td>{{value.rto_return}}</td>
+                                       <td>{{value.rto_code}}</td>
+                                       <td>{{value.rto_city}}</td>
+                                       <td>{{value.rto_state}}</td>
                                        <td><span class="badge badge-success">{{value.status}}</span></td>
-                                       <td class=" w-10pc">
-                                       <form method='POST' action="{{value.id}}">
+                                       <td class=" w-10pc">                                       
+                                     <form method='POST' action="{{value.id}}">
                                           {% csrf_token %}
-                                             {% comment %} <button type='submit' class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit" >
+                                              <button type='submit' class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit" >
                                                 <i class="fa fa-pencil-alt" aria-hidden="true"></i>
-                                             </button> {% endcomment %}
+                                             </button> 
                                              <button type='submit'class="mr-1 btn btn-md btn-icon btn-secondary" name="delete" >
                                                 <i class="fa fa-trash-alt text-danger" aria-hidden="true"></i>
                                              </button>
-                                       </form>
-                                       </td>
+                                       </form> 
+                                   </td>
                                     </tr>
                                     
                                 </tbody>
@@ -242,6 +244,6 @@
 <script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
 <script src="{%static 'js/jquery.form.js' %}"></script>
 <script src="{%static 'js/custom.min.js' %}"></script>
-<script src="rto.js"></script>
+<!-- <script src="rto.js"></script> -->
 </body></html>
 {%endblock%}
