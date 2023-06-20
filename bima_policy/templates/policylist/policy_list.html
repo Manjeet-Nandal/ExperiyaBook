@@ -186,7 +186,7 @@
                                              aria-hidden="true" required>
                                              <option value="" hidden>-- Select Make By --</option>
                                              {% for value in makes %}
-                                             <option value="{{value}}">{{value}}</option>
+                                             <option value="{{value.make}}">{{value.make}}</option>
                                              {%endfor%}
                                           </select>
 
@@ -199,8 +199,9 @@
                                              aria-hidden="true" required>
                                              <option value="" hidden>-- Select Model --</option>
                                              {% for value in models %}
-                                             <option value="{{value}}">{{value}}</option>
+                                             <option value="{{value.model}}">{{value.model}}</option>
                                              {%endfor%}
+                                          
                                           </select>
                                        </div>
 

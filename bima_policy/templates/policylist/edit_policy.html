@@ -184,7 +184,7 @@
                                              aria-hidden="true" required>
                                              <option value="{{data.vehicle_makeby}}"> {{data.vehicle_makeby}} </option>
                                              {% for value in makes %}
-                                             <option value="{{value}}">{{value}}</option>
+                                             <option value="{{value.make}}">{{value.make}}</option>
                                              {%endfor%}
                                           </select>
 
@@ -197,7 +197,7 @@
                                              aria-hidden="true" required>
                                              <option value="{{data.vehicle_model}}"> {{data.vehicle_model}} </option>
                                              {% for value in models %}
-                                             <option value="{{value}}">{{value}}</option>
+                                             <option value="{{value.model}}">{{value.model}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>

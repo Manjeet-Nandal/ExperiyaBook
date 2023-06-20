@@ -14,9 +14,7 @@ urlpatterns = [
     path('agent/', agent, name='agent'),
     path('agent/add_agent/', add_agent, name='add_agent'),
     path('agent/edit_agent/<str:id>', edit_agent, name='edit_agent'),
-    path('agent/delete_agent/<str:id>', delete_agent, name='delete_agent'),
-
-    # path('agent/verify_agent/<str:id>/', verify_agent, name='verify_agent'),
+    path('agent/delete_agent/<str:id>', delete_agent, name='delete_agent'),  
     path('agent/profile', agent_profile, name='agent_profile'),
     path('service_provider/', service_provider, name='service_p'),
     path('service_provider/add_sp/', add_sp, name='add_sp'),
@@ -27,11 +25,9 @@ urlpatterns = [
     path('product/<str:name>/add', add_product, name='add_product'),
     path('product/<str:name>/delete', delete_product, name='delete_product'),
     path('vehicle/', vehicle_view, name='vehi'),
-    path('vehicle/<str:id>/', delete_vehicle, name='del_vehicle'),
     path('vehicle/<str:id>/category', delete_vehicle_category, name='delete_vehicle_category'),
     path('vehicle/<str:id>/model', delete_vehicle_model, name='delete_vehicle_model'),
     path('vehicle/<str:id>/make', delete_vehicle_make, name='delete_vehicle_make'),
-    path('vehicle/<str:id>/edit', edit_vehicle, name='edit_vehicle'),
     path('insurance_comp/', ins_comp, name="ins_comp"),
     path('insurance_comp/<str:id>', ins_del, name='ins_del'),
     path('rto/', rto_list, name="rto"),
@@ -73,7 +69,6 @@ urlpatterns = [
     path('deleted_policy/<str:id>/', store_deleted_policy, name="store_deleted_policy"),
     path('policy/deleted_entry/', policy_deleted_entry, name="policy_deleted_entry"),
     path('policy/local_entry/', policy_local_entry, name="policy_local_entry"),
-    path('policy/new_entry/', new_entry, name="new_entry")    ,
+    path('policy/new_entry/', new_entry, name="new_entry")   
 
-    # path('send-otp/', send_otp, name='send_otp'),
 ]

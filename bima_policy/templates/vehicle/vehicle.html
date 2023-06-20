@@ -47,7 +47,7 @@
               <div class="card card-fluid">
                 <div class="card-header">
                   Vehicle Category
-                  <button data-toggle="modal" data-target="#mdlvehiclecategory"
+                  <button data-toggle="modal" data-target="#mdlvehiclecategory" 
                     class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
                 </div>
                 <!-- .card-body -->
@@ -285,7 +285,7 @@
               <div class="card card-fluid">
                 <div class="card-header">
                   Vehicle Models
-                  <button data-toggle="modal" data-target="#mdlvehiclemodel"
+                  <button data-toggle="modal" data-target="#mdlvehiclemodel" 
                     class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
                 </div>
                 <!-- .card-body -->
@@ -313,24 +313,18 @@
                                 style="width: 0px;">Action</th>
                             </tr>
                           </thead>
-                          {%for value in context.model%}
-
-                          {% if forloop.counter <= 25 %}
+                          {%for value in models%}
+                         
                           <tbody>
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc sorting_1">{{forloop.counter}}</td>
-                              <td>{{value}}</td>
+                              <td>{{value.model}}</td>
                               <td class=" text-center w-10pc"><span class="badge badge-success">Active</span>
                               </td>
                               <td class="text-center w-10pc nowrap">
-                                <form method='POST' action="{{value}}/cat">
-                                  {% csrf_token %}
-                                  <!-- <a data-toggle="modal" data-target="#mdledit"
-                                    onclick="document.getElementById('model1').value = '{{value}}'"
-                                    class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
-                                    <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
-                                  </a> -->
-                                  <a type='submit' href="./{{value}}/model" class="mr-1 btn btn-sm btn-icon btn-secondary"
+                                <form method='POST' action="{{value.id}}/vcat">
+                                  {% csrf_token %}                                 
+                                  <a type='submit' href="./{{value.model}}/model" class="mr-1 btn btn-sm btn-icon btn-secondary"
                                     name="delete">
                                     <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
                                   </a>
@@ -339,7 +333,7 @@
                             </tr>
 
                           </tbody>
-                          {%endif%}
+                        
                           {%endfor%}
 
                           <div class="modal fade" id="mdledit" data-backdrop="static" data-keyboard="false"
@@ -516,7 +510,7 @@
               <div class="card card-fluid">
                 <div class="card-header">
                   Atomobile Companies
-                  <button data-toggle="modal" data-target="#mdlvehiclemakeby"
+                  <button data-toggle="modal" data-target="#mdlvehiclemakeby" 
                     class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
                 </div>
                 <!-- .card-body -->
@@ -565,23 +559,17 @@
                                 aria-label="#" style="width: 0px;">Action</th>
                             </tr>
                           </thead>
-                          {%for value in context.make%}
+                          {%for value in makes %}
                           <tbody>
                             <tr role="row" class="odd">
                               <td class="text-center w-10pc nowrap sorting_1">{{forloop.counter}}</td>
-                              <td>{{value}}</td>
+                              <td>{{value.make}}</td>
                               <td class=" text-center w-10pc nowrap"><span class="badge badge-success">Active</span>
                               </td>
                               <td class="text-center  nowrap w-10pc">
-                                <form method='' action="{{value.id}}">
-
-                                  {% csrf_token %}
-                                  <!-- <a data-toggle="modal" data-target="#mkedit"
-                                    onclick="document.getElementById('makeby1').value = '{{value}}'"
-                                    class="mr-1 btn btn-sm btn-icon btn-secondary" name="edit">
-                                    <i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
-                                  </a> -->
-                                  <a type='submit' href="./{{value}}/make" class="mr-1 btn btn-sm btn-icon btn-secondary"
+                                <form method='POST' action="{{value.id}}/vcat">
+                                  {% csrf_token %}                                 
+                                  <a type='submit' href="./{{value.make}}/make" class="mr-1 btn btn-sm btn-icon btn-secondary"
                                     name="delete">
                                     <i class="fa fa-trash-alt text-danger mt-2" aria-hidden="true"></i>
                                   </a>

@@ -288,7 +288,7 @@
                                                 --
                                              </option>
                                              {%for value in makes %}
-                                             <option value="{{value}}">{{value}}</option>
+                                             <option value="{{value.make}}">{{value.make}}</option>
                                              {%endfor%}
 
                                           </select>
@@ -329,7 +329,7 @@
                                                 --
                                              </option>
                                              {%for value in models %}
-                                             <option value="{{value}}">{{value}}</option>
+                                             <option value="{{value.model}}">{{value.model}}</option>
                                              {%endfor%}
                                           </select>
                                           <input type="text" id="search-select2" class="form-control">

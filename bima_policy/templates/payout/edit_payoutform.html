@@ -137,11 +137,12 @@
 
                                              <option value="" onclick="selectAllItems('vehicle_makeby')">-- select all
                                                 -- </option>
-                                             {%for value in makes %}
-                                             <option value="{{value}}">{{value}}</option>
+                                             {%for value in makes %}                                           
+                                             <option value="{{value.make}}">{{value.make}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
+                                      
                                        <div class="col-md-3 mb-4">
                                           <label>Vehicle Model <abbr title="Required"
                                                 class="text-danger">*</abbr></label>
@@ -151,7 +152,7 @@
                                              <option value="" onclick="selectAllItems('vehicle_model')">-- select all --
                                              </option>
                                              {%for value in models %}
-                                             <option value="{{value}}">{{value}}</option>
+                                             <option value="{{value.model}}">{{value.model}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>

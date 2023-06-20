@@ -205,27 +205,23 @@ class Payout(models.Model):
         super(Payout, self).save(*args, **kwargs)
 
 
-class VehicleMakeBy(models.Model):
-    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
-    ).hex[:6].upper(), editable=False, max_length=30)
-    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
-    company = models.CharField(max_length=100)
+class VehicleMake(models.Model):
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4().hex[:6].upper(), editable=False, max_length=30)   
+    make = models.CharField(max_length=50)
     status = models.CharField(default='Active', max_length=20)
 
     def __str__(self):
-        return self.company
+        return self.make
 
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:6].upper()
-        super(VehicleMakeBy, self).save(*args, **kwargs)
+        super(VehicleMake, self).save(*args, **kwargs)
 
 
-class VehicleModelName(models.Model):
+class VehicleModel(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
-    ).hex[:6].upper(), editable=False, max_length=30)
-    profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
-    model = models.CharField(max_length=100)
-    company = models.CharField(max_length=100)
+    ).hex[:6].upper(), editable=False, max_length=30)   
+    model = models.CharField(max_length=50)   
     status = models.CharField(default='Active', max_length=20)
 
     def __str__(self):
@@ -233,7 +229,7 @@ class VehicleModelName(models.Model):
 
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:6].upper()
-        super(VehicleModelName, self).save(*args, **kwargs)
+        super(VehicleModel, self).save(*args, **kwargs)
 
 
 class VehicleCategory(models.Model):

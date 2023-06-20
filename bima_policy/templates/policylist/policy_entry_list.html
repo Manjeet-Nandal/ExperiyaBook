@@ -2347,11 +2347,11 @@
 
 
    function addVehicleMakes() {
-
+// return
       document.getElementById('filter_content').innerHTML = ''
       add_select_all_option()
 
-      element = document.getElementById('filter_content')
+      element = document.getElementById('filter_content')   
 
       "{{ makes |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
