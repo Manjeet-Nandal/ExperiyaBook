@@ -3,7 +3,7 @@
 {% load static %}
 
 <main class="app-main">
-  
+
    <!-- .app-main -->
    <div class="wrapper">
       <!-- .wrapper -->
@@ -531,266 +531,30 @@
                                  aria-describedby="tblInsurance_info" role="grid">
 
                                  <thead style="border-bottom: inset;">
-                                    <tr role="row" >
-                                       <th class=" text-center sorting thShow" tabindex="0"
-                                       aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 83.2344px;"
-                                       aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
-                                       <th id="thCheck" class="text-center sorting_disabled sorting" tabindex="0"
-                                          aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 30px;"
-                                          aria-label="">
-                                          <input type="checkbox" class="checkbox" id="chkblkrm"
-                                             onchange="selectAllPolicy()" />
-                                       </th>
-
+                                    <tr role="row">
+                                       <th class=" text-center sorting thShow" tabindex="0" aria-controls="tblInsurance"
+                                          rowspan="1" colspan="1" style="width: 83.2344px;"
+                                          aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
                                        <th class="sorting">PolicyID</th>
                                        <th class="sorting thShow">Proposal No.</th>
-                                       <th class="sorting">Policy No. </th>
                                        <th class="sorting thShow">Customer Name</th>
-                                       <th class="sorting  thShow">Insurer Name</th>
-                                       <th class="sorting">Service Provider</th>
-                                       <th class="sorting">Broker Code</th>
-                                       <th class="sorting">Product Name</th>
-                                       <th class="sorting">Registration No.</th>
-                                       <th class="sorting">RTO State</th>
-                                       <th class="sorting">RTO City</th>
-                                       <th class="sorting">Vehicle Makeby </th>
-                                       <th class="sorting">Vehicle Model </th>
-                                       <th class="sorting thShow">Vehicle Catagory </th>
-                                       <th class="sorting">Vehicle Fuel Type</th>
-                                       <th class="sorting">Manufacture Year </th>
-                                       <th class="sorting">Addon</th>
-                                       <th class="sorting">NCB</th>
-                                       <th class="sorting">Cubic Capacity</th>
-                                       <th class="sorting">GVW</th>
-                                       <th class="sorting">Seating Capacity</th>
-                                       <th class="sorting">Coverage Type</th>
-                                       <th class="sorting">Policy Type</th>
-                                       <th class="sorting">CPA</th>
-                                       <th class="sorting">Risk Start Date</th>
-                                       <th class="sorting">Risk End Date</th>
-                                       <th class="sorting">Issue Date</th>
-                                       <th class="sorting">Insured Age</th>
-                                       <th class="sorting">Policy Term</th>
-                                       <th class="sorting">BQP</th>
-                                       <th class="sorting">POS</th>
-                                       <th class="sorting">Employee</th>
-                                       <th class="sorting">Remark</th>
-                                       <th class="sorting thShow">OD Premium</th>
-                                       <th class="sorting thShow">TP / Terrorism</th>
-                                       <th class="sorting thShow">NET Premium</th>
-                                       <th class="sorting thShow">GST 18%</th>
-                                       <th class="sorting thShow">GST 12%</th>
-                                       <th class="sorting thShow">Total</th>
-                                       <th class="sorting">Payment Mode</th>
 
-                                       <th class="sorting thShow">Agent OD Reward %</th>
-                                       <th class="sorting thShow">Agent OD Amount</th>
-                                       <th class="sorting thShow">Agent TP Reward %</th>
-                                       <th class="sorting thShow">Agent TP Amount</th>
-                                       {% if is_user %}
-                                       <th class="sorting thShow">Self OD Reward %</th>
-                                       <th class="sorting thShow">Self OD Amount</th>
-                                       <th class="sorting thShow">Self TP Reward %</th>
-                                       <th class="sorting thShow">Self TP Amount</th>
-                                       {% endif %}
-                                       <th class="sorting">Proposal</th>
-                                       <th class="sorting">Mandate</th>
-                                       <th class="sorting">Policy</th>
-                                       <th class="sorting">Previous Policy</th>
-                                       <th class="sorting">Pan Card</th>
-                                       <th class="sorting">Aadhar Card</th>
-                                       <th class="sorting">Vehicle RC</th>
-                                       <th class="sorting">Inspection Report</th>
-                                       <th class="sorting">Action</th>
                                     </tr>
                                  </thead>
 
-                                 <tbody id="tbdy">                                 
+                                 <tbody id="tbdy">
 
                                     {% for value in data %}
 
-                              
-
-                                    <tr role="row" class="policy-row odd" onclick="highlight(this)" id="tr1">
+                                    <tr role="row" class="odd policy-row" onclick="highlight(this)" id="tr1">
 
                                        <td class="text-center">{{forloop.counter}}</td>
-                                       <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
-                                             id="chkblkrm{{forloop.counter}}" /></td>
 
                                        <td>{{value.policyid}}</td>
                                        <td>{{value.proposal_no}}</td>
-                                       <td>
-                                          <a href="" class="tile tile-img" target="_blank"><i
-                                                class="far fa-file-pdf text-danger mt-1"></i></a>
-                                          <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
-                                             class="">{{value.policy_no}}</a>
-                                       </td>
                                        <td>{{value.customer_name}}</td>
-                                       <td>{{value.insurance_company}}</td>
-                                       <td>{{value.sp_name}}</td>
-                                       <td>{{value.sp_brokercode}}</td>
-                                       <td>{{value.product_name}}</td>
-                                       <td>{{value.registration_no}}</td>
-                                       <td>{{value.rto_state}}</td>
-                                       <td>{{value.rto_city}}</td>
-                                       <td>{{value.vehicle_makeby}}</td>
-                                       <td>{{value.vehicle_model}}</td>
-                                       <td>{{value.vehicle_catagory}}</td>
-                                       <td>{{value.vehicle_fuel_type}}</td>
 
-                                       {% if value.mfg_year%}
-                                       <td>{{value.mfg_year}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       <td>{{value.addon}}</td>
-                                       <td>{{value.ncb}}</td>
-                                       <td>{{value.cubic_capacity}}</td>
-                                       <td>{{value.gvw}}</td>
-
-                                       <!-- Note: Space added because Excel converts 5-7 or 7-12 as date formate -->
-                                       <td>&nbsp;{{value.seating_capacity}}</td>
-
-                                       <td>{{value.coverage_type}}</td>
-                                       <td>{{value.policy_type}}</td>
-                                       <td>{{value.cpa}}</td>
-                                       <td>{{value.risk_start_date}}</td>
-                                       <td>{{value.risk_end_date}}</td>
-                                       <td>{{value.issue_date}}</td>
-
-                                       {% if value.insured_age%}
-                                       <td>{{value.insured_age}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       <td>{{value.policy_term}}</td>
-                                       <td>{{value.bqp}}</td>
-                                       <td>{{value.pos}}</td>
-                                       <td>{{value.employee}}</td>
-                                       <td>{{value.remark}}</td>
-                                       <!-- OD  -->
-
-                                       <td>{{value.OD_premium}}</td>
-
-                                       <td>{{value.TP_terrorism}}</td>
-                                       <td>{{value.net}}</td>
-
-                                       <td>{{value.gst_amount}}</td>
-
-                                       {% if value.gst_gcv_amount %}
-                                       <td>{{ value.gst_gcv_amount }}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       <td>{{value.total}}</td>
-
-                                       <td>{{value.payment_mode}}</td>
-
-                                       {% if value.agent_od_reward%}
-                                       <td>{{value.agent_od_reward}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       {% if value.agent_od_amount%}
-                                       <td>{{value.agent_od_amount}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       {% if value.agent_tp_reward%}
-                                       <td>{{value.agent_tp_reward}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       {% if value.agent_tp_amount%}
-                                       <td>{{value.agent_tp_amount}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       {% if is_user %}
-
-                                       {% if value.self_od_reward%}
-                                       <td>{{value.self_od_reward}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       {% if value.self_od_amount%}
-                                       <td>{{value.self_od_amount}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       {% if value.self_tp_reward%}
-                                       <td>{{value.self_tp_reward}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       {% if value.self_tp_amount%}
-                                       <td>{{value.self_tp_amount}}</td>
-                                       {% else %}
-                                       <td></td>
-                                       {% endif %}
-
-                                       {% endif %}
-
-                                       <td> <a href="#" class="text-black"
-                                             onclick="downloadFile('{{value.proposal}}')">{{value.proposal}}</a> </td>
-                                       <td> <a href="#"
-                                             onclick="downloadFile('{{value.mandate}}')">{{value.mandate}}</a> </td>
-                                       <td> <a href="#" onclick="downloadFile('{{value.policy}}')">{{value.policy}}</a>
-                                       </td>
-                                       <td> <a href="#"
-                                             onclick="downloadFile('{{value.previous_policy}}')">{{value.previous_policy}}</a>
-                                       </td>
-                                       <td> <a href="#"
-                                             onclick="downloadFile('{{value.pan_card}}')">{{value.pan_card}}</a> </td>
-                                       <td> <a href="#"
-                                             onclick="downloadFile('{{value.aadhar_card}}')">{{value.aadhar_card}}</a>
-                                       </td>
-                                       <td> <a href="#"
-                                             onclick="downloadFile('{{value.vehicle_rc}}')">{{value.vehicle_rc}}</a>
-                                       </td>
-                                       <td> <a href="#"
-                                             onclick="downloadFile('{{value.inspection_report}}')">{{value.inspection_report}}</a>
-                                       </td>
-
-                                       <!-- <td> <a href="/media/{{value.proposal}}">{{value.proposal}}</a> </td> -->
-                                       <!-- <td> <a href="/media/{{value.mandate}}">{{value.mandate}}</a> </td> -->
-                                       <!-- <td> <a href="/media/{{value.policy}}">{{value.policy}}</a> </td>
-                                       <td> <a href="/media/{{value.previous_policy}}">{{value.previous_policy}}</a>
-                                       </td>
-                                       <td> <a href="/media/{{value.pan_card}}">{{value.pan_card}}</a> </td>
-                                       <td> <a href="/media/{{value.aadhar_card}}">{{value.aadhar_card}}</a> </td>
-                                       <td> <a href="/media/{{value.vehicle_rc}}">{{value.vehicle_rc}}</a> </td>
-                                       <td> <a href="/media/{{value.inspection_report}}">{{value.inspection_report}}</a>  </td> -->
-
-                                       <td class="text-center">
-                                          <form method="POST">
-                                             {% csrf_token %}
-                                             <a href="/bima_policy/policy/policy_entrydata/{{value.policyid}}"
-                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
-                                                <i class="fa fa-pencil-alt mt-2"></i>
-                                                <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
-                                             </a>
-                                             <a href="/bima_policy/deleted_policy/{{value.policyid}}" name="Remove"
-                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
-                                                <i class="far fa-trash-alt mt-2"></i>
-
-                                                <!-- href="/bima_policy/policy/{{value.policyid}}/delete" -->
-
-                                             </a>
-                                       </td>
                                     </tr>
-
-                                
 
                                     {% endfor %}
 
@@ -799,546 +563,18 @@
                            </div>
                         </div>
                      </div>
-                     
-                     <button class="btn btn-secondary mt-3" style="float: right; color: #FFFFFF; background: #6E11F4; " id="showMoreButton">Show More</button>      
-                  
-                     <div class="col-sm-12 col-md-7 d-flex justify-content-end"
-                        style="align-content: right; margin-left: auto; margin-right: 0;">
-                        <div class="dataTables_paginate paging_simple_numbers" id="tblList_paginate" hidden>
-                           <ul class="pagination justify-content-center " >
-                              {% if data.has_previous %}
-                              <li id="link_one" class="paginate_button page-item active "><a href="?page=1"
-                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link">First</a>
-                              </li>
-                              <li id="link_two" class="paginate_button page-item active"><a
-                                    href="?page={{ data.previous_page_number }}" aria-controls="tblList" data-dt-idx="1"
-                                    tabindex="0" class="page-link"> &laquo; Prev</a></li>
-                              {% endif %}
 
-                              <!-- <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
-                                    data-dt-idx="1" tabindex="0" class="page-link"> Page {{ data.number }} of
-                                    {{data.paginator.num_pages }}.</a></li> -->
+                     <button class="btn btn-secondary mt-3" style="float: right;" id="showMoreButton">Show More</button>                   
+                   
 
-                              <li class="paginate_button page-item active"><a href="#" aria-controls="tblList"
-                                    data-dt-idx="1" tabindex="0" class="page-link">
-                                 </a></li>
 
-                              {% if data.has_next %}
-
-                              <li class="paginate_button page-item active "><a href="?page={{ data.next_page_number }}"
-                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"> Next
-                                    &raquo;</a></li>
-
-                              <li class="paginate_button page-item active "><a
-                                    href="?page={{ data.paginator.num_pages }}" aria-controls="tblList" data-dt-idx="1"
-                                    tabindex="0" class="page-link"> Last &raquo;</a></li>
-
-                              {% endif %}
-
-                              <li hidden id="link_gen" class="paginate_button page-item active "><a href="#"
-                                    aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link"
-                                    onclick="gen_table()">Next Page
-                                 </a></li>
-
-                           </ul>
-
-                        </div>
-                     </div>
-
-                     <!-- /.page-section -->
-                     <div class="modal fade" id="mdlrpolicy" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                        role="dialog" aria-labelledby="mdTitle1" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                           <div class="modal-content">
-                              <div class="modal-header">
-                                 <h5 id="mdTitle1" class="modal-title">Confirmation</h5>
-                              </div>
-                              <div class="modal-body">
-                                 <p><i class="fa fa-question-circle text-red mr-1"></i> Do you want to permanently
-                                    delete selected Insurance?</p>
-                              </div>
-                              <div class="modal-footer">
-                                 <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">No</button>
-                                 <button type="submit" id="remove" class="btn btn-primary w-100p">Yes</button>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="modal fade" id="mdlcpolicy" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                        role="dialog" aria-labelledby="mdTitle2" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                           <div class="modal-content">
-                              <div class="modal-header">
-                                 <h5 id="mdTitle2" class="modal-title">Cancel Policy</h5>
-                              </div>
-                              <form id="frmcancelp" data-parsley-validate="true" novalidate="">
-                                 <div class="modal-body">
-                                    <label>Cancel Remarks<abbr title="Required" class="text-danger">*</abbr></label>
-                                    <textarea class="form-control" data-parsley-required="true"
-                                       id="txtcancel_remakrs"></textarea>
-                                 </div>
-                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary w-100p"
-                                       data-dismiss="modal">No</button>
-                                    <button type="submit" id="cancel" class="btn btn-danger w-100p">Cancel</button>
-                                 </div>
-                              </form>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="modal fade" id="mdlcolsetting" data-backdrop="static" data-keyboard="false"
-                        tabindex="-1" role="dialog" aria-labelledby="rtoModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                           <div class="modal-content">
-                              <div class="modal-header">
-                                 <h5 id="rtoModalLabel" class="modal-title"> Column Setting </h5>
-                              </div>
-                              <div class="modal-body modal-scroll">
-                                 <ul class="disabled pl-0 mb-0">
-                                    <li class="list-group-item disabled  bg-light">
-                                       <i class="fa fa-ban drag-indicator-block"></i>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" checked="">
-                                          <label class="custom-control-label"><small class="text">1)</small> Policy
-                                             No.</label>
-                                       </div>
-                                    </li>
-                                 </ul>
-                                 <ul class="sortable-lists list-group list-group-flush list-group-bordered"
-                                    data-toggle="sortable" data-group="pages">
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="2" value="1" checked="">
-                                          <label class="custom-control-label" for="2"><small class="text">2)</small>
-                                             REGISTRATION</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="REGISTRATION">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="3" value="1" checked="">
-                                          <label class="custom-control-label" for="3"><small class="text">3)</small>
-                                             ISSUE_DATE</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="ISSUE_DATE">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="4" value="1" checked="">
-                                          <label class="custom-control-label" for="4"><small class="text">4)</small>
-                                             RISK_DATE</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="RISK_DATE">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="5" value="1" checked="">
-                                          <label class="custom-control-label" for="5"><small class="text">5)</small>
-                                             POLICY_M</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="POLICY_MADE_BY">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="6" value="1" checked="">
-                                          <label class="custom-control-label" for="6"><small class="text">6)</small>
-                                             CANCEL_REMARKS</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="CANCEL_REMARKS">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="7" value="1" checked="">
-                                          <label class="custom-control-label" for="7"><small class="text">7)</small>
-                                             CUSTOMER</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="CUSTOMER">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="8" value="1" checked="">
-                                          <label class="custom-control-label" for="8"><small class="text">8)</small>
-                                             VEHICLE_CATEGORY</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="VEHICLE_CATEGORY">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="9" value="1" checked="">
-                                          <label class="custom-control-label" for="9"><small class="text">9)</small>
-                                             POLICY_PROVIDER</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="POLICY_PROVIDER">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="10" value="1" checked="">
-                                          <label class="custom-control-label" for="10"><small class="text">10)</small>
-                                             POLICY_PROVIDER_CODE</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="POLICY_PROVIDER_CODE">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="11" value="1" checked="">
-                                          <label class="custom-control-label" for="11"><small class="text">11)</small>
-                                             INSURANCE_COMPANY</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="INSURANCE_COMPANY">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="12" value="0">
-                                          <label class="custom-control-label" for="12"><small class="text">12)</small>
-                                             RTO</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="RTO">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="13" value="1" checked="">
-                                          <label class="custom-control-label" for="13"><small class="text">13)</small>
-                                             POLICY_TYPE</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="POLICY_TYPE">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="14" value="1" checked="">
-                                          <label class="custom-control-label" for="14"><small class="text">14)</small>
-                                             MANUFACTURE_YEAR</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="MANUFACTURE_YEAR">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="15" value="1" checked="">
-                                          <label class="custom-control-label" for="15"><small class="text">15)</small>
-                                             FUEL_TYPE</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="FUEL_TYPE">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="16" value="1" checked="">
-                                          <label class="custom-control-label" for="16"><small class="text">16)</small>
-                                             VEHICLE_OTHER_INFO</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="VEHICLE_OTHER_INFO">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="17" value="1" checked="">
-                                          <label class="custom-control-label" for="17"><small class="text">17)</small>
-                                             OD</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="OD">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="18" value="1" checked="">
-                                          <label class="custom-control-label" for="18"><small class="text">18)</small>
-                                             TP</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="TP">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="19" value="1" checked="">
-                                          <label class="custom-control-label" for="19"><small class="text">19)</small>
-                                             NET</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="NET">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="20" value="1" checked="">
-                                          <label class="custom-control-label" for="20"><small class="text">20)</small>
-                                             GST</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="GST">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="21" value="1" checked="">
-                                          <label class="custom-control-label" for="21"><small class="text">21)</small>
-                                             TOTAL_NET</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="TOTAL_NET">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="22" value="1" checked="">
-                                          <label class="custom-control-label" for="22"><small class="text">22)</small>
-                                             COMM</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="COMM">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="23" value="1" checked="">
-                                          <label class="custom-control-label" for="23"><small class="text">23)</small>
-                                             AGENT</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="AGENT">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="24" value="1" checked="">
-                                          <label class="custom-control-label" for="24"><small class="text">24)</small>
-                                             REMARKS</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="REMARKS">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="25" value="1" checked="">
-                                          <label class="custom-control-label" for="25"><small class="text">25)</small>
-                                             SELF_COMM.</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="SELF_COMM.">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="26" value="1" checked="">
-                                          <label class="custom-control-label" for="26"><small class="text">26)</small>
-                                             CREATED_ON</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="CREATED_ON">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="27" value="1" checked="">
-                                          <label class="custom-control-label" for="27"><small class="text">27)</small>
-                                             CANCEL_ON</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="CANCEL_ON">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="28" value="1" checked="">
-                                          <label class="custom-control-label" for="28"><small class="text">28)</small>
-                                             PREVIOUS_POLICY</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="PREVIOUS_POLICY">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="29" value="1" checked="">
-                                          <label class="custom-control-label" for="29"><small class="text">29)</small>
-                                             VEHICLE_RC</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="VEHICLE_RC">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="30" value="1" checked="">
-                                          <label class="custom-control-label" for="30"><small class="text">30)</small>
-                                             CASE_TYPE</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="CASE_TYPE">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="31" value="1" checked="">
-                                          <label class="custom-control-label" for="31"><small class="text">31)</small>
-                                             CHASIS_NO</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="CHASIS_NO">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="32" value="1" checked="">
-                                          <label class="custom-control-label" for="32"><small class="text">32)</small>
-                                             ENGINE_NO</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="ENGINE_NO">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="33" value="1" checked="">
-                                          <label class="custom-control-label" for="33"><small class="text">33)</small>
-                                             VEHICLE_MAKEBY</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="VEHICLE_MAKEBY">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="34" value="1" checked="">
-                                          <label class="custom-control-label" for="34"><small class="text">34)</small>
-                                             VEHICLE_MODEL</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="VEHICLE_MODEL">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="35" value="1" checked="">
-                                          <label class="custom-control-label" for="35"><small class="text">35)</small>
-                                             CPA</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="CPA">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="36" value="1" checked="">
-                                          <label class="custom-control-label" for="36"><small class="text">36)</small>
-                                             AGENT CALC.</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="AGENT CALC.">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="37" value="1" checked="">
-                                          <label class="custom-control-label" for="37"><small class="text">37)</small>
-                                             SELF_CALC.</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="SELF_CALC.">
-                                    </li>
-                                    <li class="list-group-item align-items-center drag-handle">
-                                       <span class="drag-indicator"></span>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" data-sort="checkbox"
-                                             id="38" value="1" checked="">
-                                          <label class="custom-control-label" for="38"><small class="text">38)</small>
-                                             PAYMENT_MODE</label>
-                                       </div>
-                                       <input type="hidden" class="colval" value="PAYMENT_MODE">
-                                    </li>
-                                 </ul>
-                              </div>
-                              <div class="modal-footer">
-                                 <button type="button" class="btn btn-secondary w-100p"
-                                    data-dismiss="modal">Close</button>
-                                 <button type="button" id="md-ilc-colUpdate"
-                                    class="btn btn-primary w-100p">Save</button>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="modal fade" id="confirm-modal-remove" data-backdrop="static" data-keyboard="false"
-                        tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                           <div class="modal-content">
-                              <div class="modal-header">
-                                 <h5 id="rtoModalLabel" class="modal-title"> Confirmation </h5>
-                              </div>
-                              <div class="modal-body">
-                                 <div id="resbulkremove" class="d-none alert alert-danger">
-                                    select atleast one action for remove
-                                 </div>
-                                 <p>You can also delete some part of the policy form, for that you have to select the
-                                    part from the table given below.</p>
-                                 <table class="table table-bordered">
-                                    <tbody>
-                                       <tr class="bg-light">
-                                          <th colspan="2">Select</th>
-                                       </tr>
-                                       <tr>
-                                          <td>Complete Policy Form</td>
-                                          <td class="text-center"><input class="checkbox" type="checkbox"
-                                                id="chkpolicy_form"></td>
-                                       </tr>
-                                       <tr>
-                                          <td>Previous Policy PDF</td>
-                                          <td class="text-center"><input class="checkbox" type="checkbox"
-                                                data-remove-group="block-r" id="chkprevious_documents"></td>
-                                       </tr>
-                                       <tr>
-                                          <td>Vehicle RC</td>
-                                          <td class="text-center"><input class="checkbox" type="checkbox"
-                                                data-remove-group="block-r" id="chkvehicle_rc"></td>
-                                       </tr>
-                                    </tbody>
-                                 </table>
-                              </div>
-                              <div class="modal-footer">
-                                 <button type="button" class="btn btn-secondary w-100p"
-                                    data-dismiss="modal">Close</button>
-                                 <button type="button" id="mdlbtnblkremove"
-                                    class="btn bg-red text-white w-100p">Remove</button>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
                   </div>
                   <!-- /.page-inner -->
                </div>
                <!-- /.page -->
             </div>
             <!-- /.wrapper -->
-         
+
 </main>
 <!-- /.app-main -->
 <div class="aside-backdrop"></div>
@@ -1557,12 +793,12 @@
       row.classList.toggle("selectedRow");
 
       var anchorTag = row.getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
-    
+
       if (anchorTag) {
          for (const iterator of anchorTag) {
-            
-            iterator.style.color = "white"          
-         }        
+
+            iterator.style.color = "white"
+         }
       }
    }
 
@@ -1582,11 +818,11 @@
          rows[i].style.color = "black";
 
          var anchorTag = rows[i].getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
-    
+
          if (anchorTag) {
-            for (const iterator of anchorTag) {               
-               iterator.style.color = "black"          
-            }        
+            for (const iterator of anchorTag) {
+               iterator.style.color = "black"
+            }
          }
       }
    }
@@ -2358,11 +1594,11 @@
 
 
    function addVehicleMakes() {
-// return
+      // return
       document.getElementById('filter_content').innerHTML = ''
       add_select_all_option()
 
-      element = document.getElementById('filter_content')   
+      element = document.getElementById('filter_content')
 
       "{{ makes |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
@@ -2414,10 +1650,11 @@
 
 </script>
 
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
    $(document).ready(function () {
-      var numRowsToShow = 10; // Number of rows to show per click
+      var numRowsToShow = 5; // Number of rows to show per click
       var rows = $('.policy-row'); // Select all rows with the CSS class
 
       // Hide all rows initially except for the first 'numRowsToShow' rows
@@ -2425,9 +1662,6 @@
 
       // Button click event handler
       $('#showMoreButton').click(function () {
-
-         event.preventDefault(); // Prevent the default form submission behavior
-
          // Get the hidden rows within the current visible range
          var hiddenRows = rows.filter(':hidden').slice(0, numRowsToShow);
 

@@ -2597,16 +2597,14 @@ def policy_entry(request):
 
         if is_user(request):
             # data = Policy.objects.order_by('-policyid').values()[:25].all()
-            # data = Policy.objects.order_by('-created_at')[:25].all()
-            pass
-
+            data = Policy.objects.order_by('-created_at')[:500].all()
+        
         else:
             # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()[:25].all()
-            # data = Policy.objects.order_by('-created_at').all()
-            pass
-
-        data = Policy.objects.order_by('-created_at')[:10].all()
-
+            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at').all()    
+        
+        # print(Policy.objects.order_by('-created_at').count())
+        # data = Policy.objects.order_by('-created_at')
         # policyid_list = []
         # for item in data:
         #     policyid_list.append(item['policyid'])
@@ -2620,7 +2618,7 @@ def policy_entry(request):
             "data": data,
             # "policyid_list": policyid_list,
             "is_user": is_user(request),
-            "user_name": get_user_name(request),
+            "user_name": get_user_name(request)           
         }
 
         return render(request, 'policylist/policy_entry_list.html', context)
