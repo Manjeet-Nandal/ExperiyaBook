@@ -794,8 +794,11 @@
                         </div>
                      </div>
 
-                     <button id="showMoreButton" onclick="fetchData()" class="btn btn-secondary mt-3"
-                        style="float: right; color: #FFFFFF; background: #6E11F4; ">Show More</button>
+                     <button id="nextButton" onclick="nextRecords()" class="btn btn-secondary mt-3"
+                        style="float: right; color: #FFFFFF; background: #6E11F4; ">Next</button>
+
+                     <button id="pevButton" onclick="prevRecords()" class="btn btn-secondary mt-3" hidden
+                        style="float: right; color: #FFFFFF; background: #6E11F4; ">Back</button>
 
                      <div class="col-sm-12 col-md-7 d-flex justify-content-end"
                         style="align-content: right; margin-left: auto; margin-right: 0;">
@@ -2415,154 +2418,61 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
 <script>
-   recordsList = []
-   lastIndex = 0;
-
-   var start = 0;
-   var currentIndex = 0
+   recordsList = []  // recordsList holds fetched data 
+   startIndex = 0;   // startIndex / endIndex is used to render records from recordsList[]
+   endIndex = 5;     // startIndex / endIndex is used to render records from recordsList[]
 
    function fetchData() {
 
       event.preventDefault()
 
-      if (currentIndex > 0) {
-         // alert(currentIndex)
-         if (currentIndex -1 === recordsList.length) {
-            alert('No more records!')
-            return
-         }
-         renderRows(currentIndex)
-         return
-      }
-    
-      currentIndex = 1
-
-      // AJAX request to fetch the next set of records
       $.ajax({
-
          url: "{%url 'bima_policy:fetch_records'%}",
-         data: { start_index: start },
+         // data: { start_index: startIndex },
          dataType: 'json',
          success: function (response) {
-            var records = response.records;
-            // console.log(records);
-            recordsList = records
-            console.log('');
-            console.log(recordsList);
-            // Get the table body element
-            // tableBody = $('#tbdy');
-
-            // Iterate over the fetched records and render them
-            for (var i = 0; i < 5; i++) {
-               var record = recordsList[i];
-               console.log(record);
-               // Render the record data within the table body
-               var recordHtml = '<tr   >' +
-                  '<td class="text-center" > ' + currentIndex + '</td>' +
-                  '<td >' + record.proposal_no + '</td>' +
-                  `<td > <a href="" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="/bima_policy/policy/policy_entrydata/${record.policyid}" class=""> ${record.policy_no}</a> </td>` +
-                  '<td >' + record.customer_name + '</td>' +
-                  '<td >' + record.insurance_company + '</td>' +
-                  '<td >' + record.sp_name + '</td>' +
-                  '<td >' + record.sp_brokercode + '</td>' +
-                  '<td >' + record.product_name + '</td>' +
-                  '<td >' + record.registration_no + '</td>' +
-                  '<td >' + record.rto_state + '</td>' +
-                  '<td >' + record.rto_city + '</td>' +
-                  '<td >' + record.vehicle_makeby + '</td>' +
-                  '<td >' + record.vehicle_model + '</td>' +
-                  '<td >' + record.vehicle_catagory + '</td>' +
-                  '<td >' + record.vehicle_fuel_type + '</td>' +
-                  '<td >' + record.mfg_year + '</td>' +
-
-                  '<td >' + record.addon + '</td>' +
-                  '<td >' + record.ncb + '</td>' +
-                  '<td >' + record.cubic_capacity + '</td>' +
-                  '<td >' + record.gvw + '</td>' +
-                  '<td >' + record.seating_capacity + '</td>' +
-                  '<td >' + record.coverage_type + '</td>' +
-                  '<td >' + record.policy_type + '</td>' +
-                  '<td >' + record.cpa + '</td>' +
-                  '<td >' + record.risk_start_date + '</td>' +
-                  '<td >' + record.risk_end_date + '</td>' +
-                  '<td >' + record.issue_date + '</td>' +
-
-                  '<td >' + record.insured_age + '</td>' +
-                  '<td >' + record.policy_term + '</td>' +
-                  '<td >' + record.bqp + '</td>' +
-                  '<td >' + record.pos + '</td>' +
-                  '<td >' + record.employee + '</td>' +
-                  '<td >' + record.remark + '</td>' +
-
-                  '<td >' + record.OD_premium + '</td>' +
-                  '<td >' + record.TP_terrorism + '</td>' +
-                  '<td >' + record.net + '</td>' +
-                  '<td >' + record.gst_amount + '</td>' +
-                  '<td >' + record.gst_gcv_amount + '</td>' +
-                  '<td >' + record.total + '</td>' +
-                  '<td >' + record.payment_mode + '</td>' +
-
-                  '<td >' + record.agent_od_reward + '</td>' +
-                  '<td >' + record.agent_od_amount + '</td>' +
-                  '<td >' + record.agent_tp_reward + '</td>' +
-                  '<td >' + record.agent_tp_amount + '</td>' +
-
-                  '<td >' + record.self_od_reward + '</td>' +
-                  '<td >' + record.self_od_amount + '</td>' +
-                  '<td >' + record.self_tp_reward + '</td>' +
-                  '<td >' + record.self_tp_amount + '</td>' +
-
-                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.proposal}')">${record.proposal}</a> </td>` +
-                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.mandate}')">${record.mandate}</a> </td>` +
-                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.policy}')">${record.policy}</a> </td>` +
-                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.previous_policy}')">${record.previous_policy}</a> </td>` +
-                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>` +
-                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>` +
-                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.vehicle_rc}')">${record.vehicle_rc}</a> </td>` +
-                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>` +
-
-                  `<td class="text-center"> <form method="POST">   {% csrf_token %}
-                                             <a href="/bima_policy/policy/policy_entrydata/${record.policyid}"
-                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
-                                                <i class="fa fa-pencil-alt mt-2"></i>                                               
-                                             </a>
-                                             <a href="/bima_policy/deleted_policy/${record.policyid}" name="Remove"
-                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
-                                                <i class="far fa-trash-alt mt-2"></i> 
-                                             </a>
-                                       </td>`
-               '</tr>';
-               tableBody.append(recordHtml);
-
-               currentIndex++;
-               start += i;
-            }
-
-            // Scroll to the bottom of the newly displayed rows
-            $('html, body').animate({ scrollTop: $('#showMoreButton').offset().top }, 1);
+            recordsList = response.records;           
+            renderRows(startIndex, endIndex)
          },
          error: function (xhr, status, error) {
             console.error(error);
+            alert(error.toString())
          }
       });
 
    }
-   tableBody = $('#tbdy');
 
-   function renderRows() {
-      let start_index = currentIndex -1
-      let end_index = start_index + 5
+   function nextRecords() {
 
-      document.getElementById('tbdy').innerHTML = ''
-      
-      for (var i = start_index; i < end_index; i++) {
-         var record = recordsList[i];
-         // console.log(record);
-         // Render the record data within the table body
-         var recordHtml = '<tr   >' +
-            '<td class="text-center" > ' + currentIndex + '</td>' +
+      startIndex = endIndex;
+      endIndex = startIndex + 5
+      renderRows(startIndex, endIndex)
+   }
+
+   function prevRecords() {
+
+      startIndex = startIndex - 5;
+      endIndex = startIndex + 5
+      renderRows(startIndex, endIndex)
+   }
+
+   function renderRows(startIndex, endIndex) {
+
+      console.log('start index: ' + startIndex);
+      console.log('end index: ' + endIndex);
+
+      let srNo = startIndex + 1
+
+      let tableBody = $('#tbdy');
+      tableBody.empty()
+
+      for (var i = startIndex; i < endIndex; i++) {
+
+         record = recordsList[i];
+
+         recordHtml = '<tr   >' +
+            '<td class="text-center" > ' + srNo + '</td>' +
             '<td >' + record.proposal_no + '</td>' +
             `<td > <a href="" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="/bima_policy/policy/policy_entrydata/${record.policyid}" class=""> ${record.policy_no}</a> </td>` +
             '<td >' + record.customer_name + '</td>' +
@@ -2626,22 +2536,26 @@
             `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>` +
 
             `<td class="text-center"> <form method="POST">   {% csrf_token %}
-                                             <a href="/bima_policy/policy/policy_entrydata/${record.policyid}"
-                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
-                                                <i class="fa fa-pencil-alt mt-2"></i>                                               
-                                             </a>
-                                             <a href="/bima_policy/deleted_policy/${record.policyid}" name="Remove"
-                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
-                                                <i class="far fa-trash-alt mt-2"></i> 
-                                             </a>
-                                       </td>`
-         '</tr>';
+                  <a href="/bima_policy/policy/policy_entrydata/${record.policyid}"
+                     class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+                     <i class="fa fa-pencil-alt mt-2"></i>                                               
+                  </a>
+                  <a href="/bima_policy/deleted_policy/${record.policyid}" name="Remove"
+                     class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+                     <i class="far fa-trash-alt mt-2"></i> 
+                  </a>
+            </td>`
+
+            '</tr>';
 
          tableBody.append(recordHtml);
 
-         currentIndex++;
-         // start_index += i;
+         srNo++;
       }
+
+      if (startIndex < 1) document.getElementById('pevButton').hidden = true
+
+      else document.getElementById('pevButton').hidden = false
 
    }
 
@@ -2650,4 +2564,5 @@
 <body onload="fetchData()">
 
 </body>
+
 {%endblock%}

@@ -50,12 +50,13 @@ def dashboard(request):
     spcount = ServiceProvider.objects.count()
     if is_user(request):
         policycount = Policy.objects.count()
-    else:      
-        print( get_id_from_session(request))
+    else:
+        print(get_id_from_session(request))
 
-        policycount = Policy.objects.filter(employee=get_id_from_session(request)).count()
-   
-    print('total policycount :', policycount)     
+        policycount = Policy.objects.filter(
+            employee=get_id_from_session(request)).count()
+
+    print('total policycount :', policycount)
 
     return render(request, 'dashboard.html', {'agentcount': agentcount, 'staffcount': staffcount, 'spcount': spcount, 'totalpolicy': policycount})
 
@@ -74,23 +75,26 @@ def add_vehicles_data():
             VehicleModel.objects.create(model=line.strip())
     print('added')
 
+
 def update_employee():
     return
     print('update_employee calling: ')
 
-    print(Policy.objects.filter(employee = 'PANKAJ').count())   
-    print(Policy.objects.filter(employee = 'NEERAJ').count())   
-    print(Policy.objects.filter(employee = 'SHABNAM').count())   
-    print(Policy.objects.filter(employee = 'NISHA').count())   
+    print(Policy.objects.filter(employee='PANKAJ').count())
+    print(Policy.objects.filter(employee='NEERAJ').count())
+    print(Policy.objects.filter(employee='SHABNAM').count())
+    print(Policy.objects.filter(employee='NISHA').count())
 
-    # emp_data = Policy.objects.filter(employee = 'PANKAJ').update(employee = '6081E03886')  
-    # emp_data = Policy.objects.filter(employee = 'NEERAJ').update(employee = '8EBF59D741')   
-    # emp_data = Policy.objects.filter(employee = 'SHABNAM').update(employee = '1B98AFA2BF')   
+    # emp_data = Policy.objects.filter(employee = 'PANKAJ').update(employee = '6081E03886')
+    # emp_data = Policy.objects.filter(employee = 'NEERAJ').update(employee = '8EBF59D741')
+    # emp_data = Policy.objects.filter(employee = 'SHABNAM').update(employee = '1B98AFA2BF')
     # emp_data = Policy.objects.filter(employee = 'NISHA').update(employee = 'A0A954D4DD')
 
     print('done')
 
 # LoginView
+
+
 def login_form(request):
     return render(request, 'login.html')
 
@@ -711,7 +715,8 @@ def vehicle_view(request):
 
         p = ProfileModel.objects.get(id=get_id_from_session(request))
         if 'mb_add' in request.POST:
-            VehicleMake.objects.create(make=request.POST['makeby'], status=request.POST['mbstatus'])
+            VehicleMake.objects.create(
+                make=request.POST['makeby'], status=request.POST['mbstatus'])
             return redirect('bima_policy:vehi')
         elif 'vm_add' in request.POST:
             VehicleModel.objects.create(
@@ -2598,13 +2603,13 @@ def policy_entry(request):
         if is_user(request):
             # data = Policy.objects.order_by('-policyid').values()[:25].all()
             # data = Policy.objects.order_by('-created_at')[:10].all()
-           pass
-        
+            pass
+
         else:
             # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()[:25].all()
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at').all()    
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at').all()
             pass
-        
+
         # print(Policy.objects.order_by('-created_at').count())
         # data = Policy.objects.order_by('-created_at')
         # policyid_list = []
@@ -2620,7 +2625,7 @@ def policy_entry(request):
             # "data": data,
             # "policyid_list": policyid_list,
             "is_user": is_user(request),
-            "user_name": get_user_name(request)           
+            "user_name": get_user_name(request)
         }
 
         return render(request, 'policylist/policy_entry_list.html', context)
@@ -5576,14 +5581,10 @@ def fetch_recordss(request):
     return JsonResponse({'records': list(records)})
 
 
-def fetch_records(request):
-    print('')
-    print('fetch calling ')
-    start_index = int(request.GET.get('start_index', 0))
-    end_index = start_index + 10
-    # data = Policy.objects.all()
-    records = Policy.objects.order_by('-created_at').values() 
-    # records = data[start_index:end_index].values()    
-    print(records.__len__()  )
-
-    return JsonResponse({'records': list(records)})
+def fetch_records(request):  
+    print('\nfetch calling ')   
+    if is_user(request):
+        records = Policy.objects.order_by('-created_at').values() 
+    else:
+        records = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-created_at').values()         
+    return JsonResponse({'records': list( records)})
