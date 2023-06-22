@@ -5567,20 +5567,6 @@ def send_otp_via_twilio(to, otp):
 
 # data = Policy.objects.order_by('-created_at')
 
-def fetch_recordss(request):
-    print('')
-    print('fetch calling ')
-    start_index = int(request.GET.get('start_index', 0))
-    end_index = start_index + 10
-    # data = Policy.objects.all()
-    data = Policy.objects.order_by('-created_at')
-    # Assuming you have your queryset stored in the variable 'my_queryset'
-    records = data[start_index:end_index].values()
-    # print(records   )
-
-    return JsonResponse({'records': list(records)})
-
-
 def fetch_records(request):  
     print('\nfetch calling ')   
     if is_user(request):
