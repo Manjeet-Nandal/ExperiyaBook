@@ -2597,11 +2597,13 @@ def policy_entry(request):
 
         if is_user(request):
             # data = Policy.objects.order_by('-policyid').values()[:25].all()
-            data = Policy.objects.order_by('-created_at')[:500].all()
+            # data = Policy.objects.order_by('-created_at')[:10].all()
+           pass
         
         else:
             # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()[:25].all()
-            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at').all()    
+            # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at').all()    
+            pass
         
         # print(Policy.objects.order_by('-created_at').count())
         # data = Policy.objects.order_by('-created_at')
@@ -2615,7 +2617,7 @@ def policy_entry(request):
             "vehicle_categories": vehicle_categories,
             "makes": makes,
             "models": models,
-            "data": data,
+            # "data": data,
             # "policyid_list": policyid_list,
             "is_user": is_user(request),
             "user_name": get_user_name(request)           
@@ -5556,3 +5558,32 @@ def send_otp_via_twilio(to, otp):
     #     to=to
     # )
     # return message.sid
+
+
+# data = Policy.objects.order_by('-created_at')
+
+def fetch_recordss(request):
+    print('')
+    print('fetch calling ')
+    start_index = int(request.GET.get('start_index', 0))
+    end_index = start_index + 10
+    # data = Policy.objects.all()
+    data = Policy.objects.order_by('-created_at')
+    # Assuming you have your queryset stored in the variable 'my_queryset'
+    records = data[start_index:end_index].values()
+    # print(records   )
+
+    return JsonResponse({'records': list(records)})
+
+
+def fetch_records(request):
+    print('')
+    print('fetch calling ')
+    start_index = int(request.GET.get('start_index', 0))
+    end_index = start_index + 10
+    # data = Policy.objects.all()
+    records = Policy.objects.order_by('-created_at').values() 
+    # records = data[start_index:end_index].values()    
+    print(records.__len__()  )
+
+    return JsonResponse({'records': list(records)})

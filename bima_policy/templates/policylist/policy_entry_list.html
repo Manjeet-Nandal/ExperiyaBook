@@ -3,7 +3,7 @@
 {% load static %}
 
 <main class="app-main">
-  
+
    <!-- .app-main -->
    <div class="wrapper">
       <!-- .wrapper -->
@@ -531,20 +531,20 @@
                                  aria-describedby="tblInsurance_info" role="grid">
 
                                  <thead style="border-bottom: inset;">
-                                    <tr role="row" >
-                                       <th class=" text-center sorting thShow" tabindex="0"
-                                       aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 83.2344px;"
-                                       aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
-                                       <th id="thCheck" class="text-center sorting_disabled sorting" tabindex="0"
+                                    <tr role="row">
+                                       <th class=" text-center sorting thShow" tabindex="0" aria-controls="tblInsurance"
+                                          rowspan="1" colspan="1" style="width: 83.2344px;"
+                                          aria-label="Sr.No.: activate to sort column ascending">Sr.No.</th>
+                                       <!-- <th id="thCheck" class="text-center sorting_disabled sorting" tabindex="0"
                                           aria-controls="tblInsurance" rowspan="1" colspan="1" style="width: 30px;"
                                           aria-label="">
                                           <input type="checkbox" class="checkbox" id="chkblkrm"
                                              onchange="selectAllPolicy()" />
-                                       </th>
+                                       </th> -->
 
-                                       <th class="sorting">PolicyID</th>
+                                       <!-- <th class="sorting">PolicyID</th> -->
                                        <th class="sorting thShow">Proposal No.</th>
-                                       <th class="sorting">Policy No. </th>
+                                       <th class="sorting text-center">Policy No. </th>
                                        <th class="sorting thShow">Customer Name</th>
                                        <th class="sorting  thShow">Insurer Name</th>
                                        <th class="sorting">Service Provider</th>
@@ -605,13 +605,10 @@
                                     </tr>
                                  </thead>
 
-                                 <tbody id="tbdy">                                 
+                                 <tbody id="tbdy">
 
-                                    {% for value in data %}
-
-                              
-
-                                    <tr role="row" class="policy-row odd" onclick="highlight(this)" id="tr1">
+                                    <!-- {% for value in data %}                              -->
+                                    <tr hidden role="row" class="policy-row odd" onclick="highlight(this)" id="tr1">
 
                                        <td class="text-center">{{forloop.counter}}</td>
                                        <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
@@ -789,23 +786,21 @@
                                              </a>
                                        </td>
                                     </tr>
-
-                                
-
-                                    {% endfor %}
+                                    <!-- {% endfor %} -->
 
                                  </tbody>
                               </table>
                            </div>
                         </div>
                      </div>
-                     
-                     <button class="btn btn-secondary mt-3" style="float: right; color: #FFFFFF; background: #6E11F4; " id="showMoreButton">Show More</button>      
-                  
+
+                     <button id="showMoreButton" onclick="fetchData()" class="btn btn-secondary mt-3"
+                        style="float: right; color: #FFFFFF; background: #6E11F4; ">Show More</button>
+
                      <div class="col-sm-12 col-md-7 d-flex justify-content-end"
                         style="align-content: right; margin-left: auto; margin-right: 0;">
                         <div class="dataTables_paginate paging_simple_numbers" id="tblList_paginate" hidden>
-                           <ul class="pagination justify-content-center " >
+                           <ul class="pagination justify-content-center ">
                               {% if data.has_previous %}
                               <li id="link_one" class="paginate_button page-item active "><a href="?page=1"
                                     aria-controls="tblList" data-dt-idx="1" tabindex="0" class="page-link">First</a>
@@ -1323,6 +1318,7 @@
                                     </tbody>
                                  </table>
                               </div>
+                              <button id="load-more-btn">Load More</button>
                               <div class="modal-footer">
                                  <button type="button" class="btn btn-secondary w-100p"
                                     data-dismiss="modal">Close</button>
@@ -1338,7 +1334,7 @@
                <!-- /.page -->
             </div>
             <!-- /.wrapper -->
-         
+
 </main>
 <!-- /.app-main -->
 <div class="aside-backdrop"></div>
@@ -1476,17 +1472,19 @@
    var returned_index = 0
 
    function load_values() {
-      pids = "{{policyid_list|safe}}".replace('[', '').replace(']', '').split(',')
-      console.log('res ' + pids);
+      // pids = "{{policyid_list|safe}}".replace('[', '').replace(']', '').split(',')
+      // console.log('res ' + pids);
 
-      pids.forEach(element => {
-         console.log(element.replace("'", "").replace("'", "").trim())
-         policyid_list.push(element.replace("'", "").replace("'", "").trim())
-      });
+      // pids.forEach(element => {
+      //    console.log(element.replace("'", "").replace("'", "").trim())
+      //    policyid_list.push(element.replace("'", "").replace("'", "").trim())
+      // });
 
-      policies = "{{ policies | safe }}"
+      // policies = "{{ policies | safe }}"
 
-      console.log(policies);
+      // console.log(policies);
+
+      // document.getElementById('showMoreButton2').click()
 
    }
 
@@ -1557,12 +1555,12 @@
       row.classList.toggle("selectedRow");
 
       var anchorTag = row.getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
-    
+
       if (anchorTag) {
          for (const iterator of anchorTag) {
-            
-            iterator.style.color = "white"          
-         }        
+
+            iterator.style.color = "white"
+         }
       }
    }
 
@@ -1582,11 +1580,11 @@
          rows[i].style.color = "black";
 
          var anchorTag = rows[i].getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
-    
+
          if (anchorTag) {
-            for (const iterator of anchorTag) {               
-               iterator.style.color = "black"          
-            }        
+            for (const iterator of anchorTag) {
+               iterator.style.color = "black"
+            }
          }
       }
    }
@@ -2358,11 +2356,11 @@
 
 
    function addVehicleMakes() {
-// return
+      // return
       document.getElementById('filter_content').innerHTML = ''
       add_select_all_option()
 
-      element = document.getElementById('filter_content')   
+      element = document.getElementById('filter_content')
 
       "{{ makes |safe}}".replace('[', '').replace(']', '').split(',')
          .forEach(item => {
@@ -2412,43 +2410,244 @@
 
    }
 
+
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <script>
-   $(document).ready(function () {
-      var numRowsToShow = 10; // Number of rows to show per click
-      var rows = $('.policy-row'); // Select all rows with the CSS class
+   recordsList = []
+   lastIndex = 0;
 
-      // Hide all rows initially except for the first 'numRowsToShow' rows
-      rows.slice(numRowsToShow).hide();
+   var start = 0;
+   var currentIndex = 0
 
-      // Button click event handler
-      $('#showMoreButton').click(function () {
+   function fetchData() {
 
-         event.preventDefault(); // Prevent the default form submission behavior
+      event.preventDefault()
 
-         // Get the hidden rows within the current visible range
-         var hiddenRows = rows.filter(':hidden').slice(0, numRowsToShow);
-
-         // Show the hidden rows
-         hiddenRows.show();
-
-         // Check if there are no more hidden rows
-         if (hiddenRows.length === 0) {
-            $('#showMoreButton').hide(); // Hide the button if no more hidden rows
+      if (currentIndex > 0) {
+         // alert(currentIndex)
+         if (currentIndex -1 === recordsList.length) {
+            alert('No more records!')
+            return
          }
+         renderRows(currentIndex)
+         return
+      }
+    
+      currentIndex = 1
 
-         // Scroll to the bottom of the newly displayed rows
-         $('html, body').animate({ scrollTop: $('#showMoreButton').offset().top }, 1);
+      // AJAX request to fetch the next set of records
+      $.ajax({
+
+         url: "{%url 'bima_policy:fetch_records'%}",
+         data: { start_index: start },
+         dataType: 'json',
+         success: function (response) {
+            var records = response.records;
+            // console.log(records);
+            recordsList = records
+            console.log('');
+            console.log(recordsList);
+            // Get the table body element
+            // tableBody = $('#tbdy');
+
+            // Iterate over the fetched records and render them
+            for (var i = 0; i < 5; i++) {
+               var record = recordsList[i];
+               console.log(record);
+               // Render the record data within the table body
+               var recordHtml = '<tr   >' +
+                  '<td class="text-center" > ' + currentIndex + '</td>' +
+                  '<td >' + record.proposal_no + '</td>' +
+                  `<td > <a href="" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="/bima_policy/policy/policy_entrydata/${record.policyid}" class=""> ${record.policy_no}</a> </td>` +
+                  '<td >' + record.customer_name + '</td>' +
+                  '<td >' + record.insurance_company + '</td>' +
+                  '<td >' + record.sp_name + '</td>' +
+                  '<td >' + record.sp_brokercode + '</td>' +
+                  '<td >' + record.product_name + '</td>' +
+                  '<td >' + record.registration_no + '</td>' +
+                  '<td >' + record.rto_state + '</td>' +
+                  '<td >' + record.rto_city + '</td>' +
+                  '<td >' + record.vehicle_makeby + '</td>' +
+                  '<td >' + record.vehicle_model + '</td>' +
+                  '<td >' + record.vehicle_catagory + '</td>' +
+                  '<td >' + record.vehicle_fuel_type + '</td>' +
+                  '<td >' + record.mfg_year + '</td>' +
+
+                  '<td >' + record.addon + '</td>' +
+                  '<td >' + record.ncb + '</td>' +
+                  '<td >' + record.cubic_capacity + '</td>' +
+                  '<td >' + record.gvw + '</td>' +
+                  '<td >' + record.seating_capacity + '</td>' +
+                  '<td >' + record.coverage_type + '</td>' +
+                  '<td >' + record.policy_type + '</td>' +
+                  '<td >' + record.cpa + '</td>' +
+                  '<td >' + record.risk_start_date + '</td>' +
+                  '<td >' + record.risk_end_date + '</td>' +
+                  '<td >' + record.issue_date + '</td>' +
+
+                  '<td >' + record.insured_age + '</td>' +
+                  '<td >' + record.policy_term + '</td>' +
+                  '<td >' + record.bqp + '</td>' +
+                  '<td >' + record.pos + '</td>' +
+                  '<td >' + record.employee + '</td>' +
+                  '<td >' + record.remark + '</td>' +
+
+                  '<td >' + record.OD_premium + '</td>' +
+                  '<td >' + record.TP_terrorism + '</td>' +
+                  '<td >' + record.net + '</td>' +
+                  '<td >' + record.gst_amount + '</td>' +
+                  '<td >' + record.gst_gcv_amount + '</td>' +
+                  '<td >' + record.total + '</td>' +
+                  '<td >' + record.payment_mode + '</td>' +
+
+                  '<td >' + record.agent_od_reward + '</td>' +
+                  '<td >' + record.agent_od_amount + '</td>' +
+                  '<td >' + record.agent_tp_reward + '</td>' +
+                  '<td >' + record.agent_tp_amount + '</td>' +
+
+                  '<td >' + record.self_od_reward + '</td>' +
+                  '<td >' + record.self_od_amount + '</td>' +
+                  '<td >' + record.self_tp_reward + '</td>' +
+                  '<td >' + record.self_tp_amount + '</td>' +
+
+                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.proposal}')">${record.proposal}</a> </td>` +
+                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.mandate}')">${record.mandate}</a> </td>` +
+                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.policy}')">${record.policy}</a> </td>` +
+                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.previous_policy}')">${record.previous_policy}</a> </td>` +
+                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>` +
+                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>` +
+                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.vehicle_rc}')">${record.vehicle_rc}</a> </td>` +
+                  `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>` +
+
+                  `<td class="text-center"> <form method="POST">   {% csrf_token %}
+                                             <a href="/bima_policy/policy/policy_entrydata/${record.policyid}"
+                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+                                                <i class="fa fa-pencil-alt mt-2"></i>                                               
+                                             </a>
+                                             <a href="/bima_policy/deleted_policy/${record.policyid}" name="Remove"
+                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+                                                <i class="far fa-trash-alt mt-2"></i> 
+                                             </a>
+                                       </td>`
+               '</tr>';
+               tableBody.append(recordHtml);
+
+               currentIndex++;
+               start += i;
+            }
+
+            // Scroll to the bottom of the newly displayed rows
+            $('html, body').animate({ scrollTop: $('#showMoreButton').offset().top }, 1);
+         },
+         error: function (xhr, status, error) {
+            console.error(error);
+         }
       });
-   });
+
+   }
+   tableBody = $('#tbdy');
+
+   function renderRows() {
+      let start_index = currentIndex -1
+      let end_index = start_index + 5
+
+      document.getElementById('tbdy').innerHTML = ''
+      
+      for (var i = start_index; i < end_index; i++) {
+         var record = recordsList[i];
+         // console.log(record);
+         // Render the record data within the table body
+         var recordHtml = '<tr   >' +
+            '<td class="text-center" > ' + currentIndex + '</td>' +
+            '<td >' + record.proposal_no + '</td>' +
+            `<td > <a href="" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="/bima_policy/policy/policy_entrydata/${record.policyid}" class=""> ${record.policy_no}</a> </td>` +
+            '<td >' + record.customer_name + '</td>' +
+            '<td >' + record.insurance_company + '</td>' +
+            '<td >' + record.sp_name + '</td>' +
+            '<td >' + record.sp_brokercode + '</td>' +
+            '<td >' + record.product_name + '</td>' +
+            '<td >' + record.registration_no + '</td>' +
+            '<td >' + record.rto_state + '</td>' +
+            '<td >' + record.rto_city + '</td>' +
+            '<td >' + record.vehicle_makeby + '</td>' +
+            '<td >' + record.vehicle_model + '</td>' +
+            '<td >' + record.vehicle_catagory + '</td>' +
+            '<td >' + record.vehicle_fuel_type + '</td>' +
+            '<td >' + record.mfg_year + '</td>' +
+
+            '<td >' + record.addon + '</td>' +
+            '<td >' + record.ncb + '</td>' +
+            '<td >' + record.cubic_capacity + '</td>' +
+            '<td >' + record.gvw + '</td>' +
+            '<td >' + record.seating_capacity + '</td>' +
+            '<td >' + record.coverage_type + '</td>' +
+            '<td >' + record.policy_type + '</td>' +
+            '<td >' + record.cpa + '</td>' +
+            '<td >' + record.risk_start_date + '</td>' +
+            '<td >' + record.risk_end_date + '</td>' +
+            '<td >' + record.issue_date + '</td>' +
+
+            '<td >' + record.insured_age + '</td>' +
+            '<td >' + record.policy_term + '</td>' +
+            '<td >' + record.bqp + '</td>' +
+            '<td >' + record.pos + '</td>' +
+            '<td >' + record.employee + '</td>' +
+            '<td >' + record.remark + '</td>' +
+
+            '<td >' + record.OD_premium + '</td>' +
+            '<td >' + record.TP_terrorism + '</td>' +
+            '<td >' + record.net + '</td>' +
+            '<td >' + record.gst_amount + '</td>' +
+            '<td >' + record.gst_gcv_amount + '</td>' +
+            '<td >' + record.total + '</td>' +
+            '<td >' + record.payment_mode + '</td>' +
+
+            '<td >' + record.agent_od_reward + '</td>' +
+            '<td >' + record.agent_od_amount + '</td>' +
+            '<td >' + record.agent_tp_reward + '</td>' +
+            '<td >' + record.agent_tp_amount + '</td>' +
+
+            '<td >' + record.self_od_reward + '</td>' +
+            '<td >' + record.self_od_amount + '</td>' +
+            '<td >' + record.self_tp_reward + '</td>' +
+            '<td >' + record.self_tp_amount + '</td>' +
+
+            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.proposal}')">${record.proposal}</a> </td>` +
+            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.mandate}')">${record.mandate}</a> </td>` +
+            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.policy}')">${record.policy}</a> </td>` +
+            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.previous_policy}')">${record.previous_policy}</a> </td>` +
+            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>` +
+            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>` +
+            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.vehicle_rc}')">${record.vehicle_rc}</a> </td>` +
+            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>` +
+
+            `<td class="text-center"> <form method="POST">   {% csrf_token %}
+                                             <a href="/bima_policy/policy/policy_entrydata/${record.policyid}"
+                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+                                                <i class="fa fa-pencil-alt mt-2"></i>                                               
+                                             </a>
+                                             <a href="/bima_policy/deleted_policy/${record.policyid}" name="Remove"
+                                                class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+                                                <i class="far fa-trash-alt mt-2"></i> 
+                                             </a>
+                                       </td>`
+         '</tr>';
+
+         tableBody.append(recordHtml);
+
+         currentIndex++;
+         // start_index += i;
+      }
+
+   }
+
 </script>
 
+<body onload="fetchData()">
 
-<body onload="load_values()">
 </body>
-
-
-
 {%endblock%}
