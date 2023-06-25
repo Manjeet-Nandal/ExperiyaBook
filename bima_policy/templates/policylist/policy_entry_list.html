@@ -3,7 +3,6 @@
 {% load static %}
 
 <main class="app-main">
-
    <!-- .app-main -->
    <div class="wrapper">
       <!-- .wrapper -->
@@ -476,6 +475,7 @@
                                        Show
                                        <select id="select_length" name="tblInsurance_length"
                                           aria-controls="tblInsurance" class="custom-select">
+                                          <option value="5">5</option>
                                           <option value="10">10</option>
                                           <option value="25">25</option>
                                           <option value="50">50</option>
@@ -491,22 +491,9 @@
 
                               <div class="col-md-6">
                                  <div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input value=""
-                                          type="search" id="myInput" onkeydown="searchPolicy_no(event)"
-                                          oninput="searchName()" class="form-control" placeholder="policy number.."
-                                          aria-controls="tblInsurance"></label></div>
+                                          type="search" id="myInput" oninput="searchName()" class="form-control"
+                                          placeholder="" aria-controls="tblInsurance"></label></div>
                               </div>
-
-                              <script>
-                                 function searchPolicy_no(event) {
-                                    if (event.keyCode === 13) {
-                                       event.preventDefault(); // Prevent the default Enter key behavior
-
-                                       // Perform your action here
-                                       console.log("Enter key pressed!");
-                                       document.getElementById("filterlist").click();
-                                    }
-                                 }
-                              </script>
 
                            </div>
                         </div>
@@ -608,13 +595,13 @@
                                  <tbody id="tbdy">
 
                                     <!-- {% for value in data %}                              -->
-                                    <tr hidden role="row" class="policy-row odd" onclick="highlight(this)" id="tr1">
+                                    <tr role="row" class="policy-row odd" onclick="highlight(this)" id="tr1">
 
                                        <td class="text-center">{{forloop.counter}}</td>
-                                       <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
-                                             id="chkblkrm{{forloop.counter}}" /></td>
+                                       <!-- <td class="text-center"><input type="checkbox" value="2479" class="checkbox"
+                                             id="chkblkrm{{forloop.counter}}" /></td> -->
 
-                                       <td>{{value.policyid}}</td>
+                                       <!-- <td>{{value.policyid}}</td> -->
                                        <td>{{value.proposal_no}}</td>
                                        <td>
                                           <a href="" class="tile tile-img" target="_blank"><i
@@ -789,15 +776,18 @@
                                     <!-- {% endfor %} -->
 
                                  </tbody>
+
                               </table>
+
+
                            </div>
                         </div>
                      </div>
 
-                     <button id="nextButton" onclick="nextRecords()" class="btn btn-secondary mt-3"
+                     <button id="nextButton" class="btn btn-secondary mt-3" onclick="showNextRows(false)" hidden
                         style="float: right; color: #FFFFFF; background: #6E11F4; ">Next</button>
 
-                     <button id="pevButton" onclick="prevRecords()" class="btn btn-secondary mt-3" hidden
+                     <button id="pevButton" class="btn btn-secondary mt-3" hidden
                         style="float: right; color: #FFFFFF; background: #6E11F4; ">Back</button>
 
                      <div class="col-sm-12 col-md-7 d-flex justify-content-end"
@@ -1469,10 +1459,9 @@
    var payoutValues = []
    var filter_date_list = []
    var initialResponse = []
-
    var curIndex = 0
-
    var returned_index = 0
+   var tableRows = '';
 
    function load_values() {
       // pids = "{{policyid_list|safe}}".replace('[', '').replace(']', '').split(',')
@@ -1593,6 +1582,7 @@
    }
 
    function searchName() {
+
       // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("myInput");
@@ -1652,7 +1642,6 @@
       policyid_list = []
       payoutValues = []
    }
-
 
    function getCellName() {
 
@@ -1846,8 +1835,22 @@
       }
    }
 
-
    function entry_filter() {
+
+      val1 = document.getElementById('frmDate').value
+      val2 = document.getElementById('toDate').value
+
+      if (String(val1) == "") {
+         val1 = val2
+      }
+
+      d1 = String(val1).replace('/', '-').replace('/', '-').replace('/', '-')
+      d2 = String(val2).replace('/', '-').replace('/', '-').replace('/', '-')
+
+
+      fetchData(d1 + '|' + d2)
+
+      return
       search_value = document.getElementById('myInput').value.trim()
       if (search_value != "") {
          if (search_value.includes("/")) {
@@ -2414,26 +2417,15 @@
    }
 
 
-</script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-   recordsList = []  // recordsList holds fetched data 
-   startIndex = 0;   // startIndex / endIndex is used to render records from recordsList[]
-   endIndex = 5;     // startIndex / endIndex is used to render records from recordsList[]
-
-   function fetchData() {
-
-      event.preventDefault()
+   function fetchData(data) {
 
       $.ajax({
          url: "{%url 'bima_policy:fetch_records'%}",
-         // data: { start_index: startIndex },
+         data: { data: data },
          dataType: 'json',
          success: function (response) {
-            recordsList = response.records;           
-            renderRows(startIndex, endIndex)
+            console.log(response.records);
+            generateTableRowsAsync(response.records);
          },
          error: function (xhr, status, error) {
             console.error(error);
@@ -2441,38 +2433,24 @@
          }
       });
 
+      showNotification('⌛️ Getting ready...')
    }
 
-   function nextRecords() {
+   function generateTableRowsAsync(records) {
+      tableRows = ''
+      document.getElementById('tbdy').innerHTML = ''
 
-      startIndex = endIndex;
-      endIndex = startIndex + 5
-      renderRows(startIndex, endIndex)
-   }
+      if (records.length === 0) {
+         showNotification('❌ ' + 'No Policies!');
+         return
+      }
 
-   function prevRecords() {
+      for (var i = 0; i < records.length; i++) {
 
-      startIndex = startIndex - 5;
-      endIndex = startIndex + 5
-      renderRows(startIndex, endIndex)
-   }
+         record = records[i]
 
-   function renderRows(startIndex, endIndex) {
-
-      console.log('start index: ' + startIndex);
-      console.log('end index: ' + endIndex);
-
-      let srNo = startIndex + 1
-
-      let tableBody = $('#tbdy');
-      tableBody.empty()
-
-      for (var i = startIndex; i < endIndex; i++) {
-
-         record = recordsList[i];
-
-         recordHtml = '<tr   >' +
-            '<td class="text-center" > ' + srNo + '</td>' +
+         recordHtml = '<tr class="policy-row"  >' +
+            '<td class="text-center" > ' + (i + 1) + '</td>' +
             '<td >' + record.proposal_no + '</td>' +
             `<td > <a href="" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="/bima_policy/policy/policy_entrydata/${record.policyid}" class=""> ${record.policy_no}</a> </td>` +
             '<td >' + record.customer_name + '</td>' +
@@ -2536,33 +2514,78 @@
             `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>` +
 
             `<td class="text-center"> <form method="POST">   {% csrf_token %}
-                  <a href="/bima_policy/policy/policy_entrydata/${record.policyid}"
-                     class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
-                     <i class="fa fa-pencil-alt mt-2"></i>                                               
-                  </a>
-                  <a href="/bima_policy/deleted_policy/${record.policyid}" name="Remove"
-                     class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
-                     <i class="far fa-trash-alt mt-2"></i> 
-                  </a>
-            </td>`
+         <a href="/bima_policy/policy/policy_entrydata/${record.policyid}"
+            class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+            <i class="fa fa-pencil-alt mt-2"></i>                                               
+         </a>
+         <a href="/bima_policy/deleted_policy/${record.policyid}" name="Remove"
+            class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+            <i class="far fa-trash-alt mt-2"></i> 
+         </a>
+   </td>` +
 
             '</tr>';
 
-         tableBody.append(recordHtml);
-
-         srNo++;
+         tableRows += recordHtml;
       }
 
-      if (startIndex < 1) document.getElementById('pevButton').hidden = true
+      showNotification('✅ Total Policies: ' + records.length);
+      document.getElementById('tbdy').innerHTML = tableRows;   
+      showNextRows(true)
+   }
+   
+   function showNextRows(hideDefault) {
 
-      else document.getElementById('pevButton').hidden = false
+      event.preventDefault()
+
+      var selectElement = document.getElementById("select_length");
+      var selectedValue = selectElement.value;
+
+      var rows = document.getElementsByClassName("policy-row");
+
+      if (hideDefault) {
+         for (var i = 0; i < rows.length; i++) {
+            if (i < selectedValue) {
+               rows[i].style.display = ""; // Show the row
+               curIndex = i
+            }
+            else {
+               rows[i].style.display = "none"; // Show the row
+            }
+         }
+         if (rows.length === curIndex + 1)
+            document.getElementById("nextButton").hidden = true;
+         else
+            document.getElementById("nextButton").hidden = false;
+         return
+      }
+
+      from = curIndex;
+      to = from + Number(selectedValue)
+
+      for (var i = from; i <= to; i++) {
+         if (rows[i]) {
+            rows[i].style.display = ""; // Show the row
+            curIndex = i
+         }
+         else {
+            console.log('no more rows to show');
+            break
+         }
+      }
+
+      $('html, body').animate({ scrollTop: $('#nextButton').offset().top }, 1);
+
+      if (rows.length === curIndex + 1)
+         document.getElementById("nextButton").hidden = true;
+      else
+         document.getElementById("nextButton").hidden = false;
 
    }
 
+
+
 </script>
 
-<body onload="fetchData()">
-
-</body>
 
 {%endblock%}

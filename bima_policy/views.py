@@ -2600,30 +2600,18 @@ def policy_entry(request):
         for model in VehicleModel.objects.values('model'):
             models.append(model['model'])
 
-        if is_user(request):
-            # data = Policy.objects.order_by('-policyid').values()[:25].all()
-            # data = Policy.objects.order_by('-created_at')[:10].all()
-            pass
-
-        else:
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-policyid').values()[:25].all()
-            # data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at').all()
-            pass
-
-        # print(Policy.objects.order_by('-created_at').count())
-        # data = Policy.objects.order_by('-created_at')
-        # policyid_list = []
-        # for item in data:
-        #     policyid_list.append(item['policyid'])
-
+        if is_user(request): 
+            data = Policy.objects.order_by('-created_at').values()[:5] 
+        else:       
+            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at').values()[:5]         
+               
         context = {
             "agents": agents,
             "insurers": insurers,
             "vehicle_categories": vehicle_categories,
             "makes": makes,
             "models": models,
-            # "data": data,
-            # "policyid_list": policyid_list,
+            "data": data,           
             "is_user": is_user(request),
             "user_name": get_user_name(request)
         }
@@ -2633,6 +2621,49 @@ def policy_entry(request):
     except Exception as ex:
         print(ex)
         return HttpResponse('Error in policy_entry ' + str(ex))
+
+
+from datetime import datetime
+
+def fetch_records(request):  
+    print('\nfetch calling ')   
+
+    data =request.GET.get('data').split('|')
+    print(data)
+
+    d1_array = data[0].split('-')
+    d2_array = data[1].split('-')
+
+    year = d1_array[2]
+    month = d1_array[1]
+    day = d1_array[0]
+    date1 = year + "-" + month + "-" + day
+
+    year = d2_array[2]
+    month = d2_array[1]
+    day = d2_array[0]
+    date2 = year + "-" + month + "-" + day
+
+    print('date 1: ', date1)
+    print('date 2: ', date2)
+  
+    date_string = date1
+    date_string2 = date2
+    date_format = '%Y-%m-%d'
+
+    date1 = datetime.strptime(date_string, date_format).date()
+    date2 = datetime.strptime(date_string2, date_format).date()
+
+    print(date1)  # Output: 2023-06-23      
+  
+    if is_user(request):                   
+        # records = Policy.objects.filter(created_at__gte= date1, created_at__lte= date2).values()      
+        records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()      
+    else:
+        records = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-created_at').values()    
+
+    print(records.count())     
+    return JsonResponse({'records': list( records)})
 
 
 def policy_saerch_entry(request, id):
@@ -5447,10 +5478,10 @@ def new_entry(request):
 
         set_payout(my_model, my_model.policyid)
 
-        return JsonResponse('✅ Succeed: ' + request.POST['policy_no'], safe=False)
+        return JsonResponse('done: ' + request.POST['policy_no'], safe=False)
     except Exception as e:
         print("Error occurred in new_entry method:", str(e))
-        return JsonResponse('❌ Failed: ' + request.POST['policy_no'], safe=False)
+        return JsonResponse('error: ' + request.POST['policy_no'], safe=False)
 
 
 def set_payout(data, id):
@@ -5565,12 +5596,3 @@ def send_otp_via_twilio(to, otp):
     # return message.sid
 
 
-# data = Policy.objects.order_by('-created_at')
-
-def fetch_records(request):  
-    print('\nfetch calling ')   
-    if is_user(request):
-        records = Policy.objects.order_by('-created_at').values() 
-    else:
-        records = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-created_at').values()         
-    return JsonResponse({'records': list( records)})

@@ -1,41 +1,49 @@
 {% load static %}
 <html lang="en" class="">
-   <head  style="background-color: rgb(116, 48, 249);" >
-    
-      <!-- Required meta tags -->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <!-- End Required meta tags -->
-      <!-- Begin SEO tag -->
-      <title> Experiya Book </title>
-      <!-- FAVICONS -->
-      <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
-      <meta name="theme-color" content="#3063A0">
-      <!-- End FAVICONS -->
-      <!-- GOOGLE FONT -->
-      <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
-	  {% comment %} <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"> {% endcomment %}
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&amp;display=swap" rel="stylesheet">
-	  
-	  {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"> {% endcomment %}
-     {% comment %} <link rel="stylesheet" href="https://cdn.lineicons.com/3.0/lineicons.css">  {% endcomment %}
-      <!-- BEGIN PLUGINS STYLES -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-      <link rel="stylesheet" href="{%static 'css/icofont.min.css' %}">
-      <link rel="stylesheet" href="{%static 'css/open-iconic-bootstrap.min.css' %}">
-      {% comment %} <link rel="stylesheet" href="{%static 'css/font-awesome.min.css' %}"> {% endcomment %}
-      <link rel="stylesheet" href="{%static 'css/flatpickr.min.css' %}">
-      {% comment %} <link rel="stylesheet" href="{%static 'css/toastr.min.css' %}"> {% endcomment %}
-      <link rel="stylesheet" href="{%static 'css/parsley.css' %}">
-      <link rel="stylesheet" href="{%static 'css/select2.min.css' %}">
-      <link rel="stylesheet" href="{%static 'css/theme.min.css' %}" data-skin="default">
-      <!-- <link rel="stylesheet" href="{%static 'css/theme-dark.min.css' %}" data-skin="dark" disabled="true"> -->
-      <link rel="stylesheet" href="{%static 'css/custom.min.css'%}"> 
-      <link rel="stylesheet" href="{%static 'css/bootstrap-select.min.css'%}"> 
-      <link rel="stylesheet" href="{%static 'css/bootstrap-tagsinput.css'%}"> 
-      <link rel="stylesheet" href="{%static 'css/filter-multi-select.css'%}"> 
 
-      <!-- <script>
+<head style="background-color: rgb(116, 48, 249);">
+
+   <!-- Required meta tags -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <!-- End Required meta tags -->
+   <!-- Begin SEO tag -->
+   <title> Experiya Book </title>
+   <!-- FAVICONS -->
+   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+   <meta name="theme-color" content="#3063A0">
+   <!-- End FAVICONS -->
+   <!-- GOOGLE FONT -->
+   <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+   {% comment %}
+   <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"> {% endcomment %}
+   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&amp;display=swap" rel="stylesheet">
+
+   {% comment %}
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"> {%
+   endcomment %}
+   {% comment %}
+   <link rel="stylesheet" href="https://cdn.lineicons.com/3.0/lineicons.css"> {% endcomment %}
+   <!-- BEGIN PLUGINS STYLES -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <link rel="stylesheet" href="{%static 'css/icofont.min.css' %}">
+   <link rel="stylesheet" href="{%static 'css/open-iconic-bootstrap.min.css' %}">
+   {% comment %}
+   <link rel="stylesheet" href="{%static 'css/font-awesome.min.css' %}"> {% endcomment %}
+   <link rel="stylesheet" href="{%static 'css/flatpickr.min.css' %}">
+   {% comment %}
+   <link rel="stylesheet" href="{%static 'css/toastr.min.css' %}"> {% endcomment %}
+   <link rel="stylesheet" href="{%static 'css/parsley.css' %}">
+   <link rel="stylesheet" href="{%static 'css/select2.min.css' %}">
+   <link rel="stylesheet" href="{%static 'css/theme.min.css' %}" data-skin="default">
+   <!-- <link rel="stylesheet" href="{%static 'css/theme-dark.min.css' %}" data-skin="dark" disabled="true"> -->
+   <link rel="stylesheet" href="{%static 'css/custom.min.css'%}">
+   <link rel="stylesheet" href="{%static 'css/bootstrap-select.min.css'%}">
+   <link rel="stylesheet" href="{%static 'css/bootstrap-tagsinput.css'%}">
+   <link rel="stylesheet" href="{%static 'css/filter-multi-select.css'%}">
+
+   <!-- <script>
          var skin = localStorage.getItem('skin') || 'default';
          var disabledSkinStylesheet = document.querySelector('link[data-skin]:not([data-skin="' + skin + '"])');
       
@@ -44,593 +52,600 @@
          // add loading class to html immediately
          document.querySelector('html').classList.add('loading');
       </script> -->
-      	   
-   </head>
 
-   <body class=" default-skin pace-done">
-      <div class="pace  pace-inactive">
-         <div class="pace-progress" data-progress-text="100%" data-progress="99"
-            style="transform: translate3d(100%, 0px, 0px);">
-            <div class="pace-progress-inner"></div>
-         </div>
-         <div class="pace-activity"></div>
+</head>
+
+<body class=" default-skin pace-done">
+   <div class="pace  pace-inactive">
+      <div class="pace-progress" data-progress-text="100%" data-progress="99"
+         style="transform: translate3d(100%, 0px, 0px);">
+         <div class="pace-progress-inner"></div>
       </div>
-      <!-- .app -->
-      <div class="app" >
-         <!-- .app-header -->
-         <header class="app-header app-header-dark"   style="background-color: rgb(116, 48, 249);" >
-            <!-- .top-bar -->
-            <div class="top-bar">
-               <!-- .top-bar-brand -->
-               <div class="top-bar-brand d-none1">
-                  <!-- toggle aside menu -->
-                  <button class="hamburger hamburger-squeeze mr-2" type="button" data-toggle="aside-menu"
-                     aria-label="toggle aside menu"><span class="hamburger-box"><span
-                     class="hamburger-inner"></span></span></button> <!-- /toggle aside menu -->
-                  <!-- <img src="{%static 'images/logo.png' %}" class='img-fluid logo-160' alt='Experiya Logo'> -->
-                  <h4 style="color: white; margin-top: 8px;">Experiya Book </h4>                 
+      <div class="pace-activity"></div>
+   </div>
+   <!-- .app -->
+   <div class="app">
+      <!-- .app-header -->
+      <header class="app-header app-header-dark" style="background-color: rgb(116, 48, 249);">
+         <!-- .top-bar -->
+         <div class="top-bar">
+            <!-- .top-bar-brand -->
+            <div class="top-bar-brand d-none1">
+               <!-- toggle aside menu -->
+               <button class="hamburger hamburger-squeeze mr-2" type="button" data-toggle="aside-menu"
+                  aria-label="toggle aside menu"><span class="hamburger-box"><span
+                        class="hamburger-inner"></span></span></button> <!-- /toggle aside menu -->
+               <!-- <img src="{%static 'images/logo.png' %}" class='img-fluid logo-160' alt='Experiya Logo'> -->
+               <h4 style="color: white; margin-top: 8px;">Experiya Book </h4>
+
+            </div>
+            <!-- /.top-bar-brand -->
+            <!-- .top-bar-list -->
+            <div class="top-bar-list">
+               <!-- .top-bar-item -->
+               <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
+                  <!-- toggle menu -->
+                  <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside"
+                     aria-label="toggle menu"><span class="hamburger-box"><span
+                           class="hamburger-inner"></span></span></button> <!-- /toggle menu -->
+               </div>
+               <!-- /.top-bar-item -->
+               <!-- .top-bar-item -->
+               <div class="top-bar-item top-bar-item-full d-md-none d-lg-none d-xl-none">
+                  <!-- <img src="{%static 'images/logo.png' %}" width="150px"> -->
+                  <h4 style="color: white; margin-top: 8px;">Experiya Book </h4>
 
                </div>
-               <!-- /.top-bar-brand -->
-               <!-- .top-bar-list -->
-               <div class="top-bar-list">
-                  <!-- .top-bar-item -->
-                  <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
-                     <!-- toggle menu -->
-                     <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside"
-                        aria-label="toggle menu"><span class="hamburger-box"><span
-                        class="hamburger-inner"></span></span></button> <!-- /toggle menu -->
+               <div id="notification_div"
+                  style=" width: 100%;  display: none; justify-content: space-between; padding: 0px 20px; ">
+                  <div>
+                     <h6 id="notification" style="font-size: 14px; letter-spacing: 0.7; "> </h6>
                   </div>
-                  <!-- /.top-bar-item -->
-                  <!-- .top-bar-item -->
-                  <div class="top-bar-item top-bar-item-full d-md-none d-lg-none d-xl-none">
-                     <!-- <img src="{%static 'images/logo.png' %}" width="150px"> -->
-                     <h4 style="color: white; margin-top: 8px;">Experiya Book </h4>
+                  <div style="display: flex; width: 120px; justify-content: space-around; padding: 0px 5px;">
 
+                     <a id="countFormData" href="#" style="color: white;" data-toggle="modal" hidden
+                        data-target="#mdlFormData"> ... </a>
                   </div>
-                 <div id="notification_div" style=" width: 100%;  display: none; justify-content: space-between; padding: 0px 20px; font-size: 16px; font-weight: 600;">
-                    <div>
-                       <h6 id="notification"  > </h6>
-                    </div>
-                    <div style="display: flex; width: 120px; justify-content: space-around; padding: 0px 5px;">
-                      
-                       <a id="countFormData" href="#" style="color: white;"  data-toggle="modal" data-target="#mdlFormData" > ... </a>                     
+               </div>
 
-                    </div>
-                 </div>
-
-                  <!-- /.top-bar-item -->
-                  <!-- .top-bar-item -->
-                  <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
-                     <!-- .btn-account -->
-                     <div class="dropdown d-none d-md-flex"   >
-                        <button id="hello"  class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                        <span class="user-avatar user-avatar-md">                         
-                           {%  if request.session.profile_image == None %}
-                              <img src="{% static 'images/user.png' %}" alt="Demo">
-                           {%  else %}
-                        <img src="/media/{{request.session.profile_image }}" alt="Demo">  
-                        {%  endif %}
+               <!-- /.top-bar-item -->
+               <!-- .top-bar-item -->
+               <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
+                  <!-- .btn-account -->
+                  <div class="dropdown d-none d-md-flex">
+                     <button id="hello" class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <span class="user-avatar user-avatar-md">
+                           {% if request.session.profile_image == None %}
+                           <img src="{% static 'images/user.png' %}" alt="Demo">
+                           {% else %}
+                           <img src="/media/{{request.session.profile_image }}" alt="Demo">
+                           {% endif %}
                         </span>
 
-                        </button> <!-- .dropdown-menu -->
-                        <div  class="dropdown-menu"  style="color: #FFFFFF; background: #6E11F4; ">
-                           <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
-                           <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
-                           <h6 class="dropdown-header d-none d-md-block d-lg-none"> Demo </h6>
-                           
-                           {%  if request.session.role == 'admin' %}
-                           <a class="dropdown-item" href="/bima_policy/profile/" style="color: #FFFFFF; background: #6E11F4;" >
-                             
-                              <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'  ></i> Profile
-                              </a>
-                           {%  endif %}
-                           
-                           {%  if request.session.role == 'staff' %}
-                           <a class="dropdown-item" href="/bima_policy/user/edit/{{request.session.id}}" style="color: #FFFFFF; background: #6E11F4;" >                          
-                              <i class="fa fa-key"  style="color: #FFFFFF;"  aria-hidden="true" id='icon'></i> Profile
-                              </a>
-                           {%  endif %}                        
-                           
-                           <div class="dropdown-divider"></div>
-                           <a class="dropdown-item" style="color: #FFFFFF; background: #6E11F4;"
-                              href="{%url 'bima_policy:logout'%}">
-                           <i class="fa fa-sign-out"  style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>Logout
-                           </a>
-                        </div>
-                      
+                     </button> <!-- .dropdown-menu -->
+                     <div class="dropdown-menu" style="color: #FFFFFF; background: #6E11F4; ">
+                        <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
+                        <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
+                        <h6 class="dropdown-header d-none d-md-block d-lg-none"> Demo </h6>
+
+                        {% if request.session.role == 'admin' %}
+                        <a class="dropdown-item" href="/bima_policy/profile/"
+                           style="color: #FFFFFF; background: #6E11F4;">
+
+                           <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i> Profile
+                        </a>
+                        {% endif %}
+
+                        {% if request.session.role == 'staff' %}
+                        <a class="dropdown-item" href="/bima_policy/user/edit/{{request.session.id}}"
+                           style="color: #FFFFFF; background: #6E11F4;">
+                           <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i> Profile
+                        </a>
+                        {% endif %}
+
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" style="color: #FFFFFF; background: #6E11F4;"
+                           href="{%url 'bima_policy:logout'%}">
+                           <i class="fa fa-sign-out" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>Logout
+                        </a>
                      </div>
-                 
+
                   </div>
-                
-                  <!-- /.top-bar-item -->
+
                </div>
-               <!-- /.top-bar-list -->
+
+               <!-- /.top-bar-item -->
             </div>
-            <!-- /.top-bar -->
-         </header>
-         <!-- /.app-header -->
-         <!-- .app-aside -->
-         <aside class="app-aside app-aside-expand-md app-aside-light" style="background: #FFFFFF;" >
-            <!-- .aside-content -->
-            <div class="aside-content">
-               <!-- .aside-header -->
-               <header class="aside-header d-block d-md-none">
-                  <!-- .btn-account -->
-                  <button class="btn-account" type="button" data-toggle="collapse" data-target="#dropdown-aside">
-                  <span class="user-avatar user-avatar-lg"><img src="{% static 'images/user.png' %}"
-                     alt="Demo"></span>
+            <!-- /.top-bar-list -->
+         </div>
+         <!-- /.top-bar -->
+      </header>
+      <!-- /.app-header -->
+      <!-- .app-aside -->
+      <aside class="app-aside app-aside-expand-md app-aside-light" style="background: #FFFFFF;">
+         <!-- .aside-content -->
+         <div class="aside-content">
+            <!-- .aside-header -->
+            <header class="aside-header d-block d-md-none">
+               <!-- .btn-account -->
+               <button class="btn-account" type="button" data-toggle="collapse" data-target="#dropdown-aside">
+                  <span class="user-avatar user-avatar-lg"><img src="{% static 'images/user.png' %}" alt="Demo"></span>
                   <span class="account-icon"><span class="fa fa-caret-down fa-lg"></span></span>
                   <span class="account-summary"><span class="account-name">Demo</span>
                   </span></button> <!-- /.btn-account -->
-                  <!-- .dropdown-aside -->
-                  <div id="dropdown-aside" class="dropdown-aside collapse">
-                     <!-- dropdown-items -->
-                     <div class="pb-3">
-                        <a class="dropdown-item" href=""><span
-                           class="dropdown-icon icofont icofont-ui-password"></span> Change Password</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item"
-                           href="{%url 'bima_policy:logout'%}"><span
+               <!-- .dropdown-aside -->
+               <div id="dropdown-aside" class="dropdown-aside collapse">
+                  <!-- dropdown-items -->
+                  <div class="pb-3">
+                     <a class="dropdown-item" href=""><span class="dropdown-icon icofont icofont-ui-password"></span>
+                        Change Password</a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="{%url 'bima_policy:logout'%}"><span
                            class="dropdown-icon icofont-logout"></span> Logout</a>
-                     </div>
-                     <!-- /dropdown-items -->
                   </div>
-                  <!-- /.dropdown-aside -->
-               </header>
-               <!-- /.aside-header -->
-               <!-- .aside-menu -->
-               <div class="aside-menu overflow-hidden ps ps--active-y">
-                  <!-- .stacked-menu -->
-                  <nav id="stacked-menu" class="stacked-menu stacked-menu-has-collapsible">
-                     <!-- .menu -->
-                     <ul class="menu">
+                  <!-- /dropdown-items -->
+               </div>
+               <!-- /.dropdown-aside -->
+            </header>
+            <!-- /.aside-header -->
+            <!-- .aside-menu -->
+            <div class="aside-menu overflow-hidden ps ps--active-y">
+               <!-- .stacked-menu -->
+               <nav id="stacked-menu" class="stacked-menu stacked-menu-has-collapsible">
+                  <!-- .menu -->
+                  <ul class="menu">
 
-                        <style>
-                           .text-blue116{
-                              color: rgb(116, 48, 249);
-                              /* font-weight: bold; */
-                              font-weight: 550;
-                           }
-                           .text-white-ff{
-                              color: #FFFFFF                           
-                             
-                           }
-                        </style>
-                        
-                        <li class="text-center text-primary"><span class="" id="liteDate"></span> 
-                        </li>
-                        <!-- /.menu-header -->
-                        <li class="menu-header" style=" color: rgb(110, 17, 244);" >General </li>
-                        <!-- /.menu-header -->
-                        <li class="menu-item has-active">
-                           <a href="{%url 'bima_policy:dashboard'%}" class="menu-link">                         
+                     <style>
+                        .text-blue116 {
+                           color: rgb(116, 48, 249);
+                           /* font-weight: bold; */
+                           font-weight: 550;
+                        }
+
+                        .text-white-ff {
+                           color: #FFFFFF
+                        }
+                     </style>
+
+                     <li class="text-center text-primary"><span class="" id="liteDate"></span>
+                     </li>
+                     <!-- /.menu-header -->
+                     <li class="menu-header" style=" color: rgb(110, 17, 244);">General </li>
+                     <!-- /.menu-header -->
+                     <li class="menu-item has-active">
+                        <a href="{%url 'bima_policy:dashboard'%}" class="menu-link">
                            <i class="fa fa-home" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-						         <span class="menu-text text-blue116"  style="margin-left: 10px;" >Dashboard</span>
-						         </a>
-                        </li>
+                           <span class="menu-text text-blue116" style="margin-left: 10px;">Dashboard</span>
+                        </a>
+                     </li>
 
-                        <li class="menu-item has-child  ">  
-                           <a href="#" class="menu-link">                         
-                           <i class="fa fa-solid fa-book" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                           <span class="menu-text text-blue116 "  style="margin-left: 10px;"  >Policy List</span></a> 
-                           
-                           <ul class="menu" >                             
-                              <li class="menu-item has-child  text-blue116 " >
-                                 <a href="javascript:void(0);" class="menu-link">     
-                                    <span class="menu-text text-blue116" style="margin-left: 1rem;">  New</span></a> 
-                                    <!-- child menu -->
-                                       <ul class="menu text">
-                                                                               
-                                          <li class="menu-item " >
-                                             <a href="{%url 'bima_policy:create_policy' %}"  style="margin-left: 1rem; color: rgb(110, 17, 244);" class="menu-link">Motor</a>
-                                          </li>
-                                          <li class="menu-item ">
-                                             <a href="{%url 'bima_policy:create_policy_non_motor' %}"  style="margin-left: 1rem; color: rgb(110, 17, 244);" class="menu-link">Non-Motor</a>
-                                          </li>
-                                          <li class="menu-item ">
-                                             <a href="#"  style="margin-left: 1rem; color: rgb(110, 17, 244);" class="menu-link" onclick="alert('Claim-section is Under Construction!!')">Claim</a>
-                                          </li>
-                                       </ul>  
-                              </li>                             
+                     <li class="menu-item has-child  ">
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-solid fa-book" style=" color: rgb(110, 17, 244);" aria-hidden="true"
+                              id='icon'></i>
+                           <span class="menu-text text-blue116 " style="margin-left: 10px;">Policy List</span></a>
 
-                              <li class="menu-item " hidden >
-                                 <a href="{%url 'bima_policy:policy_import' %}"  style="margin-left: 1rem;"  class="menu-link"
-                                    tabindex="-1">Import</a>
-                              </li>
-                           </ul>       
-						         </a>
-
-                           <li class="menu-item has-active">
-                              <a href="{%url 'bima_policy:policy_entry'%}" class="menu-link">                         
-                              <i class="fa fa-bars" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116"  style="margin-left: 10px;" >Entry List</span>
-                              </a>
-                           </li>
-                           {% if request.session.role == "staff" %}
-                           <li class="menu-item ">
-                              <a href="{%url 'bima_policy:policy_deleted_entry'%}" class="menu-link">                         
-                              <i class="fa fa-trash" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116"  style="margin-left: 10px;" >Trash</span>
-                              </a>
-                           </li>    
-                           {% endif %}
-
-                        </li>    
-                          
-                        <li class="menu-item " hidden>
-                           <a href="#" class="menu-link">                         
-                           <i class="fa fa-retweet" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-						         <span class="menu-text text-blue116" >Upcoming Renewal</span>
-						         </a>
-                        </li>    
-  
-                        <div class={{request.session.role}} hidden>
-                           <li class="menu-item has-child ">
+                        <ul class="menu">
+                           <li class="menu-item has-child  text-blue116 ">
                               <a href="javascript:void(0);" class="menu-link">
-                                 {% comment %} <span class="menu-icon icofont icofont-money"></span>{% endcomment %}
-                                 <i class="fa-solid fa-sack-dollar" style="color:#346cb0 ;padding-right: 1.7rem;
+                                 <span class="menu-text text-blue116" style="margin-left: 1rem;"> New</span></a>
+                              <!-- child menu -->
+                              <ul class="menu text">
+
+                                 <li class="menu-item ">
+                                    <a href="{%url 'bima_policy:create_policy' %}"
+                                       style="margin-left: 1rem; color: rgb(110, 17, 244);" class="menu-link">Motor</a>
+                                 </li>
+                                 <li class="menu-item ">
+                                    <a href="{%url 'bima_policy:create_policy_non_motor' %}"
+                                       style="margin-left: 1rem; color: rgb(110, 17, 244);"
+                                       class="menu-link">Non-Motor</a>
+                                 </li>
+                                 <li class="menu-item ">
+                                    <a href="#" style="margin-left: 1rem; color: rgb(110, 17, 244);" class="menu-link"
+                                       onclick="alert('Claim-section is Under Construction!!')">Claim</a>
+                                 </li>
+                              </ul>
+                           </li>
+
+                           <li class="menu-item " hidden>
+                              <a href="{%url 'bima_policy:policy_import' %}" style="margin-left: 1rem;"
+                                 class="menu-link" tabindex="-1">Import</a>
+                           </li>
+                        </ul>
+                        </a>
+
+                     <li class="menu-item has-active">
+                        <a href="{%url 'bima_policy:policy_entry'%}" class="menu-link">
+                           <i class="fa fa-bars" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue116" style="margin-left: 10px;">Entry List</span>
+                        </a>
+                     </li>
+                     {% if request.session.role == "staff" %}
+                     <li class="menu-item ">
+                        <a href="{%url 'bima_policy:policy_deleted_entry'%}" class="menu-link">
+                           <i class="fa fa-trash" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue116" style="margin-left: 10px;">Trash</span>
+                        </a>
+                     </li>
+                     {% endif %}
+
+                     </li>
+
+                     <li class="menu-item " hidden>
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-retweet" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue116">Upcoming Renewal</span>
+                        </a>
+                     </li>
+
+                     <div class={{request.session.role}} hidden>
+                        <li class="menu-item has-child ">
+                           <a href="javascript:void(0);" class="menu-link">
+                              {% comment %} <span class="menu-icon icofont icofont-money"></span>{% endcomment %}
+                              <i class="fa-solid fa-sack-dollar" style="color:#346cb0 ;padding-right: 1.7rem;
                                  overflow: hidden;
                                  text-overflow: ellipsis;
                                  white-space: nowrap;"></i>
-                              
-                                 <span class="menu-text" style=" color: rgb(110, 17, 244);" >Ledger</span></a> <!-- child menu -->
-                              <ul class="menu">
-                                 <li class="menu-subhead">Ledger</li>
-                                 <li class="menu-item ">
-                                    <a href="#"  class="menu-link" tabindex="-1">Agent
+
+                              <span class="menu-text" style=" color: rgb(110, 17, 244);">Ledger</span></a>
+                           <!-- child menu -->
+                           <ul class="menu">
+                              <li class="menu-subhead">Ledger</li>
+                              <li class="menu-item ">
+                                 <a href="#" class="menu-link" tabindex="-1">Agent
                                     Payable</a>
-                                 </li>
-                                 <li class="menu-item ">
-                                    <a href="#" class="menu-link"
-                                       tabindex="-1">Agent Statement</a>
-                                 </li>
-                                 <li class="menu-item ">
-                                    <a href="#" class="menu-link"
-                                       tabindex="-1">SP Receivable</a>
-                                 </li>
-                                 <li class="menu-item ">
-                                    <a href="#" class="menu-link"
-                                       tabindex="-1">SP Statement</a>
-                                 </li>
-                              </ul>
-                           
-                           </li>
-                        </div>
+                              </li>
+                              <li class="menu-item ">
+                                 <a href="#" class="menu-link" tabindex="-1">Agent Statement</a>
+                              </li>
+                              <li class="menu-item ">
+                                 <a href="#" class="menu-link" tabindex="-1">SP Receivable</a>
+                              </li>
+                              <li class="menu-item ">
+                                 <a href="#" class="menu-link" tabindex="-1">SP Statement</a>
+                              </li>
+                           </ul>
 
-                        <div class={{request.session.role}} hidden>
-                           <li class="menu-item has-child " >
-                              <a href="javascript:void(0);" class="menu-link">
-                                 {% comment %} <span
-                                 class="menu-icon icofont icofont-file-text"></span>  {% endcomment %}
-                                 <i class="fa fa-file-text" id="iconn" style="padding-right: 1.8rem;"></i>
-                                 <span class="menu-text" style=" color: rgb(110, 17, 244);"  >Reports</span></a> <!-- child menu -->
-                              <ul class="menu">
-                                 <li class="menu-subhead">Reports</li>
-                                 <li class="menu-item ">
-                                    <a href="#" class="menu-link"
-                                       tabindex="-1">Agent wise</a>
-                                 </li>
-                                 <li class="menu-item ">
-                                    <a href="#"class="menu-link"
-                                       tabindex="-1">Policy Provider wise</a>
-                                 </li>
-                                 <li class="menu-item ">
-                                    <a href="#" class="menu-link"
-                                       tabindex="-1">Vehicle Category wise</a>
-                                 </li>
-                                 <li class="menu-item ">
-                                    <a href="#" class="menu-link"
-                                       tabindex="-1">Broker Code wise</a>
-                                 </li>
-                                 <li class="menu-item ">
-                                    <a href="#"class="menu-link"
-                                       tabindex="-1">Insurance Comp. wise</a>
-                                 </li>
-                              </ul>
-                           </li>
-                        </div>
-                      
-                        {% if request.session.role == "admin" %}
+                        </li>
+                     </div>
 
-                        <div class={{request.session.role}} >
-                           <li class="menu-header "  style=" color: rgb(110, 17, 244);" >Manage </li>
-                           <!-- /.menu-header -->
-                           <!-- .menu-item -->
-                           
-                           <li class="menu-item ">
-                              <a href="{%url 'bima_policy:agent'%}" class="menu-link">                         
-                              <i class="fa fa-user-friends" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116"  style="margin-left: 10px;" >POSP</span>
-                              </a>
-                           </li>
+                     <div class={{request.session.role}} hidden>
+                        <li class="menu-item has-child ">
+                           <a href="javascript:void(0);" class="menu-link">
+                              {% comment %} <span class="menu-icon icofont icofont-file-text"></span> {% endcomment %}
+                              <i class="fa fa-file-text" id="iconn" style="padding-right: 1.8rem;"></i>
+                              <span class="menu-text" style=" color: rgb(110, 17, 244);">Reports</span></a>
+                           <!-- child menu -->
+                           <ul class="menu">
+                              <li class="menu-subhead">Reports</li>
+                              <li class="menu-item ">
+                                 <a href="#" class="menu-link" tabindex="-1">Agent wise</a>
+                              </li>
+                              <li class="menu-item ">
+                                 <a href="#" class="menu-link" tabindex="-1">Policy Provider wise</a>
+                              </li>
+                              <li class="menu-item ">
+                                 <a href="#" class="menu-link" tabindex="-1">Vehicle Category wise</a>
+                              </li>
+                              <li class="menu-item ">
+                                 <a href="#" class="menu-link" tabindex="-1">Broker Code wise</a>
+                              </li>
+                              <li class="menu-item ">
+                                 <a href="#" class="menu-link" tabindex="-1">Insurance Comp. wise</a>
+                              </li>
+                           </ul>
+                        </li>
+                     </div>
 
-                           <li class="menu-item ">
-                              <a href="{%url 'bima_policy:slab'%}" class="menu-link">                         
-                              <i class="fa fa-solid fa-book" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" style="margin-left: 10px;" >Payouts</span>
-                              </a>
-                           </li>
+                     {% if request.session.role == "admin" %}
 
-                           <li class="menu-item ">
-                              <a href="{%url 'bima_policy:ins_comp'%}" class="menu-link">                         
-                              <i class="fa fa-solid fa-building" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" style="margin-left: 10px;"  >Insurers</span>
-                              </a>
-                           </li>
+                     <div class={{request.session.role}}>
+                        <li class="menu-header " style=" color: rgb(110, 17, 244);">Manage </li>
+                        <!-- /.menu-header -->
+                        <!-- .menu-item -->
 
-                           <li class="menu-item ">
-                              <a href="{%url 'bima_policy:service_p'%}" class="menu-link">                         
-                              <i class="fa fa-solid fa-user-tie" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" style="margin-left: 10px;"  >Service Providers</span>
-                              </a>
-                           </li>               
-                           
-                           <li class="menu-item ">
-                              <a href="{%url 'bima_policy:product_view'%}" class="menu-link">                         
-                              <i class="fa fa-product-hunt" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" style="margin-left: 10px;"  >Products</span>
-                              </a>
-                           </li>       
-                           
-                           <li class="menu-item ">
-                              <a href="{%url 'bima_policy:vehi'%}" class="menu-link">                         
+                        <li class="menu-item ">
+                           <a href="{%url 'bima_policy:agent'%}" class="menu-link">
+                              <i class="fa fa-user-friends" style=" color: rgb(110, 17, 244);" aria-hidden="true"
+                                 id='icon'></i>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;">POSP</span>
+                           </a>
+                        </li>
+
+                        <li class="menu-item ">
+                           <a href="{%url 'bima_policy:slab'%}" class="menu-link">
+                              <i class="fa fa-solid fa-book" style=" color: rgb(110, 17, 244);" aria-hidden="true"
+                                 id='icon'></i>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;">Payouts</span>
+                           </a>
+                        </li>
+
+                        <li class="menu-item ">
+                           <a href="{%url 'bima_policy:ins_comp'%}" class="menu-link">
+                              <i class="fa fa-solid fa-building" style=" color: rgb(110, 17, 244);" aria-hidden="true"
+                                 id='icon'></i>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;">Insurers</span>
+                           </a>
+                        </li>
+
+                        <li class="menu-item ">
+                           <a href="{%url 'bima_policy:service_p'%}" class="menu-link">
+                              <i class="fa fa-solid fa-user-tie" style=" color: rgb(110, 17, 244);" aria-hidden="true"
+                                 id='icon'></i>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;">Service Providers</span>
+                           </a>
+                        </li>
+
+                        <li class="menu-item ">
+                           <a href="{%url 'bima_policy:product_view'%}" class="menu-link">
+                              <i class="fa fa-product-hunt" style=" color: rgb(110, 17, 244);" aria-hidden="true"
+                                 id='icon'></i>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;">Products</span>
+                           </a>
+                        </li>
+
+                        <li class="menu-item ">
+                           <a href="{%url 'bima_policy:vehi'%}" class="menu-link">
                               <i class="fa fa-car" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" style="margin-left: 10px;"  >Vehicles</span>
-                              </a>
-                           </li>              
+                              <span class="menu-text text-blue116" style="margin-left: 10px;">Vehicles</span>
+                           </a>
+                        </li>
 
-                           <!-- <li class="menu-item ">
+                        <!-- <li class="menu-item ">
                               <a href="{%url 'bima_policy:rto'%}" class="menu-link">                         
                               <i class="fa fa-car" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
                               <span class="menu-text text-blue116" style="margin-left: 10px;"  >RTOs </span>
                               </a>
                            </li>               -->
-                           
-                           <li class="menu-item ">
-                              <a href="{%url 'bima_policy:staff'%}" class="menu-link">                         
+
+                        <li class="menu-item ">
+                           <a href="{%url 'bima_policy:staff'%}" class="menu-link">
                               <i class="fa fa-user" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116"  style="margin-left: 10px;" >Users</span>
-                              </a>
-                           </li>              
+                              <span class="menu-text text-blue116" style="margin-left: 10px;">Users</span>
+                           </a>
+                        </li>
 
-                           <li class="menu-item ">
-                              <a href="{%url 'bima_policy:policy_deleted_entry'%}" class="menu-link">                         
-                              <i class="fa fa-trash" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116" style="margin-left: 10px;"  >Trash</span>
-                              </a>
-                           </li>    
-                        
-                           <!-- /.menu-item -->
-                           <li class="menu-header"  style=" color: rgb(110, 17, 244);" >Settings </li>
+                        <li class="menu-item ">
+                           <a href="{%url 'bima_policy:policy_deleted_entry'%}" class="menu-link">
+                              <i class="fa fa-trash" style=" color: rgb(110, 17, 244);" aria-hidden="true"
+                                 id='icon'></i>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;">Trash</span>
+                           </a>
+                        </li>
 
-                           <li class="menu-item ">
-                              <a href="{%url 'bima_policy:profile'%}" class="menu-link">                         
-                              <i class="fa fa-user-circle" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue116"  style="margin-left: 10px;" >Profile</span>
-                              </a>
-                           </li>   
-                        </div>
-                        {% endif %}
-                     </ul>
-                  </nav>               
-               </div>
-               <!-- /.aside-menu -->
-               <!-- Skin changer -->
-               <footer class="aside-footer border-top p-2">
-                  <button class="btn btn-light btn-block text-primary" data-toggle="skin" disabled> 
-                  </button>
-                 
-               </footer>
-               <!-- /Skin changer -->
+                        <!-- /.menu-item -->
+                        <li class="menu-header" style=" color: rgb(110, 17, 244);">Settings </li>
+
+                        <li class="menu-item ">
+                           <a href="{%url 'bima_policy:profile'%}" class="menu-link">
+                              <i class="fa fa-user-circle" style=" color: rgb(110, 17, 244);" aria-hidden="true"
+                                 id='icon'></i>
+                              <span class="menu-text text-blue116" style="margin-left: 10px;">Profile</span>
+                           </a>
+                        </li>
+                     </div>
+                     {% endif %}
+                  </ul>
+               </nav>
             </div>
-            <!-- /.aside-content -->
-         </aside>
-         <!-- /.app-aside -->
-         {%block content%}{%endblock%}
-         <div class="aside-backdrop"></div>
+            <!-- /.aside-menu -->
+            <!-- Skin changer -->
+            <footer class="aside-footer border-top p-2">
+               <button class="btn btn-light btn-block text-primary" data-toggle="skin" disabled>
+               </button>
+
+            </footer>
+            <!-- /Skin changer -->
+         </div>
+         <!-- /.aside-content -->
+      </aside>
+      <!-- /.app-aside -->
+      {%block content%}{%endblock%}
+      <div class="aside-backdrop"></div>
+   </div>
+   <!-- /.app -->
+   {% comment %} <div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1"
+      role="dialog" aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
+      <!-- .modal-dialog -->
+      <div class="modal-dialog" role="document">
+         <!-- .modal-content -->
+         <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+               <h5 class="modal-title">
+                  <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
+               </h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+               <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the
+                  error remains the same, you need to contact your Administrator immediately.
+               </p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+               <button type="button" class="btn btn-light" data-dismiss="modal">OK</button>
+            </div>
+            <!-- /.modal-footer -->
+         </div>
+         <!-- /.modal-content -->
       </div>
-      <!-- /.app -->
-      {% comment %} <div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog"
-         aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
-         <!-- .modal-dialog -->
-         <div class="modal-dialog" role="document">
-            <!-- .modal-content -->
-            <div class="modal-content">
-               <!-- .modal-header -->
-               <div class="modal-header">
-                  <h5 class="modal-title">
-                     <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
-                  </h5>
-               </div>
-               <!-- /.modal-header -->
-               <!-- .modal-body -->
-               <div class="modal-body">
-                  <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the
-                     error remains the same, you need to contact your Administrator immediately.
-                  </p>
-               </div>
-               <!-- /.modal-body -->
-               <!-- .modal-footer -->
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-light" data-dismiss="modal">OK</button>
-               </div>
-               <!-- /.modal-footer -->
-            </div>
-            <!-- /.modal-content -->
-         </div>
-         <!-- /.modal-dialog -->
-      </div> {% endcomment %}
-      <!-- /.modal -->
-      <!-- BEGIN BASE JS -->
-      <script src="{%static 'js/jquery.min.js'%}"></script>
-      <script src="{%static 'js/popper.min.js'%}"></script>
-      <script src="{%static 'js/bootstrap.min.js'%}"></script> <!-- END BASE JS -->
-      <!-- BEGIN PLUGINS JS -->
-      <script src="{% static 'js/pace.min.js' %}"></script>
-      <script src="{% static 'js/stacked-menu.min.js' %}"></script>
-      <script src="{%static 'js/perfect-scrollbar.min.js' %}"></script> <!-- END PLUGINS JS -->
-      <!-- Parsley -->
-      <script src="{%static 'js/parsley.js'%}"></script>
-      <!-- BEGIN THEME JS -->
-      <script src="{%static 'js/theme.js'%}"></script>
-      <script src="{%static 'js/toastr.min.js' %}"></script>
-      <script src="{%static 'js/flatpickr.min.js' %}"></script>
-      <script src="{%static 'js/select2.full.min.js' %}"></script>
-      <script src="{%static 'js/moment.js' %}"></script>
-      <script src="{%static 'js/mask-as-number.min.js' %}"></script>
-      <script src="{%static 'js/jquery.dataTables.min.js'%}"></script>
-      <script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
-      <script src="{%static 'js/jquery.form.js' %}"></script>
-      <script src="{%static 'js/custom.min.js' %}"></script>
-      {% comment %} <script src="{%static 'js/insurance.min.js' %}"></script> {% endcomment %}
-      <script src="{% static 'js/Chart.min.js' %}"></script>
-      <script>
-         $(document).ready(function () {
-         	var data = {
-         		labels: JSON.parse('["Jun-2022"]'),
-         		datasets: [
-         			{
-         				label: 'OK Policies',
-         				borderColor: "#00A28A",
-         				backgroundColor: "#00A28A",
-         				data: JSON.parse('[0]'),
-         			},
-         			{
-         				label: 'Cancelled Policies',
-         				borderColor: "#00A28A",
-         				backgroundColor: "red",
-         				data: JSON.parse('[1]'),
-         			}
-         		]
-         	};
-         	var canvas = $('#canvas-total-policy')[0].getContext('2d');
-         	var chart = new Chart(canvas, {
-         		type: 'bar',
-         		data: data,
-         		options: {
-         			responsive: true,
-         			legend: {
-         				position: 'top' // place legend on the right side of chart
-         			},
-         			scales: {
-         				xAxes: [{
-         					gridLines: {
-         						display: true,
-         						drawBorder: false,
-         						drawOnChartArea: false
-         					},
-         					stacked: true,
-         				}],
-         				yAxes: [{
-         					gridLines: {
-         						display: true,
-         						borderDash: [8, 4]
-         					},
-         					ticks: {
-         						stepSize: 20
-         					},
-         					stacked: true,
-         				}]
-         			}
-         		}
-         	});
-         	var data = {
-         		labels: JSON.parse('["Jun-2022"]'),
-         		datasets: [{
-         			label: 'Earnings (In Lacs)',
-         			borderColor: "#ea6759",
-         			backgroundColor: "#5f4b8b",
-         			data: JSON.parse('[0]'),
-         		}]
-         	};
-         	var canvas = $('#canvas-total-earning')[0].getContext('2d');
-         	var chart = new Chart(canvas, {
-         		type: 'bar',
-         		data: data,
-         		options: {
-         			responsive: true,
-         			legend: {
-         				position: 'top' // place legend on the right side of chart
-         			},
-         			scales: {
-         				xAxes: [{
-         					gridLines: {
-         						display: true,
-         						drawBorder: false,
-         						drawOnChartArea: false
-         					},
-         					stacked: true,
-         				}],
-         				yAxes: [{
-         					gridLines: {
-         						display: true,
-         						borderDash: [8, 4]
-         					},
-         					ticks: {
-         						stepSize: 20
-         					},
-         					stacked: true,
-         				}]
-         			}
-         		}
-         	});
+      <!-- /.modal-dialog -->
+   </div> {% endcomment %}
+   <!-- /.modal -->
+   <!-- BEGIN BASE JS -->
+   <script src="{%static 'js/jquery.min.js'%}"></script>
+   <script src="{%static 'js/popper.min.js'%}"></script>
+   <script src="{%static 'js/bootstrap.min.js'%}"></script> <!-- END BASE JS -->
+   <!-- BEGIN PLUGINS JS -->
+   <script src="{% static 'js/pace.min.js' %}"></script>
+   <script src="{% static 'js/stacked-menu.min.js' %}"></script>
+   <script src="{%static 'js/perfect-scrollbar.min.js' %}"></script> <!-- END PLUGINS JS -->
+   <!-- Parsley -->
+   <script src="{%static 'js/parsley.js'%}"></script>
+   <!-- BEGIN THEME JS -->
+   <script src="{%static 'js/theme.js'%}"></script>
+   <script src="{%static 'js/toastr.min.js' %}"></script>
+   <script src="{%static 'js/flatpickr.min.js' %}"></script>
+   <script src="{%static 'js/select2.full.min.js' %}"></script>
+   <script src="{%static 'js/moment.js' %}"></script>
+   <script src="{%static 'js/mask-as-number.min.js' %}"></script>
+   <script src="{%static 'js/jquery.dataTables.min.js'%}"></script>
+   <script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
+   <script src="{%static 'js/jquery.form.js' %}"></script>
+   <script src="{%static 'js/custom.min.js' %}"></script>
+   {% comment %}
+   <script src="{%static 'js/insurance.min.js' %}"></script> {% endcomment %}
+   <script src="{% static 'js/Chart.min.js' %}"></script>
+   <script>
+      $(document).ready(function () {
+         var data = {
+            labels: JSON.parse('["Jun-2022"]'),
+            datasets: [
+               {
+                  label: 'OK Policies',
+                  borderColor: "#00A28A",
+                  backgroundColor: "#00A28A",
+                  data: JSON.parse('[0]'),
+               },
+               {
+                  label: 'Cancelled Policies',
+                  borderColor: "#00A28A",
+                  backgroundColor: "red",
+                  data: JSON.parse('[1]'),
+               }
+            ]
+         };
+         var canvas = $('#canvas-total-policy')[0].getContext('2d');
+         var chart = new Chart(canvas, {
+            type: 'bar',
+            data: data,
+            options: {
+               responsive: true,
+               legend: {
+                  position: 'top' // place legend on the right side of chart
+               },
+               scales: {
+                  xAxes: [{
+                     gridLines: {
+                        display: true,
+                        drawBorder: false,
+                        drawOnChartArea: false
+                     },
+                     stacked: true,
+                  }],
+                  yAxes: [{
+                     gridLines: {
+                        display: true,
+                        borderDash: [8, 4]
+                     },
+                     ticks: {
+                        stepSize: 20
+                     },
+                     stacked: true,
+                  }]
+               }
+            }
          });
-      </script>
-      <div class="flatpickr-calendar rangeMode animate" tabindex="-1">
-         <div class="flatpickr-months">
-            <span class="flatpickr-prev-month">
-               <svg version="1.1"
-                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 17 17">
-                  <g></g>
-                  <path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z">
-                  </path>
-               </svg>
-            </span>
-            <div class="flatpickr-month">
-               <div class="flatpickr-current-month">
-                  <select class="flatpickr-monthDropdown-months" tabindex="-1">
-                     <option class="flatpickr-monthDropdown-month" value="0" tabindex="-1">January</option>
-                     <option class="flatpickr-monthDropdown-month" value="1" tabindex="-1">February</option>
-                     <option class="flatpickr-monthDropdown-month" value="2" tabindex="-1">March</option>
-                     <option class="flatpickr-monthDropdown-month" value="3" tabindex="-1">April</option>
-                     <option class="flatpickr-monthDropdown-month" value="4" tabindex="-1">May</option>
-                     <option class="flatpickr-monthDropdown-month" value="5" tabindex="-1">June</option>
-                     <option class="flatpickr-monthDropdown-month" value="6" tabindex="-1">July</option>
-                     <option class="flatpickr-monthDropdown-month" value="7" tabindex="-1">August</option>
-                     <option class="flatpickr-monthDropdown-month" value="8" tabindex="-1">September</option>
-                     <option class="flatpickr-monthDropdown-month" value="9" tabindex="-1">October</option>
-                     <option class="flatpickr-monthDropdown-month" value="10" tabindex="-1">November</option>
-                     <option class="flatpickr-monthDropdown-month" value="11" tabindex="-1">December</option>
-                  </select>
-                  <div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1"
+         var data = {
+            labels: JSON.parse('["Jun-2022"]'),
+            datasets: [{
+               label: 'Earnings (In Lacs)',
+               borderColor: "#ea6759",
+               backgroundColor: "#5f4b8b",
+               data: JSON.parse('[0]'),
+            }]
+         };
+         var canvas = $('#canvas-total-earning')[0].getContext('2d');
+         var chart = new Chart(canvas, {
+            type: 'bar',
+            data: data,
+            options: {
+               responsive: true,
+               legend: {
+                  position: 'top' // place legend on the right side of chart
+               },
+               scales: {
+                  xAxes: [{
+                     gridLines: {
+                        display: true,
+                        drawBorder: false,
+                        drawOnChartArea: false
+                     },
+                     stacked: true,
+                  }],
+                  yAxes: [{
+                     gridLines: {
+                        display: true,
+                        borderDash: [8, 4]
+                     },
+                     ticks: {
+                        stepSize: 20
+                     },
+                     stacked: true,
+                  }]
+               }
+            }
+         });
+      });
+   </script>
+
+   <div class="flatpickr-calendar rangeMode animate" tabindex="-1">
+      <div class="flatpickr-months">
+         <span class="flatpickr-prev-month">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 17 17">
+               <g></g>
+               <path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z">
+               </path>
+            </svg>
+         </span>
+         <div class="flatpickr-month">
+            <div class="flatpickr-current-month">
+               <select class="flatpickr-monthDropdown-months" tabindex="-1">
+                  <option class="flatpickr-monthDropdown-month" value="0" tabindex="-1">January</option>
+                  <option class="flatpickr-monthDropdown-month" value="1" tabindex="-1">February</option>
+                  <option class="flatpickr-monthDropdown-month" value="2" tabindex="-1">March</option>
+                  <option class="flatpickr-monthDropdown-month" value="3" tabindex="-1">April</option>
+                  <option class="flatpickr-monthDropdown-month" value="4" tabindex="-1">May</option>
+                  <option class="flatpickr-monthDropdown-month" value="5" tabindex="-1">June</option>
+                  <option class="flatpickr-monthDropdown-month" value="6" tabindex="-1">July</option>
+                  <option class="flatpickr-monthDropdown-month" value="7" tabindex="-1">August</option>
+                  <option class="flatpickr-monthDropdown-month" value="8" tabindex="-1">September</option>
+                  <option class="flatpickr-monthDropdown-month" value="9" tabindex="-1">October</option>
+                  <option class="flatpickr-monthDropdown-month" value="10" tabindex="-1">November</option>
+                  <option class="flatpickr-monthDropdown-month" value="11" tabindex="-1">December</option>
+               </select>
+               <div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1"
                      aria-label="Year"><span class="arrowUp"></span><span class="arrowDown"></span></div>
+            </div>
+         </div>
+         <span class="flatpickr-next-month">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 17 17">
+               <g></g>
+               <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z">
+               </path>
+            </svg>
+         </span>
+      </div>
+      <div class="flatpickr-innerContainer">
+         <div class="flatpickr-rContainer">
+            <div class="flatpickr-weekdays">
+               <div class="flatpickr-weekdaycontainer">
+                  <span class="flatpickr-weekday">
+                     Sun</span><span class="flatpickr-weekday">Mon</span><span class="flatpickr-weekday">Tue</span><span
+                     class="flatpickr-weekday">Wed</span><span class="flatpickr-weekday">Thu</span><span
+                     class="flatpickr-weekday">Fri</span><span class="flatpickr-weekday">Sat
+                  </span>
                </div>
             </div>
-            <span class="flatpickr-next-month">
-               <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 17 17">
-                  <g></g>
-                  <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z">
-                  </path>
-               </svg>
-            </span>
-         </div>
-         <div class="flatpickr-innerContainer">
-            <div class="flatpickr-rContainer">
-               <div class="flatpickr-weekdays">
-                  <div class="flatpickr-weekdaycontainer">
-                     <span class="flatpickr-weekday">
-                     Sun</span><span class="flatpickr-weekday">Mon</span><span
-                        class="flatpickr-weekday">Tue</span><span class="flatpickr-weekday">Wed</span><span
-                        class="flatpickr-weekday">Thu</span><span class="flatpickr-weekday">Fri</span><span
-                        class="flatpickr-weekday">Sat
-                     </span>
-                  </div>
-               </div>
-               <div class="flatpickr-days" tabindex="-1">
-                  <div class="dayContainer"><span class="flatpickr-day prevMonthDay" aria-label="June 26, 2022"
+            <div class="flatpickr-days" tabindex="-1">
+               <div class="dayContainer"><span class="flatpickr-day prevMonthDay" aria-label="June 26, 2022"
                      tabindex="-1">26</span><span class="flatpickr-day prevMonthDay" aria-label="June 27, 2022"
                      tabindex="-1">27</span><span class="flatpickr-day prevMonthDay" aria-label="June 28, 2022"
                      tabindex="-1">28</span><span class="flatpickr-day prevMonthDay" aria-label="June 29, 2022"
@@ -662,39 +677,38 @@
                      tabindex="-1">24</span><span class="flatpickr-day " aria-label="July 25, 2022"
                      tabindex="-1">25</span><span class="flatpickr-day " aria-label="July 26, 2022"
                      tabindex="-1">26</span><span class="flatpickr-day today" aria-label="July 27, 2022"
-                     aria-current="date" tabindex="-1">27</span><span class="flatpickr-day "
-                     aria-label="July 28, 2022" tabindex="-1">28</span><span class="flatpickr-day "
-                     aria-label="July 29, 2022" tabindex="-1">29</span><span class="flatpickr-day "
-                     aria-label="July 30, 2022" tabindex="-1">30</span><span class="flatpickr-day "
-                     aria-label="July 31, 2022" tabindex="-1">31</span><span class="flatpickr-day nextMonthDay"
-                     aria-label="August 1, 2022" tabindex="-1">1</span><span class="flatpickr-day nextMonthDay"
-                     aria-label="August 2, 2022" tabindex="-1">2</span><span class="flatpickr-day nextMonthDay"
-                     aria-label="August 3, 2022" tabindex="-1">3</span><span class="flatpickr-day nextMonthDay"
-                     aria-label="August 4, 2022" tabindex="-1">4</span><span class="flatpickr-day nextMonthDay"
-                     aria-label="August 5, 2022" tabindex="-1">5</span><span class="flatpickr-day nextMonthDay"
-                     aria-label="August 6, 2022" tabindex="-1">6</span></div>
-               </div>
+                     aria-current="date" tabindex="-1">27</span><span class="flatpickr-day " aria-label="July 28, 2022"
+                     tabindex="-1">28</span><span class="flatpickr-day " aria-label="July 29, 2022"
+                     tabindex="-1">29</span><span class="flatpickr-day " aria-label="July 30, 2022"
+                     tabindex="-1">30</span><span class="flatpickr-day " aria-label="July 31, 2022"
+                     tabindex="-1">31</span><span class="flatpickr-day nextMonthDay" aria-label="August 1, 2022"
+                     tabindex="-1">1</span><span class="flatpickr-day nextMonthDay" aria-label="August 2, 2022"
+                     tabindex="-1">2</span><span class="flatpickr-day nextMonthDay" aria-label="August 3, 2022"
+                     tabindex="-1">3</span><span class="flatpickr-day nextMonthDay" aria-label="August 4, 2022"
+                     tabindex="-1">4</span><span class="flatpickr-day nextMonthDay" aria-label="August 5, 2022"
+                     tabindex="-1">5</span><span class="flatpickr-day nextMonthDay" aria-label="August 6, 2022"
+                     tabindex="-1">6</span></div>
             </div>
          </div>
       </div>
+   </div>
 
-      <div class="modal fade" id="mdlUpdatePassword" style="height: 400px">
+   <div class="modal fade" id="mdlUpdatePassword" style="height: 400px">
 
-         <div class="modal-dialog" role="document">
-   
-            <div class="modal-content">
-               <div class="modal-header">
-                  <h5 id="rtoModalLabel" class="modal-title"> Change Password</h5>
-               </div>
-               <div class="modal-body ">
-                  <div class="form-row">
-                     <div class="col-md-6 mb-4">
-                        <div class=""><label>Old Password:<input id="inp_old_pass" type="password" value=""
-                                 class="form-control" name="agent" style="text-transform: uppercase;"
-                                 title="Search POS using Name, mobile no, email, pan/aadhar number" 
-                                 >
-   
-                              <!-- <script>
+      <div class="modal-dialog" role="document">
+
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 id="rtoModalLabel" class="modal-title"> Change Password</h5>
+            </div>
+            <div class="modal-body ">
+               <div class="form-row">
+                  <div class="col-md-6 mb-4">
+                     <div class=""><label>Old Password:<input id="inp_old_pass" type="password" value=""
+                              class="form-control" name="agent" style="text-transform: uppercase;"
+                              title="Search POS using Name, mobile no, email, pan/aadhar number">
+
+                           <!-- <script>
                                  function handle(e) {
                                     if (e.keyCode === 13) {
                                        e.preventDefault(); // Ensure it is only this code that runs
@@ -703,74 +717,90 @@
                                     }
                                  }
                               </script> -->
-                           </label></div>
-                     </div>
-                     <div class="col-md-6 mb-4">
-                        <div class=""><label>New Password:<input id="inp_new_pass" type="password" value=""
-                                 class="form-control" name="agent" style="text-transform: uppercase;"
-                                 title="POS should be automatically fetched">
-                           </label>
-                        </div>
-                     </div>
+                        </label></div>
                   </div>
-   
-                  <!-- <button class="btn btn-primary" style="margin-bottom: -60px;"  onclick="add_agent()">Update</button> -->
-                  <!-- old pass:  123@expe1
-                  new pass:  123@expe -->
-                  <script>
-                     function change_password() {
-   
-                        old_pass = document.getElementById('inp_old_pass').value.toString().trim()
-                        new_pass = document.getElementById('inp_new_pass').value.toString().trim()
-                        if ((old_pass == "") || (new_pass == "")) {
-                           alert('Inavlid value')
-                           return
-                        }
-   
-                        // url = window.location.origin + '/bima_policy/change_password/' + old_pass + "|" + new_pass
-                        url = window.location.origin + '/bima_policy/change_password/'
-                        jsonData = JSON.stringify(old_pass + "|" + new_pass)
-   
-                        $.ajax({
-                        
-                           url: url,
-                           type: 'POST',
-                           beforeSend: function (xhr) {
-                              xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-                           },
-                           data: { 'data': jsonData },
-                           dataType: 'json',
-                           success: function (response) {
-                              res = JSON.parse(JSON.stringify(response))                        
-                              console.log(res);                               
-                              alert(res['status']);                          
-                           },
-                           error: function (xhr, status, error) {
-                              // Handle any errors that occurred during the request
-                              console.log('error occurred ', error);
-                             
-                           }
-                        });
-   
-                        // window.location.replace(url)
-                     }
-   
-   
-                  </script>
-   
-                  <div class="modal-footer">
-                     <button class="btn btn-primary" onclick="change_password()">Update</button>
-                     <button id="btnExit" type="button" class="btn btn-secondary w-100p"
-                        data-dismiss="modal">Close</button>                   
+                  <div class="col-md-6 mb-4">
+                     <div class=""><label>New Password:<input id="inp_new_pass" type="password" value=""
+                              class="form-control" name="agent" style="text-transform: uppercase;"
+                              title="POS should be automatically fetched">
+                        </label>
+                     </div>
                   </div>
                </div>
-   
+
+               <!-- <button class="btn btn-primary" style="margin-bottom: -60px;"  onclick="add_agent()">Update</button> -->
+               <!-- old pass:  123@expe1
+                  new pass:  123@expe -->
+               <script>
+                  function change_password() {
+
+                     old_pass = document.getElementById('inp_old_pass').value.toString().trim()
+                     new_pass = document.getElementById('inp_new_pass').value.toString().trim()
+                     if ((old_pass == "") || (new_pass == "")) {
+                        alert('Inavlid value')
+                        return
+                     }
+
+                     // url = window.location.origin + '/bima_policy/change_password/' + old_pass + "|" + new_pass
+                     url = window.location.origin + '/bima_policy/change_password/'
+                     jsonData = JSON.stringify(old_pass + "|" + new_pass)
+
+                     $.ajax({
+
+                        url: url,
+                        type: 'POST',
+                        beforeSend: function (xhr) {
+                           xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                        },
+                        data: { 'data': jsonData },
+                        dataType: 'json',
+                        success: function (response) {
+                           res = JSON.parse(JSON.stringify(response))
+                           console.log(res);
+                           alert(res['status']);
+                        },
+                        error: function (xhr, status, error) {
+                           // Handle any errors that occurred during the request
+                           console.log('error occurred ', error);
+
+                        }
+                     });
+
+                     // window.location.replace(url)
+                  }
+
+
+               </script>
+
+               <div class="modal-footer">
+                  <button class="btn btn-primary" onclick="change_password()">Update</button>
+                  <button id="btnExit" type="button" class="btn btn-secondary w-100p"
+                     data-dismiss="modal">Close</button>
+               </div>
             </div>
-   
+
          </div>
-   
+
       </div>
 
+   </div>
 
-   </body>
+   <script>
+
+   function showNotification(message) {
+      document.getElementById('notification_div').style.display = "flex";
+      document.getElementById('notification').style.display = 'block';
+      document.getElementById('notification').innerHTML = message;
+   }
+   
+   function hideNotification() {
+      document.getElementById('notification_div').style.display = 'none';
+      // document.getElementById('notification').style.display = 'block';
+      // document.getElementById('notification').innerHTML = message;
+   }
+
+   </script>
+
+</body>
+
 </html>

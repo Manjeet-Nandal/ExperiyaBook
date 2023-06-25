@@ -201,7 +201,7 @@
                                              {% for value in models %}
                                              <option value="{{value.model}}">{{value.model}}</option>
                                              {%endfor%}
-                                          
+
                                           </select>
                                        </div>
 
@@ -391,7 +391,7 @@
 
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="bqp" class="custom-select" required >
+                                          <select name="bqp" class="custom-select" required>
                                              <!-- <option value="">-- Select BQP --</option> -->
                                              {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
@@ -758,14 +758,14 @@
                                        </div>
                                        <div class="col-md-3 mb-4">
                                           <label>BQP <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="bqp" class="custom-select" required >
+                                          <select name="bqp" class="custom-select" required>
                                              <!-- <option value="" hidden>-- Select BQP --</option> -->
                                              {%for value in bqps %}
                                              <option value="{{value}}">{{value}}</option>
                                              {%endfor%}
                                           </select>
                                        </div>
-                                      
+
                                        <div class="col-md-3 mb-4">
                                           <label for="employee">Employee <abbr title=""
                                                 class="text-danger">*</abbr></label><input type="text"
@@ -979,16 +979,16 @@
                <hr>
 
                <style>
-                  .text-blue116{
+                  .text-blue116 {
                      color: rgb(116, 48, 249);
                      /* font-weight: bold; */
                      font-weight: 550;
                   }
                </style>
 
-               <div class="form-row" >
+               <div class="form-row">
                   <div class="col-md-12 col-sm-12">
-                     <div id="payoutSection" class="card card-inverse " style=" background-color: rgb(110, 17, 244);" >
+                     <div id="payoutSection" class="card card-inverse " style=" background-color: rgb(110, 17, 244);">
                         <!-- .card -->
                         <div class="card-header p-2">
                            <h4 class="card-title mb-1">Payouts</h4>
@@ -1004,11 +1004,13 @@
                               <!-- <button hidden type="submit" name="submit" class="btn btn-success w-100p">Save</button> -->
 
                               <a href="#">
-                                 <button type="button" class="btn w-100p text-blue116" style=" background-color: white; "  onclick="sendPolicyData()">Save
+                                 <button type="button" class="btn w-100p text-blue116"
+                                    style=" background-color: white; " onclick="sendPolicyData()">Save
                                  </button>
                               </a>
                               {% else %}
-                              <button type="submit" name="submit" class="btn w-100p text-blue116" style=" background-color: white; ">Save</button>
+                              <button type="submit" name="submit" class="btn w-100p text-blue116"
+                                 style=" background-color: white; ">Save</button>
                               {% endif %}
 
                            </div>
@@ -2471,7 +2473,7 @@
    }
 
    function clearFormData() {
-
+     
       formDataList = []
 
       selectElement = document.getElementById("formDataSelect");
@@ -2488,14 +2490,7 @@
       val = validateFormData()
 
       if (val.includes(' is missing')) {
-
-         notification_div = document.getElementById('notification_div');
-         notification_div.style.display = "flex";
-
-         notification = document.getElementById('notification');
-         notification.innerHTML = val + " 😢"
-         notification.style.display = 'block';
-
+         showNotification(('⚠️ ' + val.toUpperCase()));
          return;
       }
 
@@ -2557,9 +2552,11 @@
 
    function sendFormData(formDataKey, formData) {
 
-      document.getElementById('notification_div').style.display = "flex";
-      document.getElementById('notification').style.display = 'block';
-      document.getElementById('notification').innerHTML = 'Saving policy...';
+      // document.getElementById('notification_div').style.display = "flex";
+      // document.getElementById('notification').style.display = 'block';
+      // document.getElementById('notification').innerHTML = 'Saving policy...';
+    
+      showNotification('⌛️ Getting ready...')
 
       href = window.location.origin + '/bima_policy/policy/new_entry/'
 
@@ -2576,13 +2573,18 @@
 
             result = JSON.parse(JSON.stringify(response)).toString()
             console.log(result);
-            document.getElementById('notification').innerHTML = result;
-
-            if (result.includes('Succeed:'))
-               removeFormData(formDataKey)
-
-            // document.getElementById("countFormData").innerHTML = formDataList.length + " pols"
-            document.getElementById("countFormData").innerHTML = 'Policies: ' + formDataList.length
+        
+            if (result.includes('done:')){             
+               // showNotification('⚠️ ' + val);            
+               showNotification('✅ ' + 'succeed :'.toUpperCase() +  formDataKey.toUpperCase());
+               removeFormData(formDataKey)              
+            }
+            else{            
+               showNotification('❌ ' + 'failed :'.toUpperCase() +  + formDataKey.toUpperCase());          
+               // document.getElementById("countFormData").innerHTML = 'Policies: ' + formDataList.length
+               // document.getElementById("countFormData").hidden = false
+            }    
+           
          },
          error: function (xhr, status, error) {
             console.log(error);
@@ -2642,8 +2644,8 @@
 
 </script>
 
-<!-- 
-<body onload="mockAllField()">
+
+<!-- <body onload="mockAllField()">
 
 </body> -->
 
