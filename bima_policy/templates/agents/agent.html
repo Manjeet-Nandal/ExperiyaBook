@@ -328,7 +328,7 @@
   }
 
 
-  function highlight(row) {
+  function highlightT(row) {
     SelectedRow = row.cells[0].textContent;
     deHighlight();
     // row.style.backgroundColor = 'silver';
@@ -347,7 +347,7 @@
     }
   }
 
-  function deHighlight() {
+  function deHighlightT() {
     let table = document.getElementById("tblInsurance");
     let rows = table.rows;
     for (let i = 0; i < rows.length; i++) {
@@ -370,6 +370,51 @@
         }
       }
     }
+  }
+
+
+  function highlight(row) {
+     
+     SelectedRow = row.cells[0].textContent;
+     deHighlight();    
+     row.style.background = "darkgray"   
+     row.style.color = 'black'
+     row.classList.toggle("selectedRow");
+
+     var anchorTag = row.getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
+
+     if (anchorTag) {
+        for (const iterator of anchorTag) {
+
+           // iterator.style.color = "white"
+        }
+     }
+  }
+
+  function deHighlight() {
+     let table = document.getElementById("tblInsurance");
+     let rows = table.rows;
+     for (let i = 0; i < rows.length; i++) {
+        // to avoid checked 
+        try {
+           is_checked = document.getElementById(`chkblkrm${i}`).checked
+           if (is_checked) {
+              continue;
+           }
+        } catch { }
+
+        // rows[i].style.background = "#FFFFFF";
+        rows[i].style.background = "";
+        // rows[i].style.color = "black";
+
+        var anchorTag = rows[i].getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
+
+        if (anchorTag) {
+           for (const iterator of anchorTag) {
+              // iterator.style.color = "black"
+           }
+        }
+     }
   }
 
 

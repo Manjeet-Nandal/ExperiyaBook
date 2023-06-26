@@ -1538,12 +1538,11 @@
    }
 
    function highlight(row) {
+     
       SelectedRow = row.cells[0].textContent;
-      deHighlight();
-      // row.style.backgroundColor = 'silver';
-      row.style.background = '#6E11F4'
-      // row.style.background = "gray"
-      row.style.color = '#FFFFFF'
+      deHighlight();    
+      row.style.background = "darkgray"   
+      row.style.color = 'black'
       row.classList.toggle("selectedRow");
 
       var anchorTag = row.getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
@@ -1551,7 +1550,7 @@
       if (anchorTag) {
          for (const iterator of anchorTag) {
 
-            iterator.style.color = "white"
+            // iterator.style.color = "white"
          }
       }
    }
@@ -1568,14 +1567,15 @@
             }
          } catch { }
 
-         rows[i].style.background = "#FFFFFF";
-         rows[i].style.color = "black";
+         // rows[i].style.background = "#FFFFFF";
+         rows[i].style.background = "";
+         // rows[i].style.color = "black";
 
          var anchorTag = rows[i].getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
 
          if (anchorTag) {
             for (const iterator of anchorTag) {
-               iterator.style.color = "black"
+               // iterator.style.color = "black"
             }
          }
       }
@@ -2441,7 +2441,7 @@
       document.getElementById('tbdy').innerHTML = ''
 
       if (records.length === 0) {
-         showNotification('❌ ' + 'No Policies!');
+         showNotification('❌ ' + 'NO POLICIES!');
          return
       }
 
@@ -2449,7 +2449,7 @@
 
          record = records[i]
 
-         recordHtml = '<tr class="policy-row"  >' +
+         recordHtml = '<tr class="policy-row" onclick="highlight(this)"  >' +
             '<td class="text-center" > ' + (i + 1) + '</td>' +
             '<td >' + record.proposal_no + '</td>' +
             `<td > <a href="" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="/bima_policy/policy/policy_entrydata/${record.policyid}" class=""> ${record.policy_no}</a> </td>` +
@@ -2504,14 +2504,14 @@
             '<td >' + record.self_tp_reward + '</td>' +
             '<td >' + record.self_tp_amount + '</td>' +
 
-            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.proposal}')">${record.proposal}</a> </td>` +
-            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.mandate}')">${record.mandate}</a> </td>` +
-            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.policy}')">${record.policy}</a> </td>` +
-            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.previous_policy}')">${record.previous_policy}</a> </td>` +
-            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>` +
-            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>` +
-            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.vehicle_rc}')">${record.vehicle_rc}</a> </td>` +
-            `<td class="text-center" > <a href="#" class="text-black" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>` +
+            `<td class="text-center" > <a href="#" onclick="downloadFile('${record.proposal}')">${record.proposal}</a> </td>` +
+            `<td class="text-center" > <a href="#" onclick="downloadFile('${record.mandate}')">${record.mandate}</a> </td>` +
+            `<td class="text-center" > <a href="#" onclick="downloadFile('${record.policy}')">${record.policy}</a> </td>` +
+            `<td class="text-center" > <a href="#" onclick="downloadFile('${record.previous_policy}')">${record.previous_policy}</a> </td>` +
+            `<td class="text-center" > <a href="#" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>` +
+            `<td class="text-center" > <a href="#" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>` +
+            `<td class="text-center" > <a href="#" onclick="downloadFile('${record.vehicle_rc}')">${record.vehicle_rc}</a> </td>` +
+            `<td class="text-center" > <a href="#" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>` +
 
             `<td class="text-center"> <form method="POST">   {% csrf_token %}
          <a href="/bima_policy/policy/policy_entrydata/${record.policyid}"
@@ -2529,11 +2529,11 @@
          tableRows += recordHtml;
       }
 
-      showNotification('✅ Total Policies: ' + records.length);
-      document.getElementById('tbdy').innerHTML = tableRows;   
+      showNotification('✅ TOTAL POLICIES: ' + records.length);
+      document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
    }
-   
+
    function showNextRows(hideDefault) {
 
       event.preventDefault()

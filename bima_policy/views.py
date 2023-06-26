@@ -2600,11 +2600,16 @@ def policy_entry(request):
         for model in VehicleModel.objects.values('model'):
             models.append(model['model'])
 
+        current_datetime = datetime.now()
+        print(current_datetime)
+        
         if is_user(request): 
-            data = Policy.objects.order_by('-created_at').values()[:5] 
-        else:       
-            data = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-created_at').values()[:5]         
-               
+            # data = Policy.objects.order_by('-created_at').values()[:5]  
+            data = Policy.objects.filter(created_at= current_datetime).values()
+             
+        else: 
+            data = Policy.objects.filter(created_at = current_datetime, employee = get_id_from_session(request)).values()
+           
         context = {
             "agents": agents,
             "insurers": insurers,
@@ -2657,10 +2662,10 @@ def fetch_records(request):
     print(date1)  # Output: 2023-06-23      
   
     if is_user(request):                   
-        # records = Policy.objects.filter(created_at__gte= date1, created_at__lte= date2).values()      
-        records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()      
+        # records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()      
+        records = Policy.objects.filter(created_at__gte= date1, created_at__lte= date2).values()  
     else:
-        records = Policy.objects.filter(employee = get_id_from_session(request)).order_by('-created_at').values()    
+        records = Policy.objects.filter(created_at__gte= date1, created_at__lte= date2, employee = get_id_from_session(request)).values()    
 
     print(records.count())     
     return JsonResponse({'records': list( records)})
