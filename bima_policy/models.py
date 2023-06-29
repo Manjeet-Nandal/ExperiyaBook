@@ -83,7 +83,7 @@ class Agents(models.Model):
     profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
     posp_code = models.CharField(max_length=50)
     registration_code = models.CharField(max_length=50)
-    full_name = models.CharField(max_length=100)   
+    full_name = models.CharField(max_length=100)
     gender = models.CharField(max_length=50)
     email_id = models.EmailField(max_length=30)
     mob_no = models.CharField(max_length=12)
@@ -93,24 +93,24 @@ class Agents(models.Model):
     pincode = models.CharField(max_length=10)
     rural_urban = models.CharField(max_length=50)
     slab = models.CharField(max_length=100)
-    GSTIN = models.CharField(max_length=100)  
+    GSTIN = models.CharField(max_length=100)
     account_no = models.CharField(max_length=100)
     ifsc_code = models.CharField(max_length=100)
     bank_name = models.CharField(max_length=100)
-    
+
     basic_qualification = models.FileField(upload_to='media/documents/')
     aadhar_card = models.FileField(upload_to='media/documents/')
     pan_card = models.FileField(upload_to='media/documents/')
     training_certificate = models.FileField(upload_to='media/documents/')
     appointment_certificate = models.FileField(upload_to='media/documents/')
     agreement_certificate = models.FileField(upload_to='media/documents/')
-    bank_details= models.FileField(upload_to='media/documents/')
-    
-    password = models.CharField(max_length=20)    
+    bank_details = models.FileField(upload_to='media/documents/')
+
+    password = models.CharField(max_length=20)
     created_by = models.CharField(max_length=100)
     created_at = models.DateField(auto_now=True)
-    status = models.CharField(default='Active', max_length=20)   
-    # otp = models.CharField( max_length=4)    
+    status = models.CharField(default='Active', max_length=20)
+    # otp = models.CharField( max_length=4)
 
     def __str__(self):
         return self.full_name
@@ -206,7 +206,8 @@ class Payout(models.Model):
 
 
 class VehicleMake(models.Model):
-    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4().hex[:6].upper(), editable=False, max_length=30)   
+    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
+    ).hex[:6].upper(), editable=False, max_length=30)
     make = models.CharField(max_length=50)
     status = models.CharField(default='Active', max_length=20)
 
@@ -220,8 +221,8 @@ class VehicleMake(models.Model):
 
 class VehicleModel(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
-    ).hex[:6].upper(), editable=False, max_length=30)   
-    model = models.CharField(max_length=50)   
+    ).hex[:6].upper(), editable=False, max_length=30)
+    model = models.CharField(max_length=50)
     status = models.CharField(default='Active', max_length=20)
 
     def __str__(self):
@@ -310,7 +311,6 @@ class Policy(models.Model):
     remark = models.CharField(max_length=255)
 
     created_at = models.DateField(auto_now=True)
-    
 
     def __str__(self):
         return self.customer_name
@@ -535,8 +535,8 @@ class RtoTable(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:4].upper(), editable=False, max_length=10)
     rto_state = models.CharField(max_length=100, unique=True)
-    rto_city= models.CharField(max_length=100, unique=True)
-    rto_code= models.CharField(max_length=100, unique=True)
+    rto_city = models.CharField(max_length=100, unique=True)
+    rto_code = models.CharField(max_length=100, unique=True)
     status = models.CharField(default='Active', max_length=20)
 
     def __str__(self):
@@ -545,4 +545,3 @@ class RtoTable(models.Model):
     def save(self, *args, **kwargs):
         self.id = uuid.uuid4().hex[:4].upper()
         super(RtoTable, self).save(*args, **kwargs)
-

@@ -1,8 +1,7 @@
+from datetime import datetime
 import random
-# from twilio.rest import Client
 from django.conf import settings
 import ast
-import datetime
 from storages.backends.s3boto3 import S3Boto3Storage
 from django.http import HttpResponse
 import subprocess
@@ -1491,7 +1490,7 @@ class create_policy(View):
 def new_entryy(request, data):
     try:
         print('new_entry post method')
-        print('current_time: ', datetime.datetime.now())
+        print('current_time: ', datetime.now())
 
         print(request['data'])
         id = get_profile_id(get_id_from_session(request))
@@ -1590,7 +1589,7 @@ def new_entryy(request, data):
 
         data = Policy.objects.filter(policyid=pol.policyid).values()
 
-        print('current_time: ', datetime.datetime.now())
+        print('current_time: ', datetime.now())
 
         return render(request, 'policylist/policy_entry_list.html', {'data': data})
 
@@ -2570,7 +2569,7 @@ def apply_policy(request, id):
         print(ex)
         return HttpResponse('apply_policy method originated folowing error: ' + ex)
 
-
+# import datetime
 def policy_entry(request):
     try:
         print('policy_entry method')
@@ -2602,21 +2601,21 @@ def policy_entry(request):
 
         current_datetime = datetime.now()
         print(current_datetime)
-        
-        if is_user(request): 
-            # data = Policy.objects.order_by('-created_at').values()[:5]  
-            data = Policy.objects.filter(created_at= current_datetime).values()
-             
-        else: 
-            data = Policy.objects.filter(created_at = current_datetime, employee = get_id_from_session(request)).values()
-           
+
+        if is_user(request):
+            # data = Policy.objects.order_by('-created_at').values()[:5]
+            data = Policy.objects.filter(created_at=current_datetime).values()
+
+        else:
+            data = Policy.objects.filter( created_at=current_datetime, employee=get_id_from_session(request)).values()
+
         context = {
             "agents": agents,
             "insurers": insurers,
             "vehicle_categories": vehicle_categories,
             "makes": makes,
             "models": models,
-            "data": data,           
+            "data": data,
             "is_user": is_user(request),
             "user_name": get_user_name(request)
         }
@@ -2628,12 +2627,10 @@ def policy_entry(request):
         return HttpResponse('Error in policy_entry ' + str(ex))
 
 
-from datetime import datetime
+def fetch_records(request):
+    print('\nfetch calling ')
 
-def fetch_records(request):  
-    print('\nfetch calling ')   
-
-    data =request.GET.get('data').split('|')
+    data = request.GET.get('data').split('|')
     print(data)
 
     d1_array = data[0].split('-')
@@ -2651,7 +2648,7 @@ def fetch_records(request):
 
     print('date 1: ', date1)
     print('date 2: ', date2)
-  
+
     date_string = date1
     date_string2 = date2
     date_format = '%Y-%m-%d'
@@ -2659,16 +2656,17 @@ def fetch_records(request):
     date1 = datetime.strptime(date_string, date_format).date()
     date2 = datetime.strptime(date_string2, date_format).date()
 
-    print(date1)  # Output: 2023-06-23      
-  
-    if is_user(request):                   
-        # records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()      
-        records = Policy.objects.filter(created_at__gte= date1, created_at__lte= date2).values()  
-    else:
-        records = Policy.objects.filter(created_at__gte= date1, created_at__lte= date2, employee = get_id_from_session(request)).values()    
+    print(date1)  # Output: 2023-06-23
 
-    print(records.count())     
-    return JsonResponse({'records': list( records)})
+    if is_user(request):
+        # records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()
+        records = Policy.objects.filter(created_at__gte=date1, created_at__lte=date2).values()
+    else:
+        records = Policy.objects.filter(
+            created_at__gte=date1, created_at__lte=date2, employee=get_id_from_session(request)).values()
+
+    print(records.count())
+    return JsonResponse({'records': list(records)})
 
 
 def policy_saerch_entry(request, id):
@@ -5599,5 +5597,3 @@ def send_otp_via_twilio(to, otp):
     #     to=to
     # )
     # return message.sid
-
-

@@ -4,9 +4,6 @@ bima_policy/static/~$vhdata.xlsx
 *.pyc
 *.pdf
 
+__pycache__
 
-**/__pycache__/
-bima_policy/__pycache__/
-
-Bima/__pycache__/
-bima_policy/migrations/__pycache__
+.env

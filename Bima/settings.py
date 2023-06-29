@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0v_0p6s6#68rtu!3t=hqk$l)*z391o2vtx11q+ew-r8s@@u5r*'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -86,15 +88,14 @@ WSGI_APPLICATION = 'Bima.wsgi.application'
 #     }
 # }
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'ExperiyaBook',
+        'NAME': os.environ.get('DB_NAME'),
         'CLIENT': {
-                'host': 'mongodb+srv://bhavi:Rqw7dAxrzY3UUj1S@experiya.bi2f9gh.mongodb.net/?retryWrites=true&w=majority',
-                'username': 'bhavi',
-                'password': 'Rqw7dAxrzY3UUj1S',
+            'host': os.environ.get('DB_HOST'),
+            'username': os.environ.get('DB_USER_NAME'),
+            'password': os.environ.get('DB_USER_PASSWORD'),
         }
     }
 }
@@ -155,16 +156,11 @@ LOGIN_REDIRECT_URL = 'login/'
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
-
-AWS_ACCESS_KEY_ID = "AKIAQHVWIUX56OGJLSBN"
-AWS_SECRET_ACCESS_KEY = "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"
-AWS_STORAGE_BUCKET_NAME = "experiya-book-bucket"
-
-# TWILIO_ACCOUNT_SID = 'AC87cb05fa440182b1e98a324f50dae252'
-# TWILIO_AUTH_TOKEN = '266f128ba7d499c0e0a4885de0bc8413'``
-# TWILIO_PHONE_NUMBER = '+13613154583'
-# TWILIO_PHONE_TO = '+919215501095'
-
+SECRETSMAN_ACCESS_KEY = os.environ.get('SECRETSMAN_ACCESS_KEY')
+SECRETSMAN_SECRET_ACCESS_KEY = os.environ.get('SECRETSMAN_SECRET_ACCESS_KEY')
