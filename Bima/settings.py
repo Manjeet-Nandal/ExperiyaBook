@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -24,7 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if os.getenv('ENVIRONMENT') == 'dev':
+    DEBUG = True  
+else:  
+    DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -90,12 +94,12 @@ WSGI_APPLICATION = 'Bima.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
+        'ENGINE': os.environ.get('DB_ENGINE'),
         'NAME': os.environ.get('DB_NAME'),
         'CLIENT': {
             'host': os.environ.get('DB_HOST'),
             'username': os.environ.get('DB_USER_NAME'),
-            'password': os.environ.get('DB_USER_PASSWORD'),
+            'password': os.environ.get('DB_USER_PASSWORD')
         }
     }
 }
@@ -143,7 +147,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "bima_policy/static")
 ),
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -162,5 +168,3 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
-SECRETSMAN_ACCESS_KEY = os.environ.get('SECRETSMAN_ACCESS_KEY')
-SECRETSMAN_SECRET_ACCESS_KEY = os.environ.get('SECRETSMAN_SECRET_ACCESS_KEY')
