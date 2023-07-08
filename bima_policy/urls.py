@@ -45,6 +45,7 @@ urlpatterns = [
     path('policy', create_policy.as_view(), name="create_policy"),
     path('policy/create_policy_non_motor', create_policy_non_motor.as_view(), name="create_policy_non_motor"),  
     path('policy/entry/', policy_entry, name="policy_entry"),
+    path('policy/fetch_record/', fetch_record, name="fetch_record"),
     path('policy/fetch/', fetch_records, name="fetch_records"),
 
     path('policy/search_entry/<str:id>', policy_saerch_entry, name="policy_saerch_entry"),   

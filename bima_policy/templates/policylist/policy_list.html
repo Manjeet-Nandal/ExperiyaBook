@@ -774,7 +774,14 @@
                                              required>
                                        </div>
 
-                                       <div class="col-md-3 mb-4">
+                                       <!-- <div class="col-md-3 mb-4">
+                                          <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
+                                             id="pos" type="text" value="" data-toggle="modal" data-target="#mdlPOS"
+                                             class="form-control" name="pos" style="text-transform: uppercase;" required
+                                             readonly>
+                                       </div> -->
+
+                                       <div class="col-md-3 mb-4" onkeypress="document.getElementById('pos').click();">
                                           <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
                                              id="pos" type="text" value="" data-toggle="modal" data-target="#mdlPOS"
                                              class="form-control" name="pos" style="text-transform: uppercase;" required
@@ -1034,7 +1041,7 @@
             </div>
             <div class="modal-body ">
                <div class="form-row">
-                  <div class="col-md-6 col-sm-12">
+                  <div class="col-md-12 col-sm-12 mb-2">
                      <select id="agents" class="custom-select select2 select2-hidden-accessible"
                         data-parsley-required="true" tabindex="-1" aria-hidden="true" on
                         onchange="get_POS_from_Modal()">
@@ -1044,7 +1051,8 @@
                         {%endfor%}
                      </select>
                   </div>
-                  <div class="col-md-6 col-sm-12">
+
+                  <div class="col-md-12 col-sm-12">
                      <input id="inp_agent" type="text" value="" class="form-control" name="inp_agent" disabled
                         style="text-transform: uppercase;" title="POS should be automatically fetched">
                   </div>
@@ -2182,7 +2190,7 @@
       if (value.includes('-- Select POS --')) {
          value = ''
       }
-      document.getElementById("pos").value = value
+      document.getElementById("pos").value = value.split('|')[0].trim()
    }
 
    function add_new_agent() {
@@ -2473,7 +2481,7 @@
    }
 
    function clearFormData() {
-     
+
       formDataList = []
 
       selectElement = document.getElementById("formDataSelect");
@@ -2555,7 +2563,7 @@
       // document.getElementById('notification_div').style.display = "flex";
       // document.getElementById('notification').style.display = 'block';
       // document.getElementById('notification').innerHTML = 'Saving policy...';
-    
+
       showNotification('⌛️ Getting ready...')
 
       href = window.location.origin + '/bima_policy/policy/new_entry/'
@@ -2573,18 +2581,18 @@
 
             result = JSON.parse(JSON.stringify(response)).toString()
             console.log(result);
-        
-            if (result.includes('done:')){             
+
+            if (result.includes('done:')) {
                // showNotification('⚠️ ' + val);            
-               showNotification('✅ ' + 'succeed :'.toUpperCase() +  formDataKey.toUpperCase());
-               removeFormData(formDataKey)              
+               showNotification('✅ ' + 'succeed :'.toUpperCase() + formDataKey.toUpperCase());
+               removeFormData(formDataKey)
             }
-            else{            
-               showNotification('❌ ' + 'failed :'.toUpperCase() +  + formDataKey.toUpperCase());          
+            else {
+               showNotification('❌ ' + 'failed :'.toUpperCase() + + formDataKey.toUpperCase());
                // document.getElementById("countFormData").innerHTML = 'Policies: ' + formDataList.length
                // document.getElementById("countFormData").hidden = false
-            }    
-           
+            }
+
          },
          error: function (xhr, status, error) {
             console.log(error);

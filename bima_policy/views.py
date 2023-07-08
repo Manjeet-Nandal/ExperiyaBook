@@ -1021,10 +1021,11 @@ class create_policy(View):
 
         # getting agents full name and sorts them.
         agents = []
-        for ag in Agents.objects.filter(status="Active").values('full_name'):
-            agents.append(ag['full_name'])
-            # agents.append(ag['posp_code'])
-        agents.sort()
+        for ag in Agents.objects.filter(status="Active").values():  
+            agents.append(ag['posp_code'] +' | ' +ag['full_name'])      
+        # agents.sort()
+        # print(agents)      
+      
 
         # getting insurers name and sorts them.
         insurers = []
@@ -1908,12 +1909,12 @@ class create_policy_non_motor(View):
         for p in Product.objects.values('name'):
             products.append(p['name'])
         products.sort()
-
+       
         # getting agents full name and sorts them.
         agents = []
-        for ag in Agents.objects.filter(status="Active").values('full_name'):
-            agents.append(ag['full_name'])
-        agents.sort()
+        for ag in Agents.objects.filter(status="Active").values():  
+            agents.append(ag['posp_code'] +' | ' +ag['full_name'])      
+        # print(agents)      
 
         # getting insurers name and sorts them.
         insurers = []
@@ -2576,9 +2577,11 @@ def policy_entry(request):
 
         # getting agents full name and sorts them.
         agents = []
-        for ag in Agents.objects.filter(status="Active").values('full_name'):
-            agents.append(ag['full_name'])
-        agents.sort()
+        for ag in Agents.objects.filter(status="Active").values():  
+            agents.append(ag['posp_code'] +' | ' +ag['full_name'])      
+        # print(agents)      
+
+        print(agents)
 
         # getting insurers name and sorts them.
         insurers = []
@@ -2667,6 +2670,28 @@ def fetch_records(request):
 
     print(records.count())
     return JsonResponse({'records': list(records)})
+
+
+def fetch_record(request):
+    print('\nfetch record calling ')
+
+    data = request.GET.get('data')
+    print(data)    
+  
+    record = Policy.objects.filter(proposal_no = data).values()
+
+    if record:
+        pass    
+    else:
+        record = Policy.objects.filter(policy_no = data).values()
+
+    record = list(record)
+    print(record)   
+
+    if record:        
+        return JsonResponse({'record': record })      
+  
+    return JsonResponse({'message': "Not found!"})
 
 
 def policy_saerch_entry(request, id):
@@ -4097,7 +4122,7 @@ def agent(request):
     print('agent method')
     # data = Agents.objects.filter(profile_id=get_id_from_session(request))
     data = Agents.objects.filter(status="Active")
-
+     
     print(data)
     return render(request, 'agents/agent.html', {'data': data})
 
