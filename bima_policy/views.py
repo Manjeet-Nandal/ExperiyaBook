@@ -2573,16 +2573,14 @@ def apply_policy(request, id):
 # import datetime
 def policy_entry(request):
     try:
-        print('policy_entry method')
-
-        # getting agents full name and sorts them.
+        print('\npolicy_entry method')
+     
         agents = []
         for ag in Agents.objects.filter(status="Active").values():  
             agents.append(ag['posp_code'] +' | ' +ag['full_name'])      
         # print(agents)      
 
-        print(agents)
-
+     
         # getting insurers name and sorts them.
         insurers = []
         for ins in InsuranceCompany.objects.values('comp_name'):
@@ -2603,7 +2601,7 @@ def policy_entry(request):
             models.append(model['model'])
 
         current_datetime = datetime.now()
-        print(current_datetime)
+        # print(current_datetime)
 
         if is_user(request):
             # data = Policy.objects.order_by('-created_at').values()[:5]
@@ -2631,10 +2629,10 @@ def policy_entry(request):
 
 
 def fetch_records(request):
-    print('\nfetch calling ')
+    print('\nfetch_records calling ')
 
     data = request.GET.get('data').split('|')
-    print(data)
+    # print(data)
 
     d1_array = data[0].split('-')
     d2_array = data[1].split('-')
@@ -2649,8 +2647,8 @@ def fetch_records(request):
     day = d2_array[0]
     date2 = year + "-" + month + "-" + day
 
-    print('date 1: ', date1)
-    print('date 2: ', date2)
+    # print('date 1: ', date1)
+    # print('date 2: ', date2)
 
     date_string = date1
     date_string2 = date2
@@ -2659,7 +2657,7 @@ def fetch_records(request):
     date1 = datetime.strptime(date_string, date_format).date()
     date2 = datetime.strptime(date_string2, date_format).date()
 
-    print(date1)  # Output: 2023-06-23
+    # print(date1)  # Output: 2023-06-23
 
     if is_user(request):
         # records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()
@@ -2668,7 +2666,7 @@ def fetch_records(request):
         records = Policy.objects.filter(
             created_at__gte=date1, created_at__lte=date2, employee=get_id_from_session(request)).values()
 
-    print(records.count())
+    # print(records.count())
     return JsonResponse({'records': list(records)})
 
 
