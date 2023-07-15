@@ -217,7 +217,7 @@
                               <label for="ps1">Payout-less Policies</label>
                            </div>
 
-                           <div class="col-md-4 mb-4">
+                           <div class="col-md-5 mb-4">
 
                               <input type="text" id="search-select_vc" class="form-control"
                                  placeholder="Select any field">
@@ -341,7 +341,7 @@
                            </div>
 
 
-                           <div id="divFilterContent" class="col-md-7 mb-4">
+                           <div id="divFilterContent" class="col-md-5 mb-4">
                               <!-- <label for="my-select">Vehicle Make:</label> -->
                               <input type="text" id="search-select" class="form-control" placeholder="Search..">
                               <select id="filter_content" name="filter_content" class="form-control" multiple onclick="filterFetchList()">
@@ -439,11 +439,11 @@
                               <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
                               <!-- <button id="btnFilter" type="button" class="btn btn-primary mt-1"
                                  onclick="searchName2()">Filter</button> -->
-                              <button type="button" class="btn btn-primary mt-1 w-100" onclick="addToFilterList()">SET</button>
+                              <button type="button" class="btn btn-primary mt-1 w-100" onclick="addToFilterList()">FREEZE</button>
 
                               {% if is_user %}
 
-                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100" enabled hidden
+                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1 " enabled hidden
                                  data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
 
                               {% else %}
@@ -454,7 +454,7 @@
                               <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1" hidden
                                  onclick="saveFilter()">Save</button>
                               <button type="button" class="btn btn-primary mt-1  w-100" onmouseenter="getLength()"
-                                 onclick="clearFilterList()">Clear</button>
+                                 onclick="clearFilterList()">CLEAR</button>
 
                            </div>
 

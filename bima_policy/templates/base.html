@@ -133,21 +133,21 @@
                         <a class="dropdown-item" href="/bima_policy/profile/"
                            style="color: #FFFFFF; background: #6E11F4;">
 
-                           <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i> Profile
+                           <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>&nbsp;&nbsp; Profile
                         </a>
                         {% endif %}
 
                         {% if request.session.role == 'staff' %}
                         <a class="dropdown-item" href="/bima_policy/user/edit/{{request.session.id}}"
                            style="color: #FFFFFF; background: #6E11F4;">
-                           <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i> Profile
+                           <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>&nbsp;&nbsp; Profile
                         </a>
                         {% endif %}
 
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" style="color: #FFFFFF; background: #6E11F4;"
                            href="{%url 'bima_policy:logout'%}">
-                           <i class="fa fa-sign-out" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>Logout
+                           <i class="fa fa-sign-out" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>&nbsp;&nbsp; Logout
                         </a>
                      </div>
 
