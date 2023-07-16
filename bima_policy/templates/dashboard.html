@@ -282,7 +282,7 @@
             success: function (response) {
                 // console.log(response.records);      
                 sessionStorage.setItem('objectList', JSON.stringify(response.records));
-                console.log(JSON.parse(sessionStorage.getItem('objectList')));
+                // console.log(JSON.parse(sessionStorage.getItem('objectList')));
                 var objectList = JSON.parse(sessionStorage.getItem('objectList'));
                 document.getElementById('staffcount').textContent = objectList.staffcount
                 document.getElementById('agentcount').textContent = objectList.agentcount
@@ -308,7 +308,7 @@
             success: function (response) {
                 // console.log(response.records);      
                 sessionStorage.setItem('records', JSON.stringify(response.records));
-                console.log(JSON.parse(sessionStorage.getItem('records')));                               
+                console.log(JSON.parse(sessionStorage.getItem('records')));
             },
             error: function (xhr, status, error) {
                 console.error(error);
@@ -318,8 +318,11 @@
 
         // showNotification('⌛️ Getting ready...')
     }
+  
 
-    function get_count_objects() {
+    document.addEventListener('DOMContentLoaded', function () {
+        // Code to run when the DOM is loaded
+        console.log('DOMContentLoaded event fired');
         count_objects()
 
         fetch_records()
@@ -334,13 +337,10 @@
         document.getElementById('agentcount').textContent = objectList.agentcount
         document.getElementById('spcount').textContent = objectList.spcount
         document.getElementById('policycount').textContent = objectList.policycount
-    }
+
+    });
 
 </script>
-
-<body onload="get_count_objects()">
-
-</body>
 
 
 {%endblock%}

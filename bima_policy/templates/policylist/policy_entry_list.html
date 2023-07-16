@@ -1448,8 +1448,8 @@
 
 </div>
 
-<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
-
+<!-- <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script> -->
+<!-- it was moved to base.html -->
 
 <script>
    var c = [];
@@ -3332,9 +3332,18 @@
       generateTableRowsAsync(fetchList)
    }
 
+   document.addEventListener('DOMContentLoaded', function() {
+   // Code to run when the DOM is loaded
+   console.log('DOMContentLoaded event fired');
+   getData()
+
+ });
+
 </script>
 
-<body onload="getData()">
+
+ 
+<body >
 
 </body>
 
