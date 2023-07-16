@@ -28,12 +28,12 @@
                                     <!-- metric column -->
                                     <div class="col">
                                         <!-- .metric -->
-                                        <a href="{%url 'bima_policy:staff' %}" 
+                                        <a href="{%url 'bima_policy:staff' %}"
                                             class="metric metric-bordered align-items-center">
                                             <h2 class="metric-label ">Staff </h2>
                                             <p class="metric-value h3">
-                                                <sub><span class="icofont icofont-users-alt-5"  ></span></sub>
-                                                <span class="value">
+                                                <sub><span class="icofont icofont-users-alt-5"></span></sub>
+                                                <span id="staffcount" class="value">
                                                     {{staffcount}} </span>
                                             </p>
                                         </a> <!-- /.metric -->
@@ -43,8 +43,8 @@
                                             class="metric metric-bordered align-items-center">
                                             <h2 class="metric-label text-blue116">Agent </h2>
                                             <p class="metric-value h3">
-                                                <sub><span class="icofont icofont-users-alt-1"  ></span></sub>
-                                                <span class="value">{{agentcount}}</span>
+                                                <sub><span class="icofont icofont-users-alt-1"></span></sub>
+                                                <span id="agentcount" class="value">{{agentcount}}</span>
                                             </p>
                                         </a> <!-- /.metric -->
                                     </div><!-- /metric column -->
@@ -54,8 +54,8 @@
                                             class="metric metric-bordered align-items-center">
                                             <h2 class="metric-label text-blue116">Service Providers </h2>
                                             <p class="metric-value h3">
-                                                <sub><span class="icofont icofont-business-man"   ></span></sub>
-                                                <span class="value">{{spcount}}</span>
+                                                <sub><span class="icofont icofont-business-man"></span></sub>
+                                                <span id="spcount" class="value">{{spcount}}</span>
                                             </p>
                                         </a> <!-- /.metric -->
                                     </div><!-- /metric column -->
@@ -65,8 +65,8 @@
                                             class="metric metric-bordered align-items-center">
                                             <h2 class="metric-label text-blue116">Total Policies </h2>
                                             <p class="metric-value h3">
-                                                <sub><span class="icofont icofont icofont-ebook" ></span></sub>
-                                                <span class="value">
+                                                <sub><span class="icofont icofont icofont-ebook"></span></sub>
+                                                <span id="policycount" class="value">
                                                     {{totalpolicy}} </span>
                                             </p>
                                         </a> <!-- /.metric -->
@@ -174,11 +174,13 @@
                                             <div class="card-body ">
                                                 <h2 class="metric-label">Expire On</h2>
                                                 <p class="metric-value h3">
-                                                    <sub><i class="icofont icofont-ui-calendar" style="color: rgb(110, 17, 244);" ></i></sub>
+                                                    <sub><i class="icofont icofont-ui-calendar"
+                                                            style="color: rgb(110, 17, 244);"></i></sub>
                                                     <span class="value" style="color: rgb(110, 17, 244);">Never</span>
                                                 </p>
                                                 <p class="pt-3">
-                                                    <small class="text-muted " style="color: rgb(110, 17, 244);"> (Life-time Activation)</small>
+                                                    <small class="text-muted " style="color: rgb(110, 17, 244);">
+                                                        (Life-time Activation)</small>
                                                 </p>
                                             </div><!-- /.card-body -->
                                         </div><!-- /.card -->
@@ -196,7 +198,8 @@
                                                                 style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
                                                                 aria-valuemax="100"> 0% </div>
                                                         </div>
-                                                        <p class="" style="color: rgb(110, 17, 244);" >3 GB free of 3 GB</p>
+                                                        <p class="" style="color: rgb(110, 17, 244);">3 GB free of 3 GB
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <dl class="d-flex justify-content-between mb-0">
@@ -244,7 +247,7 @@
                                                         0 MB </dd>
                                                 </dl>
                                                 <hr>
-                                                <dl class="d-flex justify-content-between" >
+                                                <dl class="d-flex justify-content-between">
                                                     <dt class="text-left">
                                                         <div class="tile">
                                                             <i class="icofont-file-alt text-blue116"></i>
@@ -267,6 +270,77 @@
         </div><!-- /.page -->
     </div><!-- /.wrapper -->
 </main><!-- /.app-main -->
+
+<script>
+
+    function count_objects() {
+
+        $.ajax({
+            url: "{%url 'bima_policy:count_objects'%}",
+            // data: { data: '' },
+            dataType: 'json',
+            success: function (response) {
+                // console.log(response.records);      
+                sessionStorage.setItem('objectList', JSON.stringify(response.records));
+                console.log(JSON.parse(sessionStorage.getItem('objectList')));
+                var objectList = JSON.parse(sessionStorage.getItem('objectList'));
+                document.getElementById('staffcount').textContent = objectList.staffcount
+                document.getElementById('agentcount').textContent = objectList.agentcount
+                document.getElementById('spcount').textContent = objectList.spcount
+                document.getElementById('policycount').textContent = objectList.policycount
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                alert(error.toString())
+            }
+        });
+
+        // showNotification('⌛️ Getting ready...')
+    }
+
+
+    function fetch_records() {
+
+        $.ajax({
+            url: "{%url 'bima_policy:fetch_records'%}",
+            data: { data: '' },
+            dataType: 'json',
+            success: function (response) {
+                // console.log(response.records);      
+                sessionStorage.setItem('records', JSON.stringify(response.records));
+                console.log(JSON.parse(sessionStorage.getItem('records')));                               
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                alert(error.toString())
+            }
+        });
+
+        // showNotification('⌛️ Getting ready...')
+    }
+
+    function get_count_objects() {
+        count_objects()
+
+        fetch_records()
+
+        var objectList = JSON.parse(sessionStorage.getItem('objectList'));
+
+        if (objectList == null) {
+            return
+        }
+        // console.log(objectList);
+        document.getElementById('staffcount').textContent = objectList.staffcount
+        document.getElementById('agentcount').textContent = objectList.agentcount
+        document.getElementById('spcount').textContent = objectList.spcount
+        document.getElementById('policycount').textContent = objectList.policycount
+    }
+
+</script>
+
+<body onload="get_count_objects()">
+
+</body>
 
 
 {%endblock%}

@@ -35,10 +35,10 @@
                      <form id="frminslist" autocomplete="off">
                         <div class="row">
                            <div class="col-md-2 col-sm-12">
-                              <select class="custom-select" name="period" id="select-period">              
+                              <select class="custom-select" name="period" id="select-period">
                                  <option value="today">Today</option>
                                  <option value="yesterday">Yesterday</option>
-                                 <option value="this_month"  >This Month</option>
+                                 <option value="this_month">This Month</option>
                                  <option value="last_month">Last Month</option>
                                  <option value="current_year">Current Year</option>
                                  <option value="custom">Custom</option>
@@ -344,7 +344,8 @@
                            <div id="divFilterContent" class="col-md-5 mb-4">
                               <!-- <label for="my-select">Vehicle Make:</label> -->
                               <input type="text" id="search-select" class="form-control" placeholder="Search..">
-                              <select id="filter_content" name="filter_content" class="form-control" multiple onclick="filterFetchList()">
+                              <select id="filter_content" name="filter_content" class="form-control" multiple
+                                 onclick="filterFetchList()">
                                  <option id="op_select_all" value="" onclick="select_all_Items('filter_content')">
                                  </option>
 
@@ -439,7 +440,8 @@
                               <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
                               <!-- <button id="btnFilter" type="button" class="btn btn-primary mt-1"
                                  onclick="searchName2()">Filter</button> -->
-                              <button type="button" class="btn btn-primary mt-1 w-100" onclick="addToFilterList()">FREEZE</button>
+                              <button type="button" class="btn btn-primary mt-1 w-100"
+                                 onclick="addToFilterList()">FREEZE</button>
 
                               {% if is_user %}
 
@@ -472,15 +474,16 @@
                                  <div class="dataTables_length" id="tblInsurance_length">
                                     <label>
                                        Show
-                                       <select id="select_length" name="tblInsurance_length" onchange="showNextRows(true)"
-                                          aria-controls="tblInsurance" class="custom-select">
+                                       <select id="select_length" name="tblInsurance_length"
+                                          onchange="showNextRows(true)" aria-controls="tblInsurance"
+                                          class="custom-select">
                                           <option value="3">3</option>
-                                          <option value="5">5</option>
+                                          <option value="5" selected>5</option>
                                           <option value="10">10</option>
                                           <option value="25">25</option>
                                           <option value="50">50</option>
-                                          <option value="100" >100</option>
-                                          <option value="0" selected>all</option>
+                                          <option value="100">100</option>
+                                          <option value="0">all</option>
                                        </select>
                                        entries
                                     </label>
@@ -1708,9 +1711,9 @@
 
    function addName3() {
       // Declare variables
-     
-      console.log('addName3');     
-         
+
+      console.log('addName3');
+
       filter_content = document.getElementById('filter_content')
 
       tempfilterList = []
@@ -1734,19 +1737,19 @@
       filterList = []
 
       if (filter_type == "agent") {
-        
+
          for (const iterator of fetchList) {
 
             pos = iterator.pos
-            
+
             for (const tempItr of tempfilterList) {
-               
-              if (tempItr == pos) {
+
+               if (tempItr == pos) {
                   filterList.push(iterator)
                   console.log(tempItr);
-              }
+               }
             }
-            
+
          }
       }
 
@@ -1757,7 +1760,7 @@
 
       return
 
-     
+
       isMultiFilter = true
 
       value = document.getElementById('filter_type').value
@@ -2374,7 +2377,7 @@
             newoption.value = value.split('|')[0].trim()
             newoption.innerHTML = value
             element.options.add(newoption);
-         })     
+         })
    }
 
 
@@ -2476,7 +2479,6 @@
       window.open(href)
 
    }
-
 
    function fetchData(data) {
 
@@ -2725,15 +2727,15 @@
 
       var rows = document.getElementsByClassName("policy-row");
 
-      if (selectedValue == 0) {        
-         
+      if (selectedValue == 0) {
+
          for (var i = 0; i < rows.length; i++) {
             rows[i].style.display = ""; // Show the row
-         }         
+         }
          return
-      }    
+      }
 
-     rows = document.getElementsByClassName("policy-row");
+      rows = document.getElementsByClassName("policy-row");
 
       if (hideDefault) {
          for (var i = 0; i < rows.length; i++) {
@@ -2783,30 +2785,30 @@
 
    function addToFilterList() {
 
-      filter_type = document.getElementById('filter_type')       
+      filter_type = document.getElementById('filter_type')
 
       showNotification(`⌛️ You have Freezed ${filter_type.value}`.toUpperCase())
 
       for (i = 0; i < filter_type.options.length; i++) {
 
-         if (filter_type.options[i].value  == filter_type.value) {
+         if (filter_type.options[i].value == filter_type.value) {
             filter_type.options[i].remove()
          }
       }
-     
+
       filter_type.selectedIndex = 0
 
       add_filter_type()
-      
-      freezList = filterList           
-     
-      // console.log('freez list: ', freezList);
-      
-   }
-   
-   function filterFetchList() {  
 
-      filter_type = document.getElementById('filter_type').value    
+      freezList = filterList
+
+      // console.log('freez list: ', freezList);
+
+   }
+
+   function filterFetchList() {
+
+      filter_type = document.getElementById('filter_type').value
       filter_content = document.getElementById('filter_content')
 
       if (freezList.length > 0) {
@@ -2819,21 +2821,21 @@
                tempfilterList.push(filter_content.options[i].value.trim())
             }
          }
-                        
+
          filterList = []
 
          if (filter_type == "pos") {
-         
+
             for (const iterator of freezList) {
 
-               pos = iterator.pos          
-               
+               pos = iterator.pos
+
                for (const tempItr of tempfilterList) {
-                  
+
                   if (tempItr == pos) {
-                     filterList.push(iterator)  
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
 
             generateTableRowsAsync(filterList)
@@ -2841,190 +2843,190 @@
          }
 
          if (filter_type == "insurance_company") {
-         
+
             for (const iterator of freezList) {
 
                insurance_company = iterator.insurance_company
-               
+
                for (const tempItr of tempfilterList) {
-                  
+
                   if (tempItr == insurance_company) {
                      filterList.push(iterator)
                      // console.log(tempItr);
                   }
                }
-               
+
             }
             generateTableRowsAsync(filterList)
             return
-      }
+         }
 
          if (filter_type == "vehicle_catagory") {
-         
+
             for (const iterator of freezList) {
 
                vehicle_catagory = iterator.vehicle_catagory
-               
+
                for (const tempItr of tempfilterList) {
-                  
-               if (tempItr == vehicle_catagory) {
+
+                  if (tempItr == vehicle_catagory) {
                      filterList.push(iterator)
                      // console.log(tempItr);
+                  }
                }
-               }
-               
+
             }
             generateTableRowsAsync(filterList)
             return
-      }
+         }
 
-         if (filter_type == "vehicle_makeby") {      
+         if (filter_type == "vehicle_makeby") {
             for (const iterator of freezList) {
-               vehicle_makeby = iterator.vehicle_makeby            
-               for (const tempItr of tempfilterList) {               
+               vehicle_makeby = iterator.vehicle_makeby
+               for (const tempItr of tempfilterList) {
                   if (tempItr == vehicle_makeby) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "vehicle_model") {      
+         if (filter_type == "vehicle_model") {
             for (const iterator of freezList) {
-               vehicle_model = iterator.vehicle_model            
-               for (const tempItr of tempfilterList) {               
+               vehicle_model = iterator.vehicle_model
+               for (const tempItr of tempfilterList) {
                   if (tempItr == vehicle_model) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "vehicle_fuel_type") {      
+         if (filter_type == "vehicle_fuel_type") {
             for (const iterator of freezList) {
-               vehicle_fuel_type = iterator.vehicle_fuel_type            
-               for (const tempItr of tempfilterList) {               
+               vehicle_fuel_type = iterator.vehicle_fuel_type
+               for (const tempItr of tempfilterList) {
                   if (tempItr == vehicle_fuel_type) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "cubic_capacity") {      
+         if (filter_type == "cubic_capacity") {
             for (const iterator of freezList) {
-               cubic_capacity = iterator.cubic_capacity            
-               for (const tempItr of tempfilterList) {               
+               cubic_capacity = iterator.cubic_capacity
+               for (const tempItr of tempfilterList) {
                   if (tempItr == cubic_capacity) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "seating_capacity") {      
+         if (filter_type == "seating_capacity") {
             for (const iterator of freezList) {
-               seating_capacity = iterator.seating_capacity            
-               for (const tempItr of tempfilterList) {               
+               seating_capacity = iterator.seating_capacity
+               for (const tempItr of tempfilterList) {
                   if (tempItr == seating_capacity) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "coverage_type") {      
+         if (filter_type == "coverage_type") {
             for (const iterator of freezList) {
-               coverage_type = iterator.coverage_type            
-               for (const tempItr of tempfilterList) {               
+               coverage_type = iterator.coverage_type
+               for (const tempItr of tempfilterList) {
                   if (tempItr == coverage_type) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
-      
-         if (filter_type == "gvw") {      
+
+         if (filter_type == "gvw") {
             for (const iterator of freezList) {
-               gvw = iterator.gvw            
-               for (const tempItr of tempfilterList) {               
+               gvw = iterator.gvw
+               for (const tempItr of tempfilterList) {
                   if (tempItr == gvw) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "policy_type") {      
+         if (filter_type == "policy_type") {
             for (const iterator of freezList) {
-               policy_type = iterator.policy_type            
-               for (const tempItr of tempfilterList) {               
+               policy_type = iterator.policy_type
+               for (const tempItr of tempfilterList) {
                   if (tempItr == policy_type) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "addon") {      
+         if (filter_type == "addon") {
             for (const iterator of freezList) {
-               addon = iterator.addon            
-               for (const tempItr of tempfilterList) {               
+               addon = iterator.addon
+               for (const tempItr of tempfilterList) {
                   if (tempItr == addon) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "ncb") {      
+         if (filter_type == "ncb") {
             for (const iterator of freezList) {
-               ncb = iterator.ncb            
-               for (const tempItr of tempfilterList) {               
+               ncb = iterator.ncb
+               for (const tempItr of tempfilterList) {
                   if (tempItr == ncb) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "cpa") {      
+         if (filter_type == "cpa") {
             for (const iterator of freezList) {
-               cpa = iterator.cpa            
-               for (const tempItr of tempfilterList) {               
+               cpa = iterator.cpa
+               for (const tempItr of tempfilterList) {
                   if (tempItr == cpa) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
-            
-         
+
+
       }
-    
-      else{      
+
+      else {
 
          tempfilterList = []
 
@@ -3034,21 +3036,21 @@
                tempfilterList.push(filter_content.options[i].value.trim())
             }
          }
-                        
+
          filterList = []
 
          if (filter_type == "pos") {
-         
+
             for (const iterator of fetchList) {
 
-               pos = iterator.pos          
-               
+               pos = iterator.pos
+
                for (const tempItr of tempfilterList) {
-                  
-               if (tempItr == pos) {
-                     filterList.push(iterator)  
+
+                  if (tempItr == pos) {
+                     filterList.push(iterator)
+                  }
                }
-               }            
             }
 
             generateTableRowsAsync(filterList)
@@ -3056,269 +3058,284 @@
          }
 
          if (filter_type == "insurance_company") {
-         
-         for (const iterator of fetchList) {
 
-            insurance_company = iterator.insurance_company
-            
-            for (const tempItr of tempfilterList) {
-               
-               if (tempItr == insurance_company) {
-                  filterList.push(iterator)
-                  // console.log(tempItr);
+            for (const iterator of fetchList) {
+
+               insurance_company = iterator.insurance_company
+
+               for (const tempItr of tempfilterList) {
+
+                  if (tempItr == insurance_company) {
+                     filterList.push(iterator)
+                     // console.log(tempItr);
+                  }
                }
+
             }
-            
-         }
-         generateTableRowsAsync(filterList)
+            generateTableRowsAsync(filterList)
             return
-      }
+         }
 
          if (filter_type == "vehicle_catagory") {
-         
-         for (const iterator of fetchList) {
 
-            vehicle_catagory = iterator.vehicle_catagory
-            
-            for (const tempItr of tempfilterList) {
-               
-            if (tempItr == vehicle_catagory) {
-                  filterList.push(iterator)
-                  // console.log(tempItr);
-            }
-            }
-            
-         }
-         generateTableRowsAsync(filterList)
-         return
-      }
-
-         if (filter_type == "vehicle_makeby") {      
             for (const iterator of fetchList) {
-               vehicle_makeby = iterator.vehicle_makeby            
-               for (const tempItr of tempfilterList) {               
+
+               vehicle_catagory = iterator.vehicle_catagory
+
+               for (const tempItr of tempfilterList) {
+
+                  if (tempItr == vehicle_catagory) {
+                     filterList.push(iterator)
+                     // console.log(tempItr);
+                  }
+               }
+
+            }
+            generateTableRowsAsync(filterList)
+            return
+         }
+
+         if (filter_type == "vehicle_makeby") {
+            for (const iterator of fetchList) {
+               vehicle_makeby = iterator.vehicle_makeby
+               for (const tempItr of tempfilterList) {
                   if (tempItr == vehicle_makeby) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "vehicle_model") {      
+         if (filter_type == "vehicle_model") {
             for (const iterator of fetchList) {
-               vehicle_model = iterator.vehicle_model            
-               for (const tempItr of tempfilterList) {               
+               vehicle_model = iterator.vehicle_model
+               for (const tempItr of tempfilterList) {
                   if (tempItr == vehicle_model) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "vehicle_fuel_type") {      
+         if (filter_type == "vehicle_fuel_type") {
             for (const iterator of fetchList) {
-               vehicle_fuel_type = iterator.vehicle_fuel_type            
-               for (const tempItr of tempfilterList) {               
+               vehicle_fuel_type = iterator.vehicle_fuel_type
+               for (const tempItr of tempfilterList) {
                   if (tempItr == vehicle_fuel_type) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "cubic_capacity") {      
+         if (filter_type == "cubic_capacity") {
             for (const iterator of fetchList) {
-               cubic_capacity = iterator.cubic_capacity            
-               for (const tempItr of tempfilterList) {               
+               cubic_capacity = iterator.cubic_capacity
+               for (const tempItr of tempfilterList) {
                   if (tempItr == cubic_capacity) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "seating_capacity") {      
+         if (filter_type == "seating_capacity") {
             for (const iterator of fetchList) {
-               seating_capacity = iterator.seating_capacity            
-               for (const tempItr of tempfilterList) {               
+               seating_capacity = iterator.seating_capacity
+               for (const tempItr of tempfilterList) {
                   if (tempItr == seating_capacity) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "coverage_type") {      
+         if (filter_type == "coverage_type") {
             for (const iterator of fetchList) {
-               coverage_type = iterator.coverage_type            
-               for (const tempItr of tempfilterList) {               
+               coverage_type = iterator.coverage_type
+               for (const tempItr of tempfilterList) {
                   if (tempItr == coverage_type) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
-      
-         if (filter_type == "gvw") {      
+
+         if (filter_type == "gvw") {
             for (const iterator of fetchList) {
-               gvw = iterator.gvw            
-               for (const tempItr of tempfilterList) {               
+               gvw = iterator.gvw
+               for (const tempItr of tempfilterList) {
                   if (tempItr == gvw) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "policy_type") {      
+         if (filter_type == "policy_type") {
             for (const iterator of fetchList) {
-               policy_type = iterator.policy_type            
-               for (const tempItr of tempfilterList) {               
+               policy_type = iterator.policy_type
+               for (const tempItr of tempfilterList) {
                   if (tempItr == policy_type) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "addon") {      
+         if (filter_type == "addon") {
             for (const iterator of fetchList) {
-               addon = iterator.addon            
-               for (const tempItr of tempfilterList) {               
+               addon = iterator.addon
+               for (const tempItr of tempfilterList) {
                   if (tempItr == addon) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "ncb") {      
+         if (filter_type == "ncb") {
             for (const iterator of fetchList) {
-               ncb = iterator.ncb            
-               for (const tempItr of tempfilterList) {               
+               ncb = iterator.ncb
+               for (const tempItr of tempfilterList) {
                   if (tempItr == ncb) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
 
-         if (filter_type == "cpa") {      
+         if (filter_type == "cpa") {
             for (const iterator of fetchList) {
-               cpa = iterator.cpa            
-               for (const tempItr of tempfilterList) {               
+               cpa = iterator.cpa
+               for (const tempItr of tempfilterList) {
                   if (tempItr == cpa) {
-                     filterList.push(iterator)                 
+                     filterList.push(iterator)
                   }
-               }            
+               }
             }
             generateTableRowsAsync(filterList)
             return
          }
-            
+
       }
    }
 
    function addFilterTypes() {
 
       filter_type = document.getElementById('filter_type')
-      filter_type.innerHTML = ''    
-   
+      filter_type.innerHTML = ''
+
       var newoption = document.createElement("option");
       newoption.value = 'pos'
-      newoption.innerHTML = 'POSPS'   
+      newoption.innerHTML = 'POSPS'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'insurance_company'
-      newoption.innerHTML = 'Insurers'   
+      newoption.innerHTML = 'Insurers'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'vehicle_catagory'
-      newoption.innerHTML = 'vehicle catagory'   
+      newoption.innerHTML = 'vehicle catagory'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'vehicle_makeby'
-      newoption.innerHTML = 'vehicle makeby'   
+      newoption.innerHTML = 'vehicle makeby'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'vehicle_model'
-      newoption.innerHTML = 'vehicle model'   
+      newoption.innerHTML = 'vehicle model'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'vehicle_fuel_type'
-      newoption.innerHTML = 'fuel type'   
+      newoption.innerHTML = 'fuel type'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'cubic_capacity'
-      newoption.innerHTML = 'cubic capacity'   
+      newoption.innerHTML = 'cubic capacity'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'seating_capacity'
-      newoption.innerHTML = 'seating capacity'   
+      newoption.innerHTML = 'seating capacity'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'coverage_type'
-      newoption.innerHTML = 'coverage type'   
+      newoption.innerHTML = 'coverage type'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'gvw'
-      newoption.innerHTML = 'gvw'   
+      newoption.innerHTML = 'gvw'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'policy_type'
-      newoption.innerHTML = 'policy type'   
+      newoption.innerHTML = 'policy type'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'addon'
-      newoption.innerHTML = 'addon'   
+      newoption.innerHTML = 'addon'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'ncb'
-      newoption.innerHTML = 'ncb'   
+      newoption.innerHTML = 'ncb'
       filter_type.options.add(newoption);
 
       newoption = document.createElement("option");
       newoption.value = 'cpa'
-      newoption.innerHTML = 'cpa'   
+      newoption.innerHTML = 'cpa'
       filter_type.options.add(newoption);
-      
+
 
    }
-   
-   
+
+   function getData() {
+      
+      fetchData("")
+
+      records = JSON.parse(sessionStorage.getItem('records'));
+      if (records == null) {
+         return
+      }
+      console.log(records);
+      fetchList = records
+      generateTableRowsAsync(fetchList)
+   }
+
 </script>
 
+<body onload="getData()">
+
+</body>
 
 {%endblock%}

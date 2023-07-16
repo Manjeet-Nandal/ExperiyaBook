@@ -44,6 +44,9 @@ def Index(request):
 
 def dashboard(request):
     # print(get_profile_id(get_id_from_session(request)))
+
+    return render(request, 'dashboard.html')
+
     agentcount = Agents.objects.filter(status="Active").count()
     staffcount = StaffModel.objects.count()
     spcount = ServiceProvider.objects.count()
@@ -2572,8 +2575,13 @@ def apply_policy(request, id):
 
 # import datetime
 def policy_entry(request):
+    print('\npolicy_entry method')
+    return render(request, 'policylist/policy_entry_list.html')
+
     try:
         print('\npolicy_entry method')
+
+        return render(request, 'policylist/policy_entry_list.html')
      
         agents = []
         for ag in Agents.objects.filter(status="Active").values():  
@@ -2606,9 +2614,10 @@ def policy_entry(request):
         if is_user(request):
             # data = Policy.objects.order_by('-created_at').values()[:5]
             data = Policy.objects.filter(created_at=current_datetime).values()
+         
 
         else:
-            data = Policy.objects.filter( created_at=current_datetime, employee=get_id_from_session(request)).values()
+            data = Policy.objects.filter( created_at=current_datetime, employee=get_id_from_session(request)).values()          
 
         context = {
             "agents": agents,
@@ -2628,11 +2637,37 @@ def policy_entry(request):
         return HttpResponse('Error in policy_entry ' + str(ex))
 
 
+def count_objects(request):
+    print('\nfetch_agents calling ')
+       
+    staffcount = StaffModel.objects.count()
+    agentcount = Agents.objects.filter(status="Active").count()
+    spcount = ServiceProvider.objects.count()
+    policycount = Policy.objects.count()
+
+    counts ={
+        "staffcount" : staffcount,
+        "agentcount" : agentcount,
+        "spcount" : spcount,
+        "policycount" : policycount
+    }
+    
+    return JsonResponse({'records': counts})  
+
+
 def fetch_records(request):
     print('\nfetch_records calling ')
 
-    data = request.GET.get('data').split('|')
-    # print(data)
+    data = request.GET.get('data').split('|')   
+    print(data)
+  
+    if data[0] == '':  
+        if is_user(request):           
+            records = Policy.objects.filter(created_at=datetime.now()).values()
+        else:
+            records = Policy.objects.filter(created_at=datetime.now(), employee=get_id_from_session(request)).values()
+       
+        return JsonResponse({'records': list(records)})
 
     d1_array = data[0].split('-')
     d2_array = data[1].split('-')
@@ -2660,8 +2695,8 @@ def fetch_records(request):
     # print(date1)  # Output: 2023-06-23
 
     if is_user(request):
-        # records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()
-        records = Policy.objects.filter(created_at__gte=date1, created_at__lte=date2).values()
+        records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()
+        # records = Policy.objects.filter(created_at__gte=date1, created_at__lte=date2).values()
     else:
         records = Policy.objects.filter(
             created_at__gte=date1, created_at__lte=date2, employee=get_id_from_session(request)).values()
