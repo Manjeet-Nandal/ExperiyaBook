@@ -2683,6 +2683,10 @@ def fetch_records(request):
               
         return JsonResponse({'agents': agents, 'insurers': insurers, 'vehicle_categories': vehicle_categories, 'makes': makes, 'models':models})
 
+    if data[0] == 'agents':  
+        agents = Agents.objects.filter(status="Active").values()  
+        return JsonResponse({'agents': list(agents)})
+    
     d1_array = data[0].split('-')
     d2_array = data[1].split('-')
 
@@ -2754,7 +2758,6 @@ def fetch_mix_records(request):
     
     return JsonResponse({'agents': agents})
     
-
 
 def policy_saerch_entry(request, id):
     try:
@@ -4182,6 +4185,8 @@ def logout(request):
 
 def agent(request):
     print('agent method')
+    return render(request, 'agents/agent.html')
+
     # data = Agents.objects.filter(profile_id=get_id_from_session(request))
     data = Agents.objects.filter(status="Active")
      

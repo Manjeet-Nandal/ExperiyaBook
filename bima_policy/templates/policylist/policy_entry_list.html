@@ -3313,9 +3313,16 @@
       showNotification('⌛️ Getting ready...')
    }
 
+   isFirstTime = true
    function fetch_records(data) {
       // console.log('fetch_records calling');
-      showNotification('⌛️ Getting ready...')
+
+      if (isFirstTime) {
+         isFirstTime = false         
+      }
+      else{
+         showNotification('⌛️ Getting ready...')
+      }
 
       $.ajax({
          url: "{%url 'bima_policy:fetch_records'%}",
@@ -3368,7 +3375,7 @@
    }
 
    document.addEventListener('DOMContentLoaded', function () {
-      // console.log('dom');
+      // console.log('dom');     
       loadRecordLocalStorage()
       fetch_records("")
       fetch_filter_details("mix")

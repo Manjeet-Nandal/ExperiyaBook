@@ -112,90 +112,10 @@
                             </tr>
                           </thead>
 
-                          <tbody id="tbdy">
-
-                            {% for value in data %}
-
-                            <tr role="row" class="odd" onclick="highlight(this)" id="tr1">
-
-                              <td class="text-center">{{forloop.counter}}</td>                            
-                              <td>{{value.posp_code}}</td>
-                              <td>{{value.registration_code}}</td>
-                              <td>
-                                <a href="" class="tile tile-img" target="_blank"><i
-                                      class="far fa-file-pdf text-danger mt-1"></i></a>
-                                <a href="/bima_policy/agent/edit_agent/{{value.login_id}}"
-                                   class="">{{value.full_name}}</a>
-                             </td>
-                              <td>{{value.gender}}</td>
-                              <td>{{value.email_id}}</td>
-                              <td>{{value.mob_no}}</td>
-                              <td>{{value.address}}</td>
-                              <td>{{value.state}}</td>
-                              <td>{{value.city}}</td>
-                              <td>{{value.pincode}}</td>
-                              <td>{{value.rural_urban}}</td>
-                              <td>{{value.slab}}</td>
-                              <td>{{value.GSTIN}}</td>
-                              <td>{{value.account_no}}</td>
-                              <td>{{value.ifsc_code}}</td>
-                              <td>{{value.bank_name}}</td>
-
-                              <td> <a href="#"
-                                  onclick="downloadFile('{{value.basic_qualification}}')">{{value.basic_qualification}}</a>
-                              </td>
-                              <td> <a href="#" onclick="downloadFile('{{value.aadhar_card}}')">{{value.aadhar_card}}</a>
-                              </td>
-                              <td> <a href="#" onclick="downloadFile('{{value.pan_card}}')">{{value.pan_card}}</a>
-                              </td>
-                              <td> <a href="#"
-                                  onclick="downloadFile('{{value.training_certificate}}')">{{value.training_certificate}}</a>
-                              </td>
-                              <td> <a href="#"
-                                  onclick="downloadFile('{{value.appointment_certificate}}')">{{value.appointment_certificate}}</a>
-                              </td>
-                              <td> <a href="#"
-                                  onclick="downloadFile('{{value.agreement_certificate}}')">{{value.agreement_certificate}}</a>
-                              </td>
-                              <td> <a href="#"
-                                  onclick="downloadFile('{{value.bank_details}}')">{{value.bank_details}}</a>
-                              </td>
-
-                              <td>{{value.login_id}}</td>
-                              <td>{{value.created_by}}</td>
-
-                              <!-- <td class=" text-center w-10pc nowrap" data-toggle="modal" data-target="#mdlPOS"><span
-                                  class="badge badge-success">{{value.status}}</span>
-                              </td> -->
-
-                              <td class=" text-center w-10pc nowrap">
-
-                                <a href="#" class="badge badge-success" name="Edit"> {{value.status}}
-                                </a>
-
-                              </td>
-
-                              <td class="text-center">
-                                <form method="POST">
-                                  {% csrf_token %}
-                                  <a href="/bima_policy/agent/edit_agent/{{value.login_id}}"
-                                    class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
-                                    <i class="fa fa-pencil-alt mt-2"></i>
-                                    <!-- href="/bima_policy/policy/policy_entrydata/{{value.policyid}}" -->
-                                  </a>
-                                  <a href="/bima_policy/agent/delete_agent/{{value.login_id}}" name="Remove"
-                                    class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
-                                    <i class="far fa-trash-alt mt-2"></i>
-
-                                    <!-- href="/bima_policy/policy/{{value.policyid}}/delete" -->
-
-                                  </a>
-                              </td>
-                            </tr>
-
-                            {% endfor %}
+                          <tbody id="tbdy">                          
 
                           </tbody>
+                          
                         </table>
                       </div>
                     </div>
@@ -293,24 +213,24 @@
 <!-- BEGIN BASE JS -->
 <script src="{%static 'js/jquery.min.js'%}"></script>
 <script src="{%static 'js/popper.min.js'%}"></script>
-<script src="{%static 'js/bootstrap.min.js'%}"></script> <!-- END BASE JS -->
-<!-- BEGIN PLUGINS JS -->
-<script src="{% static 'js/pace.min.js' %}"></script>
+<script src="{%static 'js/bootstrap.min.js'%}"></script>
+
+<!-- <script src="{% static 'js/pace.min.js' %}"></script> -->
 <script src="{% static 'js/stacked-menu.min.js' %}"></script>
 <script src="{% static 'js/perfect-scrollbar.min.js'%}"></script> <!-- END PLUGINS JS -->
 <!-- Parsley -->
 <script src="{%static 'js/parsley.js' %}"></script>
 <!-- BEGIN THEME JS -->
 <script src="{%static 'js/theme.js' %}"></script>
-<script src="{%static 'js/toastr.min.js' %}"></script>
+<!-- <script src="{%static 'js/toastr.min.js' %}"></script> -->
 <script src="{%static 'js/flatpickr.min.js' %}"></script>
 <script src="{%static 'js/select2.full.min.js' %}"></script>
 <script src="{%static 'js/moment.js' %}"></script>
 <script src="{%static 'js/mask-as-number.min.js' %}"></script>
-<script src="{%static 'js/jquery.dataTables.min.js' %}"></script>
-<script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
-<script src="{%static 'js/jquery.form.js' %}"></script>
-<script src="{%static 'js/custom.min.js' %}"></script>
+<!-- <script src="{%static 'js/jquery.dataTables.min.js' %}"></script> -->
+<!-- <script src="{%static 'js/dataTables.bootstrap.js' %}"></script> -->
+<!-- <script src="{%static 'js/jquery.form.js' %}"></script> -->
+<!-- <script src="{%static 'js/custom.min.js' %}"></script> -->
 
 <script>
   selectedAgentId = null
@@ -374,48 +294,147 @@
 
 
   function highlight(row) {
-     
-     SelectedRow = row.cells[0].textContent;
-     deHighlight();    
-     row.style.background = "darkgray"   
-     row.style.color = 'black'
-     row.classList.toggle("selectedRow");
 
-     var anchorTag = row.getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
+    SelectedRow = row.cells[0].textContent;
+    deHighlight();
+    row.style.background = "darkgray"
+    row.style.color = 'black'
+    row.classList.toggle("selectedRow");
 
-     if (anchorTag) {
-        for (const iterator of anchorTag) {
+    var anchorTag = row.getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
 
-           // iterator.style.color = "white"
-        }
-     }
+    if (anchorTag) {
+      for (const iterator of anchorTag) {
+
+        // iterator.style.color = "white"
+      }
+    }
   }
 
   function deHighlight() {
-     let table = document.getElementById("tblInsurance");
-     let rows = table.rows;
-     for (let i = 0; i < rows.length; i++) {
-        // to avoid checked 
-        try {
-           is_checked = document.getElementById(`chkblkrm${i}`).checked
-           if (is_checked) {
-              continue;
-           }
-        } catch { }
-
-        // rows[i].style.background = "#FFFFFF";
-        rows[i].style.background = "";
-        // rows[i].style.color = "black";
-
-        var anchorTag = rows[i].getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
-
-        if (anchorTag) {
-           for (const iterator of anchorTag) {
-              // iterator.style.color = "black"
-           }
+    let table = document.getElementById("tblInsurance");
+    let rows = table.rows;
+    for (let i = 0; i < rows.length; i++) {
+      // to avoid checked 
+      try {
+        is_checked = document.getElementById(`chkblkrm${i}`).checked
+        if (is_checked) {
+          continue;
         }
-     }
+      } catch { }
+
+      // rows[i].style.background = "#FFFFFF";
+      rows[i].style.background = "";
+      // rows[i].style.color = "black";
+
+      var anchorTag = rows[i].getElementsByTagName('a'); // Replace 'a' with the appropriate tag name     
+
+      if (anchorTag) {
+        for (const iterator of anchorTag) {
+          // iterator.style.color = "black"
+        }
+      }
+    }
   }
+
+  function generateTableRowsAsync(records) {
+    tableRows = ''
+    document.getElementById('tbdy').innerHTML = ''
+
+    if (records.length === 0) {
+      showNotification('❌ ' + 'NO AGENTS!');
+      return
+    }
+
+    for (var i = 0; i < records.length; i++) {
+
+      record = records[i]
+
+      recordHtml = '<tr class="policy-row" onclick="highlight(this)"  >' +
+        '<td class="text-center" > ' + (i + 1) + '</td>' +
+        '<td >' + record.posp_code + '</td>' +
+        `<td > <a href="" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="/bima_policy/agent/edit_agent/${record.login_id}" class=""> ${record.registration_code}</a> </td>` +
+        '<td >' + record.full_name + '</td>' +
+        '<td >' + record.gender + '</td>' +
+        '<td >' + record.email_id + '</td>' +
+        '<td >' + record.mob_no + '</td>' +
+        '<td >' + record.address + '</td>' +
+        '<td >' + record.state + '</td>' +
+        '<td >' + record.city + '</td>' +
+        '<td >' + record.pincode + '</td>' +
+        '<td >' + record.rural_urban + '</td>' +
+        '<td >' + record.slab + '</td>' +
+        '<td >' + record.GSTIN + '</td>' +
+        '<td >' + record.account_no + '</td>' +
+        '<td >' + record.ifsc_code + '</td>' +
+
+        '<td >' + record.bank_name + '</td>' +
+
+        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.basic_qualification}')">${record.basic_qualification}</a> </td>` +
+        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>` +
+        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>` +
+        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.training_certificate}')">${record.training_certificate}</a> </td>` +
+        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.appointment_certificate}')">${record.appointment_certificate}</a> </td>` +
+        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.agreement_certificate}')">${record.agreement_certificate}</a> </td>` +
+        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.bank_details}')">${record.bank_details}</a> </td>` +
+
+        '<td >' + record.login_id + '</td>' +
+        '<td >' + record.created_by + '</td>' +
+
+        `<td class="text-center w-10pc nowrap" > <a href="#" class="badge badge-success" >${record.status}</a> </td>` +
+
+        `<td class="text-center"> <form method="POST">   {% csrf_token %}
+         <a href="/bima_policy/agent/edit_agent/${record.login_id}"
+            class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+            <i class="fa fa-pencil-alt mt-2"></i>                                               
+         </a>
+         <a href="/bima_policy/agent/delete_agent/${record.login_id}" name="Remove"
+            class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+            <i class="far fa-trash-alt mt-2"></i> 
+         </a> 
+        </td>  
+        </tr>`;
+
+      tableRows += recordHtml;
+    }
+
+    showNotification('✅ TOTAL AGENTS: ' + records.length);
+    document.getElementById('tbdy').innerHTML = tableRows;
+
+  }
+
+  function loadRecordLocalStorage() {
+    // console.log('loadRecordLocalStorage calling');
+    agents = JSON.parse(sessionStorage.getItem('agents'));
+    if (agents == null) {
+      return
+    }
+    generateTableRowsAsync(agents);
+  }
+
+  function fetch_records(data) {
+    // console.log('fetch_records calling');
+    $.ajax({
+      url: "{%url 'bima_policy:fetch_records'%}",
+      data: { data: data },
+      dataType: 'json',
+      success: function (response) {
+        console.log(response.agents);
+        generateTableRowsAsync(response.agents)
+        sessionStorage.setItem('agents', JSON.stringify(response.agents));
+      },
+      error: function (xhr, status, error) {
+        console.error(error);
+        alert(error.toString())
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // console.log('dom');
+    loadRecordLocalStorage()
+    fetch_records("agents")
+  });
 
 
 </script>
