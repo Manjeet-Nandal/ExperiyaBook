@@ -76,15 +76,23 @@
                                  <button onclick="entry_filter()" type="button" id="filterlist"
                                     class="btn btn-secondary " title="Filter"><i class="fa fa-search"
                                        aria-hidden="true"></i> </button>
+
                                  <button type="button" id="btnreset" class="btn btn-secondary" title="Refresh"
                                     onclick="resertDocument()"><i class="icofont icofont-refresh"
                                        aria-hidden="true"></i> </button>
+
+                                 <button onclick="addToFilterList()" type="button" id="btnlock" class="btn btn-secondary "
+                                    title="Freeze"><i class="fa fa-snowflake" aria-hidden="true"></i> </button>
+                                
                                  <button type="button" onclick="ExportToExcel('xlsx')" id="download_inslist"
                                     class="btn btn-secondary " title="Download"><i class="fa fa-download"
                                        aria-hidden="true"></i> </button>
-                                 <button data-toggle="modal" data-target="" type="button" id="bulk_remove"
-                                    class="btn btn-secondary" title="Delete"><i class="icofont icofont-trash"
+
+                                       <!-- data-toggle="modal" data-target=""  -->
+                                 <button type="button" id="bulk_remove" onclick="clearFilterList()"
+                                    class="btn btn-secondary" title="Clear filters"><i class="icofont icofont-trash"
                                        aria-hidden="true"></i> </button>
+
                                  <a id="linkShowFilterDiv" href="#" class="no-wrap pl-0 morefilter" title="More Filter"
                                     onclick="showMoreFilters()"><small>More
                                        Filter</small></a>
@@ -217,7 +225,7 @@
                               <label for="ps1">Payout-less Policies</label>
                            </div>
 
-                           <div class="col-md-5 mb-4">
+                           <div class="col-md-4 mb-4">
 
                               <input type="text" id="search-select_vc" class="form-control"
                                  placeholder="Select any field">
@@ -338,7 +346,7 @@
                            </div>
 
 
-                           <div id="divFilterContent" class="col-md-5 mb-4">
+                           <div id="divFilterContent" class="col-md-5">
                               <!-- <label for="my-select">Vehicle Make:</label> -->
                               <input type="text" id="search-select" class="form-control" placeholder="Search..">
                               <select id="filter_content" name="filter_content" class="form-control" multiple
@@ -431,32 +439,7 @@
 
                               </script>
                            </div>
-
-                           <div id="divFilterContentBtns" class="col-md-1 mb-4">
-
-                              <button type="button" class="btn btn-primary" onclick="addName2()" hidden>Add</button>
-                              <!-- <button id="btnFilter" type="button" class="btn btn-primary mt-1"
-                                 onclick="searchName2()">Filter</button> -->
-                              <button type="button" class="btn btn-primary mt-1 w-100"
-                                 onclick="addToFilterList()">FREEZE</button>
-
-                              {% if is_user %}
-
-                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1 " enabled hidden
-                                 data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
-
-                              {% else %}
-                              <button id="btnUpdatePayout" type="button" class="btn btn-primary mt-1  w-100" disabled
-                                 data-toggle="modal" data-target="#mdlUpdatePayout">Update</button>
-                              {% endif %}
-
-                              <button id="btnSaveFilter" type="button" class="btn btn-primary mt-1" hidden
-                                 onclick="saveFilter()">Save</button>
-                              <button type="button" class="btn btn-primary mt-1  w-100" onmouseenter="getLength()"
-                                 onclick="clearFilterList()">CLEAR</button>
-
-                           </div>
-
+                         
                         </div>
                      </form>
                   </div>
@@ -1538,10 +1521,6 @@
       window.location.replace(window.location.origin + pathname)
    }
 
-   function resertDocument() {
-      document.location.reload()
-   }
-
    function highlight(row) {
 
       SelectedRow = row.cells[0].textContent;
@@ -1652,6 +1631,8 @@
       generateTableRowsAsync(fetchList)
 
       addFilterTypes()
+
+      showNotification('✅ FILTERS CLEARED! ');
    }
 
    function getCellName() {
@@ -3341,9 +3322,9 @@
          dataType: 'json',
          success: function (response) {
             // console.log(response.records);
-            fetchList = response.records           
+            fetchList = response.records
             generateTableRowsAsync(fetchList);
-            sessionStorage.setItem('records', JSON.stringify(response.records));        
+            sessionStorage.setItem('records', JSON.stringify(response.records));
          },
          error: function (xhr, status, error) {
             console.error(error);
@@ -3376,8 +3357,16 @@
       });
    }
 
-   document.addEventListener('DOMContentLoaded', function () {
+   
+   function resertDocument() {
+      // document.location.reload()
+      loadRecordLocalStorage()
+      fetch_records("")
+      fetch_filter_details("mix")
+   }
 
+   document.addEventListener('DOMContentLoaded', function () {
+      // console.log('dom');
       loadRecordLocalStorage()
       fetch_records("")
       fetch_filter_details("mix")
