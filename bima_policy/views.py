@@ -113,9 +113,8 @@ def loginView(request):
             user2 = StaffModel.objects.filter(
                 login_id=full_name, password=password).first()
             if user:
-                p = ProfileModel.objects.filter(
-                    full_name=full_name, password=password).first()
-                id = p.id
+                # p = ProfileModel.objects.filter(full_name=full_name, password=password).first()
+                # id = p.id
                 request.session['id'] = user.id
                 request.session['full_name'] = user.full_name
 
@@ -126,12 +125,12 @@ def loginView(request):
                 #     UserRole.objects.create(profile_id_id=id, role='admin')
 
                 request.session["role"] = "admin"
-                try:
-                    request.session['profile_image'] = user.profile_image.name
-                    print('profile_image: ',  user.profile_image.name)
+                # try:
+                #     request.session['profile_image'] = user.profile_image.name
+                #     print('profile_image: ',  user.profile_image.name)
 
-                except Exception as ex_u1:
-                    pass
+                # except Exception as ex_u1:
+                #     pass
 
                 return redirect('bima_policy:dashboard')
             if user1:
@@ -139,20 +138,12 @@ def loginView(request):
                 request.session['full_name'] = user1.full_name
                 # user_ob = UserRole.objects.filter(agent_id=id).first()
                 # role = user_ob.role
-                request.session["role"] = "agent"
-                try:
-                    request.session['profile_image'] = user1.profile_image.name
-                except Exception as ex_u1:
-                    pass
+                request.session["role"] = "agent"               
                 return redirect('bima_policy:dashboard')
             if user2:
                 request.session['id'] = user2.login_id
                 request.session['staffname'] = user2.staffname
-                request.session["role"] = "staff"
-                try:
-                    request.session['profile_image'] = user2.profile_image.name
-                except Exception as ex_u1:
-                    pass
+                request.session["role"] = "staff"                
 
                 return redirect('bima_policy:dashboard')
             return render(request, 'login.html', {'error_message': 'Invalid ID or Password!'})
@@ -2664,6 +2655,7 @@ def fetch_records(request):
     if data[0] == '':  
         if is_user(request):           
             records = Policy.objects.filter(created_at=datetime.now()).values()          
+            # records = Policy.objects.filter().values()          
         else:
             records = Policy.objects.filter(created_at=datetime.now(), employee=get_id_from_session(request)).values()
        

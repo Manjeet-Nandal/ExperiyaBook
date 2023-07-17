@@ -1915,7 +1915,7 @@
       d2 = String(val2).replace('/', '-').replace('/', '-').replace('/', '-')
 
 
-      fetchData(d1 + '|' + d2)
+      fetch_records(d1 + '|' + d2)
 
       return
       search_value = document.getElementById('myInput').value.trim()
@@ -2480,27 +2480,6 @@
 
    }
 
-   function fetchData(data) {
-
-      $.ajax({
-         url: "{%url 'bima_policy:fetch_records'%}",
-         data: { data: data },
-         dataType: 'json',
-         success: function (response) {
-            // console.log(response.records);
-            fetchList = response.records
-            // console.log(fetchList);
-
-            generateTableRowsAsync(response.records);
-         },
-         error: function (xhr, status, error) {
-            console.error(error);
-            alert(error.toString())
-         }
-      });
-
-      showNotification('⌛️ Getting ready...')
-   }
 
    function fetchRecord(searchText) {
 
@@ -3319,32 +3298,74 @@
 
    }
 
-   function getData() {
-      return
-      fetchData("")
-
-      records = JSON.parse(sessionStorage.getItem('records'));
+   function loadRecordLocalStorage() {
+      // console.log('loadRecordLocalStorage calling');
+      var records = JSON.parse(sessionStorage.getItem('records'));
       if (records == null) {
          return
       }
-      console.log(records);
       fetchList = records
-      generateTableRowsAsync(fetchList)
+      // console.log(fetchList);
+      generateTableRowsAsync(fetchList);
    }
 
-   document.addEventListener('DOMContentLoaded', function() {
-   // Code to run when the DOM is loaded
-   console.log('DOMContentLoaded event fired');
-   getData()
+   function fetchRecord(searchText) {
+      console.log('fetchRecord calling');
 
- });
+      $.ajax({
+         url: "{%url 'bima_policy:fetch_record'%}",
+         data: { data: searchText },
+         dataType: 'json',
+         success: function (response) {
+            record = response.record
+            // console.log(record);
+
+            if (record === undefined) {
+               showNotification('❌ No RECORD FOUND! ');
+               return
+            }
+
+            generateSingleRowsAsync(record[0])
+
+         },
+         error: function (xhr, status, error) {
+            console.error(error);
+            alert(error.toString())
+         }
+      });
+
+      showNotification('⌛️ Getting ready...')
+   }
+
+   function fetch_records(data) {
+      // console.log('fetch_records calling');
+
+      $.ajax({
+         url: "{%url 'bima_policy:fetch_records'%}",
+         data: { data: data },
+         dataType: 'json',
+         success: function (response) {
+            // console.log(response.records);
+            sessionStorage.setItem('records', JSON.stringify(response.records));
+            // console.log(JSON.parse(sessionStorage.getItem('records')));
+            fetchList = response.records
+            generateTableRowsAsync(fetchList);
+         },
+         error: function (xhr, status, error) {
+            console.error(error);
+            alert(error.toString())
+         }
+      });
+   }
+
+   document.addEventListener('DOMContentLoaded', function () {
+
+      loadRecordLocalStorage()
+      fetch_records("")
+   });
+
 
 </script>
 
-
- 
-<body >
-
-</body>
 
 {%endblock%}
