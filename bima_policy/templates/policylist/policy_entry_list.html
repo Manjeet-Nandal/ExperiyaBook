@@ -272,9 +272,6 @@
                               <script>
 
                                  function add_filter_type() {
-                                    // document.getElementById('btnFilter').disabled = false
-                                    // document.getElementById('divFilterContent').hidden = false
-                                    // document.getElementById('divFilterContentBtns').hidden = false
 
                                     filter_type_value = document.getElementById('filter_type').value
                                     filter_content = document.getElementById('filter_content')
@@ -2365,84 +2362,77 @@
    function addAgentNames() {
 
       document.getElementById('filter_content').innerHTML = ''
+
       add_select_all_option()
 
       element = document.getElementById('filter_content')
 
-      "{{ agents |safe}}".replace('[', '').replace(']', '').split(',')
-         .forEach(item => {
+      agents = JSON.parse(localStorage.getItem('agents'));
 
-            value = item.replaceAll("'", "")
-            var newoption = document.createElement("option");
-            newoption.value = value.split('|')[0].trim()
-            newoption.innerHTML = value
-            element.options.add(newoption);
-         })
+      agents.forEach(item => {
+         var newoption = document.createElement("option");
+         newoption.value = item.trim()
+         newoption.innerHTML = item.trim()
+         element.options.add(newoption);
+      })
    }
 
 
    function addInsurerNames() {
 
       document.getElementById('filter_content').innerHTML = ''
+
       add_select_all_option()
 
       element = document.getElementById('filter_content')
 
-      "{{ insurers |safe}}".replace('[', '').replace(']', '').split(',')
-         .forEach(item => {
+      insurers = JSON.parse(localStorage.getItem('insurers'));
 
-            value = item.replaceAll("'", "")
-            var newoption = document.createElement("option");
-            newoption.value = value
-            newoption.innerHTML = value
-            element.options.add(newoption);
-
-         })
-
-      // select_all_Items('filter_content')
+      insurers.forEach(item => {
+         var newoption = document.createElement("option");
+         newoption.value = item
+         newoption.innerHTML = item
+         element.options.add(newoption);
+      })
    }
 
 
    function addVehicleCat() {
 
       document.getElementById('filter_content').innerHTML = ''
+
       add_select_all_option()
 
       element = document.getElementById('filter_content')
 
-      "{{ vehicle_categories |safe}}".replace('[', '').replace(']', '').split(',')
-         .forEach(item => {
+      vehicle_categories = JSON.parse(localStorage.getItem('vehicle_categories'));
 
-            value = item.replaceAll("'", "")
-            var newoption = document.createElement("option");
-            newoption.value = value
-            newoption.innerHTML = value
-            element.options.add(newoption);
-
-         })
-
-      // select_all_Items('filter_content')
+      vehicle_categories.forEach(item => {
+         var newoption = document.createElement("option");
+         newoption.value = item
+         newoption.innerHTML = item
+         element.options.add(newoption);
+      })
    }
 
 
    function addVehicleMakes() {
-      // return
+
       document.getElementById('filter_content').innerHTML = ''
+
       add_select_all_option()
 
       element = document.getElementById('filter_content')
 
-      "{{ makes |safe}}".replace('[', '').replace(']', '').split(',')
-         .forEach(item => {
+      makes = JSON.parse(localStorage.getItem('makes'));
 
-            value = item.replaceAll("'", "")
-            var newoption = document.createElement("option");
-            newoption.value = value
-            newoption.innerHTML = value
-            element.options.add(newoption);
+      makes.forEach(item => {
+         var newoption = document.createElement("option");
+         newoption.value = item.make
+         newoption.innerHTML = item.make
+         element.options.add(newoption);
+      })
 
-         })
-      // select_all_Items('filter_content')
    }
 
 
@@ -2454,18 +2444,14 @@
 
       element = document.getElementById('filter_content')
 
-      "{{ models |safe}}".replace('[', '').replace(']', '').split(',')
-         .forEach(item => {
+      models = JSON.parse(localStorage.getItem('models'));
 
-            value = item.replaceAll("'", "")
-            var newoption = document.createElement("option");
-            newoption.value = value
-            newoption.innerHTML = value
-            element.options.add(newoption);
-
-         })
-
-      // select_all_Items('filter_content')
+      models.forEach(item => {
+         var newoption = document.createElement("option");
+         newoption.value = item.model
+         newoption.innerHTML = item.model
+         element.options.add(newoption);
+      })
    }
 
    function downloadFile(params) {
@@ -2790,6 +2776,8 @@
       filter_type = document.getElementById('filter_type').value
       filter_content = document.getElementById('filter_content')
 
+      console.log(filter_type);
+
       if (freezList.length > 0) {
 
          tempfilterList = []
@@ -2811,7 +2799,9 @@
 
                for (const tempItr of tempfilterList) {
 
-                  if (tempItr == pos) {
+                  poscode = tempItr.split('|')[0].trim()
+
+                  if (poscode == pos) {
                      filterList.push(iterator)
                   }
                }
@@ -3016,6 +3006,8 @@
             }
          }
 
+         console.log(tempfilterList);
+
          filterList = []
 
          if (filter_type == "pos") {
@@ -3026,7 +3018,10 @@
 
                for (const tempItr of tempfilterList) {
 
-                  if (tempItr == pos) {
+                  poscode = tempItr.split('|')[0].trim()
+
+                  if (poscode == pos) {
+
                      filterList.push(iterator)
                   }
                }
@@ -3310,7 +3305,7 @@
    }
 
    function fetchRecord(searchText) {
-      console.log('fetchRecord calling');
+      // console.log('fetchRecord calling');
 
       $.ajax({
          url: "{%url 'bima_policy:fetch_record'%}",
@@ -3346,10 +3341,33 @@
          dataType: 'json',
          success: function (response) {
             // console.log(response.records);
-            sessionStorage.setItem('records', JSON.stringify(response.records));
-            // console.log(JSON.parse(sessionStorage.getItem('records')));
-            fetchList = response.records
+            fetchList = response.records           
             generateTableRowsAsync(fetchList);
+            sessionStorage.setItem('records', JSON.stringify(response.records));        
+         },
+         error: function (xhr, status, error) {
+            console.error(error);
+            alert(error.toString())
+         }
+      });
+   }
+
+   function fetch_filter_details(data) {
+      // console.log('fetch_filter_details calling');
+
+      $.ajax({
+         url: "{%url 'bima_policy:fetch_records'%}",
+         data: { data: data },
+         dataType: 'json',
+         success: function (response) {
+            // console.log(response.agents);
+            localStorage.setItem('agents', JSON.stringify(response.agents));
+            localStorage.setItem('insurers', JSON.stringify(response.insurers));
+            localStorage.setItem('vehicle_categories', JSON.stringify(response.vehicle_categories));
+            localStorage.setItem('makes', JSON.stringify(response.makes));
+            localStorage.setItem('models', JSON.stringify(response.models));
+            // console.log(JSON.parse(localStorage.getItem('agents')));            
+
          },
          error: function (xhr, status, error) {
             console.error(error);
@@ -3362,6 +3380,7 @@
 
       loadRecordLocalStorage()
       fetch_records("")
+      fetch_filter_details("mix")
    });
 
 

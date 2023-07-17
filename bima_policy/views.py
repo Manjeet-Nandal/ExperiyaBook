@@ -2629,7 +2629,7 @@ def policy_entry(request):
 
 
 def count_objects(request):
-    print('\nfetch_agents calling ')
+    print('\ncount_objects calling ')
        
     staffcount = StaffModel.objects.count()
     agentcount = Agents.objects.filter(status="Active").count()
@@ -2650,8 +2650,9 @@ def fetch_records(request):
     print('\nfetch_records calling ')
 
     data = request.GET.get('data').split('|')   
-    print(data)
+    # print(data)
   
+    # get from todays
     if data[0] == '':  
         if is_user(request):           
             records = Policy.objects.filter(created_at=datetime.now()).values()          
@@ -2660,6 +2661,27 @@ def fetch_records(request):
             records = Policy.objects.filter(created_at=datetime.now(), employee=get_id_from_session(request)).values()
        
         return JsonResponse({'records': list(records)})
+    
+    # get mixed
+    if data[0] == 'mix':  
+        agents = []
+        for ag in Agents.objects.filter(status="Active").values():  
+            agents.append(ag['posp_code'] +' | ' +ag['full_name'])  
+
+        insurers = []
+        for ins in InsuranceCompany.objects.values('comp_name'):
+            insurers.append(ins['comp_name'])
+        insurers.sort()
+
+        vehicle_categories = []
+        for category in VehicleCategory.objects.values("category"):
+            vehicle_categories.append(category['category'])
+        vehicle_categories.sort()
+
+        makes = list(VehicleMake.objects.values('make'))
+        models = list(VehicleModel.objects.values('model'))
+              
+        return JsonResponse({'agents': agents, 'insurers': insurers, 'vehicle_categories': vehicle_categories, 'makes': makes, 'models':models})
 
     d1_array = data[0].split('-')
     d2_array = data[1].split('-')
@@ -2687,8 +2709,8 @@ def fetch_records(request):
     # print(date1)  # Output: 2023-06-23
 
     if is_user(request):
-        records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()
-        # records = Policy.objects.filter(created_at__gte=date1, created_at__lte=date2).values()
+        # records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()
+        records = Policy.objects.filter(created_at__gte=date1, created_at__lte=date2).values()
     else:
         records = Policy.objects.filter(
             created_at__gte=date1, created_at__lte=date2, employee=get_id_from_session(request)).values()
@@ -2717,6 +2739,21 @@ def fetch_record(request):
         return JsonResponse({'record': record })      
   
     return JsonResponse({'message': "Not found!"})
+
+
+def fetch_mix_records(request):
+    print('\nfetch_mix_records calling ')
+
+    data = request.GET.get('data').split('|')   
+    print(data)    
+   
+    agents = []
+    for ag in Agents.objects.filter(status="Active").values():  
+        agents.append(ag['posp_code'] +' | ' +ag['full_name'])      
+
+    
+    return JsonResponse({'agents': agents})
+    
 
 
 def policy_saerch_entry(request, id):
