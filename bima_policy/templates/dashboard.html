@@ -273,31 +273,39 @@
 
 <script>
 
-    function count_objects() {
+    function loadCountDetailFromLocalStorage() {
+        var counts = JSON.parse(localStorage.getItem('counts'));
+        if (counts != null) {
+            console.log(counts);
+            document.getElementById('staffcount').textContent = counts.staffcount
+            document.getElementById('agentcount').textContent = counts.agentcount
+            document.getElementById('spcount').textContent = counts.spcount
+            document.getElementById('policycount').textContent = counts.policycount
+        }
+    }
+
+    function fetchCountDetails() {
 
         $.ajax({
             url: "{%url 'bima_policy:count_objects'%}",
             // data: { data: '' },
             dataType: 'json',
             success: function (response) {
-                // console.log(response.records);      
-                sessionStorage.setItem('objectList', JSON.stringify(response.records));
-                // console.log(JSON.parse(sessionStorage.getItem('objectList')));
-                var objectList = JSON.parse(sessionStorage.getItem('objectList'));
-                document.getElementById('staffcount').textContent = objectList.staffcount
-                document.getElementById('agentcount').textContent = objectList.agentcount
-                document.getElementById('spcount').textContent = objectList.spcount
-                document.getElementById('policycount').textContent = objectList.policycount
+                // console.log('ajax counts: ', response.counts);
+                localStorage.setItem('counts', JSON.stringify(response.counts));
+                counts = JSON.parse(localStorage.getItem('counts'));
+                // console.log('localStorage counts: ', counts);
+                document.getElementById('staffcount').textContent = counts.staffcount
+                document.getElementById('agentcount').textContent = counts.agentcount
+                document.getElementById('spcount').textContent = counts.spcount
+                document.getElementById('policycount').textContent = counts.policycount
             },
             error: function (xhr, status, error) {
                 console.error(error);
                 alert(error.toString())
             }
         });
-
-        // showNotification('⌛️ Getting ready...')
     }
-
 
     function fetch_records() {
 
@@ -308,39 +316,24 @@
             success: function (response) {
                 // console.log(response.records);      
                 sessionStorage.setItem('records', JSON.stringify(response.records));
-                console.log(JSON.parse(sessionStorage.getItem('records')));
+                // console.log(JSON.parse(sessionStorage.getItem('records')));
             },
             error: function (xhr, status, error) {
                 console.error(error);
                 alert(error.toString())
             }
         });
-
-        // showNotification('⌛️ Getting ready...')
     }
-  
 
     document.addEventListener('DOMContentLoaded', function () {
-        // Code to run when the DOM is loaded
-        console.log('DOMContentLoaded event fired');
-        count_objects()
 
+        loadCountDetailFromLocalStorage()
+        fetchCountDetails()
         fetch_records()
-
-        var objectList = JSON.parse(sessionStorage.getItem('objectList'));
-
-        if (objectList == null) {
-            return
-        }
-        // console.log(objectList);
-        document.getElementById('staffcount').textContent = objectList.staffcount
-        document.getElementById('agentcount').textContent = objectList.agentcount
-        document.getElementById('spcount').textContent = objectList.spcount
-        document.getElementById('policycount').textContent = objectList.policycount
-
     });
 
-</script>
 
+
+</script>
 
 {%endblock%}

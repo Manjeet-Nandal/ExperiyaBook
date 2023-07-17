@@ -10,48 +10,32 @@
    <!-- Begin SEO tag -->
    <title> Experiya Book </title>
    <!-- FAVICONS -->
-   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+   <!-- <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"> -->
    <meta name="theme-color" content="#3063A0">
-   <!-- End FAVICONS -->
-   <!-- GOOGLE FONT -->
-   <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
-   {% comment %}
-   <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"> {% endcomment %}
-   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&amp;display=swap" rel="stylesheet">
 
-   {% comment %}
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"> {%
-   endcomment %}
-   {% comment %}
-   <link rel="stylesheet" href="https://cdn.lineicons.com/3.0/lineicons.css"> {% endcomment %}
-   <!-- BEGIN PLUGINS STYLES -->
+   <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css"> 
+   <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&amp;display=swap" rel="stylesheet"> -->
+ 
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-   <link rel="stylesheet" href="{%static 'css/icofont.min.css' %}">
-   <link rel="stylesheet" href="{%static 'css/open-iconic-bootstrap.min.css' %}">
-   {% comment %}
-   <link rel="stylesheet" href="{%static 'css/font-awesome.min.css' %}"> {% endcomment %}
-   <link rel="stylesheet" href="{%static 'css/flatpickr.min.css' %}">
-   {% comment %}
-   <link rel="stylesheet" href="{%static 'css/toastr.min.css' %}"> {% endcomment %}
-   <link rel="stylesheet" href="{%static 'css/parsley.css' %}">
-   <link rel="stylesheet" href="{%static 'css/select2.min.css' %}">
-   <link rel="stylesheet" href="{%static 'css/theme.min.css' %}" data-skin="default">
-   <!-- <link rel="stylesheet" href="{%static 'css/theme-dark.min.css' %}" data-skin="dark" disabled="true"> -->
-   <link rel="stylesheet" href="{%static 'css/custom.min.css'%}">
-   <link rel="stylesheet" href="{%static 'css/bootstrap-select.min.css'%}">
-   <link rel="stylesheet" href="{%static 'css/bootstrap-tagsinput.css'%}">
-   <link rel="stylesheet" href="{%static 'css/filter-multi-select.css'%}">
 
-   <!-- <script>
-         var skin = localStorage.getItem('skin') || 'default';
-         var disabledSkinStylesheet = document.querySelector('link[data-skin]:not([data-skin="' + skin + '"])');
-      
-         disabledSkinStylesheet.setAttribute('rel', '');
-         disabledSkinStylesheet.setAttribute('disabled', true);
-         // add loading class to html immediately
-         document.querySelector('html').classList.add('loading');
-      </script> -->
+   <link rel="stylesheet" href="{%static 'css/icofont.min.css' %}">
+   <!-- <link rel="stylesheet" href="{%static 'css/open-iconic-bootstrap.min.css' %}"> -->
+ 
+   <!-- <link rel="stylesheet" href="{%static 'css/font-awesome.min.css' %}">  -->
+   <link rel="stylesheet" href="{%static 'css/flatpickr.min.css' %}">
+  
+   <!-- <link rel="stylesheet" href="{%static 'css/toastr.min.css' %}">  -->
+
+   <!-- <link rel="stylesheet" href="{%static 'css/parsley.css' %}"> -->
+   <link rel="stylesheet" href="{%static 'css/select2.min.css' %}">
+   <link rel="stylesheet" href="{%static 'css/theme.min.css' %}" data-skin="default">  
+   <link rel="stylesheet" href="{%static 'css/custom.min.css'%}">
+   <!-- <link rel="stylesheet" href="{%static 'css/bootstrap-select.min.css'%}">  -->
+   <!-- <link rel="stylesheet" href="{%static 'css/bootstrap-tagsinput.css'%}"> -->
+   <!-- <link rel="stylesheet" href="{%static 'css/filter-multi-select.css'%}"> -->
+
+   
 
 </head>
 
@@ -115,12 +99,10 @@
                   <div class="dropdown d-none d-md-flex">
                      <button id="hello" class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
-                        <span class="user-avatar user-avatar-md">
-                           {% if request.session.profile_image == None %}
-                           <img src="{% static 'images/user.png' %}" alt="Demo">
-                           {% else %}
-                           <img src="/media/{{request.session.profile_image }}" alt="Demo">
-                           {% endif %}
+                        <span class="user-avatar user-avatar-md">                          
+                           <img src="{% static 'images/user.png' %}" alt="Demo">                          
+                           <!-- <img src="/media/{{request.session.profile_image }}" alt="Demo"> -->                        
+                         
                         </span>
 
                      </button> <!-- .dropdown-menu -->
@@ -477,123 +459,31 @@
       </div>
       <!-- /.modal-dialog -->
    </div> {% endcomment %}
-   <!-- /.modal -->
-   <!-- BEGIN BASE JS -->
+  
    <script src="{%static 'js/jquery.min.js'%}"></script>
    <script src="{%static 'js/popper.min.js'%}"></script>
-   <script src="{%static 'js/bootstrap.min.js'%}"></script> <!-- END BASE JS -->
-   <!-- BEGIN PLUGINS JS -->
-   <script src="{% static 'js/pace.min.js' %}"></script>
+   <script src="{%static 'js/bootstrap.min.js'%}"></script>
+ 
+   <!-- <script src="{% static 'js/pace.min.js' %}"></script> -->
    <script src="{% static 'js/stacked-menu.min.js' %}"></script>
-   <script src="{%static 'js/perfect-scrollbar.min.js' %}"></script> <!-- END PLUGINS JS -->
+   <script src="{%static 'js/perfect-scrollbar.min.js' %}"></script> 
    <!-- Parsley -->
-   <script src="{%static 'js/parsley.js'%}"></script>
+   <!-- <script src="{%static 'js/parsley.js'%}"></script> -->
    <!-- BEGIN THEME JS -->
    <script src="{%static 'js/theme.js'%}"></script>
-   <script src="{%static 'js/toastr.min.js' %}"></script>
+   <!-- <script src="{%static 'js/toastr.min.js' %}"></script> -->
    <script src="{%static 'js/flatpickr.min.js' %}"></script>
-   <script src="{%static 'js/select2.full.min.js' %}"></script>
+   <!-- <script src="{%static 'js/select2.full.min.js' %}"></script> -->
    <script src="{%static 'js/moment.js' %}"></script>
    <script src="{%static 'js/mask-as-number.min.js' %}"></script>
-   <script src="{%static 'js/jquery.dataTables.min.js'%}"></script>
-   <script src="{%static 'js/dataTables.bootstrap.js' %}"></script>
-   <script src="{%static 'js/jquery.form.js' %}"></script>
+   <!-- <script src="{%static 'js/jquery.dataTables.min.js'%}"></script> -->
+   <!-- <script src="{%static 'js/dataTables.bootstrap.js' %}"></script> -->
+   <!-- <script src="{%static 'js/jquery.form.js' %}"></script> -->
    <script src="{%static 'js/custom.min.js' %}"></script>
-   {% comment %}
-   <script src="{%static 'js/insurance.min.js' %}"></script> {% endcomment %}
-   <script src="{% static 'js/Chart.min.js' %}"></script>
-   <script>
-      $(document).ready(function () {
-         var data = {
-            labels: JSON.parse('["Jun-2022"]'),
-            datasets: [
-               {
-                  label: 'OK Policies',
-                  borderColor: "#00A28A",
-                  backgroundColor: "#00A28A",
-                  data: JSON.parse('[0]'),
-               },
-               {
-                  label: 'Cancelled Policies',
-                  borderColor: "#00A28A",
-                  backgroundColor: "red",
-                  data: JSON.parse('[1]'),
-               }
-            ]
-         };
-         var canvas = $('#canvas-total-policy')[0].getContext('2d');
-         var chart = new Chart(canvas, {
-            type: 'bar',
-            data: data,
-            options: {
-               responsive: true,
-               legend: {
-                  position: 'top' // place legend on the right side of chart
-               },
-               scales: {
-                  xAxes: [{
-                     gridLines: {
-                        display: true,
-                        drawBorder: false,
-                        drawOnChartArea: false
-                     },
-                     stacked: true,
-                  }],
-                  yAxes: [{
-                     gridLines: {
-                        display: true,
-                        borderDash: [8, 4]
-                     },
-                     ticks: {
-                        stepSize: 20
-                     },
-                     stacked: true,
-                  }]
-               }
-            }
-         });
-         var data = {
-            labels: JSON.parse('["Jun-2022"]'),
-            datasets: [{
-               label: 'Earnings (In Lacs)',
-               borderColor: "#ea6759",
-               backgroundColor: "#5f4b8b",
-               data: JSON.parse('[0]'),
-            }]
-         };
-         var canvas = $('#canvas-total-earning')[0].getContext('2d');
-         var chart = new Chart(canvas, {
-            type: 'bar',
-            data: data,
-            options: {
-               responsive: true,
-               legend: {
-                  position: 'top' // place legend on the right side of chart
-               },
-               scales: {
-                  xAxes: [{
-                     gridLines: {
-                        display: true,
-                        drawBorder: false,
-                        drawOnChartArea: false
-                     },
-                     stacked: true,
-                  }],
-                  yAxes: [{
-                     gridLines: {
-                        display: true,
-                        borderDash: [8, 4]
-                     },
-                     ticks: {
-                        stepSize: 20
-                     },
-                     stacked: true,
-                  }]
-               }
-            }
-         });
-      });
-   </script>
+  
+   <!-- <script src="{%static 'js/insurance.min.js' %}"></script>  -->
+   <!-- <script src="{% static 'js/Chart.min.js' %}"></script> -->
+  
 
    <div class="flatpickr-calendar rangeMode animate" tabindex="-1">
       <div class="flatpickr-months">

@@ -2652,7 +2652,7 @@ def count_objects(request):
         "policycount" : policycount
     }
     
-    return JsonResponse({'records': counts})  
+    return JsonResponse({'counts': counts})  
 
 
 def fetch_records(request):
@@ -2663,7 +2663,7 @@ def fetch_records(request):
   
     if data[0] == '':  
         if is_user(request):           
-            records = Policy.objects.filter(created_at=datetime.now()).values()
+            records = Policy.objects.filter(created_at=datetime.now()).values()          
         else:
             records = Policy.objects.filter(created_at=datetime.now(), employee=get_id_from_session(request)).values()
        
