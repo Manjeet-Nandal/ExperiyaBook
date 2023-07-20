@@ -10,34 +10,63 @@
    <!-- Begin SEO tag -->
    <title> Experiya Book </title>
    <!-- FAVICONS -->
-   <!-- <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"> -->
+   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
    <meta name="theme-color" content="#3063A0">
 
-   <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css"> 
-   <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&amp;display=swap" rel="stylesheet"> -->
- 
+   <!-- <link rel="stylesheet" href="{%static 'css/font-awesome.min.css' %}">  -->
+   <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&amp;display=swap" rel="stylesheet">
+
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
    <link rel="stylesheet" href="{%static 'css/icofont.min.css' %}">
-   <!-- <link rel="stylesheet" href="{%static 'css/open-iconic-bootstrap.min.css' %}"> -->
- 
-   <link rel="stylesheet" href="{%static 'css/font-awesome.min.css' %}"> 
+   <link rel="stylesheet" href="{%static 'css/open-iconic-bootstrap.min.css' %}">
+
    <link rel="stylesheet" href="{%static 'css/flatpickr.min.css' %}">
-  
-   <!-- <link rel="stylesheet" href="{%static 'css/toastr.min.css' %}">  -->
+
+   <link rel="stylesheet" href="{%static 'css/toastr.min.css' %}">
 
    <link rel="stylesheet" href="{%static 'css/parsley.css' %}">
    <link rel="stylesheet" href="{%static 'css/select2.min.css' %}">
-   <link rel="stylesheet" href="{%static 'css/theme.min.css' %}" data-skin="default">  
+   <link rel="stylesheet" href="{%static 'css/theme.min.css' %}" data-skin="default">
    <link rel="stylesheet" href="{%static 'css/custom.min.css'%}">
-   
-   <!-- <link rel="stylesheet" href="{%static 'css/bootstrap-select.min.css'%}">  -->
-   <!-- <link rel="stylesheet" href="{%static 'css/bootstrap-tagsinput.css'%}"> -->
-   <link rel="stylesheet" href="{%static 'css/filter-multi-select.css'%}">  
 
-   
+   <link rel="stylesheet" href="{%static 'css/bootstrap-select.min.css'%}">
+   <link rel="stylesheet" href="{%static 'css/bootstrap-tagsinput.css'%}">
+   <link rel="stylesheet" href="{%static 'css/filter-multi-select.css'%}">
+
+
 </head>
+
+<style>
+   /* Basic menu styles */
+   .menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+   }
+
+   .menu-item {
+      display: inline-block;
+      padding: 1px 20px;
+      cursor: pointer;
+   }
+
+   /* Hover effect */
+   .menu-item:hover {
+      background-color: #f0f0f0;
+      
+   }
+
+   /* Selected effect */
+   .menu-item.selected {
+      background-color: #007bff;
+      color: #fff;
+   }
+</style>
+
+
 
 <body class=" default-skin pace-done">
    <div class="pace  pace-inactive">
@@ -99,10 +128,10 @@
                   <div class="dropdown d-none d-md-flex">
                      <button id="hello" class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
-                        <span class="user-avatar user-avatar-md">                          
-                           <img src="{% static 'images/user.png' %}" alt="Demo">                          
-                           <!-- <img src="/media/{{request.session.profile_image }}" alt="Demo"> -->                        
-                         
+                        <span class="user-avatar user-avatar-md">
+                           <img src="{% static 'images/user.png' %}" alt="Demo">
+                           <!-- <img src="/media/{{request.session.profile_image }}" alt="Demo"> -->
+
                         </span>
 
                      </button> <!-- .dropdown-menu -->
@@ -115,21 +144,24 @@
                         <a class="dropdown-item" href="/bima_policy/profile/"
                            style="color: #FFFFFF; background: #6E11F4;">
 
-                           <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>&nbsp;&nbsp; Profile
+                           <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>&nbsp;&nbsp;
+                           Profile
                         </a>
                         {% endif %}
 
                         {% if request.session.role == 'staff' %}
                         <a class="dropdown-item" href="/bima_policy/user/edit/{{request.session.id}}"
                            style="color: #FFFFFF; background: #6E11F4;">
-                           <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>&nbsp;&nbsp; Profile
+                           <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>&nbsp;&nbsp;
+                           Profile
                         </a>
                         {% endif %}
 
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" style="color: #FFFFFF; background: #6E11F4;"
                            href="{%url 'bima_policy:logout'%}">
-                           <i class="fa fa-sign-out" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>&nbsp;&nbsp; Logout
+                           <i class="fa fa-sign-out" style="color: #FFFFFF;" aria-hidden="true"
+                              id='icon'></i>&nbsp;&nbsp; Logout
                         </a>
                      </div>
 
@@ -178,12 +210,12 @@
                   <!-- .menu -->
                   <ul class="menu">
 
-                     <style>   
-                        .text-blue{
+                     <style>
+                        .text-blue {
                            color: #346CB0;
                            font-weight: 700;
-                           
-                        }                   
+
+                        }
 
                         .text-white-ff {
                            color: #FFFFFF
@@ -192,12 +224,13 @@
 
                      <li class="text-center text-primary"><span class="" id="liteDate"></span>
                      </li>
-                     <!-- /.menu-header -->
-                     <li class="menu-header" >General </li>
-                     <!-- /.menu-header -->
+                    
+                     <li class="menu-header">General </li>
+                   
+                     <!--  -->
                      <li class="menu-item has-active" onclick="showDashboard()">
                         <a href="#" class="menu-link">
-                           <i class="fa fa-home"  aria-hidden="true" id='icon'></i>
+                           <i class="fa fa-home" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Dashboard</span>
                         </a>
                      </li>
@@ -211,206 +244,197 @@
 
                      <li class="menu-item has-child">
                         <a href="#" class="menu-link">
-                           <i class="fa fa-book text-blue"  aria-hidden="true"       id='icon'></i>
+                           <i class="fa fa-book text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">New Policy</span></a>
 
                         <ul class="menu">
-                                                         
-                                 <li class="menu-item" onclick="motor_entry()">
-                                    <a href="#"
-                                       style="margin-left: 1rem; " class="menu-link text-blue">Motor</a>
-                                 </li>
-                                 <li class="menu-item " onclick="non_motor_entry()">
-                                    <a href="#"
-                                       style="margin-left: 1rem; "
-                                       class="menu-link text-blue">Non-Motor</a>
-                                 </li>
-                                 <li class="menu-item ">
-                                    <a href="#" style="margin-left: 1rem;" class="menu-link text-blue"
-                                       onclick="alert('Claim-section is Under Construction!!')">Claim</a>
-                                 </li>
+
+                           <li class="menu-item" onclick="motor_entry()">
+                              <a href="#" style="margin-left: 1rem; " class="menu-link text-blue">Motor</a>
                            </li>
-
-                           <li class="menu-item " hidden>
-                              <a href="{%url 'bima_policy:policy_import' %}" style="margin-left: 1rem;"
-                                 class="menu-link" tabindex="-1">Import</a>
+                           <li class="menu-item " onclick="non_motor_entry()">
+                              <a href="#" style="margin-left: 1rem; " class="menu-link text-blue">Non-Motor</a>
                            </li>
-                        </ul>
-                        </a>
-
-                     <li class="menu-item has-active"  onclick="showEntryList()">
-                        <a href="#" class="menu-link">
-                           <i class="fa fa-bars text-blue" aria-hidden="true" id='icon'></i>
-                           <span class="menu-text text-blue" style="margin-left: 10px;">Entry List</span>
-                        </a>
-                     </li>
-                     
-
-                     {% if request.session.role == "staff" %}
-                     <li class="menu-item ">
-                        <a href="{%url 'bima_policy:policy_deleted_entry'%}" class="menu-link">
-                           <i class="fa fa-trash text-blue" aria-hidden="true" id='icon'></i>
-                           <span class="menu-text text-blue" style="margin-left: 10px;">Trash</span>
-                        </a>
-                     </li>
-                     {% endif %}
-
+                           <li class="menu-item ">
+                              <a href="#" style="margin-left: 1rem;" class="menu-link text-blue"
+                                 onclick="alert('Claim-section is Under Construction!!')">Claim</a>
+                           </li>
                      </li>
 
                      <li class="menu-item " hidden>
-                        <a href="#" class="menu-link">
-                           <i class="fa fa-retweet"  aria-hidden="true" id='icon'></i>
-                           <span class="menu-text ">Upcoming Renewal</span>
-                        </a>
+                        <a href="{%url 'bima_policy:policy_import' %}" style="margin-left: 1rem;" class="menu-link"
+                           tabindex="-1">Import</a>
                      </li>
+                  </ul>
+                  </a>
 
-                     <div class={{request.session.role}} hidden>
-                        <li class="menu-item has-child ">
-                           <a href="javascript:void(0);" class="menu-link">
-                              {% comment %} <span class="menu-icon icofont icofont-money"></span>{% endcomment %}
-                              <i class="fa-solid fa-sack-dollar" style="color:#346cb0 ;padding-right: 1.7rem;
+                  <li class="menu-item has-active" onclick="showEntryList()">
+                     <a href="#" class="menu-link">
+                        <i class="fa fa-bars text-blue" aria-hidden="true" id='icon'></i>
+                        <span class="menu-text text-blue" style="margin-left: 10px;">Entry List</span>
+                     </a>
+                  </li>
+
+
+                  {% if request.session.role == "staff" %}
+                  <li class="menu-item ">
+                     <a href="{%url 'bima_policy:policy_deleted_entry'%}" class="menu-link">
+                        <i class="fa fa-trash text-blue" aria-hidden="true" id='icon'></i>
+                        <span class="menu-text text-blue" style="margin-left: 10px;">Trash</span>
+                     </a>
+                  </li>
+                  {% endif %}
+
+                  </li>
+
+                  <li class="menu-item " hidden>
+                     <a href="#" class="menu-link">
+                        <i class="fa fa-retweet" aria-hidden="true" id='icon'></i>
+                        <span class="menu-text ">Upcoming Renewal</span>
+                     </a>
+                  </li>
+
+                  <div class={{request.session.role}} hidden>
+                     <li class="menu-item has-child ">
+                        <a href="javascript:void(0);" class="menu-link">
+                           {% comment %} <span class="menu-icon icofont icofont-money"></span>{% endcomment %}
+                           <i class="fa-solid fa-sack-dollar" style="color:#346cb0 ;padding-right: 1.7rem;
                                  overflow: hidden;
                                  text-overflow: ellipsis;
                                  white-space: nowrap;"></i>
 
-                              <span class="menu-text" >Ledger</span></a>
-                           <!-- child menu -->
-                           <ul class="menu">
-                              <li class="menu-subhead">Ledger</li>
-                              <li class="menu-item ">
-                                 <a href="#" class="menu-link" tabindex="-1">Agent
-                                    Payable</a>
-                              </li>
-                              <li class="menu-item ">
-                                 <a href="#" class="menu-link" tabindex="-1">Agent Statement</a>
-                              </li>
-                              <li class="menu-item ">
-                                 <a href="#" class="menu-link" tabindex="-1">SP Receivable</a>
-                              </li>
-                              <li class="menu-item ">
-                                 <a href="#" class="menu-link" tabindex="-1">SP Statement</a>
-                              </li>
-                           </ul>
+                           <span class="menu-text">Ledger</span></a>
+                        <!-- child menu -->
+                        <ul class="menu">
+                           <li class="menu-subhead">Ledger</li>
+                           <li class="menu-item ">
+                              <a href="#" class="menu-link" tabindex="-1">Agent
+                                 Payable</a>
+                           </li>
+                           <li class="menu-item ">
+                              <a href="#" class="menu-link" tabindex="-1">Agent Statement</a>
+                           </li>
+                           <li class="menu-item ">
+                              <a href="#" class="menu-link" tabindex="-1">SP Receivable</a>
+                           </li>
+                           <li class="menu-item ">
+                              <a href="#" class="menu-link" tabindex="-1">SP Statement</a>
+                           </li>
+                        </ul>
 
-                        </li>
-                     </div>
+                     </li>
+                  </div>
 
-                     <div class={{request.session.role}} hidden>
-                        <li class="menu-item has-child ">
-                           <a href="javascript:void(0);" class="menu-link">
-                              {% comment %} <span class="menu-icon icofont icofont-file-text"></span> {% endcomment %}
-                              <i class="fa fa-file-text" id="iconn" style="padding-right: 1.8rem;"></i>
-                              <span class="menu-text" >Reports</span></a>
-                           <!-- child menu -->
-                           <ul class="menu">
-                              <li class="menu-subhead">Reports</li>
-                              <li class="menu-item ">
-                                 <a href="#" class="menu-link" tabindex="-1">Agent wise</a>
-                              </li>
-                              <li class="menu-item ">
-                                 <a href="#" class="menu-link" tabindex="-1">Policy Provider wise</a>
-                              </li>
-                              <li class="menu-item ">
-                                 <a href="#" class="menu-link" tabindex="-1">Vehicle Category wise</a>
-                              </li>
-                              <li class="menu-item ">
-                                 <a href="#" class="menu-link" tabindex="-1">Broker Code wise</a>
-                              </li>
-                              <li class="menu-item ">
-                                 <a href="#" class="menu-link" tabindex="-1">Insurance Comp. wise</a>
-                              </li>
-                           </ul>
-                        </li>
-                     </div>
+                  <div class={{request.session.role}} hidden>
+                     <li class="menu-item has-child ">
+                        <a href="javascript:void(0);" class="menu-link">
+                           {% comment %} <span class="menu-icon icofont icofont-file-text"></span> {% endcomment %}
+                           <i class="fa fa-file-text" id="iconn" style="padding-right: 1.8rem;"></i>
+                           <span class="menu-text">Reports</span></a>
+                        <!-- child menu -->
+                        <ul class="menu">
+                           <li class="menu-subhead">Reports</li>
+                           <li class="menu-item ">
+                              <a href="#" class="menu-link" tabindex="-1">Agent wise</a>
+                           </li>
+                           <li class="menu-item ">
+                              <a href="#" class="menu-link" tabindex="-1">Policy Provider wise</a>
+                           </li>
+                           <li class="menu-item ">
+                              <a href="#" class="menu-link" tabindex="-1">Vehicle Category wise</a>
+                           </li>
+                           <li class="menu-item ">
+                              <a href="#" class="menu-link" tabindex="-1">Broker Code wise</a>
+                           </li>
+                           <li class="menu-item ">
+                              <a href="#" class="menu-link" tabindex="-1">Insurance Comp. wise</a>
+                           </li>
+                        </ul>
+                     </li>
+                  </div>
 
-                     {% if request.session.role == "admin" %}
+                  {% if request.session.role == "admin" %}
 
-                     <div class={{request.session.role}}>
-                        <li class="menu-header " >Manage </li>
-                        <!-- /.menu-header -->
-                        <!-- .menu-item -->
+                  <div class={{request.session.role}}>
+                     <li class="menu-header ">Manage </li>
+                     <!-- /.menu-header -->
+                     <!-- .menu-item -->
 
-                        <li class="menu-item "  onclick="showPosp()">
-                           <a href="#" class="menu-link">
-                              <i class="fa fa-user-friends text-blue"  aria-hidden="true"
-                                 id='icon'></i>
-                              <span class="menu-text text-blue" style="margin-left: 10px;">POSP</span>
-                           </a>
-                        </li>
+                     <li class="menu-item " onclick="showPosp()">
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-user-friends text-blue" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">POSP</span>
+                        </a>
+                     </li>
 
-                        <li class="menu-item "  onclick="" >
-                           <a href="#" class="menu-link">
-                              <i class="fa fa-solid fa-book text-blue"  aria-hidden="true"
-                                 id='icon'></i>
-                              <span class="menu-text text-blue" style="margin-left: 10px;">Payouts</span>
-                           </a>
-                        </li>
+                     <li class="menu-item " onclick="">
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-solid fa-book text-blue" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Payouts</span>
+                        </a>
+                     </li>
 
-                        <li class="menu-item " onclick="show_insurer()">
-                           <a href="#" class="menu-link">
-                              <i class="fa fa-solid fa-building text-blue"  aria-hidden="true"
-                                 id='icon'></i>
-                              <span class="menu-text text-blue" style="margin-left: 10px;">Insurers</span>
-                           </a>
-                        </li>
+                     <li class="menu-item " onclick="show_insurer()">
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-solid fa-building text-blue" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Insurers</span>
+                        </a>
+                     </li>
 
-                        <li class="menu-item " onclick="show_sp()">
-                           <a href="#" class="menu-link">
-                              <i class="fa fa-solid fa-user-tie text-blue" aria-hidden="true"
-                                 id='icon'></i>
-                              <span class="menu-text text-blue" style="margin-left: 10px;">Serving Office</span>
-                           </a>
-                        </li>
+                     <li class="menu-item " onclick="show_sp()">
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-solid fa-user-tie text-blue" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Serving Office</span>
+                        </a>
+                     </li>
 
-                        <li class="menu-item "   onclick="show_product()">
-                           <a href="#" class="menu-link">
-                              <i class="fa fa-product-hunt text-blue"  aria-hidden="true"
-                                 id='icon'></i>
-                              <span class="menu-text text-blue" style="margin-left: 10px;">Products</span>
-                           </a>
-                        </li>
+                     <li class="menu-item " onclick="show_product()">
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-product-hunt text-blue" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Products</span>
+                        </a>
+                     </li>
 
-                        <li class="menu-item "  onclick="show_vehicle()">
-                           <a href="#" class="menu-link">
-                              <i class="fa fa-car text-blue" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue" style="margin-left: 10px;">Vehicles</span>
-                           </a>
-                        </li>
+                     <li class="menu-item " onclick="show_vehicle()">
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-car text-blue" style=" color: rgb(110, 17, 244);" aria-hidden="true"
+                              id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Vehicles</span>
+                        </a>
+                     </li>
 
-                        <!-- <li class="menu-item ">
+                     <!-- <li class="menu-item ">
                               <a href="{%url 'bima_policy:rto'%}" class="menu-link">                         
                               <i class="fa fa-car" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
                               <span class="menu-text " style="margin-left: 10px;"  >RTOs </span>
                               </a>
                            </li>               -->
 
-                        <li class="menu-item "  onclick="show_staff()">
-                           <a href="#" class="menu-link">
-                              <i class="fa fa-user text-blue" aria-hidden="true" id='icon'></i>
-                              <span class="menu-text text-blue" style="margin-left: 10px;">Users</span>
-                           </a>
-                        </li>
+                     <li class="menu-item " onclick="show_staff()">
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-user text-blue" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Users</span>
+                        </a>
+                     </li>
 
-                        <li class="menu-item " >
-                           <a href="#" class="menu-link">
-                              <i class="fa fa-trash text-blue"  aria-hidden="true"
-                                 id='icon'></i>
-                              <span class="menu-text text-blue" style="margin-left: 10px;">Trash</span>
-                           </a>
-                        </li>
+                     <li class="menu-item ">
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-trash text-blue" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Trash</span>
+                        </a>
+                     </li>
 
-                        <!-- /.menu-item -->
-                        <li class="menu-header" >Settings </li>
+                     <!-- /.menu-item -->
+                     <li class="menu-header">Settings </li>
 
-                        <li class="menu-item ">
-                           <a href="{%url 'bima_policy:profile'%}" class="menu-link">
-                              <i class="fa fa-user-circle text-blue" aria-hidden="true"
-                                 id='icon'></i>
-                              <span class="menu-text text-blue" style="margin-left: 10px;">Profile</span>
-                           </a>
-                        </li>
-                     </div>
-                     {% endif %}
+                     <li class="menu-item ">
+                        <a href="{%url 'bima_policy:profile'%}" class="menu-link">
+                           <i class="fa fa-user-circle text-blue" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Profile</span>
+                        </a>
+                     </li>
+                  </div>
+                  {% endif %}
                   </ul>
                </nav>
             </div>
@@ -460,19 +484,19 @@
       </div>
       <!-- /.modal-dialog -->
    </div> {% endcomment %}
-  
+
    <script src="{%static 'js/jquery.min.js'%}"></script>
    <script src="{%static 'js/popper.min.js'%}"></script>
    <script src="{%static 'js/bootstrap.min.js'%}"></script>
- 
-   <!-- <script src="{% static 'js/pace.min.js' %}"></script> -->
+
+   <script src="{% static 'js/pace.min.js' %}"></script>
    <script src="{% static 'js/stacked-menu.min.js' %}"></script>
-   <script src="{%static 'js/perfect-scrollbar.min.js' %}"></script> 
+   <script src="{%static 'js/perfect-scrollbar.min.js' %}"></script>
    <!-- Parsley -->
-   <!-- <script src="{%static 'js/parsley.js'%}"></script> -->
+   <script src="{%static 'js/parsley.js'%}"></script>
    <!-- BEGIN THEME JS -->
    <script src="{%static 'js/theme.js'%}"></script>
-   <!-- <script src="{%static 'js/toastr.min.js' %}"></script> -->
+   <script src="{%static 'js/toastr.min.js' %}"></script>
    <script src="{%static 'js/flatpickr.min.js' %}"></script>
    <script src="{%static 'js/select2.full.min.js' %}"></script>
    <script src="{%static 'js/moment.js' %}"></script>
@@ -481,10 +505,10 @@
    <!-- <script src="{%static 'js/dataTables.bootstrap.js' %}"></script> -->
    <!-- <script src="{%static 'js/jquery.form.js' %}"></script> -->
    <script src="{%static 'js/custom.min.js' %}"></script>
-  
+
    <!-- <script src="{%static 'js/insurance.min.js' %}"></script>  -->
    <!-- <script src="{% static 'js/Chart.min.js' %}"></script> -->
-  
+
 
    <div class="flatpickr-calendar rangeMode animate" tabindex="-1">
       <div class="flatpickr-months">
@@ -679,21 +703,21 @@
 
    <script>
 
-   function showNotification(message) {
-      document.getElementById('notification_div').style.display = "flex";
-      document.getElementById('notification').style.display = 'block';
-      document.getElementById('notification').innerHTML = message;
-   }
-   
-   function hideNotification() {
-      document.getElementById('notification_div').style.display = 'none';
-      // document.getElementById('notification').style.display = 'block';
-      // document.getElementById('notification').innerHTML = message;
-   }
+      function showNotification(message) {
+         document.getElementById('notification_div').style.display = "flex";
+         document.getElementById('notification').style.display = 'block';
+         document.getElementById('notification').innerHTML = message;
+      }
+
+      function hideNotification() {
+         document.getElementById('notification_div').style.display = 'none';
+         // document.getElementById('notification').style.display = 'block';
+         // document.getElementById('notification').innerHTML = message;
+      }
 
    </script>
-   
-  <script src="{%static 'js/xlsx.full.min.js'%}"></script>
+
+   <script src="{%static 'js/xlsx.full.min.js'%}"></script>
 
 </body>
 
