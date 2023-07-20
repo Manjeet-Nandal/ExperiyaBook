@@ -15,7 +15,9 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title">Slabs<button data-toggle="modal" data-target="#mdlslab" class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New Slab</button></h1>
+                     <h1 class="page-title">Slabs<button data-toggle="modal" data-target="#mdlslab"
+                           class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New Slab</button>
+                     </h1>
                   </div>
                   <!-- /grid column -->
                </div>
@@ -34,205 +36,229 @@
                            <div class="avatar has-badge">
                               <a href="" class="user-avatar">
                                  <span class="menu-icon icofont icofont-book-alt"></span>
-                              </a> 
+                              </a>
                               <span></span>
                            </div>
                            <!-- /.avatar -->
                         </div>
                         <!-- /message figure -->
                         <!-- message body -->
-                        
+
                         <div class="list-group-item-body pl-md-2">
                            <!-- grid row -->
                            <div class="row">
                               <!-- grid column -->
                               <div class="col-12 col-lg-3">
-                                 
+
                                  <h4 class="list-group-item-title text-truncate">
-                                    <a href="{%url 'bima_policy:slab_payout' value.slab_name %}" class="text-bolder data-title-24">{{value.slab_name}}</a>
+                                    <a href="{%url 'bima_policy:slab_payout' value.slab_name %}"
+                                       class="text-bolder data-title-24">{{value.slab_name}}</a>
                                  </h4>
                                  <p class="list-group-item-text">
                                  </p>
                                  <ul class="list-inline text-muted mb-0">
-                                    <li class="list-inline-item mr-3" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Agents">
-                                       <i class="fas fa-users text-teal"></i> 
-                                       {{agcount}}										
+                                    <li class="list-inline-item mr-3" data-toggle="tooltip" title=""
+                                       data-placement="bottom" data-original-title="Agents">
+                                       <i class="fas fa-users text-teal"></i>
+                                       {{agcount}}
                                     </li>
-                                    <li class="list-inline-item mr-3" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="Payouts">
-                                       <i class="fa fa-bookmark text-yellow"></i> 
+                                    <li class="list-inline-item mr-3" data-toggle="tooltip" title=""
+                                       data-placement="bottom" data-original-title="Payouts">
+                                       <i class="fa fa-bookmark text-yellow"></i>
                                        {{value.policy}}
                                     </li>
-                                    <li class="list-inline-item" data-toggle="tooltip" title="" data-original-title="Status">
-                                       <label class="switcher-control switcher-control-success switcher-control-md"><input type="checkbox" class="switcher-input" id="chkstatus-24" checked="" disabled=""> <span class="switcher-indicator"></span> <span class="switcher-label-on"><i class="fas fa-check"></i></span> <span class="switcher-label-off"><i class="fas fa-times"></i></span></label>
+                                    <li class="list-inline-item" data-toggle="tooltip" title=""
+                                       data-original-title="Status">
+                                       <label
+                                          class="switcher-control switcher-control-success switcher-control-md"><input
+                                             type="checkbox" class="switcher-input" id="chkstatus-24" checked=""
+                                             disabled=""> <span class="switcher-indicator"></span> <span
+                                             class="switcher-label-on"><i class="fas fa-check"></i></span> <span
+                                             class="switcher-label-off"><i class="fas fa-times"></i></span></label>
                                     </li>
                                  </ul>
-                                 
-                              </p>
+
+                                 </p>
+                              </div>
+                              <!-- /grid column -->
                            </div>
-                           <!-- /grid column -->
+                           <!-- /grid row -->
                         </div>
-                        <!-- /grid row -->
-                     </div>
                         <!-- /message body -->
                         <!-- message actions -->
-                        
+
                         <!-- /message figure -->
                         <!-- message body -->
                         <div class="list-group-item-figure">
                            <form method="POST">
                               {%csrf_token%}
-                           <ul class="list-inline text-muted mb-0">
-                              <li class="list-inline-item" data-toggle="tooltip" title="" data-original-title="Edit">
-                                 <a href="{{value.slab_name}}/edit">
-                                 <i class="text-info icofont-ui-edit"></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                 <a href="{{value.slab_name}}/copy" name='copy' >
-                                 <i class="text-info icofont-ui-copy"></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                 <a href="{{value.slab_name}}" name='remove' >
-                                 <i class="text-danger fa fa-trash-alt"></i></a>
-                              </li>
-                           </ul>
-                        </form>
+                              <ul class="list-inline text-muted mb-0">
+                                 <li class="list-inline-item" data-toggle="tooltip" title="" data-original-title="Edit">
+                                    <a href="{{value.slab_name}}/edit">
+                                       <i class="text-info icofont-ui-edit"></i></a>
+                                 </li>
+                                 <li class="list-inline-item">
+                                    <a href="{{value.slab_name}}/copy" name='copy'>
+                                       <i class="text-info icofont-ui-copy"></i></a>
+                                 </li>
+                                 <li class="list-inline-item">
+                                    <a href="{{value.slab_name}}" name='remove'>
+                                       <i class="text-danger fa fa-trash-alt"></i></a>
+                                 </li>
+                              </ul>
+                           </form>
                         </div>
                      </div>
                   </div>
                </div>
                {%endfor%}
-         <!-- /.page-section -->
-         <div class="modal fade has-shown" id="mdlslab" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="SlabTitle" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <h5 id="SlabTitle" class="modal-title"> Add New Slab </h5>
+               <!-- /.page-section -->
+               <div class="modal fade has-shown" id="mdlslab" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                  role="dialog" aria-labelledby="SlabTitle" style="display: none;" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 id="SlabTitle" class="modal-title"> Add New Slab </h5>
+                        </div>
+                        <form method="post" autocomplete="off" data-parsley-validate="true" name="frmslab"
+                           novalidate="">
+                           {% csrf_token %}
+                           <div class="modal-body">
+                              <div class="form-group">
+                                 <label class="col-form-label">Slab<em class="text-danger">*</em></label>
+                                 <input type="text" class="form-control" data-parsley-required="true" name="slab">
+                              </div>
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
+                              <button type="submit" name="slab_add" class="btn btn-primary w-100p">Save</button>
+                           </div>
+                        </form>
+                     </div>
                   </div>
-                  <form method="post" autocomplete="off" data-parsley-validate="true" name="frmslab" novalidate="">
-                     {% csrf_token %}
-                     <div class="modal-body">
-                        <div class="form-group">
-                           <label class="col-form-label">Slab<em class="text-danger">*</em></label>
-                           <input type="text" class="form-control" data-parsley-required="true" name="slab">
-                        </div>
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
-                        <button type="submit" name="slab_add" class="btn btn-primary w-100p">Save</button>
-                     </div>
-                  </form>
                </div>
-            </div>
-         </div>
-         <div class="modal fade" id="mdleslab" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="SlabeTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <h5 id="SlabeTitle" class="modal-title">Edit Slab </h5>
+               <div class="modal fade" id="mdleslab" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                  role="dialog" aria-labelledby="SlabeTitle" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 id="SlabeTitle" class="modal-title">Edit Slab </h5>
+                        </div>
+                        <form method="post" autocomplete="off" data-parsley-validate="true" name="frmeslab"
+                           novalidate="">
+                           {% csrf_token %}
+                           <div class="modal-body">
+                              <div class="form-group">
+                                 <label class="col-form-label">Slab<em class="text-danger">*</em></label>
+                                 <input type="text" class="form-control" data-parsley-required="true" name="editslab">
+                                 <input type="hidden" name="slabid" value="" readonly="">
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-form-label">Status<em class="text-danger">*</em></label>
+                                 <select class="custom-select" id="status" name="status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
+                              <button type="submit" name="slab_edit" class="btn btn-primary w-100p">Save</button>
+                           </div>
+                        </form>
+                     </div>
                   </div>
-                  <form method="post" autocomplete="off" data-parsley-validate="true" name="frmeslab" novalidate="">
-                     {% csrf_token %}
-                     <div class="modal-body">
-                        <div class="form-group">
-                           <label class="col-form-label">Slab<em class="text-danger">*</em></label>
-                           <input type="text" class="form-control" data-parsley-required="true" name="editslab">
-                           <input type="hidden" name="slabid" value="" readonly="">
-                        </div>
-                        <div class="form-group">
-                           <label class="col-form-label">Status<em class="text-danger">*</em></label>
-                           <select class="custom-select" id="status" name="status">
-                              <option value="Active">Active</option>
-                              <option value="Inactive">Inactive</option>
-                           </select>
-                        </div>
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
-                        <button type="submit" name="slab_edit" class="btn btn-primary w-100p">Save</button>
-                     </div>
-                  </form>
                </div>
-            </div>
-         </div>
 
-         <div class="modal fade" id="mdlcslab" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="SlabecTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <h5 id="SlabecTitle" class="modal-title">Copy Slab </h5>
+               <div class="modal fade" id="mdlcslab" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                  role="dialog" aria-labelledby="SlabecTitle" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 id="SlabecTitle" class="modal-title">Copy Slab </h5>
+                        </div>
+                        <form method="post" autocomplete="off" data-parsley-validate="true" name="frmcopyslab"
+                           novalidate="">
+                           {% csrf_token %}
+                           <div class="modal-body">
+                              <div class="form-group">
+                                 <label class="col-form-label">Slab<em class="text-danger">*</em></label>
+                                 <input type="text" class="form-control" data-parsley-required="true" name="cslabname">
+                                 <input type="hidden" name="cslabid" value="" readonly="">
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12 col-sm-12">
+                                    <label class="col-form-label">Agent Rewards %age<em class="text-danger">*</em> (Bid
+                                       would be apply on every payout)</label>
+                                 </div>
+                                 <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                       <input type="text" name="arewards" class="form-control maskNumField"
+                                          data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
+                                          max="100" maxlength="4">
+                                    </div>
+                                 </div>
+                                 <div class="col-md-8 col-sm-12">
+                                    <div class="form-group">
+                                       <select class="custom-select" data-parsley-required="true" name="abid">
+                                          <option value="">Choose Bid</option>
+                                          <option value="+">Increament</option>
+                                          <option value="-">Decreament</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-12 col-sm-12">
+                                    <label class="col-form-label">Self Rewards %age<em class="text-danger">*</em> (would
+                                       be apply on every payout)</label>
+                                 </div>
+                                 <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                       <input type="text" name="srewards" class="form-control maskNumField"
+                                          data-mask-as-number-decimals="2" data-parsley-required="true" min="0"
+                                          max="100" maxlength="4">
+                                    </div>
+                                 </div>
+                                 <div class="col-md-8 col-sm-12">
+                                    <div class="form-group">
+                                       <select class="custom-select" data-parsley-required="true" name="sbid">
+                                          <option value="">Choose Bid</option>
+                                          <option value="+">Increament</option>
+                                          <option value="-">Decreament</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-form-label">Status<em class="text-danger">*</em></label>
+                                 <select class="custom-select" id="status" name="status">
+                                    <option value="1">Active</option>
+                                    <option value="0">In Active</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
+                              <button type="submit" name="slab_paste" class="btn btn-primary w-100p">Paste</button>
+                           </div>
+                        </form>
+                     </div>
                   </div>
-                  <form method="post" autocomplete="off" data-parsley-validate="true" name="frmcopyslab" novalidate="">
-                     {% csrf_token %}
-                     <div class="modal-body">
-                        <div class="form-group">
-                           <label class="col-form-label">Slab<em class="text-danger">*</em></label>
-                           <input type="text" class="form-control" data-parsley-required="true" name="cslabname">
-                           <input type="hidden" name="cslabid" value="" readonly="">
-                        </div>
-                        <div class="row">
-                           <div class="col-md-12 col-sm-12">
-                              <label class="col-form-label">Agent Rewards %age<em class="text-danger">*</em> (Bid would be apply on every payout)</label>
-                           </div>
-                           <div class="col-md-4 col-sm-12">
-                              <div class="form-group">
-                                 <input type="text" name="arewards" class="form-control maskNumField" data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100" maxlength="4">
-                              </div>
-                           </div>
-                           <div class="col-md-8 col-sm-12">
-                              <div class="form-group">
-                                 <select class="custom-select" data-parsley-required="true" name="abid">
-                                    <option value="">Choose Bid</option>
-                                    <option value="+">Increament</option>
-                                    <option value="-">Decreament</option>
-                                 </select>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col-md-12 col-sm-12">
-                              <label class="col-form-label">Self Rewards %age<em class="text-danger">*</em> (would be apply on every payout)</label>
-                           </div>
-                           <div class="col-md-4 col-sm-12">
-                              <div class="form-group">
-                                 <input type="text" name="srewards" class="form-control maskNumField" data-mask-as-number-decimals="2" data-parsley-required="true" min="0" max="100" maxlength="4">
-                              </div>
-                           </div>
-                           <div class="col-md-8 col-sm-12">
-                              <div class="form-group">
-                                 <select class="custom-select" data-parsley-required="true" name="sbid">
-                                    <option value="">Choose Bid</option>
-                                    <option value="+">Increament</option>
-                                    <option value="-">Decreament</option>
-                                 </select>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <label class="col-form-label">Status<em class="text-danger">*</em></label>
-                           <select class="custom-select" id="status" name="status">
-                              <option value="1">Active</option>
-                              <option value="0">In Active</option>
-                           </select>
-                        </div>
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
-                        <button type="submit" name="slab_paste" class="btn btn-primary w-100p">Paste</button>
-                     </div>
-                  </form>
                </div>
             </div>
+            <!-- /.page-inner -->
+
          </div>
+         <!-- /.page -->
       </div>
-      <!-- /.page-inner -->
-   </div>
-   <!-- /.page -->
-   </div><!-- /.wrapper -->
+      <!-- /.wrapper -->
 </main>
 <!-- /.app-main -->
 <div class="aside-backdrop"></div>
 </div><!-- /.app -->
-<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
+<div class="modal modal-alert fade" id="ModalAlertError" data-backdrop="static" tabindex="-1" role="dialog"
+   aria-labelledby="ModalAlertErrorLabel" aria-hidden="true">
    <!-- .modal-dialog -->
    <div class="modal-dialog" role="document">
       <!-- .modal-content -->
@@ -240,13 +266,14 @@
          <!-- .modal-header -->
          <div class="modal-header">
             <h5 class="modal-title">
-               <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error 
+               <i class="fa fa-exclamation-triangle text-red mr-1"></i> System Error
             </h5>
          </div>
          <!-- /.modal-header -->
          <!-- .modal-body -->
          <div class="modal-body">
-            <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error remains the same, you need to contact your Administrator immediately.</p>
+            <p>The Code Execution cannot proceed due to system error, retry after refreshing the page if the error
+               remains the same, you need to contact your Administrator immediately.</p>
          </div>
          <!-- /.modal-body -->
          <!-- .modal-footer -->
@@ -261,17 +288,20 @@
 </div>
 <!-- /.modal -->
 <!-- BEGIN BASE JS -->
-{% comment %} <script src="{%static 'js/jquery.min.js'%}"></script> {% endcomment %}
-{% comment %} <script src="{%static 'js/popper.min.js'%}"></script>
+{% comment %}
+<script src="{%static 'js/jquery.min.js'%}"></script> {% endcomment %}
+{% comment %}
+<script src="{%static 'js/popper.min.js'%}"></script>
 <script src="{%static 'js/bootstrap.min.js'%}"></script><!-- END BASE JS -->
 <!-- BEGIN PLUGINS JS -->
 <script src="{% static 'js/pace.min.js' %}"></script>
 <script src="{% static 'js/stacked-menu.min.js' %}"></script>
 <script src="{% static 'js/perfect-scrollbar.min.js'%}"></script> <!-- END PLUGINS JS -->
 <!-- Parsley -->
-<script src="{%static 'js/parsley.js'%}"></script></script>
+<script src="{%static 'js/parsley.js'%}"></script>
+</script>
 <!-- BEGIN THEME JS -->
-<script src="{%static 'js/theme.js' %}"></script> 
+<script src="{%static 'js/theme.js' %}"></script>
 <script src="{%static 'js/toastr.min.js' %}"></script>
 <script src="{%static 'js/flatpickr.min.js' %}"></script>
 <script src="{%static 'js/select2.full.min.js' %}"></script>
@@ -283,5 +313,7 @@
 <script src="{%static 'js/custom.min.js' %}"></script>
 <script src="{%static 'js/slab.min.js' %}"></script> {% endcomment %}
 <script></script>
-</body></html>
+</body>
+
+</html>
 {%endblock%}

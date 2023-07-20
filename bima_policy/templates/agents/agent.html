@@ -350,40 +350,40 @@
 
       record = records[i]
 
-      recordHtml = '<tr class="policy-row" onclick="highlight(this)"  >' +
-        '<td class="text-center" > ' + (i + 1) + '</td>' +
-        '<td >' + record.posp_code + '</td>' +
-        `<td > <a href="" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="/bima_policy/agent/edit_agent/${record.login_id}" class=""> ${record.registration_code}</a> </td>` +
-        '<td >' + record.full_name + '</td>' +
-        '<td >' + record.gender + '</td>' +
-        '<td >' + record.email_id + '</td>' +
-        '<td >' + record.mob_no + '</td>' +
-        '<td >' + record.address + '</td>' +
-        '<td >' + record.state + '</td>' +
-        '<td >' + record.city + '</td>' +
-        '<td >' + record.pincode + '</td>' +
-        '<td >' + record.rural_urban + '</td>' +
-        '<td >' + record.slab + '</td>' +
-        '<td >' + record.GSTIN + '</td>' +
-        '<td >' + record.account_no + '</td>' +
-        '<td >' + record.ifsc_code + '</td>' +
+      recordHtml = `<tr class="policy-row" onclick="highlight(this)"  >
+        <td class="text-center" > ${(i + 1)}  </td> 
+        <td >  ${record.posp_code} </td>
+        <td > <a href="" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="/bima_policy/agent/edit_agent/${record.login_id}" class=""> ${record.registration_code}</a> </td>
+        <td > ${record.full_name} </td>
+        <td >  ${record.gender} </td>
+        <td >  ${record.email_id} </td>
+        <td >  ${record.mob_no} </td>
+        <td >  ${record.address} </td>
+        <td >  ${record.state} </td>
+        <td >  ${record.city} </td>
+        <td >  ${record.pincode} </td>
+        <td >  ${record.rural_urban} </td>
+        <td >  ${record.slab} </td>
 
-        '<td >' + record.bank_name + '</td>' +
+        <td >  ${record.GSTIN} </td>
+        <td >  ${record.account_no} </td>
+        <td >  ${record.ifsc_code} </td>
+        <td >  ${record.bank_name} </td>              
 
-        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.basic_qualification}')">${record.basic_qualification}</a> </td>` +
-        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>` +
-        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>` +
-        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.training_certificate}')">${record.training_certificate}</a> </td>` +
-        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.appointment_certificate}')">${record.appointment_certificate}</a> </td>` +
-        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.agreement_certificate}')">${record.agreement_certificate}</a> </td>` +
-        `<td class="text-center" > <a href="#" onclick="downloadFile('${record.bank_details}')">${record.bank_details}</a> </td>` +
+        <td class="text-center" > <a href="#" onclick="downloadFile('${record.basic_qualification}')">${record.basic_qualification}</a> </td>
+        <td class="text-center" > <a href="#" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>
+        <td class="text-center" > <a href="#" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>
+        <td class="text-center" > <a href="#" onclick="downloadFile('${record.training_certificate}')">${record.training_certificate}</a> </td>
+        <td class="text-center" > <a href="#" onclick="downloadFile('${record.appointment_certificate}')">${record.appointment_certificate}</a> </td>
+        <td class="text-center" > <a href="#" onclick="downloadFile('${record.agreement_certificate}')">${record.agreement_certificate}</a> </td>
+        <td class="text-center" > <a href="#" onclick="downloadFile('${record.bank_details}')">${record.bank_details}</a> </td>
+     
+        <td >  ${record.login_id} </td>
+        <td >  ${record.created_by} </td>      
 
-        '<td >' + record.login_id + '</td>' +
-        '<td >' + record.created_by + '</td>' +
+        <td class="text-center w-10pc nowrap" > <a href="#" class="badge badge-success" >${record.status}</a> </td>
 
-        `<td class="text-center w-10pc nowrap" > <a href="#" class="badge badge-success" >${record.status}</a> </td>` +
-
-        `<td class="text-center"> <form method="POST">   {% csrf_token %}
+        <td class="text-center"> <form method="POST">   {% csrf_token %}
          <a href="/bima_policy/agent/edit_agent/${record.login_id}"
             class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
             <i class="fa fa-pencil-alt mt-2"></i>                                               

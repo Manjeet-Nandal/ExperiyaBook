@@ -22,22 +22,21 @@
    <link rel="stylesheet" href="{%static 'css/icofont.min.css' %}">
    <!-- <link rel="stylesheet" href="{%static 'css/open-iconic-bootstrap.min.css' %}"> -->
  
-   <!-- <link rel="stylesheet" href="{%static 'css/font-awesome.min.css' %}">  -->
+   <link rel="stylesheet" href="{%static 'css/font-awesome.min.css' %}"> 
    <link rel="stylesheet" href="{%static 'css/flatpickr.min.css' %}">
   
    <!-- <link rel="stylesheet" href="{%static 'css/toastr.min.css' %}">  -->
 
-   <!-- <link rel="stylesheet" href="{%static 'css/parsley.css' %}"> -->
+   <link rel="stylesheet" href="{%static 'css/parsley.css' %}">
    <link rel="stylesheet" href="{%static 'css/select2.min.css' %}">
    <link rel="stylesheet" href="{%static 'css/theme.min.css' %}" data-skin="default">  
    <link rel="stylesheet" href="{%static 'css/custom.min.css'%}">
    
-   <!-- <link rel="stylesheet" href="{%static 'css/bootstrap-select.min.css'%}"> 
-   <link rel="stylesheet" href="{%static 'css/bootstrap-tagsinput.css'%}">
-   <link rel="stylesheet" href="{%static 'css/filter-multi-select.css'%}"> -->
+   <!-- <link rel="stylesheet" href="{%static 'css/bootstrap-select.min.css'%}">  -->
+   <!-- <link rel="stylesheet" href="{%static 'css/bootstrap-tagsinput.css'%}"> -->
+   <link rel="stylesheet" href="{%static 'css/filter-multi-select.css'%}">  
 
    
-
 </head>
 
 <body class=" default-skin pace-done">
@@ -196,31 +195,33 @@
                      <!-- /.menu-header -->
                      <li class="menu-header" >General </li>
                      <!-- /.menu-header -->
-                     <li class="menu-item has-active">
-                        <a href="{%url 'bima_policy:dashboard'%}" class="menu-link">
+                     <li class="menu-item has-active" onclick="showDashboard()">
+                        <a href="#" class="menu-link">
                            <i class="fa fa-home"  aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Dashboard</span>
                         </a>
                      </li>
 
+                     <!-- <li class="menu-item has-active" onclick="testHello()">
+                        <a href="{%url 'bima_policy:dashboard'%}" class="menu-link">
+                           <i class="fa fa-home"  aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Dashboard</span>
+                        </a>
+                     </li> -->
+
                      <li class="menu-item has-child">
                         <a href="#" class="menu-link">
                            <i class="fa fa-book text-blue"  aria-hidden="true"       id='icon'></i>
-                           <span class="menu-text text-blue" style="margin-left: 10px;">Policy List</span></a>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">New Policy</span></a>
 
                         <ul class="menu">
-                           <li class="menu-item has-child   ">
-                              <a href="javascript:void(0);" class="menu-link">
-                                 <span class="menu-text text-blue" style="margin-left: 1rem;"> New</span></a>
-                              <!-- child menu -->
-                              <ul class="menu text">
-
-                                 <li class="menu-item">
-                                    <a href="{%url 'bima_policy:create_policy' %}"
+                                                         
+                                 <li class="menu-item" onclick="motor_entry()">
+                                    <a href="#"
                                        style="margin-left: 1rem; " class="menu-link text-blue">Motor</a>
                                  </li>
-                                 <li class="menu-item ">
-                                    <a href="{%url 'bima_policy:create_policy_non_motor' %}"
+                                 <li class="menu-item " onclick="non_motor_entry()">
+                                    <a href="#"
                                        style="margin-left: 1rem; "
                                        class="menu-link text-blue">Non-Motor</a>
                                  </li>
@@ -228,7 +229,6 @@
                                     <a href="#" style="margin-left: 1rem;" class="menu-link text-blue"
                                        onclick="alert('Claim-section is Under Construction!!')">Claim</a>
                                  </li>
-                              </ul>
                            </li>
 
                            <li class="menu-item " hidden>
@@ -238,8 +238,8 @@
                         </ul>
                         </a>
 
-                     <li class="menu-item has-active">
-                        <a href="{%url 'bima_policy:policy_entry'%}" class="menu-link">
+                     <li class="menu-item has-active"  onclick="showEntryList()">
+                        <a href="#" class="menu-link">
                            <i class="fa fa-bars text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Entry List</span>
                         </a>
@@ -330,48 +330,48 @@
                         <!-- /.menu-header -->
                         <!-- .menu-item -->
 
-                        <li class="menu-item ">
-                           <a href="{%url 'bima_policy:agent'%}" class="menu-link">
+                        <li class="menu-item "  onclick="showPosp()">
+                           <a href="#" class="menu-link">
                               <i class="fa fa-user-friends text-blue"  aria-hidden="true"
                                  id='icon'></i>
                               <span class="menu-text text-blue" style="margin-left: 10px;">POSP</span>
                            </a>
                         </li>
 
-                        <li class="menu-item ">
-                           <a href="{%url 'bima_policy:slab'%}" class="menu-link">
+                        <li class="menu-item "  onclick="" >
+                           <a href="#" class="menu-link">
                               <i class="fa fa-solid fa-book text-blue"  aria-hidden="true"
                                  id='icon'></i>
                               <span class="menu-text text-blue" style="margin-left: 10px;">Payouts</span>
                            </a>
                         </li>
 
-                        <li class="menu-item ">
-                           <a href="{%url 'bima_policy:ins_comp'%}" class="menu-link">
+                        <li class="menu-item " onclick="show_insurer()">
+                           <a href="#" class="menu-link">
                               <i class="fa fa-solid fa-building text-blue"  aria-hidden="true"
                                  id='icon'></i>
                               <span class="menu-text text-blue" style="margin-left: 10px;">Insurers</span>
                            </a>
                         </li>
 
-                        <li class="menu-item ">
-                           <a href="{%url 'bima_policy:service_p'%}" class="menu-link">
+                        <li class="menu-item " onclick="show_sp()">
+                           <a href="#" class="menu-link">
                               <i class="fa fa-solid fa-user-tie text-blue" aria-hidden="true"
                                  id='icon'></i>
-                              <span class="menu-text text-blue" style="margin-left: 10px;">Service Providers</span>
+                              <span class="menu-text text-blue" style="margin-left: 10px;">Serving Office</span>
                            </a>
                         </li>
 
-                        <li class="menu-item ">
-                           <a href="{%url 'bima_policy:product_view'%}" class="menu-link">
+                        <li class="menu-item "   onclick="show_product()">
+                           <a href="#" class="menu-link">
                               <i class="fa fa-product-hunt text-blue"  aria-hidden="true"
                                  id='icon'></i>
                               <span class="menu-text text-blue" style="margin-left: 10px;">Products</span>
                            </a>
                         </li>
 
-                        <li class="menu-item ">
-                           <a href="{%url 'bima_policy:vehi'%}" class="menu-link">
+                        <li class="menu-item "  onclick="show_vehicle()">
+                           <a href="#" class="menu-link">
                               <i class="fa fa-car text-blue" style=" color: rgb(110, 17, 244);" aria-hidden="true" id='icon'></i>
                               <span class="menu-text text-blue" style="margin-left: 10px;">Vehicles</span>
                            </a>
@@ -384,15 +384,15 @@
                               </a>
                            </li>               -->
 
-                        <li class="menu-item ">
-                           <a href="{%url 'bima_policy:staff'%}" class="menu-link">
+                        <li class="menu-item "  onclick="show_staff()">
+                           <a href="#" class="menu-link">
                               <i class="fa fa-user text-blue" aria-hidden="true" id='icon'></i>
                               <span class="menu-text text-blue" style="margin-left: 10px;">Users</span>
                            </a>
                         </li>
 
-                        <li class="menu-item ">
-                           <a href="{%url 'bima_policy:policy_deleted_entry'%}" class="menu-link">
+                        <li class="menu-item " >
+                           <a href="#" class="menu-link">
                               <i class="fa fa-trash text-blue"  aria-hidden="true"
                                  id='icon'></i>
                               <span class="menu-text text-blue" style="margin-left: 10px;">Trash</span>

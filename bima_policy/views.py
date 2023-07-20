@@ -190,6 +190,8 @@ def staffmanage(request):
     if request.method == 'GET':
         try:
             # data = StaffModel.objects.filter( profile_id=get_id_from_session(request))
+            return render(request, 'user/user.html')
+
             data = StaffModel.objects.all()
             return render(request, 'user/user.html', {'data': data})
         except StaffModel.DoesNotExist:
@@ -199,8 +201,7 @@ def staffmanage(request):
             data = ProfileModel.objects.get(id=get_id_from_session(request))
             staffname = request.POST['staffname']
             password = request.POST['password']
-            StaffModel.objects.create(
-                staffname=staffname, password=password, profile_id=data)
+            StaffModel.objects.create(staffname=staffname, password=password, profile_id=data)
             return HttpResponseRedirect(request.path, ('staff'))
 
 
@@ -238,6 +239,18 @@ def staff_edit(request, id):
                 print('profile_image updated')
                 return render(request, 'login.html', {'success_message': 'Image updated successfully!'})
         return redirect('bima_policy:staff')
+
+
+def staff_delete(request, id):
+    print('\ndelete_staff calling:')
+    # print(id)
+    try:
+        StaffModel.objects.filter(login_id=id).delete()
+        print('staff user deleted\n')
+        return redirect('bima_policy:staff')
+    except Exception as e:
+        print(str(e))
+        return HttpResponse(str(e))
 
 # ProfileView
 
@@ -2636,14 +2649,21 @@ def count_objects(request):
     spcount = ServiceProvider.objects.count()
     policycount = Policy.objects.count()
 
-    counts ={
+    data ={
         "staffcount" : staffcount,
         "agentcount" : agentcount,
         "spcount" : spcount,
         "policycount" : policycount
     }
     
-    return JsonResponse({'counts': counts})  
+    return JsonResponse({'data': data})  
+
+def fetch_policyId(request):
+    print('\nfetch_policyId calling ')       
+    
+    policy = list(Policy.objects.filter(policyid = request.GET.get('data') )  .values())
+    
+    return JsonResponse({'data': policy})  
 
 
 def fetch_records(request):
@@ -2655,15 +2675,16 @@ def fetch_records(request):
     # get from todays
     if data[0] == '':  
         if is_user(request):           
-            records = Policy.objects.filter(created_at=datetime.now()).values()          
-            # records = Policy.objects.filter().values()          
+            # records = Policy.objects.filter(created_at=datetime.now()).values()          
+            records = Policy.objects.order_by('-issue_date').values()[:5]          
         else:
-            records = Policy.objects.filter(created_at=datetime.now(), employee=get_id_from_session(request)).values()
+            # records = Policy.objects.filter(created_at=datetime.now(), employee=get_id_from_session(request)).values()
+            records = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-issue_date').values()[:5]         
        
-        return JsonResponse({'records': list(records)})
+        return JsonResponse({'data': list(records)})
     
     # get mixed
-    if data[0] == 'mix':  
+    if data[0] == 'filter_data':  
         agents = []
         for ag in Agents.objects.filter(status="Active").values():  
             agents.append(ag['posp_code'] +' | ' +ag['full_name'])  
@@ -2680,12 +2701,75 @@ def fetch_records(request):
 
         makes = list(VehicleMake.objects.values('make'))
         models = list(VehicleModel.objects.values('model'))
-              
-        return JsonResponse({'agents': agents, 'insurers': insurers, 'vehicle_categories': vehicle_categories, 'makes': makes, 'models':models})
 
-    if data[0] == 'agents':  
+        filter_data = {'agents': agents, 'insurers': insurers, 'vcats': vehicle_categories, 'vmakes': makes, 'vmodels':models}
+              
+        return JsonResponse({'filter_data': filter_data})
+
+    if data[0] == 'posp':  
         agents = Agents.objects.filter(status="Active").values()  
-        return JsonResponse({'agents': list(agents)})
+        return JsonResponse({'posp': list(agents)})
+    
+    if data[0] == 'staffs':  
+        staffs = StaffModel.objects.values()  
+        return JsonResponse({'data': list(staffs)})
+   
+    if data[0] == 'slabs':  
+        data = Slab.objects.values()  
+        return JsonResponse({'data': list(data)})
+    
+    if data[0] == 'insurers':  
+        data = InsuranceCompany.objects.values()  
+        return JsonResponse({'data': list(data)})
+   
+    if data[0] == 'products':  
+        data = Product.objects.values()  
+        return JsonResponse({'data': list(data)})
+    
+    if data[0] == 'sps':  
+        data = list(ServiceProvider.objects.values()  )
+        bc = list(BrokerCode.objects.values()  )
+        return JsonResponse({'data': data, 'bc': bc})
+   
+    if data[0] == 'vehicles':         
+        category = list(VehicleCategory.objects.values())
+        makes = list(VehicleMake.objects.values())
+        models = list(VehicleModel.objects.values())
+
+        data = {'category': category, 'makes': makes, 'models':models}
+              
+        return JsonResponse({'data': data})
+    
+    if data[0] == 'employee':  
+        data = get_user_name(request)              
+        return JsonResponse({'data': data})
+    
+    if data[0] == 'motor_option':         
+        category = list(VehicleCategory.objects.values())
+        makes = list(VehicleMake.objects.values())
+        models = list(VehicleModel.objects.values())
+
+        data = {'category': category, 'makes': makes, 'models':models}
+        posp = list(Agents.objects.filter(status="Active").values()  )
+        ins = list(InsuranceCompany.objects.values()  )
+        sp = list(ServiceProvider.objects.values()  )
+        bc = list(BrokerCode.objects.values()  )
+
+        employee = get_user_name(request)   
+              
+        return JsonResponse({'data': data, 'posp': posp, 'ins': ins, 'sp': sp, 'bc': bc, 'employee': employee})
+    
+    if data[0] == 'non_motor_option':  
+        products = list(Product.objects.values()  )
+        posp = list(Agents.objects.filter(status="Active").values()  )
+        ins = list(InsuranceCompany.objects.values()  )
+        sp = list(ServiceProvider.objects.values()  )
+        bc = list(BrokerCode.objects.values()  )
+
+        employee = get_user_name(request)   
+              
+        return JsonResponse({'products': products, 'posp': posp, 'ins': ins, 'sp': sp, 'bc': bc, 'employee': employee})
+    
     
     d1_array = data[0].split('-')
     d2_array = data[1].split('-')
@@ -2713,14 +2797,13 @@ def fetch_records(request):
     # print(date1)  # Output: 2023-06-23
 
     if is_user(request):
-        # records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()
-        records = Policy.objects.filter(created_at__gte=date1, created_at__lte=date2).values()
+        records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).order_by('-issue_date').values()
+        # records = Policy.objects.filter(created_at__gte=date1, created_at__lte=date2).values()
     else:
-        records = Policy.objects.filter(
-            created_at__gte=date1, created_at__lte=date2, employee=get_id_from_session(request)).values()
+        records = Policy.objects.filter(employee=get_id_from_session(request), issue_date__gte=date1, issue_date__lte=date2).order_by('-issue_date').values()
 
     # print(records.count())
-    return JsonResponse({'records': list(records)})
+    return JsonResponse({'data': list(records)})
 
 
 def fetch_record(request):
@@ -5579,6 +5662,100 @@ def new_entry(request):
         return JsonResponse('error: ' + request.POST['policy_no'], safe=False)
 
 
+def new_entry_non_motor(request):
+    try:
+        print('new_entry_non_motor method')
+
+        id = get_profile_id(get_id_from_session(request))
+        profile_id = ProfileModel.objects.get(id=id)
+
+        print(request.POST['policy_no'])
+   
+        fspr = FileSystemStorage()
+        proposal = mandate = policy = previous_policy = pan_card = aadhar_card = vehicle_rc = inspection_report = None
+
+        if len(request.FILES.getlist('proposal')) > 0:
+            proposal = request.FILES.getlist('proposal')[0]
+            if proposal is not None:
+                fspr.save(proposal.name, proposal)
+                print('proposal saved...')
+
+        if len(request.FILES.getlist('mandate')) > 0:
+            mandate = request.FILES.getlist('mandate')[0]
+            if mandate is not None:
+                fspr.save(mandate.name, mandate)
+                print('mandate saved...')
+
+        if len(request.FILES.getlist('policy')) > 0:
+            policy = request.FILES.getlist('policy')[0]
+            if policy is not None:
+                fspr.save(policy.name, policy)
+                print('policy saved...')
+
+        if len(request.FILES.getlist('previous_policy')) > 0:
+            previous_policy = request.FILES.getlist('previous_policy')[0]
+            if previous_policy is not None:
+                fspr.save(previous_policy.name, previous_policy)
+                print('previous_policy saved...')
+
+        if len(request.FILES.getlist('pan_card')) > 0:
+            pan_card = request.FILES.getlist('pan_card')[0]
+            if pan_card is not None:
+                fspr.save(pan_card.name, pan_card)
+                print('pan_card saved...')
+
+        if len(request.FILES.getlist('aadhar_card')) > 0:
+            aadhar_card = request.FILES.getlist('aadhar_card')[0]
+            if aadhar_card is not None:
+                fspr.save(aadhar_card.name, aadhar_card)
+                print('aadhar_card saved...')
+        
+
+        if len(request.FILES.getlist('inspection_report')) > 0:
+            inspection_report = request.FILES.getlist('inspection_report')[0]
+            if inspection_report is not None:
+                fspr.save(inspection_report.name, inspection_report)
+                print('inspection_report saved...')
+
+        data = Policy.objects.create(profile_id=profile_id, 
+                                     product_name=request.POST['product_name'], 
+                                     policy_type=request.POST['policy_type'],
+                                     proposal_no=request.POST['proposal_no'], 
+                                     policy_no=request.POST['policy_no'], 
+                                     customer_name=request.POST['customer_name'],
+                                     insurance_company=request.POST['insurance_company'], 
+                                     sp_name=request.POST['sp_name'],  
+                                     sp_brokercode=request.POST['sp_brokercode'],
+                                     risk_start_date=request.POST['risk_start_date'],
+                                     risk_end_date=request.POST['risk_end_date'], 
+                                     issue_date=request.POST['issue_date'],
+                                     policy_term=request.POST['policy_term'],  
+                                     bqp=request.POST['bqp'], 
+                                     pos=request.POST['pos'],
+                                     employee=request.POST['employee'], 
+                                     proposal=proposal, 
+                                     mandate=mandate,
+                                     policy=policy, 
+                                     previous_policy=previous_policy, 
+                                     pan_card=pan_card, 
+                                     aadhar_card=aadhar_card, 
+                                     inspection_report=inspection_report,
+                                     OD_premium=request.POST['od'],   
+                                     TP_terrorism=request.POST['tpt'],  
+                                     net=request.POST['net'],  
+                                     gst_amount=request.POST['gst'],  
+                                     total=request.POST['total'], 
+                                     payment_mode=request.POST['payment_mode'],  
+                                     remark=request.POST['remark'])
+        print('pol data ', data)    
+
+
+        return JsonResponse('done: ' + request.POST['policy_no'], safe=False)
+    except Exception as e:
+        print("Error occurred in new_entry_non_motor method:", str(e))
+        return JsonResponse('error: ' + request.POST['policy_no'], safe=False)
+
+
 def set_payout(data, id):
     try:
         print('set_payout method calling: ')
@@ -5689,3 +5866,4 @@ def send_otp_via_twilio(to, otp):
     #     to=to
     # )
     # return message.sid
+

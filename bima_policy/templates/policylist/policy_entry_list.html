@@ -81,14 +81,15 @@
                                     onclick="resertDocument()"><i class="icofont icofont-refresh"
                                        aria-hidden="true"></i> </button>
 
-                                 <button onclick="addToFilterList()" type="button" id="btnlock" class="btn btn-secondary "
-                                    title="Freeze"><i class="fa fa-snowflake" aria-hidden="true"></i> </button>
-                                
+                                 <button onclick="addToFilterList()" type="button" id="btnlock"
+                                    class="btn btn-secondary " title="Freeze"><i class="fa fa-snowflake"
+                                       aria-hidden="true"></i> </button>
+
                                  <button type="button" onclick="ExportToExcel('xlsx')" id="download_inslist"
                                     class="btn btn-secondary " title="Download"><i class="fa fa-download"
                                        aria-hidden="true"></i> </button>
 
-                                       <!-- data-toggle="modal" data-target=""  -->
+                                 <!-- data-toggle="modal" data-target=""  -->
                                  <button type="button" id="bulk_remove" onclick="clearFilterList()"
                                     class="btn btn-secondary" title="Clear filters"><i class="icofont icofont-trash"
                                        aria-hidden="true"></i> </button>
@@ -295,24 +296,107 @@
                                     cpa_col = ['YES', 'NO']
 
                                     if (filter_type_value == 'pos') {
-                                       addAgentNames();
-                                    }
-                                    else if (filter_type_value == 'insurance_company') {
-                                       addInsurerNames();
-                                    }
-                                    else if (filter_type_value == 'vehicle_catagory') {
-                                       // add_items(vcat_col, filter_content)                                     
 
-                                       addVehicleCat()
+                                       filter_content.innerHTML = ''
+
+                                       add_select_all_option()
+
+                                       element = document.getElementById('filter_content')
+
+                                       var filter_data = JSON.parse(localStorage.getItem('filter_data'));
+                                       if (filter_data != null) {
+                                          agents = filter_data.agents
+                                          agents.forEach(item => {
+                                             var newoption = document.createElement("option");
+                                             newoption.value = item
+                                             newoption.innerHTML = item
+                                             element.options.add(newoption);
+                                          })
+                                       }
                                     }
+
+                                    else if (filter_type_value == 'insurance_company') {
+
+                                       filter_content.innerHTML = ''
+
+                                       add_select_all_option()
+
+                                       element = document.getElementById('filter_content')
+
+                                       var filter_data = JSON.parse(localStorage.getItem('filter_data'));
+                                       if (filter_data != null) {
+                                          insurers = filter_data.insurers
+                                          insurers.forEach(item => {
+                                             var newoption = document.createElement("option");
+                                             newoption.value = item
+                                             newoption.innerHTML = item
+                                             element.options.add(newoption);
+                                          })
+                                       }
+
+                                    }
+
+                                    else if (filter_type_value == 'vehicle_catagory') {
+
+                                       filter_content.innerHTML = ''
+
+                                       add_select_all_option()
+
+                                       element = document.getElementById('filter_content')
+
+                                       var filter_data = JSON.parse(localStorage.getItem('filter_data'));
+                                       if (filter_data != null) {
+                                          vcats = filter_data.vcats
+                                          vcats.forEach(item => {
+                                             var newoption = document.createElement("option");
+                                             newoption.value = item
+                                             newoption.innerHTML = item
+                                             element.options.add(newoption);
+                                          })
+                                       }
+
+                                    }
+
                                     else if (filter_type_value == 'vehicle_makeby') {
-                                       // add_items(vmb_col, filter_content)
-                                       addVehicleMakes();
+
+                                       filter_content.innerHTML = ''
+
+                                       add_select_all_option()
+
+                                       element = document.getElementById('filter_content')
+
+                                       var filter_data = JSON.parse(localStorage.getItem('filter_data'));
+                                       if (filter_data != null) {
+                                          vmakes = filter_data.vmakes
+                                          vmakes.forEach(item => {
+                                             var newoption = document.createElement("option");
+                                             newoption.value = item.make
+                                             newoption.innerHTML = item.make
+                                             element.options.add(newoption);
+                                          })
+                                       }
                                     }
+
                                     else if (filter_type_value == 'vehicle_model') {
-                                       // add_items(vmb_col, filter_content)
-                                       addVehicleModels();
+
+                                       filter_content.innerHTML = ''
+
+                                       add_select_all_option()
+
+                                       element = document.getElementById('filter_content')
+
+                                       var filter_data = JSON.parse(localStorage.getItem('filter_data'));
+                                       if (filter_data != null) {
+                                          vmodels = filter_data.vmodels
+                                          vmodels.forEach(item => {
+                                             var newoption = document.createElement("option");
+                                             newoption.value = item.model
+                                             newoption.innerHTML = item.model
+                                             element.options.add(newoption);
+                                          })
+                                       }
                                     }
+
                                     else if (filter_type_value == 'vehicle_fuel_type') {
                                        add_items(fuel_col, filter_content)
                                     }
@@ -341,6 +425,7 @@
                                        add_items(cpa_col, filter_content)
                                     }
                                  }
+
                               </script>
 
                            </div>
@@ -439,7 +524,7 @@
 
                               </script>
                            </div>
-                         
+
                         </div>
                      </form>
                   </div>
@@ -516,62 +601,8 @@
                                        <!-- <th class="sorting">PolicyID</th> -->
                                        <th class="sorting thShow">Proposal No.</th>
                                        <th class="sorting text-center">Policy No. </th>
-                                       <th class="sorting thShow">Customer Name</th>
-                                       <th class="sorting  thShow">Insurer Name</th>
-                                       <th class="sorting">Service Provider</th>
-                                       <th class="sorting">Broker Code</th>
-                                       <th class="sorting">Product Name</th>
-                                       <th class="sorting">Registration No.</th>
-                                       <th class="sorting">RTO State</th>
-                                       <th class="sorting">RTO City</th>
-                                       <th class="sorting">Vehicle Makeby </th>
-                                       <th class="sorting">Vehicle Model </th>
-                                       <th class="sorting thShow">Vehicle Catagory </th>
-                                       <th class="sorting">Vehicle Fuel Type</th>
-                                       <th class="sorting">Manufacture Year </th>
-                                       <th class="sorting">Addon</th>
-                                       <th class="sorting">NCB</th>
-                                       <th class="sorting">Cubic Capacity</th>
-                                       <th class="sorting">GVW</th>
-                                       <th class="sorting">Seating Capacity</th>
-                                       <th class="sorting">Coverage Type</th>
-                                       <th class="sorting">Policy Type</th>
-                                       <th class="sorting">CPA</th>
-                                       <th class="sorting">Risk Start Date</th>
-                                       <th class="sorting">Risk End Date</th>
-                                       <th class="sorting">Issue Date</th>
-                                       <th class="sorting">Insured Age</th>
-                                       <th class="sorting">Policy Term</th>
-                                       <th class="sorting">BQP</th>
-                                       <th class="sorting">POS</th>
-                                       <th class="sorting">Employee</th>
-                                       <th class="sorting">Remark</th>
-                                       <th class="sorting thShow">OD Premium</th>
-                                       <th class="sorting thShow">TP / Terrorism</th>
-                                       <th class="sorting thShow">NET Premium</th>
-                                       <th class="sorting thShow">GST 18%</th>
-                                       <th class="sorting thShow">GST 12%</th>
-                                       <th class="sorting thShow">Total</th>
-                                       <th class="sorting">Payment Mode</th>
-
-                                       <th class="sorting thShow">Agent OD Reward %</th>
-                                       <th class="sorting thShow">Agent OD Amount</th>
-                                       <th class="sorting thShow">Agent TP Reward %</th>
-                                       <th class="sorting thShow">Agent TP Amount</th>
-                                       {% if is_user %}
-                                       <th class="sorting thShow">Self OD Reward %</th>
-                                       <th class="sorting thShow">Self OD Amount</th>
-                                       <th class="sorting thShow">Self TP Reward %</th>
-                                       <th class="sorting thShow">Self TP Amount</th>
-                                       {% endif %}
-                                       <th class="sorting">Proposal</th>
-                                       <th class="sorting">Mandate</th>
-                                       <th class="sorting">Policy</th>
-                                       <th class="sorting">Previous Policy</th>
-                                       <th class="sorting">Pan Card</th>
-                                       <th class="sorting">Aadhar Card</th>
-                                       <th class="sorting">Vehicle RC</th>
-                                       <th class="sorting">Inspection Report</th>
+                                       <th class="sorting thShow">Customer Name</th>                                   
+                                   
                                        <th class="sorting">Action</th>
                                     </tr>
                                  </thead>
@@ -1313,6 +1344,7 @@
             <!-- /.wrapper -->
 
 </main>
+
 <!-- /.app-main -->
 <div class="aside-backdrop"></div>
 </div><!-- /.app -->
@@ -1862,7 +1894,11 @@
    }
 
    function showMoreFilters() {
+
       if (document.getElementById('morefilters').hidden) {
+
+         fetch_filter_data("filter_data")
+
          document.getElementById('morefilters').hidden = false
          document.getElementById('filter_type').selectedIndex = 0
          add_filter_type()
@@ -2243,10 +2279,6 @@
 
    }
 
-   function getLength() {
-
-   }
-
 
    function entry_filter_loader() {
 
@@ -2337,25 +2369,6 @@
       return dl ?
          XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
          XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
-   }
-
-
-   function addAgentNames() {
-
-      document.getElementById('filter_content').innerHTML = ''
-
-      add_select_all_option()
-
-      element = document.getElementById('filter_content')
-
-      agents = JSON.parse(localStorage.getItem('agents'));
-
-      agents.forEach(item => {
-         var newoption = document.createElement("option");
-         newoption.value = item.trim()
-         newoption.innerHTML = item.trim()
-         element.options.add(newoption);
-      })
    }
 
 
@@ -2757,7 +2770,7 @@
       filter_type = document.getElementById('filter_type').value
       filter_content = document.getElementById('filter_content')
 
-      console.log(filter_type);
+      // console.log(filter_type);
 
       if (freezList.length > 0) {
 
@@ -2987,7 +3000,7 @@
             }
          }
 
-         console.log(tempfilterList);
+         // console.log(tempfilterList);
 
          filterList = []
 
@@ -3275,18 +3288,17 @@
    }
 
    function loadRecordLocalStorage() {
-      // console.log('loadRecordLocalStorage calling');
-      var records = JSON.parse(sessionStorage.getItem('records'));
+
+      var records = JSON.parse(localStorage.getItem('records'));
       if (records == null) {
          return
       }
+      generateTableRowsAsync(records);
       fetchList = records
       // console.log(fetchList);
-      generateTableRowsAsync(fetchList);
    }
 
    function fetchRecord(searchText) {
-      // console.log('fetchRecord calling');
 
       $.ajax({
          url: "{%url 'bima_policy:fetch_record'%}",
@@ -3314,13 +3326,13 @@
    }
 
    isFirstTime = true
+
    function fetch_records(data) {
-      // console.log('fetch_records calling');
 
       if (isFirstTime) {
-         isFirstTime = false         
+         isFirstTime = false
       }
-      else{
+      else {
          showNotification('⌛️ Getting ready...')
       }
 
@@ -3330,10 +3342,9 @@
          dataType: 'json',
          success: function (response) {
             // console.log(response.records);
+            generateTableRowsAsync(response.records);
             fetchList = response.records
-            generateTableRowsAsync(fetchList);
-            sessionStorage.setItem('records', JSON.stringify(response.records));           
-
+            localStorage.setItem('records', JSON.stringify(fetchList));
          },
          error: function (xhr, status, error) {
             console.error(error);
@@ -3342,22 +3353,15 @@
       });
    }
 
-   function fetch_filter_details(data) {
-      // console.log('fetch_filter_details calling');
+   function fetch_filter_data(data) {
 
       $.ajax({
          url: "{%url 'bima_policy:fetch_records'%}",
          data: { data: data },
          dataType: 'json',
          success: function (response) {
-            // console.log(response.agents);
-            localStorage.setItem('agents', JSON.stringify(response.agents));
-            localStorage.setItem('insurers', JSON.stringify(response.insurers));
-            localStorage.setItem('vehicle_categories', JSON.stringify(response.vehicle_categories));
-            localStorage.setItem('makes', JSON.stringify(response.makes));
-            localStorage.setItem('models', JSON.stringify(response.models));
-            // console.log(JSON.parse(localStorage.getItem('agents')));            
-
+            // console.log(response.filter_data);
+            localStorage.setItem('filter_data', JSON.stringify(response.filter_data));
          },
          error: function (xhr, status, error) {
             console.error(error);
@@ -3366,7 +3370,6 @@
       });
    }
 
-   
    function resertDocument() {
       // document.location.reload()
       loadRecordLocalStorage()
@@ -3375,12 +3378,10 @@
    }
 
    document.addEventListener('DOMContentLoaded', function () {
-      // console.log('dom');     
+
       loadRecordLocalStorage()
       fetch_records("")
-      fetch_filter_details("mix")
    });
-
 
 </script>
 

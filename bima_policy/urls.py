@@ -11,6 +11,7 @@ urlpatterns = [
     path('profile/bank_details/<str:id>', delete_bank_details, name='del_bank'),
     path('user/', staffmanage, name='staff'),
     path('user/edit/<str:id>', staff_edit, name='staff_edit'),
+    path('user/delete/<str:id>', staff_delete, name='staff_delete'),
     path('agent/', agent, name='agent'),
     path('agent/add_agent/', add_agent, name='add_agent'),
     path('agent/edit_agent/<str:id>', edit_agent, name='edit_agent'),
@@ -47,6 +48,7 @@ urlpatterns = [
     path('policy/entry/', policy_entry, name="policy_entry"),
     path('policy/fetch_record/', fetch_record, name="fetch_record"),
     path('policy/fetch/', fetch_records, name="fetch_records"),
+    path('policy/fetch_policyId/', fetch_policyId, name="fetch_policyId"),
     path('policy/count_objects/', count_objects, name="count_objects"),
 
     path('policy/search_entry/<str:id>', policy_saerch_entry, name="policy_saerch_entry"),   
@@ -73,6 +75,7 @@ urlpatterns = [
     path('deleted_policy/<str:id>/', store_deleted_policy, name="store_deleted_policy"),
     path('policy/deleted_entry/', policy_deleted_entry, name="policy_deleted_entry"),
     path('policy/local_entry/', policy_local_entry, name="policy_local_entry"),
-    path('policy/new_entry/', new_entry, name="new_entry")   
+    path('policy/new_entry/', new_entry, name="new_entry")   ,
+    path('policy/new_entry_non_motor/', new_entry_non_motor, name="new_entry_non_motor")   
 
 ]

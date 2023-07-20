@@ -2,115 +2,237 @@
 {%block content%}
 {%load static%}
 
-    		<main class="app-main"><!-- .app-main -->
-    		    <div class="wrapper"><!-- .wrapper -->
-    		        <div class="page "><!-- .page -->
-    		            <div class="page-inner"> <!-- .page-inner -->
-    		                <header class="page-title-bar"><!-- .page-title-bar -->
-    		                                        <!-- grid row -->
-    		                <div class="row text-center text-sm-left">
-    		                    <!-- grid column -->
-    		                    <div class="col">
-    		                        <h1 class="page-title"> Staff List 
-    		                            <button data-toggle="modal" data-target="#mdlstaff" class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add New</button>
-    		                        </h1>
-    		                    </div><!-- /grid column -->
-    		                </div><!-- /grid row -->
-    		                </header>
-    		                <!-- .page-section -->
-							{%if data%}
-    		                <div class="page-section">
-    		                    <!-- .card -->
-    		                    <div class="card card-fluid">
-									<!-- .card-body -->
-									<div class="card-body">
-										<!-- .table -->
-										<div class="table-responsive">
-                                        <div id="tblList_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="tblList_length"><label>Show <select name="tblList_length" aria-controls="tblList" class="custom-select"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="tblList_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="tblList"></label></div></div></div><div class="table-responsive"><table id="tblList" class="table no-wrap w-100 dataTable no-footer" role="grid" aria-describedby="tblList_info">
-                                            <thead>
-                                                <tr role="row"><th class="text-center width-10p sorting_asc" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sr. No.: activate to sort column descending">Sr. No.</th><th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Staff Name: activate to sort column ascending">Staff Name</th><th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Login Id: activate to sort column ascending">Login Id</th><th class="sorting" tabindex="0" aria-controls="tblList" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Status</th><th class="text-center width-10p sorting_disabled" rowspan="1" colspan="1" aria-label="#">#</th></tr>
-    		                                </thead>
-                                            {% for value in data %}
-    		                                <tbody>
-                                                <tr role="row" class="odd">
-                                                    <td class="text-center width-10p sorting_1">{{forloop.counter}}</td>
-                                                    <td>{{value.staffname}}</td>
-                                                    <td>{{value.login_id}}</td>
-													<td><span class="badge badge-success">{{value.status}}</span></td>
-                                                    <td class=" text-center width-10p">
-                                                        <a href="{%url 'bima_policy:staff_edit' value.login_id %}" class="mr-3 btn btn btn-icon btn-secondary" title="Edit">
-															<i class="fa fa-pencil-alt mt-2" aria-hidden="true"></i>
-    		                                            </a>
-    		                                        </td>
-    		                                    </tr>
-                                            </tbody>
-                                            {% endfor %}
-    		                            </table>
-										{%else%}
-											<h2>There is no data in Staff List!</h2>
-										{%endif%}
-    		                            <div id="tblList_processing" class="dataTables_processing card" style="display: none;">Processing...</div>
-    		                        </div>
-    		                        <div class="row align-items-center">
-    		                            <div class="col-sm-12 col-md-5">
-    		                                <div class="dataTables_info" id="tblList_info" role="status" aria-live="polite">
-    		
-    		                                </div>
-    		                            </div>
-    		                            <div class="col-sm-12 col-md-7 d-flex justify-content-end">
-    		                                <div class="dataTables_paginate paging_simple_numbers" id="tblList_paginate">
-    		                                    
-    		                                </div>
-    		                            </div>
-    		                        </div>
-    		                    </div>
-    		                        
-    		                </div>     
-    		            </div><!-- /.card-body -->
-    		                    
-    		        </div><!-- /.card -->
-    		               
-    		    </div><!-- /.page-section -->
-    		                
-    		    <div class="modal fade" id="mdlstaff" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="inscompModalLabel" aria-hidden="true">
-    		                    <div class="modal-dialog" role="document">
-    		                        <div class="modal-content">
-    		                            <div class="modal-header">
-    		                                <h5 id="inscompModalLabel" class="modal-title"> Add New Staff </h5>
-    		                            </div>
-    		                            <form method="post" autocomplete="off"         data-parsley-validate="true" name="frmstaff">
+<main class="app-main"><!-- .app-main -->
+	<div class="wrapper"><!-- .wrapper -->
+		<div class="page "><!-- .page -->
+			<div class="page-inner"> <!-- .page-inner -->
+				<header class="page-title-bar"><!-- .page-title-bar -->
+					<!-- grid row -->
+					<div class="row text-center text-sm-left">
+						<!-- grid column -->
+						<div class="col">
+							<h1 class="page-title"> Staff List
+								<button data-toggle="modal" data-target="#mdlstaff"
+									class="btn btn-secondary btn-sm float-right"><i class="fa fa-plus"></i> Add
+									New</button>
+							</h1>
+						</div><!-- /grid column -->
+					</div><!-- /grid row -->
+				</header>
+				<!-- .page-section -->
 
-											<div class="modal-body">
-												<div class="form-group">
-													{% csrf_token %}
-    		                                        <label class="col-form-label">Full Name <abbr title="Required" class="text-danger">*</abbr></label>
-    		                                        <input type="text" class="form-control" data-parsley-pattern="^(?:[A-Za-z]+[- ])*[A-Za-z]+$" data-parsley-required="true" name="staffname">
-    		                                    </div>
-    		                                    <div class="form-group">
-    		                                        <label class="col-form-label">Password <abbr title="Required" class="text-danger">*</abbr></label>
-    		                                        <input type="password" id="password" name="password" class="form-control" data-parsley-minlength="6" data-parsley-maxlength="15" data-parsley-pattern="/^(?=.*[0-9])(?=.*[!@#$%^&amp;*])[a-zA-Z0-9!@#$%^&amp;*]{6,20}$/" data-parsley-required="true" parsley-pattern-message="The string must contain at least 1 lowercase alphabetical character<br>The Password must contain at least 1 uppercase alphabetical character<br>The Password must contain at least 1 numeric character <br>The string must contain at least one special character">
-    		                                                
-    		                                    </div>
-    		                                    <div class="form-group">
-    		                                        <label>Retype Password<abbr title="Required" class="text-danger">*</abbr></label>
-    		                                        <input type="password" id="confirm_password" name="confirm_password" data-parsley-error-message="Password &amp; confirm password should be same" data-parsley-equalto="#password" class="form-control" data-parsley-required="true">
-    		                                        <small>
-    		                                            <b>Note:</b> Password should be Minimum 6 to 20 characters with different classes of characters in password. Classes of characters is: Lower Case, Upper Case, Digits, Special Characters
-    		                                        </small>		
-    		                                    </div>
-    		                                </div>
-    		                                <div class="modal-footer">
-    		                                    
-    		                                    <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button>
-    		                                    <button type="submit" name="staff_add" class="btn btn-primary w-100p">Save</button>
-    		                                </div>
-    		                            </form>
-    		                        </div>
-    		                    </div>
-    		                </div>
-    		            </div><!-- /.page-inner -->
-    		        </div><!-- /.page -->
-    		    </div><!-- /.wrapper -->
-    		</main>
-    		<!-- /.app-main -->
+				<div class="page-section">
+					<!-- .card -->
+					<div class="card card-fluid">
+						<!-- .card-body -->
+						<div class="card-body">
+							<!-- .table -->
+							<!-- <div class="table-responsive"> -->
+							<div id="tblList_wrapper" class="dataTables_wrapper dt-bootstrap4 ">
+
+								<div class="form-row  mb-3">
+									<div class="col-md-6">
+										<div class="dataTables_length" id="tblInsurance_length">
+											<label>
+												Show
+												<select id="select_length" name="tblInsurance_length"
+													aria-controls="tblInsurance" class="custom-select">
+													<option value="3">3</option>
+													<option value="5" selected>5</option>
+													<option value="10">10</option>
+													<option value="25">25</option>
+													<option value="50">50</option>
+													<option value="100">100</option>
+													<option value="0">all</option>
+												</select>
+												entries
+											</label>
+										</div>
+
+
+									</div>
+
+									<div class="col-md-6">
+										<div id="tblInsurance_filter" class="dataTables_filter"><label>Search:<input
+													value="" type="search" id="myInput" class="form-control"
+													placeholder="" aria-controls="tblInsurance"></label></div>
+									</div>
+
+								</div>
+
+								<div class="table-responsive">
+
+									<div class="dataTables_scrollBody" style="position: relative;  width: 100%;">
+										<table id="tblInsurance"
+											class="table table-striped1 table-hover no-wrap table-bordered no-footer dataTable"
+											aria-describedby="tblInsurance_info" role="grid">
+
+											<thead style="border-bottom: inset;">
+												<tr role="row">
+													<th class=" text-center sorting " tabindex="0"
+														aria-controls="tblInsurance" rowspan="1" colspan="1"
+														style="width: 83.2344px;"
+														aria-label="Sr.No.: activate to sort column ascending">
+														Sr.No.</th>
+													<th class="sorting">Staff Name</th>
+													<th class="sorting">Login Id </th>
+													<th class="sorting text-center">Status</th>
+													<th class="sorting text-center">Action</th>
+												</tr>
+											</thead>
+
+											<tbody id="tbdy">
+
+											</tbody>
+
+										</table>
+
+									</div>
+
+								</div>
+
+							</div>
+
+							<!-- </div> -->
+						</div><!-- /.card-body -->
+
+					</div><!-- /.card -->
+
+				</div><!-- /.page-section -->
+
+				<div class="modal fade" id="mdlstaff" data-backdrop="static" data-keyboard="false" tabindex="-1"
+					role="dialog" aria-labelledby="inscompModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 id="inscompModalLabel" class="modal-title"> Add New Staff </h5>
+							</div>
+							<form method="post" autocomplete="off" data-parsley-validate="true" name="frmstaff">
+
+								<div class="modal-body">
+									<div class="form-group">
+										{% csrf_token %}
+										<label class="col-form-label">Full Name <abbr title="Required"
+												class="text-danger">*</abbr></label>
+										<input type="text" class="form-control"
+											data-parsley-pattern="^(?:[A-Za-z]+[- ])*[A-Za-z]+$"
+											data-parsley-required="true" name="staffname">
+									</div>
+									<div class="form-group">
+										<label class="col-form-label">Password <abbr title="Required"
+												class="text-danger">*</abbr></label>
+										<input type="password" id="password" name="password" class="form-control"
+											data-parsley-minlength="6" data-parsley-maxlength="15"
+											data-parsley-pattern="/^(?=.*[0-9])(?=.*[!@#$%^&amp;*])[a-zA-Z0-9!@#$%^&amp;*]{6,20}$/"
+											data-parsley-required="true"
+											parsley-pattern-message="The string must contain at least 1 lowercase alphabetical character<br>The Password must contain at least 1 uppercase alphabetical character<br>The Password must contain at least 1 numeric character <br>The string must contain at least one special character">
+
+									</div>
+									<div class="form-group">
+										<label>Retype Password<abbr title="Required"
+												class="text-danger">*</abbr></label>
+										<input type="password" id="confirm_password" name="confirm_password"
+											data-parsley-error-message="Password &amp; confirm password should be same"
+											data-parsley-equalto="#password" class="form-control"
+											data-parsley-required="true">
+										<small>
+											<b>Note:</b> Password should be Minimum 6 to 20 characters with different
+											classes of characters in password. Classes of characters is: Lower Case,
+											Upper Case, Digits, Special Characters
+										</small>
+									</div>
+								</div>
+								<div class="modal-footer">
+
+									<button type="button" class="btn btn-secondary w-100p"
+										data-dismiss="modal">Close</button>
+									<button type="submit" name="staff_add" class="btn btn-primary w-100p">Save</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div><!-- /.page-inner -->
+		</div><!-- /.page -->
+	</div><!-- /.wrapper -->
+</main>
+
+<script>
+
+	function generateTableRowsAsync(records) {
+		tableRows = ''
+		document.getElementById('tbdy').innerHTML = ''
+
+		if (records.length === 0) {
+			showNotification('❌ ' + 'NO AGENTS!');
+			return
+		}
+
+		for (var i = 0; i < records.length; i++) {
+
+			record = records[i]
+
+			recordHtml = `<tr class="policy-row" onclick="highlight(this)"  >
+			<td class="text-center" > ${(i + 1)}  </td> 
+			<td >  ${record.staffname} </td>
+			<td > ${record.login_id} </td>
+			<td class="text-center w-10pc nowrap" > <a href="#" class="badge badge-success" >${record.status}</a> </td>
+			   
+			<td class="text-center"> <form method="POST">   {% csrf_token %}
+			 <a href="/bima_policy/user/edit/${record.login_id}" 
+				class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+				<i class="fa fa-pencil-alt mt-2"></i>                                               
+			 </a>
+			 <a href="/bima_policy/user/delete/${record.login_id}" name="Remove"
+				class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+				<i class="far fa-trash-alt mt-2"></i> 
+			 </a> 
+			</td>  
+			</tr>`;
+
+			tableRows += recordHtml;
+		}
+
+		showNotification('✅ TOTAL STAFF: ' + records.length);
+		document.getElementById('tbdy').innerHTML = tableRows;
+
+	}
+
+
+	function loadRecordLocalStorage() {		
+		staffs = JSON.parse(localStorage.getItem('staffs'));
+		if (staffs == null) {
+			return
+		}
+		// console.log(staffs);
+		generateTableRowsAsync(staffs);
+	}
+
+	function fetch_records(data) {
+		// console.log('fetch_records calling');
+		$.ajax({
+			url: "{%url 'bima_policy:fetch_records'%}",
+			data: { data: data },
+			dataType: 'json',
+			success: function (response) {
+				console.log(response.staffs);
+				generateTableRowsAsync(response.staffs)
+				localStorage.setItem('staffs', JSON.stringify(response.staffs));
+			},
+			error: function (xhr, status, error) {
+				console.error(error);
+				alert(error.toString())
+			}
+		});
+	}
+
+	document.addEventListener('DOMContentLoaded', function () {
+		
+		loadRecordLocalStorage()
+		fetch_records("staffs")
+	});
+
+</script>
+
+
 {%endblock%}
