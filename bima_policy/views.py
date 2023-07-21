@@ -2675,11 +2675,9 @@ def fetch_records(request):
     # get from todays
     if data[0] == '':  
         if is_user(request):           
-            # records = Policy.objects.filter(created_at=datetime.now()).values()          
-            records = Policy.objects.order_by('-issue_date').values()[:5]          
-        else:
-            # records = Policy.objects.filter(created_at=datetime.now(), employee=get_id_from_session(request)).values()
-            records = Policy.objects.filter(employee=get_id_from_session(request)).order_by('-issue_date').values()[:5]         
+            records = Policy.objects.filter(created_at=datetime.now()).values()   
+        else:  
+            records = Policy.objects.filter(employee=get_id_from_session(request), created_at=datetime.now()).values()    
        
         return JsonResponse({'data': list(records)})
     
@@ -2784,25 +2782,18 @@ def fetch_records(request):
     day = d2_array[0]
     date2 = year + "-" + month + "-" + day
 
-    # print('date 1: ', date1)
-    # print('date 2: ', date2)
-
     date_string = date1
     date_string2 = date2
     date_format = '%Y-%m-%d'
 
     date1 = datetime.strptime(date_string, date_format).date()
     date2 = datetime.strptime(date_string2, date_format).date()
-
-    # print(date1)  # Output: 2023-06-23
-
-    if is_user(request):
-        records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).order_by('-issue_date').values()
-        # records = Policy.objects.filter(created_at__gte=date1, created_at__lte=date2).values()
+   
+    if is_user(request):      
+        records = Policy.objects.filter(issue_date__gte= date1, issue_date__lte= date2).values()
     else:
-        records = Policy.objects.filter(employee=get_id_from_session(request), issue_date__gte=date1, issue_date__lte=date2).order_by('-issue_date').values()
-
-    # print(records.count())
+        records = Policy.objects.filter(employee=get_id_from_session(request), issue_date__gte=date1, issue_date__lte=date2).values()
+ 
     return JsonResponse({'data': list(records)})
 
 
@@ -5654,8 +5645,8 @@ def new_entry(request):
                                          inspection_report=inspection_report
                                          )
 
-        set_payout(my_model, my_model.policyid)
-
+        # set_payout(my_model, my_model.policyid)
+        
         return JsonResponse('done: ' + request.POST['policy_no'], safe=False)
     except Exception as e:
         print("Error occurred in new_entry method:", str(e))

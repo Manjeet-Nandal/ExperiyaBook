@@ -1131,6 +1131,8 @@
                            New</a>
                      </h1>
                   </div>
+
+                 
                   <!-- /grid column -->
                </div>
                <!-- /grid row -->
@@ -7366,7 +7368,6 @@
          }
 
          formData = new FormData();
-
          formData.append('product_name', document.getElementsByName('product_name')[0].value);
          formData.append('policy_type', document.getElementsByName('policy_type2')[0].value);
          formData.append('proposal_no', document.getElementsByName('proposal_no2')[0].value);
@@ -7492,7 +7493,12 @@
             console.log(result);
 
             if (result.includes('done:')) {
+
                showNotification('✅ ' + 'succeed : '.toUpperCase() + formDataKey.toUpperCase());
+               data = JSON.parse(localStorage.getItem('entry_list'))
+               if (data) {
+                  localStorage.removeItem('entry_list')                  
+               }
             }
             else {
                showNotification('❌ ' + 'failed : '.toUpperCase() + + formDataKey.toUpperCase());
