@@ -4502,15 +4502,13 @@
             <td class="text-center" > <a href="#" onclick="downloadFile('${record.vehicle_rc}')">${record.vehicle_rc}</a> </td>
             <td class="text-center" > <a href="#" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>
 
-            <td class="text-center"> <form method="POST">   {% csrf_token %}
-            <a href="/bima_policy/policy/policy_entrydata/${record.policyid}"
-            class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
-            <i class="fa fa-pencil-alt mt-2"></i>                                               
-            </a>            
-            <a href="/bima_policy/deleted_policy/${record.policyid}" name="Remove"
-            class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
-            <i class="far fa-trash-alt mt-2"></i> 
-            </a>
+            
+            <td >    
+               <a onclick="edit_motor_policy('${record.policyid}')" href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+               <i class="fa fa-pencil-alt mt-2"></i>                                               
+               </a>            
+               <a onclick="alert('Do you want to delete?')" href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+               <i class="far fa-trash-alt mt-2"></i>  </a>
             </td>
             </tr>`;
 
