@@ -2658,6 +2658,7 @@ def count_objects(request):
     
     return JsonResponse({'data': data})  
 
+
 def fetch_policyId(request):
     print('\nfetch_policyId calling ')       
     
@@ -2802,19 +2803,21 @@ def fetch_record(request):
 
     data = request.GET.get('data')
     print(data)    
-  
-    record = Policy.objects.filter(proposal_no = data).values()
 
-    if record:
-        pass    
-    else:
-        record = Policy.objects.filter(policy_no = data).values()
-
-    record = list(record)
-    print(record)   
-
-    if record:        
-        return JsonResponse({'record': record })      
+    # search for proposal no
+    record = list(Policy.objects.filter(proposal_no__iexact = data).values())
+    if record.__len__() > 0:
+        return JsonResponse({'record': record })
+    
+    # search for policy no    
+    record = list(Policy.objects.filter(policy_no__iexact = data).values())
+    if record.__len__() > 0:
+        return JsonResponse({'record': record })
+    
+    # search for customer name  
+    record = list(Policy.objects.filter(customer_name__icontains = data).values())
+    if record.__len__() > 0:
+        return JsonResponse({'record': record })   
   
     return JsonResponse({'message': "Not found!"})
 

@@ -4489,9 +4489,7 @@
             <td > ${record.agent_od_reward} </td>
             <td > ${record.agent_od_amount} </td>
             <td > ${record.agent_tp_reward} </td>
-            <td > ${record.agent_tp_amount} </td>
-
-           
+            <td > ${record.agent_tp_amount} </td>           
 
             <td class="text-center" > <a href="#" onclick="downloadFile('${record.proposal}')">${record.proposal}</a> </td>
             <td class="text-center" > <a href="#" onclick="downloadFile('${record.mandate}')">${record.mandate}</a> </td>
@@ -4501,7 +4499,6 @@
             <td class="text-center" > <a href="#" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>
             <td class="text-center" > <a href="#" onclick="downloadFile('${record.vehicle_rc}')">${record.vehicle_rc}</a> </td>
             <td class="text-center" > <a href="#" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>
-
             
             <td >    
                <a onclick="edit_motor_policy('${record.policyid}')" href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
@@ -4525,82 +4522,73 @@
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
 
-      recordHtml = '<tr class="policy-row" onclick="highlight(this)"  >' +
-         '<td class="text-center" > ' + 1 + '</td>' +
-         '<td >' + record.proposal_no + '</td>' +
-         `<td > <a href="" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="/bima_policy/policy/policy_entrydata/${record.policyid}" class=""> ${record.policy_no}</a> </td>` +
-         '<td >' + record.customer_name + '</td>' +
-         '<td >' + record.insurance_company + '</td>' +
-         '<td >' + record.sp_name + '</td>' +
-         '<td >' + record.sp_brokercode + '</td>' +
-         '<td >' + record.product_name + '</td>' +
-         '<td >' + record.registration_no + '</td>' +
-         '<td >' + record.rto_state + '</td>' +
-         '<td >' + record.rto_city + '</td>' +
-         '<td >' + record.vehicle_makeby + '</td>' +
-         '<td >' + record.vehicle_model + '</td>' +
-         '<td >' + record.vehicle_catagory + '</td>' +
-         '<td >' + record.vehicle_fuel_type + '</td>' +
-         '<td >' + record.mfg_year + '</td>' +
+      recordHtml = `<tr class="policy-row" onclick="highlight(this)" >
+            <td class="text-center" >  ${1} </td> 
+            <td >  ${record.proposal_no} </td>
+            <td onclick="edit_motor_policy('${record.policyid}')" >  <a href="#" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="#" class=""> ${record.policy_no}</a> </td>
+            <td >  ${record.customer_name}  </td> 
+            <td >  ${record.insurance_company} </td>
+            <td > ${record.sp_name} </td> 
+            <td > ${record.sp_brokercode} </td>
+            <td > ${record.product_name} </td>
+            <td > ${record.registration_no} </td>
+            <td > ${record.rto_state} </td>
+            <td > ${record.rto_city} </td>
+            <td > ${record.vehicle_makeby} </td>
+            <td > ${record.vehicle_model} </td>
+            <td > ${record.vehicle_catagory} </td>
+            <td > ${record.vehicle_fuel_type} </td>
+            <td > ${record.mfg_year} </td>
 
-         '<td >' + record.addon + '</td>' +
-         '<td >' + record.ncb + '</td>' +
-         '<td >' + record.cubic_capacity + '</td>' +
-         '<td >' + record.gvw + '</td>' +
-         '<td >' + record.seating_capacity + '</td>' +
-         '<td >' + record.coverage_type + '</td>' +
-         '<td >' + record.policy_type + '</td>' +
-         '<td >' + record.cpa + '</td>' +
-         '<td >' + record.risk_start_date + '</td>' +
-         '<td >' + record.risk_end_date + '</td>' +
-         '<td >' + record.issue_date + '</td>' +
+            <td >  ${record.addon} </td>
+            <td > ${record.ncb} </td>
+            <td >  ${record.cubic_capacity} </td>
+            <td > ${record.gvw} </td>
+            <td > ${record.seating_capacity} </td>
+            <td > ${record.coverage_type} </td>
+            <td > ${record.policy_type} </td>
+            <td > ${record.cpa} </td>
+            <td > ${record.risk_start_date} </td>
+            <td > ${record.risk_end_date} </td>
+            <td > ${record.issue_date} </td>
 
-         '<td >' + record.insured_age + '</td>' +
-         '<td >' + record.policy_term + '</td>' +
-         '<td >' + record.bqp + '</td>' +
-         '<td >' + record.pos + '</td>' +
-         '<td >' + record.employee + '</td>' +
-         '<td >' + record.remark + '</td>' +
+            <td > ${record.insured_age} </td>
+            <td > ${record.policy_term} </td>
+            <td > ${record.bqp} </td>
+            <td > ${record.pos} </td>
+            <td > ${record.employee} </td>
+            <td > ${record.remark} </td>
 
-         '<td >' + record.OD_premium + '</td>' +
-         '<td >' + record.TP_terrorism + '</td>' +
-         '<td >' + record.net + '</td>' +
-         '<td >' + record.gst_amount + '</td>' +
-         '<td >' + record.gst_gcv_amount + '</td>' +
-         '<td >' + record.total + '</td>' +
-         '<td >' + record.payment_mode + '</td>' +
+            <td > ${record.OD_premium} </td>
+            <td > ${record.TP_terrorism} </td>
+            <td > ${record.net} </td>
+            <td > ${record.gst_amount} </td>
+            <td > ${record.gst_gcv_amount} </td>
+            <td > ${record.total} </td>
+            <td > ${record.payment_mode} </td>
 
-         '<td >' + record.agent_od_reward + '</td>' +
-         '<td >' + record.agent_od_amount + '</td>' +
-         '<td >' + record.agent_tp_reward + '</td>' +
-         '<td >' + record.agent_tp_amount + '</td>' +
+            <td > ${record.agent_od_reward} </td>
+            <td > ${record.agent_od_amount} </td>
+            <td > ${record.agent_tp_reward} </td>
+            <td > ${record.agent_tp_amount} </td>           
 
-         '<td >' + record.self_od_reward + '</td>' +
-         '<td >' + record.self_od_amount + '</td>' +
-         '<td >' + record.self_tp_reward + '</td>' +
-         '<td >' + record.self_tp_amount + '</td>' +
-
-         `<td class="text-center" > <a href="#" onclick="downloadFile('${record.proposal}')">${record.proposal}</a> </td>` +
-         `<td class="text-center" > <a href="#" onclick="downloadFile('${record.mandate}')">${record.mandate}</a> </td>` +
-         `<td class="text-center" > <a href="#" onclick="downloadFile('${record.policy}')">${record.policy}</a> </td>` +
-         `<td class="text-center" > <a href="#" onclick="downloadFile('${record.previous_policy}')">${record.previous_policy}</a> </td>` +
-         `<td class="text-center" > <a href="#" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>` +
-         `<td class="text-center" > <a href="#" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>` +
-         `<td class="text-center" > <a href="#" onclick="downloadFile('${record.vehicle_rc}')">${record.vehicle_rc}</a> </td>` +
-         `<td class="text-center" > <a href="#" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>` +
-
-         `<td class="text-center"> <form method="POST">   {% csrf_token %}
-         <a href="/bima_policy/policy/policy_entrydata/${record.policyid}"
-            class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
-            <i class="fa fa-pencil-alt mt-2"></i>                                               
-         </a>
-         <a href="/bima_policy/deleted_policy/${record.policyid}" name="Remove"
-            class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
-            <i class="far fa-trash-alt mt-2"></i> 
-         </a>
-   </td>` +
-
-         '</tr>';
+            <td class="text-center" > <a href="#" onclick="downloadFile('${record.proposal}')">${record.proposal}</a> </td>
+            <td class="text-center" > <a href="#" onclick="downloadFile('${record.mandate}')">${record.mandate}</a> </td>
+            <td class="text-center" > <a href="#" onclick="downloadFile('${record.policy}')">${record.policy}</a> </td>
+            <td class="text-center" > <a href="#" onclick="downloadFile('${record.previous_policy}')">${record.previous_policy}</a> </td>
+            <td class="text-center" > <a href="#" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>
+            <td class="text-center" > <a href="#" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>
+            <td class="text-center" > <a href="#" onclick="downloadFile('${record.vehicle_rc}')">${record.vehicle_rc}</a> </td>
+            <td class="text-center" > <a href="#" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>
+            
+            <td >    
+               <a onclick="edit_motor_policy('${record.policyid}')" href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+               <i class="fa fa-pencil-alt mt-2"></i>                                               
+               </a>            
+               <a onclick="alert('Do you want to delete?')" href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+               <i class="far fa-trash-alt mt-2"></i>  </a>
+            </td>
+            </tr>`;
 
       tableRows += recordHtml;
 
@@ -5478,14 +5466,15 @@
          dataType: 'json',
          success: function (response) {
             record = response.record
-            // console.log(record);
+            console.log(record);
 
             if (record === undefined) {
-               showNotification('❌ No RECORD FOUND! ');
+               showNotification('❌ nothing found!'.toUpperCase());
                return
             }
 
-            generateSingleRowsAsync(record[0])
+            // generateSingleRowsAsync(record[0])
+            generateTableRowsAsync(record)
 
          },
          error: function (xhr, status, error) {
