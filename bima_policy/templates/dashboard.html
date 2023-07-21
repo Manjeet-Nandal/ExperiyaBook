@@ -4305,17 +4305,13 @@
 
    document.addEventListener('DOMContentLoaded', function () {
 
-      console.log('DOM calling: ');
+      // console.log('DOM calling: ');
 
-      load_dashboard_details()
-
-      fetch_dashboard_details()
-    
+      load_dashboard_details()         
 
    });
 
    // Dashboard
-
 
    function showDashboard() {
 
@@ -4330,11 +4326,10 @@
       document.getElementById('vehicle').hidden = true
       document.getElementById('motor_entry').hidden = true
       document.getElementById('non_motor_entry').hidden = true
-      document.getElementById('motor_entry_edit').hidden = true
-    
-      load_dashboard_details()
-
-      fetch_dashboard_details()
+      document.getElementById('motor_entry_edit').hidden = true    
+     
+      load_dashboard_details()           
+     
    }
 
    function load_dashboard_details() {
@@ -4345,6 +4340,9 @@
          document.getElementById('agentcount').textContent = dashboard_details.agentcount
          document.getElementById('spcount').textContent = dashboard_details.spcount
          document.getElementById('policycount').textContent = dashboard_details.policycount
+      }
+      else{
+         fetch_dashboard_details()
       }
    }
 
@@ -4370,7 +4368,6 @@
       });
    }
 
-
    // Policy Entry List
 
    var fetchList = []
@@ -4393,13 +4390,15 @@
 
       load_entry_list()
 
-      fetch_entry_list("")
+      // fetch_entry_list("")
    }
 
    function load_entry_list() {
 
       var entry_list = JSON.parse(localStorage.getItem('entry_list'));
       if (entry_list == null) {
+
+         fetch_entry_list("")       
          return
       }
       generateTableRowsAsync(entry_list);
@@ -4856,7 +4855,6 @@
 
    }
 
-
    function show_motor_policy_edit() {
 
       document.getElementById('dashboard').hidden = true
@@ -4892,7 +4890,6 @@
          }
       });
    }
-
 
    function showNextRows(hideDefault) {
 
@@ -5502,9 +5499,57 @@
 
    function resertDocument() {
       // document.location.reload()
-      load_entry_list()
-      fetch_entry_list("")
-      fetch_filter_data("filter_data")
+
+      data = JSON.parse(localStorage.getItem('dashboard_details'))
+      if (data) {
+         localStorage.removeItem('dashboard_details')
+         // console.log('dashboard_details removeed')
+      }
+      data = JSON.parse(localStorage.getItem('entry_list'))
+      if (data) {
+         localStorage.removeItem('entry_list')
+      }
+      data = JSON.parse(localStorage.getItem('posp'))
+      if (data) {
+         localStorage.removeItem('posp')
+      }
+      data = JSON.parse(localStorage.getItem('insurers'))
+      if (data) {
+         localStorage.removeItem('insurers')
+      }
+      data = JSON.parse(localStorage.getItem('sps'))
+      if (data) {
+         localStorage.removeItem('sps')
+      }
+      data = JSON.parse(localStorage.getItem('bc'))
+      if (data) {
+         localStorage.removeItem('bc')
+      }
+      data = JSON.parse(localStorage.getItem('products'))
+      if (data) {
+         localStorage.removeItem('products')
+      }
+      data = JSON.parse(localStorage.getItem('vehicles'))
+      if (data) {
+         localStorage.removeItem('vehicles')
+      }
+      data = JSON.parse(localStorage.getItem('staffs'))
+      if (data) {
+         localStorage.removeItem('staffs')
+      }
+      data = JSON.parse(localStorage.getItem('employee'))
+      if (data) {
+         localStorage.removeItem('employee')
+      }
+      data = JSON.parse(localStorage.getItem('filter_data'))
+      if (data) {
+         localStorage.removeItem('filter_data')
+      }
+
+
+      // load_entry_list()
+      // fetch_entry_list("")
+      // fetch_filter_data("filter_data")
    }
 
    function addToFilterList() {
@@ -5634,7 +5679,6 @@
 
    }
 
-
    function searchTableOnEnterKey(event) {
       if (event.key === "Enter") {
          entry_filter()
@@ -5692,7 +5736,6 @@
       }
    }
 
-
    // Posp
 
    function showPosp() {
@@ -5712,16 +5755,17 @@
 
       load_posp()
 
-      fetch_posp("posp")
+      // fetch_posp("posp")
    }
 
    function load_posp() {
 
       posp = JSON.parse(localStorage.getItem('posp'));
       if (posp == null) {
+         fetch_posp("posp")
          return
       }
-      console.log(posp);
+      // console.log(posp);
       generate_posp_table(posp);
    }
 
@@ -5830,13 +5874,14 @@
 
       load_slab()
 
-      fetch_slab('slabs')
+      // fetch_slab('slabs')
    }
 
    function load_slab() {
 
       slabs = JSON.parse(localStorage.getItem('slabs'));
       if (slabs == null) {
+         fetch_slab('slabs')
          return
       }
       console.log(slabs);
@@ -5911,13 +5956,14 @@
 
       load_insurer()
 
-      fetch_insurer('insurers')
+      // fetch_insurer('insurers')
    }
 
    function load_insurer() {
 
       insurers = JSON.parse(localStorage.getItem('insurers'));
       if (insurers == null) {
+         fetch_insurer('insurers')
          return
       }
       console.log(insurers);
@@ -5942,7 +5988,6 @@
          }
       });
    }
-
 
    function generate_insurer_table(records) {
       tableRows = ''
@@ -5989,7 +6034,6 @@
 
    }
 
-
    // staff
 
    function show_staff() {
@@ -6009,13 +6053,14 @@
 
       load_staff()
 
-      fetch_staff('staffs')
+      // fetch_staff('staffs')
    }
 
    function load_staff() {
 
       staffs = JSON.parse(localStorage.getItem('staffs'));
       if (staffs == null) {
+         fetch_staff('staffs')
          return
       }
       console.log(staffs);
@@ -6085,7 +6130,6 @@
 
    }
 
-
    // product
 
    function show_product() {
@@ -6105,13 +6149,15 @@
 
       load_product()
 
-      fetch_product('products')
+      // fetch_product('products')
    }
 
    function load_product() {
 
       products = JSON.parse(localStorage.getItem('products'));
       if (products == null) {
+
+         fetch_product('products')
          return
       }
       console.log(products);
@@ -6199,13 +6245,14 @@
 
       load_sp()
 
-      fetch_sp('sps')
+      // fetch_sp('sps')
    }
 
    function load_sp() {
 
       sps = JSON.parse(localStorage.getItem('sps'));
       if (sps == null) {
+         fetch_sp('sps')
          return
       }
       console.log(sps);
@@ -6295,13 +6342,14 @@
 
       load_vehicles()
 
-      fetch_vehicles('vehicles')
+      // fetch_vehicles('vehicles')
    }
 
    function load_vehicles() {
 
       vehicles = JSON.parse(localStorage.getItem('vehicles'));
       if (vehicles == null) {
+         fetch_vehicles('vehicles')
          return
       }
       //  console.log(vehicles.category);
@@ -6477,19 +6525,19 @@
       document.getElementById('non_motor_entry').hidden = true
       document.getElementById('motor_entry_edit').hidden = true
 
-      try {
-         load_motor_entry()
-      } catch (error) {
+      load_motor_entry()
 
-      }
-
-      fetch_motor_option('motor_option')
+      // fetch_motor_option('motor_option')
 
    }
-
+ 
    function load_motor_entry() {
 
       vehicles = JSON.parse(localStorage.getItem('vehicles'));
+      if (vehicles == null) {
+         fetch_motor_option('motor_option')        
+         return                  
+      }
       category = vehicles.category
       if (category != null) {
          element = document.getElementById('vehicle_catagory')
@@ -6526,6 +6574,10 @@
             element.options.add(newoption);
          })
       }
+      else{       
+         fetch_motor_option('motor_option')         
+         return    
+      }
 
       sps = JSON.parse(localStorage.getItem('sps'));
       if (sps != null) {
@@ -6544,6 +6596,10 @@
             newoption.innerHTML = item.full_name
             element.options.add(newoption);
          })
+      }
+      else{       
+         fetch_motor_option('motor_option')
+         return    
       }
 
       // broker code    
@@ -6566,6 +6622,10 @@
             element.options.add(newoption);
          })
       }
+      else{       
+         fetch_motor_option('motor_option')        
+         return    
+      }
 
       // vehicle makeby          
       // vehicles = JSON.parse(localStorage.getItem('vehicles'));
@@ -6585,6 +6645,10 @@
             newoption.innerHTML = item.make
             element.options.add(newoption);
          })
+      }
+      else{       
+         fetch_motor_option('motor_option')       
+         return    
       }
 
       // vehicle model
@@ -6606,13 +6670,18 @@
             element.options.add(newoption);
          })
       }
+      else{       
+         fetch_motor_option('motor_option')       
+         return    
+      }
 
       // employee
       employee = JSON.parse(localStorage.getItem('employee'));
-      console.log(employee);
-
+      if(employee == null){       
+         fetch_motor_option('motor_option')       
+         return    
+      }    
       document.getElementById('employee').value = employee
-
    }
 
    posp_added = false
@@ -6621,7 +6690,7 @@
       // posp
       if (posp_added == false) {
          posp = JSON.parse(localStorage.getItem('posp'));
-         console.log(posp);
+      
          if (posp != null) {
             element = document.getElementById('posps')
             element.innerHTML = ''
@@ -6632,6 +6701,10 @@
                element.options.add(newoption);
                // console.log( item.posp_code + ' | ' + item.full_name);
             })
+         }
+         else{
+            fetch_posp("posp")
+            return
          }
          posp_added = true
       }
@@ -6650,7 +6723,6 @@
       document.getElementById("inp_agent").value = value.split('|')[0].trim()
       document.getElementById("pos").value = value.split('|')[0].trim()
    }
-
 
    function fetch_motor_option(data) {
 
@@ -6675,7 +6747,6 @@
          }
       });
    }
-
 
    function setCategoryOnChange() {
 
@@ -7633,13 +7704,9 @@
       document.getElementById('non_motor_entry').hidden = false
       document.getElementById('motor_entry_edit').hidden = true
 
-      try {
-         load_non_motor_entry()
-      } catch (error) {
+      load_non_motor_entry()
 
-      }
-
-      fetch_non_motor_option('non_motor_option')
+      // fetch_non_motor_option('non_motor_option')
    }
 
    function load_non_motor_entry() {
@@ -7662,6 +7729,10 @@
             element.options.add(newoption);
          })
       }
+      else{
+         fetch_non_motor_option('non_motor_option')
+         return
+      }
 
       insurers = JSON.parse(localStorage.getItem('insurers'));
       if (insurers != null) {
@@ -7680,6 +7751,10 @@
             newoption.innerHTML = item.comp_name
             element.options.add(newoption);
          })
+      }
+      else{
+         fetch_non_motor_option('non_motor_option')
+         return
       }
 
       sps = JSON.parse(localStorage.getItem('sps'));
@@ -7700,6 +7775,10 @@
             element.options.add(newoption);
             console.log(item.full_name);
          })
+      }
+      else{
+         fetch_non_motor_option('non_motor_option')
+         return
       }
 
       // broker code    
@@ -7722,10 +7801,18 @@
             element.options.add(newoption);
          })
       }
+      else{
+         fetch_non_motor_option('non_motor_option')
+         return
+      }
 
       // employee
       employee = JSON.parse(localStorage.getItem('employee'));
-      console.log(employee);
+      if(employee == null){
+         fetch_non_motor_option('non_motor_option')
+         return
+      }
+      // console.log(employee);
 
       document.getElementById('product_employee').value = employee
 
@@ -7911,7 +7998,6 @@
       document.getElementsByName("product_name")[0].focus()
    }
 
-
    function validateFormDataNonMotor() {
 
       // validate if values is blank 
@@ -7942,7 +8028,6 @@
       return ''
 
    }
-
 
 
 
