@@ -2834,7 +2834,44 @@ def fetch_mix_records(request):
 
     
     return JsonResponse({'agents': agents})
+
+
+def fetch_all(request):
+    print('\nfetch_all calling ')
+      
+    # policy    
+    if is_user(request):           
+        # policy = list(Policy.objects.filter(created_at=datetime.now()).values() )
+        policy = list(Policy.objects.order_by('-issue_date').values()[:5] )
+        # policy = list(Policy.objects.order_by('-policyid').values() )
+    else:  
+        policy = list(Policy.objects.filter(employee=get_id_from_session(request), created_at=datetime.now()).values()    )
     
+    agents = list(Agents.objects.filter(status="Active").values())
+    insurers = list(InsuranceCompany.objects.values()  )
+    sp = list(ServiceProvider.objects.values()  )
+    bc = list(BrokerCode.objects.values()  )
+    products = list(Product.objects.values()  )
+
+    vc = list(VehicleCategory.objects.values())
+    makes = list(VehicleMake.objects.values())
+    models = list(VehicleModel.objects.values())
+    staff = list(StaffModel.objects.values())   
+  
+    data = {
+        "employee": get_user_name(request)   ,
+        "dashboard_details": {"staffcount": staff.__len__(), "agentcount": agents.__len__(), "spcount": sp.__len__(), "policycount": Policy.objects.count() },
+        "entry_list": policy,
+        "agents": agents,
+        "insurers": insurers,
+        "sps": sp,
+        "bc": bc,
+        "products": products,
+        "vehicles": {'category': vc, 'makes': makes, 'models':models},       
+        "staffs": staff
+    }
+    return JsonResponse({'data': data})
+
 
 def policy_saerch_entry(request, id):
     try:

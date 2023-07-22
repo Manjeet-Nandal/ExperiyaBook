@@ -1,7 +1,7 @@
 {% load static %}
 <html lang="en" class="">
 
-<head style="background-color: rgb(116, 48, 249);">
+<head    >
 
    <!-- Required meta tags -->
    <meta charset="utf-8">
@@ -79,7 +79,7 @@
    <!-- .app -->
    <div class="app">
       <!-- .app-header -->
-      <header class="app-header app-header-dark" style="background-color: rgb(116, 48, 249);">
+      <header class="app-header app-header-dark" >
          <!-- .top-bar -->
          <div class="top-bar">
             <!-- .top-bar-brand -->
@@ -228,7 +228,7 @@
                      <li class="menu-header">General </li>
                    
                      <!--  -->
-                     <li class="menu-item has-active" onclick="showDashboard()">
+                     <li class="menu-item has-active" onclick="ShowPage('dashboard')" >
                         <a href="#" class="menu-link">
                            <i class="fa fa-home" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Dashboard</span>
@@ -268,7 +268,7 @@
                   </ul>
                   </a>
 
-                  <li class="menu-item has-active" onclick="showEntryList()">
+                  <li class="menu-item has-active"  onclick="ShowPage('entry_list')"  >
                      <a href="#" class="menu-link">
                         <i class="fa fa-bars text-blue" aria-hidden="true" id='icon'></i>
                         <span class="menu-text text-blue" style="margin-left: 10px;">Entry List</span>
@@ -360,7 +360,7 @@
                      <!-- /.menu-header -->
                      <!-- .menu-item -->
 
-                     <li class="menu-item " onclick="showPosp()">
+                     <li class="menu-item "  onclick="ShowPage('posp')"  >
                         <a href="#" class="menu-link">
                            <i class="fa fa-user-friends text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">POSP</span>
@@ -374,28 +374,28 @@
                         </a>
                      </li>
 
-                     <li class="menu-item " onclick="show_insurer()">
+                     <li class="menu-item "  onclick="ShowPage('insurer')"  >
                         <a href="#" class="menu-link">
                            <i class="fa fa-solid fa-building text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Insurers</span>
                         </a>
                      </li>
 
-                     <li class="menu-item " onclick="show_sp()">
+                     <li class="menu-item "  onclick="ShowPage('sp')" >
                         <a href="#" class="menu-link">
                            <i class="fa fa-solid fa-user-tie text-blue" aria-hidden="true" id='icon'></i>
-                           <span class="menu-text text-blue" style="margin-left: 10px;">Serving Office</span>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Providers</span>
                         </a>
                      </li>
 
-                     <li class="menu-item " onclick="show_product()">
+                     <li class="menu-item "  onclick="ShowPage('product')" >
                         <a href="#" class="menu-link">
                            <i class="fa fa-product-hunt text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Products</span>
                         </a>
                      </li>
 
-                     <li class="menu-item " onclick="show_vehicle()">
+                     <li class="menu-item "  onclick="ShowPage('vehicle')" >
                         <a href="#" class="menu-link">
                            <i class="fa fa-car text-blue" style=" color: rgb(110, 17, 244);" aria-hidden="true"
                               id='icon'></i>
@@ -410,7 +410,7 @@
                               </a>
                            </li>               -->
 
-                     <li class="menu-item " onclick="show_staff()">
+                     <li class="menu-item "  onclick="ShowPage('staff')"  >
                         <a href="#" class="menu-link">
                            <i class="fa fa-user text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Users</span>

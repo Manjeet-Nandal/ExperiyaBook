@@ -311,6 +311,8 @@ class Policy(models.Model):
     remark = models.CharField(max_length=255)
 
     created_at = models.DateField(auto_now=True)
+    
+    status = models.CharField(default='Active', max_length=20)
 
     def __str__(self):
         return self.customer_name
