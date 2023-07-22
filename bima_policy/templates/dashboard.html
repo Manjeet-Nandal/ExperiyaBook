@@ -2887,10 +2887,20 @@
          document.getElementById('entrylist').hidden = false
          Load_Product_List()
       }
-      else if (page_name == 'vehicle') {
+      else if (page_name == 'vcategory') {
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = false
-         Load_Vehicle_List()
+         Load_Vehicle_Category_List()
+      }
+      else if (page_name == 'vmake') {
+         document.getElementById('dashboard').hidden = true
+         document.getElementById('entrylist').hidden = false
+         Load_Vehicle_Make_List()
+      }
+      else if (page_name == 'vmodel') {
+         document.getElementById('dashboard').hidden = true
+         document.getElementById('entrylist').hidden = false
+         Load_Vehicle_Model_List()
       }
       else if (page_name == 'staff') {
          document.getElementById('dashboard').hidden = true
@@ -2973,12 +2983,36 @@
       }
    }
 
-   function Load_Vehicle_List() {
+   function Load_Vehicle_Category_List() {
       data = JSON.parse(localStorage.getItem('vehicles'));
       if (data != null) {
 
-         GenerateVehicleTable(data);
-         fetchList = data
+         GenerateVehicleCategoryTable(data.category);
+         fetchList = data.category
+      }
+      else {
+         fetch_all()
+      }
+   }
+
+   function Load_Vehicle_Make_List() {
+      data = JSON.parse(localStorage.getItem('vehicles'));
+      if (data != null) {
+
+         GenerateVehicleMakeTable(data.makes);
+         fetchList = data.makes
+      }
+      else {
+         fetch_all()
+      }
+   }
+
+   function Load_Vehicle_Model_List() {
+      data = JSON.parse(localStorage.getItem('vehicles'));
+      if (data != null) {
+
+         GenerateVehicleModelTable(data.models);
+         fetchList = data.models
       }
       else {
          fetch_all()
@@ -3418,27 +3452,25 @@
       showNextRows(true)
    }
 
-   function GenerateVehicleTable(default_table, records) {
+   function GenerateVehicleCategoryTable(records) {
 
-      document.getElementById('page_heading').innerHTML = 'Vehicle List'
+      document.getElementById('page_heading').innerHTML = 'Vehicle Category List'
 
-      if (default_table == 'category') {
-
-      }
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
 
       if (records.length === 0) {
-         showNotification('❌ ' + 'NO VEHICLE!');
+         showNotification('❌ ' + 'NO VEHICLE CATEGORY!');
          return
       }
 
       // table header
       table_header = `
-      <td  class="sorting thShow" style="font-weight: bold" >  sr. no. </td>      
-      <td  class="sorting thShow" style="font-weight: bold" >  VEHICLE CATEGORY </td>      
-      <td  class="text-center sorting thShow" style="font-weight: bold" >  Status </td>           
-      <td  class="sorting thShow" style="font-weight: bold" >  Action </td>              
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  sr. no. </td> 
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  CATEGORY </td>            
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  CREATED BY </td>     
+      <td  class="text-center sorting thShow p-4 pr-5" style="font-weight: bold" >  Status </td>           
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  Action </td>              
       
       </tr>`;
 
@@ -3449,13 +3481,65 @@
          record = records[i]
 
          recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
-         <td class="text-center w-10pc nowrap" >  ${i + 1} </td> 
-         <td >  ${record.category} </td>
-               
-         <td class="text-center w-10pc nowrap" > <a href="#" class="badge badge-success" >${record.status}</a> </td>      
-         
-         <td >    
-            <a onclick="edit_motor_policy('${record.policyid}')" href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+      <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
+      <td class="p-2" >  ${record.category} </td>
+      <td class="p-2">  ${record.created_by}  </td>      
+      <td class="text-center w-10pc nowrap p-2" > <a href="#" class="badge badge-success" >${record.status}</a> </td>      
+      
+      <td class="p-2" >   
+         <a onclick=" href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+         <i class="fa fa-pencil-alt mt-2"></i>                                               
+         </a>            
+         <a onclick="alert('Do you want to delete?')" href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+         <i class="far fa-trash-alt mt-2"></i>  </a>
+      </td>
+      </tr>`;
+
+         tableRows += recordHtml;
+      }
+
+      showNotification('✅ TOTAL CATEGORY: ' + records.length);
+      document.getElementById('tbdy').innerHTML = tableRows;
+      showNextRows(true)
+
+   }
+
+   function GenerateVehicleMakeTable(records) {
+
+      document.getElementById('page_heading').innerHTML = 'Vehicle Make List'
+
+      tableRows = ''
+      document.getElementById('tbdy').innerHTML = ''
+
+      if (records.length === 0) {
+         showNotification('❌ ' + 'NO VEHICLE MAKES!');
+         return
+      }
+
+      // table header
+      table_header = `
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  sr. no. </td> 
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  MAKE </td>            
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  CREATED BY </td>     
+      <td  class="text-center sorting thShow p-4 pr-5" style="font-weight: bold" >  Status </td>           
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  Action </td>              
+
+      </tr>`;
+
+      document.getElementById('tbdy_head').innerHTML = table_header;
+
+      for (var i = 0; i < records.length; i++) {
+
+         record = records[i]
+
+         recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
+         <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
+         <td class="p-2" >  ${record.make} </td>
+         <td class="p-2">  ${record.created_by}  </td>      
+         <td class="text-center w-10pc nowrap p-2" > <a href="#" class="badge badge-success" >${record.status}</a> </td>      
+
+         <td class="p-2" >   
+            <a onclick=" href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
             <i class="fa fa-pencil-alt mt-2"></i>                                               
             </a>            
             <a onclick="alert('Do you want to delete?')" href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
@@ -3466,97 +3550,64 @@
          tableRows += recordHtml;
       }
 
-      showNotification('✅ TOTAL VEHICLES: ' + records.length);
+      showNotification('✅ TOTAL VEHICLE MAKES: ' + records.length);
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
 
    }
 
-   function generate_vmake_table(records) {
+   function GenerateVehicleModelTable(records) {
+
+      document.getElementById('page_heading').innerHTML = 'Vehicle Model List'
+
       tableRows = ''
-      document.getElementById('tbdy_vmake').innerHTML = ''
-
-      if (records.length === 0) {
-         showNotification('❌ ' + 'NO VEHICLE MAKES!');
-         return
-      }
-
-      for (var i = 0; i < records.length; i++) {
-
-         record = records[i]
-
-         recordHtml = `<tr class="policy-row"  >
-       <td  > ${(i + 1)}  </td> 
-       <td >  ${record.make} </td>
-     
-       <td class="text-center w-10pc nowrap" > <a href="#" class="badge badge-success" >${record.status}</a> </td>      
-
-       <td class="text-center"> <form method="POST">   {% csrf_token %}
-          <a href="#"
-             class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
-             <i class="fa fa-pencil-alt mt-2"></i>                                               
-          </a>
-          <a href="#" name="Remove"
-             class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
-             <i class="far fa-trash-alt mt-2"></i> 
-          </a> 
-       </td>  
-       </tr>`;
-
-         tableRows += recordHtml;
-      }
-
-      showNotification('✅ TOTAL VEHICLE MAKES: ' + records.length);
-
-
-      document.getElementById('tbdy_vmake').innerHTML = tableRows;
-
-      // console.log(tableRows);
-
-   }
-
-   function generate_vmodel_table(records) {
-      tableRows = ''
-      document.getElementById('tbdy_vmodel').innerHTML = ''
+      document.getElementById('tbdy').innerHTML = ''
 
       if (records.length === 0) {
          showNotification('❌ ' + 'NO VEHICLE MODELS!');
          return
       }
 
+      // table header
+      table_header = `
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  sr. no. </td> 
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  MAKE </td>            
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  CREATED BY </td>     
+      <td  class="text-center sorting thShow p-4 pr-5" style="font-weight: bold" >  Status </td>           
+      <td  class="sorting thShow p-4 pr-5" style="font-weight: bold" >  Action </td>              
+
+      </tr>`;
+
+      document.getElementById('tbdy_head').innerHTML = table_header;
+
       for (var i = 0; i < records.length; i++) {
 
          record = records[i]
 
-         recordHtml = `<tr class="policy-row"  >
-       <td  > ${(i + 1)}  </td> 
-       <td >  ${record.model} </td>
-     
-       <td class="text-center w-10pc nowrap" > <a href="#" class="badge badge-success" >${record.status}</a> </td>      
+         recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
+         <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
+         <td class="p-2" >  ${record.model} </td>
+         <td class="p-2">  ${record.created_by}  </td>      
+         <td class="text-center w-10pc nowrap p-2" > <a href="#" class="badge badge-success" >${record.status}</a> </td>      
 
-       <td class="text-center"> <form method="POST">   {% csrf_token %}
-          <a href="#"
-             class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
-             <i class="fa fa-pencil-alt mt-2"></i>                                               
-          </a>
-          <a href="#" name="Remove"
-             class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
-             <i class="far fa-trash-alt mt-2"></i> 
-          </a> 
-       </td>  
-       </tr>`;
+         <td class="p-2" >   
+            <a onclick=" href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+            <i class="fa fa-pencil-alt mt-2"></i>                                               
+            </a>            
+            <a onclick="alert('Do you want to delete?')" href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+            <i class="far fa-trash-alt mt-2"></i>  </a>
+         </td>
+         </tr>`;
 
          tableRows += recordHtml;
       }
 
       showNotification('✅ TOTAL VEHICLE MODELS: ' + records.length);
-
-
-      document.getElementById('tbdy_vmodel').innerHTML = tableRows;
-
-      // console.log(tableRows);
+      document.getElementById('tbdy').innerHTML = tableRows;
+      showNextRows(true)
 
    }
+
 
    function GenerateStaffTable(records) {
 

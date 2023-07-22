@@ -209,6 +209,8 @@ class VehicleMake(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
     make = models.CharField(max_length=50)
+    created_by = models.CharField(max_length=100)
+    created_at = models.DateField(auto_now=True)
     status = models.CharField(default='Active', max_length=20)
 
     def __str__(self):
@@ -223,6 +225,8 @@ class VehicleModel(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
     model = models.CharField(max_length=50)
+    created_by = models.CharField(max_length=100)
+    created_at = models.DateField(auto_now=True)
     status = models.CharField(default='Active', max_length=20)
 
     def __str__(self):
@@ -237,7 +241,9 @@ class VehicleCategory(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4(
     ).hex[:6].upper(), editable=False, max_length=30)
     profile_id = models.ForeignKey(ProfileModel, on_delete=models.CASCADE)
-    category = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)   
+    created_by = models.CharField(max_length=100)
+    created_at = models.DateField(auto_now=True)
     status = models.CharField(default='Active', max_length=20)
 
     def __str__(self):

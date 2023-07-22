@@ -395,12 +395,31 @@
                         </a>
                      </li>
 
-                     <li class="menu-item "  onclick="ShowPage('vehicle')" >
+                     <!-- <li class="menu-item "  onclick="ShowPage('vehicle')" >
                         <a href="#" class="menu-link">
                            <i class="fa fa-car text-blue" style=" color: rgb(110, 17, 244);" aria-hidden="true"
                               id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Vehicles</span>
                         </a>
+                     </li> -->
+
+                     <li class="menu-item has-child" >
+                        <a href="#" class="menu-link">
+                           <i class="fa fa-car text-blue" aria-hidden="true" id='icon'></i>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Vehicles</span></a>
+
+                        <ul class="menu">
+
+                           <li class="menu-item" onclick="ShowPage('vcategory')" >
+                              <a href="#" style="margin-left: 1rem; " class="menu-link text-blue">Category</a>
+                           </li>
+                           <li class="menu-item " onclick="ShowPage('vmake')" >
+                              <a href="#" style="margin-left: 1rem; " class="menu-link text-blue">Make</a>
+                           </li>
+                           <li class="menu-item " onclick="ShowPage('vmodel')" >
+                              <a href="#" style="margin-left: 1rem; " class="menu-link text-blue">Model</a>
+                           </li>
+                        </ul>
                      </li>
 
                      <!-- <li class="menu-item ">
