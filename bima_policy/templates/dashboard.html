@@ -1123,12 +1123,16 @@
                <div class="row text-center text-sm-left">
                   <!-- grid column -->
                   <div class="col">
-                     <h1 class="page-title"> Agents List
+                     <h1 class="page-title"> Agents List                        
+                       
                         <button type="button" id="download_agent" class="btn btn-success btn-sm float-right"
                            title="Download"><i class="fa fa-download" aria-hidden="true"></i> Download</button>
                         <a href="add_agent/" class="btn btn-secondary btn-sm float-right mr-2"><i
                               class="fa fa-plus"></i> Add
                            New</a>
+
+                           <a  onclick="resertPosp()" href="#" class="btn btn-secondary btn-sm float-right mr-2">
+                              <i class="fa fa-refresh mr-1" aria-hidden="true"></i>Refresh</a>
                      </h1>
                   </div>
 
@@ -5842,6 +5846,18 @@
          }
       });
    }
+
+   function resertPosp() {
+
+      // document.location.reload()            
+      data = JSON.parse(localStorage.getItem('posp'))
+      if (data) {
+         localStorage.removeItem('posp')
+      }      
+      fetch_posp("posp")
+
+   }
+
 
    // Slab
 
