@@ -50,6 +50,7 @@ urlpatterns = [
     path('policy/fetch/', fetch_records, name="fetch_records"),
     path('policy/fetch_all/', fetch_all, name="fetch_all"),
     path('policy/fetch_policyId/', fetch_policyId, name="fetch_policyId"),
+    path('policy/fetch_key/', fetch_key, name="fetch_key"),
     path('policy/count_objects/', count_objects, name="count_objects"),
 
     path('policy/search_entry/<str:id>', policy_saerch_entry, name="policy_saerch_entry"),   

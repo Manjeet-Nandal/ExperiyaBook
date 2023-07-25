@@ -96,11 +96,11 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE'),
         'NAME': os.environ.get('DB_NAME'),
-        # 'CLIENT': {
-        #     'host': os.environ.get('DB_HOST'),
-        #     'username': os.environ.get('DB_USER_NAME'),
-        #     'password': os.environ.get('DB_USER_PASSWORD')
-        # }
+        'CLIENT': {
+            'host': os.environ.get('DB_HOST'),
+            'username': os.environ.get('DB_USER_NAME'),
+            'password': os.environ.get('DB_USER_PASSWORD')
+        }
     }
 }
 
@@ -165,6 +165,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_REGION = os.environ.get('AWS_ACCESS_KEY_REGION')
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 

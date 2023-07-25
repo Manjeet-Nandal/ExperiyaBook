@@ -1,7 +1,7 @@
 {% load static %}
 <html lang="en" class="">
 
-<head    >
+<head>
 
    <!-- Required meta tags -->
    <meta charset="utf-8">
@@ -56,7 +56,7 @@
    /* Hover effect */
    .menu-item:hover {
       background-color: #f0f0f0;
-      
+
    }
 
    /* Selected effect */
@@ -79,7 +79,7 @@
    <!-- .app -->
    <div class="app">
       <!-- .app-header -->
-      <header class="app-header app-header-dark" >
+      <header class="app-header app-header-dark">
          <!-- .top-bar -->
          <div class="top-bar">
             <!-- .top-bar-brand -->
@@ -224,11 +224,11 @@
 
                      <li class="text-center text-primary"><span class="" id="liteDate"></span>
                      </li>
-                    
+
                      <li class="menu-header">General </li>
-                   
+
                      <!--  -->
-                     <li class="menu-item has-active" onclick="ShowPage('dashboard')" >
+                     <li class="menu-item has-active" onclick="ShowPage('dashboard')">
                         <a href="#" class="menu-link">
                            <i class="fa fa-home" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Dashboard</span>
@@ -249,10 +249,10 @@
 
                         <ul class="menu">
 
-                           <li class="menu-item" onclick="motor_entry()">
+                           <li class="menu-item" onclick="ShowPage('motor_entry')">
                               <a href="#" style="margin-left: 1rem; " class="menu-link text-blue">Motor</a>
                            </li>
-                           <li class="menu-item " onclick="non_motor_entry()">
+                           <li class="menu-item " onclick="ShowPage('non_motor_entry')">
                               <a href="#" style="margin-left: 1rem; " class="menu-link text-blue">Non-Motor</a>
                            </li>
                            <li class="menu-item ">
@@ -268,7 +268,7 @@
                   </ul>
                   </a>
 
-                  <li class="menu-item has-active"  onclick="ShowPage('entry_list')"  >
+                  <li class="menu-item has-active" onclick="ShowPage('entry_list')">
                      <a href="#" class="menu-link">
                         <i class="fa fa-bars text-blue" aria-hidden="true" id='icon'></i>
                         <span class="menu-text text-blue" style="margin-left: 10px;">Entry List</span>
@@ -360,7 +360,7 @@
                      <!-- /.menu-header -->
                      <!-- .menu-item -->
 
-                     <li class="menu-item "  onclick="ShowPage('posp')"  >
+                     <li class="menu-item " onclick="ShowPage('posp')">
                         <a href="#" class="menu-link">
                            <i class="fa fa-user-friends text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">POSP</span>
@@ -374,21 +374,21 @@
                         </a>
                      </li>
 
-                     <li class="menu-item "  onclick="ShowPage('insurer')"  >
+                     <li class="menu-item " onclick="ShowPage('insurer')">
                         <a href="#" class="menu-link">
                            <i class="fa fa-solid fa-building text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Insurers</span>
                         </a>
                      </li>
 
-                     <li class="menu-item "  onclick="ShowPage('sp')" >
+                     <li class="menu-item " onclick="ShowPage('sp')">
                         <a href="#" class="menu-link">
                            <i class="fa fa-solid fa-user-tie text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Providers</span>
                         </a>
                      </li>
 
-                     <li class="menu-item "  onclick="ShowPage('product')" >
+                     <li class="menu-item " onclick="ShowPage('product')">
                         <a href="#" class="menu-link">
                            <i class="fa fa-product-hunt text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Products</span>
@@ -403,20 +403,20 @@
                         </a>
                      </li> -->
 
-                     <li class="menu-item has-child" >
+                     <li class="menu-item has-child">
                         <a href="#" class="menu-link">
                            <i class="fa fa-car text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Vehicles</span></a>
 
                         <ul class="menu">
 
-                           <li class="menu-item" onclick="ShowPage('vcategory')" >
+                           <li class="menu-item" onclick="ShowPage('vcategory')">
                               <a href="#" style="margin-left: 1rem; " class="menu-link text-blue">Category</a>
                            </li>
-                           <li class="menu-item " onclick="ShowPage('vmake')" >
+                           <li class="menu-item " onclick="ShowPage('vmake')">
                               <a href="#" style="margin-left: 1rem; " class="menu-link text-blue">Make</a>
                            </li>
-                           <li class="menu-item " onclick="ShowPage('vmodel')" >
+                           <li class="menu-item " onclick="ShowPage('vmodel')">
                               <a href="#" style="margin-left: 1rem; " class="menu-link text-blue">Model</a>
                            </li>
                         </ul>
@@ -429,7 +429,7 @@
                               </a>
                            </li>               -->
 
-                     <li class="menu-item "  onclick="ShowPage('staff')"  >
+                     <li class="menu-item " onclick="ShowPage('staff')">
                         <a href="#" class="menu-link">
                            <i class="fa fa-user text-blue" aria-hidden="true" id='icon'></i>
                            <span class="menu-text text-blue" style="margin-left: 10px;">Users</span>
@@ -446,10 +446,10 @@
                      <!-- /.menu-item -->
                      <li class="menu-header">Settings </li>
 
-                     <li class="menu-item " >
-                        <a href="#" class="menu-link" >
+                     <li class="menu-item ">
+                        <a href="#" class="menu-link">
                            <i class="fa fa-user-circle text-blue" aria-hidden="true" id='icon'></i>
-                           <span class="menu-text text-blue" style="margin-left: 10px;" >Profile</span>
+                           <span class="menu-text text-blue" style="margin-left: 10px;">Profile</span>
                         </a>
                      </li>
                   </div>
@@ -737,6 +737,9 @@
    </script>
 
    <script src="{%static 'js/xlsx.full.min.js'%}"></script>
+
+   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1083.0.min.js"></script>
+   
 
 </body>
 
