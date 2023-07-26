@@ -1791,18 +1791,18 @@
             <header class="page-title-bar">
                <!-- <h3 id="notification">files </h3> -->
 
-               <div class="d-flex justify-content-between align-items-center">
+               <!-- <div class="d-flex justify-content-between align-items-center">
                   <nav aria-label="breadcrumb">
                      <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">
-                           <!-- <a href="list"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a> -->
-                        </li>
+                        <li class="breadcrumb-item active"> -->
+               <!-- <a href="list"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a> -->
+               <!-- </li>
                      </ol>
                   </nav>
-               </div>
+               </div> -->
                <div class="row text-center text-sm-left">
                   <div class="col">
-                     <h1 class="page-title"> Non Motor Policy
+                     <h1 id="policy_title_non_motor" class="page-title"> Non Motor Policy
                         <small class="text-muted"> All * marks Fields are
                            mandatory.
                         </small>
@@ -1810,331 +1810,332 @@
                   </div>
                </div>
             </header>
+
             <div class="page-section">
                <div class="section-block">
-                  <form id="frminsurance" method="post" enctype="multipart/form-data">
 
+                  <div class="row">
+                     <div class="col-lg-9 col-md-9 col-sm-12">
+                        <div class="card">
+                           <div class="card-body">
+                              <fieldset>
+                                 <legend>Policy Details</legend>
 
-                     <div class="row">
-                        <div class="col-lg-9 col-md-9 col-sm-12">
-                           <div class="card">
-                              <div class="card-body">
-                                 <fieldset>
-                                    <legend>Policy Details</legend>
-
-                                    <div class="form-row">
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Product Name <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="product_name" id="product_name" class="custom-select" required>
-
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="policy_type2" id="policy_type2" class="custom-select" required>
-                                             <option value="" hidden>-- Select Case Type --</option>
-                                             <option value="FRESH">FRESH</option>
-                                             <option value="RENEWAL">RENEWAL</option>
-                                             <option value="ROLLOVER">ROLLOVER</option>
-                                             <option value="ENDORSEMENT">ENDORSEMENT</option>
-                                          </select>
-                                       </div>
-
-
-                                       <div class="col-md-3 mb-4">
-                                          <label for="proposal_no">Proposal No. <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             class="form-control" name="proposal_no2" id="proposal_no2"
-                                             style="text-transform: uppercase;" required>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label for="policy_no">Policy No. <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             class="form-control" name="policy_no2" id="policy_no2"
-                                             style="text-transform: uppercase;" required>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label for="customer_name">Insured Name <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             class="form-control" name="customer_name2" id="customer_name2"
-                                             style="text-transform: uppercase;" required>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="insurer_name" class="custom-select" id="insurer_name" required>
-
-                                          </select>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="sps_name" class="custom-select" id="sps_name" required>
-
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Office Code <abbr title="" class="text-danger">*</abbr></label>
-                                          <select name="sp_code" class="custom-select" id="sp_code" required>
-
-                                          </select>
-
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label for="flatpickr-wrap">Risk Start Date <abbr title=""
-                                                class="text-danger">*</abbr></label>
-                                          <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="risk_flatpickr" data-wrap="true" data-alt-input="true"
-                                             data-alt-format="F j, Y" data-alt-input-class="form-control"
-                                             data-date-format="Y-m-d">
-                                             <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="" id="risk_start_date2"
-                                                name="risk_start_date2" required data-input="">
-                                          </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
-                                                class="text-danger">*</abbr></label>
-                                          <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="risk_flatpickr" data-wrap="true" data-alt-input="true"
-                                             data-alt-format="F j, Y" data-alt-input-class="form-control"
-                                             data-date-format="Y-m-d">
-                                             <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="" id="risk_end_date2"
-                                                name="risk_end_date2" required data-input="">
-                                          </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label for="flatpickr-wrap">Issued Date <abbr title=""
-                                                class="text-danger">*</abbr></label>
-                                          <div class="input-group input-group-alt flatpickr"
-                                             data-toggle="issue_flatpickr" data-wrap="true" data-alt-input="true"
-                                             ata-alt-format="F j, Y" data-alt-input-class="form-control"
-                                             data-date-format="Y-m-d">
-                                             <input type="date" class="form-control flatpickr-input"
-                                                placeholder="Choose date..." value="" id="issue_date2"
-                                                name="issue_date2" required data-input="">
-                                          </div>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
-                                          <select id="policy_term2" name="policy_term2" class="custom-select" required>
-                                             <option value="" hidden>-- Select Term --</option>
-                                             <option value="1">1</option>
-                                             <option value="5">5</option>
-                                             <option value="10">10</option>
-
-                                          </select>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>BQP <abbr title="" class="text-danger">*</abbr></label>
-                                          <select id="bqp2" name="bqp2" class="custom-select" required>
-                                             <option value="SATVEER SINGH"> SATVEER SINGH </option>
-                                          </select>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label for="employee">Employee <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             class="form-control" name="product_employee" id="product_employee"
-                                             style="text-transform: uppercase;  background-color: lightgray;" disabled
-                                             required>
-                                       </div>
-
-                                       <!-- <div class="col-md-3 mb-4">
-                                          <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos" type="text" value="" data-toggle="modal" data-target="#mdlPOS"
-                                             class="form-control" name="pos" style="text-transform: uppercase;" required
-                                             readonly>
-                                       </div> -->
-
-                                       <div class="col-md-3 mb-4" onkeypress="document.getElementById('pos').click();">
-                                          <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
-                                             id="pos_product" type="text" value="" data-toggle="modal"
-                                             data-target="#mdlPOSP" class="form-control" name="pos_product"
-                                             style="text-transform: uppercase;" required readonly>
-                                       </div>
-
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Proposal <small>(Only<strong> PDF &amp; Image
-                                                </strong>File)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="proposal2" accept=".pdf,image/" id="proposal2"
-                                                class="custom-file-input">
-                                             <label name="lbl_proposal2" class="custom-file-label" for="proposal">Choose
-                                                file</label>
-
-                                          </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Mandate <small>(Only<strong> PDF &amp; Image
-                                                </strong>File)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="mandate2" accept=".pdf,image/" id="mandate2"
-                                                class="custom-file-input">
-                                             <label name="lbl_mandate2" class="custom-file-label" for="mandate">Choose
-                                                file</label>
-                                          </div>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Policy <small>(Only<strong> PDF &amp; Image
-                                                </strong>File)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="policy2" accept=".pdf,image/" id="policy2"
-                                                class="custom-file-input" required>
-                                             <label name="lbl_policy" class="custom-file-label" for="policy">Choose
-                                                file</label>
-                                          </div>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Prev. Policy <small>(Only<strong> PDF &amp; Image
-                                                </strong>)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="previous_policy2" accept=".pdf,image/"
-                                                id="previous_policy2" class="custom-file-input">
-                                             <label name="lbl_previous_policy" class="custom-file-label"
-                                                for="previous_policy">Choose file</label>
-                                          </div>
-                                       </div>
-
-                                       <div class="col-md-3 mb-4">
-                                          <label>Pan Card <small>(Only<strong> PDF &amp; Image
-                                                </strong>)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="pan_card2" accept=".pdf,image/" id="pan_card2"
-                                                class="custom-file-input">
-                                             <label name="lbl_pan_card" class="custom-file-label" for="pan_card">Choose
-                                                file</label>
-                                          </div>
-                                       </div>
-                                       <div class="col-md-3 mb-4">
-                                          <label>Aadhar Card / GST<small>(Only<strong> PDF &amp; Image
-                                                </strong>)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="aadhar_card2" accept=".pdf,image/"
-                                                id="aadhar_card2" class="custom-file-input">
-                                             <label name="lbl_aadhar_card" class="custom-file-label"
-                                                for="aadhar_card">Choose file</label>
-                                          </div>
-                                       </div>
-
-                                       <div class="col-md-4 mb-4">
-                                          <label>Brochure <small>(Only<strong> PDF &amp; Image
-                                                </strong>)</small> </label>
-                                          <div class="custom-file">
-                                             <input type="file" name="inspection_report2" accept=".pdf,image/"
-                                                id="inspection_report2" class="custom-file-input">
-                                             <label name="lbl_inspection_report" class="custom-file-label"
-                                                for="vehicle_rc">Choose file</label>
-                                          </div>
-                                       </div>
-
-                                       <div class="col-md-4 mb-4">
-                                          <label for="remark">Remarks <abbr title=""
-                                                class="text-danger">*</abbr></label><input type="text" value=""
-                                             maxlength="255" class="form-control" name="remark2" id="remark2"
-                                             style="text-transform: uppercase;">
-                                       </div>
-
-
-                                    </div>
-
-                                 </fieldset>
-                                 <p class="mb-4"></p>
-                              </div>
-                              <!-- /.card-body -->
-                           </div>
-                           <!-- /.card -->
-                        </div>
-
-
-                        <div class="col-lg-3 col-md-3 col-sm-12">
-
-                           <div class="card">
-
-                              <div class="card-body">
-                                 <!-- .card-body -->
-                                 <h4 class="card-title mb-3"> Premium Details </h4>
-                                 <!-- grid row -->
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="od">OD Premium <abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue2()" value="" class="form-control col-lg-6 "
-                                       name="od_product" id="od_product" maxlength="10" required>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text"
-                                       oninput="calculateValue2()" value="" class="form-control col-lg-6 "
-                                       name="tpt_product" id="tpt_product" maxlength="10" required>
-                                 </div>
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Net Premium</label><input type="text" name="net_product"
-                                       value="" class="form-control col-lg-6  bg-light" id="net_product" maxlength="10"
-                                       readonly="" required tabindex="-1">
-                                 </div>
-
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5" for="gst">GST 18%<abbr title=""
-                                          class="text-danger">*</abbr></label><input type="text" value=""
-                                       class="form-control col-lg-6 bg-light" name="gst_product" id="gst_product"
-                                       maxlength="10" required readonly tabindex="-1">
-                                 </div>
-
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5">Total=(Net+GST) </label><input type="text"
-                                       name="total_product" value="" class="form-control  col-lg-6 bg-light"
-                                       id="total_product" readonly="" maxlength="10" required tabindex="-1">
-                                 </div>
-
-
-                                 <div class="row mb-2">
-                                    <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
-                                    <select class="custom-select col-lg-6" id="payment_mode2" name="payment_mode2"
-                                       required>
-                                       <option value="" hidden> -- Select Payment Mode -- </option>
-                                       <option value="ONLINE" selected>ONLINE</option>
-                                       <option value="CHEQUE"> CHEQUE</option>
-                                       <option value="CASH">CASH</option>
-                                    </select>
-                                 </div>
-
-                              </div>
-
-
-                           </div>
-
-
-                        </div>
-
-                     </div>
-
-                     <div class="modal fade" id="mdlPOSP">
-                        <div class="modal-dialog">
-                           <div class="modal-content">
-                              <div class="modal-header">
-                                 <h5 class="modal-title"> POSP </h5>
-                              </div>
-                              <div class="modal-body ">
                                  <div class="form-row">
 
-                                    <div class="col-md-12 mb-4">
-                                       <label>SELECT POSP <abbr title="" class="text-danger">*</abbr></label>
-                                       <select name="posps_product" class="custom-select select2 " id="posps_product"
-                                          onclick="addPosToProduct()" onchange="get_POS_from_Modal_product()"
-                                          aria-hidden="true" required>
+                                    <div class="col-md-3 mb-4">
+                                       <label>Product Name <abbr title="" class="text-danger">*</abbr></label>
+                                       <select id="product_name" name="product_name" class="custom-select" required>
+                                          <!-- <option value="" >-- Select Product --</option> -->
+
+                                       </select>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>Policy Type <abbr title="" class="text-danger">*</abbr></label>
+                                       <select name="policy_type2" id="policy_type2" class="custom-select" required>
+                                          <option value="">-- Select Case Type --</option>
+                                          <option value="FRESH">FRESH</option>
+                                          <option value="RENEWAL">RENEWAL</option>
+                                          <option value="ROLLOVER">ROLLOVER</option>
+                                          <option value="ENDORSEMENT">ENDORSEMENT</option>
                                        </select>
                                     </div>
 
 
-                                    <!-- <div class="col-md-12 col-sm-12 mb-2">
+                                    <div class="col-md-3 mb-4">
+                                       <label for="proposal_no">Proposal No. <abbr title=""
+                                             class="text-danger">*</abbr></label><input type="text" value=""
+                                          class="form-control" name="proposal_no2" id="proposal_no2"
+                                          style="text-transform: uppercase;" required>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label for="policy_no">Policy No. <abbr title=""
+                                             class="text-danger">*</abbr></label><input type="text" value=""
+                                          class="form-control" name="policy_no2" id="policy_no2"
+                                          style="text-transform: uppercase;" required>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label for="customer_name">Insured Name <abbr title=""
+                                             class="text-danger">*</abbr></label><input type="text" value=""
+                                          class="form-control" name="customer_name2" id="customer_name2"
+                                          style="text-transform: uppercase;" required>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>Insurer Name<abbr title="" class="text-danger">*</abbr></label>
+                                       <select name="insurer_name" class="custom-select" id="insurer_name" required>
+
+                                       </select>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>Serving Office <abbr title="" class="text-danger">*</abbr></label>
+                                       <select name="sps_name" class="custom-select" id="sps_name" required>
+
+                                       </select>
+                                    </div>
+                                    <div class="col-md-3 mb-4">
+                                       <label>Office Code <abbr title="" class="text-danger">*</abbr></label>
+                                       <select name="sp_code" class="custom-select" id="sp_code" required>
+
+                                       </select>
+
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label for="flatpickr-wrap">Risk Start Date <abbr title=""
+                                             class="text-danger">*</abbr></label>
+                                       <div class="input-group input-group-alt flatpickr" data-toggle="risk_flatpickr"
+                                          data-wrap="true" data-alt-input="true" data-alt-format="F j, Y"
+                                          data-alt-input-class="form-control" data-date-format="Y-m-d">
+                                          <input type="date" class="form-control flatpickr-input"
+                                             placeholder="Choose date..." value="" id="risk_start_date2"
+                                             name="risk_start_date2" required data-input="">
+                                       </div>
+                                    </div>
+                                    <div class="col-md-3 mb-4">
+                                       <label for="flatpickr-wrap">Risk End Date <abbr title="Required"
+                                             class="text-danger">*</abbr></label>
+                                       <div class="input-group input-group-alt flatpickr" data-toggle="risk_flatpickr"
+                                          data-wrap="true" data-alt-input="true" data-alt-format="F j, Y"
+                                          data-alt-input-class="form-control" data-date-format="Y-m-d">
+                                          <input type="date" class="form-control flatpickr-input"
+                                             placeholder="Choose date..." value="" id="risk_end_date2"
+                                             name="risk_end_date2" required data-input="">
+                                       </div>
+                                    </div>
+                                    <div class="col-md-3 mb-4">
+                                       <label for="flatpickr-wrap">Issued Date <abbr title=""
+                                             class="text-danger">*</abbr></label>
+                                       <div class="input-group input-group-alt flatpickr" data-toggle="issue_flatpickr"
+                                          data-wrap="true" data-alt-input="true" ata-alt-format="F j, Y"
+                                          data-alt-input-class="form-control" data-date-format="Y-m-d">
+                                          <input type="date" class="form-control flatpickr-input"
+                                             placeholder="Choose date..." value="" id="issue_date2" name="issue_date2"
+                                             required data-input="">
+                                       </div>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>Policy Term <abbr title="" class="text-danger">*</abbr></label>
+                                       <select id="policy_term2" name="policy_term2" class="custom-select" required>
+                                          <option value="">-- Select Term --</option>
+                                          <option value="1">1</option>
+                                          <option value="5">5</option>
+                                          <option value="10">10</option>
+
+                                       </select>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4" onkeypress="document.getElementById('pos').click();">
+                                       <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label><input
+                                          id="pos_product" type="text" value="" data-toggle="modal"
+                                          data-target="#mdlPOSP" class="form-control" name="pos_product"
+                                          style="text-transform: uppercase;" required readonly>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>BQP <abbr title="" class="text-danger">*</abbr></label>
+                                       <select id="bqp2" name="bqp2" class="custom-select" required>
+                                          <option value="">-- Select BQP --</option>
+                                          <option value="SATVEER SINGH" selected> SATVEER SINGH </option>
+                                       </select>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label for="employee">Employee <abbr title=""
+                                             class="text-danger">*</abbr></label><input type="text" value=""
+                                          class="form-control" name="product_employee" id="product_employee"
+                                          style="text-transform: uppercase;  background-color: lightgray;" disabled
+                                          required>
+                                    </div>
+
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>Proposal <small>(Only<strong> PDF &amp; Image
+                                             </strong>File)</small> </label>
+                                       <div class="custom-file">
+                                          <input type="file" name="proposal2" accept=".pdf,image/" id="proposal2"
+                                             class="custom-file-input">
+                                          <label id="lbl_proposal2" name="lbl_proposal2" class="custom-file-label" for="proposal">Choose
+                                             file</label>
+                                       </div>
+                                       <a id="a_proposal2" href="#"> </a>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>Mandate <small>(Only<strong> PDF &amp; Image
+                                             </strong>File)</small> </label>
+                                       <div class="custom-file">
+                                          <input type="file" name="mandate2" accept=".pdf,image/" id="mandate2"
+                                             class="custom-file-input">
+                                          <label id="lbl_mandate2" name="lbl_mandate2" class="custom-file-label" for="mandate">Choose
+                                             file</label>
+                                       </div>
+                                       <a id="a_mandate2" href="#"> </a>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>Policy <small>(Only<strong> PDF &amp; Image
+                                             </strong>File)</small> </label>
+                                       <div class="custom-file">
+                                          <input type="file" name="policy2" accept=".pdf,image/" id="policy2"
+                                             class="custom-file-input" required>
+                                          <label id="lbl_policy2" name="lbl_policy2" class="custom-file-label" for="policy">Choose
+                                             file</label>
+                                       </div>
+                                       <a id="a_policy2" href="#"> </a>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>Prev. Policy <small>(Only<strong> PDF &amp; Image
+                                             </strong>)</small> </label>
+                                       <div class="custom-file">
+                                          <input type="file" name="previous_policy2" accept=".pdf,image/"
+                                             id="previous_policy2" class="custom-file-input">
+                                          <label  id="lbl_previous_policy2"  name="lbl_previous_policy2" class="custom-file-label"
+                                             for="previous_policy">Choose file</label>
+                                       </div>
+                                       <a id="a_previous_policy2" href="#"> </a>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>Pan Card <small>(Only<strong> PDF &amp; Image
+                                             </strong>)</small> </label>
+                                       <div class="custom-file">
+                                          <input type="file" name="pan_card2" accept=".pdf,image/" id="pan_card2"
+                                             class="custom-file-input">
+                                          <label  id="lbl_pan_card2" name="lbl_pan_card2" class="custom-file-label" for="pan_card">Choose
+                                             file</label>
+                                       </div>
+                                       <a id="a_pan_card2" href="#"> </a>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4">
+                                       <label>Aadhar Card / GST<small>(Only<strong> PDF &amp; Image
+                                             </strong>)</small> </label>
+                                       <div class="custom-file">
+                                          <input type="file" name="aadhar_card2" accept=".pdf,image/" id="aadhar_card2"
+                                             class="custom-file-input">
+                                          <label  id="lbl_aadhar_card2" name="lbl_aadhar_card2" class="custom-file-label"
+                                             for="aadhar_card">Choose file</label>
+                                       </div>
+                                       <a id="a_aadhar_card2" href="#"> </a>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                       <label>Brochure <small>(Only<strong> PDF &amp; Image
+                                             </strong>)</small> </label>
+                                       <div class="custom-file">
+                                          <input type="file" name="inspection_report2" accept=".pdf,image/"
+                                             id="inspection_report2" class="custom-file-input">
+                                          <label id="lbl_inspection_report2" name="lbl_inspection_report2" class="custom-file-label"
+                                             for="vehicle_rc">Choose file</label>
+                                       </div>
+                                       <a id="a_inspection_report2" href="#"> </a>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                       <label for="remark">Remarks <abbr title=""
+                                             class="text-danger">*</abbr></label><input type="text" value=""
+                                          maxlength="255" class="form-control" name="remark2" id="remark2"
+                                          style="text-transform: uppercase;">
+                                    </div>
+
+                                 </div>
+
+                              </fieldset>
+                              <p class="mb-4"></p>
+                           </div>
+                           <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                     </div>
+
+
+                     <div class="col-lg-3 col-md-3 col-sm-12">
+
+                        <div class="card">
+
+                           <div class="card-body">
+                              <!-- .card-body -->
+                              <h4 class="card-title mb-3"> Premium Details </h4>
+                              <!-- grid row -->
+                              <div class="row mb-2">
+                                 <label class="col-lg-5" for="od">OD Premium <abbr title=""
+                                       class="text-danger">*</abbr></label><input type="text"
+                                    oninput="calculateValue2()" value="" class="form-control col-lg-6 "
+                                    name="od_product" id="od_product" maxlength="10" required>
+                              </div>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5" for="tp">TP/Terrorism<abbr title=""
+                                       class="text-danger">*</abbr></label><input type="text"
+                                    oninput="calculateValue2()" value="" class="form-control col-lg-6 "
+                                    name="tpt_product" id="tpt_product" maxlength="10" required>
+                              </div>
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Net Premium</label><input type="text" name="net_product"
+                                    value="" class="form-control col-lg-6  bg-light" id="net_product" maxlength="10"
+                                    readonly="" required tabindex="-1">
+                              </div>
+
+                              <div class="row mb-2">
+                                 <label class="col-lg-5" for="gst">GST 18%<abbr title=""
+                                       class="text-danger">*</abbr></label><input type="text" value=""
+                                    class="form-control col-lg-6 bg-light" name="gst_product" id="gst_product"
+                                    maxlength="10" required readonly tabindex="-1">
+                              </div>
+
+                              <div class="row mb-2">
+                                 <label class="col-lg-5">Total=(Net+GST) </label><input type="text" name="total_product"
+                                    value="" class="form-control  col-lg-6 bg-light" id="total_product" readonly=""
+                                    maxlength="10" required tabindex="-1">
+                              </div>
+
+
+                              <div class="row mb-2">
+                                 <label class="col-lg-5 pr-0 ">Payment <br> Mode</label>
+                                 <select class="custom-select col-lg-6" id="payment_mode2" name="payment_mode2"
+                                    required>
+                                    <option value=""> -- Select Mode -- </option>
+                                    <option value="ONLINE" selected>ONLINE</option>
+                                    <option value="CHEQUE"> CHEQUE</option>
+                                    <option value="CASH">CASH</option>
+                                 </select>
+                              </div>
+
+                           </div>
+
+
+                        </div>
+
+
+                     </div>
+
+                  </div>
+
+                  <div class="modal fade" id="mdlPOSP">
+                     <div class="modal-dialog">
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <h5 class="modal-title"> POSP </h5>
+                           </div>
+                           <div class="modal-body ">
+                              <div class="form-row">
+
+                                 <div class="col-md-12 mb-4">
+                                    <label>SELECT POSP <abbr title="" class="text-danger">*</abbr></label>
+                                    <select name="posps_product" class="custom-select select2 " id="posps_product"
+                                       onclick="addPosToProduct()" onchange="get_POS_from_Modal_product()"
+                                       aria-hidden="true" required>
+                                    </select>
+                                 </div>
+
+
+                                 <!-- <div class="col-md-12 col-sm-12 mb-2">
                                        <select id="agents" class="custom-select " tabindex="-1" onclick="addPos()"
                                           aria-hidden="true" onchange="get_POS_from_Modal()">
 
@@ -2143,49 +2144,42 @@
                                     </div> -->
 
 
-                                    <div class="col-md-12 col-sm-12">
-                                       <input id="inp_agent_product" type="text" value="" class="form-control"
-                                          name="inp_agent_product" disabled style="text-transform: uppercase;"
-                                          title="POS should be automatically fetched">
-                                    </div>
-                                 </div>
-
-                                 <button class="mt-4 btn btn-primary" style="margin-bottom: -60px;"
-                                    onclick="add_new_agent()">Add New
-                                    POS</button>
-
-                                 <div class="modal-footer">
-                                    <button id="btnExit" type="button" class="btn btn-secondary w-100p"
-                                       data-dismiss="modal">Close</button>
+                                 <div class="col-md-12 col-sm-12">
+                                    <input id="inp_agent_product" type="text" value="" class="form-control"
+                                       name="inp_agent_product" disabled style="text-transform: uppercase;"
+                                       title="POS should be automatically fetched">
                                  </div>
                               </div>
 
+                              <button class="mt-4 btn btn-primary" style="margin-bottom: -60px;"
+                                 onclick="add_new_agent()">Add New
+                                 POS</button>
+
+                              <div class="modal-footer">
+                                 <button id="btnExit" type="button" class="btn btn-secondary w-100p"
+                                    data-dismiss="modal">Close</button>
+                              </div>
                            </div>
 
                         </div>
 
                      </div>
 
+                  </div>
+
 
                </div>
                <hr>
 
-               <!-- <style>
-                  .text-blue116 {
-                     color: rgb(116, 48, 249);
-                     /* font-weight: bold; */
-                     font-weight: 550;
-                  }
-               </style> -->
-
+               <!-- submit data -->
                <div class="form-row">
-                  <div class="col-md-12 col-sm-12">
-                     <div id="payoutSection" class="card card-inverse ">
+                  <div class="col-md-12 col-sm-12" style="background-color: #346CB0; ">
+                     <div id="payoutSection" class="card card-inverse " style="background-color: #346CB0;">
                         <!-- .card -->
                         <div class="card-header p-2">
                            <h4 class="card-title mb-1">Payouts</h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="background-color: #346CB0; ">
                            <p><span class="icofont icofont-hand-right ml-1"></span> The Payout will be shown as
                               per the Policy Details</p>
                            <p><span class="icofont icofont-hand-right ml-1"></span> You can add manual Payout
@@ -2193,9 +2187,10 @@
                            <div class="text-center">
 
                               <a href="#">
-                                 <!-- <button type="button" class="btn w-100p text-blue116"
-                                    onclick="sendPolicyData(true)">GENERATE
-                                 </button> -->
+                                 <button id="btnGenerate_Policy_nonmotor" name="btnGenerate_Policy"
+                                    style="background-color: #FFFFFF; color: #346CB0; font-weight: bold;" type="button"
+                                    class="btn w-100p" onclick="sendPolicyDataNonMotor()">GENERATE
+                                 </button>
                               </a>
 
                            </div>
@@ -2203,7 +2198,7 @@
                      </div>
                   </div>
                </div>
-               </form>
+
             </div>
 
          </div>
@@ -2227,43 +2222,6 @@
 
 <script>
 
-   function fetch_key() {
-
-   
-      href = window.location.origin + '/bima_policy/policy/fetch_key/'
-
-      $.ajax({
-         url: href,
-         type: "POST",
-         beforeSend: function (xhr) {
-            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-         },
-         // data: formData,
-         processData: false,
-         contentType: false,
-         success: function (response) {
-
-            // console.log(response.data);        
-            // console.log(response.data.accessKeyId);        
-
-            AWS.config.update({
-               accessKeyId: response.data.accessKeyId,
-               secretAccessKey: response.data.secretAccessKey,
-               region: response.data.region, // e.g., 'us-east-1'
-            });
-
-            _bucketName = response.data.BUCKET_NAME
-
-         },
-         error: function (xhr, status, error) {
-            // console.log(error);
-            alert(error.message)
-            showNotification('❌ ' + 'error : '.toUpperCase() + error.message.toUpperCase());
-         }
-      });
-   }
-
-
    var fetchList = []
    var freezList = []
 
@@ -2274,69 +2232,88 @@
          document.getElementById('dashboard').hidden = false
          document.getElementById('entrylist').hidden = true
          document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_Dashboard_Details()
       }
+
       else if (page_name == 'entry_list') {
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_Entry_List()
       }
+
       else if (page_name == 'posp') {
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_POSP_List()
       }
+
       else if (page_name == 'insurer') {
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_Insurer_List()
       }
+
       else if (page_name == 'sp') {
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_SP_List()
       }
+
       else if (page_name == 'product') {
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_Product_List()
       }
+
       else if (page_name == 'vcategory') {
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_Vehicle_Category_List()
       }
+
       else if (page_name == 'vmake') {
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_Vehicle_Make_List()
       }
+
       else if (page_name == 'vmodel') {
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_Vehicle_Model_List()
       }
+
       else if (page_name == 'staff') {
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_Staff_List()
       }
@@ -2345,10 +2322,19 @@
          document.getElementById('dashboard').hidden = true
          document.getElementById('entrylist').hidden = true
          document.getElementById('motor_entry').hidden = false
+         document.getElementById('non_motor_entry').hidden = true
 
          Load_Motor_Config()
       }
 
+      else if (page_name == 'non_motor_entry') {
+         document.getElementById('dashboard').hidden = true
+         document.getElementById('entrylist').hidden = true
+         document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = false
+
+         Load_NonMotor_Config()
+      }
 
    }
 
@@ -2588,7 +2574,120 @@
       document.getElementById('employee').value = employee
    }
 
+   function Load_NonMotor_Config() {
 
+      document.getElementById('policy_title_non_motor').innerText = "Non Motor Policy"
+      document.getElementById('btnGenerate_Policy_nonmotor').innerText = "GENERATE"
+
+      document.getElementById('product_name').innerHTML = ''
+      document.getElementById('policy_type2').selectedIndex = 0
+      document.getElementById('proposal_no2').value = ""
+      document.getElementById('policy_no2').value = ""
+      document.getElementById('customer_name2').value = ""
+      document.getElementById('insurer_name').selectedIndex = 0
+      document.getElementById('sps_name').selectedIndex = 0
+      document.getElementById('sp_code').selectedIndex = 0
+
+      document.getElementById('risk_start_date2').value = ""
+      document.getElementById('risk_end_date2').value = ""
+      document.getElementById('issue_date2').value = ""
+
+      document.getElementById('policy_term2').selectedIndex = 0
+      document.getElementById('pos_product').value = ""
+      document.getElementById('bqp2').selectedIndex = 1
+
+      employee = JSON.parse(localStorage.getItem('employee'));
+      document.getElementById('product_employee').value = employee
+
+      document.getElementById('remark2').value = ""
+
+      document.getElementById('od_product').value = ""
+      document.getElementById('tpt_product').value = ""
+      document.getElementById('net_product').value = ""
+      document.getElementById('gst_product').value = ""
+      document.getElementById('total_product').value = ""
+
+      document.getElementById('payment_mode2').selectedIndex = 1
+
+      document.getElementById('proposal2').value = ""
+      document.getElementById('a_proposal2').innerText = ""
+      document.getElementById('mandate2').value = ""
+      document.getElementById('a_mandate2').innerText = ""
+      document.getElementById('policy2').value = ""
+      document.getElementById('a_policy2').innerText = ""
+      document.getElementById('previous_policy2').value = ""
+      document.getElementById('a_previous_policy2').innerText = ""
+      document.getElementById('pan_card2').value = ""
+      document.getElementById('a_pan_card2').innerText = ""
+      document.getElementById('aadhar_card2').value = ""
+      document.getElementById('a_aadhar_card2').innerText = ""
+      document.getElementById('inspection_report').value = ""
+      document.getElementById('a_inspection_report2').innerText = ""
+
+      // product names
+      products = JSON.parse(localStorage.getItem('products'));
+      element = document.getElementById('product_name')
+      element.innerHTML = ''
+      newoption = document.createElement("option");
+      newoption.value = ''
+      newoption.innerHTML = '-- select product --'
+      element.options.add(newoption);
+      products.forEach(item => {
+         var newoption = document.createElement("option");
+         newoption.value = item.name
+         newoption.innerHTML = item.name
+         element.options.add(newoption);
+      })
+
+      // insurance_company
+      insurers = JSON.parse(localStorage.getItem('insurers'));
+      element = document.getElementById('insurer_name')
+      element.innerHTML = ''
+      newoption = document.createElement("option");
+      newoption.value = ''
+      newoption.innerHTML = '-- select insurer --'
+      element.options.add(newoption);
+      insurers.forEach(item => {
+         var newoption = document.createElement("option");
+         newoption.value = item.comp_name
+         newoption.innerHTML = item.comp_name
+         element.options.add(newoption);
+      })
+
+      // service providers
+      sps = JSON.parse(localStorage.getItem('sps'));
+      element = document.getElementById('sps_name')
+      element.innerHTML = ''
+      newoption = document.createElement("option");
+      newoption.value = ''
+      newoption.innerHTML = '-- select branch --'
+      element.options.add(newoption);
+      sps.forEach(item => {
+         var newoption = document.createElement("option");
+         newoption.value = item.full_name
+         newoption.innerHTML = item.full_name
+         element.options.add(newoption);
+      })
+
+      // broker code    
+      bc = JSON.parse(localStorage.getItem('bc'));
+      element = document.getElementById('sp_code')
+      element.innerHTML = ''
+      newoption = document.createElement("option");
+      newoption.value = ''
+      newoption.innerHTML = '-- select code --'
+      element.options.add(newoption);
+      bc.forEach(item => {
+         var newoption = document.createElement("option");
+         newoption.value = item.code
+         newoption.innerHTML = item.code
+         element.options.add(newoption);
+      })
+
+   }
+
+
+   // Tables function
    function GeneratePolicyTable(records) {
 
       document.getElementById('page_heading').innerHTML = 'Policy List'
@@ -2737,7 +2836,6 @@
       showNextRows(true)
 
    }
-
 
    function GeneratePospTable(records) {
 
@@ -3242,11 +3340,13 @@
       }
    }
 
+
+   // utilities function
    function Edit_Motor_Policy(params) {
 
       ShowPage('motor_entry')
 
-      document.getElementById('policy_title').innerText = "Update Policy"
+      document.getElementById('policy_title').innerText = "Update Motor Policy"
       document.getElementById('btnGenerate_Policy').innerText = "UPDATE"
 
       // find policy from storage
@@ -3273,80 +3373,40 @@
       })
    }
 
-   var policyid = null
+   function Load_NonMotor_Edit_Config(data) {
 
-   function Load_Motor_Edit_Config(data) {
+      document.getElementById('policy_title_non_motor').innerText = "Update Non Motor Policy"
+      document.getElementById('btnGenerate_Policy_nonmotor').innerText = "UPDATE"
+      
       policyid = null
       policyid = data.policyid
 
-      // vehicle category     
-      element = document.getElementById('vehicle_catagory')
+      // product_name    
+      element = document.getElementById('product_name')
       for (let index = 0; index < element.options.length; index++) {
          ele = element[index]
-         if (ele.value == data.vehicle_catagory) {
+         if (ele.value == data.product_name) {
             element.options[index].selected = true;
             break
          }
       }
 
-      setCategoryOnChange()
-
-      // vehicle make     
-      element = document.getElementById('vmake')
+      // policy_type2    
+      element = document.getElementById('policy_type2')
       for (let index = 0; index < element.options.length; index++) {
          ele = element[index]
-         if (ele.value == data.vehicle_makeby) {
+         if (ele.value == data.policy_type) {
             element.options[index].selected = true;
             break
          }
       }
 
-      // vehicle model     
-      element = document.getElementById('vmodel')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.vehicle_model) {
-            element.options[index].selected = true;
-            break
-         }
-      }
-
-      // general things, proposal_no policy no customer name
-      document.getElementById('proposal_no').value = data.proposal_no
-      document.getElementById('policy_no').value = data.policy_no
-      document.getElementById('customer_name').value = data.customer_name
-      document.getElementById('registration_no').value = data.registration_no
-      document.getElementById('rto_city').value = data.rto_city
-      document.getElementById('rto_city').value = data.rto_city
-      document.getElementById('pos').value = data.pos
-      document.getElementById('employee').value = data.employee
-      document.getElementById('risk_start_date').value = data.risk_start_date
-      document.getElementById('risk_end_date').value = data.risk_end_date
-      document.getElementById('issue_date').value = data.issue_date
-      document.getElementById('insured_age').value = data.insured_age
-
-      // premium value
-      document.getElementById('od').value = data.OD_premium
-      document.getElementById('tpt').value = data.TP_terrorism
-      document.getElementById('net').value = data.net
-      document.getElementById('gst').value = data.gst_amount
-      document.getElementById('gstt').value = data.gst_gcv_amount
-      document.getElementById('totalnet').value = data.total
-
-      //  attachments
-      document.getElementById('a_proposal').innerText = data.proposal;
-      document.getElementById('a_mandate').innerText = data.mandate;
-      document.getElementById('a_policy').innerText = data.policy;
-      document.getElementById('a_previous_policy').innerText = data.previous_policy;
-      document.getElementById('a_pan_card').innerText = data.pan_card;
-      document.getElementById('a_aadhar_card').innerText = data.aadhar_card;
-      document.getElementById('a_vehicle_rc').innerText = data.vehicle_rc;
-      document.getElementById('a_inspection_report').innerText = data.inspection_report;
-
-      document.getElementById('remark').value = data.remark
+      document.getElementById('proposal_no2').value = data.proposal_no
+      document.getElementById('policy_no2').value = data.policy_no
+      document.getElementById('customer_name2').value = data.customer_name
 
       // insurance_company    
-      element = document.getElementById('insurance_company')
+      element = document.getElementById('insurer_name')
       for (let index = 0; index < element.options.length; index++) {
          ele = element[index]
          if (ele.value == data.insurance_company) {
@@ -3356,7 +3416,7 @@
       }
 
       // sp_name    
-      element = document.getElementById('sp_name')
+      element = document.getElementById('sps_name')
       for (let index = 0; index < element.options.length; index++) {
          ele = element[index]
          if (ele.value == data.sp_name) {
@@ -3366,7 +3426,7 @@
       }
 
       // sp_brokercode    
-      element = document.getElementById('sp_brokercode')
+      element = document.getElementById('sp_code')
       for (let index = 0; index < element.options.length; index++) {
          ele = element[index]
          if (ele.value == data.sp_brokercode) {
@@ -3375,118 +3435,32 @@
          }
       }
 
-      // rto_state    
-      element = document.getElementById('rto_state')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.rto_state) {
-            element.options[index].selected = true;
-            break
-         }
-      }
+      document.getElementById('risk_start_date2').value = data.risk_start_date
+      document.getElementById('risk_end_date2').value = data.risk_end_date
+      document.getElementById('issue_date2').value = data.issue_date
+      document.getElementById('pos_product').value = data.pos
+      document.getElementById('product_employee').value = data.employee
 
-      // vehicle_fuel_type    
-      element = document.getElementById('vehicle_fuel_type')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.vehicle_fuel_type) {
-            element.options[index].selected = true;
-            break
-         }
-      }
+      // premium value
+      document.getElementById('od_product').value = data.OD_premium
+      document.getElementById('tpt_product').value = data.TP_terrorism
+      document.getElementById('net_product').value = data.net
+      document.getElementById('gst_product').value = data.gst_amount
+      document.getElementById('total_product').value = data.total
 
-      // mfg_year    
-      element = document.getElementById('mfg_year')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.mfg_year) {
-            element.options[index].selected = true;
-            break
-         }
-      }
+      //  attachments
+      document.getElementById('a_proposal2').innerText = data.proposal;
+      document.getElementById('a_mandate2').innerText = data.mandate;
+      document.getElementById('a_policy2').innerText = data.policy;
+      document.getElementById('a_previous_policy2').innerText = data.previous_policy;
+      document.getElementById('a_pan_card2').innerText = data.pan_card;
+      document.getElementById('a_aadhar_card2').innerText = data.aadhar_card;
+      document.getElementById('a_inspection_report2').innerText = data.inspection_report;
 
-      // addon    
-      element = document.getElementById('addon')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.addon) {
-            element.options[index].selected = true;
-            break
-         }
-      }
-
-      // ncb    
-      element = document.getElementById('ncb')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.ncb) {
-            element.options[index].selected = true;
-            break
-         }
-      }
-
-      // cubic_capacity    
-      element = document.getElementById('cubic_capacity')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.cubic_capacity) {
-            element.options[index].selected = true;
-            break
-         }
-      }
-
-      // coverage_type    
-      element = document.getElementById('coverage_type')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.coverage_type) {
-            element.options[index].selected = true;
-            break
-         }
-      }
-
-      // seating_capacity    
-      element = document.getElementById('seating_capacity')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.seating_capacity) {
-            element.options[index].selected = true;
-            break
-         }
-      }
-
-      // gvw    
-      element = document.getElementById('gvw')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.gvw) {
-            element.options[index].selected = true;
-            break
-         }
-      }
-
-      // policy_type    
-      element = document.getElementById('policy_type')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.policy_type) {
-            element.options[index].selected = true;
-            break
-         }
-      }
-
-      // cpa    
-      element = document.getElementById('cpa')
-      for (let index = 0; index < element.options.length; index++) {
-         ele = element[index]
-         if (ele.value == data.cpa) {
-            element.options[index].selected = true;
-            break
-         }
-      }
+      document.getElementById('remark2').value = data.remark
 
       // policy_term    
-      element = document.getElementById('policy_term')
+      element = document.getElementById('policy_term2')
       for (let index = 0; index < element.options.length; index++) {
          ele = element[index]
          if (ele.value == data.policy_term) {
@@ -3496,7 +3470,7 @@
       }
 
       // bqp    
-      element = document.getElementById('bqp')
+      element = document.getElementById('bqp2')
       for (let index = 0; index < element.options.length; index++) {
          ele = element[index]
          if (ele.value == data.bqp) {
@@ -3506,7 +3480,7 @@
       }
 
       // payment_mode    
-      element = document.getElementById('payment_mode')
+      element = document.getElementById('payment_mode2')
       for (let index = 0; index < element.options.length; index++) {
          ele = element[index]
          if (ele.value == data.payment_mode) {
@@ -3516,6 +3490,268 @@
       }
 
 
+   }
+
+
+   var policyid = null  // used for updating policy, bcoz now dont need to filter in backend
+
+   function Load_Motor_Edit_Config(data) {
+
+      reg_no = data.registration_no
+
+      console.log(reg_no);
+
+      if (reg_no == "") {
+         console.log('non motor');
+
+         ShowPage('non_motor_entry')
+
+         Load_NonMotor_Edit_Config(data)
+
+      }
+      else {
+         console.log(data.vehicle_catagory);
+
+         policyid = null
+         policyid = data.policyid
+
+         // vehicle category     
+         element = document.getElementById('vehicle_catagory')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.vehicle_catagory) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         setCategoryOnChange()
+
+         // vehicle make     
+         element = document.getElementById('vmake')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.vehicle_makeby) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // vehicle model     
+         element = document.getElementById('vmodel')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.vehicle_model) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // general things, proposal_no policy no customer name
+         document.getElementById('proposal_no').value = data.proposal_no
+         document.getElementById('policy_no').value = data.policy_no
+         document.getElementById('customer_name').value = data.customer_name
+         document.getElementById('registration_no').value = data.registration_no
+         document.getElementById('rto_city').value = data.rto_city
+         document.getElementById('rto_city').value = data.rto_city
+         document.getElementById('pos').value = data.pos
+         document.getElementById('employee').value = data.employee
+         document.getElementById('risk_start_date').value = data.risk_start_date
+         document.getElementById('risk_end_date').value = data.risk_end_date
+         document.getElementById('issue_date').value = data.issue_date
+         document.getElementById('insured_age').value = data.insured_age
+
+         // premium value
+         document.getElementById('od').value = data.OD_premium
+         document.getElementById('tpt').value = data.TP_terrorism
+         document.getElementById('net').value = data.net
+         document.getElementById('gst').value = data.gst_amount
+         document.getElementById('gstt').value = data.gst_gcv_amount
+         document.getElementById('totalnet').value = data.total
+
+         //  attachments
+         document.getElementById('a_proposal').innerText = data.proposal;
+         document.getElementById('a_mandate').innerText = data.mandate;
+         document.getElementById('a_policy').innerText = data.policy;
+         document.getElementById('a_previous_policy').innerText = data.previous_policy;
+         document.getElementById('a_pan_card').innerText = data.pan_card;
+         document.getElementById('a_aadhar_card').innerText = data.aadhar_card;
+         document.getElementById('a_vehicle_rc').innerText = data.vehicle_rc;
+         document.getElementById('a_inspection_report').innerText = data.inspection_report;
+
+         document.getElementById('remark').value = data.remark
+
+         // insurance_company    
+         element = document.getElementById('insurance_company')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.insurance_company) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // sp_name    
+         element = document.getElementById('sp_name')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.sp_name) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // sp_brokercode    
+         element = document.getElementById('sp_brokercode')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.sp_brokercode) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // rto_state    
+         element = document.getElementById('rto_state')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.rto_state) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // vehicle_fuel_type    
+         element = document.getElementById('vehicle_fuel_type')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.vehicle_fuel_type) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // mfg_year    
+         element = document.getElementById('mfg_year')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.mfg_year) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // addon    
+         element = document.getElementById('addon')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.addon) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // ncb    
+         element = document.getElementById('ncb')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.ncb) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // cubic_capacity    
+         element = document.getElementById('cubic_capacity')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.cubic_capacity) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // coverage_type    
+         element = document.getElementById('coverage_type')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.coverage_type) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // seating_capacity    
+         element = document.getElementById('seating_capacity')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.seating_capacity) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // gvw    
+         element = document.getElementById('gvw')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.gvw) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // policy_type    
+         element = document.getElementById('policy_type')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.policy_type) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // cpa    
+         element = document.getElementById('cpa')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.cpa) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // policy_term    
+         element = document.getElementById('policy_term')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.policy_term) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // bqp    
+         element = document.getElementById('bqp')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.bqp) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+         // payment_mode    
+         element = document.getElementById('payment_mode')
+         for (let index = 0; index < element.options.length; index++) {
+            ele = element[index]
+            if (ele.value == data.payment_mode) {
+               element.options[index].selected = true;
+               break
+            }
+         }
+
+      }
 
    }
 
@@ -4122,8 +4358,8 @@
                return
             }
             fetchList = response.data
-            GeneratePolicyTable(fetchList);
-            localStorage.setItem('records', JSON.stringify(fetchList));
+            GeneratePolicyTable(fetchList);           
+            localStorage.setItem('records', JSON.stringify(fetchList));          
          },
          error: function (xhr, status, error) {
             console.error(error);
@@ -4475,216 +4711,12 @@
       }
    }
 
-
    function delayedSearch() {
       setTimeout(searchTable, 10);
    }
 
 
-   function searchTablex() {
-      var input = document.getElementById("myInput");
-      var filter = input.value.toUpperCase();
-      var table = document.getElementById("tbdy");
-      var tr = table.getElementsByTagName("tr");
-
-      // Loop through all table rows
-      for (var i = 0; i < tr.length; i++) {
-         var displayRow = false;
-
-         // Loop through all table cells in the current row
-         for (var j = 1; j <= 3; j++) {
-            var td = tr[i].getElementsByTagName("td")[j];
-            if (td) {
-               var txtValue = td.textContent || td.innerText;
-               if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  displayRow = true;
-                  break; // Break the inner loop if a match is found in any cell
-               }
-            }
-         }
-
-         // Show/hide the row based on the search query match
-         tr[i].style.display = displayRow ? "" : "none";
-      }
-   }
-
-
-   // motor_entry
-
-   function motor_entry() {
-
-      document.getElementById('dashboard').hidden = true
-      document.getElementById('entrylist').hidden = true
-      document.getElementById('posp').hidden = true
-      document.getElementById('slab').hidden = true
-      document.getElementById('insurer').hidden = true
-      document.getElementById('staff').hidden = true
-      document.getElementById('product').hidden = true
-      document.getElementById('sp').hidden = true
-      document.getElementById('vehicle').hidden = true
-      document.getElementById('motor_entry').hidden = false
-      document.getElementById('non_motor_entry').hidden = true
-      document.getElementById('motor_entry_edit').hidden = true
-
-      load_motor_entry()
-
-      // fetch_motor_option('motor_option')
-
-   }
-
-   function load_motor_entry() {
-
-      vehicles = JSON.parse(localStorage.getItem('vehicles'));
-      if (vehicles == null) {
-         fetch_motor_option('motor_option')
-         return
-      }
-      category = vehicles.category
-      if (category != null) {
-         element = document.getElementById('vehicle_catagory')
-         element.innerHTML = ''
-
-         newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- select category --'
-         element.options.add(newoption);
-
-         category.forEach(item => {
-            newoption = document.createElement("option");
-            newoption.value = item.category
-            newoption.innerHTML = item.category
-            element.options.add(newoption);
-         })
-      }
-
-      insurers = JSON.parse(localStorage.getItem('insurers'));
-      if (insurers != null) {
-
-         element = document.getElementById('insurance_company')
-         element.innerHTML = ''
-
-         newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- select insurer --'
-         element.options.add(newoption);
-
-         insurers.forEach(item => {
-            var newoption = document.createElement("option");
-            newoption.value = item.comp_name
-            newoption.innerHTML = item.comp_name
-            element.options.add(newoption);
-         })
-      }
-      else {
-         fetch_motor_option('motor_option')
-         return
-      }
-
-      sps = JSON.parse(localStorage.getItem('sps'));
-      if (sps != null) {
-
-         element = document.getElementById('sp_name')
-         element.innerHTML = ''
-
-         newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- select branch --'
-         element.options.add(newoption);
-
-         sps.forEach(item => {
-            var newoption = document.createElement("option");
-            newoption.value = item.full_name
-            newoption.innerHTML = item.full_name
-            element.options.add(newoption);
-         })
-      }
-      else {
-         fetch_motor_option('motor_option')
-         return
-      }
-
-      // broker code    
-      bc = JSON.parse(localStorage.getItem('bc'));
-
-      if (sp_brokercode != null) {
-
-         element = document.getElementById('sp_brokercode')
-         element.innerHTML = ''
-
-         newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- select code --'
-         element.options.add(newoption);
-
-         bc.forEach(item => {
-            var newoption = document.createElement("option");
-            newoption.value = item.code
-            newoption.innerHTML = item.code
-            element.options.add(newoption);
-         })
-      }
-      else {
-         fetch_motor_option('motor_option')
-         return
-      }
-
-      // vehicle makeby          
-      // vehicles = JSON.parse(localStorage.getItem('vehicles'));
-      makes = vehicles.makes
-      if (makes != null) {
-         element = document.getElementById('vmake')
-         element.innerHTML = ''
-
-         newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- select make --'
-         element.options.add(newoption);
-
-         makes.forEach(item => {
-            var newoption = document.createElement("option");
-            newoption.value = item.make
-            newoption.innerHTML = item.make
-            element.options.add(newoption);
-         })
-      }
-      else {
-         fetch_motor_option('motor_option')
-         return
-      }
-
-      // vehicle model
-      // vehicles = JSON.parse(localStorage.getItem('vehicles'));
-      models = vehicles.models
-      if (models != null) {
-         element = document.getElementById('vmodel')
-         element.innerHTML = ''
-
-         newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- select model --'
-         element.options.add(newoption);
-
-         models.forEach(item => {
-            var newoption = document.createElement("option");
-            newoption.value = item.model
-            newoption.innerHTML = item.model
-            element.options.add(newoption);
-         })
-      }
-      else {
-         fetch_motor_option('motor_option')
-         return
-      }
-
-      // employee
-      employee = JSON.parse(localStorage.getItem('employee'));
-      if (employee == null) {
-         fetch_motor_option('motor_option')
-         return
-      }
-      document.getElementById('employee').value = employee
-   }
-
+   // motor_entry functions
    posp_added = false
    function addPos() {
 
@@ -4712,10 +4744,6 @@
 
    }
 
-   function add_new_agent() {
-      // showPosp()
-   }
-
    function get_POS_from_Modal() {
       value = document.getElementById("inp_agent").value = document.getElementById("posps").options[document.getElementById("posps").selectedIndex].text;
       if (value == '') {
@@ -4725,36 +4753,12 @@
       document.getElementById("pos").value = value.split('|')[0].trim()
    }
 
-   function fetch_motor_option(data) {
-
-      $.ajax({
-         url: "{%url 'bima_policy:fetch_records'%}",
-         data: { data: data },
-         dataType: 'json',
-         success: function (response) {
-            // console.log(response.data);
-            localStorage.setItem('vehicles', JSON.stringify(response.data));
-            localStorage.setItem('posp', JSON.stringify(response.posp));
-            localStorage.setItem('insurers', JSON.stringify(response.ins));
-            localStorage.setItem('sps', JSON.stringify(response.sp));
-            localStorage.setItem('bc', JSON.stringify(response.bc));
-            localStorage.setItem('employee', JSON.stringify(response.employee));
-
-            load_motor_entry()
-         },
-         error: function (xhr, status, error) {
-            console.error(error);
-            alert(error.toString())
-         }
-      });
-   }
-
    function setCategoryOnChange() {
 
       text = document.getElementById('policy_title').innerText
 
       let cc, cv, sc, gvw = ""
-      if (text == "Update Policy") {
+      if (text == "Update Motor Policy") {
          cc = document.getElementById('cubic_capacity').value
          cv = document.getElementById('coverage_type').value
          sc = document.getElementById('seating_capacity').value
@@ -5286,7 +5290,7 @@
          coverage_type.options.add(newoption);
       }
 
-      if (text == "Update Policy") {
+      if (text == "Update Motor Policy") {
 
          element = document.getElementById('cubic_capacity')
          for (let index = 0; index < element.options.length; index++) {
@@ -5352,7 +5356,9 @@
       }
 
       // console.log(fileName);
-      showNotification(`linking ${fileName}...`.toUpperCase());
+      // showNotification(`linking ${fileName}...`.toUpperCase());
+      showNotification('✅ ' + 'succeed : '.toUpperCase() + `linking ${fileName}...`.toUpperCase() );
+
 
       // policy pdf
       const fileInput = document.getElementById(file_element);
@@ -5385,8 +5391,9 @@
                }
             });
          });
+         showNotification('✅ ' + 'succeed : '.toUpperCase() + `linked ${fileName}...`.toUpperCase() );
 
-         showNotification(`✅ linked ${fileName} `.toUpperCase());
+         // showNotification(`✅ linked ${fileName} `.toUpperCase());
          // console.log('File uploaded successfully. Location:', data.Location);
       } catch (err) {
          alert('Error uploading the file:', err);
@@ -5395,10 +5402,10 @@
       }
    }
 
-
    async function sendPolicyData() {
 
       formData = new FormData();
+      formData.append('ptype', 'motor');
       formData.append('proposal_no', document.getElementById('proposal_no').value);
       formData.append('policy_no', document.getElementById('policy_no').value);
       formData.append('customer_name', document.getElementById('customer_name').value);
@@ -5449,7 +5456,7 @@
 
       text = document.getElementById('policy_title').innerText
 
-      if (text == "Update Policy") {
+      if (text == "Update Motor Policy") {
          formData.append('policyid', policyid);
       }
       else {
@@ -5665,51 +5672,6 @@
       }
    }
 
-
-   function sendFormDataa(formDataKey, formData) {
-
-      // for (const iterator of formData) {
-
-      //    console.log(iterator);
-      // }
-      // return
-      showNotification('⌛️ Generating policy...'.toUpperCase())
-
-      href = window.location.origin + '/bima_policy/policy/new_entry/'
-
-      $.ajax({
-         url: href,
-         type: "POST",
-         beforeSend: function (xhr) {
-            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-         },
-         data: formData,
-         processData: false,
-         contentType: false,
-         success: async function (response) {
-
-            result = JSON.parse(JSON.stringify(response)).toString()
-            // console.log(result);
-
-            if (result.includes('done:')) {
-               showNotification('✅ ' + 'succeed : '.toUpperCase() + formDataKey.toUpperCase());
-               return result
-            }
-
-            else {
-               showNotification('❌ ' + 'failed : '.toUpperCase() + + formDataKey.toUpperCase());
-               return null
-            }
-
-         },
-         error: function (xhr, status, error) {
-            // console.log(error);
-            alert(error.message)
-            showNotification('❌ ' + 'error : '.toUpperCase() + error.toUpperCase());
-         }
-      });
-   }
-
    function clearAllField() {
 
       document.getElementById('proposal_no').value = ''
@@ -5825,160 +5787,189 @@
    }
 
 
-   // non motor entry
+   // non motor entry functions
 
-   function non_motor_entry() {
 
-      document.getElementById('dashboard').hidden = true
-      document.getElementById('entrylist').hidden = true
-      document.getElementById('posp').hidden = true
-      document.getElementById('slab').hidden = true
-      document.getElementById('insurer').hidden = true
-      document.getElementById('staff').hidden = true
-      document.getElementById('product').hidden = true
-      document.getElementById('sp').hidden = true
-      document.getElementById('vehicle').hidden = true
-      document.getElementById('motor_entry').hidden = true
-      document.getElementById('non_motor_entry').hidden = false
-      document.getElementById('motor_entry_edit').hidden = true
+   async function sendPolicyDataNonMotor() {
 
-      load_non_motor_entry()
+      console.log('sendPolicyDataNonMotor calling: ');
 
-      // fetch_non_motor_option('non_motor_option')
-   }
+      formData = new FormData();
+      formData.append('ptype', 'nonmotor');
+      formData.append('product_name', document.getElementById('product_name').value);
+      formData.append('policy_type', document.getElementById('policy_type2').value);
+      formData.append('proposal_no', document.getElementById('proposal_no2').value);
+      formData.append('policy_no', document.getElementById('policy_no2').value);
+      formData.append('customer_name', document.getElementById('customer_name2').value);
+      formData.append('insurance_company', document.getElementById('insurer_name').value);
+      formData.append('sp_name', document.getElementById('sps_name').value);
+      formData.append('sp_brokercode', document.getElementById('sp_code').value);
 
-   function load_non_motor_entry() {
+      formData.append('risk_start_date', document.getElementById('risk_start_date2').value);
+      formData.append('risk_end_date', document.getElementById('risk_end_date2').value);
+      formData.append('issue_date', document.getElementById('issue_date2').value);
 
-      products = JSON.parse(localStorage.getItem('products'));
-      if (products != null) {
+      formData.append('policy_term', document.getElementById('policy_term2').value);
+      formData.append('pos', document.getElementById('pos_product').value);
+      formData.append('bqp', document.getElementById('bqp2').value);
+      formData.append('employee', document.getElementById('product_employee').value);
 
-         element = document.getElementById('product_name')
-         element.innerHTML = ''
+      formData.append('od', document.getElementById('od_product').value);
+      formData.append('tpt', document.getElementById('tpt_product').value);
+      formData.append('net', document.getElementById('net_product').value);
+      formData.append('gst', document.getElementById('gst_product').value);
+      formData.append('total', document.getElementById('total_product').value);
+      formData.append('payment_mode', document.getElementById('payment_mode2').value);
 
-         newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- select product --'
-         element.options.add(newoption);
+      for (const iterator of formData) {
 
-         products.forEach(item => {
-            var newoption = document.createElement("option");
-            newoption.value = item.name
-            newoption.innerHTML = item.name
-            element.options.add(newoption);
-         })
-      }
-      else {
-         fetch_non_motor_option('non_motor_option')
-         return
-      }
-
-      insurers = JSON.parse(localStorage.getItem('insurers'));
-      if (insurers != null) {
-
-         element = document.getElementById('insurer_name')
-         element.innerHTML = ''
-
-         newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- select insurer --'
-         element.options.add(newoption);
-
-         insurers.forEach(item => {
-            var newoption = document.createElement("option");
-            newoption.value = item.comp_name
-            newoption.innerHTML = item.comp_name
-            element.options.add(newoption);
-         })
-      }
-      else {
-         fetch_non_motor_option('non_motor_option')
-         return
-      }
-
-      sps = JSON.parse(localStorage.getItem('sps'));
-      if (sps != null) {
-
-         element = document.getElementById('sps_name')
-         element.innerHTML = ''
-
-         newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- select branch --'
-         element.options.add(newoption);
-
-         sps.forEach(item => {
-            var newoption = document.createElement("option");
-            newoption.value = item.full_name
-            newoption.innerHTML = item.full_name
-            element.options.add(newoption);
-            // console.log(item.full_name);
-         })
-      }
-      else {
-         fetch_non_motor_option('non_motor_option')
-         return
-      }
-
-      // broker code    
-      bc = JSON.parse(localStorage.getItem('bc'));
-
-      if (sp_brokercode != null) {
-
-         element = document.getElementById('sp_code')
-         element.innerHTML = ''
-
-         newoption = document.createElement("option");
-         newoption.value = ''
-         newoption.innerHTML = '-- select code --'
-         element.options.add(newoption);
-
-         bc.forEach(item => {
-            var newoption = document.createElement("option");
-            newoption.value = item.code
-            newoption.innerHTML = item.code
-            element.options.add(newoption);
-         })
-      }
-      else {
-         fetch_non_motor_option('non_motor_option')
-         return
-      }
-
-      // employee
-      employee = JSON.parse(localStorage.getItem('employee'));
-      if (employee == null) {
-         fetch_non_motor_option('non_motor_option')
-         return
-      }
-      // console.log(employee);
-
-      document.getElementById('product_employee').value = employee
-
-   }
-
-   function fetch_non_motor_option(data) {
-
-      $.ajax({
-         url: "{%url 'bima_policy:fetch_records'%}",
-         data: { data: data },
-         dataType: 'json',
-         success: function (response) {
-            // console.log(response.data);
-            localStorage.setItem('products', JSON.stringify(response.products));
-            localStorage.setItem('posp', JSON.stringify(response.posp));
-            localStorage.setItem('insurers', JSON.stringify(response.ins));
-            localStorage.setItem('sps', JSON.stringify(response.sp));
-            localStorage.setItem('bc', JSON.stringify(response.bc));
-            localStorage.setItem('employee', JSON.stringify(response.employee));
-
-            load_non_motor_entry()
-         },
-         error: function (xhr, status, error) {
-            console.error(error);
-            alert(error.toString())
+         if (iterator[1] == "") {
+            showNotification((`⚠️ ${iterator[0]} is missing`.toUpperCase()));
+            return
          }
-      });
+         else {
+            showNotification('');
+         }
+      }
+
+      formData.append('remark', document.getElementById('remark2').value);
+
+      text = document.getElementById('policy_title_non_motor').innerText
+
+      if (text == "Update Non Motor Policy") {
+         formData.append('policyid', policyid);
+      }
+      else {
+         formData.append('policyid', '');
+      }
+
+      formData.append('proposal', '');
+      formData.append('mandate', '');
+      formData.append('policy', '');
+      formData.append('previous_policy', '');
+      formData.append('pan_card', '');
+      formData.append('aadhar_card', '');
+      formData.append('inspection_report', '');
+
+      // attachments
+      proposal = document.getElementById('proposal2').files[0]
+      if (proposal != null) {
+         file_name = `media/documents/` + getRandomFileName(proposal)
+         formData.set('proposal', file_name.trim());
+      }
+      mandate = document.getElementById('mandate2').files[0]
+      if (mandate != null) {
+         file_name = `media/documents/` + getRandomFileName(mandate)
+         formData.set('mandate', file_name.trim());
+      }
+      policy = document.getElementById('policy2').files[0]
+      if (policy != null) {
+         file_name = `media/documents/` + getRandomFileName(policy)
+         formData.set('policy', file_name.trim());
+      }
+      previous_policy = document.getElementById('previous_policy2').files[0]
+      if (previous_policy != null) {
+         file_name = `media/documents/` + getRandomFileName(previous_policy)
+         formData.set('previous_policy', file_name.trim());
+      }
+      pan_card = document.getElementById('pan_card2').files[0]
+
+      if (pan_card != null) {
+         file_name = `media/documents/` + getRandomFileName(pan_card)
+         formData.set('pan_card', file_name.trim());
+      }
+
+      aadhar_card = document.getElementById('aadhar_card2').files[0]
+      if (aadhar_card != null) {
+         file_name = `media/documents/` + getRandomFileName(aadhar_card)
+         formData.set('aadhar_card', file_name.trim());
+      }
+
+      inspection_report = document.getElementById('inspection_report2').files[0]
+      if (inspection_report != null) {
+         file_name = `media/documents/` + getRandomFileName(inspection_report)
+         formData.set('inspection_report', file_name.trim());
+      }
+
+      for (const iterator of formData) {
+
+         console.log(iterator);
+      }
+
+      // return
+      result = await sendFormData(formData.get('policy_no'), formData);
+      
+      if (result != null) {
+
+         if (document.getElementById('policy_title_non_motor').innerText == "Non Motor Policy") {
+
+            await uploadPdf(formData.get('proposal'), 'proposal2')
+            await uploadPdf(formData.get('mandate'), 'mandate2')
+            await uploadPdf(formData.get('policy'), 'policy2')
+            await uploadPdf(formData.get('previous_policy'), 'previous_policy2')
+            await uploadPdf(formData.get('pan_card'), 'pan_card2')
+            await uploadPdf(formData.get('aadhar_card'), 'aadhar_card2')
+            await uploadPdf(formData.get('inspection_report'), 'inspection_report2')
+
+            showNotification('✅ ' + 'succeed : '.toUpperCase() + formData.get('policy_no').toUpperCase());
+         }
+
+         FetchDataAsync()
+
+         clearNonMotorForm()
+      }
+
    }
+
+   function clearNonMotorForm() {
+
+      document.getElementById('product_name').value = ''
+      document.getElementById('policy_type2').value = ''
+      document.getElementById('proposal_no2').value = ''
+      document.getElementById('policy_no2').value = ''
+
+      document.getElementById('customer_name2').value = ''
+
+      document.getElementById('insurer_name').value = ''
+      document.getElementById('sps_name').value = ''
+      document.getElementById('sp_code').value = ''     
+      
+      document.getElementById('risk_start_date2').value = ''
+      document.getElementById('risk_end_date2').value = ''
+      document.getElementById('issue_date2').value = ''
+    
+      document.getElementById('policy_term2').selectedIndex = 0
+      document.getElementById('pos_product').value = ''
+      document.getElementById('bqp2').selectedIndex = 1
+      document.getElementById('product_employee').value = ''
+
+      document.getElementById('remark2').value = ''
+
+      document.getElementById('od_product').value = ''
+      document.getElementById('tpt_product').value = ''
+      document.getElementById('net_product').value = ''
+      document.getElementById('gst_product').value = ''
+      document.getElementById('total_product').value = ''
+      document.getElementById('payment_mode2').selectedIndex = 0
+
+      document.getElementById('proposal2').value = ''
+      document.getElementById('lbl_proposal2').innerHTML = 'Choose file'
+      document.getElementById('mandate2').value = ''
+      document.getElementById('lbl_mandate2').innerHTML = 'Choose file'
+      document.getElementById('policy2').value = ''
+      document.getElementById('lbl_policy2').innerHTML = 'Choose file'
+      document.getElementById('previous_policy2').value = ''
+      document.getElementById('lbl_previous_policy2').innerHTML = 'Choose file'
+      document.getElementById('pan_card2').value = ''
+      document.getElementById('lbl_pan_card2').innerHTML = 'Choose file'
+      document.getElementById('aadhar_card2').value = ''
+      document.getElementById('lbl_aadhar_card2').innerHTML = 'Choose file'   
+      document.getElementById('inspection_report2').value = ''
+      document.getElementById('lbl_inspection_report2').innerHTML = 'Choose file'
+
+      document.getElementById("product_name").focus()
+}
+
 
    posp_product_added = false
    function addPosToProduct() {
@@ -6443,6 +6434,42 @@
       }
 
    }
+
+   function fetch_key() {
+
+      href = window.location.origin + '/bima_policy/policy/fetch_key/'
+
+      $.ajax({
+         url: href,
+         type: "POST",
+         beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+         },
+         // data: formData,
+         processData: false,
+         contentType: false,
+         success: function (response) {
+
+            // console.log(response.data);        
+            // console.log(response.data.accessKeyId);        
+
+            AWS.config.update({
+               accessKeyId: response.data.accessKeyId,
+               secretAccessKey: response.data.secretAccessKey,
+               region: response.data.region, // e.g., 'us-east-1'
+            });
+
+            _bucketName = response.data.BUCKET_NAME
+
+         },
+         error: function (xhr, status, error) {
+            // console.log(error);
+            alert(error.message)
+            showNotification('❌ ' + 'error : '.toUpperCase() + error.message.toUpperCase());
+         }
+      });
+   }
+
 
 
 

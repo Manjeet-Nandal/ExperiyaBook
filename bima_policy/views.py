@@ -44,7 +44,7 @@ def Index(request):
 
 def dashboard(request):
     # print(get_profile_id(get_id_from_session(request)))
-          
+
     return render(request, 'dashboard.html')
 
     agentcount = Agents.objects.filter(status="Active").count()
@@ -85,7 +85,7 @@ def update_employee():
     # print(Policy.objects.filter(status='Active').count())
     # print(Policy.objects.filter(status= None).count())
     # Policy.objects.filter(status= None).update(status = 'Active')
-  
+
     # print(Policy.objects.filter(employee='NEERAJ').count())
     # print(Policy.objects.filter(employee='SHABNAM').count())
     # print(Policy.objects.filter(employee='NISHA').count())
@@ -2662,8 +2662,9 @@ def count_objects(request):
 
     return JsonResponse({'data': data})
 
+
 def fetch_key(request):
-    print('\nfetch_key calling ')
+    # print('\nfetch_key calling ')
 
     keys = {
         "accessKeyId": AWS_ACCESS_KEY_ID,
@@ -2671,8 +2672,8 @@ def fetch_key(request):
         "region": AWS_ACCESS_KEY_REGION,
         "BUCKET_NAME": AWS_STORAGE_BUCKET_NAME
     }
-    
-    print(keys)   
+
+    # print(keys)
 
     return JsonResponse({'data': keys})
 
@@ -2863,11 +2864,13 @@ def fetch_all(request):
 
     # policy
     if is_user(request):
-        policy = list(Policy.objects.filter(issue_date=datetime.now()).values() )
+        policy = list(Policy.objects.filter(
+            issue_date=datetime.now()).values())
         # policy = list(Policy.objects.order_by('-issue_date').values()[:5])
         # policy = list(Policy.objects.order_by('-policyid').values() )
     else:
-        policy = list(Policy.objects.filter(employee=get_id_from_session(request), issue_date=datetime.now()).values())
+        policy = list(Policy.objects.filter(employee=get_id_from_session(
+            request), issue_date=datetime.now()).values())
 
     agents = list(Agents.objects.filter(status="Active").values())
     insurers = list(InsuranceCompany.objects.values())
@@ -5604,134 +5607,267 @@ def new_entry(request):
         id = get_profile_id(get_id_from_session(request))
         profile_id = ProfileModel.objects.get(id=id)
 
-        policy_no = request.POST['policy_no']
+        ptype = request.POST['ptype']
+        print(ptype)
         policyid = request.POST['policyid']
+        policy_no = request.POST['policy_no']
 
-        if policyid != "":
-            print('in update block: ')
-            data = Policy.objects.filter(policyid=policyid)           
-            print(data)
-            data.update(proposal_no=request.POST['proposal_no'],
-                        policy_no=request.POST['policy_no'],
-                        customer_name=request.POST['customer_name'],
-                        insurance_company=request.POST['insurance_company'],
-                        sp_name=request.POST['sp_name'],
-                        sp_brokercode=request.POST['sp_brokercode'],
-                        registration_no=request.POST['registration_no'],
-                        rto_state=request.POST['rto_state'],
-                        rto_city=request.POST['rto_city'],
-                        vehicle_makeby=request.POST['vmake'],
-                        vehicle_model=request.POST['vmodel'],
-                        vehicle_catagory=request.POST['vehicle_catagory'],
-                        vehicle_fuel_type=request.POST['vehicle_fuel_type'],
-                        mfg_year=request.POST['mfg_year'],
-                        addon=request.POST['addon'],
-                        ncb=request.POST['ncb'],
-                        cubic_capacity=request.POST['cubic_capacity'],
-                        coverage_type=request.POST['coverage_type'],
-                        seating_capacity=request.POST['seating_capacity'],
-                        gvw=request.POST['gvw'],
-                        policy_type=request.POST['policy_type'],
-                        cpa=request.POST['cpa'],
-                        risk_start_date=request.POST['risk_start_date'],
-                        risk_end_date=request.POST['risk_end_date'],
-                        issue_date=request.POST['issue_date'],
-                        insured_age=request.POST['insured_age'],
-                        policy_term=request.POST['policy_term'],
-                        bqp=request.POST['bqp'],
-                        pos=request.POST['pos'],
-                        employee=get_id_from_session(request),
-                        remark=request.POST['remark'],
-                        OD_premium=request.POST['od'],
-                        TP_terrorism=request.POST['tpt'],
-                        net=request.POST['net'],
-                        total=request.POST['total'],
-                        gst_amount=request.POST['gst'],
-                        gst_gcv_amount=request.POST['gstt'],
-                        payment_mode=request.POST['payment_mode']
-                        # proposal=request.POST['proposal'],
-                        # mandate=request.POST['mandate'],
-                        # policy=request.POST['policy'],
-                        # previous_policy=request.POST['previous_policy'],
-                        # pan_card=request.POST['pan_card'],
-                        # aadhar_card=request.POST['aadhar_card'],
-                        # vehicle_rc=request.POST['vehicle_rc'],
-                        # inspection_report=request.POST['inspection_report']
-                        )
+        if ptype == "motor":   
+            if policyid != "":
+                print('motor update: ')
+                data = Policy.objects.filter(policyid=policyid)
+                print(data)
+                data.update(proposal_no=request.POST['proposal_no'],
+                            policy_no=request.POST['policy_no'],
+                            customer_name=request.POST['customer_name'],
+                            insurance_company=request.POST['insurance_company'],
+                            sp_name=request.POST['sp_name'],
+                            sp_brokercode=request.POST['sp_brokercode'],
+                            registration_no=request.POST['registration_no'],
+                            rto_state=request.POST['rto_state'],
+                            rto_city=request.POST['rto_city'],
+                            vehicle_makeby=request.POST['vmake'],
+                            vehicle_model=request.POST['vmodel'],
+                            vehicle_catagory=request.POST['vehicle_catagory'],
+                            vehicle_fuel_type=request.POST['vehicle_fuel_type'],
+                            mfg_year=request.POST['mfg_year'],
+                            addon=request.POST['addon'],
+                            ncb=request.POST['ncb'],
+                            cubic_capacity=request.POST['cubic_capacity'],
+                            coverage_type=request.POST['coverage_type'],
+                            seating_capacity=request.POST['seating_capacity'],
+                            gvw=request.POST['gvw'],
+                            policy_type=request.POST['policy_type'],
+                            cpa=request.POST['cpa'],
+                            risk_start_date=request.POST['risk_start_date'],
+                            risk_end_date=request.POST['risk_end_date'],
+                            issue_date=request.POST['issue_date'],
+                            insured_age=request.POST['insured_age'],
+                            policy_term=request.POST['policy_term'],
+                            bqp=request.POST['bqp'],
+                            pos=request.POST['pos'],
+                            employee=get_id_from_session(request),
+                            remark=request.POST['remark'],
+                            OD_premium=request.POST['od'],
+                            TP_terrorism=request.POST['tpt'],
+                            net=request.POST['net'],
+                            total=request.POST['total'],
+                            gst_amount=request.POST['gst'],
+                            gst_gcv_amount=request.POST['gstt'],
+                            payment_mode=request.POST['payment_mode']
+                            )
+             
+                print('done')
+                return JsonResponse('done: ' + policy_no, safe=False)
 
-             # proposal=request.POST['proposal'],
-           
-            # proposal=request.POST['proposal'],
-            # mandate=request.POST['mandate'],
-            # policy=request.POST['policy'],
-            # previous_policy=request.POST['previous_policy'],
-            # pan_card=request.POST['pan_card'],
-            # aadhar_card=request.POST['aadhar_card'],
-            # vehicle_rc=request.POST['vehicle_rc'],
-            # inspection_report=request.POST['inspection_report']
-            
-            print('done')
+            else:
+                print('motor new')
+                my_model = Policy.objects.create(profile_id=profile_id,
+                                                 proposal_no=request.POST['proposal_no'],
+                                                 policy_no=request.POST['policy_no'],
+                                                 customer_name=request.POST['customer_name'],
+                                                 insurance_company=request.POST['insurance_company'],
+                                                 sp_name=request.POST['sp_name'],
+                                                 sp_brokercode=request.POST['sp_brokercode'],
+                                                 registration_no=request.POST['registration_no'],
+                                                 rto_state=request.POST['rto_state'],
+                                                 rto_city=request.POST['rto_city'],
+                                                 vehicle_makeby=request.POST['vmake'],
+                                                 vehicle_model=request.POST['vmodel'],
+                                                 vehicle_catagory=request.POST['vehicle_catagory'],
+                                                 vehicle_fuel_type=request.POST['vehicle_fuel_type'],
+                                                 mfg_year=request.POST['mfg_year'],
+                                                 addon=request.POST['addon'],
+                                                 ncb=request.POST['ncb'],
+                                                 cubic_capacity=request.POST['cubic_capacity'],
+                                                 coverage_type=request.POST['coverage_type'],
+                                                 seating_capacity=request.POST['seating_capacity'],
+                                                 gvw=request.POST['gvw'],
+                                                 policy_type=request.POST['policy_type'],
+                                                 cpa=request.POST['cpa'],
+                                                 risk_start_date=request.POST['risk_start_date'],
+                                                 risk_end_date=request.POST['risk_end_date'],
+                                                 issue_date=request.POST['issue_date'],
+                                                 insured_age=request.POST['insured_age'],
+                                                 policy_term=request.POST['policy_term'],
+                                                 bqp=request.POST['bqp'],
+                                                 pos=request.POST['pos'],
+                                                 employee=get_id_from_session(
+                                                     request),
+                                                 remark=request.POST['remark'],
+                                                 OD_premium=request.POST['od'],
+                                                 TP_terrorism=request.POST['tpt'],
+                                                 net=request.POST['net'],
+                                                 total=request.POST['total'],
+                                                 gst_amount=request.POST['gst'],
+                                                 gst_gcv_amount=request.POST['gstt'],
+                                                 payment_mode=request.POST['payment_mode'],
+
+                                                 proposal=request.POST['proposal'],
+                                                 mandate=request.POST['mandate'],
+                                                 policy=request.POST['policy'],
+                                                 previous_policy=request.POST['previous_policy'],
+                                                 pan_card=request.POST['pan_card'],
+                                                 aadhar_card=request.POST['aadhar_card'],
+                                                 vehicle_rc=request.POST['vehicle_rc'],
+                                                 inspection_report=request.POST['inspection_report']
+                                                 )
+
+                return JsonResponse('done: ' + policy_no, safe=False)
+
+        else:          
+            if policyid != "":
+                print('non motor update')
+                data = update_entry_non_motor(request, policyid)
+                print(data)
+                return JsonResponse('done: ' + policy_no, safe=False)             
+
+            else:
+                print('non motor new')
+                data = new_entry_non_motor(request)
+                print(data)              
             return JsonResponse('done: ' + policy_no, safe=False)
-        
-        else:
-            my_model = Policy.objects.create(profile_id=profile_id,
-                                            proposal_no=request.POST['proposal_no'],
-                                            policy_no=request.POST['policy_no'],
-                                            customer_name=request.POST['customer_name'],
-                                            insurance_company=request.POST['insurance_company'],
-                                            sp_name=request.POST['sp_name'],
-                                            sp_brokercode=request.POST['sp_brokercode'],
-                                            registration_no=request.POST['registration_no'],
-                                            rto_state=request.POST['rto_state'],
-                                            rto_city=request.POST['rto_city'],
-                                            vehicle_makeby=request.POST['vmake'],
-                                            vehicle_model=request.POST['vmodel'],
-                                            vehicle_catagory=request.POST['vehicle_catagory'],
-                                            vehicle_fuel_type=request.POST['vehicle_fuel_type'],
-                                            mfg_year=request.POST['mfg_year'],
-                                            addon=request.POST['addon'],
-                                            ncb=request.POST['ncb'],
-                                            cubic_capacity=request.POST['cubic_capacity'],
-                                            coverage_type=request.POST['coverage_type'],
-                                            seating_capacity=request.POST['seating_capacity'],
-                                            gvw=request.POST['gvw'],
-                                            policy_type=request.POST['policy_type'],
-                                            cpa=request.POST['cpa'],
-                                            risk_start_date=request.POST['risk_start_date'],
-                                            risk_end_date=request.POST['risk_end_date'],
-                                            issue_date=request.POST['issue_date'],
-                                            insured_age=request.POST['insured_age'],
-                                            policy_term=request.POST['policy_term'],
-                                            bqp=request.POST['bqp'],
-                                            pos=request.POST['pos'],
-                                            employee=get_id_from_session(request),
-                                            remark=request.POST['remark'],
-                                            OD_premium=request.POST['od'],
-                                            TP_terrorism=request.POST['tpt'],
-                                            net=request.POST['net'],
-                                            total=request.POST['total'],
-                                            gst_amount=request.POST['gst'],
-                                            gst_gcv_amount=request.POST['gstt'],
-                                            payment_mode=request.POST['payment_mode'],
+                
 
-                                            proposal=request.POST['proposal'],
-                                            mandate=request.POST['mandate'],
-                                            policy=request.POST['policy'],
-                                            previous_policy=request.POST['previous_policy'],
-                                            pan_card=request.POST['pan_card'],
-                                            aadhar_card=request.POST['aadhar_card'],
-                                            vehicle_rc=request.POST['vehicle_rc'],
-                                            inspection_report=request.POST['inspection_report']
-                                            )
-            
-            return JsonResponse('done: ' + request.POST['policy_no'], safe=False)
-    
     except Exception as e:
         print("Error occurred in new_entry method:", str(e))
         return JsonResponse('error: ' + request.POST['policy_no'], safe=False)
 
 
 def new_entry_non_motor(request):
+    try:
+        print('new_entry_non_motorr method')
+
+        id = get_profile_id(get_id_from_session(request))
+        profile_id = ProfileModel.objects.get(id=id)
+
+        print(request.POST['policy_no'])
+
+        data = Policy.objects.create(profile_id=profile_id,
+                                     product_name=request.POST['product_name'],
+                                     policy_type=request.POST['policy_type'],
+                                     proposal_no=request.POST['proposal_no'],
+                                     policy_no=request.POST['policy_no'],
+                                     customer_name=request.POST['customer_name'],
+                                     insurance_company=request.POST['insurance_company'],
+                                     sp_name=request.POST['sp_name'],
+                                     sp_brokercode=request.POST['sp_brokercode'],
+                                     risk_start_date=request.POST['risk_start_date'],
+                                     risk_end_date=request.POST['risk_end_date'],
+                                     issue_date=request.POST['issue_date'],
+                                     policy_term=request.POST['policy_term'],
+                                     bqp=request.POST['bqp'],
+                                     pos=request.POST['pos'],
+                                     employee=get_id_from_session(request),
+
+                                     proposal=request.POST['proposal'],
+                                     mandate=request.POST['mandate'],
+                                     policy=request.POST['policy'],
+                                     previous_policy=request.POST['previous_policy'],
+                                     pan_card=request.POST['pan_card'],
+                                     aadhar_card=request.POST['aadhar_card'],
+                                    #  vehicle_rc=request.POST['vehicle_rc'],
+                                     inspection_report=request.POST['inspection_report'],
+
+                                     OD_premium=request.POST['od'],
+                                     TP_terrorism=request.POST['tpt'],
+                                     net=request.POST['net'],
+                                     gst_amount=request.POST['gst'],
+                                     total=request.POST['total'],
+                                     payment_mode=request.POST['payment_mode'],
+                                     remark=request.POST['remark'])
+        
+        print('pol data ', data)
+
+        return data
+    except Exception as e:
+        print("Error occurred in new_entry_non_motor method:", str(e))
+        return str(e)
+
+def update_entry_non_motor(request, policyid):
+    try:
+        print('new_entry_non_motorr method')
+
+        print('in update block: ')
+        data = Policy.objects.filter(policyid=policyid)
+        print(data)
+        data.update(product_name=request.POST['product_name'],
+                    policy_type=request.POST['policy_type'],
+                    proposal_no=request.POST['proposal_no'],
+                    policy_no=request.POST['policy_no'],
+                    customer_name=request.POST['customer_name'],
+                    insurance_company=request.POST['insurance_company'],
+                    sp_name=request.POST['sp_name'],
+                    sp_brokercode=request.POST['sp_brokercode'],
+                    risk_start_date=request.POST['risk_start_date'],
+                    risk_end_date=request.POST['risk_end_date'],
+                    issue_date=request.POST['issue_date'],
+                    policy_term=request.POST['policy_term'],
+                    bqp=request.POST['bqp'],
+                    pos=request.POST['pos'],       
+                    employee=get_id_from_session(request),
+                    OD_premium=request.POST['od'],
+                    TP_terrorism=request.POST['tpt'],
+                    net=request.POST['net'],
+                    gst_amount=request.POST['gst'],
+                    total=request.POST['total'],
+                    payment_mode=request.POST['payment_mode'],
+                    remark=request.POST['remark'])
+       
+        print('done')
+        return data
+
+        data = Policy.objects.filter(policyid=policyid)
+        print(data)
+
+        id = get_profile_id(get_id_from_session(request))
+        profile_id = ProfileModel.objects.get(id=id)
+
+        print(request.POST['policy_no'])
+
+        data = Policy.objects.create(profile_id=profile_id,
+                                     product_name=request.POST['product_name'],
+                                     policy_type=request.POST['policy_type'],
+                                     proposal_no=request.POST['proposal_no'],
+                                     policy_no=request.POST['policy_no'],
+                                     customer_name=request.POST['customer_name'],
+                                     insurance_company=request.POST['insurance_company'],
+                                     sp_name=request.POST['sp_name'],
+                                     sp_brokercode=request.POST['sp_brokercode'],
+                                     risk_start_date=request.POST['risk_start_date'],
+                                     risk_end_date=request.POST['risk_end_date'],
+                                     issue_date=request.POST['issue_date'],
+                                     policy_term=request.POST['policy_term'],
+                                     bqp=request.POST['bqp'],
+                                     pos=request.POST['pos'],
+                                     employee=get_id_from_session(request),
+
+                                     proposal=request.POST['proposal'],
+                                     mandate=request.POST['mandate'],
+                                     policy=request.POST['policy'],
+                                     previous_policy=request.POST['previous_policy'],
+                                     pan_card=request.POST['pan_card'],
+                                     aadhar_card=request.POST['aadhar_card'],
+                                    #  vehicle_rc=request.POST['vehicle_rc'],
+                                     inspection_report=request.POST['inspection_report'],
+
+                                     OD_premium=request.POST['od'],
+                                     TP_terrorism=request.POST['tpt'],
+                                     net=request.POST['net'],
+                                     gst_amount=request.POST['gst'],
+                                     total=request.POST['total'],
+                                     payment_mode=request.POST['payment_mode'],
+                                     remark=request.POST['remark'])
+        
+        print('pol data ', data)
+
+        return data
+    except Exception as e:
+        print("Error occurred in new_entry_non_motor method:", str(e))
+        return str(e)
+
+
+def new_entry_non_motorOld(request):
     try:
         print('new_entry_non_motor method')
 
