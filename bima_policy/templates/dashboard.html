@@ -278,8 +278,11 @@
             <header class="page-title-bar">
                <!-- page title stuff goes here -->
                <div class="row">
-                  <div class="col-md-5 col-sm-12">
-                     <h1 id="page_heading" class="page-title "> Policy List </h1>
+                  <div class="col">
+                     <h1 id="page_heading" class="page-title" style="display: inline-block;"> Policy List </h1>
+                     <a onclick="addNewSomething()" href="#" class="btn btn-secondary btn-sm float-right mr-2"><i
+                           class="fa fa-plus"></i> Add
+                        New</a>
                   </div>
                </div>
             </header>
@@ -1960,7 +1963,8 @@
                                        <div class="custom-file">
                                           <input type="file" name="proposal2" accept=".pdf,image/" id="proposal2"
                                              class="custom-file-input">
-                                          <label id="lbl_proposal2" name="lbl_proposal2" class="custom-file-label" for="proposal">Choose
+                                          <label id="lbl_proposal2" name="lbl_proposal2" class="custom-file-label"
+                                             for="proposal">Choose
                                              file</label>
                                        </div>
                                        <a id="a_proposal2" href="#"> </a>
@@ -1972,7 +1976,8 @@
                                        <div class="custom-file">
                                           <input type="file" name="mandate2" accept=".pdf,image/" id="mandate2"
                                              class="custom-file-input">
-                                          <label id="lbl_mandate2" name="lbl_mandate2" class="custom-file-label" for="mandate">Choose
+                                          <label id="lbl_mandate2" name="lbl_mandate2" class="custom-file-label"
+                                             for="mandate">Choose
                                              file</label>
                                        </div>
                                        <a id="a_mandate2" href="#"> </a>
@@ -1984,7 +1989,8 @@
                                        <div class="custom-file">
                                           <input type="file" name="policy2" accept=".pdf,image/" id="policy2"
                                              class="custom-file-input" required>
-                                          <label id="lbl_policy2" name="lbl_policy2" class="custom-file-label" for="policy">Choose
+                                          <label id="lbl_policy2" name="lbl_policy2" class="custom-file-label"
+                                             for="policy">Choose
                                              file</label>
                                        </div>
                                        <a id="a_policy2" href="#"> </a>
@@ -1996,8 +2002,8 @@
                                        <div class="custom-file">
                                           <input type="file" name="previous_policy2" accept=".pdf,image/"
                                              id="previous_policy2" class="custom-file-input">
-                                          <label  id="lbl_previous_policy2"  name="lbl_previous_policy2" class="custom-file-label"
-                                             for="previous_policy">Choose file</label>
+                                          <label id="lbl_previous_policy2" name="lbl_previous_policy2"
+                                             class="custom-file-label" for="previous_policy">Choose file</label>
                                        </div>
                                        <a id="a_previous_policy2" href="#"> </a>
                                     </div>
@@ -2008,7 +2014,8 @@
                                        <div class="custom-file">
                                           <input type="file" name="pan_card2" accept=".pdf,image/" id="pan_card2"
                                              class="custom-file-input">
-                                          <label  id="lbl_pan_card2" name="lbl_pan_card2" class="custom-file-label" for="pan_card">Choose
+                                          <label id="lbl_pan_card2" name="lbl_pan_card2" class="custom-file-label"
+                                             for="pan_card">Choose
                                              file</label>
                                        </div>
                                        <a id="a_pan_card2" href="#"> </a>
@@ -2020,7 +2027,7 @@
                                        <div class="custom-file">
                                           <input type="file" name="aadhar_card2" accept=".pdf,image/" id="aadhar_card2"
                                              class="custom-file-input">
-                                          <label  id="lbl_aadhar_card2" name="lbl_aadhar_card2" class="custom-file-label"
+                                          <label id="lbl_aadhar_card2" name="lbl_aadhar_card2" class="custom-file-label"
                                              for="aadhar_card">Choose file</label>
                                        </div>
                                        <a id="a_aadhar_card2" href="#"> </a>
@@ -2032,8 +2039,8 @@
                                        <div class="custom-file">
                                           <input type="file" name="inspection_report2" accept=".pdf,image/"
                                              id="inspection_report2" class="custom-file-input">
-                                          <label id="lbl_inspection_report2" name="lbl_inspection_report2" class="custom-file-label"
-                                             for="vehicle_rc">Choose file</label>
+                                          <label id="lbl_inspection_report2" name="lbl_inspection_report2"
+                                             class="custom-file-label" for="vehicle_rc">Choose file</label>
                                        </div>
                                        <a id="a_inspection_report2" href="#"> </a>
                                     </div>
@@ -2204,16 +2211,362 @@
          </div>
       </div>
 
+      <div class="page " id="new_posp" hidden>
+         <!-- .page -->
+         <div class="page-inner">
+            <!-- .page-inner -->
+            <header class="page-title-bar">
+               <!-- .page-title-bar -->
+               <div class="d-flex justify-content-between align-items-center">
+                  <!-- .d-flex -->
+                  <!-- .breadcrumb -->
+
+                  <!-- /.breadcrumb -->
+               </div>
+               <!-- /.d-flex -->
+               <!-- grid row -->
+               <div class="row text-center text-sm-left">
+                  <!-- grid column -->
+                  <div class="col">
+                     <h1 id="posp_title" class="page-title"> POSP Form <small class="text-muted"> All * marks Fields are mandatory.
+                        </small>
+                     </h1>
+                  </div>
+                 
+                  <!-- /grid column -->
+               </div>
+               <!-- /grid row -->
+            </header>
+            <!-- .page-section -->
+            <div class="page-section">
+               <!-- .section-block -->
+               <div class="section-block">   
+                    
+                     <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                           <div class="card">
+                              <!-- .card -->
+                              <div class="card-body">
+                                 <!-- .card-body -->
+                                 <!-- .content -->
+                                 <div class="ajax-progressBar">
+                                    <div class="postProgress"></div>
+                                 </div>
+                                 <fieldset>
+                                    <!-- fieldset -->
+                                    <legend class="mb-2">POSP Information</legend>
+                                    <div class="form-row">
+
+                                       <div class="col-md-2 mb-2">
+                                          <label>POSP Code<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input id="posp_code" type="text" class="form-control" name="posp_code"
+                                             data-parsley-="true" required style="text-transform: uppercase;">
+                                       </div>
+                                       <div class="col-md-2 mb-2">
+                                          <label>Registration Code<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input id="registration_code" type="text" class="form-control"
+                                             name="registration_code" data-parsley-="true" required
+                                             style="text-transform: uppercase;">
+                                       </div>
+                                       <div class="col-md-2 mb-2">
+                                          <label>Full Name<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input id="full_name" type="text" name="full_name"
+                                             data-parsley-pattern="^(?:[A-Za-z]+[- ])*[A-Za-z]+$"
+                                             style="text-transform: uppercase;" data-parsley-="true"
+                                             class="form-control" required>
+                                       </div>
+                                       <div class="col-md-2 mb-2">
+                                          <label>Gender<abbr title=" " class="text-danger">*</abbr></label>
+                                          <select id="gender" name="gender" id="gender" data-parsley- -message=""
+                                             class="custom-select" required data-parsley-="true" aria-hidden="true">
+                                             <option value=""> -- select Gender -- </option>
+                                             <option value="MALE"> MALE </option>
+                                             <option value="FEMALE"> FEMALE </option>
+                                             <option value="OTHER"> OTHER </option>
+                                          </select>
+                                       </div>
+                                       <div class="col-md-2 mb-2">
+                                          <label>Mobile No<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input id="mob_no" type="text" class="form-control maskNumField"
+                                             data-mask-as-number-maxlength="10" required data-parsley-="true"
+                                             data-parsley-minlength="10" data-parsley-maxlength="10"
+                                             data-parsley-pattern="^[0-9]+$" name="mob_no" maxlength="10">
+                                       </div>
+                                       <div class="col-md-2 mb-2">
+                                          <label>Email Id<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input id="email_id" type="text" class="form-control" name="email_id"
+                                             data-parsley-type="email" required style="text-transform: lowercase;"
+                                             data-parsley-="true" value="">
+                                       </div>
+
+                                       <div class="col-md-2 mb-2">
+                                          <label>Address<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input id="address" type="text" class="form-control" name="address"
+                                             data-parsley-="true" required style="text-transform: uppercase;">
+                                       </div>
+
+                                       <div class="col-md-2 mb-4">
+                                          <label>RTO State<abbr title="" class="text-danger">*</abbr></label>
+                                          <select id="state" name="state" class="custom-select" id="state" required>
+                                             <option value="">-- Select State --</option>
+                                             <option value="Andama And Nicobar Island">Andama And Nicobar Island
+                                             </option>
+                                             <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                             <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                             <option value="Assam">Assam</option>
+                                             <option value="Bihar">Bihar</option>
+                                             <option value="Chandigarh">Chandigarh</option>
+                                             <option value="Chattisgarh">Chattisgarh</option>
+                                             <option value="Daman And Diu">Daman And Diu</option>
+                                             <option value="Delhi">Delhi</option>
+                                             <option value="Goa">Goa</option>
+                                             <option value="Gujrat">Gujrat</option>
+                                             <option value="Haryana">Haryana</option>
+                                             <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                             <option value="Jammu And Kashmir">Jammu And Kashmir</option>
+                                             <option value="Jharkhand">Jharkhand</option>
+                                             <option value="Karnataka">Karnataka</option>
+                                             <option value="Kerala">Kerala</option>
+                                             <option value="Lakshadweep">Lakshadweep</option>
+                                             <option value="Leh">Leh</option>
+                                             <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                             <option value="Maharashtra">Maharashtra</option>
+                                             <option value="Manipur">Manipur</option>
+                                             <option value="Meghalaya">Meghalaya</option>
+                                             <option value="Mizoram">Mizoram</option>
+                                             <option value="Nagaland">Nagaland</option>
+                                             <option value="NCR">NCR</option>
+                                             <option value="Odisha">Odisha</option>
+                                             <option value="Puducherry">Puducherry</option>
+                                             <option value="Punjab">Punjab</option>
+                                             <option value="Rajasthan">Rajasthan</option>
+                                             <option value="Sikkim">Sikkim</option>
+                                             <option value="Tamil Nadu">Tamil Nadu</option>
+                                             <option value="Telangana">Telangana</option>
+                                             <option value="Tripura">Tripura</option>
+                                             <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                             <option value="Uttrakhand">Uttrakhand</option>
+                                             <option value="West Bengal">West Bengal</option>
+                                          </select>
+                                       </div>
+
+                                       <div class="col-md-2 mb-2">
+                                          <label>City<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input id="city" type="text" class="form-control" name="city"
+                                             data-parsley-="true" required style="text-transform: uppercase;">
+                                       </div>
+                                       <div class="col-md-2 mb-2">
+                                          <label>Pincode<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input id="pincode" type="text" class="form-control maskNumField"
+                                             data-mask-as-number-maxlength="6" required data-parsley-="true"
+                                             data-parsley-minlength="6" data-parsley-maxlength="6"
+                                             data-parsley-pattern="^[0-9]+$" name="pincode" maxlength="6">
+                                       </div>
+                                       <div class="col-md-2 mb-2">
+                                          <label>Rural / Urban<abbr class="text-danger">*</abbr></label>
+                                          <select id="rural_urban" name="rural_urban" class="custom-select"
+                                             id="rural_urban" required>
+                                             <option value=""> -- Select Rural -- </option>
+                                             <option value="RURAL">Rural</option>
+                                             <option value="URBAN">Urban</option>
+                                          </select>
+                                       </div>
+
+                                       <div class="col-md-2 mb-2">
+                                          <label>Agent Slab<abbr title=" " class="text-danger">*</abbr></label>
+                                          <select id="slab" name="slab" class="custom-select " required
+                                             aria-hidden="true">
+                                             <option value="">Choose...</option>
+                                             <option value="slab1" selected>slab1</option>
+
+                                          </select>
+                                       </div>
+
+                                       <div class="col-md-2 mb-2">
+                                          <label>GSTIN<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input id="GSTIN" type="text" class="form-control maskNumField"
+                                             data-mask-as-number-maxlength="15" data-parsley-="true"
+                                             data-parsley-minlength="15" data-parsley-maxlength="15"
+                                             data-parsley-pattern="^[0-9]+$" name="GSTIN" maxlength="15">
+                                       </div>
+
+                                       <div class="col-md-2 mb-2">
+                                          <label>Account No:</label>
+                                          <input type="text" class="form-control" id="account_no" name="account_no"
+                                             required style="text-transform: uppercase;">
+                                       </div>
+                                       <div class="col-md-2 mb-2">
+                                          <label>IFSC Code:</label>
+                                          <input type="text" class="form-control" id="ifsc_code" name="ifsc_code"
+                                             required style="text-transform: uppercase;">
+                                       </div>
+                                       <div class="col-md-2 mb-2">
+                                          <label>Bank Name:</label>
+                                          <input type="text" class="form-control" id="bank_name" name="bank_name"
+                                             required style="text-transform: uppercase;">
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Basic Qualification <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" id="basic_qualification" name="basic_qualification"
+                                                accept=".pdf,image/" class="custom-file-input">
+                                             <label id="lbl_basic_qualification" class="custom-file-label"
+                                                for="basic_qualification">Choose
+                                                file</label>
+                                          </div>
+                                          <a id="a_basic_qualification" href="#"> </a>
+
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Aadhar Card <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input required type="file" name="aadhar_card_pos" accept=".pdf,image/"
+                                                id="aadhar_card_pos" class="custom-file-input">
+                                             <label id="lbl_aadhar_card_pos" class="custom-file-label"
+                                                for="aadhar_card">Choose file</label>
+                                          </div>
+                                          <a id="a_aadhar_card_pos" href="#"> </a>
+
+                                       </div>
+
+                                       <div class="col-md-3 mb-4">
+                                          <label>Pan Card <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input required type="file" name="pan_card_pos" accept=".pdf,image/"
+                                                id="pan_card_pos" class="custom-file-input">
+                                             <label id="lbl_pan_card_pos" class="custom-file-label"
+                                                for="pan_card">Choose file</label>
+                                          </div>
+                                          <a id="a_pan_card_pos" href="#"> </a>
+
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Training Certificate <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input required type="file" name="training_certificate_pos"
+                                                accept=".pdf,image/" id="training_certificate_pos"
+                                                class="custom-file-input">
+                                             <label id="lbl_training_certificate_pos" class="custom-file-label"
+                                                for="training_certificate">Choose
+                                                file</label>
+                                          </div>
+                                          <a id="a_training_certificate_pos" href="#"> </a>
+
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Appointment Certificate <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input type="file" name="appointment_certificate_pos" accept=".pdf,image/"
+                                                id="appointment_certificate_pos" class="custom-file-input">
+                                             <label id="lbl_appointment_certificate_pos" class="custom-file-label"
+                                                for="appointment_certificate">Choose
+                                                file</label>
+                                          </div>
+                                          <a id="a_appointment_certificate_pos" href="#"> </a>
+
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Agreement <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input required type="file" name="agreement_certificate_pos"
+                                                accept=".pdf,image/" id="agreement_certificate_pos"
+                                                class="custom-file-input">
+                                             <label id="lbl_agreement_certificate_pos" class="custom-file-label"
+                                                for="agreement_certificate">Choose
+                                                file</label>
+                                          </div>
+                                          <a id="a_agreement_certificate_pos" href="#"> </a>
+
+                                       </div>
+                                       <div class="col-md-3 mb-4">
+                                          <label>Bank Details <small>(Only<strong> PDF &amp; Image
+                                                </strong>File)</small> </label>
+                                          <div class="custom-file">
+                                             <input required type="file" name="bank_details_pos" accept=".pdf,image/"
+                                                id="bank_details_pos" class="custom-file-input">
+                                             <label id="lbl_bank_details_pos" class="custom-file-label"
+                                                for="bank_details">Choose file</label>
+                                          </div>
+                                          <a id="a_bank_details_pos" href="#"> </a>
+
+                                       </div>
+
+                                       <div class="col-md-3 mb-4" >
+                                          <label>Password<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input type="password" id="password" name="password" class="form-control"
+                                             required data-parsley-minlength="6" data-parsley-maxlength="15"
+                                             data-parsley-pattern="/^(?=.*[0-9])(?=.*[!@#$%^&amp;*])[a-zA-Z0-9!@#$%^&amp;*]{6,20}$/"
+                                             data-parsley-="true" 
+                                             parsley-pattern-message="The string must contain at least 1 lowercase alphabetical character<br>The Password must contain at least 1 uppercase alphabetical character<br>The Password must contain at least 1 numeric character <br>The string must contain at least one special character">
+                                       </div>
+
+                                       <div class="col-md-3 mb-4" >
+                                          <label>Retype Password<abbr title=" " class="text-danger">*</abbr></label>
+                                          <input type="password" id="confirm_password" name="confirm_password" required
+                                             data-parsley-error-message="Password &amp; confirm password should be same"
+                                             data-parsley-equalto="#password" class="form-control" data-parsley-="true">
+                                       </div>
+
+                                       <!-- <div class="col-md-4 mb-4">
+                               <legend class="mb-2">Documents</legend>
+                               <label><small>(Accept Only<strong> PDF &amp; Image </strong>File) </small> <span
+                                   class="docerror text-red"></span></label>
+                               <div class="k-content">
+                                 <div class="k-widget k-upload k-header k-upload-sync k-upload-empty">
+                                   <div class="k-button k-upload-button" aria-label="Select files..."><input name="docs"  
+                                       id="documents" accept=".pdf,image/*" type="file" aria-label="files" data-role="upload"
+                                       multiple="multiple" autocomplete="off"   ><span>Select files...</span></div>
+                                 </div>
+                               </div>
+                             </div> -->
+
+                                    </div>
+
+                              </div>
+
+
+                              </fieldset>
+
+                           </div>
+                           <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                     </div>
+               </div>
+               <hr>
+               <div>
+                  <!-- <a href="{%url 'bima_policy:agent' %}" class="btn btn-secondary w-100p pull-left">Back</a> -->
+                  <span class="float-right">
+                     <!-- <button type="submit" name="subagent" class="btn btn-success w-100p">Save</button> -->
+                     <button  ID="subagent" name="subagent" class="btn btn-success w-100p"
+                        onclick="sendPOspFormData()">SAVE</button>
+                     <!-- mdlVerifyOTP -->
+                  </span>
+               </div>
+              
+               <!-- /form -->
+            </div>
+            <!-- /.section-block -->
+         </div>
+         <!-- /.page-section -->
+      </div>
+
 </main>
 
 
 <script>
    document.addEventListener('DOMContentLoaded', async function () {
-
-      await FetchDataAsync()
-
+      
       Load_Dashboard_Details()
-
+      await FetchDataAsync()
+      Load_Dashboard_Details()
    });
 
 
@@ -2225,7 +2578,7 @@
    var fetchList = []
    var freezList = []
 
-   // Dashboard
+   // Dashboard 
 
    function ShowPage(page_name) {
       if (page_name == 'dashboard') {
@@ -2233,6 +2586,7 @@
          document.getElementById('entrylist').hidden = true
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_Dashboard_Details()
       }
@@ -2242,6 +2596,7 @@
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_Entry_List()
       }
@@ -2251,6 +2606,7 @@
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_POSP_List()
       }
@@ -2260,6 +2616,7 @@
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_Insurer_List()
       }
@@ -2269,6 +2626,7 @@
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_SP_List()
       }
@@ -2278,6 +2636,7 @@
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_Product_List()
       }
@@ -2287,6 +2646,7 @@
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_Vehicle_Category_List()
       }
@@ -2296,6 +2656,7 @@
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_Vehicle_Make_List()
       }
@@ -2305,6 +2666,7 @@
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_Vehicle_Model_List()
       }
@@ -2314,6 +2676,7 @@
          document.getElementById('entrylist').hidden = false
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_Staff_List()
       }
@@ -2323,6 +2686,7 @@
          document.getElementById('entrylist').hidden = true
          document.getElementById('motor_entry').hidden = false
          document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = true
 
          Load_Motor_Config()
       }
@@ -2332,8 +2696,19 @@
          document.getElementById('entrylist').hidden = true
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = false
+         document.getElementById('new_posp').hidden = true
 
          Load_NonMotor_Config()
+      }
+
+      else if (page_name == 'new_posp') {
+         document.getElementById('dashboard').hidden = true
+         document.getElementById('entrylist').hidden = true
+         document.getElementById('motor_entry').hidden = true
+         document.getElementById('non_motor_entry').hidden = true
+         document.getElementById('new_posp').hidden = false
+
+         Load_Posp_Config()
       }
 
    }
@@ -3377,7 +3752,7 @@
 
       document.getElementById('policy_title_non_motor').innerText = "Update Non Motor Policy"
       document.getElementById('btnGenerate_Policy_nonmotor').innerText = "UPDATE"
-      
+
       policyid = null
       policyid = data.policyid
 
@@ -4358,8 +4733,8 @@
                return
             }
             fetchList = response.data
-            GeneratePolicyTable(fetchList);           
-            localStorage.setItem('records', JSON.stringify(fetchList));          
+            GeneratePolicyTable(fetchList);
+            localStorage.setItem('records', JSON.stringify(fetchList));
          },
          error: function (xhr, status, error) {
             console.error(error);
@@ -5357,7 +5732,7 @@
 
       // console.log(fileName);
       // showNotification(`linking ${fileName}...`.toUpperCase());
-      showNotification('✅ ' + 'succeed : '.toUpperCase() + `linking ${fileName}...`.toUpperCase() );
+      showNotification('✅ ' + 'succeed : '.toUpperCase() + `linking ${fileName}...`.toUpperCase());
 
 
       // policy pdf
@@ -5391,7 +5766,7 @@
                }
             });
          });
-         showNotification('✅ ' + 'succeed : '.toUpperCase() + `linked ${fileName}...`.toUpperCase() );
+         showNotification('✅ ' + 'succeed : '.toUpperCase() + `linked ${fileName}...`.toUpperCase());
 
          // showNotification(`✅ linked ${fileName} `.toUpperCase());
          // console.log('File uploaded successfully. Location:', data.Location);
@@ -5898,7 +6273,7 @@
 
       // return
       result = await sendFormData(formData.get('policy_no'), formData);
-      
+
       if (result != null) {
 
          if (document.getElementById('policy_title_non_motor').innerText == "Non Motor Policy") {
@@ -5932,12 +6307,12 @@
 
       document.getElementById('insurer_name').value = ''
       document.getElementById('sps_name').value = ''
-      document.getElementById('sp_code').value = ''     
-      
+      document.getElementById('sp_code').value = ''
+
       document.getElementById('risk_start_date2').value = ''
       document.getElementById('risk_end_date2').value = ''
       document.getElementById('issue_date2').value = ''
-    
+
       document.getElementById('policy_term2').selectedIndex = 0
       document.getElementById('pos_product').value = ''
       document.getElementById('bqp2').selectedIndex = 1
@@ -5963,12 +6338,12 @@
       document.getElementById('pan_card2').value = ''
       document.getElementById('lbl_pan_card2').innerHTML = 'Choose file'
       document.getElementById('aadhar_card2').value = ''
-      document.getElementById('lbl_aadhar_card2').innerHTML = 'Choose file'   
+      document.getElementById('lbl_aadhar_card2').innerHTML = 'Choose file'
       document.getElementById('inspection_report2').value = ''
       document.getElementById('lbl_inspection_report2').innerHTML = 'Choose file'
 
       document.getElementById("product_name").focus()
-}
+   }
 
 
    posp_product_added = false
@@ -6470,7 +6845,221 @@
       });
    }
 
+   function addNewSomething() {
 
+      heading = document.getElementById('page_heading').innerText
+
+      if (heading == "Policy List") {
+         ShowPage('motor_entry')
+      }
+      else if (heading == "POS List") {
+         ShowPage('new_posp')
+      }
+   }
+
+   function Load_Posp_Config() {
+
+      document.getElementById('posp_code').value = ''
+      document.getElementById('registration_code').value = ''
+      document.getElementById('full_name').value = ''
+      document.getElementById('gender').selectedIndex = 0
+      document.getElementById('mob_no').value = ""
+      document.getElementById('email_id').value = ""
+      document.getElementById('address').selectedIndex = 0
+      document.getElementById('state').selectedIndex = 0
+      document.getElementById('city').value = ''
+
+      document.getElementById('pincode').value = ''
+      document.getElementById('rural_urban').selectedIndex = 0
+      document.getElementById('slab').selectedIndex = 0
+
+      document.getElementById('GSTIN').value = ''
+      document.getElementById('account_no').value = ''
+      document.getElementById('ifsc_code').value = ''
+      document.getElementById('bank_name').value = ''
+
+      document.getElementById('basic_qualification').value = ""
+      document.getElementById('a_basic_qualification').innerText = ""
+      document.getElementById('lbl_basic_qualification').innerText = "Choose file"
+
+      document.getElementById('aadhar_card_pos').value = ""
+      document.getElementById('a_aadhar_card_pos').innerText = ""
+      document.getElementById('lbl_aadhar_card_pos').innerText = "Choose file"
+
+      document.getElementById('pan_card_pos').value = ""
+      document.getElementById('a_pan_card_pos').innerText = ""
+      document.getElementById('lbl_pan_card_pos').innerText = "Choose file"
+
+      document.getElementById('training_certificate_pos').value = ""
+      document.getElementById('a_training_certificate_pos').innerText = ""
+      document.getElementById('lbl_training_certificate_pos').innerText = "Choose file"
+
+      document.getElementById('appointment_certificate_pos').value = ""
+      document.getElementById('a_appointment_certificate_pos').innerText = ""
+      document.getElementById('lbl_appointment_certificate_pos').innerText = "Choose file"
+
+      document.getElementById('agreement_certificate_pos').value = ""
+      document.getElementById('a_agreement_certificate_pos').innerText = ""
+      document.getElementById('lbl_agreement_certificate_pos').innerText = "Choose file"
+
+      document.getElementById('bank_details_pos').value = ""
+      document.getElementById('a_bank_details_pos').innerText = ""
+      document.getElementById('lbl_bank_details_pos').innerText = "Choose file"
+
+   }
+
+   async function sendPOspFormData() {
+
+      formData = new FormData();     
+      formData.append('posp_code', document.getElementById('posp_code').value);
+      formData.append('registration_code', document.getElementById('registration_code').value);
+      formData.append('full_name', document.getElementById('full_name').value);
+      formData.append('gender', document.getElementById('gender').value);
+      formData.append('mob_no', document.getElementById('mob_no').value);
+      formData.append('email_id', document.getElementById('email_id').value);
+      formData.append('address', document.getElementById('address').value);
+      formData.append('state', document.getElementById('state').value);
+      formData.append('city', document.getElementById('city').value);
+
+      formData.append('pincode', document.getElementById('pincode').value);
+      formData.append('rural_urban', document.getElementById('rural_urban').value);
+      formData.append('slab', document.getElementById('slab').value);
+      formData.append('GSTIN', document.getElementById('GSTIN').value);
+      formData.append('account_no', document.getElementById('account_no').value);
+      formData.append('ifsc_code', document.getElementById('ifsc_code').value);
+      formData.append('bank_name', document.getElementById('bank_name').value);
+
+      formData.append('password', document.getElementById('password').value);
+          
+      for (const iterator of formData) {
+
+         if (iterator[1] == "") {
+            showNotification((`⚠️ ${iterator[0]} is missing`.toUpperCase()));
+            return
+         }
+         else {
+            showNotification('');
+         }
+      }     
+    
+      if (document.getElementById('posp_title').innerText.startsWith("POSP Form")) {
+         formData.append('login_id', '');
+      }
+      else{
+         formData.append('login_id', policyid); // will be populated during editonclick()
+      }
+    
+      formData.append('basic_qualification', '');    
+      formData.append('aadhar_card', '');    
+      formData.append('pan_card', '');    
+      formData.append('training_certificate', '');
+      formData.append('appointment_certificate', '');
+      formData.append('agreement_certificate', '');
+      formData.append('bank_details', '');
+    
+      // attachments
+      basic_qualification = document.getElementById('basic_qualification').files[0]
+      if (basic_qualification != null) {
+         file_name = `media/documents/` + getRandomFileName(basic_qualification)
+         formData.set('basic_qualification', file_name.trim());
+      }
+      aadhar_card_pos = document.getElementById('aadhar_card_pos').files[0]
+      if (aadhar_card_pos != null) {
+         file_name = `media/documents/` + getRandomFileName(aadhar_card_pos)
+         formData.set('aadhar_card', file_name.trim());
+      }
+      pan_card_pos = document.getElementById('pan_card_pos').files[0]
+      if (pan_card_pos != null) {
+         file_name = `media/documents/` + getRandomFileName(pan_card_pos)
+         formData.set('pan_card', file_name.trim());
+      }
+      training_certificate_pos = document.getElementById('training_certificate_pos').files[0]
+      if (training_certificate_pos != null) {
+         file_name = `media/documents/` + getRandomFileName(training_certificate_pos)
+         formData.set('training_certificate', file_name.trim());
+      }
+      appointment_certificate_pos = document.getElementById('appointment_certificate_pos').files[0]
+
+      if (appointment_certificate_pos != null) {
+         file_name = `media/documents/` + getRandomFileName(appointment_certificate_pos)
+         formData.set('appointment_certificate', file_name.trim());
+      }
+
+      agreement_certificate_pos = document.getElementById('agreement_certificate_pos').files[0]
+      if (agreement_certificate_pos != null) {
+         file_name = `media/documents/` + getRandomFileName(agreement_certificate_pos)
+         formData.set('agreement_certificate', file_name.trim());
+      }
+
+      bank_details_pos = document.getElementById('bank_details_pos').files[0]
+      if (bank_details_pos != null) {
+         file_name = `media/documents/` + getRandomFileName(bank_details_pos)
+         formData.set('bank_details', file_name.trim());
+      }
+
+      for (const iterator of formData) {
+
+         console.log(iterator);
+      }
+
+
+      // return
+
+      result = await sendPospData(formData.get('posp_code'), formData);
+
+      if (result != null) {
+                
+         if (document.getElementById('posp_title').innerText.startsWith("POSP Form")) {
+          
+            await uploadPdf(formData.get('basic_qualification'), 'basic_qualification')
+            await uploadPdf(formData.get('aadhar_card'), 'aadhar_card_pos')
+            await uploadPdf(formData.get('pan_card'), 'pan_card_pos')
+            await uploadPdf(formData.get('training_certificate'), 'training_certificate_pos')
+            await uploadPdf(formData.get('appointment_certificate'), 'appointment_certificate_pos')
+            await uploadPdf(formData.get('agreement_certificate'), 'agreement_certificate_pos')
+            await uploadPdf(formData.get('bank_details'), 'bank_details_pos')
+         
+            showNotification('✅ ' + 'succeed : '.toUpperCase() + formData.get('posp_code').toUpperCase());
+         }
+ 
+         FetchDataAsync()
+
+         // clearAllField()
+
+      }
+   }
+
+   async function sendPospData(formDataKey, formData) {
+      try {
+         showNotification('⌛️ saving posp ...'.toUpperCase());
+
+         const href = window.location.origin + '/bima_policy/policy/new_posp/';
+         const csrfToken = '{{ csrf_token }}';
+
+         const response = await fetch(href, {
+            method: 'POST',
+            headers: {
+               'X-CSRFToken': csrfToken,
+            },
+            body: formData,
+         });
+
+         const result = await response.text();
+         // console.log(result);
+
+         if (result.includes('done:')) {
+            showNotification('✅ ' + 'succeed : '.toUpperCase() + formDataKey.toUpperCase());
+            return result
+         } else {
+            showNotification('❌ ' + 'failed : '.toUpperCase() + formDataKey.toUpperCase());
+            return null
+         }
+      } catch (error) {
+         showNotification('❌ ' + 'error : '.toUpperCase() + error.message.toUpperCase());
+         alert(error.toString())
+         return null
+      }
+   }
 
 
 </script>

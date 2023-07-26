@@ -24,7 +24,7 @@
 
 </head>
 
-<body onload="count_objects()">
+<body >
   <!-- .app -->
   <main class="app app-site">
     <!-- site header -->
@@ -586,26 +586,6 @@
       });
     });
     
-    function count_objects() {
-
-      $.ajax({
-        url: "{%url 'bima_policy:count_objects'%}",
-        // data: { data: '' },
-        dataType: 'json',
-        success: function (response) {
-          // console.log(response.records);      
-          sessionStorage.setItem('objectList', JSON.stringify(response.records));
-          // console.log(JSON.parse(sessionStorage.getItem('objectList')));
-        },
-        error: function (xhr, status, error) {
-          console.error(error);
-          alert(error.toString())
-        }
-      });
-
-      // showNotification('⌛️ Getting ready...')
-    }
-
    
 
   </script>

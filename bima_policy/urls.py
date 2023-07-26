@@ -78,6 +78,9 @@ urlpatterns = [
     path('policy/deleted_entry/', policy_deleted_entry, name="policy_deleted_entry"),
     path('policy/local_entry/', policy_local_entry, name="policy_local_entry"),
     path('policy/new_entry/', new_entry, name="new_entry")   ,
-    path('policy/new_entry_non_motor/', new_entry_non_motor, name="new_entry_non_motor")   
+    path('policy/new_entry_non_motor/', new_entry_non_motor, name="new_entry_non_motor")   ,
+    path('policy/new_posp/', new_posp, name="new_posp")   ,
+
+
 
 ]
