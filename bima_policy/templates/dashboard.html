@@ -2541,15 +2541,35 @@
                   </div>
                </div>
                <hr>
-               <div>
-                  <!-- <a href="{%url 'bima_policy:agent' %}" class="btn btn-secondary w-100p pull-left">Back</a> -->
-                  <span class="float-right">
-                     <!-- <button type="submit" name="subagent" class="btn btn-success w-100p">Save</button> -->
-                     <button id="btn_save_posp" name="btn_save_posp" class="btn btn-success w-100p"
-                        onclick="sendPOspFormData()">SAVE</button>
-                     <!-- mdlVerifyOTP -->
-                  </span>
+
+
+               <div class="form-row">
+                  <div class="col-md-12 col-sm-12" style="background-color: #346CB0; ">
+                     <div id="payoutSection" class="card card-inverse " style="background-color: #346CB0;">
+                        <!-- .card -->
+                        <div class="card-header p-2">
+                           <h4 class="card-title mb-1">POSP</h4>
+                        </div>
+                        <div class="card-body" style="background-color: #346CB0; ">
+                           <p><span class="icofont icofont-hand-right ml-1"></span> The POSP will be
+                              active by-defaults</p>
+                           <p><span class="icofont icofont-hand-right ml-1"></span> You can edit POSP
+                              later except posp-code</p>
+                           <div class="text-center">
+
+                              <a href="#">
+                                 <button id="btn_save_posp" name="btn_save_posp"
+                                    style="background-color: #FFFFFF; color: #346CB0; font-weight: bold;" type="button"
+                                    class="btn w-100p" onclick="sendPOspFormData()">GENERATE
+                                 </button>
+                              </a>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                </div>
+
 
                <!-- /form -->
             </div>
@@ -6882,8 +6902,9 @@
    function Load_Posp_Config() {
 
       document.getElementById('posp_title').innerText = "POSP Form"
-      document.getElementById('btn_save_posp').innerText = "SAVE"
-
+      document.getElementById('btn_save_posp').innerText = "GENERATE"
+      clearPospForm()
+      return
       document.getElementById('posp_code').value = ''
       document.getElementById('registration_code').value = ''
       document.getElementById('full_name').value = ''
@@ -7108,7 +7129,7 @@
       if (result != null) {
 
          if (document.getElementById('posp_title').innerText.startsWith("POSP Form")) {
-            console.log('new block');
+
             await uploadPdf(formData.get('basic_qualification'), 'basic_qualification')
             await uploadPdf(formData.get('aadhar_card'), 'aadhar_card_pos')
             await uploadPdf(formData.get('pan_card'), 'pan_card_pos')
@@ -7120,12 +7141,9 @@
             showNotification('✅ ' + 'succeed : '.toUpperCase() + formData.get('posp_code').toUpperCase());
          }
 
-         clearPospForm()
-
          await FetchDataAsync()
 
          ShowPage('posp')
-
       }
    }
 
@@ -7185,35 +7203,35 @@
       document.getElementById('state').selectedIndex = 0
       document.getElementById('rural_urban').selectedIndex = 0
       document.getElementById('slab').selectedIndex = 0
-     
+
       document.getElementById('basic_qualification').value = ''
       document.getElementById('lbl_basic_qualification').innerHTML = 'Choose file'
       document.getElementById('a_basic_qualification').innerHTML = ''
-     
+
       document.getElementById('aadhar_card_pos').value = ''
       document.getElementById('lbl_aadhar_card_pos').innerHTML = 'Choose file'
       document.getElementById('a_aadhar_card_pos').innerHTML = ''
-     
+
       document.getElementById('pan_card_pos').value = ''
       document.getElementById('lbl_pan_card_pos').innerHTML = 'Choose file'
       document.getElementById('a_pan_card_pos').innerHTML = ''
-     
+
       document.getElementById('training_certificate_pos').value = ''
       document.getElementById('lbl_training_certificate_pos').innerHTML = 'Choose file'
       document.getElementById('a_training_certificate_pos').innerHTML = ''
-     
+
       document.getElementById('appointment_certificate_pos').value = ''
       document.getElementById('lbl_appointment_certificate_pos').innerHTML = 'Choose file'
       document.getElementById('a_appointment_certificate_pos').innerHTML = ''
-     
+
       document.getElementById('agreement_certificate_pos').value = ''
       document.getElementById('lbl_agreement_certificate_pos').innerHTML = 'Choose file'
       document.getElementById('a_agreement_certificate_pos').innerHTML = ''
-     
+
       document.getElementById('bank_details_pos').value = ''
       document.getElementById('lbl_bank_details_pos').innerHTML = 'Choose file'
       document.getElementById('a_bank_details_pos').innerHTML = ''
-     
+
       document.getElementById("posp_code").focus()
 
    }
