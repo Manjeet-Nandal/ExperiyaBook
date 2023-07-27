@@ -5943,14 +5943,48 @@ def new_posp(request):
         profile_id = ProfileModel.objects.get(id=id)
 
         login_id = request.POST['login_id']
+        posp_code = request.POST['posp_code']
 
         if login_id != "":
-            print('login_id ', login_id)
-        else:
-           print('login_id ', login_id)
-           posp_code = request.POST['posp_code']
-           print(posp_code)
+            print('login_id ', login_id)            
+            data = Agents.objects.filter(login_id=login_id)
 
+            my_model = data.update(posp_code=request.POST['posp_code'],
+                                registration_code=request.POST['registration_code'],
+                                full_name=request.POST['full_name'],
+                                gender=request.POST['gender'],
+                                mob_no=request.POST['mob_no'],
+                                email_id=request.POST['email_id'],
+                                address=request.POST['address'],
+                                state=request.POST['state'],
+                                city=request.POST['city'],
+                                pincode=request.POST['pincode'],
+                                rural_urban=request.POST['rural_urban'],
+                                slab=request.POST['slab'],
+                                GSTIN=request.POST['GSTIN'],
+                                account_no=request.POST['account_no'],
+                                ifsc_code=request.POST['ifsc_code'],
+                                bank_name=request.POST['bank_name'],
+
+                                # basic_qualification=request.POST['basic_qualification'],
+                                # aadhar_card=request.POST['aadhar_card'],
+                                # pan_card=request.POST['pan_card'],
+                                # training_certificate=request.POST['training_certificate'],
+                                # appointment_certificate=request.POST['appointment_certificate'],
+                                # agreement_certificate=request.POST['agreement_certificate'],
+                                # bank_details=request.POST['bank_details'],
+
+                                password=request.POST['password'],
+                                created_by=get_id_from_session(
+                                    request)
+                                )
+
+            print(my_model)
+
+            return JsonResponse('done: ' + posp_code, safe=False)
+            
+        else:
+           print('login_id ', login_id)         
            my_model = Agents.objects.create(profile_id=profile_id,
                                             posp_code=request.POST['posp_code'],
                                             registration_code=request.POST['registration_code'],
@@ -5988,4 +6022,4 @@ def new_posp(request):
 
     except Exception as e:
         print("Error occurred in new_posp method:", str(e))
-        return JsonResponse('error: ' + request.POST['posp_code'] + ' : ' + str(e), safe=False)
+        return JsonResponse('error: ' + posp_code + ' : ' + str(e), safe=False)
