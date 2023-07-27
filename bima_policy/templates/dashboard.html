@@ -6122,7 +6122,8 @@
       document.getElementById('insured_age').value = 0
       document.getElementById('policy_term').selectedIndex = 0
       document.getElementById('bqp').selectedIndex = 1
-      document.getElementById('employee').value = ''
+      // document.getElementById('employee').value = ''
+      document.getElementById('employee').value = JSON.parse(localStorage.getItem('employee'));
       document.getElementById('pos').value = ''
       document.getElementById('remark').value = ''
 
@@ -6151,6 +6152,8 @@
       document.getElementById('inspection_report').value = ''
       document.getElementById('lbl_inspection_report').innerHTML = 'Choose file'
 
+    
+      
       document.getElementById("vehicle_catagory").focus()
    }
 
@@ -6360,8 +6363,8 @@
       document.getElementById('policy_term2').selectedIndex = 0
       document.getElementById('pos_product').value = ''
       document.getElementById('bqp2').selectedIndex = 1
-      document.getElementById('product_employee').value = ''
-
+      document.getElementById('product_employee').value = JSON.parse(localStorage.getItem('employee'));
+   
       document.getElementById('remark2').value = ''
 
       document.getElementById('od_product').value = ''
