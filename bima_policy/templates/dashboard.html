@@ -2836,9 +2836,11 @@
       document.getElementById('coverage_type').selectedIndex = 0
       document.getElementById('policy_type').selectedIndex = 0
       document.getElementById('cpa').selectedIndex = 0
-      document.getElementById('risk_start_date').value = ""
-      document.getElementById('risk_end_date').value = ""
-      document.getElementById('issue_date').value = ""
+     
+      document.getElementById('risk_start_date').valueAsDate = new Date();
+      document.getElementById('risk_end_date').valueAsDate = new Date();
+      document.getElementById('issue_date').valueAsDate = new Date();
+    
       document.getElementById('insured_age').value = 0
       document.getElementById('policy_term').selectedIndex = 0
       document.getElementById('pos').value = ""
@@ -2982,10 +2984,10 @@
       document.getElementById('insurer_name').selectedIndex = 0
       document.getElementById('sps_name').selectedIndex = 0
       document.getElementById('sp_code').selectedIndex = 0
-
-      document.getElementById('risk_start_date2').value = ""
-      document.getElementById('risk_end_date2').value = ""
-      document.getElementById('issue_date2').value = ""
+     
+      document.getElementById('risk_start_date2').valueAsDate = new Date();
+      document.getElementById('risk_end_date2').valueAsDate = new Date();
+      document.getElementById('issue_date2').valueAsDate = new Date();
 
       document.getElementById('policy_term2').selectedIndex = 0
       document.getElementById('pos_product').value = ""
@@ -6116,7 +6118,8 @@
       document.getElementById('gvw').selectedIndex = 0
       document.getElementById('policy_type').selectedIndex = 0
       document.getElementById('cpa').selectedIndex = 0
-      document.getElementById('risk_start_date').value = ''
+      // document.getElementById('risk_start_date').value = ''
+      document.getElementById('risk_start_date').valueAsDate = new Date();
       document.getElementById('risk_end_date').value = ''
       document.getElementById('issue_date').value = ''
       document.getElementById('insured_age').value = 0
