@@ -80,6 +80,8 @@ urlpatterns = [
     path('policy/new_entry/', new_entry, name="new_entry")   ,
     path('policy/new_entry_non_motor/', new_entry_non_motor, name="new_entry_non_motor")   ,
     path('policy/new_posp/', new_posp, name="new_posp")   ,
+    path('policy/delete_policy/', delete_policy, name="delete_policy")   ,
+    path('policy/delete_posp/', delete_posp, name="delete_posp")   ,
 
 
 

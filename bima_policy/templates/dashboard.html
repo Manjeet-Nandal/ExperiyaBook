@@ -3160,7 +3160,7 @@
          recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
             <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
             <td class="p-2" >  ${record.proposal_no} </td>
-            <td class="p-2" onclick="Edit_Motor_Policy('${record.policyid}')" >  <a href="#" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="#" class=""> ${record.policy_no}</a> </td>
+            <td class="p-2" >  <a href="#" class="tile tile-img" onclick="Edit_Motor_Policy('${record.policyid}')" ><i class="far fa-file-pdf text-danger mt-1"></i></a> <a onclick="Edit_Motor_Policy('${record.policyid}')" href="#" class=""> ${record.policy_no}</a> </td>
             <td class="p-2">  ${record.customer_name}  </td> 
             <td class="p-2" >  ${record.insurance_company} </td>
             <td  class="p-2" > ${record.sp_name} </td> 
@@ -3218,7 +3218,7 @@
                <a onclick="Edit_Motor_Policy('${record.policyid}')" href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
                <i class="fa fa-pencil-alt mt-2"></i>                                               
                </a>            
-               <a onclick="alert('Do you want to delete?')" href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+               <a onclick="Delete_Policy('${record.policyid}')" href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                <i class="far fa-trash-alt mt-2"></i>  </a>
             </td>
             </tr > `;
@@ -3287,7 +3287,7 @@
          recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
          <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
          <td class="p-2" >  ${record.posp_code} </td>
-        <td class="p-2" onclick="Edit_Posp('${record.login_id}')"  >  <a href="#" class="tile tile-img" target="_blank"><i class="far fa-file-pdf text-danger mt-1"></i></a> <a href="#" class=""> ${record.registration_code}</a> </td>
+        <td class="p-2" >  <a href="#" class="tile tile-img" onclick="Edit_Posp('${record.login_id}')" ><i class="far fa-file-pdf text-danger mt-1"></i></a> <a onclick="Edit_Posp('${record.login_id}')" href="#" class="" > ${record.registration_code}</a> </td>
         <td class="p-2" >  ${record.full_name}  </td> 
         <td class="p-2" >  ${record.gender} </td>
         <td class="p-2" > ${record.email_id} </td> 
@@ -3319,10 +3319,10 @@
             <a  href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
             <i class="fa fa-pencil-alt mt-2"></i>                                               
             </a>            
-            <a onclick="alert('Do you want to delete?')" href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+            <a onclick="Delete_Posp('${record.login_id}')"  href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
             <i class="far fa-trash-alt mt-2"></i>  </a>
          </td>
-         </tr > `;
+         </tr>`;
 
          tableRows += recordHtml;
       }
@@ -3789,6 +3789,8 @@
          }
       })
    }
+
+   
 
    function Load_NonMotor_Edit_Config(data) {
 
@@ -7235,6 +7237,89 @@
 
       document.getElementById("posp_code").focus()
 
+   }
+
+
+   async function Delete_Policy(policyid) {
+      try {
+         
+         showNotification(`⌛️ deleting policy: ${policyid}`.toUpperCase());  
+
+         // Create a Promise to wrap the $.ajax() call
+         const response = await new Promise((resolve, reject) => {
+            $.ajax({
+               url: "{%url 'bima_policy:delete_policy'%}",
+               data: { data: policyid },
+               dataType: 'json',
+               success: function (response) {
+                  resolve(response);
+               },
+               error: function (xhr, status, error) {
+                  reject(error);
+               }
+            });
+         });
+
+         msg = response.message;
+
+         // console.log(msg);
+
+         if (msg == "deleted") {
+            showNotification('✅ ' + 'successfully deleted : '.toUpperCase() + policyid.toUpperCase());      
+            await FetchDataAsync()      
+            ShowPage('entry_list')
+         }
+         else{
+            showNotification('❌ ' + 'failed : '.toUpperCase() + policyid.toUpperCase());
+         }       
+
+
+      } catch (error) {
+         // Handle errors
+         console.error(error);
+         alert(error.toString());
+      }
+   }
+
+   async function Delete_Posp(login_id) {
+      try {
+         
+         showNotification(`⌛️ deleting posp: ${login_id}`.toUpperCase());  
+
+         // Create a Promise to wrap the $.ajax() call
+         const response = await new Promise((resolve, reject) => {
+            $.ajax({
+               url: "{%url 'bima_policy:delete_posp'%}",
+               data: { data: login_id },
+               dataType: 'json',
+               success: function (response) {
+                  resolve(response);
+               },
+               error: function (xhr, status, error) {
+                  reject(error);
+               }
+            });
+         });
+
+         msg = response.message;
+
+         console.log(msg);
+
+         if (msg == "deleted") {
+            showNotification('✅ ' + 'successfully deleted : '.toUpperCase() + login_id.toUpperCase());      
+            await FetchDataAsync()      
+            ShowPage('posp')
+         }
+         else{
+            showNotification('❌ ' + 'failed : '.toUpperCase() + policyid.toUpperCase());
+         }       
+
+
+      } catch (error) {
+         // Handle errors
+         console.error(error);
+         alert(error.toString());
+      }
    }
 
 

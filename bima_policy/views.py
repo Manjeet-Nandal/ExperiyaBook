@@ -6023,3 +6023,27 @@ def new_posp(request):
     except Exception as e:
         print("Error occurred in new_posp method:", str(e))
         return JsonResponse('error: ' + posp_code + ' : ' + str(e), safe=False)
+
+def delete_policy(request):
+    try:
+        print('delete policy is calling...')
+        data = request.GET.get('data')
+        print(data)
+        val = Policy.objects.get(policyid = data).delete()
+        print(val)
+        return JsonResponse({'message': "deleted"})
+    except Exception as e:
+        print('error occured when deleting policy: ' + str(e))
+        return JsonResponse({'message': str(e)}) 
+
+def delete_posp(request):
+    try:
+        print('delete posp is calling...')
+        data = request.GET.get('data')
+        print(data)
+        val = Agents.objects.get(login_id = data).delete()
+        print(val)
+        return JsonResponse({'message': "deleted"})
+    except Exception as e:
+        print('error occured when deleting posp: ' + str(e))
+        return JsonResponse({'message': str(e)}) 
