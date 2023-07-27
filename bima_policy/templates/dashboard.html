@@ -1227,7 +1227,7 @@
                                     <div class="col-md-3 mb-4">
                                        <label>RTO State<abbr title="" class="text-danger">*</abbr></label>
                                        <select name="rto_state" class="custom-select" id="rto_state" required>
-                                          <option value="" hidden>-- Select State --</option>
+                                          <option value="" >-- Select State --</option>
                                           <option value="Andama And Nicobar Island">Andama And Nicobar Island
                                           </option>
                                           <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -1310,7 +1310,7 @@
                                        <label for="mfg_year">Manufacture Year <abbr title=""
                                              class="text-danger">*</abbr></label>
                                        <select id="mfg_year" name="mfg_year" class="custom-select" required>
-                                          <option value="" hidden>-- Select Year --</option>
+                                          <option value="" >-- Select Year --</option>
                                           <option value="2025">2025</option>
                                           <option value="2024">2024</option>
                                           <option value="2023">2023</option>
@@ -1518,7 +1518,7 @@
                                              for="proposal">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_proposal" href="#"> </a>
+                                       <a id="a_proposal" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
 
@@ -1532,7 +1532,7 @@
                                              for="mandate">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_mandate" href="#"> </a>
+                                       <a id="a_mandate" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
                                     </div>
 
                                     <div class="col-md-3 mb-4">
@@ -1545,7 +1545,7 @@
                                              for="policy">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_policy" href="#"> </a>
+                                       <a id="a_policy" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
                                     </div>
 
                                     <div class="col-md-3 mb-4">
@@ -1557,7 +1557,7 @@
                                           <label id="lbl_previous_policy" name="lbl_previous_policy"
                                              class="custom-file-label" for="previous_policy">Choose file</label>
                                        </div>
-                                       <a id="a_previous_policy" href="#"> </a>
+                                       <a id="a_previous_policy" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
 
@@ -1571,7 +1571,7 @@
                                              for="pan_card">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_pan_card" href="#"> </a>
+                                       <a id="a_pan_card" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
 
@@ -1584,7 +1584,7 @@
                                           <label id="lbl_aadhar_card" name="lbl_aadhar_card" class="custom-file-label"
                                              for="aadhar_card">Choose file</label>
                                        </div>
-                                       <a id="a_aadhar_card" href="#"> </a>
+                                       <a id="a_aadhar_card" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
 
@@ -1598,7 +1598,7 @@
                                              for="vehicle_rc">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_vehicle_rc" href="#"> </a>
+                                       <a id="a_vehicle_rc" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
 
@@ -1611,7 +1611,7 @@
                                           <label id="lbl_inspection_report" name="lbl_inspection_report"
                                              class="custom-file-label" for="inspection_report">Choose file</label>
                                        </div>
-                                       <a id="a_inspection_report" href="#"> </a>
+                                       <a id="a_inspection_report" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
 
@@ -1967,7 +1967,7 @@
                                              for="proposal">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_proposal2" href="#"> </a>
+                                       <a id="a_proposal2" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
                                     </div>
 
                                     <div class="col-md-3 mb-4">
@@ -1980,7 +1980,7 @@
                                              for="mandate">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_mandate2" href="#"> </a>
+                                       <a id="a_mandate2" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
                                     </div>
 
                                     <div class="col-md-3 mb-4">
@@ -1993,7 +1993,7 @@
                                              for="policy">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_policy2" href="#"> </a>
+                                       <a id="a_policy2" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
                                     </div>
 
                                     <div class="col-md-3 mb-4">
@@ -2005,7 +2005,7 @@
                                           <label id="lbl_previous_policy2" name="lbl_previous_policy2"
                                              class="custom-file-label" for="previous_policy">Choose file</label>
                                        </div>
-                                       <a id="a_previous_policy2" href="#"> </a>
+                                       <a id="a_previous_policy2" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
                                     </div>
 
                                     <div class="col-md-3 mb-4">
@@ -2018,7 +2018,7 @@
                                              for="pan_card">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_pan_card2" href="#"> </a>
+                                       <a id="a_pan_card2" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
                                     </div>
 
                                     <div class="col-md-3 mb-4">
@@ -2030,7 +2030,7 @@
                                           <label id="lbl_aadhar_card2" name="lbl_aadhar_card2" class="custom-file-label"
                                              for="aadhar_card">Choose file</label>
                                        </div>
-                                       <a id="a_aadhar_card2" href="#"> </a>
+                                       <a id="a_aadhar_card2" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
                                     </div>
 
                                     <div class="col-md-4 mb-4">
@@ -2042,7 +2042,7 @@
                                           <label id="lbl_inspection_report2" name="lbl_inspection_report2"
                                              class="custom-file-label" for="vehicle_rc">Choose file</label>
                                        </div>
-                                       <a id="a_inspection_report2" href="#"> </a>
+                                       <a id="a_inspection_report2" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
                                     </div>
 
                                     <div class="col-md-4 mb-4">
@@ -2416,7 +2416,7 @@
                                              for="basic_qualification">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_basic_qualification" href="#"> </a>
+                                       <a id="a_basic_qualification"  href="#"  onclick="downloadFile(`${this.innerText}`)"  > </a>
 
                                     </div>
                                     <div class="col-md-3 mb-4">
@@ -2428,7 +2428,7 @@
                                           <label id="lbl_aadhar_card_pos" class="custom-file-label"
                                              for="aadhar_card">Choose file</label>
                                        </div>
-                                       <a id="a_aadhar_card_pos" href="#"> </a>
+                                       <a id="a_aadhar_card_pos" href="#"  onclick="downloadFile(`${this.innerText}`)"  > </a>
 
                                     </div>
 
@@ -2441,7 +2441,7 @@
                                           <label id="lbl_pan_card_pos" class="custom-file-label" for="pan_card">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_pan_card_pos" href="#"> </a>
+                                       <a id="a_pan_card_pos" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
                                     <div class="col-md-3 mb-4">
@@ -2455,7 +2455,7 @@
                                              for="training_certificate">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_training_certificate_pos" href="#"> </a>
+                                       <a id="a_training_certificate_pos" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
                                     <div class="col-md-3 mb-4">
@@ -2468,7 +2468,7 @@
                                              for="appointment_certificate">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_appointment_certificate_pos" href="#"> </a>
+                                       <a id="a_appointment_certificate_pos" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
                                     <div class="col-md-3 mb-4">
@@ -2482,7 +2482,7 @@
                                              for="agreement_certificate">Choose
                                              file</label>
                                        </div>
-                                       <a id="a_agreement_certificate_pos" href="#"> </a>
+                                       <a id="a_agreement_certificate_pos" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
                                     <div class="col-md-3 mb-4">
@@ -2494,7 +2494,7 @@
                                           <label id="lbl_bank_details_pos" class="custom-file-label"
                                              for="bank_details">Choose file</label>
                                        </div>
-                                       <a id="a_bank_details_pos" href="#"> </a>
+                                       <a id="a_bank_details_pos" href="#" onclick="downloadFile(`${this.innerText}`)" > </a>
 
                                     </div>
 
@@ -7018,7 +7018,7 @@
 
       //  attachments
       document.getElementById('a_basic_qualification').innerText = data.basic_qualification;
-      document.getElementById('a_aadhar_card_pos').innerText = data.aadhar_card;
+      document.getElementById('a_aadhar_card_pos').innerText = data.aadhar_card;     
       document.getElementById('a_pan_card_pos').innerText = data.pan_card;
       document.getElementById('a_training_certificate_pos').innerText = data.training_certificate;
       document.getElementById('a_appointment_certificate_pos').innerText = data.appointment_certificate;
@@ -7128,6 +7128,7 @@
 
       if (result != null) {
 
+         
          if (document.getElementById('posp_title').innerText.startsWith("POSP Form")) {
 
             await uploadPdf(formData.get('basic_qualification'), 'basic_qualification')
