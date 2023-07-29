@@ -2950,7 +2950,8 @@
       newoption = document.createElement("option");
       newoption.value = ''
       newoption.innerHTML = '-- select category --'
-      element.options.add(newoption);
+      element.options.add(newoption);     
+     
       category.forEach(item => {
          newoption = document.createElement("option");
          newoption.value = item.category
@@ -5267,6 +5268,9 @@
          document.getElementById('gvw_div').hidden = true
          document.getElementById('gvw').selectedIndex = 0
 
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').value = 0
+
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
@@ -5332,6 +5336,9 @@
          document.getElementById('seating_div').hidden = false
          document.getElementById('gvw_div').hidden = true
          document.getElementById('gvw').selectedIndex = 0
+
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').value = 0
 
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
@@ -5400,6 +5407,9 @@
          document.getElementById('gvw_div').hidden = true
          document.getElementById('gvw').selectedIndex = 0
 
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').value = 0
+
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
@@ -5459,7 +5469,7 @@
          coverage_type.options.add(newoption);
       }
 
-      else if (value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W') {
+      else if (value == 'GCV-PUBLIC CARRIER OTHER THAN 3 W'  || value == 'E CART - GCV') {
 
          document.getElementById('coverage_div').hidden = false
          document.getElementById('gvw_div').hidden = false
@@ -5468,7 +5478,10 @@
          document.getElementById('cubic_capacity').innerHTML = ''
          document.getElementById('seating_div').hidden = true
          document.getElementById('seating_capacity').selectedIndex = 0
-
+         
+         document.getElementById('gsttDiv').hidden = false
+         // document.getElementById('gstt').value = 0
+         
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
@@ -5497,6 +5510,9 @@
          document.getElementById('cubic_div').hidden = true
          document.getElementById('cubic_capacity').innerHTML = ''
 
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').value = 0
+
          coverage_type.innerHTML = ''
 
          // Coverage type        
@@ -5524,6 +5540,9 @@
          document.getElementById('cubic_div').hidden = true
          document.getElementById('cubic_capacity').innerHTML = ''
 
+         document.getElementById('gsttDiv').hidden = false
+         // document.getElementById('gstt').value = 0
+
          cubic_capacity.innerHTML = ''
          coverage_type.innerHTML = ''
 
@@ -5550,6 +5569,9 @@
 
          document.getElementById('gvw_div').hidden = true
          document.getElementById('gvw').selectedIndex = 0
+
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').value = 0
 
 
          cubic_capacity.innerHTML = ''
@@ -5621,6 +5643,9 @@
          document.getElementById('gvw_div').hidden = true
          document.getElementById('gvw').selectedIndex = 0
 
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').value = 0
+
          // document.getElementById('seating_capacityDiv1').hidden = false
 
          coverage_type = document.getElementById('coverage_type')
@@ -5652,6 +5677,9 @@
 
          document.getElementById('gvw_div').hidden = true
          document.getElementById('gvw').selectedIndex = 0
+
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').value = 0
 
          // Coverage Type
          coverage_type = document.getElementById('coverage_type')
@@ -5699,6 +5727,9 @@
          document.getElementById('gvw_div').hidden = true
          document.getElementById('gvw').selectedIndex = 0
 
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').value = 0
+
          // Coverage Type
          coverage_type = document.getElementById('coverage_type')
          coverage_type.innerHTML = ''
@@ -5744,6 +5775,9 @@
 
          document.getElementById('gvw_div').hidden = true
          document.getElementById('gvw').selectedIndex = 0
+
+         document.getElementById('gsttDiv').hidden = true
+         document.getElementById('gstt').value = 0
 
          // Coverage Type
          coverage_type = document.getElementById('coverage_type')
@@ -5997,7 +6031,7 @@
          }
       }
 
-      if (vc == "GCV-PUBLIC CARRIER OTHER THAN 3 W") {
+      if (vc == "GCV-PUBLIC CARRIER OTHER THAN 3 W" || value == 'E CART - GCV') {
 
          formData.append('cubic_capacity', '');
          formData.append('coverage_type', document.getElementById('coverage_type').value);
@@ -6261,7 +6295,7 @@
 
       try {
          vc = document.getElementById('vehicle_catagory').value
-         if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER') {
+         if (vc == 'GCV-PUBLIC CARRIER OTHER THAN 3 W' || vc == '3 WHEELER GCV-PUBLIC CARRIER'  || value == 'E CART - GCV') {
             document.getElementById("gst").value = Number(od * 18 / 100).toFixed((2))
             document.getElementById("gstt").value = Number(tpt * 12 / 100).toFixed((2))
          }
@@ -7456,7 +7490,7 @@
 
             showNotification('✅ ' + response.data.toUpperCase());
 
-            FetchDataAsync()
+            FetchDataAsync()           
             
          },
          error: function (xhr, status, error) {

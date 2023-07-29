@@ -43,7 +43,7 @@ def Index(request):
 
 
 def dashboard(request):
-    # print(get_profile_id(get_id_from_session(request)))
+    # print(get_profile_id(get_id_from_session(request)))    
 
     return render(request, 'dashboard.html')
 
@@ -109,12 +109,10 @@ def loginView(request):
         if request.method == 'POST':
             full_name = request.POST['full_name']
             password = request.POST['password']
-            user = ProfileModel.objects.filter(
-                full_name=full_name, password=password).first()
-            user1 = Agents.objects.filter(
-                login_id=full_name, password=password, status="Active").first()
-            user2 = StaffModel.objects.filter(
-                login_id=full_name, password=password).first()
+            
+            user = ProfileModel.objects.filter(full_name=full_name, password=password).first()
+            user1 = Agents.objects.filter(login_id=full_name, password=password, status="Active").first()
+            user2 = StaffModel.objects.filter(login_id=full_name, password=password).first()
             if user:
                 # p = ProfileModel.objects.filter(full_name=full_name, password=password).first()
                 # id = p.id
@@ -153,6 +151,7 @@ def loginView(request):
     except (ProfileModel.DoesNotExist, Agents.DoesNotExist, StaffModel.DoesNotExist):
         error_message = 'Invalid ID or Password!'
         return render(request, 'login.html', {'error_message': error_message})
+
 
 
 # ProfileView
@@ -6094,3 +6093,4 @@ def add_vehicle(request):
     except Exception as e:
         print('error occured when deleting posp: ' + str(e))
         return JsonResponse({'message': str(e)})
+
