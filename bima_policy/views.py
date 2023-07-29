@@ -5600,8 +5600,6 @@ def policy_local_entry(request):
         return HttpResponse("Error occurred in policy_deleted_entry: " + str(e))
 
 
-
-
 def set_payout(data, id):
     try:
         print('set_payout method calling: ')
@@ -5897,6 +5895,7 @@ def new_entry_non_motor(request):
         print("Error occurred in new_entry_non_motor method:", str(e))
         return str(e)
 
+
 def update_entry_non_motor(request, policyid):
     try:
         print('new_entry_non_motorr method')
@@ -5946,104 +5945,152 @@ def new_posp(request):
         posp_code = request.POST['posp_code']
 
         if login_id != "":
-            print('login_id ', login_id)            
+            print('login_id ', login_id)
             data = Agents.objects.filter(login_id=login_id)
 
             my_model = data.update(posp_code=request.POST['posp_code'],
-                                registration_code=request.POST['registration_code'],
-                                full_name=request.POST['full_name'],
-                                gender=request.POST['gender'],
-                                mob_no=request.POST['mob_no'],
-                                email_id=request.POST['email_id'],
-                                address=request.POST['address'],
-                                state=request.POST['state'],
-                                city=request.POST['city'],
-                                pincode=request.POST['pincode'],
-                                rural_urban=request.POST['rural_urban'],
-                                slab=request.POST['slab'],
-                                GSTIN=request.POST['GSTIN'],
-                                account_no=request.POST['account_no'],
-                                ifsc_code=request.POST['ifsc_code'],
-                                bank_name=request.POST['bank_name'],
+                                   registration_code=request.POST['registration_code'],
+                                   full_name=request.POST['full_name'],
+                                   gender=request.POST['gender'],
+                                   mob_no=request.POST['mob_no'],
+                                   email_id=request.POST['email_id'],
+                                   address=request.POST['address'],
+                                   state=request.POST['state'],
+                                   city=request.POST['city'],
+                                   pincode=request.POST['pincode'],
+                                   rural_urban=request.POST['rural_urban'],
+                                   slab=request.POST['slab'],
+                                   GSTIN=request.POST['GSTIN'],
+                                   account_no=request.POST['account_no'],
+                                   ifsc_code=request.POST['ifsc_code'],
+                                   bank_name=request.POST['bank_name'],
 
-                                # basic_qualification=request.POST['basic_qualification'],
-                                # aadhar_card=request.POST['aadhar_card'],
-                                # pan_card=request.POST['pan_card'],
-                                # training_certificate=request.POST['training_certificate'],
-                                # appointment_certificate=request.POST['appointment_certificate'],
-                                # agreement_certificate=request.POST['agreement_certificate'],
-                                # bank_details=request.POST['bank_details'],
+                                   # basic_qualification=request.POST['basic_qualification'],
+                                   # aadhar_card=request.POST['aadhar_card'],
+                                   # pan_card=request.POST['pan_card'],
+                                   # training_certificate=request.POST['training_certificate'],
+                                   # appointment_certificate=request.POST['appointment_certificate'],
+                                   # agreement_certificate=request.POST['agreement_certificate'],
+                                   # bank_details=request.POST['bank_details'],
 
-                                password=request.POST['password'],
-                                created_by=get_id_from_session(
-                                    request)
-                                )
+                                   password=request.POST['password'],
+                                   created_by=get_id_from_session(
+                request)
+            )
 
             print(my_model)
 
             return JsonResponse('done: ' + posp_code, safe=False)
-            
+
         else:
-           print('login_id ', login_id)         
-           my_model = Agents.objects.create(profile_id=profile_id,
-                                            posp_code=request.POST['posp_code'],
-                                            registration_code=request.POST['registration_code'],
-                                            full_name=request.POST['full_name'],
-                                            gender=request.POST['gender'],
-                                            mob_no=request.POST['mob_no'],
-                                            email_id=request.POST['email_id'],
-                                            address=request.POST['address'],
-                                            state=request.POST['state'],
-                                            city=request.POST['city'],
-                                            pincode=request.POST['pincode'],
-                                            rural_urban=request.POST['rural_urban'],
-                                            slab=request.POST['slab'],
-                                            GSTIN=request.POST['GSTIN'],
-                                            account_no=request.POST['account_no'],
-                                            ifsc_code=request.POST['ifsc_code'],
-                                            bank_name=request.POST['bank_name'],
+            print('login_id ', login_id)
+            my_model = Agents.objects.create(profile_id=profile_id,
+                                             posp_code=request.POST['posp_code'],
+                                             registration_code=request.POST['registration_code'],
+                                             full_name=request.POST['full_name'],
+                                             gender=request.POST['gender'],
+                                             mob_no=request.POST['mob_no'],
+                                             email_id=request.POST['email_id'],
+                                             address=request.POST['address'],
+                                             state=request.POST['state'],
+                                             city=request.POST['city'],
+                                             pincode=request.POST['pincode'],
+                                             rural_urban=request.POST['rural_urban'],
+                                             slab=request.POST['slab'],
+                                             GSTIN=request.POST['GSTIN'],
+                                             account_no=request.POST['account_no'],
+                                             ifsc_code=request.POST['ifsc_code'],
+                                             bank_name=request.POST['bank_name'],
 
-                                            basic_qualification=request.POST['basic_qualification'],
-                                            aadhar_card=request.POST['aadhar_card'],
-                                            pan_card=request.POST['pan_card'],
-                                            training_certificate=request.POST['training_certificate'],
-                                            appointment_certificate=request.POST['appointment_certificate'],
-                                            agreement_certificate=request.POST['agreement_certificate'],
-                                            bank_details=request.POST['bank_details'],
+                                             basic_qualification=request.POST['basic_qualification'],
+                                             aadhar_card=request.POST['aadhar_card'],
+                                             pan_card=request.POST['pan_card'],
+                                             training_certificate=request.POST['training_certificate'],
+                                             appointment_certificate=request.POST['appointment_certificate'],
+                                             agreement_certificate=request.POST['agreement_certificate'],
+                                             bank_details=request.POST['bank_details'],
 
-                                            password=request.POST['password'],
-                                            created_by=get_id_from_session(
-                                                request)
-                                            )
+                                             password=request.POST['password'],
+                                             created_by=get_id_from_session(
+                                                 request)
+                                             )
 
-           print(my_model)
+            print(my_model)
 
-           return JsonResponse('done: ' + posp_code, safe=False)
+            return JsonResponse('done: ' + posp_code, safe=False)
 
     except Exception as e:
         print("Error occurred in new_posp method:", str(e))
         return JsonResponse('error: ' + posp_code + ' : ' + str(e), safe=False)
+
 
 def delete_policy(request):
     try:
         print('delete policy is calling...')
         data = request.GET.get('data')
         print(data)
-        val = Policy.objects.get(policyid = data).delete()
+        val = Policy.objects.get(policyid=data).delete()
         print(val)
         return JsonResponse({'message': "deleted"})
     except Exception as e:
         print('error occured when deleting policy: ' + str(e))
-        return JsonResponse({'message': str(e)}) 
+        return JsonResponse({'message': str(e)})
+
 
 def delete_posp(request):
     try:
         print('delete posp is calling...')
         data = request.GET.get('data')
         print(data)
-        val = Agents.objects.get(login_id = data).delete()
+        val = Agents.objects.get(login_id=data).delete()
         print(val)
         return JsonResponse({'message': "deleted"})
     except Exception as e:
         print('error occured when deleting posp: ' + str(e))
-        return JsonResponse({'message': str(e)}) 
+        return JsonResponse({'message': str(e)})
+
+
+def add_vehicle(request):
+    try:
+        print('add_vehicle is calling...')       
+        data = json.loads(request.GET.get('data'))
+        # print(data)      
+        # print(data['choice'])
+        # print(data['name'])
+
+        if data['choice'] == "category":
+            vm = VehicleCategory.objects.filter(category=data['name'] )
+            # print(vm)
+            if vm.__len__()== 0:
+                obj = VehicleCategory.objects.create( category=data['name'], created_by=get_id_from_session(request), status=data['status'])
+                # print(obj)
+                return JsonResponse({'data': data['choice'] + ': ' + data['name'] + ' added!'})
+            else:                
+                return JsonResponse({'data': data['choice'] + ': ' + data['name'] + ' already exist!'})
+        
+        if data['choice'] == "make":
+            vm = VehicleMake.objects.filter(make=data['name'] )
+            # print(vm)
+            if vm.__len__()== 0:
+                obj = VehicleMake.objects.create( make=data['name'], created_by=get_id_from_session(request), status=data['status'])
+                # print(obj)
+                return JsonResponse({'data': data['choice'] + ': ' + data['name'] + ' added!'})
+
+            else:                
+                return JsonResponse({'data': data['choice'] + ': ' + data['name'] + ' already exist!'})
+
+        if data['choice'] == "model":
+            vm = VehicleModel.objects.filter(model=data['name'] )
+            # print(vm)
+            if vm.__len__()== 0:
+                obj = VehicleModel.objects.create( model=data['name'], created_by=get_id_from_session(request), status=data['status'])
+                # print(obj)
+                return JsonResponse({'data': data['choice'] + ': ' + data['name'] + ' added!'})
+            else:                
+                return JsonResponse({'data': data['choice'] + ': ' + data['name'] + ' already exist!'})
+        
+        return JsonResponse({'data': 'Nothing!'})
+        
+    except Exception as e:
+        print('error occured when deleting posp: ' + str(e))
+        return JsonResponse({'message': str(e)})

@@ -82,6 +82,7 @@ urlpatterns = [
     path('policy/new_posp/', new_posp, name="new_posp")   ,
     path('policy/delete_policy/', delete_policy, name="delete_policy")   ,
     path('policy/delete_posp/', delete_posp, name="delete_posp")   ,
+    path('policy/add_vehicle/', add_vehicle, name="add_vehicle")   ,
 
 
 

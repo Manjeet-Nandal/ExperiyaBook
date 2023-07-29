@@ -13,7 +13,7 @@
 
       <!-- Dashboard -->
 
-      <div class="page" id="dashboard">
+      <div class="page" id="dashboard" >
          <!-- .page-inner -->
          <div class="page-inner text-blue116">
             <!-- .page-title-bar -->
@@ -2578,6 +2578,62 @@
          <!-- /.page-section -->
       </div>
 
+      <div class="page " id="new_vehicle_make" hidden>
+
+         <div  class="modal-dialog " id="mdlvehiclemakeby" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         role="dialog" aria-labelledby="ModalmbLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 id="ModalmbLabel" class="modal-title"> Add New Make By </h5>
+             </div>
+               
+               <div class="modal-body">
+                  <div class="form-group">
+                     <label class="form-label">Choice</label>
+                     <select id="mbchoice" name="mbchoice" class="custom-select">
+                       <option value="category">Category</option>
+                       <option value="make">Make</option>
+                       <option value="model" selected>Model</option>
+                     </select>
+                   </div>
+                 <div class="form-group">                
+                   <label class="col-form-label">Name<em class="text-danger">*</em></label>
+                   <input id="choicename" type="text" class="form-control" data-parsley-required="true"
+                     name="choicename">
+                 </div>
+                 <div class="form-group">                
+                  <label class="col-form-label">Created By<em class="text-danger">*</em></label>
+                  <input id="choicecreatedby" type="text" disabled class="form-control" data-parsley-required="true"
+                    name="choicecreatedby">
+                </div>
+                 <div class="form-group">
+                   <label class="form-label">Status</label>
+                   <select id="mbstatus" name="mbstatus" class="custom-select">
+                     <option value="Active">Active</option>
+                     <option value="">Passive</option>
+                   </select>
+                 </div>
+               </div>
+               <div class="modal-footer">
+                 <div class="custom-control custom-control-inline custom-checkbox">
+                   <input type="checkbox" class="custom-control-input" id="mbckreload"
+                     data-parsley-multiple="mbckreload"> <label class="custom-control-label"
+                     for="mbckreload">Stay on this page after Save.</label>
+                 </div>
+                 <!-- <button type="button" class="btn btn-secondary w-100p" data-dismiss="modal">Close</button> -->
+                 <button onclick="addVehicleMake()" name="mb_add" class="btn btn-primary w-100p">Save </button>
+               </div>
+   
+           
+           </div>
+         </div>
+       </div>       
+
+      </div>
+
+     
+
 </main>
 
 
@@ -2607,6 +2663,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_Dashboard_Details()
       }
@@ -2617,6 +2674,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_Entry_List()
       }
@@ -2627,6 +2685,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_POSP_List()
       }
@@ -2637,6 +2696,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_Insurer_List()
       }
@@ -2647,6 +2707,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_SP_List()
       }
@@ -2657,6 +2718,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_Product_List()
       }
@@ -2667,6 +2729,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_Vehicle_Category_List()
       }
@@ -2677,6 +2740,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_Vehicle_Make_List()
       }
@@ -2687,6 +2751,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_Vehicle_Model_List()
       }
@@ -2697,6 +2762,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_Staff_List()
       }
@@ -2707,6 +2773,7 @@
          document.getElementById('motor_entry').hidden = false
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_Motor_Config()
       }
@@ -2717,6 +2784,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = false
          document.getElementById('new_posp').hidden = true
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_NonMotor_Config()
       }
@@ -2727,6 +2795,7 @@
          document.getElementById('motor_entry').hidden = true
          document.getElementById('non_motor_entry').hidden = true
          document.getElementById('new_posp').hidden = false
+         document.getElementById('new_vehicle_make').hidden = true
 
          Load_Posp_Config()
       }
@@ -2744,7 +2813,7 @@
    }
 
    function Load_Entry_List() {
-      data = JSON.parse(localStorage.getItem('entry_list'));
+      data = JSON.parse(localStorage.getItem('entry_list')); 
       if (data != null) {
          GeneratePolicyTable(data);
          fetchList = data
@@ -3091,12 +3160,7 @@
 
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
-
-      if (records.length === 0) {
-         showNotification('❌ ' + 'NO POLICIES!');
-         return
-      }
-
+      
       // table header
       table_header = `
       <td class="sorting thShow p-4 pr-5" style="font-weight: bold" >  sr. no. </td>
@@ -3154,6 +3218,11 @@
    </tr>`;
 
       document.getElementById('tbdy_head').innerHTML = table_header;
+
+      if (records.length === 0) {
+         showNotification('❌ ' + 'NO POLICIES!');
+         return
+      }
 
       for (var i = 0; i < records.length; i++) {
 
@@ -6905,6 +6974,34 @@
       else if (heading == "POS List") {
          ShowPage('new_posp')
       }
+      else if (heading == "Vehicle Category List") {        
+         document.getElementById('entrylist').hidden = true
+         document.getElementById('new_vehicle_make').hidden = false
+         document.getElementById('ModalmbLabel').innerText = 'Add New Vehicle Category'
+         document.getElementById('choicename').value = ''
+         document.getElementById('choicecreatedby').value = JSON.parse(localStorage.getItem('employee'))
+         document.getElementById('mbchoice').selectedIndex = 0     
+         document.getElementById('mbstatus').selectedIndex = 0   
+      }
+      else if (heading == "Vehicle Make List") {        
+        document.getElementById('entrylist').hidden = true
+        document.getElementById('new_vehicle_make').hidden = false
+        document.getElementById('ModalmbLabel').innerText = 'Add New Vehicle Make'
+        document.getElementById('choicename').value = ''
+        document.getElementById('choicecreatedby').value = JSON.parse(localStorage.getItem('employee'))
+        document.getElementById('mbchoice').selectedIndex = 1     
+        document.getElementById('mbstatus').selectedIndex = 0   
+     }
+      else if (heading == "Vehicle Model List") {        
+        document.getElementById('entrylist').hidden = true
+        document.getElementById('new_vehicle_make').hidden = false
+        document.getElementById('ModalmbLabel').innerText = 'Add New Vehicle Model'
+        document.getElementById('choicename').value = ''
+        document.getElementById('choicecreatedby').value = JSON.parse(localStorage.getItem('employee'))
+        document.getElementById('mbchoice').selectedIndex = 2     
+        document.getElementById('mbstatus').selectedIndex = 0   
+     }
+  
    }
 
    function Load_Posp_Config() {
@@ -7326,6 +7423,47 @@
          console.error(error);
          alert(error.toString());
       }
+   }
+
+   function addVehicleMake() {
+      
+      add_vehicle()
+
+   }
+
+   function add_vehicle() {
+
+      data = {
+         choice: document.getElementById('mbchoice').value,
+         name: document.getElementById('choicename').value,
+         created_by: document.getElementById('choicecreatedby').value,
+         status: document.getElementById('mbstatus').value,
+      }
+      data = JSON.stringify(data)
+      // console.log(data);
+    
+      $.ajax({
+         url: "{%url 'bima_policy:add_vehicle'%}",
+         data: { data: data },
+         dataType: 'json',
+         success: function (response) {
+            // console.log(response.data);
+          
+            if (response.data.includes('already exist!')) {
+               showNotification('❌ ' + response.data);
+               return
+            }    
+
+            showNotification('✅ ' + response.data.toUpperCase());
+
+            FetchDataAsync()
+            
+         },
+         error: function (xhr, status, error) {
+            console.error(error);
+            alert(error.toString())
+         }
+      });
    }
 
 
