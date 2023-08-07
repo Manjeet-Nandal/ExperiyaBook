@@ -2871,7 +2871,8 @@ def fetch_all(request):
         policy = list(Policy.objects.filter(employee=get_id_from_session(
             request), issue_date=datetime.now()).values())
 
-    agents = list(Agents.objects.filter(status="Active").values())
+    # agents = list(Agents.objects.filter(status="Active").values())
+    agents = list(Agents.objects.filter(status="Active").values('login_id', 'posp_code', 'registration_code', 'full_name', 'gender', 'email_id', 'mob_no', 'address', 'state', 'city', 'pincode', 'rural_urban', 'slab', 'GSTIN', 'account_no', 'ifsc_code', 'bank_name', 'basic_qualification', 'aadhar_card', 'pan_card', 'training_certificate', 'appointment_certificate', 'agreement_certificate', 'bank_details', 'created_by', 'status' ))
     insurers = list(InsuranceCompany.objects.values())
     sp = list(ServiceProvider.objects.values())
     bc = list(BrokerCode.objects.values())
@@ -2880,7 +2881,8 @@ def fetch_all(request):
     vc = list(VehicleCategory.objects.values())
     makes = list(VehicleMake.objects.values())
     models = list(VehicleModel.objects.values())
-    staff = list(StaffModel.objects.values())
+    staff = list(StaffModel.objects.values('login_id', 'staffname', 'status'))
+    
 
     data = {
         "employee": get_user_name(request),
