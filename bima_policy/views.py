@@ -5934,6 +5934,9 @@ def update_entry_non_motor(request, policyid):
         print("Error occurred in new_entry_non_motor method:", str(e))
         return str(e)
 
+def generate_random_filename():
+    unique_filename = str(uuid.uuid4())
+    return unique_filename
 
 def new_posp(request):
     try:
@@ -5946,7 +5949,8 @@ def new_posp(request):
         posp_code = request.POST['posp_code']
 
         if login_id != "":
-            print('login_id ', login_id)
+            print('login_id ', login_id)           
+                       
             data = Agents.objects.filter(login_id=login_id)
 
             my_model = data.update(posp_code=request.POST['posp_code'],
@@ -5966,18 +5970,76 @@ def new_posp(request):
                                    ifsc_code=request.POST['ifsc_code'],
                                    bank_name=request.POST['bank_name'],
 
-                                   # basic_qualification=request.POST['basic_qualification'],
-                                   # aadhar_card=request.POST['aadhar_card'],
-                                   # pan_card=request.POST['pan_card'],
-                                   # training_certificate=request.POST['training_certificate'],
-                                   # appointment_certificate=request.POST['appointment_certificate'],
-                                   # agreement_certificate=request.POST['agreement_certificate'],
-                                   # bank_details=request.POST['bank_details'],
-
+                                    # basic_qualification=basic_qualification,
+                                    # aadhar_card=aadhar_card,
+                                    # pan_card=pan_card,
+                                    # training_certificate=training_certificate,
+                                    # appointment_certificate=appointment_certificate,
+                                    # agreement_certificate=agreement_certificate,
+                                    # bank_details=bank_details,
+                                 
                                    password=request.POST['password'],
                                    created_by=get_id_from_session(
                 request)
             )
+
+            # basic_qualification = request.FILES.get('basic_qualification')         
+            # aadhar_card = request.FILES.get('aadhar_card')
+            # pan_card = request.FILES.get('pan_card')
+            # training_certificate = request.FILES.get('training_certificate')
+            # appointment_certificate = request.FILES.get('appointment_certificate')
+            # agreement_certificate = request.FILES.get('agreement_certificate')
+            # bank_details = request.FILES.get('bank_details')
+            
+            # fspr = FileSystemStorage()
+            # if basic_qualification is not None:
+            #     tmp_name =  generate_random_filename() + basic_qualification.name
+            #     print( tmp_name)
+            #     fspr.save(tmp_name, basic_qualification)
+            #     data = Agents.objects.filter(login_id=login_id)
+            #     data.update( basic_qualification= 'media/documents/' + tmp_name )
+           
+            # if aadhar_card is not None:
+            #     tmp_name =  generate_random_filename() + aadhar_card.name
+            #     print( tmp_name)
+            #     fspr.save(tmp_name, aadhar_card)
+            #     data = Agents.objects.filter(login_id=login_id)
+            #     data.update( aadhar_card= 'media/documents/' + tmp_name )
+          
+            # if pan_card is not None:
+            #     tmp_name =  generate_random_filename() + pan_card.name
+            #     print(tmp_name)
+            #     fspr.save(tmp_name, pan_card)
+            #     data = Agents.objects.filter(login_id=login_id)
+            #     data.update( pan_card= 'media/documents/' + tmp_name )
+           
+            # if training_certificate is not None:
+            #     tmp_name = generate_random_filename() + training_certificate.name
+            #     print(tmp_name)
+            #     fspr.save(tmp_name, training_certificate)
+            #     data = Agents.objects.filter(login_id=login_id)
+            #     data.update( training_certificate= 'media/documents/' + tmp_name )
+           
+            # if appointment_certificate is not None:
+            #     tmp_name =  generate_random_filename() + appointment_certificate.name
+            #     print(tmp_name)
+            #     fspr.save(tmp_name, appointment_certificate)
+            #     data = Agents.objects.filter(login_id=login_id)
+            #     data.update( appointment_certificate= 'media/documents/' + tmp_name )
+           
+            # if agreement_certificate is not None:
+            #     tmp_name =  generate_random_filename() + agreement_certificate.name
+            #     print(tmp_name)
+            #     fspr.save(tmp_name, agreement_certificate)
+            #     data = Agents.objects.filter(login_id=login_id)
+            #     data.update( agreement_certificate= 'media/documents/' + tmp_name )
+           
+            # if bank_details is not None:
+            #     tmp_name =  generate_random_filename() + bank_details.name
+            #     print(tmp_name)
+            #     fspr.save(tmp_name, bank_details)
+            #     data = Agents.objects.filter(login_id=login_id)
+            #     data.update( bank_details= 'media/documents/' + tmp_name )
 
             print(my_model)
 
@@ -5985,6 +6047,31 @@ def new_posp(request):
 
         else:
             print('login_id ', login_id)
+            basic_qualification = request.FILES.get('basic_qualification')
+            aadhar_card = request.FILES.get('aadhar_card')
+            pan_card = request.FILES.get('pan_card')
+            training_certificate = request.FILES.get('training_certificate')
+            appointment_certificate = request.FILES.get('appointment_certificate')
+            agreement_certificate = request.FILES.get('agreement_certificate')
+            bank_details = request.FILES.get('bank_details')
+            
+            fspr = FileSystemStorage()
+
+            if basic_qualification is not None:
+                fspr.save(basic_qualification.name, basic_qualification)
+            if aadhar_card is not None:
+                fspr.save(aadhar_card.name, aadhar_card)
+            if pan_card is not None:
+                fspr.save(pan_card.name, pan_card)
+            if training_certificate is not None:
+                fspr.save(training_certificate.name, training_certificate)
+            if appointment_certificate is not None:
+                fspr.save(appointment_certificate.name, appointment_certificate)
+            if agreement_certificate is not None:
+                fspr.save(agreement_certificate.name, agreement_certificate)
+            if bank_details is not None:
+                fspr.save(bank_details.name, bank_details)
+                       
             my_model = Agents.objects.create(profile_id=profile_id,
                                              posp_code=request.POST['posp_code'],
                                              registration_code=request.POST['registration_code'],
@@ -6003,14 +6090,13 @@ def new_posp(request):
                                              ifsc_code=request.POST['ifsc_code'],
                                              bank_name=request.POST['bank_name'],
 
-                                             basic_qualification=request.POST['basic_qualification'],
-                                             aadhar_card=request.POST['aadhar_card'],
-                                             pan_card=request.POST['pan_card'],
-                                             training_certificate=request.POST['training_certificate'],
-                                             appointment_certificate=request.POST['appointment_certificate'],
-                                             agreement_certificate=request.POST['agreement_certificate'],
-                                             bank_details=request.POST['bank_details'],
-
+                                             basic_qualification=basic_qualification,
+                                             aadhar_card=aadhar_card,
+                                             pan_card=pan_card,
+                                             training_certificate=training_certificate,
+                                             appointment_certificate=appointment_certificate,
+                                             agreement_certificate=agreement_certificate,
+                                             bank_details=bank_details,
                                              password=request.POST['password'],
                                              created_by=get_id_from_session(
                                                  request)
