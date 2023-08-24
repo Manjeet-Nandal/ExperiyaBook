@@ -5935,7 +5935,7 @@ def update_entry_non_motor(request, policyid):
         return str(e)
 
 def generate_random_filename():
-    unique_filename = str(uuid.uuid4())
+    unique_filename = str(uuid.uuid4()).replace("/", "").replace("-", "")
     return unique_filename
 
 def new_posp(request):
@@ -5951,7 +5951,7 @@ def new_posp(request):
         if login_id != "":
             print('login_id ', login_id)           
                        
-            data = Agents.objects.filter(login_id=login_id)
+            data = Agents.objects.filter(login_id=login_id)  
 
             my_model = data.update(posp_code=request.POST['posp_code'],
                                    registration_code=request.POST['registration_code'],
@@ -5970,7 +5970,7 @@ def new_posp(request):
                                    ifsc_code=request.POST['ifsc_code'],
                                    bank_name=request.POST['bank_name'],
 
-                                    # basic_qualification=basic_qualification,
+                                    # basic_qualification= basic_qualification,
                                     # aadhar_card=aadhar_card,
                                     # pan_card=pan_card,
                                     # training_certificate=training_certificate,
@@ -5978,75 +5978,56 @@ def new_posp(request):
                                     # agreement_certificate=agreement_certificate,
                                     # bank_details=bank_details,
                                  
-                                   password=request.POST['password'],
-                                   created_by=get_id_from_session(
-                request)
+                                #    password=request.POST['password'],
+                                   created_by=get_id_from_session(request)
             )
+            
+            print('model : ' , my_model)
 
-            # basic_qualification = request.FILES.get('basic_qualification')         
-            # aadhar_card = request.FILES.get('aadhar_card')
-            # pan_card = request.FILES.get('pan_card')
-            # training_certificate = request.FILES.get('training_certificate')
-            # appointment_certificate = request.FILES.get('appointment_certificate')
-            # agreement_certificate = request.FILES.get('agreement_certificate')
-            # bank_details = request.FILES.get('bank_details')
+            fspr =  FileSystemStorage()
+            basic_qualification = request.FILES.get('basic_qualification')           
+            print('basic_qualification: ', basic_qualification)          
+        
+            data = Agents.objects.filter(login_id=login_id)              
+
+            if basic_qualification is not None:
+                bq = fspr.save('media/documents/' + basic_qualification.name, basic_qualification)
+                print('bq: ', bq)
+                num = data.update(basic_qualification =  bq)
+                print('num is:', num)
+
+                data = Agents.objects.filter(login_id=login_id)  
+                print(data[0])
+                print(data[0].basic_qualification)
+
+            else: basic_qualification = data[0].basic_qualification                 
+            
+           
+            return JsonResponse({"done":  posp_code})
             
             # fspr = FileSystemStorage()
-            # if basic_qualification is not None:
-            #     tmp_name =  generate_random_filename() + basic_qualification.name
-            #     print( tmp_name)
-            #     fspr.save(tmp_name, basic_qualification)
-            #     data = Agents.objects.filter(login_id=login_id)
-            #     data.update( basic_qualification= 'media/documents/' + tmp_name )
-           
-            # if aadhar_card is not None:
-            #     tmp_name =  generate_random_filename() + aadhar_card.name
-            #     print( tmp_name)
-            #     fspr.save(tmp_name, aadhar_card)
-            #     data = Agents.objects.filter(login_id=login_id)
-            #     data.update( aadhar_card= 'media/documents/' + tmp_name )
-          
-            # if pan_card is not None:
-            #     tmp_name =  generate_random_filename() + pan_card.name
-            #     print(tmp_name)
-            #     fspr.save(tmp_name, pan_card)
-            #     data = Agents.objects.filter(login_id=login_id)
-            #     data.update( pan_card= 'media/documents/' + tmp_name )
-           
-            # if training_certificate is not None:
-            #     tmp_name = generate_random_filename() + training_certificate.name
-            #     print(tmp_name)
-            #     fspr.save(tmp_name, training_certificate)
-            #     data = Agents.objects.filter(login_id=login_id)
-            #     data.update( training_certificate= 'media/documents/' + tmp_name )
-           
-            # if appointment_certificate is not None:
-            #     tmp_name =  generate_random_filename() + appointment_certificate.name
-            #     print(tmp_name)
-            #     fspr.save(tmp_name, appointment_certificate)
-            #     data = Agents.objects.filter(login_id=login_id)
-            #     data.update( appointment_certificate= 'media/documents/' + tmp_name )
-           
-            # if agreement_certificate is not None:
-            #     tmp_name =  generate_random_filename() + agreement_certificate.name
-            #     print(tmp_name)
-            #     fspr.save(tmp_name, agreement_certificate)
-            #     data = Agents.objects.filter(login_id=login_id)
-            #     data.update( agreement_certificate= 'media/documents/' + tmp_name )
-           
-            # if bank_details is not None:
-            #     tmp_name =  generate_random_filename() + bank_details.name
-            #     print(tmp_name)
-            #     fspr.save(tmp_name, bank_details)
-            #     data = Agents.objects.filter(login_id=login_id)
-            #     data.update( bank_details= 'media/documents/' + tmp_name )
 
-            print(my_model)
+            # basic_qualification = request.FILES.get('basic_qualification')         
+            # print(basic_qualification)
 
-            return JsonResponse('done: ' + posp_code, safe=False)
+            # if basic_qualification is not None:          
+            #     tmp_name = generate_random_filename() + basic_qualification.name    
+            #     fspr.save(tmp_name   , basic_qualification)           
+            #     basic_qualification = 'media/documents/' + tmp_name      
+            # else:
+            #     basic_qualification = data[0].basic_qualification
+
+            # print(data[0].basic_qualification)                                
+
+            # return JsonResponse('done: ' + posp_code, safe=False)
+            # return JsonResponse({"done":  posp_code})
+        
 
         else:
             print('login_id ', login_id)
+
+            fspr = FileSystemStorage()
+
             basic_qualification = request.FILES.get('basic_qualification')
             aadhar_card = request.FILES.get('aadhar_card')
             pan_card = request.FILES.get('pan_card')
@@ -6055,7 +6036,7 @@ def new_posp(request):
             agreement_certificate = request.FILES.get('agreement_certificate')
             bank_details = request.FILES.get('bank_details')
             
-            fspr = FileSystemStorage()
+            # print(basic_qualification)
 
             if basic_qualification is not None:
                 fspr.save(basic_qualification.name, basic_qualification)
@@ -6097,6 +6078,7 @@ def new_posp(request):
                                              appointment_certificate=appointment_certificate,
                                              agreement_certificate=agreement_certificate,
                                              bank_details=bank_details,
+
                                              password=request.POST['password'],
                                              created_by=get_id_from_session(
                                                  request)
@@ -6104,11 +6086,13 @@ def new_posp(request):
 
             print(my_model)
 
-            return JsonResponse('done: ' + posp_code, safe=False)
+            # return JsonResponse('done: ' + posp_code, safe=False)
+            return JsonResponse({"done":  posp_code})
 
     except Exception as e:
         print("Error occurred in new_posp method:", str(e))
-        return JsonResponse('error: ' + posp_code + ' : ' + str(e), safe=False)
+        # return JsonResponse('error: ' + posp_code + ' : ' + str(e), safe=False)
+        return JsonResponse({'error' :  posp_code })
 
 
 def delete_policy(request):

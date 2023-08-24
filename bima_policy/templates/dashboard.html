@@ -5083,7 +5083,6 @@
       }
    }
 
-
    function addToFilterList() {
 
       filter_type = document.getElementById('filter_type')
@@ -7273,6 +7272,17 @@
 
    }
 
+   function generateRandomPassword(length) {
+      const charset = "0123456789";
+      let password = "";
+      
+      for (let i = 0; i < length; i++) {
+         const randomIndex = Math.floor(Math.random() * charset.length);
+         password += charset[randomIndex];
+      }
+      
+      return password;
+}
    async function sendPOspFormData() {
 
       formData = new FormData();
@@ -7294,19 +7304,55 @@
       formData.append('ifsc_code', document.getElementById('ifsc_code').value);
       formData.append('bank_name', document.getElementById('bank_name').value);
 
-      formData.append('basic_qualification', document.getElementById('basic_qualification').files[0]);
-      formData.append('aadhar_card', document.getElementById('aadhar_card_pos').files[0]);
-      formData.append('pan_card', document.getElementById('pan_card_pos').files[0]);
-      formData.append('training_certificate', document.getElementById('training_certificate_pos').files[0]);
-      formData.append('appointment_certificate', document.getElementById('appointment_certificate_pos').files[0]);
-      formData.append('agreement_certificate', document.getElementById('agreement_certificate_pos').files[0]);
-      formData.append('bank_details', document.getElementById('bank_details_pos').files[0]);
+      if (document.getElementById('posp_title').innerText.startsWith("POSP Form")) {         
+    
+         formData.append('basic_qualification', document.getElementById('basic_qualification').files[0]);
+         formData.append('aadhar_card', document.getElementById('aadhar_card_pos').files[0]);
+         formData.append('pan_card', document.getElementById('pan_card_pos').files[0]);
+         formData.append('training_certificate', document.getElementById('training_certificate_pos').files[0]);
+         formData.append('appointment_certificate', document.getElementById('appointment_certificate_pos').files[0]);
+         formData.append('agreement_certificate', document.getElementById('agreement_certificate_pos').files[0]);
+         formData.append('bank_details', document.getElementById('bank_details_pos').files[0]);
+      }
+      else{
 
-      formData.append('password', '@123>=6');
+         bq = document.getElementById('basic_qualification').files[0]
+         if (bq !== undefined) {          
+            formData.append('basic_qualification', document.getElementById('basic_qualification').files[0]);
+         }
+         bq = document.getElementById('aadhar_card_pos').files[0]
+         if (bq !== undefined) {          
+            formData.append('aadhar_card', document.getElementById('aadhar_card_pos').files[0]);
+         }
+         bq = document.getElementById('pan_card_pos').files[0]
+         if (bq !== undefined) {          
+            formData.append('pan_card', document.getElementById('pan_card_pos').files[0]);
+         }
+         bq = document.getElementById('training_certificate_pos').files[0]
+         if (bq !== undefined) {          
+            formData.append('training_certificate', document.getElementById('training_certificate_pos').files[0]);
+         }
+         bq = document.getElementById('appointment_certificate_pos').files[0]
+         if (bq !== undefined) {          
+            formData.append('appointment_certificate', document.getElementById('appointment_certificate_pos').files[0]);
+         }
+         bq = document.getElementById('agreement_certificate_pos').files[0]
+         if (bq !== undefined) {          
+            formData.append('agreement_certificate', document.getElementById('agreement_certificate_pos').files[0]);
+         }
+         bq = document.getElementById('bank_details_pos').files[0]
+         if (bq !== undefined) {          
+            formData.append('bank_details', document.getElementById('bank_details_pos').files[0]);
+         }
+      }
+
+      formData.append('password', generateRandomPassword(6));
+
+      console.log(formData);
 
       for (const iterator of formData) {
 
-         if (iterator[1] == "") {
+         if (iterator[1] == "" || iterator[1] == "undefined") {
             showNotification((`⚠️ ${iterator[0]} is missing`.toUpperCase()));
             return
          }
@@ -7321,55 +7367,7 @@
       else {
          formData.append('login_id', policyid); // will be populated during editonclick()
       }
-
-      // formData.append('basic_qualification', '');
-      // formData.append('aadhar_card', '');
-      // formData.append('pan_card', '');
-      // formData.append('training_certificate', '');
-      // formData.append('appointment_certificate', '');
-      // formData.append('agreement_certificate', '');
-      // formData.append('bank_details', '');
-
-      // attachments
-      // basic_qualification = document.getElementById('basic_qualification').files[0]
-      // if (basic_qualification != null) {
-      //    file_name = `media/documents/` + getRandomFileName(basic_qualification)
-      //    formData.set('basic_qualification', file_name.trim());
-      // }
-      // aadhar_card_pos = document.getElementById('aadhar_card_pos').files[0]
-      // if (aadhar_card_pos != null) {
-      //    file_name = `media/documents/` + getRandomFileName(aadhar_card_pos)
-      //    formData.set('aadhar_card', file_name.trim());
-      // }
-      // pan_card_pos = document.getElementById('pan_card_pos').files[0]
-      // if (pan_card_pos != null) {
-      //    file_name = `media/documents/` + getRandomFileName(pan_card_pos)
-      //    formData.set('pan_card', file_name.trim());
-      // }
-      // training_certificate_pos = document.getElementById('training_certificate_pos').files[0]
-      // if (training_certificate_pos != null) {
-      //    file_name = `media/documents/` + getRandomFileName(training_certificate_pos)
-      //    formData.set('training_certificate', file_name.trim());
-      // }
-      // appointment_certificate_pos = document.getElementById('appointment_certificate_pos').files[0]
-
-      // if (appointment_certificate_pos != null) {
-      //    file_name = `media/documents/` + getRandomFileName(appointment_certificate_pos)
-      //    formData.set('appointment_certificate', file_name.trim());
-      // }
-
-      // agreement_certificate_pos = document.getElementById('agreement_certificate_pos').files[0]
-      // if (agreement_certificate_pos != null) {
-      //    file_name = `media/documents/` + getRandomFileName(agreement_certificate_pos)
-      //    formData.set('agreement_certificate', file_name.trim());
-      // }
-
-      // bank_details_pos = document.getElementById('bank_details_pos').files[0]
-      // if (bank_details_pos != null) {
-      //    file_name = `media/documents/` + getRandomFileName(bank_details_pos)
-      //    formData.set('bank_details', file_name.trim());
-      // }
-
+      
       for (const iterator of formData) {
 
          console.log(iterator);
@@ -7380,8 +7378,16 @@
 
       result = await sendPospData(formData.get('posp_code'), formData);
 
-      if (result != null) {
+      console.log(result);
 
+      showNotification('✅ ' + 'succeed : '.toUpperCase() + formData.get('posp_code').toUpperCase());
+      await FetchDataAsync()
+
+      ShowPage('posp')
+
+      return
+
+      if (result != null) {
 
          if (document.getElementById('posp_title').innerText.startsWith("POSP Form")) {
 
