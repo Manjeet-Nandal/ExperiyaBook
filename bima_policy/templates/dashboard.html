@@ -2549,7 +2549,7 @@
 
                                     <div class="col-md-3 mb-4" hidden>
                                        <label>Retype Password<abbr title=" " class="text-danger">*</abbr></label>
-                                       <input type="password" id="confirm_password" name="confirm_password" 
+                                       <input type="password" id="confirm_password" name="confirm_password"
                                           data-parsley-error-message="Password &amp; confirm password should be same"
                                           data-parsley-equalto="#password" class="form-control" data-parsley-="true">
                                     </div>
@@ -3401,6 +3401,21 @@
 
          record = records[i]
 
+         if (record.basic_qualification == null)
+            record.basic_qualification = ''
+         if (record.aadhar_card == null)
+            record.aadhar_card = ''
+         if (record.pan_card == null)
+            record.pan_card = ''
+         if (record.training_certificate == null)
+            record.training_certificate = ''
+         if (record.appointment_certificate == null)
+            record.appointment_certificate = ''
+         if (record.agreement_certificate == null)
+            record.agreement_certificate = ''
+         if (record.bank_details == null)
+            record.bank_details = ''
+
          recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
          <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
          <td class="p-2" >  ${record.posp_code} </td>
@@ -3427,7 +3442,7 @@
          <td class="p-2 text-center" > <a href="#" onclick="downloadFile('${record.appointment_certificate}')">${record.appointment_certificate}</a> </td>
          <td class="p-2 text-center" > <a href="#" onclick="downloadFile('${record.agreement_certificate}')">${record.agreement_certificate}</a> </td>
          <td class="p-2 text-center" > <a href="#" onclick="downloadFile('${record.bank_details}')">${record.bank_details}</a> </td>
-         
+      
         <td class="p-2" >  ${record.login_id} </td>
         <td class="p-2" > ${record.created_by} </td>
          <td class="p-2 text-center w-10pc nowrap" > <a href="#" class="badge badge-success" >${record.status}</a> </td>      
@@ -5985,8 +6000,6 @@
          return;
       }
 
-      // console.log(fileName);
-      // showNotification(`linking ${fileName}...`.toUpperCase());
       showNotification('✅ ' + 'succeed : '.toUpperCase() + `linking ${fileName}...`.toUpperCase());
 
 
@@ -7275,14 +7288,79 @@
    function generateRandomPassword(length) {
       const charset = "0123456789";
       let password = "";
-      
+
       for (let i = 0; i < length; i++) {
          const randomIndex = Math.floor(Math.random() * charset.length);
          password += charset[randomIndex];
       }
-      
+
       return password;
-}
+   }
+
+   var status = false
+   async function uploadPdfs(fileDataArray) {
+      const bucketName = _bucketName; // Assuming _bucketName is defined somewhere
+      const s3 = new AWS.S3();
+
+      const uploadPromises = fileDataArray.map(async (fileData) => {
+         const { fileName, fileElement } = fileData;
+
+         if (fileName.trim() === "") {
+            console.log(`Skipping empty file name for element ${fileElement}`);
+            return { success: false, fileName, error: "Empty file name" };
+         }
+
+         const fileInput = document.getElementById(fileElement);
+         const file = fileInput.files[0];
+
+         if (!file) {
+            console.log(`No file selected for element ${fileElement}`);
+            return { success: false, fileName, error: "No file selected" };
+         }
+
+         const params = {
+            Bucket: bucketName,
+            Key: fileName,
+            Body: file,
+         };
+
+         //   console.log(params);
+
+         try {
+            const data = await new Promise((resolve, reject) => {
+               s3.upload(params, function (err, data) {
+                  if (err) {
+                     reject(err);
+                  } else {
+                     resolve(data);
+                  }
+               });
+            });
+
+            console.log(`File uploaded successfully: ${fileName}`, data);
+            return { success: true, fileName };
+         } catch (err) {
+            console.error(`Error uploading ${fileName}:`, err);
+            return { success: false, fileName, error: err.message };
+         }
+      });
+
+      const uploadResults = await Promise.all(uploadPromises);
+
+      const allFilesUploaded = uploadResults.every(result => result.success);
+
+      if (allFilesUploaded) {
+         console.log("All files uploaded successfully!");
+         status = true
+
+      } else {
+         console.log("Some files failed to upload. Details:");
+         console.log(uploadResults.filter(result => !result.success));
+         status = false
+      }
+   }
+
+
    async function sendPOspFormData() {
 
       formData = new FormData();
@@ -7295,7 +7373,6 @@
       formData.append('address', document.getElementById('address').value);
       formData.append('state', document.getElementById('state').value);
       formData.append('city', document.getElementById('city').value);
-
       formData.append('pincode', document.getElementById('pincode').value);
       formData.append('rural_urban', document.getElementById('rural_urban').value);
       formData.append('slab', document.getElementById('slab').value);
@@ -7304,55 +7381,52 @@
       formData.append('ifsc_code', document.getElementById('ifsc_code').value);
       formData.append('bank_name', document.getElementById('bank_name').value);
 
-      if (document.getElementById('posp_title').innerText.startsWith("POSP Form")) {         
-    
-         formData.append('basic_qualification', document.getElementById('basic_qualification').files[0]);
-         formData.append('aadhar_card', document.getElementById('aadhar_card_pos').files[0]);
-         formData.append('pan_card', document.getElementById('pan_card_pos').files[0]);
-         formData.append('training_certificate', document.getElementById('training_certificate_pos').files[0]);
-         formData.append('appointment_certificate', document.getElementById('appointment_certificate_pos').files[0]);
-         formData.append('agreement_certificate', document.getElementById('agreement_certificate_pos').files[0]);
-         formData.append('bank_details', document.getElementById('bank_details_pos').files[0]);
-      }
-      else{
-
-         bq = document.getElementById('basic_qualification').files[0]
-         if (bq !== undefined) {          
-            formData.append('basic_qualification', document.getElementById('basic_qualification').files[0]);
-         }
-         bq = document.getElementById('aadhar_card_pos').files[0]
-         if (bq !== undefined) {          
-            formData.append('aadhar_card', document.getElementById('aadhar_card_pos').files[0]);
-         }
-         bq = document.getElementById('pan_card_pos').files[0]
-         if (bq !== undefined) {          
-            formData.append('pan_card', document.getElementById('pan_card_pos').files[0]);
-         }
-         bq = document.getElementById('training_certificate_pos').files[0]
-         if (bq !== undefined) {          
-            formData.append('training_certificate', document.getElementById('training_certificate_pos').files[0]);
-         }
-         bq = document.getElementById('appointment_certificate_pos').files[0]
-         if (bq !== undefined) {          
-            formData.append('appointment_certificate', document.getElementById('appointment_certificate_pos').files[0]);
-         }
-         bq = document.getElementById('agreement_certificate_pos').files[0]
-         if (bq !== undefined) {          
-            formData.append('agreement_certificate', document.getElementById('agreement_certificate_pos').files[0]);
-         }
-         bq = document.getElementById('bank_details_pos').files[0]
-         if (bq !== undefined) {          
-            formData.append('bank_details', document.getElementById('bank_details_pos').files[0]);
-         }
+      bq = document.getElementById('basic_qualification').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('basic_qualification', file_name.trim());
       }
 
-      formData.append('password', generateRandomPassword(6));
+      bq = document.getElementById('aadhar_card_pos').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('aadhar_card', file_name.trim());
+      }
 
-      console.log(formData);
+      bq = document.getElementById('pan_card_pos').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('pan_card', file_name.trim());
+      }
 
+      bq = document.getElementById('training_certificate_pos').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('training_certificate', file_name.trim());
+      }
+
+      bq = document.getElementById('appointment_certificate_pos').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('appointment_certificate', file_name.trim());
+      }
+
+      bq = document.getElementById('agreement_certificate_pos').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('agreement_certificate', file_name.trim());
+      }
+
+      bq = document.getElementById('bank_details_pos').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('bank_details', file_name.trim());
+      }
+
+      // checking if any field is missing then return
       for (const iterator of formData) {
 
-         if (iterator[1] == "" || iterator[1] == "undefined") {
+         if (iterator[1].trim() === "" || iterator[1] === undefined) {
             showNotification((`⚠️ ${iterator[0]} is missing`.toUpperCase()));
             return
          }
@@ -7361,56 +7435,58 @@
          }
       }
 
-      if (document.getElementById('posp_title').innerText.startsWith("POSP Form")) {
+      // specify if this is an update or new posp
+      if (document.getElementById('posp_title').innerText.startsWith("POSP Form"))
          formData.append('login_id', '');
+      else
+         formData.append('login_id', policyid); // will be populated during editonclick()
+
+
+      // for (const iterator of formData) {
+      //    console.log(iterator);
+      // }
+
+      //    return
+
+      fileDataArrayTemp = [];
+      fileDataArray = [];
+
+      fileDataArrayTemp.push({ fileName: formData.get('basic_qualification'), fileElement: 'basic_qualification' })
+      fileDataArrayTemp.push({ fileName: formData.get('aadhar_card'), fileElement: 'aadhar_card_pos' })
+      fileDataArrayTemp.push({ fileName: formData.get('pan_card'), fileElement: 'pan_card_pos' })
+      fileDataArrayTemp.push({ fileName: formData.get('training_certificate'), fileElement: 'training_certificate_pos' })
+      fileDataArrayTemp.push({ fileName: formData.get('appointment_certificate'), fileElement: 'appointment_certificate_pos' })
+      fileDataArrayTemp.push({ fileName: formData.get('agreement_certificate'), fileElement: 'agreement_certificate_pos' })
+      fileDataArrayTemp.push({ fileName: formData.get('bank_details'), fileElement: 'bank_details_pos' })
+
+      fileDataArrayTemp.forEach(item => {
+         if (item.fileName != null) {
+            fileDataArray.push(item)
+         }
+      })
+
+      // console.log(fileDataArray);
+      if (fileDataArray.length > 0) {
+
+         showNotification(('⌛️ Verifying: ' + formData.get('posp_code')).toUpperCase());
+
+         await uploadPdfs(fileDataArray);
+         if (status) {
+            await sendPospData(formData.get('posp_code'), formData);
+         }
       }
       else {
-         formData.append('login_id', policyid); // will be populated during editonclick()
-      }
-      
-      for (const iterator of formData) {
-
-         console.log(iterator);
+         await sendPospData(formData.get('posp_code'), formData);
       }
 
-
-      // return
-
-      result = await sendPospData(formData.get('posp_code'), formData);
-
-      console.log(result);
-
-      showNotification('✅ ' + 'succeed : '.toUpperCase() + formData.get('posp_code').toUpperCase());
       await FetchDataAsync()
-
       ShowPage('posp')
 
-      return
-
-      if (result != null) {
-
-         if (document.getElementById('posp_title').innerText.startsWith("POSP Form")) {
-
-            // await uploadPdf(formData.get('basic_qualification'), 'basic_qualification')
-            // await uploadPdf(formData.get('aadhar_card'), 'aadhar_card_pos')
-            // await uploadPdf(formData.get('pan_card'), 'pan_card_pos')
-            // await uploadPdf(formData.get('training_certificate'), 'training_certificate_pos')
-            // await uploadPdf(formData.get('appointment_certificate'), 'appointment_certificate_pos')
-            // await uploadPdf(formData.get('agreement_certificate'), 'agreement_certificate_pos')
-            // await uploadPdf(formData.get('bank_details'), 'bank_details_pos')
-
-            showNotification('✅ ' + 'succeed : '.toUpperCase() + formData.get('posp_code').toUpperCase());
-         }
-
-         await FetchDataAsync()
-
-         ShowPage('posp')
-      }
    }
+
 
    async function sendPospData(formDataKey, formData) {
       try {
-         showNotification('⌛️ saving posp ...'.toUpperCase());
 
          const href = window.location.origin + '/bima_policy/policy/new_posp/';
          const csrfToken = '{{ csrf_token }}';
@@ -7424,10 +7500,11 @@
          });
 
          const result = await response.text();
-         // console.log(result);
+         console.log(result);
 
-         if (result.includes('done:')) {
-            showNotification('✅ ' + 'succeed : '.toUpperCase() + formDataKey.toUpperCase());
+         if (result === 'done') {
+            showNotification(('✅ Done: ' + formDataKey).toUpperCase());
+
             return result
          } else {
             showNotification('❌ ' + 'failed : '.toUpperCase() + formDataKey.toUpperCase());

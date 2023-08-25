@@ -5949,110 +5949,83 @@ def new_posp(request):
         posp_code = request.POST['posp_code']
 
         if login_id != "":
-            print('login_id ', login_id)           
-                       
-            data = Agents.objects.filter(login_id=login_id)  
+            print('login_id ', login_id)     
+           
+            data = Agents.objects.filter(login_id = login_id)
+            print(data)
+
+            basic_qualification = request.POST.get('basic_qualification', None)
+            if basic_qualification is None:
+                basic_qualification = data[0].basic_qualification if data[0].basic_qualification else None            
+            
+            aadhar_card = request.POST.get('aadhar_card', None)
+            if aadhar_card is None:
+                aadhar_card = data[0].aadhar_card if data[0].aadhar_card else None            
+            
+            pan_card = request.POST.get('pan_card', None)
+            if pan_card is None:
+                pan_card = data[0].pan_card if data[0].pan_card else None            
+
+            training_certificate = request.POST.get('training_certificate', None)
+            if training_certificate is None:
+                training_certificate = data[0].training_certificate if data[0].training_certificate else None            
+ 
+            appointment_certificate = request.POST.get('appointment_certificate', None)
+            if appointment_certificate is None:
+                appointment_certificate = data[0].appointment_certificate if data[0].appointment_certificate else None            
+
+            agreement_certificate = request.POST.get('agreement_certificate', None)
+            if agreement_certificate is None:
+                agreement_certificate = data[0].agreement_certificate if data[0].agreement_certificate else None            
+
+            bank_details = request.POST.get('bank_details', None)
+            if bank_details is None:
+                bank_details = data[0].bank_details if data[0].bank_details else None           
+ 
 
             my_model = data.update(posp_code=request.POST['posp_code'],
-                                   registration_code=request.POST['registration_code'],
-                                   full_name=request.POST['full_name'],
-                                   gender=request.POST['gender'],
-                                   mob_no=request.POST['mob_no'],
-                                   email_id=request.POST['email_id'],
-                                   address=request.POST['address'],
-                                   state=request.POST['state'],
-                                   city=request.POST['city'],
-                                   pincode=request.POST['pincode'],
-                                   rural_urban=request.POST['rural_urban'],
-                                   slab=request.POST['slab'],
-                                   GSTIN=request.POST['GSTIN'],
-                                   account_no=request.POST['account_no'],
-                                   ifsc_code=request.POST['ifsc_code'],
-                                   bank_name=request.POST['bank_name'],
+                                    registration_code=request.POST['registration_code'],
+                                    full_name=request.POST['full_name'],
+                                    gender=request.POST['gender'],
+                                    mob_no=request.POST['mob_no'],
+                                    email_id=request.POST['email_id'],
+                                    address=request.POST['address'],
+                                    state=request.POST['state'],
+                                    city=request.POST['city'],
+                                    pincode=request.POST['pincode'],
+                                    rural_urban=request.POST['rural_urban'],
+                                    slab=request.POST['slab'],
+                                    GSTIN=request.POST['GSTIN'],
+                                    account_no=request.POST['account_no'],
+                                    ifsc_code=request.POST['ifsc_code'],
+                                    bank_name=request.POST['bank_name'],      
 
-                                    # basic_qualification= basic_qualification,
-                                    # aadhar_card=aadhar_card,
-                                    # pan_card=pan_card,
-                                    # training_certificate=training_certificate,
-                                    # appointment_certificate=appointment_certificate,
-                                    # agreement_certificate=agreement_certificate,
-                                    # bank_details=bank_details,
-                                 
-                                #    password=request.POST['password'],
-                                   created_by=get_id_from_session(request)
-            )
-            
-            print('model : ' , my_model)
+                                    basic_qualification=basic_qualification,
+                                    aadhar_card=aadhar_card,
+                                    pan_card=pan_card,
+                                    training_certificate=training_certificate,
+                                    appointment_certificate=appointment_certificate,
+                                    agreement_certificate=agreement_certificate,
+                                    bank_details=bank_details,
+                                                           
+                                    created_by=get_id_from_session( request)
+                                    )
 
-            fspr =  FileSystemStorage()
-            basic_qualification = request.FILES.get('basic_qualification')           
-            print('basic_qualification: ', basic_qualification)          
-        
-            data = Agents.objects.filter(login_id=login_id)              
+            print(my_model)
 
-            if basic_qualification is not None:
-                bq = fspr.save('media/documents/' + basic_qualification.name, basic_qualification)
-                print('bq: ', bq)
-                num = data.update(basic_qualification =  bq)
-                print('num is:', num)
-
-                data = Agents.objects.filter(login_id=login_id)  
-                print(data[0])
-                print(data[0].basic_qualification)
-
-            else: basic_qualification = data[0].basic_qualification                 
-            
-           
-            return JsonResponse({"done":  posp_code})
-            
-            # fspr = FileSystemStorage()
-
-            # basic_qualification = request.FILES.get('basic_qualification')         
-            # print(basic_qualification)
-
-            # if basic_qualification is not None:          
-            #     tmp_name = generate_random_filename() + basic_qualification.name    
-            #     fspr.save(tmp_name   , basic_qualification)           
-            #     basic_qualification = 'media/documents/' + tmp_name      
-            # else:
-            #     basic_qualification = data[0].basic_qualification
-
-            # print(data[0].basic_qualification)                                
-
-            # return JsonResponse('done: ' + posp_code, safe=False)
-            # return JsonResponse({"done":  posp_code})
-        
-
+            return HttpResponse("done" )
+               
         else:
             print('login_id ', login_id)
 
-            fspr = FileSystemStorage()
-
-            basic_qualification = request.FILES.get('basic_qualification')
-            aadhar_card = request.FILES.get('aadhar_card')
-            pan_card = request.FILES.get('pan_card')
-            training_certificate = request.FILES.get('training_certificate')
-            appointment_certificate = request.FILES.get('appointment_certificate')
-            agreement_certificate = request.FILES.get('agreement_certificate')
-            bank_details = request.FILES.get('bank_details')
-            
-            # print(basic_qualification)
-
-            if basic_qualification is not None:
-                fspr.save(basic_qualification.name, basic_qualification)
-            if aadhar_card is not None:
-                fspr.save(aadhar_card.name, aadhar_card)
-            if pan_card is not None:
-                fspr.save(pan_card.name, pan_card)
-            if training_certificate is not None:
-                fspr.save(training_certificate.name, training_certificate)
-            if appointment_certificate is not None:
-                fspr.save(appointment_certificate.name, appointment_certificate)
-            if agreement_certificate is not None:
-                fspr.save(agreement_certificate.name, agreement_certificate)
-            if bank_details is not None:
-                fspr.save(bank_details.name, bank_details)
-                       
+            basic_qualification = request.POST.get('basic_qualification', None)
+            aadhar_card = request.POST.get('aadhar_card', None)
+            pan_card = request.POST.get('pan_card', None)
+            training_certificate = request.POST.get('training_certificate', None)
+            appointment_certificate = request.POST.get('appointment_certificate', None)
+            agreement_certificate = request.POST.get('agreement_certificate', None)
+            bank_details = request.POST.get('bank_details', None)          
+                    
             my_model = Agents.objects.create(profile_id=profile_id,
                                              posp_code=request.POST['posp_code'],
                                              registration_code=request.POST['registration_code'],
@@ -6071,28 +6044,27 @@ def new_posp(request):
                                              ifsc_code=request.POST['ifsc_code'],
                                              bank_name=request.POST['bank_name'],
 
-                                             basic_qualification=basic_qualification,
-                                             aadhar_card=aadhar_card,
-                                             pan_card=pan_card,
-                                             training_certificate=training_certificate,
-                                             appointment_certificate=appointment_certificate,
-                                             agreement_certificate=agreement_certificate,
-                                             bank_details=bank_details,
+                                            basic_qualification=basic_qualification,
+                                            aadhar_card=aadhar_card,
+                                            pan_card=pan_card,
+                                            training_certificate=training_certificate,
+                                            appointment_certificate=appointment_certificate,
+                                            agreement_certificate=agreement_certificate,
+                                            bank_details=bank_details,
 
-                                             password=request.POST['password'],
+                                            #  password=request.POST['password'],
                                              created_by=get_id_from_session(
                                                  request)
                                              )
 
             print(my_model)
 
-            # return JsonResponse('done: ' + posp_code, safe=False)
-            return JsonResponse({"done":  posp_code})
+            return HttpResponse("done" )
+        
 
     except Exception as e:
-        print("Error occurred in new_posp method:", str(e))
-        # return JsonResponse('error: ' + posp_code + ' : ' + str(e), safe=False)
-        return JsonResponse({'error' :  posp_code })
+        print("Error occurred in new_posp method:", str(e)) 
+        return HttpResponse('error')
 
 
 def delete_policy(request):
