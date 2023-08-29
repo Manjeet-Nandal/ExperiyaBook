@@ -4,9 +4,6 @@
 
 
 <main class="app-main">
-   <style>
-
-   </style>
 
    <div class="wrapper">
 
@@ -805,8 +802,6 @@
                                     entries
                                  </label>
                               </div>
-
-
                            </div>
 
                            <div class="col-md-6">
@@ -818,6 +813,7 @@
                         </div>
                      </div>
                   </div>
+
 
                   <div class="table-responsive">
                      <div class="dataTables_scroll">
@@ -1103,17 +1099,49 @@
                      </div>
                   </div>
 
-                  <button id="nextButton" class="btn mt-3" onclick="showNextRows(false)"
-                     style="float: right; background-color: #346CB0; color: white;">Next</button>
+                  <!-- <button id="nextButton" class="btn mt-3" onclick="showNextRows(false)" 
+                     style="float: right; background-color: #346CB0; color: white;">Next</button> -->
 
+                  <style>
+                     #upButton {
+                        float: right;
+                        margin: 20px;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 40px;
+                        height: 40px;
+                        background-color: #3498db;
+                        color: white;
+                        border-radius: 50%;
+                        text-decoration: none;
+                        transition: background-color 0.3s;
+                     }
+
+                     #upButton i {
+                        margin-right: 0.2em;
+                     }
+
+                     #upButton:hover {
+                        background-color: #2980b9;
+                     }
+                  </style>
+
+                  <a id="upButton" class="btn  " href="#" title="Scroll to Top">
+                     <i class="fas fa-chevron-up"></i>
+                  </a>
+                 
                   <button id="pevButton" class="btn btn-secondary mt-3" hidden
                      style="float: right; background-color: #346CB0; color: #FFFFFF; ">Back</button>
 
                </div>
+
                <!-- /.page-inner -->
             </div>
             <!-- /.page -->
          </div>
+
+
 
       </div>
 
@@ -2673,15 +2701,13 @@
       </div>
 
 
-
 </main>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 
-
-</script>
 
 <script>
+
    document.addEventListener('DOMContentLoaded', async function () {
 
       Load_Dashboard_Details()
@@ -2689,12 +2715,6 @@
       Load_Dashboard_Details()
 
    });
-
-
-</script>
-
-
-<script>
 
    var fetchList = []
    var freezList = []
@@ -3204,6 +3224,8 @@
 
       document.getElementById('page_heading').innerHTML = 'Policy List'
 
+      document.getElementById('upButton').hidden = true
+
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
 
@@ -3347,11 +3369,19 @@
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
 
+      if (records.length > 5) {
+         document.getElementById('upButton').hidden = false
+      }
+      else {
+         document.getElementById('upButton').hidden = true
+      }
+
    }
 
    function GeneratePospTable(records) {
 
       document.getElementById('page_heading').innerHTML = 'POS List'
+      document.getElementById('upButton').hidden = true
 
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
@@ -3462,11 +3492,19 @@
       showNotification('✅ TOTAL POSP: ' + records.length);
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
+
+      if (records.length > 5) {
+         document.getElementById('upButton').hidden = false
+      }
+      else {
+         document.getElementById('upButton').hidden = true
+      }
    }
 
    function GenerateInsurerTable(records) {
 
       document.getElementById('page_heading').innerHTML = 'Insurer List'
+      document.getElementById('upButton').hidden = true
 
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
@@ -3511,11 +3549,19 @@
       showNotification('✅ TOTAL INSURERS: ' + records.length);
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
+
+      if (records.length > 5) {
+         document.getElementById('upButton').hidden = false
+      }
+      else {
+         document.getElementById('upButton').hidden = true
+      }
    }
 
    function GenerateSPTable(records) {
 
       document.getElementById('page_heading').innerHTML = 'Service Provider List'
+      document.getElementById('upButton').hidden = true
 
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
@@ -3566,11 +3612,19 @@
       showNotification('✅ TOTAL SERVICE PROVIDERS: ' + records.length);
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
+
+      if (records.length > 5) {
+         document.getElementById('upButton').hidden = false
+      }
+      else {
+         document.getElementById('upButton').hidden = true
+      }
    }
 
    function GenerateProductTable(records) {
 
       document.getElementById('page_heading').innerHTML = 'Product List'
+      document.getElementById('upButton').hidden = true
 
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
@@ -3614,11 +3668,19 @@
       showNotification('✅ TOTAL PRODUCTS: ' + records.length);
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
+
+      if (records.length > 5) {
+         document.getElementById('upButton').hidden = false
+      }
+      else {
+         document.getElementById('upButton').hidden = true
+      }
    }
 
    function GenerateVehicleCategoryTable(records) {
 
       document.getElementById('page_heading').innerHTML = 'Vehicle Category List'
+      document.getElementById('upButton').hidden = true
 
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
@@ -3666,11 +3728,19 @@
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
 
+      if (records.length > 5) {
+         document.getElementById('upButton').hidden = false
+      }
+      else {
+         document.getElementById('upButton').hidden = true
+      }
+
    }
 
    function GenerateVehicleMakeTable(records) {
 
       document.getElementById('page_heading').innerHTML = 'Vehicle Make List'
+      document.getElementById('upButton').hidden = true
 
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
@@ -3718,11 +3788,19 @@
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
 
+      if (records.length > 5) {
+         document.getElementById('upButton').hidden = false
+      }
+      else {
+         document.getElementById('upButton').hidden = true
+      }
+
    }
 
    function GenerateVehicleModelTable(records) {
 
       document.getElementById('page_heading').innerHTML = 'Vehicle Model List'
+      document.getElementById('upButton').hidden = true
 
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
@@ -3770,11 +3848,19 @@
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
 
+      if (records.length > 5) {
+         document.getElementById('upButton').hidden = false
+      }
+      else {
+         document.getElementById('upButton').hidden = true
+      }
+
    }
 
    function GenerateStaffTable(records) {
 
       document.getElementById('page_heading').innerHTML = 'Staff List'
+      document.getElementById('upButton').hidden = true
 
       tableRows = ''
       document.getElementById('tbdy').innerHTML = ''
@@ -3821,6 +3907,13 @@
       showNotification('✅ TOTAL STAFF: ' + records.length);
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
+
+      if (records.length > 5) {
+         document.getElementById('upButton').hidden = false
+      }
+      else {
+         document.getElementById('upButton').hidden = true
+      }
    }
 
    function SelectRow(row) {
@@ -3921,8 +4014,6 @@
          }
       })
    }
-
-
 
    function Load_NonMotor_Edit_Config(data) {
 
@@ -4042,7 +4133,6 @@
 
 
    }
-
 
    var policyid = null  // used for updating policy, bcoz now dont need to filter in backend
 
@@ -4306,7 +4396,6 @@
 
    }
 
-
    async function FetchMotorPolicyAsync() {
       try {
          // Create a Promise to wrap the $.ajax() call
@@ -4334,7 +4423,6 @@
          alert(error.toString());
       }
    }
-
 
    function showNextRows(hideDefault) {
 
@@ -5326,7 +5414,6 @@
    function delayedSearch() {
       setTimeout(searchTable, 10);
    }
-
 
    // motor_entry functions
    posp_added = false
@@ -6435,8 +6522,6 @@
 
 
    // non motor entry functions
-
-
    async function sendPolicyDataNonMotor() {
 
       console.log('sendPolicyDataNonMotor calling: ');
@@ -6616,7 +6701,6 @@
 
       document.getElementById("product_name").focus()
    }
-
 
    posp_product_added = false
    function addPosToProduct() {
@@ -7466,14 +7550,13 @@
       })
 
       // console.log(fileDataArray);
+
       if (fileDataArray.length > 0) {
-
+         status = false;
          showNotification(('⌛️ Verifying: ' + formData.get('posp_code')).toUpperCase());
-
          await uploadPdfs(fileDataArray);
-         if (status) {
+         if (status)
             await sendPospData(formData.get('posp_code'), formData);
-         }
       }
       else {
          await sendPospData(formData.get('posp_code'), formData);
@@ -7697,58 +7780,6 @@
          }
       });
    }
-
-
-</script>
-
-
-
-<script>
-
-   $(function () {
-
-      return
-
-      var dtToday = new Date();
-
-      var month = dtToday.getMonth() + 1;
-      var day = dtToday.getDate();
-      var year = dtToday.getFullYear();
-
-      if (month < 10) {
-         month = '0' + month.toString();
-      }
-
-      var minDate;
-
-      if (day >= 1 && day <= 3) {
-         // If the day is between 1 and 3 (inclusive), allow previous month dates
-         if (month === 1) {
-            // If the current month is January, set minDate to December of the previous year
-            minDate = (year - 1) + '-12-01';
-         } else {
-            // Otherwise, set minDate to the 1st day of the previous month
-            minDate = year + '-' + ('0' + (month - 1)).slice(-2) + '-01';
-         }
-      } else {
-         // If the day is after the 3rd day of the month, restrict to the current month
-         minDate = year + '-' + month + '-01';
-      }
-
-      emp = JSON.parse(localStorage.getItem('employee'))
-
-      console.log(emp);
-
-      if (emp === "SATVEER SINGH" || "BHAVINEESH MALIK") {
-         return;
-      }
-
-      // $('#issue_date').attr('min', minDate);    
-      document.getElementsByClassName('black-out')[0].min = minDate
-      document.getElementsByClassName('black-out')[1].min = minDate
-
-
-   });
 
 
 </script>
