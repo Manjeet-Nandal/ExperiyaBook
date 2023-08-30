@@ -31,7 +31,7 @@
                            <!-- metric column -->
                            <div class="col">
                               <!-- .metric -->
-                              <a href="{%url 'bima_policy:staff' %}" class="metric metric-bordered align-items-center">
+                              <a onclick="ShowPage('staff')" class="metric metric-bordered align-items-center">
                                  <h2 class="metric-label text-blue116">Staff </h2>
                                  <p class="metric-value h3">
                                     <sub><span class="icofont icofont-users-alt-5"></span></sub>
@@ -41,7 +41,7 @@
                               </a> <!-- /.metric -->
                            </div><!-- /metric column -->
                            <div class="col">
-                              <a href="{%url 'bima_policy:agent' %}" class="metric metric-bordered align-items-center">
+                              <a  onclick="ShowPage('posp')" class="metric metric-bordered align-items-center">
                                  <h2 class="metric-label text-blue116">Agent </h2>
                                  <p class="metric-value h3">
                                     <sub><span class="icofont icofont-users-alt-1"></span></sub>
@@ -51,9 +51,9 @@
                            </div><!-- /metric column -->
                            <div class="col">
                               <!-- .metric -->
-                              <a href="{%url 'bima_policy:service_p' %}"
+                              <a onclick="ShowPage('insurer')" 
                                  class="metric metric-bordered align-items-center">
-                                 <h2 class="metric-label text-blue116">Service Providers </h2>
+                                 <h2 class="metric-label text-blue116">Insurers </h2>
                                  <p class="metric-value h3">
                                     <sub><span class="icofont icofont-business-man"></span></sub>
                                     <span id="spcount" class="value">{{spcount}}</span>
@@ -62,7 +62,7 @@
                            </div><!-- /metric column -->
                            <div class="col">
                               <!-- .metric -->
-                              <a href="{%url 'bima_policy:policy_entry' %}"
+                              <a onclick="ShowPage('entry_list')" 
                                  class="metric metric-bordered align-items-center">
                                  <h2 class="metric-label text-blue116">Total Policies </h2>
                                  <p class="metric-value h3">
@@ -87,7 +87,7 @@
                            <div class="col-xl-6">
                               <div class="text-right mb-2">
                                  <div class="dropdown">
-                                    <form method="post">
+                                  
                                        <button class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true"
                                           aria-expanded="false"><span>This
                                              Year</span> <i class="fa fa-fw fa-caret-down"></i></button>
@@ -118,7 +118,7 @@
                                              </div>
                                           </div><!-- /.custom-control -->
                                        </div><!-- /.dropdown-menu -->
-                                    </form>
+                                   
                                  </div><!-- /.dropdown -->
                               </div>
                            </div>
@@ -127,7 +127,7 @@
                         <div class="row">
 
                            <div class="card card-body">
-                              <div class="card-header p-0 mb-3 pb-2 text-white-ff">Policies</div>
+                              <div class="card-header p-0 mb-3 pb-2 ">Policies</div>
                               <!-- legend -->
                               <ul class="list-inline small ">
                                  <li class="list-inline-item">
@@ -146,19 +146,19 @@
                         <div class="row">
                            <div class="card card-body">
                               <div class="card-header p-0 mb-3 pb-2">Commission</div>
-                              <div class="chartjs" style="height: 300px">
-                                 <div class="chartjs-size-monitor">
-                                    <div class="chartjs-size-monitor-expand">
-                                       <div class=""></div>
-                                    </div>
-                                    <div class="chartjs-size-monitor-shrink">
-                                       <div class=""></div>
-                                    </div>
-                                 </div>
-                                 <canvas id="canvas-total-earning" width="771" height="300"
-                                    style="display: block; width: 771px; height: 300px;"
-                                    class="chartjs-render-monitor"></canvas>
+
+                              <ul class="list-inline small ">
+                                 <li class="list-inline-item">
+                                    <i class="fa fa-fw fa-circle text-green"></i> Amount
+                                 </li>
+                                 <li class="list-inline-item">
+                                    <i class="fa fa-fw fa-circle text-red"></i> Pending
+                                 </li>
+                              </ul>
+                              <div>
+                                 <canvas></canvas>
                               </div>
+                            
                            </div><!-- /.card -->
                         </div>
                      </div>
@@ -194,8 +194,7 @@
                                              <div class="progress-bar bg-primary" role="progressbar" style="width: 0%;"
                                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> 0% </div>
                                           </div>
-                                          <p class="">3 GB free of 3 GB
-                                          </p>
+                                          <!-- <p class="">3 GB free of 3 GB </p> -->
                                        </div>
                                     </div>
                                     <dl class="d-flex justify-content-between mb-0">

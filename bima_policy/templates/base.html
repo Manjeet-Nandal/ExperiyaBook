@@ -130,14 +130,14 @@
                         </span>
 
                      </button> <!-- .dropdown-menu -->
-                     <div class="dropdown-menu" style="color: #FFFFFF; background: #6E11F4; ">
+                     <div class="dropdown-menu" style="color: #FFFFFF; background: #346CB0; ">
                         <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
                         <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
                         <h6 class="dropdown-header d-none d-md-block d-lg-none"> Demo </h6>
 
                         {% if request.session.role == 'admin' %}
-                        <a class="dropdown-item" href="/bima_policy/profile/"
-                           style="color: #FFFFFF; background: #6E11F4;">
+                        <a class="dropdown-item"  
+                           style="color: #FFFFFF; background: #346CB0;">
 
                            <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>&nbsp;&nbsp;
                            Profile
@@ -145,15 +145,15 @@
                         {% endif %}
 
                         {% if request.session.role == 'staff' %}
-                        <a class="dropdown-item" href="/bima_policy/user/edit/{{request.session.id}}"
-                           style="color: #FFFFFF; background: #6E11F4;">
+                        <a class="dropdown-item" 
+                           style="color: #FFFFFF; background: #346CB0;">
                            <i class="fa fa-key" style="color: #FFFFFF;" aria-hidden="true" id='icon'></i>&nbsp;&nbsp;
                            Profile
                         </a>
                         {% endif %}
 
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" style="color: #FFFFFF; background: #6E11F4;"
+                        <a class="dropdown-item" style="color: #FFFFFF; background: #346CB0;"
                            href="{%url 'bima_policy:logout'%}">
                            <i class="fa fa-sign-out" style="color: #FFFFFF;" aria-hidden="true"
                               id='icon'></i>&nbsp;&nbsp; Logout
