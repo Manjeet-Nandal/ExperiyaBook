@@ -1812,7 +1812,7 @@
                               <a href="#">
                                  <button id="btnGenerate_Policy" name="btnGenerate_Policy"
                                     style="background-color: #FFFFFF; color: #346CB0; font-weight: bold;" type="button"
-                                    class="btn w-100p" onclick="sendPolicyData()">GENERATE
+                                    class="btn w-100p" onclick="sendMotorFormData()">GENERATE
                                  </button>
                               </a>
 
@@ -3308,6 +3308,8 @@
             record.aadhar_card = ''
          if (record.pan_card == null)
             record.pan_card = ''
+         if (record.vehicle_rc == null)
+            record.vehicle_rc = ''
          if (record.inspection_report == null)
             record.inspection_report = ''
 
@@ -7934,6 +7936,193 @@
       try {
 
          const href = window.location.origin + '/bima_policy/policy/new_entry_nonmotor/';
+         const csrfToken = '{{ csrf_token }}';
+
+         const response = await fetch(href, {
+            method: 'POST',
+            headers: {
+               'X-CSRFToken': csrfToken,
+            },
+            body: formData,
+         });
+
+         const result = await response.text();
+         console.log(result);
+
+         if (result === 'done') {
+            showNotification(('✅ Done: ' + formDataKey).toUpperCase());
+
+            return result
+         } else {
+            showNotification('❌ ' + 'failed : '.toUpperCase() + formDataKey.toUpperCase());
+            return null
+         }
+      } catch (error) {
+         showNotification('❌ ' + 'error : '.toUpperCase() + error.message.toUpperCase());
+         alert(error.toString())
+         return null
+      }
+   }
+
+   async function sendMotorFormData() {
+
+      formData = new FormData();
+      formData.append('proposal_no', document.getElementById('proposal_no').value);
+      formData.append('policy_no', document.getElementById('policy_no').value);
+      formData.append('customer_name', document.getElementById('customer_name').value);
+      formData.append('insurance_company', document.getElementById('insurance_company').value);
+      formData.append('sp_name', document.getElementById('sp_name').value);
+      formData.append('sp_brokercode', document.getElementById('sp_brokercode').value);
+      formData.append('registration_no', document.getElementById('registration_no').value);
+      formData.append('rto_state', document.getElementById('rto_state').value);
+      formData.append('rto_city', document.getElementById('rto_city').value);
+      formData.append('vmake', document.getElementById('vmake').value);
+      formData.append('vmodel', document.getElementById('vmodel').value);
+      formData.append('vehicle_catagory', document.getElementById('vehicle_catagory').value);
+      formData.append('vehicle_fuel_type', document.getElementById('vehicle_fuel_type').value);
+      formData.append('mfg_year', document.getElementById('mfg_year').value);
+      formData.append('addon', document.getElementById('addon').value);
+      formData.append('ncb', document.getElementById('ncb').value);
+      formData.append('policy_type', document.getElementById('policy_type').value);
+      formData.append('cpa', document.getElementById('cpa').value);
+
+      formData.append('risk_start_date', document.getElementById('risk_start_date').value);
+      formData.append('risk_end_date', document.getElementById('risk_end_date').value);
+      formData.append('issue_date', document.getElementById('issue_date').value);
+      formData.append('insured_age', document.getElementById('insured_age').value);
+      formData.append('policy_term', document.getElementById('policy_term').value);
+      formData.append('pos', document.getElementById('pos').value);
+      formData.append('bqp', document.getElementById('bqp').value);
+      formData.append('employee', document.getElementById('employee').value);
+      formData.append('od', document.getElementById('od').value);
+      formData.append('tpt', document.getElementById('tpt').value);
+      formData.append('net', document.getElementById('net').value);
+      formData.append('gst', document.getElementById('gst').value);
+      formData.append('total', document.getElementById('totalnet').value);
+      formData.append('payment_mode', document.getElementById('payment_mode').value);
+
+      // docs goes here
+      bq = document.getElementById('proposal').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('proposal', file_name.trim());
+      }
+
+      bq = document.getElementById('mandate').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('mandate', file_name.trim());
+      }
+
+      bq = document.getElementById('policy').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('policy', file_name.trim());
+      }
+
+      bq = document.getElementById('previous_policy').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('previous_policy', file_name.trim());
+      }
+
+      bq = document.getElementById('pan_card').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('pan_card', file_name.trim());
+      }
+
+      bq = document.getElementById('aadhar_card').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('aadhar_card', file_name.trim());
+      }
+
+      bq = document.getElementById('vehicle_rc').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('vehicle_rc`', file_name.trim());
+      }
+
+      bq = document.getElementById('inspection_report').files[0]
+      if (bq !== undefined) {
+         file_name = `media/documents/` + getRandomFileName(bq)
+         formData.append('inspection_report', file_name.trim());
+      }
+
+      // checking if any field is missing then return
+      for (const iterator of formData) {
+
+         if (iterator[1].trim() === "" || iterator[1] === undefined) {
+            showNotification((`⚠️ ${iterator[0]} is missing`.toUpperCase()));
+            return
+         }
+         else {
+            showNotification('');
+         }
+      }
+
+      formData.append('cubic_capacity', document.getElementById('cubic_capacity').value);
+      formData.append('coverage_type', document.getElementById('coverage_type').value);
+      formData.append('seating_capacity', document.getElementById('seating_capacity').value);
+      formData.append('gvw', document.getElementById('gvw').value);
+
+      formData.append('gstt', document.getElementById('gstt').value);
+      formData.append('remark', document.getElementById('remark').value);
+
+      // specify if this is an update or new posp
+      if (document.getElementById('policy_title').innerText.startsWith("Update Motor Policy"))
+         formData.append('policyid', policyid);
+      else
+         formData.append('policyid', ''); // will be populated during editonclick()
+
+
+      for (const iterator of formData) {
+         console.log(iterator);
+      }
+
+      // return
+
+      fileDataArrayTemp = [];
+      fileDataArray = [];
+
+      fileDataArrayTemp.push({ fileName: formData.get('proposal'), fileElement: 'proposal' })
+      fileDataArrayTemp.push({ fileName: formData.get('mandate'), fileElement: 'mandate' })
+      fileDataArrayTemp.push({ fileName: formData.get('policy'), fileElement: 'policy' })
+      fileDataArrayTemp.push({ fileName: formData.get('previous_policy'), fileElement: 'previous_policy' })
+      fileDataArrayTemp.push({ fileName: formData.get('pan_card'), fileElement: 'pan_card' })
+      fileDataArrayTemp.push({ fileName: formData.get('aadhar_card'), fileElement: 'aadhar_card' })
+      fileDataArrayTemp.push({ fileName: formData.get('vehicle_rc'), fileElement: 'vehicle_rc' })
+      fileDataArrayTemp.push({ fileName: formData.get('inspection_report'), fileElement: 'inspection_report' })
+
+      fileDataArrayTemp.forEach(item => {
+         if (item.fileName != null) {
+            fileDataArray.push(item)
+         }
+      })
+
+      console.log(fileDataArray);
+
+      if (fileDataArray.length > 0) {
+         status = false;
+         showNotification(('⌛️ Verifying: ' + formData.get('policy_no')).toUpperCase());
+         await uploadPdfs(fileDataArray);
+         if (status)
+            await sendMotorData(formData.get('policy_no'), formData);
+      }
+      else {
+         await sendMotorData(formData.get('policy_no'), formData);
+      }
+
+      await FetchDataAsync()
+      ShowPage('entry_list')
+
+   }
+
+   async function sendMotorData(formDataKey, formData) {
+      try {
+
+         const href = window.location.origin + '/bima_policy/policy/new_entry_motor/';
          const csrfToken = '{{ csrf_token }}';
 
          const response = await fetch(href, {
