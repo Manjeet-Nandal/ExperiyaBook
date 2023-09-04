@@ -5730,8 +5730,10 @@ def new_posp(request):
         login_id = request.POST['login_id']
         posp_code = request.POST['posp_code']
 
+        print('login_id: ', login_id)
+
+
         if login_id != "":
-            print('login_id ', login_id)
 
             data = Agents.objects.filter(login_id=login_id)
             print(data)
@@ -5800,8 +5802,6 @@ def new_posp(request):
             return HttpResponse("done")
 
         else:
-            print('login_id ', login_id)
-
             basic_qualification = request.POST.get('basic_qualification', None)
             aadhar_card = request.POST.get('aadhar_card', None)
             pan_card = request.POST.get('pan_card', None)
@@ -5930,16 +5930,18 @@ def add_vehicle(request):
 
 def new_entry_motor(request):
     try:
-        print('new_entry_motor')
-        
+      
+        print('new_entry_motor method:')
+
         id = get_profile_id(get_id_from_session(request))
         profile_id = ProfileModel.objects.get(id=id)
 
         policyid = request.POST['policyid']
 
-        if policyid != "":
-            print('policyid ', policyid)
+        print('policyid: ', policyid)
 
+        if policyid != "":
+          
             data = Policy.objects.filter(policyid=policyid)
             print(data)
 
@@ -6102,20 +6104,17 @@ def new_entry_motor(request):
 
 def new_entry_nonmotor(request):
     try:
-        print('new_entry_exp method')
+        print('new_entry_nonmotor method:')
 
         id = get_profile_id(get_id_from_session(request))
         profile_id = ProfileModel.objects.get(id=id)
 
         policyid = request.POST['policyid']
 
-        print(policyid)
-
-        # return HttpResponse('done')
+        print('policyid: ', policyid)
 
         if policyid != "":
-            print('policyid ', policyid)
-
+          
             data = Policy.objects.filter(policyid=policyid)
             print(data)
 
@@ -6184,8 +6183,7 @@ def new_entry_nonmotor(request):
 
             return HttpResponse("done")
 
-        else:
-            print('new new_entry_nonmotor')
+        else:        
             proposal = request.POST.get('proposal', None)
             mandate = request.POST.get('mandate', None)
             policy = request.POST.get('policy', None)

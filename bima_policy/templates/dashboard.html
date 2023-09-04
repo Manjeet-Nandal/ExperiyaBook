@@ -2956,6 +2956,9 @@
       document.getElementById('policy_no').value = ""
       document.getElementById('customer_name').value = ""
       document.getElementById('registration_no').value = ""
+
+      document.getElementById('demo').innerText = ""
+
       document.getElementById('rto_state').selectedIndex = 0
       document.getElementById('rto_city').value = ""
       document.getElementById('vehicle_fuel_type').selectedIndex = 0
@@ -2987,20 +2990,35 @@
 
       document.getElementById('proposal').value = ""
       document.getElementById('a_proposal').innerText = ""
+      document.getElementById('lbl_proposal').innerText = ""
+
       document.getElementById('mandate').value = ""
       document.getElementById('a_mandate').innerText = ""
+      document.getElementById('lbl_mandate').innerText = ""
+
       document.getElementById('policy').value = ""
       document.getElementById('a_policy').innerText = ""
+      document.getElementById('lbl_policy').innerText = ""
+
       document.getElementById('previous_policy').value = ""
       document.getElementById('a_previous_policy').innerText = ""
+      document.getElementById('lbl_previous_policy').innerText = ""
+
       document.getElementById('pan_card').value = ""
       document.getElementById('a_pan_card').innerText = ""
+      document.getElementById('lbl_pan_card').innerText = ""
+
       document.getElementById('aadhar_card').value = ""
       document.getElementById('a_aadhar_card').innerText = ""
+      document.getElementById('lbl_aadhar_card').innerText = ""
+
       document.getElementById('vehicle_rc').value = ""
       document.getElementById('a_vehicle_rc').innerText = ""
+      document.getElementById('lbl_vehicle_rc').innerText = ""
+
       document.getElementById('inspection_report').value = ""
       document.getElementById('a_inspection_report').innerText = ""
+      document.getElementById('lbl_inspection_report').innerText = ""
 
 
       vehicles = JSON.parse(localStorage.getItem('vehicles'));
@@ -3100,6 +3118,7 @@
       // employee
       employee = JSON.parse(localStorage.getItem('employee'));
       document.getElementById('employee').value = employee
+
    }
 
    function Load_NonMotor_Config() {
@@ -3143,18 +3162,31 @@
 
       document.getElementById('proposal2').value = ""
       document.getElementById('a_proposal2').innerText = ""
+      document.getElementById('lbl_proposal2').innerText = ""
+
       document.getElementById('mandate2').value = ""
       document.getElementById('a_mandate2').innerText = ""
+      document.getElementById('lbl_mandate2').innerText = ""
+
       document.getElementById('policy2').value = ""
       document.getElementById('a_policy2').innerText = ""
+      document.getElementById('lbl_policy2').innerText = ""
+
       document.getElementById('previous_policy2').value = ""
       document.getElementById('a_previous_policy2').innerText = ""
+      document.getElementById('lbl_previous_policy2').innerText = ""
+
       document.getElementById('pan_card2').value = ""
       document.getElementById('a_pan_card2').innerText = ""
+      document.getElementById('lbl_pan_card2').innerText = ""
+
       document.getElementById('aadhar_card2').value = ""
       document.getElementById('a_aadhar_card2').innerText = ""
+      document.getElementById('lbl_aadhar_card2').innerText = ""
+
       document.getElementById('inspection_report').value = ""
       document.getElementById('a_inspection_report2').innerText = ""
+      document.getElementById('lbl_inspection_report2').innerText = ""
 
       // product names
       products = JSON.parse(localStorage.getItem('products'));
@@ -7465,22 +7497,22 @@
    async function sendPOspFormData() {
 
       formData = new FormData();
-      formData.append('posp_code', document.getElementById('posp_code').value);
-      formData.append('registration_code', document.getElementById('registration_code').value);
-      formData.append('full_name', document.getElementById('full_name').value);
-      formData.append('gender', document.getElementById('gender').value);
-      formData.append('mob_no', document.getElementById('mob_no').value);
-      formData.append('email_id', document.getElementById('email_id').value);
-      formData.append('address', document.getElementById('address').value);
-      formData.append('state', document.getElementById('state').value);
-      formData.append('city', document.getElementById('city').value);
-      formData.append('pincode', document.getElementById('pincode').value);
-      formData.append('rural_urban', document.getElementById('rural_urban').value);
-      formData.append('slab', document.getElementById('slab').value);
-      formData.append('GSTIN', document.getElementById('GSTIN').value);
-      formData.append('account_no', document.getElementById('account_no').value);
-      formData.append('ifsc_code', document.getElementById('ifsc_code').value);
-      formData.append('bank_name', document.getElementById('bank_name').value);
+      formData.append('posp_code', document.getElementById('posp_code').value.trim());
+      formData.append('registration_code', document.getElementById('registration_code').value.trim());
+      formData.append('full_name', document.getElementById('full_name').value.trim());
+      formData.append('gender', document.getElementById('gender').value.trim());
+      formData.append('mob_no', document.getElementById('mob_no').value.trim());
+      formData.append('email_id', document.getElementById('email_id').value.trim());
+      formData.append('address', document.getElementById('address').value.trim());
+      formData.append('state', document.getElementById('state').value.trim());
+      formData.append('city', document.getElementById('city').value.trim());
+      formData.append('pincode', document.getElementById('pincode').value.trim());
+      formData.append('rural_urban', document.getElementById('rural_urban').value.trim());
+      formData.append('slab', document.getElementById('slab').value.trim());
+      formData.append('GSTIN', document.getElementById('GSTIN').value.trim());
+      formData.append('account_no', document.getElementById('account_no').value.trim());
+      formData.append('ifsc_code', document.getElementById('ifsc_code').value.trim());
+      formData.append('bank_name', document.getElementById('bank_name').value.trim());
 
       bq = document.getElementById('basic_qualification').files[0]
       if (bq !== undefined) {
@@ -7801,30 +7833,30 @@
    async function sendNonMotorFormData() {
 
       formData = new FormData();
-      formData.append('product_name', document.getElementById('product_name').value);
-      formData.append('policy_type', document.getElementById('policy_type2').value);
-      formData.append('proposal_no', document.getElementById('proposal_no2').value);
-      formData.append('policy_no', document.getElementById('policy_no2').value);
-      formData.append('customer_name', document.getElementById('customer_name2').value);
-      formData.append('insurance_company', document.getElementById('insurer_name').value);
-      formData.append('sp_name', document.getElementById('sps_name').value);
-      formData.append('sp_brokercode', document.getElementById('sp_code').value);
+      formData.append('product_name', document.getElementById('product_name').value.trim());
+      formData.append('policy_type', document.getElementById('policy_type2').value.trim());
+      formData.append('proposal_no', document.getElementById('proposal_no2').value.trim());
+      formData.append('policy_no', document.getElementById('policy_no2').value.trim());
+      formData.append('customer_name', document.getElementById('customer_name2').value.trim());
+      formData.append('insurance_company', document.getElementById('insurer_name').value.trim());
+      formData.append('sp_name', document.getElementById('sps_name').value.trim());
+      formData.append('sp_brokercode', document.getElementById('sp_code').value.trim());
 
-      formData.append('risk_start_date', document.getElementById('risk_start_date2').value);
-      formData.append('risk_end_date', document.getElementById('risk_end_date2').value);
-      formData.append('issue_date', document.getElementById('issue_date2').value);
+      formData.append('risk_start_date', document.getElementById('risk_start_date2').value.trim());
+      formData.append('risk_end_date', document.getElementById('risk_end_date2').value.trim());
+      formData.append('issue_date', document.getElementById('issue_date2').value.trim());
 
-      formData.append('policy_term', document.getElementById('policy_term2').value);
-      formData.append('pos', document.getElementById('pos_product').value);
-      formData.append('bqp', document.getElementById('bqp2').value);
-      formData.append('employee', document.getElementById('product_employee').value);
+      formData.append('policy_term', document.getElementById('policy_term2').value.trim());
+      formData.append('pos', document.getElementById('pos_product').value.trim());
+      formData.append('bqp', document.getElementById('bqp2').value.trim());
+      formData.append('employee', document.getElementById('product_employee').value.trim());
 
-      formData.append('od', document.getElementById('od_product').value);
-      formData.append('tpt', document.getElementById('tpt_product').value);
-      formData.append('net', document.getElementById('net_product').value);
-      formData.append('gst', document.getElementById('gst_product').value);
-      formData.append('total', document.getElementById('total_product').value);
-      formData.append('payment_mode', document.getElementById('payment_mode2').value);
+      formData.append('od', document.getElementById('od_product').value.trim());
+      formData.append('tpt', document.getElementById('tpt_product').value.trim());
+      formData.append('net', document.getElementById('net_product').value.trim());
+      formData.append('gst', document.getElementById('gst_product').value.trim());
+      formData.append('total', document.getElementById('total_product').value.trim());
+      formData.append('payment_mode', document.getElementById('payment_mode2').value.trim());
       // formData.append('remark', document.getElementById('remark2').value);
 
       bq = document.getElementById('proposal2').files[0]
@@ -7882,7 +7914,7 @@
       }
 
       // remark if available
-      formData.append('remark', document.getElementById('remark2').value);
+      formData.append('remark', document.getElementById('remark2').value.trim());
 
       // specify if this is an update or new posp
       if (document.getElementById('policy_title_non_motor').innerText.startsWith("Update Non Motor Policy"))
@@ -7927,8 +7959,10 @@
          await sendNonMotorData(formData.get('policy_no'), formData);
       }
 
+      Load_NonMotor_Config()
+
       await FetchDataAsync()
-      ShowPage('entry_list')
+      // ShowPage('entry_list')
 
    }
 
@@ -7967,39 +8001,39 @@
    async function sendMotorFormData() {
 
       formData = new FormData();
-      formData.append('proposal_no', document.getElementById('proposal_no').value);
-      formData.append('policy_no', document.getElementById('policy_no').value);
-      formData.append('customer_name', document.getElementById('customer_name').value);
-      formData.append('insurance_company', document.getElementById('insurance_company').value);
-      formData.append('sp_name', document.getElementById('sp_name').value);
-      formData.append('sp_brokercode', document.getElementById('sp_brokercode').value);
-      formData.append('registration_no', document.getElementById('registration_no').value);
-      formData.append('rto_state', document.getElementById('rto_state').value);
-      formData.append('rto_city', document.getElementById('rto_city').value);
-      formData.append('vmake', document.getElementById('vmake').value);
-      formData.append('vmodel', document.getElementById('vmodel').value);
-      formData.append('vehicle_catagory', document.getElementById('vehicle_catagory').value);
-      formData.append('vehicle_fuel_type', document.getElementById('vehicle_fuel_type').value);
-      formData.append('mfg_year', document.getElementById('mfg_year').value);
-      formData.append('addon', document.getElementById('addon').value);
-      formData.append('ncb', document.getElementById('ncb').value);
-      formData.append('policy_type', document.getElementById('policy_type').value);
-      formData.append('cpa', document.getElementById('cpa').value);
+      formData.append('proposal_no', document.getElementById('proposal_no').value.trim());
+      formData.append('policy_no', document.getElementById('policy_no').value.trim());
+      formData.append('customer_name', document.getElementById('customer_name').value.trim());
+      formData.append('insurance_company', document.getElementById('insurance_company').value.trim());
+      formData.append('sp_name', document.getElementById('sp_name').value.trim());
+      formData.append('sp_brokercode', document.getElementById('sp_brokercode').value.trim());
+      formData.append('registration_no', document.getElementById('registration_no').value.trim());
+      formData.append('rto_state', document.getElementById('rto_state').value.trim());
+      formData.append('rto_city', document.getElementById('rto_city').value.trim());
+      formData.append('vmake', document.getElementById('vmake').value.trim());
+      formData.append('vmodel', document.getElementById('vmodel').value.trim());
+      formData.append('vehicle_catagory', document.getElementById('vehicle_catagory').value.trim());
+      formData.append('vehicle_fuel_type', document.getElementById('vehicle_fuel_type').value.trim());
+      formData.append('mfg_year', document.getElementById('mfg_year').value.trim());
+      formData.append('addon', document.getElementById('addon').value.trim());
+      formData.append('ncb', document.getElementById('ncb').value.trim());
+      formData.append('policy_type', document.getElementById('policy_type').value.trim());
+      formData.append('cpa', document.getElementById('cpa').value.trim());
 
-      formData.append('risk_start_date', document.getElementById('risk_start_date').value);
-      formData.append('risk_end_date', document.getElementById('risk_end_date').value);
-      formData.append('issue_date', document.getElementById('issue_date').value);
-      formData.append('insured_age', document.getElementById('insured_age').value);
-      formData.append('policy_term', document.getElementById('policy_term').value);
-      formData.append('pos', document.getElementById('pos').value);
-      formData.append('bqp', document.getElementById('bqp').value);
-      formData.append('employee', document.getElementById('employee').value);
-      formData.append('od', document.getElementById('od').value);
-      formData.append('tpt', document.getElementById('tpt').value);
-      formData.append('net', document.getElementById('net').value);
-      formData.append('gst', document.getElementById('gst').value);
-      formData.append('total', document.getElementById('totalnet').value);
-      formData.append('payment_mode', document.getElementById('payment_mode').value);
+      formData.append('risk_start_date', document.getElementById('risk_start_date').value.trim());
+      formData.append('risk_end_date', document.getElementById('risk_end_date').value.trim());
+      formData.append('issue_date', document.getElementById('issue_date').value.trim());
+      formData.append('insured_age', document.getElementById('insured_age').value.trim());
+      formData.append('policy_term', document.getElementById('policy_term').value.trim());
+      formData.append('pos', document.getElementById('pos').value.trim());
+      formData.append('bqp', document.getElementById('bqp').value.trim());
+      formData.append('employee', document.getElementById('employee').value.trim());
+      formData.append('od', document.getElementById('od').value.trim());
+      formData.append('tpt', document.getElementById('tpt').value.trim());
+      formData.append('net', document.getElementById('net').value.trim());
+      formData.append('gst', document.getElementById('gst').value.trim());
+      formData.append('total', document.getElementById('totalnet').value.trim());
+      formData.append('payment_mode', document.getElementById('payment_mode').value.trim());
 
       // docs goes here
       bq = document.getElementById('proposal').files[0]
@@ -8062,13 +8096,13 @@
          }
       }
 
-      formData.append('cubic_capacity', document.getElementById('cubic_capacity').value);
-      formData.append('coverage_type', document.getElementById('coverage_type').value);
-      formData.append('seating_capacity', document.getElementById('seating_capacity').value);
-      formData.append('gvw', document.getElementById('gvw').value);
+      formData.append('cubic_capacity', document.getElementById('cubic_capacity').value.trim());
+      formData.append('coverage_type', document.getElementById('coverage_type').value.trim());
+      formData.append('seating_capacity', document.getElementById('seating_capacity').value.trim());
+      formData.append('gvw', document.getElementById('gvw').value.trim());
 
-      formData.append('gstt', document.getElementById('gstt').value);
-      formData.append('remark', document.getElementById('remark').value);
+      formData.append('gstt', document.getElementById('gstt').value.trim());
+      formData.append('remark', document.getElementById('remark').value.trim());
 
       // specify if this is an update or new posp
       if (document.getElementById('policy_title').innerText.startsWith("Update Motor Policy"))
@@ -8114,8 +8148,10 @@
          await sendMotorData(formData.get('policy_no'), formData);
       }
 
+      Load_Motor_Config()
+
       await FetchDataAsync()
-      ShowPage('entry_list')
+      // ShowPage('entry_list')
 
    }
 
@@ -8153,7 +8189,6 @@
 
 
 </script>
-
 
 
 {%endblock%}
