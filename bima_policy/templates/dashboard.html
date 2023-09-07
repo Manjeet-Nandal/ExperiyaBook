@@ -3324,6 +3324,103 @@
          return
       }
 
+      emp = JSON.parse(localStorage.getItem('employee'))
+
+      if (emp === "SATVEER SINGH" || emp === "BHAVINEESH MALIK") {
+
+         for (var i = 0; i < records.length; i++) {
+
+            record = records[i]
+
+            if (record.proposal == null)
+               record.proposal = ''
+            if (record.mandate == null)
+               record.mandate = ''
+            if (record.policy == null)
+               record.policy = ''
+            if (record.previous_policy == null)
+               record.previous_policy = ''
+            if (record.aadhar_card == null)
+               record.aadhar_card = ''
+            if (record.pan_card == null)
+               record.pan_card = ''
+            if (record.vehicle_rc == null)
+               record.vehicle_rc = ''
+            if (record.inspection_report == null)
+               record.inspection_report = ''
+
+            recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
+   <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
+   <td class="p-2" >  ${record.proposal_no} </td>
+   <td class="p-2" >  <a href="#" class="tile tile-img" onclick="Edit_Motor_Policy('${record.policyid}')" ><i class="far fa-file-pdf text-danger mt-1"></i></a> <a onclick="Edit_Motor_Policy('${record.policyid}')" href="#" class=""> ${record.policy_no}</a> </td>
+   <td class="p-2">  ${record.customer_name}  </td> 
+   <td class="p-2" >  ${record.insurance_company} </td>
+   <td  class="p-2" > ${record.sp_name} </td> 
+   <td  class="p-2" > ${record.sp_brokercode} </td>
+   <td  class="p-2" > ${record.product_name} </td>
+   <td class="p-2" > ${record.registration_no} </td>
+   <td class="p-2" > ${record.rto_state} </td>
+   <td class="p-2" > ${record.rto_city} </td>
+   <td class="p-2" > ${record.vehicle_catagory} </td>
+   <td class="p-2" > ${record.vehicle_makeby} </td>
+   <td class="p-2" > ${record.vehicle_model} </td>
+   <td class="p-2" > ${record.vehicle_fuel_type} </td>
+   <td class="p-2" > ${record.mfg_year} </td>
+
+   <td class="p-2" >  ${record.addon} </td>
+   <td class="p-2" > ${record.ncb} </td>
+   <td class="p-2" >  ${record.cubic_capacity} </td>
+   <td class="p-2" > ${record.coverage_type} </td>
+   <td class="p-2" > ${record.seating_capacity} </td>
+   <td class="p-2" > ${record.gvw} </td>
+   <td class="p-2" > ${record.policy_type} </td>
+   <td class="p-2" > ${record.cpa} </td>
+   <td class="p-2" > ${record.risk_start_date} </td>
+   <td class="p-2" > ${record.risk_end_date} </td>
+   <td class="p-2" > ${record.issue_date} </td>
+
+   <td class="p-2" > ${record.insured_age} </td>
+   <td class="p-2" > ${record.policy_term} </td>
+   <td class="p-2" > ${record.pos} </td>
+   <td class="p-2" > ${record.bqp} </td>
+   <td class="p-2" > ${record.employee} </td>
+   <td class="p-2" > ${record.remark} </td>
+
+   <td class="p-2" > ${record.OD_premium} </td>
+   <td class="p-2" > ${record.TP_terrorism} </td>
+   <td class="p-2" > ${record.net} </td>
+   <td class="p-2" > ${record.gst_amount} </td>
+   <td class="p-2" > ${record.gst_gcv_amount} </td>
+   <td class="p-2" > ${record.total} </td>
+   <td class="p-2" > ${record.payment_mode} </td>
+
+
+   <td class="text-center p-2" > <a href="#" onclick="downloadFile('${record.proposal}')">${record.proposal}</a> </td>
+   <td class="text-center p-2" > <a href="#" onclick="downloadFile('${record.mandate}')">${record.mandate}</a> </td>
+   <td class="text-center p-2" > <a href="#" onclick="downloadFile('${record.policy}')">${record.policy}</a> </td>
+   <td class="text-center p-2" > <a href="#" onclick="downloadFile('${record.previous_policy}')">${record.previous_policy}</a> </td>
+   <td class="text-center p-2" > <a href="#" onclick="downloadFile('${record.pan_card}')">${record.pan_card}</a> </td>
+   <td class="text-center p-2" > <a href="#" onclick="downloadFile('${record.aadhar_card}')">${record.aadhar_card}</a> </td>
+   <td class="text-center p-2" > <a href="#" onclick="downloadFile('${record.vehicle_rc}')">${record.vehicle_rc}</a> </td>
+   <td class="text-center p-2" > <a href="#" onclick="downloadFile('${record.inspection_report}')">${record.inspection_report}</a> </td>
+   
+   <td class="text-center w-10pc nowrap p-2" > <a href="#" class="badge badge-success" >${record.status}</a> </td>      
+   
+   <td class="p-2" >   
+      <a onclick="Edit_Motor_Policy('${record.policyid}')" href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+      <i class="fa fa-pencil-alt mt-2"></i>                                               
+      </a>            
+      <a onclick="Delete_Policy('${record.policyid}')" href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+      <i class="far fa-trash-alt mt-2"></i>  </a>
+   </td>
+   </tr > `;
+
+            tableRows += recordHtml;
+         }
+      }
+      else
+      {
+      
       for (var i = 0; i < records.length; i++) {
 
          record = records[i]
@@ -3348,7 +3445,7 @@
          recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
             <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
             <td class="p-2" >  ${record.proposal_no} </td>
-            <td class="p-2" >  <a href="#" class="tile tile-img" onclick="Edit_Motor_Policy('${record.policyid}')" ><i class="far fa-file-pdf text-danger mt-1"></i></a> <a onclick="Edit_Motor_Policy('${record.policyid}')" href="#" class=""> ${record.policy_no}</a> </td>
+            <td class="p-2" >  <a href="#" class="tile tile-img" ><i class="far fa-file-pdf text-danger mt-1"></i></a> <a  href="#" class=""> ${record.policy_no}</a> </td>
             <td class="p-2">  ${record.customer_name}  </td> 
             <td class="p-2" >  ${record.insurance_company} </td>
             <td  class="p-2" > ${record.sp_name} </td> 
@@ -3403,10 +3500,10 @@
             <td class="text-center w-10pc nowrap p-2" > <a href="#" class="badge badge-success" >${record.status}</a> </td>      
             
             <td class="p-2" >   
-               <a onclick="Edit_Motor_Policy('${record.policyid}')" href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
+               <a href="#" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary" name="Edit">
                <i class="fa fa-pencil-alt mt-2"></i>                                               
                </a>            
-               <a onclick="Delete_Policy('${record.policyid}')" href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
+               <a href="#" name="Remove" class="mr-1 mt-1 btn btn-sm btn-icon btn-secondary text-danger">
                <i class="far fa-trash-alt mt-2"></i>  </a>
             </td>
             </tr > `;
@@ -3414,6 +3511,8 @@
          tableRows += recordHtml;
       }
 
+      }
+      
       showNotification('✅ TOTAL POLICIES: ' + records.length);
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
@@ -8107,6 +8206,7 @@
       // specify if this is an update or new posp
       if (document.getElementById('policy_title').innerText.startsWith("Update Motor Policy"))
          formData.append('policyid', policyid);
+
       else
          formData.append('policyid', ''); // will be populated during editonclick()
 
