@@ -6031,15 +6031,24 @@ def new_entry_motor(request):
             return HttpResponse("done")
 
         else:
-            # print('new_entry_motor')
+            print('new_entry_motor')
             proposal = request.POST.get('proposal', None)
             mandate = request.POST.get('mandate', None)
             policy = request.POST.get('policy', None)
             previous_policy = request.POST.get('previous_policy', None)
             pan_card = request.POST.get('pan_card', None)
             aadhar_card = request.POST.get('aadhar_card', None)
-            vehicle_rc = request.POST.get('vehicle_rc', None)
+            vehicle_rc = request.POST.get('vehicle_rc', None)    
             inspection_report = request.POST.get('inspection_report', None)
+
+            print('proposal: ', proposal)
+            print('mandate: ', mandate)
+            print('policy: ', policy)
+            print('previous_policy: ', previous_policy)
+            print('pan_card: ', pan_card)
+            print('aadhar_card: ', aadhar_card)
+            print('vehicle_rc: ', vehicle_rc)          
+            print('inspection_report: ', inspection_report)
 
             my_model = Policy.objects.create(profile_id=profile_id,
                                              proposal_no=request.POST['proposal_no'],
