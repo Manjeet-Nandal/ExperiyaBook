@@ -44,7 +44,7 @@ def Index(request):
 
 def dashboard(request):
     # print(get_profile_id(get_id_from_session(request)))
-
+   
     return render(request, 'dashboard.html')
 
     agentcount = Agents.objects.filter(status="Active").count()
@@ -81,7 +81,7 @@ def add_vehicles_data():
 def update_employee():
     return
     print('update_employee calling: ')
-
+      
     # print(Policy.objects.filter(status='Active').count())
     # print(Policy.objects.filter(status= None).count())
     # Policy.objects.filter(status= None).update(status = 'Active')

@@ -3346,6 +3346,8 @@
 
             record = records[i]
 
+            if (record.pos_name == null)
+               record.pos_name = ''
             if (record.proposal == null)
                record.proposal = ''
             if (record.mandate == null)
@@ -3362,6 +3364,8 @@
                record.vehicle_rc = ''
             if (record.inspection_report == null)
                record.inspection_report = ''
+            if (record.remark == null)
+               record.remark = ''
 
             recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
    <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
@@ -3441,6 +3445,8 @@
 
             record = records[i]
 
+            if (record.pos_name == null)
+               record.pos_name = ''
             if (record.proposal == null)
                record.proposal = ''
             if (record.mandate == null)
@@ -3457,6 +3463,8 @@
                record.vehicle_rc = ''
             if (record.inspection_report == null)
                record.inspection_report = ''
+            if (record.remark == null)
+               record.remark = ''
 
             recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
             <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
@@ -3490,7 +3498,8 @@
 
             <td class="p-2" > ${record.insured_age} </td>
             <td class="p-2" > ${record.policy_term} </td>
-            <td class="p-2" > ${record.pos_name} </td>
+          
+            <td class="p-2" > ${record.pos_name} </td>  
             <td class="p-2" > ${record.pos} </td>
             
             <td class="p-2" > ${record.bqp} </td>

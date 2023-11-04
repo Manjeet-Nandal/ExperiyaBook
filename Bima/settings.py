@@ -96,11 +96,11 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE'),
         'NAME': os.environ.get('DB_NAME'),
-        # 'CLIENT': {
-        #     'host': os.environ.get('DB_HOST'),
-        #     'username': os.environ.get('DB_USER_NAME'),
-        #     'password': os.environ.get('DB_USER_PASSWORD')
-        # }
+        'CLIENT': {
+            'host': os.environ.get('DB_HOST'),
+            'username': os.environ.get('DB_USER_NAME'),
+            'password': os.environ.get('DB_USER_PASSWORD')
+        }
     }
 }
 
