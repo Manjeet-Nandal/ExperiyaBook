@@ -1521,6 +1521,11 @@
                                        </select>
                                     </div>
 
+                                    <div class="col-md-3 mb-4" hidden>
+                                       <label for="posname">POS Name <abbr title="" class="text-danger">*</abbr></label>
+                                       <input id="posname" name="posname" type="text" class="form-control" required>
+                                    </div>
+
                                     <div class="col-md-3 mb-4" onkeypress="document.getElementById('pos').click();">
                                        <label for="pos">POS <abbr title="" class="text-danger">*</abbr></label>
                                        <input id="pos" name="pos" type="text" value="" data-toggle="modal"
@@ -1985,6 +1990,11 @@
                                           <option value="10">10</option>
 
                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3 mb-4" hidden>
+                                       <label for="posname2">POS Name <abbr title="" class="text-danger">*</abbr></label>
+                                       <input id="posname2" name="posname2" type="text" class="form-control" required>
                                     </div>
 
                                     <div class="col-md-3 mb-4" onkeypress="document.getElementById('pos').click();">
@@ -3289,7 +3299,10 @@
       <td class="sorting thShow p-4 pr-5" style="font-weight: bold" >  Issue Date </td>
       <td class="sorting thShow p-4 pr-5" style="font-weight: bold" >  Insured Age </td>
       <td class="sorting thShow p-4 pr-5" style="font-weight: bold" >  Policy Term </td>
-      <td class="sorting thShow p-4 pr-5" style="font-weight: bold" >  POS </td>
+
+      <td class="sorting thShow p-4 pr-5" style="font-weight: bold" >  POS Name </td>
+      <td class="sorting thShow p-4 pr-5" style="font-weight: bold" >  POS Code </td>     
+
       <td class="sorting thShow p-4 pr-5" style="font-weight: bold" >  BQP </td>
       <td class="sorting thShow p-4 pr-5" style="font-weight: bold" >  Employee </td>
       <td class="sorting thShow p-4 pr-5" style="font-weight: bold" >  Remark </td>
@@ -3378,7 +3391,10 @@
 
    <td class="p-2" > ${record.insured_age} </td>
    <td class="p-2" > ${record.policy_term} </td>
-   <td class="p-2" > ${record.pos} </td>
+
+   <td class="p-2" > ${record.pos_name} </td>   
+   <td class="p-2" > ${record.pos} </td>    
+
    <td class="p-2" > ${record.bqp} </td>
    <td class="p-2" > ${record.employee} </td>
    <td class="p-2" > ${record.remark} </td>
@@ -3470,7 +3486,9 @@
 
             <td class="p-2" > ${record.insured_age} </td>
             <td class="p-2" > ${record.policy_term} </td>
+            <td class="p-2" > ${record.pos_name} </td>
             <td class="p-2" > ${record.pos} </td>
+            
             <td class="p-2" > ${record.bqp} </td>
             <td class="p-2" > ${record.employee} </td>
             <td class="p-2" > ${record.remark} </td>
@@ -5594,6 +5612,8 @@
       }
       document.getElementById("inp_agent").value = value.split('|')[0].trim()
       document.getElementById("pos").value = value.split('|')[0].trim()
+      document.getElementById("posname").value = value.split('|')[1].trim()
+
    }
 
    function setCategoryOnChange() {
@@ -6876,6 +6896,10 @@
       }
       document.getElementById("inp_agent_product").value = value.split('|')[0].trim()
       document.getElementById("pos_product").value = value.split('|')[0].trim()
+
+      document.getElementById("posname2").value = value.split('|')[1].trim()
+
+     
    }
 
    function calculateValue2() {
@@ -7943,6 +7967,8 @@
 
       formData.append('policy_term', document.getElementById('policy_term2').value.trim());
       formData.append('pos', document.getElementById('pos_product').value.trim());
+      formData.append('posname', document.getElementById('posname2').value.trim());
+
       formData.append('bqp', document.getElementById('bqp2').value.trim());
       formData.append('employee', document.getElementById('product_employee').value.trim());
 
@@ -8121,6 +8147,7 @@
       formData.append('insured_age', document.getElementById('insured_age').value.trim());
       formData.append('policy_term', document.getElementById('policy_term').value.trim());
       formData.append('pos', document.getElementById('pos').value.trim());
+      formData.append('posname', document.getElementById('posname').value.trim());
       formData.append('bqp', document.getElementById('bqp').value.trim());
       formData.append('employee', document.getElementById('employee').value.trim());
       formData.append('od', document.getElementById('od').value.trim());

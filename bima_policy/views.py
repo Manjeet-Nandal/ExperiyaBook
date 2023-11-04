@@ -6006,6 +6006,8 @@ def new_entry_motor(request):
                                    policy_term=request.POST['policy_term'],
                                    bqp=request.POST['bqp'],
                                    pos=request.POST['pos'],
+                                   pos_name=request.POST['posname'],
+
                                    employee=get_id_from_session(request),
                                    remark=request.POST['remark'],
                                    OD_premium=request.POST['od'],
@@ -6079,6 +6081,7 @@ def new_entry_motor(request):
                                              insured_age=request.POST['insured_age'],
                                              policy_term=request.POST['policy_term'],
                                              bqp=request.POST['bqp'],
+                                             pos_name=request.POST['posname'],
                                              pos=request.POST['pos'],
                                              employee=get_id_from_session(
                                                  request),
@@ -6169,6 +6172,8 @@ def new_entry_nonmotor(request):
                                    policy_term=request.POST['policy_term'],
                                    bqp=request.POST['bqp'],
                                    pos=request.POST['pos'],
+                                   pos_name=request.POST['posname'],
+
                                    employee=get_id_from_session(request),
 
                                    proposal=proposal,
@@ -6218,6 +6223,8 @@ def new_entry_nonmotor(request):
                                              policy_term=request.POST['policy_term'],
                                              bqp=request.POST['bqp'],
                                              pos=request.POST['pos'],
+                                             pos_name=request.POST['posname'],
+
                                              employee=get_id_from_session(
                                                  request),
 

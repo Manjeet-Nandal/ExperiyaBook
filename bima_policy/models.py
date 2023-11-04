@@ -286,6 +286,7 @@ class Policy(models.Model):
     issue_date = models.DateField()
     insured_age = models.CharField(max_length=2)
     policy_term = models.IntegerField()
+    pos_name = models.CharField(max_length=50)
     pos = models.CharField(max_length=50)
     bqp = models.CharField(max_length=50)
     employee = models.CharField(max_length=50)
