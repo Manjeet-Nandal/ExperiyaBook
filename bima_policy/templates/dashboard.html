@@ -1993,7 +1993,8 @@
                                     </div>
 
                                     <div class="col-md-3 mb-4" hidden>
-                                       <label for="posname2">POS Name <abbr title="" class="text-danger">*</abbr></label>
+                                       <label for="posname2">POS Name <abbr title=""
+                                             class="text-danger">*</abbr></label>
                                        <input id="posname2" name="posname2" type="text" class="form-control" required>
                                     </div>
 
@@ -2712,6 +2713,9 @@
 <script>
 
    document.addEventListener('DOMContentLoaded', async function () {
+
+      // Clear localStorage when the page loads      
+      localStorage.clear();
 
       Load_Dashboard_Details()
       await FetchDataAsync()
@@ -5553,7 +5557,7 @@
          var displayRow = false;
 
          // Loop through all table cells in the current row
-         for (var j = 1; j <= 32; j++) {
+         for (var j = 1; j <= 41; j++) {
             var td = tr[i].getElementsByTagName("td")[j];
             if (td) {
                var txtValue = td.textContent || td.innerText;
@@ -6899,7 +6903,7 @@
 
       document.getElementById("posname2").value = value.split('|')[1].trim()
 
-     
+
    }
 
    function calculateValue2() {
