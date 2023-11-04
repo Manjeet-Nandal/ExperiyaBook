@@ -263,7 +263,6 @@
       </div>
 
       <!-- Policy entry list -->
-
       <div class="page" id="entrylist" hidden>
 
          <div class="page-inner text-blue116">
@@ -1138,10 +1137,7 @@
             <!-- /.page -->
          </div>
 
-
-
       </div>
-
 
       <div class="page " id="motor_entry" hidden>
          <div class="page-inner">
@@ -3419,31 +3415,30 @@
             tableRows += recordHtml;
          }
       }
-      else
-      {
-      
-      for (var i = 0; i < records.length; i++) {
+      else {
 
-         record = records[i]
+         for (var i = 0; i < records.length; i++) {
 
-         if (record.proposal == null)
-            record.proposal = ''
-         if (record.mandate == null)
-            record.mandate = ''
-         if (record.policy == null)
-            record.policy = ''
-         if (record.previous_policy == null)
-            record.previous_policy = ''
-         if (record.aadhar_card == null)
-            record.aadhar_card = ''
-         if (record.pan_card == null)
-            record.pan_card = ''
-         if (record.vehicle_rc == null)
-            record.vehicle_rc = ''
-         if (record.inspection_report == null)
-            record.inspection_report = ''
+            record = records[i]
 
-         recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
+            if (record.proposal == null)
+               record.proposal = ''
+            if (record.mandate == null)
+               record.mandate = ''
+            if (record.policy == null)
+               record.policy = ''
+            if (record.previous_policy == null)
+               record.previous_policy = ''
+            if (record.aadhar_card == null)
+               record.aadhar_card = ''
+            if (record.pan_card == null)
+               record.pan_card = ''
+            if (record.vehicle_rc == null)
+               record.vehicle_rc = ''
+            if (record.inspection_report == null)
+               record.inspection_report = ''
+
+            recordHtml = `<tr class="policy-row" onclick="SelectRow(this)" >
             <td class="text-center w-10pc nowrap p-2" >  ${i + 1} </td> 
             <td class="p-2" >  ${record.proposal_no} </td>
             <td class="p-2" >  <a href="#" class="tile tile-img" ><i class="far fa-file-pdf text-danger mt-1"></i></a> <a  href="#" class=""> ${record.policy_no}</a> </td>
@@ -3509,11 +3504,11 @@
             </td>
             </tr > `;
 
-         tableRows += recordHtml;
-      }
+            tableRows += recordHtml;
+         }
 
       }
-      
+
       showNotification('✅ TOTAL POLICIES: ' + records.length);
       document.getElementById('tbdy').innerHTML = tableRows;
       showNextRows(true)
@@ -5540,7 +5535,7 @@
          var displayRow = false;
 
          // Loop through all table cells in the current row
-         for (var j = 1; j <= 3; j++) {
+         for (var j = 1; j <= 32; j++) {
             var td = tr[i].getElementsByTagName("td")[j];
             if (td) {
                var txtValue = td.textContent || td.innerText;
