@@ -6034,6 +6034,22 @@ def new_entry_motor(request):
 
         else:
             print('new_entry_motor')
+
+            # items = Policy.objects.filter(proposal_no = request.POST['proposal_no'])
+            # if items.count() > 0:
+            #     return HttpResponse('Proposal Number Already Exists')
+            
+            # items = Policy.objects.filter(policy_no = request.POST['policy_no'])            
+            # if items.count() > 0:
+            #     return HttpResponse('Policy Number Already Exists')
+            
+            items = Policy.objects.filter(registration_no = request.POST['registration_no'])            
+            if items.count() > 0:
+                return HttpResponse('Registration Number Already Exists')
+            
+
+            print('processing...')
+
             proposal = request.POST.get('proposal', None)
             mandate = request.POST.get('mandate', None)
             policy = request.POST.get('policy', None)
