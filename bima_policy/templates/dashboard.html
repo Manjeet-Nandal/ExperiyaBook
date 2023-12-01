@@ -6658,14 +6658,10 @@
 
    }
 
-   function calc() {
-      // Removes space      
-
-      document.getElementById("od").value = document.getElementById("od").value.toString().trim()
-      document.getElementById("tpt").value = document.getElementById("tpt").value.toString().trim()
-
-      od = parseFloat(document.getElementById("od").value);
-      tpt = parseFloat(document.getElementById("tpt").value);
+   function calc() {    
+   
+      od = parseFloat(document.getElementById("od").value.trim());
+      tpt = parseFloat(document.getElementById("tpt").value.trim());
 
       document.getElementById("net").value = Number(od + tpt).toFixed((2))
 
@@ -6927,23 +6923,24 @@
    }
 
    function calc2() {
-      // Removes space      
 
-      document.getElementById("od_product").value = document.getElementById("od_product").value.toString().trim()
-      document.getElementById("tpt_product").value = document.getElementById("tpt_product").value.toString().trim()
-
-      od = parseFloat(document.getElementById("od_product").value);
-      tpt = parseFloat(document.getElementById("tpt_product").value);
-
+      od = parseFloat(document.getElementById("od_product").value.trim());
+      tpt = parseFloat(document.getElementById("tpt_product").value.trim());
       document.getElementById("net_product").value = Number(od + tpt).toFixed((2))
+
+      // console.log('od: ' + od);
+      // console.log('tpt: ' + tpt);
+      // console.log('net: ' + Number(od + tpt).toFixed(2));
 
    }
 
    function addGST2() {
-      try {
-         od = parseFloat(document.getElementById("od_product").value);
+      try {       
          net = parseFloat(document.getElementById("net_product").value);
-         document.getElementById("gst_product").value = Number(od * 18 / 100).toFixed((2))
+         // document.getElementById("gst_product").value = Number(od * 18 / 100).toFixed((2))
+         document.getElementById("gst_product").value = Number(net * 18 / 100).toFixed((2))
+         console.log('gst:' + document.getElementById("gst_product").value);
+
       }
       catch { }
    }
